@@ -1,4 +1,4 @@
-# The Rust Programming Language
+# Rust Dasturlash Tili
 
 [The Rust Programming Language](title-page.md)
 [Foreword](foreword.md)
