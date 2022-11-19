@@ -1,7 +1,6 @@
 ## Ilova A: Kalit so'zlar
 
 Quyidagi ro'yxatda Rust tili tomonidan joriy yoki kelajakda foydalanish uchun ajratilgan kalit so'zlar mavjud. Shunday qilib, ularni identifikator sifatida ishlatib bo‘lmaydi (“Xom identifikatorlar e’tiborga olinmaydi” bo‘limida muhokama qilinadigan xom identifikatorlar bundan mustasno). Identifikatorlar - bu funksiyalar, o'zgaruvchilar, parametrlar, struktura maydonlari, modullar, cratelar, doimiylar, makroslar, statik qiymatlar, atributlar, turlar, belgilar yoki hayot muddatlarining nomlari.
-[raw-identifiers]: #raw-identifiers
 
 ### Hozirda foydalanilayotgan kalit so'zlar
 
