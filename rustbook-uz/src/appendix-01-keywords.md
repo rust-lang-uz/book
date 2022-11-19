@@ -1,18 +1,19 @@
 ## Ilova A: Kalit so'zlar
 
-Quyidagi ro'yxatda Rust tili tomonidan joriy yoki kelajakda foydalanish uchun ajratilgan kalit so'zlar mavjud. Shunday qilib, ularni identifikator sifatida ishlatib bo‘lmaydi (biz “ [Xom identifikatorlar] ” bo‘limida muhokama qiladigan xom identifikatorlardan tashqari<!-- e'tibor bermaslik --> " Bo'lim). Identifikatorlar funksiyalar, o'zgaruvchilar, parametrlar, struktura maydonlari, modullar, qutilar, konstantalar, makroslar, statik qiymatlar, atributlar, turlar, belgilar yoki hayot muddatlarining nomlari.
+Quyidagi ro'yxatda Rust tili tomonidan joriy yoki kelajakda foydalanish uchun ajratilgan kalit so'zlar mavjud. Shunday qilib, ularni identifikator sifatida ishlatib bo‘lmaydi (“Xom identifikatorlar e’tiborga olinmaydi” bo‘limida muhokama qilinadigan xom identifikatorlar bundan mustasno). Identifikatorlar - bu funksiyalar, o'zgaruvchilar, parametrlar, struktura maydonlari, modullar, cratelar, doimiylar, makroslar, statik qiymatlar, atributlar, turlar, belgilar yoki hayot muddatlarining nomlari.
+[raw-identifiers]: #raw-identifiers
 
 ### Hozirda foydalanilayotgan kalit so'zlar
 
 Quyida hozirda ishlatilayotgan kalit so‘zlar ro‘yxati, ularning funksiyalari tasvirlangan.
 
 - `as` - ibtidoiy kastingni amalga oshiring, elementni o'z ichiga olgan o'ziga xos xususiyatni ajratib ko'rsating yoki `use` bayonotlarida elementlarning nomini o'zgartiring
--  `async` - joriy ipni bloklash o'rniga `Future` ni qaytaring
+-  `async` - joriy mavzuni bloklash o'rniga `Future` ni qaytaring
 -  `await` - `Future` natijasi tayyor bo'lgunga qadar ijroni to'xtatib turish
 -  `break` - zudlik bilan tsikldan chiqish
 -  `const` - doimiy elementlarni yoki doimiy xom ko'rsatkichlarni aniqlang
--  `continue` eting - keyingi sikl iteratsiyasiga davom eting
--  `crate` - modul yo'lida, sandiq ildiziga ishora qiladi
+-  `continue` - keyingi sikl iteratsiyasiga davom eting
+-  `crate` - modul yo'lida, crate ildiziga ishora qiladi
 -  `dyn` - xususiyat ob'ektiga dinamik jo'natish
 -  `else` - `if` va `if let` boshqaruv oqimi konstruksiyalari uchun zaxira
 -  `enum` - raqamni aniqlang
