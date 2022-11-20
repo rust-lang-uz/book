@@ -75,7 +75,7 @@ Quyidagi kalit so'zlar hali hech qanday funksiyaga ega emas, lekin kelajakda foy
 
 *Raw identifikatorlar* odatda ruxsat berilmagan kalit so'zlardan foydalanish imkonini beruvchi sintaksisdir. Kalit so'zni `r#` bilan oldindan belgilash orqali siz raw identifikatordan foydalanasiz.
 
-Masalan, `match` kalit so`zdir. Agar siz quyidagi funktsiyani kompilyatsiya qilishga harakat qilsangiz
+Masalan, `match` kalit so'zdir. Agar siz quyidagi funktsiyani kompilyatsiya qilishga harakat qilsangiz
 nomi sifatida `match` dan foydalanadi:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
