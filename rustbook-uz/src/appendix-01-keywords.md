@@ -1,6 +1,6 @@
 ## Ilova A: Kalit so'zlar
 
-Quyidagi ro'yxatda Rust tili tomonidan joriy yoki kelajakda foydalanish uchun ajratilgan kalit so'zlar mavjud. Shunday qilib, ularni identifikator sifatida ishlatib bo‘lmaydi (“Xom identifikatorlar e’tiborga olinmaydi” bo‘limida muhokama qilinadigan xom identifikatorlar bundan mustasno). Identifikatorlar - bu funksiyalar, o'zgaruvchilar, parametrlar, struktura maydonlari, modullar, cratelar, doimiylar, makroslar, statik qiymatlar, atributlar, turlar, belgilar yoki hayot muddatlarining nomlari.
+Quyidagi ro'yxatda Rust tili tomonidan joriy yoki kelajakda foydalanish uchun ajratilgan kalit so'zlar mavjud. Shunday qilib, ularni identifikator sifatida ishlatib bo‘lmaydi (“Raw identifikatorlar e’tiborga olinmaydi” bo‘limida muhokama qilinadigan raw identifikatorlar bundan mustasno). Identifikatorlar - bu funksiyalar, o'zgaruvchilar, parametrlar, struktura maydonlari, modullar, cratelar, doimiylar, makroslar, statik qiymatlar, atributlar, turlar, belgilar yoki hayot muddatlarining nomlari.
 
 Quyidagi ro'yxatda Rust tili tomonidan joriy yoki kelajakda foydalanish uchun ajratilgan kalit so'zlar mavjud. Shunday qilib, ularni identifikator sifatida ishlatib bo‘lmaydi (“Raw identifikatorlar e’tiborga olinmaydi” bo‘limida muhokama qilinadigan raw identifikatorlar bundan mustasno). Identifikatorlar - bu funksiyalar, o'zgaruvchilar, parametrlar, struktura maydonlari, modullar, cratelar, doimiylar, makroslar, statik qiymatlar, atributlar, turlar, belgilar yoki hayot muddatlarining nomlari.
 
@@ -113,9 +113,6 @@ Raw identifikatorlari identifikator sifatida tanlagan har qanday so'zdan foydala
 sizga cratengizdan ko'ra boshqa Rust nashrida yozilgan kutubxonalardan foydalanish imkonini beradi. Misol uchun, `try` 2015 yilgi nashrda kalit so'z emas, balki 2018 yilgi nashrda mavjud. Agar siz 2015 yilgi nashrdan foydalangan holda yozilgan kutubxonaga bog'liq bo'lsangiz va
 `try` funksiyasiga ega boʻlsa, siz `r#try` da raw identifikator sintaksisidan foydalanishingiz kerak boʻladi, 2018 yilgi nashr kodingizdan ushbu funktsiyani chaqirish uchun. .[E ilovasiga] qarang<!-- e'tibor bermaslik --> nashrlar haqida ko'proq ma'lumot olish uchun.
 
-
-[Xom identifikatorlar]: #raw-identifiers
-[E ilovasi]: appendix-05-editions.html
 
 [Raw identifikatorlar]: #raw-identifiers
 [E ilovasi]: appendix-05-editions.html
