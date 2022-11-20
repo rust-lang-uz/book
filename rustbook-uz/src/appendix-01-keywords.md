@@ -1,7 +1,7 @@
 ## Ilova A: Kalit so'zlar
 
-Quyidagi ro'yxatda Rust tili tomonidan joriy yoki kelajakda foydalanish uchun ajratilgan kalit so'zlar mavjud. Shunday qilib, ularni identifikator sifatida ishlatib bo‘lmaydi (“[Raw
-identifikatorlar][raw-identifiers]<!-- ignore -->” bo‘limida muhokama qilinadigan raw identifikatorlar bundan mustasno). Identifikatorlar - bu funksiyalar, o'zgaruvchilar, parametrlar, struktura maydonlari, modullar, cratelar, doimiylar, makroslar, statik qiymatlar, atributlar, turlar, belgilar yoki hayot muddatlarining nomlari.
+Quyidagi ro'yxatda Rust tili tomonidan joriy yoki kelajakda foydalanish uchun ajratilgan kalit so'zlar mavjud. Shunday qilib, ularni identifikator sifatida ishlatib bo‘lmaydi “[Raw
+identifikatorlar][raw-identifiers]<!-- ignore -->” bo‘limida muhokama qilinadigan raw identifikatorlar bundan mustasno. Identifikatorlar - bu funksiyalar, o'zgaruvchilar, parametrlar, struktura maydonlari, modullar, cratelar, doimiylar, makroslar, statik qiymatlar, atributlar, turlar, belgilar yoki hayot muddatlarining nomlari.
 
 ### Hozirda foydalanilayotgan kalit so'zlar
 
@@ -60,7 +60,7 @@ Quyidagi kalit so'zlar hali hech qanday funksiyaga ega emas, lekin kelajakda foy
 - `final`
 - `macro`
 - `override`
-- `priv`[union][union]<!-- ignore -->;
+- `priv`
 - `try`
 - `typeof`
 - `unsized`
@@ -110,7 +110,8 @@ Ushbu kod hech qanday xatosiz kompilyatsiya qilinadi. Funktsiya nomidagi `r#` pr
 
 Raw identifikatorlari identifikator sifatida tanlagan har qanday so'zdan foydalanishga imkon beradi, hatto bu so'z zahiradagi kalit so'z bo'lsa ham. Bu bizga identifikator nomlarini tanlashda ko'proq erkinlik beradi, shuningdek, bu so'zlar kalit so'zlar bo'lmagan tilda yozilgan dasturlar bilan integratsiyalashish imkonini beradi. Bundan tashqari, raw identifikatorlar
 sizga cratengizdan ko'ra boshqa Rust nashrida yozilgan kutubxonalardan foydalanish imkonini beradi. Misol uchun, `try` 2015 yilgi nashrda kalit so'z emas, balki 2018 yilgi nashrda mavjud. Agar siz 2015 yilgi nashrdan foydalangan holda yozilgan kutubxonaga bog'liq bo'lsangiz va
-`try` funksiyasiga ega boʻlsa, siz `r#try` da raw identifikator sintaksisidan foydalanishingiz kerak boʻladi, 2018 yilgi nashr kodingizdan ushbu funktsiyani chaqirish uchun. Nashrlar haqida ko'proq ma'lumot olish uchun [Ilova E][appendix-e]<!-- ignore -->  ga qarang
+`try` funksiyasiga ega boʻlsa, siz `r#try` da raw identifikator sintaksisidan foydalanishingiz kerak boʻladi, 2018 yilgi nashr kodingizdan ushbu funktsiyani chaqirish uchun. Nashrlar haqida ko'proq ma'lumot olish uchun [Appendix
+E][appendix-e]<!-- ignore -->  ga qarang
 
 
 [Raw identifikatorlar]: #raw-identifiers
