@@ -111,7 +111,7 @@ Ushbu kod hech qanday xatosiz kompilyatsiya qilinadi. Funktsiya nomidagi `r#` pr
 
 Raw identifikatorlari identifikator sifatida tanlagan har qanday so'zdan foydalanishga imkon beradi, hatto bu so'z zahiradagi kalit so'z bo'lsa ham. Bu bizga identifikator nomlarini tanlashda ko'proq erkinlik beradi, shuningdek, bu so'zlar kalit so'zlar bo'lmagan tilda yozilgan dasturlar bilan integratsiyalashish imkonini beradi. Bundan tashqari, raw identifikatorlar
 sizga cratengizdan ko'ra boshqa Rust nashrida yozilgan kutubxonalardan foydalanish imkonini beradi. Misol uchun, `try` 2015 yilgi nashrda kalit so'z emas, balki 2018 yilgi nashrda mavjud. Agar siz 2015 yilgi nashrdan foydalangan holda yozilgan kutubxonaga bog'liq bo'lsangiz va
-`try` funksiyasiga ega boʻlsa, siz `r#try` da raw identifikator sintaksisidan foydalanishingiz kerak boʻladi, 2018 yilgi nashr kodingizdan ushbu funktsiyani chaqirish uchun. .[E ilovasiga] qarang<!-- e'tibor bermaslik --> nashrlar haqida ko'proq ma'lumot olish uchun.
+`try` funksiyasiga ega boʻlsa, siz `r#try` da raw identifikator sintaksisidan foydalanishingiz kerak boʻladi, 2018 yilgi nashr kodingizdan ushbu funktsiyani chaqirish uchun. Nashrlar haqida ko'proq ma'lumot olish uchun [E ilovasi][appendix-e] ga qarang<!-- e'tibor bermaslik --> .
 
 
 [Raw identifikatorlar]: #raw-identifiers
