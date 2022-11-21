@@ -15,8 +15,8 @@ B-1-jadval Rust-dagi operatorlarni o'z ichiga oladi, operator kontekstda qanday 
 | `!=` | `expr != expr` | Tengsizlik bilan taqqoslash | `PartialEq` |
 | `%` | `expr % expr` | Arifmetik qoldiq | `Rem` |
 | `%=` | `var %= expr` | Arifmetik qoldiq va topshiriq| `RemAssign` |
-| `&` | `&expr`, `&mut expr` | Borrow | |
-| `&` | `&type`, `&mut type`, `&'a type`, `&'a mut type` | Borrow ko'rsatkich turi | |
+| `&` | `&expr`, `&mut expr` | Ampersand| |
+| `&` | `&type`, `&mut type`, `&'a type`, `&'a mut type` | Ampersand ko'rsatkich turi | |
 | `&` | `expr & expr` | Bit boʻyicha AND | `BitAnd` |
 | `&=` | `var &= expr` | Bit bo'yicha AND va tayinlash | `BitAndAssign` |
 | `&&` | `expr && expr` | Qisqa tutashuv mantiqiy AND | |

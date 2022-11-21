@@ -1,73 +1,46 @@
-# Introduction
+# Kirish
 
-> Note: This edition of the book is the same as [The Rust Programming
-> Language][nsprust] available in print and ebook format from [No Starch
+> Eslatma: Kitobning ushbu nashri [ Rust dasturlash 
+> tili][nsprust] bosma va elektron kitob formatida mavjud [No Starch
 > Press][nsp].
 
 [nsprust]: https://nostarch.com/rust
 [nsp]: https://nostarch.com/
 
-Welcome to *The Rust Programming Language*, an introductory book about Rust.
-The Rust programming language helps you write faster, more reliable software.
-High-level ergonomics and low-level control are often at odds in programming
-language design; Rust challenges that conflict. Through balancing powerful
-technical capacity and a great developer experience, Rust gives you the option
-to control low-level details (such as memory usage) without all the hassle
-traditionally associated with such control.
+Rust haqidagi kirish kitobi *Rust Dasturlash Tili*ga xush kelibsiz. 
+Rust dasturlash tili tezroq va ishonchli dasturlarni yozishga yordam beradi.
+Yuqori darajadagi samaradorlik va low-leveldagi boshqaruv ko'pincha dasturlash tilini loyihalashda bir-biriga zid keladi; Rust bu ziddiyatga qarshi turadi. Kuchli texnik imkoniyatlar va ishlab chiquvchilarning ajoyib tajribasini muvozanatlash orqali Rust sizga an'anaviy ravishda bunday nazorat bilan bog'liq bo'lgan barcha qiyinchiliklarsiz low-leveldagi tafsilotlarni (masalan, xotiradan foydalanish) boshqarish imkoniyatini beradi.
 
-## Who Rust Is For
+## Rust kim uchun
 
-Rust is ideal for many people for a variety of reasons. Let’s look at a few of
-the most important groups.
+Rust turli sabablarga ko'ra ko'p odamlar uchun idealdir. Keling, bir nechtasini ko'rib chiqaylik
+eng muhim guruhlar.
 
-### Teams of Developers
+### Dasturchilar jamoalari
 
-Rust is proving to be a productive tool for collaborating among large teams of
-developers with varying levels of systems programming knowledge. Low-level code
-is prone to various subtle bugs, which in most other languages can be caught
-only through extensive testing and careful code review by experienced
-developers. In Rust, the compiler plays a gatekeeper role by refusing to
-compile code with these elusive bugs, including concurrency bugs. By working
-alongside the compiler, the team can spend their time focusing on the program’s
-logic rather than chasing down bugs.
+Rust turli darajadagi tizimlarni dasturlash bo'yicha bilimga ega bo'lgan yirik ishlab chiquvchilar guruhlari o'rtasida hamkorlik qilish uchun samarali vosita ekanligini isbotlamoqda. Low-leveldagi kod turli xil nozik xatolarga moyil bo'lib, ko'pchilik boshqa tillarda ularni faqat keng ko'lamli sinov va tajribali ishlab chiquvchilar tomonidan sinchkovlik bilan tekshirish orqali aniqlash mumkin.Rust-da kompilyator ushbu qiyin xatolar, jumladan, parallellik xatolari bilan kodni kompilyatsiya qilishni rad etib, darvozabon rolini o'ynaydi. Kompilyator bilan birga ishlash orqali jamoa xatolarni ta'qib qilishdan ko'ra, vaqtini dastur mantig'iga qaratishga sarflashi mumkin.
 
-Rust also brings contemporary developer tools to the systems programming world:
+Rust shuningdek, tizim dasturlash dunyosiga zamonaviy ishlab chiquvchilar vositalarini olib keladi:
 
-* Cargo, the included dependency manager and build tool, makes adding,
-  compiling, and managing dependencies painless and consistent across the Rust
-  ecosystem.
-* The Rustfmt formatting tool ensures a consistent coding style across
-  developers.
-* The Rust Language Server powers Integrated Development Environment (IDE)
-  integration for code completion and inline error messages.
+* Cargo  dependency menejeri va qurish vositasini o'z ichiga oladi, Rust ekotizimida bog'liqliklarni qo'shish, kompilyatsiya qilish va boshqarishni qiyinchiliksiz va davomli qiladi.
+* Rustfmt formatlash vositasi ishlab chiquvchilar orasida barqaror kodlash uslubini ta'minlaydi.
+* Rust Language Server kodni toʻldirish va inline xato xabarlari uchun Integrated Development Environment (IDE) integratsiyasini quvvatlaydi.
 
-By using these and other tools in the Rust ecosystem, developers can be
-productive while writing systems-level code.
+Rust ekotizimidagi ushbu va boshqa vositalardan foydalangan holda, ishlab chiquvchilar tizim darajasidagi kodni yozishda samarali bo'lishi mumkin.
 
-### Students
+### Talabalar
 
-Rust is for students and those who are interested in learning about systems
-concepts. Using Rust, many people have learned about topics like operating
-systems development. The community is very welcoming and happy to answer
-student questions. Through efforts such as this book, the Rust teams want to
-make systems concepts more accessible to more people, especially those new to
-programming.
+Rust talabalar va tizim tushunchalarini o'rganishga qiziquvchilar uchun. Rust-dan foydalanib, ko'p odamlar operatsion tizimlarni ishlab chiqish kabi mavzular haqida bilib oldilar. Jamiyat juda mehmondo'st va talabalar savollariga javob berishdan xursand. Ushbu kitob kabi sa'y-harakatlar orqali Rust guruhlari tizim tushunchalarini ko'proq odamlar, ayniqsa dasturlash uchun yangi bo'lganlar uchun qulayroq qilishni xohlashadi.
 
-### Companies
+### Kompaniyalar
 
-Hundreds of companies, large and small, use Rust in production for a variety of
-tasks, including command line tools, web services, DevOps tooling, embedded
-devices, audio and video analysis and transcoding, cryptocurrencies,
-bioinformatics, search engines, Internet of Things applications, machine
-learning, and even major parts of the Firefox web browser.
+Yuzlab yirik va kichik kompaniyalar ishlab chiqarishda Rust-dan buyruq qatori vositalari, veb-xizmatlar, DevOps asboblari, o'rnatilgan qurilmalar, audio va video tahlillari va transkodlar, kriptovalyutalar, bioinformatika, qidiruv tizimlari, Internet of Things ilovalari kabi turli vazifalar uchun foydalanadilar. , machine learning va hatto Firefox veb-brauzerining asosiy qismlari.
 
-### Open Source Developers
+### Ochiq kodli dasturchilar
 
-Rust is for people who want to build the Rust programming language, community,
-developer tools, and libraries. We’d love to have you contribute to the Rust
-language.
+Rust Rust dasturlash tilini, hamjamiyatini, ishlab chiquvchilar vositalarini va kutubxonalarini yaratmoqchi bo'lgan odamlar uchundir. Rust tiliga o'z hissangizni qo'shishingizni istardik.
 
-### People Who Value Speed and Stability
+### Tezlik va barqarorlikni qadrlaydigan odamlar
 
 Rust is for people who crave speed and stability in a language. By speed, we
 mean both how quickly Rust code can run and the speed at which Rust lets you
