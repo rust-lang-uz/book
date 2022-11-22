@@ -1,28 +1,28 @@
-## Hello, World!
+## Salom Olam!
 
-Now that you’ve installed Rust, it’s time to write your first Rust program.
-It’s traditional when learning a new language to write a little program that
-prints the text `Hello, world!` to the screen, so we’ll do the same here!
+Endi siz Rustni o'rnatdingiz, hozir sizning birinchi Rust dasturingizni yozishning ayni vaqti.
+Yangi dasturlash tilini o'rganishda "Salom, Olam!" matnini ekranga chop etuvchi kichik va sodda
+dastur tuzish an'anaga aylangan, shunday ekan biz ham sinab ko'ramiz!
 
-> Note: This book assumes basic familiarity with the command line. Rust makes
-> no specific demands about your editing or tooling or where your code lives, so
-> if you prefer to use an integrated development environment (IDE) instead of
-> the command line, feel free to use your favorite IDE. Many IDEs now have some
-> degree of Rust support; check the IDE’s documentation for details. The Rust
-> team has been focusing on enabling great IDE support via `rust-analyzer`. See
-> [Appendix D][devtools]<!-- ignore --> for more details.
+> Eslatma: Bu kitob terminal bilan ishlay olishning boshlang'ich ko'nikmalarini
+> talab qiladi. Rust sizning kod muxarriringiz foydalanadigan asboblaringiz va
+> kodingizni qayerda joylayishi bo'yicha talablar qo'ymaydi, shuning uchun siz
+> terminal o'rniga o'zingiz xohlagan kod muxarririni ishlatishingiz mumkin.
+> Hozir ko'pchilik kod muxarrirlarida Rust kodini yozish ancha osson. Rust dasturlash
+> tili jamoasi kod yozishni ossonlashtirish uchun `rust-analyzer` ni ishlab chiqishgan.
+> Qo'shimcha ma'lumot uchun [Appendix D][devtools]<!-- ignore -->ni ko'zdan kechiring.
 
-### Creating a Project Directory
+### Loyiha jildini yaratish
 
-You’ll start by making a directory to store your Rust code. It doesn’t matter
-to Rust where your code lives, but for the exercises and projects in this book,
-we suggest making a *projects* directory in your home directory and keeping all
-your projects there.
+Siz ishni Rust kodingizni joylaytirish uchun jild yaratishdan boshlaysiz.
+Rust uchun sizning kodingiz qayerda joylashining ahamiyati yo'q, lekin biz
+bu kitobdagi mashq va loyihalarni joylash uchun *projects* nomli jild yaratishingizni
+maslahat beramiz.
 
-Open a terminal and enter the following commands to make a *projects* directory
-and a directory for the “Hello, world!” project within the *projects* directory.
+Terminalni oching va *projects* jildini yaratish va uning ichidan "Salom Olam!" loyihasi
+jildini yaratish uchun quyidagi buyruqlarni kiriting.
 
-For Linux, macOS, and PowerShell on Windows, enter this:
+Linux, macOS va Windows Powershell uchun:
 
 ```console
 $ mkdir ~/projects
@@ -31,7 +31,7 @@ $ mkdir hello_world
 $ cd hello_world
 ```
 
-For Windows CMD, enter this:
+Windows CMD uchun:
 
 ```cmd
 > mkdir "%USERPROFILE%\projects"
@@ -40,55 +40,49 @@ For Windows CMD, enter this:
 > cd hello_world
 ```
 
-### Writing and Running a Rust Program
+### Rust dasturi yozish va ishga tushirish.
 
-Next, make a new source file and call it *main.rs*. Rust files always end with
-the *.rs* extension. If you’re using more than one word in your filename, the
-convention is to use an underscore to separate them. For example, use
-*hello_world.rs* rather than *helloworld.rs*.
+Endi, *main.rs* nomli yangi fayl yarating. Rust kodlar har doim *.rs* kengaytmasi
+bilan tugaydi. Agar siz faylni nomlashda 1dan ortiq so'z ishlatmoqchi bo'lsangiz,
+ularni tag chiqiz orqali bog'lashingiz mumkin. Misol uchun: salom_olam.rs
 
-Now open the *main.rs* file you just created and enter the code in Listing 1-1.
+Endi hozirgina yaratgan *main.rs* faylingizni kod muharririda oching.
 
-<span class="filename">Filename: main.rs</span>
+<span class="filename">Fayl nomi: main.rs</span>
 
 ```rust
 fn main() {
-    println!("Hello, world!");
+    println!("Salom, Olam!");
 }
 ```
 
-<span class="caption">Listing 1-1: A program that prints `Hello, world!`</span>
+<span class="caption">Dastur "Salom, Olam!" matnini ekranga chop etadi.</span>
 
-Save the file and go back to your terminal window in the
-*~/projects/hello_world* directory. On Linux or macOS, enter the following
-commands to compile and run the file:
+Faylni saqlang va Terminalda *~/projects/hello_world* jildiga qayting.
+Linux yoki macOS'da, quyidagi buyruq orqali kompilyatsiya qiling va isha tushiring:
 
 ```console
 $ rustc main.rs
 $ ./main
-Hello, world!
+Salom, Olam!
 ```
 
-On Windows, enter the command `.\main.exe` instead of `./main`:
+Windowsda `./main` ning o'rniga `.\main.exe` buyrug'ini kiriting:
 
 ```powershell
 > rustc main.rs
 > .\main.exe
-Hello, world!
+Salom, Olam!
 ```
+Siz foydalanyotgan operatsion tizimdan qat'iy nazar, Terminalga "Salom, Olam!" matni
+chop etilishi kerak. Agar sizda natija boshqacha bo'lsa, [“Troubleshooting”][troubleshooting]<!-- ignore --> qismini qaytadan ko'rib chiqing.
 
-Regardless of your operating system, the string `Hello, world!` should print to
-the terminal. If you don’t see this output, refer back to the
-[“Troubleshooting”][troubleshooting]<!-- ignore --> part of the Installation
-section for ways to get help.
+Agar "Salom, Olam!" chop etilgan bo'lsa, tabriklayman. Siz ramsan Rust dasturi
+yozdingiz. Bu sizni Rust dasturchiga aylantiradi, xush kelibsiz!
 
-If `Hello, world!` did print, congratulations! You’ve officially written a Rust
-program. That makes you a Rust programmer—welcome!
+### Rust dasturining tuzilishi.
 
-### Anatomy of a Rust Program
-
-Let’s review this “Hello, world!” program in detail. Here’s the first piece of
-the puzzle:
+Keling "Salom, Olam!" dasturiga chuqurroq nazar solamiz. Boshqotirmaning 1-qismi:
 
 ```rust
 fn main() {
@@ -96,106 +90,109 @@ fn main() {
 }
 ```
 
-These lines define a function named `main`. The `main` function is special: it
-is always the first code that runs in every executable Rust program. Here, the
-first line declares a function named `main` that has no parameters and returns
-nothing. If there were parameters, they would go inside the parentheses `()`.
+Bu qatorlar `main` nomli funksiyani e'lon qiladi. `main` bajariluvchi(executable)
+Rust dasturi ishga tushganda ishlaydigan 1-koddir. Birinichi qatorda dastur hech
+qanday argumentlarsiz `main` funksiyasini e'lon qiladi va bu u hech narsa qaytarmaydi.
+Agar bizga argumentlar kerak bo'lsa, biz ularni qavslar `()` ichiga yozamiz.
 
-The function body is wrapped in `{}`. Rust requires curly brackets around all
-function bodies. It’s good style to place the opening curly bracket on the same
-line as the function declaration, adding one space in between.
+Funksiyasing tanasi `{}` bilan o'ralgan. Rust har bir funksiyalarda e'lon qilishda
+`{}` dan foydalanishni talab qiladi.
 
+> Eslatma: Agar siz Rust loyihalarda standart usulda kod yozmoqchi bo'lsangiz
+> avtomatik tarzda kod formatlab beruvchi `rustfmt` dan foydalanishingiz mumkin
 > Note: If you want to stick to a standard style across Rust projects, you can
-> use an automatic formatter tool called `rustfmt` to format your code in a
-> particular style (more on `rustfmt` in
-> [Appendix D][devtools]<!-- ignore -->). The Rust team has included this tool
-> with the standard Rust distribution, as `rustc` is, so it should already be
-> installed on your computer!
+> [Appendix D][devtools]<!-- ignore -->).Rust dasturlash tili jamoasi
+> standar holatda `rustfmt` ni `rustc`dek o'rnatiluvchi tarzda e'lon qilishgan.
+> shunday ekan u sizni qurilmangizda allaqachon o'rnatilgan bo'lishi kerak.
 
-The body of the `main` function holds the following code:
+`main` funksiyaning tanasi quyidagi kodni saqlaydi:
 
 ```rust
     println!("Hello, world!");
 ```
 
-This line does all the work in this little program: it prints text to the
-screen. There are four important details to notice here.
+Shu bir qator kod shu kichik dasturdagi barcha ishni amalga oshiardi: u
+matnni ekranga chop etadi.Bu yerda ahamiyat qaratish zarur bo'lgan
+to'rtta muhim narsalar bor.
 
-First, Rust style is to indent with four spaces, not a tab.
+Birinchidan, Rust stili 4ta bo'sh joydan iborat 1ta tabdan emas.
 
-Second, `println!` calls a Rust macro. If it had called a function instead, it
-would be entered as `println` (without the `!`). We’ll discuss Rust macros in
-more detail in Chapter 19. For now, you just need to know that using a `!`
-means that you’re calling a macro instead of a normal function and that macros
-don’t always follow the same rules as functions.
+Ikkinchidan, `println!` Rust macro deb ataladi. Agar u funksiya deb atalganda
+`println` (`!`siz) tarzda kiritilardi. Biz Rust makrolari haqida 19-bobda batafsil
+gaplashamiz. Siz hozir bilishingiz kerak bo'lgan narsa, `!`dan foydalanish 
+funksiya deb emas, makro deb ataladi.
 
-Third, you see the `"Hello, world!"` string. We pass this string as an argument
-to `println!`, and the string is printed to the screen.
+Uchinchidan, siz "Salom, Olam!" matnini ko'rdingiz. Biz `println!`ga argument
+sifatida matn berdik va matn ekranga chop etildi.
 
-Fourth, we end the line with a semicolon (`;`), which indicates that this
-expression is over and the next one is ready to begin. Most lines of Rust code
-end with a semicolon.
+To'rtinchidan, biz qatorni semikolon(`;`) bilan tugatdik, u hozirgi jarayon tugab,
+keyingi jarayonning boshlanishini anglatadi. Rust kodlarining katta qismi semikolon
+bilan tugaydi.
 
-### Compiling and Running Are Separate Steps
 
-You’ve just run a newly created program, so let’s examine each step in the
-process.
+### Kompilyatsiya qilish va ishga tushirish alohida bosqichlar hisoblanadi.
 
-Before running a Rust program, you must compile it using the Rust compiler by
-entering the `rustc` command and passing it the name of your source file, like
-this:
+Siz hozirgina yangi dastur tuzdingiz, keling jarayonning har bir qadamini
+ko'rib chiqamiz.
+
+Rust dasturini ishga tushirishdan oldin, uni `rustc` buyrug'i orqali Rust kompilyatodan
+foydalangan holda dastur nomini kiritib kompilyatsiya qilishingiz zarur. Namuna:
 
 ```console
 $ rustc main.rs
 ```
 
-If you have a C or C++ background, you’ll notice that this is similar to `gcc`
-or `clang`. After compiling successfully, Rust outputs a binary executable.
+Agar siz C yoki C++ bilan ishlagan bo'lsangiz, bu `gcc` yoki `clang` bilan bir
+xil ekanligini payqaysiz. Muvoffaqiyatli kompilyatsiyadan so'ng, Rust bina bajaruvchi
+faylni yaratadi.
 
-On Linux, macOS, and PowerShell on Windows, you can see the executable by
-entering the `ls` command in your shell:
+Linux, macOS va Windows PowerShellda, siz bajariluvchi faylni `ls` buyrug'i
+orqali ko'rishingiz mumkin:
+
 
 ```console
 $ ls
 main  main.rs
 ```
 
-On Linux and macOS, you’ll see two files. With PowerShell on Windows, you’ll
-see the same three files that you would see using CMD. With CMD on Windows, you
-would enter the following:
+Linux va macOSda, siz 2ta fayllarni ko'rasiz. Windows Powershhellda siz
+Windows CMD yordamida ko'ra oladigan 3ta faylni ko'rasiz.
+
 
 ```cmd
-> dir /B %= the /B option says to only show the file names =%
+> dir /B %= the /B faqat fayl nomlarini ko'rish uchun =%
 main.exe
 main.pdb
 main.rs
 ```
 
-This shows the source code file with the *.rs* extension, the executable file
-(*main.exe* on Windows, but *main* on all other platforms), and, when using
-Windows, a file containing debugging information with the *.pdb* extension.
-From here, you run the *main* or *main.exe* file, like this:
+Bu sizga *.rs* kengaytmali kod faylini, bajariluvchi faylni(Windowsda `main.exe`
+boshqa barcha tizimlarda `main`), va Windowsdan foydalanayotganingizda, debugging 
+ma'lumotlarini o'z ichida saqlovchi *.pdb* kengaytmali faylni ko'rsatadi.
+
+Endi, siz *main* yoki *main.exe*ni quyidagicha ishga tushira olasiz:
 
 ```console
-$ ./main # or .\main.exe on Windows
+$ ./main # yoki Windowsda ./main.exe
 ```
 
-If your *main.rs* is your “Hello, world!” program, this line prints `Hello,
-world!` to your terminal.
+Agar sizning *main.rs* faylingiz "Salom, Olam!" dasturi bo'lsa, bu dastur
+ekranga "Salom, Olam!" matnini chop etadi.
 
-If you’re more familiar with a dynamic language, such as Ruby, Python, or
-JavaScript, you might not be used to compiling and running a program as
-separate steps. Rust is an *ahead-of-time compiled* language, meaning you can
-compile a program and give the executable to someone else, and they can run it
-even without having Rust installed. If you give someone a *.rb*, *.py*, or
-*.js* file, they need to have a Ruby, Python, or JavaScript implementation
-installed (respectively). But in those languages, you only need one command to
-compile and run your program. Everything is a trade-off in language design.
+Agar siz Ruby, Python yoki JavaScript kabi dinamik tillar bilan tanish bo'lsangiz,
+siz dasturni kompilyatsiya qilish va bir necha qadamlarga bo'lish orqali ishga
+tushirmagan bo'lishingiz mumkin. Rust *yozish davomida kompilyatsiya qilinga* til,
+ya'ni siz Rust kodni yozib uni kompilyatsiya qilib, ishga tushiriluvchi faylni boshqa
+odamga jo'natsangiz, u kompyuterida Rust o'rnatilmagan holda dasturni ishga tushrish
+imkoniyatiga ega bo'ladi. Agar siz kimgadir *.rb*, *.py* yoki *.js* faylini uzatsangiz
+ular dasturni ishga tushirishi uchun Ruby, Python yoki JavaScript ishga tushiruvchilari
+o'rnatishlari zarur. Lekin bu tillarda dasturni kompilyatsiya qilish va ishga tushirish 
+uchun birgina buyruq yetarli bo'ladi.
 
-Just compiling with `rustc` is fine for simple programs, but as your project
-grows, you’ll want to manage all the options and make it easy to share your
-code. Next, we’ll introduce you to the Cargo tool, which will help you write
-real-world Rust programs.
+Kichikroq dasturlarni `rustc` orqali kompilyatsiya qilish yaxshi, lekin sizni loyihangiz 
+kengaygani sari, siz ishga tushirish jarayonini osonlashtirishni xohlaysiz.
+Endi, biz siz bilan haqiqiy Rust dasturlarini tuzishda qulaylik yaratuvchi
+Cargo yordamchisi bilan tanishamiz.
 
 [troubleshooting]: ch01-01-installation.html#troubleshooting
 [devtools]: appendix-04-useful-development-tools.md
