@@ -1,16 +1,17 @@
-## Salom Olam!
+## Hello, World!
 
 Endi siz Rustni o'rnatdingiz, hozir sizning birinchi Rust dasturingizni yozishning ayni vaqti.
-Yangi dasturlash tilini o'rganishda "Salom, Olam!" matnini ekranga chop etuvchi kichik va sodda
+Yangi dasturlash tilini o'rganishda `Hello, World!` matnini ekranga chop etuvchi kichik va sodda
 dastur tuzish an'anaga aylangan, shunday ekan biz ham sinab ko'ramiz!
 
 > Eslatma: Bu kitob terminal bilan ishlay olishning boshlang'ich ko'nikmalarini
 > talab qiladi. Rust sizning kod muxarriringiz foydalanadigan asboblaringiz va
-> kodingizni qayerda joylayishi bo'yicha talablar qo'ymaydi, shuning uchun siz
-> terminal o'rniga o'zingiz xohlagan kod muxarririni ishlatishingiz mumkin.
-> Hozir ko'pchilik kod muxarrirlarida Rust kodini yozish ancha osson. Rust dasturlash
-> tili jamoasi kod yozishni ossonlashtirish uchun `rust-analyzer` ni ishlab chiqishgan.
-> Qo'shimcha ma'lumot uchun [Appendix D][devtools]<!-- ignore -->ni ko'zdan kechiring.
+> kodingizni qayerda joylayishi bo'yicha talablar qo'ymaydi, shuning uchun agar siz
+> terminal o'rniga integratsiyalashgan ishlab chiqish muhitidan (IDE) foydalanishni afzal ko'rsangiz,
+> o'zingizning sevimli IDE-dan foydalaning. Ko'pgina IDElar endi ma'lum darajada
+> Rust-ni qo'llab-quvvatlaydi; tafsilotlar uchun IDE hujjatlarini tekshiring.
+> Rust jamoasi `rust-analyzer` orqali ajoyib IDE yordamini ta'minlashga e'tibor qaratdi.
+> Batafsil ma’lumot uchun [D ilovasi][devtools]<!-- ignore -->ni ko'zdan kechiring.
 
 ### Loyiha jildini yaratish
 
@@ -19,7 +20,7 @@ Rust uchun sizning kodingiz qayerda joylashining ahamiyati yo'q, lekin biz
 bu kitobdagi mashq va loyihalarni joylash uchun *projects* nomli jild yaratishingizni
 maslahat beramiz.
 
-Terminalni oching va *projects* jildini yaratish va uning ichidan "Salom Olam!" loyihasi
+Terminalni oching va *projects* jildini yaratish va uning ichidan “Hello, world!” loyihasi
 jildini yaratish uchun quyidagi buyruqlarni kiriting.
 
 Linux, macOS va Windows Powershell uchun:
@@ -43,8 +44,7 @@ Windows CMD uchun:
 ### Rust dasturi yozish va ishga tushirish.
 
 Endi, *main.rs* nomli yangi fayl yarating. Rust kodlar har doim *.rs* kengaytmasi
-bilan tugaydi. Agar siz faylni nomlashda 1dan ortiq so'z ishlatmoqchi bo'lsangiz,
-ularni tag chiqiz orqali bog'lashingiz mumkin. Misol uchun: salom_olam.rs
+bilan tugaydi. Agar fayl nomida bir nechta so'zlardan foydalansangiz, ularni ajratish uchun pastki chiziqdan foydalanish shart. Masalan, *helloworld.rs* o'rniga *hello_world.rs* dan foydalaning.
 
 Endi hozirgina yaratgan *main.rs* faylingizni kod muharririda oching.
 
@@ -52,19 +52,19 @@ Endi hozirgina yaratgan *main.rs* faylingizni kod muharririda oching.
 
 ```rust
 fn main() {
-    println!("Salom, Olam!");
+    println!("Hello, world!");
 }
 ```
 
-<span class="caption">Dastur "Salom, Olam!" matnini ekranga chop etadi.</span>
+<span class="caption">Listing 1-1: `Hello, world!` ni chop etuvchi dastur</span>
 
 Faylni saqlang va Terminalda *~/projects/hello_world* jildiga qayting.
-Linux yoki macOS'da, quyidagi buyruq orqali kompilyatsiya qiling va isha tushiring:
+Linux yoki macOS da faylni kompilyatsiya qilish va ishga tushirish uchun quyidagi buyruqlarni kiriting:
 
 ```console
 $ rustc main.rs
 $ ./main
-Salom, Olam!
+Hello, world!
 ```
 
 Windowsda `./main` ning o'rniga `.\main.exe` buyrug'ini kiriting:
@@ -72,13 +72,11 @@ Windowsda `./main` ning o'rniga `.\main.exe` buyrug'ini kiriting:
 ```powershell
 > rustc main.rs
 > .\main.exe
-Salom, Olam!
+Hello, world!
 ```
-Siz foydalanyotgan operatsion tizimdan qat'iy nazar, Terminalga "Salom, Olam!" matni
-chop etilishi kerak. Agar sizda natija boshqacha bo'lsa, [“Troubleshooting”][troubleshooting]<!-- ignore --> qismini qaytadan ko'rib chiqing.
+Operatsion tizimingizdan qat'i nazar, terminalda `Hello, world!` qatori chop etilishi kerak.Agar siz ushbu chiqishni ko'rmasangiz, yordam olish usullari uchun O'rnatish bo'limining [”Muammolarni bartaraf etish”][troubleshooting]<!-- ignore --> bo'limiga qayting.
 
-Agar "Salom, Olam!" chop etilgan bo'lsa, tabriklayman. Siz ramsan Rust dasturi
-yozdingiz. Bu sizni Rust dasturchiga aylantiradi, xush kelibsiz!
+Agar `Hello, world!` chop etilgan bo'lsa, tabriklaymiz! Siz rasmiy ravishda Rust dasturini yozdingiz. Bu sizni Rust dasturchisiga aylantiradi - xush kelibsiz!
 
 ### Rust dasturining tuzilishi.
 
@@ -90,20 +88,17 @@ fn main() {
 }
 ```
 
-Bu qatorlar `main` nomli funksiyani e'lon qiladi. `main` bajariluvchi(executable)
-Rust dasturi ishga tushganda ishlaydigan 1-koddir. Birinichi qatorda dastur hech
-qanday argumentlarsiz `main` funksiyasini e'lon qiladi va bu u hech narsa qaytarmaydi.
-Agar bizga argumentlar kerak bo'lsa, biz ularni qavslar `()` ichiga yozamiz.
+Bu qatorlar `main` nomli funksiyani e'lon qiladi. `main` funksiyasi alohida: u har doim bajariladigan Rust dasturida ishlaydigan birinchi koddir. Bu yerda birinchi satr hech qanday parametrga ega boʻlmagan va hech narsani qaytarmaydigan `main` funksiyasini eʼlon qiladi.
+Agar parametrlar mavjud bo'lsa, ular `()` qavslar ichiga kiradi.
 
 Funksiyasing tanasi `{}` bilan o'ralgan. Rust har bir funksiyalarda e'lon qilishda
 `{}` dan foydalanishni talab qiladi.
 
 > Eslatma: Agar siz Rust loyihalarda standart usulda kod yozmoqchi bo'lsangiz
-> avtomatik tarzda kod formatlab beruvchi `rustfmt` dan foydalanishingiz mumkin
-> Note: If you want to stick to a standard style across Rust projects, you can
-> [Appendix D][devtools]<!-- ignore -->).Rust dasturlash tili jamoasi
-> standar holatda `rustfmt` ni `rustc`dek o'rnatiluvchi tarzda e'lon qilishgan.
-> shunday ekan u sizni qurilmangizda allaqachon o'rnatilgan bo'lishi kerak.
+> kodingizni maʼlum bir uslubda formatlash uchun `rustfmt` nomli avtomatik formatlash vositasidan
+> foydalanishingiz mumkin (batafsilroq `rustfmt` [D ilovasi][devtools]<!-- ignore --> -da)
+> Rust jamoasi ushbu vositani standart Rust distributiviga kiritdi,
+> chunki `rustc` kabi, u allaqachon kompyuteringizga o'rnatilgan bo'lishi kerak!
 
 `main` funksiyaning tanasi quyidagi kodni saqlaydi:
 
