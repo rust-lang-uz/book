@@ -100,7 +100,7 @@ Funksiyasing tanasi `{}` bilan o'ralgan. Rust har bir funksiyalarda e'lon qilish
 > Rust jamoasi ushbu vositani standart Rust distributiviga kiritdi,
 > chunki `rustc` kabi, u allaqachon kompyuteringizga o'rnatilgan bo'lishi kerak!
 
-`main` funksiyaning tanasi quyidagi kodni saqlaydi:
+`main` funksiyaning tanasi quyidagi kodni o'z ichiga oladi:
 
 ```rust
     println!("Hello, world!");
@@ -110,39 +110,29 @@ Shu bir qator kod shu kichik dasturdagi barcha ishni amalga oshiardi: u
 matnni ekranga chop etadi.Bu yerda ahamiyat qaratish zarur bo'lgan
 to'rtta muhim narsalar bor.
 
-Birinchidan, Rust stili 4ta bo'sh joydan iborat 1ta tabdan emas.
+<!-- Birinchidan, Rust stili 4ta bo'sh joydan iborat 1ta tabdan emas. -->
+Birinchidan, Rust uslubi to'rtta bo'shliqdan iborat tab emas
 
-Ikkinchidan, `println!` Rust macro deb ataladi. Agar u funksiya deb atalganda
-`println` (`!`siz) tarzda kiritilardi. Biz Rust makrolari haqida 19-bobda batafsil
-gaplashamiz. Siz hozir bilishingiz kerak bo'lgan narsa, `!`dan foydalanish 
-funksiya deb emas, makro deb ataladi.
+Ikkinchidan, `println!` Rust makrosini chaqiradi. Agar u funktsiyani o'rniga chaqirgan bo'lsa, u `println` (`!` belgisiz) sifatida kiritiladi. Biz Rust makrolari haqida 19-bobda batafsilroq muhokama qilamiz.Hozircha siz shuni bilishingiz kerakki, `!` belgisidan foydalanish oddiy funksiya o‘rniga makrosni chaqirayotganingizni anglatadi va makrolar har doim ham funksiyalar bilan bir xil qoidalarga amal qilmaydi.
 
-Uchinchidan, siz "Salom, Olam!" matnini ko'rdingiz. Biz `println!`ga argument
-sifatida matn berdik va matn ekranga chop etildi.
+Uchinchidan, siz `"Hello, world!"` qatorini ko'rasiz. Bu satrni argument sifatida `println!` ga uzatamiz va satr ekranga chop etiladi.
 
-To'rtinchidan, biz qatorni semikolon(`;`) bilan tugatdik, u hozirgi jarayon tugab,
-keyingi jarayonning boshlanishini anglatadi. Rust kodlarining katta qismi semikolon
-bilan tugaydi.
+To'rtinchidan, satrni nuqtali vergul (`;`) bilan tugatamiz, bu esa bu ifoda tugaganligini va keyingisi boshlashga tayyorligini bildiradi. Rust kodining aksariyat satrlari nuqtali vergul bilan tugaydi.
 
 
-### Kompilyatsiya qilish va ishga tushirish alohida bosqichlar hisoblanadi.
+### Kompilyatsiya va ishga tushirish alohida bosqichlardir
 
-Siz hozirgina yangi dastur tuzdingiz, keling jarayonning har bir qadamini
-ko'rib chiqamiz.
+Siz yangi yaratilgan dasturni ishga tushirdingiz, shuning uchun jarayonning har bir bosqichini ko'rib chiqamiz.
 
-Rust dasturini ishga tushirishdan oldin, uni `rustc` buyrug'i orqali Rust kompilyatodan
-foydalangan holda dastur nomini kiritib kompilyatsiya qilishingiz zarur. Namuna:
+Rust dasturini ishga tushirishdan oldin uni Rust kompilyatoridan foydalanib, `rustc` buyrug‘ini kiritib, unga manba faylingiz nomini quyidagi tarzda kiritishingiz kerak:
 
 ```console
 $ rustc main.rs
 ```
 
-Agar siz C yoki C++ bilan ishlagan bo'lsangiz, bu `gcc` yoki `clang` bilan bir
-xil ekanligini payqaysiz. Muvoffaqiyatli kompilyatsiyadan so'ng, Rust bina bajaruvchi
-faylni yaratadi.
+Agar siz C yoki C++ bilan ishlagan bo'lsangiz, bu `gcc` yoki `clang` ga o'xshashligini sezasiz. Muvaffaqiyatli kompilyatsiyadan so'ng Rust ikkilik bajariladigan faylni chiqaradi.
 
-Linux, macOS va Windows PowerShellda, siz bajariluvchi faylni `ls` buyrug'i
-orqali ko'rishingiz mumkin:
+Linux, macOS va Windows-dagi PowerShell-da siz shelldagi `ls` buyrug'ini kiritish orqali bajariladigan faylni ko'rishingiz mumkin:
 
 
 ```console
@@ -150,12 +140,11 @@ $ ls
 main  main.rs
 ```
 
-Linux va macOSda, siz 2ta fayllarni ko'rasiz. Windows Powershhellda siz
-Windows CMD yordamida ko'ra oladigan 3ta faylni ko'rasiz.
+Linux va macOS-da siz ikkita faylni ko'rasiz. Windows-dagi PowerShell bilan siz CMD-dan foydalangan holda ko'rgan uchta faylni ko'rasiz. Windows-da CMD bilan siz quyidagilarni kiritasiz:
 
 
 ```cmd
-> dir /B %= the /B faqat fayl nomlarini ko'rish uchun =%
+> dir /B %= the /B faqat fayl nomlarini ko'rsatishni aytadi =%
 main.exe
 main.pdb
 main.rs
@@ -165,27 +154,19 @@ Bu sizga *.rs* kengaytmali kod faylini, bajariluvchi faylni(Windowsda `main.exe`
 boshqa barcha tizimlarda `main`), va Windowsdan foydalanayotganingizda, debugging 
 ma'lumotlarini o'z ichida saqlovchi *.pdb* kengaytmali faylni ko'rsatadi.
 
-Endi, siz *main* yoki *main.exe*ni quyidagicha ishga tushira olasiz:
+Bu yerdan siz *main* yoki *main.exe* faylini ishga tushirasiz, masalan:
 
 ```console
-$ ./main # yoki Windowsda ./main.exe
+$ ./main # or .\Windows-da main.exe
 ```
 
-Agar sizning *main.rs* faylingiz "Salom, Olam!" dasturi bo'lsa, bu dastur
-ekranga "Salom, Olam!" matnini chop etadi.
+Agar sizning *main.rs* faylingiz “Hello, world!” dasturi bo'lsa, bu dastur
+ekranga `Hello, world!` matnini chop etadi.
 
-Agar siz Ruby, Python yoki JavaScript kabi dinamik tillar bilan tanish bo'lsangiz,
-siz dasturni kompilyatsiya qilish va bir necha qadamlarga bo'lish orqali ishga
-tushirmagan bo'lishingiz mumkin. Rust *yozish davomida kompilyatsiya qilinga* til,
-ya'ni siz Rust kodni yozib uni kompilyatsiya qilib, ishga tushiriluvchi faylni boshqa
-odamga jo'natsangiz, u kompyuterida Rust o'rnatilmagan holda dasturni ishga tushrish
-imkoniyatiga ega bo'ladi. Agar siz kimgadir *.rb*, *.py* yoki *.js* faylini uzatsangiz
-ular dasturni ishga tushirishi uchun Ruby, Python yoki JavaScript ishga tushiruvchilari
-o'rnatishlari zarur. Lekin bu tillarda dasturni kompilyatsiya qilish va ishga tushirish 
-uchun birgina buyruq yetarli bo'ladi.
+Agar siz Ruby, Python yoki JavaScript kabi dinamik tilni yaxshi bilsangiz, dasturni alohida bosqichlar sifatida kompilyatsiya qilish va ishga tushirishga odatlanmagan bo'lishingiz mumkin. Rust *yozish davomida kompilyatsiya qilinga* til,
+dasturni kompilyatsiya qiling va bajariladigan faylni boshqa birovga bering va ular Rustni o'rnatmasdan ham uni ishga tushirishlari mumkin.Agar siz kimgadir *.rb*, *.py* yoki *.js* faylini bersangiz, ularda Ruby, Python yoki JavaScript ilovasi oʻrnatilgan boʻlishi kerak (mos ravishda). Ammo bu tillarda dasturni kompilyatsiya qilish va ishga tushirish uchun faqat bitta buyruq kerak bo'ladi. Til dizaynida hamma narsa o'zaro kelishuvdir.
 
-Kichikroq dasturlarni `rustc` orqali kompilyatsiya qilish yaxshi, lekin sizni loyihangiz 
-kengaygani sari, siz ishga tushirish jarayonini osonlashtirishni xohlaysiz.
+Oddiy dasturlar uchun `rustc` bilan kompilyatsiya qilish juda mos keladi, lekin loyihangiz o'sib borishi bilan siz barcha variantlarni boshqarishni va kodingizni almashishni osonlashtirishni xohlaysiz.
 Endi, biz siz bilan haqiqiy Rust dasturlarini tuzishda qulaylik yaratuvchi
 Cargo yordamchisi bilan tanishamiz.
 
