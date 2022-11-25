@@ -73,22 +73,13 @@ fn main() {
 
 Cargo “Hello, world!” siz uchun dastur, xuddi biz Ro'yxat 1-1 da yozganimiz kabi! Hozircha, bizning loyihamiz va yaratilgan Cargo loyihasi o'rtasidagi farq shundaki, Cargo kodni *src* jildiga joylashtirgan va bizda yuqori jildda *Cargo.toml* konfiguratsiya fayli mavjud.
 
-Cargo expects your source files to live inside the *src* directory. The
-top-level project directory is just for README files, license information,
-configuration files, and anything else not related to your code. Using Cargo
-helps you organize your projects. There’s a place for everything, and
-everything is in its place.
+Cargo expects your source files to live inside the *src* directory. Yuqori darajadagi loyiha jildi faqat README fayllari, litsenziya maʼlumotlari, konfiguratsiya fayllari va kodingizga aloqador boʻlmagan boshqa narsalar uchun moʻljallangan. Cargo-dan foydalanish loyihalaringizni tartibga solishga yordam beradi. Hamma narsaning o'rni bor va hamma narsa o'z o'rnida.
 
-If you started a project that doesn’t use Cargo, as we did with the “Hello,
-world!” project, you can convert it to a project that does use Cargo. Move the
-project code into the *src* directory and create an appropriate *Cargo.toml*
-file.
+Agar siz “Hello, world!” bilan qilganimizdek, Cargo-dan foydalanmaydigan loyihani boshlagan bo'lsangiz, uni Cargo-dan foydalanadigan loyihaga aylantirishingiz mumkin. Loyiha kodini *src* jildiga o'tkazing va tegishli *Cargo.toml* faylini yarating.
 
-### Building and Running a Cargo Project
+### Cargo loyihasini qurish va ishga tushirish
 
-Now let’s look at what’s different when we build and run the “Hello, world!”
-program with Cargo! From your *hello_cargo* directory, build your project by
-entering the following command:
+Keling, “Hello, world!” ni qurish va ishga tushirishda nima farq qilishini ko'rib chiqaylik. Cargo bilan dasturni *hello_cargo* jildidan quyidagi buyruqni kiritish orqali loyihangizni quring:
 
 ```console
 $ cargo build
@@ -96,26 +87,16 @@ $ cargo build
     Finished dev [unoptimized + debuginfo] target(s) in 2.85 secs
 ```
 
-This command creates an executable file in *target/debug/hello_cargo* (or
-*target\debug\hello_cargo.exe* on Windows) rather than in your current
-directory. Because the default build is a debug build, Cargo puts the binary in
-a directory named *debug*. You can run the executable with this command:
+Ushbu buyruq bajariladigan faylni joriy jildingizda emas, balki *target/debug/hello_cargo* da (yoki Windowsda *target\debug\hello_cargo.exe*)da  yaratadi. Odatiy tuzilish debug tuzilishi bo'lgani uchun Cargo ikkilik faylni *debug* nomli jildga joylashtiradi. Ushbu buyruq bilan bajariladigan faylni ishga tushirishingiz mumkin:
 
 ```console
-$ ./target/debug/hello_cargo # or .\target\debug\hello_cargo.exe on Windows
+$ ./target/debug/hello_cargo # yoki .\target\debug\hello_cargo.exe Windowsda
 Hello, world!
 ```
 
-If all goes well, `Hello, world!` should print to the terminal. Running `cargo
-build` for the first time also causes Cargo to create a new file at the top
-level: *Cargo.lock*. This file keeps track of the exact versions of
-dependencies in your project. This project doesn’t have dependencies, so the
-file is a bit sparse. You won’t ever need to change this file manually; Cargo
-manages its contents for you.
+Agar hammasi yaxshi bo'lsa, `Hello, world!` terminalga chop etilishi kerak.`cargo build` ni birinchi marta ishga tushirish ham Cargoning yuqori darajadagi yangi faylni yaratishiga olib keladi: *Cargo.lock*. Ushbu fayl loyihangizdagi dependencylarning aniq versiyalarini kuzatib boradi. Ushbu loyihada dependencylar yo'q, shuning uchun faylda kod biroz kam. Siz hech qachon ushbu faylni qo'lda o'zgartirishingiz shart emas; Cargo uning tarkibini siz uchun boshqaradi.
 
-We just built a project with `cargo build` and ran it with
-`./target/debug/hello_cargo`, but we can also use `cargo run` to compile the
-code and then run the resultant executable all in one command:
+Biz hozirgina `cargo build` orqali loyihasini qurdik va uni `./target/debug/hello_cargo` bilan ishga tushirdik, lekin kodni kompilyatsiya qilish uchun `cargo run` dan ham foydalanishimiz va natijada bajariladigan faylni bitta buyruqda ishga tushirishimiz mumkin:
 
 ```console
 $ cargo run
@@ -124,12 +105,9 @@ $ cargo run
 Hello, world!
 ```
 
-Using `cargo run` is more convenient than having to remember to run `cargo
-build` and then use the whole path to the binary, so most developers use `cargo
-run`.
+`cargo run` dan foydalanish `cargo build` ni ishga tushirishdan ko'ra qulayroqdir va keyin ikkilik yo'lni to'liq ishlatadi, shuning uchun ko'pchilik ishlab chiquvchilar `cargo run` dan foydalanadilar.
 
-Notice that this time we didn’t see output indicating that Cargo was compiling
-`hello_cargo`. Cargo figured out that the files hadn’t changed, so it didn’t
+E'tibor bering, bu safar biz `Hello_cargo` ni kompilyatsiya qilayotganini ko'rsatadigan natijani ko'rmadik. Cargo figured out that the files hadn’t changed, so it didn’t
 rebuild but just ran the binary. If you had modified your source code, Cargo
 would have rebuilt the project before running it, and you would have seen this
 output:
