@@ -107,10 +107,7 @@ Hello, world!
 
 `cargo run` dan foydalanish `cargo build` ni ishga tushirishdan ko'ra qulayroqdir va keyin ikkilik yo'lni to'liq ishlatadi, shuning uchun ko'pchilik ishlab chiquvchilar `cargo run` dan foydalanadilar.
 
-E'tibor bering, bu safar biz `Hello_cargo` ni kompilyatsiya qilayotganini ko'rsatadigan natijani ko'rmadik. Cargo figured out that the files hadn’t changed, so it didn’t
-rebuild but just ran the binary. If you had modified your source code, Cargo
-would have rebuilt the project before running it, and you would have seen this
-output:
+E'tibor bering, bu safar biz `Hello_cargo` ni kompilyatsiya qilayotganini ko'rsatadigan natijani ko'rmadik. Cargo fayllar o'zgarmaganligini aniqladi, shuning uchun u qayta tiklanmadi, balki ikkilik faylni ishga tushirdi. Agar siz manba kodingizni o'zgartirgan bo'lsangiz, Cargo loyihani ishga tushirishdan oldin uni qayta build qilgan bo'lar edi va siz ushbu natijani ko'rgan bo'lar edingiz:
 
 ```console
 $ cargo run
@@ -120,8 +117,7 @@ $ cargo run
 Hello, world!
 ```
 
-Cargo also provides a command called `cargo check`. This command quickly checks
-your code to make sure it compiles but doesn’t produce an executable:
+Cargo shuningdek, `cargo check` deb nomlangan buyruqni taqdim etadi. Bu buyruq kompilyatsiya qilish uchun kodingizni tezda tekshiradi, lekin bajariladigan fayl yaratmaydi:
 
 ```console
 $ cargo check
@@ -129,29 +125,19 @@ $ cargo check
     Finished dev [unoptimized + debuginfo] target(s) in 0.32 secs
 ```
 
-Why would you not want an executable? Often, `cargo check` is much faster than
-`cargo build` because it skips the step of producing an executable. If you’re
-continually checking your work while writing the code, using `cargo check` will
-speed up the process of letting you know if your project is still compiling! As
-such, many Rustaceans run `cargo check` periodically as they write their
-program to make sure it compiles. Then they run `cargo build` when they’re
-ready to use the executable.
+Nima uchun bajariladigan faylni xohlamaysiz? Ko'pincha `cargo check` `cargo build`dan ko'ra tezroq bo'ladi,, chunki u bajariladigan faylni yaratish bosqichini o'tkazib yuboradi. Agar siz kod yozish paytida ishingizni doimiy ravishda tekshirayotgan bo'lsangiz, `cargo check` dan foydalanish loyihangiz hali ham kompilyatsiya qilinayotganligini bildirish jarayonini tezlashtiradi! Shunday qilib, ko'plab Rustaceanlar vaqti-vaqti bilan `cargo check` ni amalga oshiradilar, chunki ular o'z dasturlarini kompilyatsiya qilishiga ishonch hosil qilish uchun yozadilar. Keyin ular bajariladigan fayldan foydalanishga tayyor bo'lgach, `cargo build` ni ishga tushiradilar.
 
-Let’s recap what we’ve learned so far about Cargo:
+Cargo haqida shu paytgacha o'rganganlarimizni takrorlaymiz:
 
-* We can create a project using `cargo new`.
-* We can build a project using `cargo build`.
-* We can build and run a project in one step using `cargo run`.
-* We can build a project without producing a binary to check for errors using
-  `cargo check`.
-* Instead of saving the result of the build in the same directory as our code,
-  Cargo stores it in the *target/debug* directory.
+* Biz `cargo new` yordamida loyiha yaratamiz.
+* `cargo build` yordamida loyihani build qilishimi mumkin.
+* Biz `cargo run` yordamida bir bosqichda loyiha build qilishimiz va ishga tushirishimiz mumkin.
+* `cargo check` yordamida xatolarni tekshirish uchun binary  ishlab chiqarmasdan loyihani build qilishimiz mumkin.
+* Build natijasini bizning kodimiz bilan bir xil jildda saqlash o'rniga, Cargo uni *target/debug* jildida saqlaydi.
 
-An additional advantage of using Cargo is that the commands are the same no
-matter which operating system you’re working on. So, at this point, we’ll no
-longer provide specific instructions for Linux and macOS versus Windows.
+Cargo-dan foydalanishning qo'shimcha afzalligi shundaki, qaysi operatsion tizimda ishlayotganingizdan qat'i nazar, buyruqlar bir xil bo'ladi. Shunday qilib, biz endi Linux va MacOS uchun Windows-ga nisbatan maxsus ko'rsatmalar bermaymiz.
 
-### Building for Release
+### Loyihani Reliz qilish
 
 When your project is finally ready for release, you can use `cargo build
 --release` to compile it with optimizations. This command will create an
