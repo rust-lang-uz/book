@@ -139,28 +139,15 @@ Cargo-dan foydalanishning qo'shimcha afzalligi shundaki, qaysi operatsion tizimd
 
 ### Loyihani Reliz qilish
 
-When your project is finally ready for release, you can use `cargo build
---release` to compile it with optimizations. This command will create an
-executable in *target/release* instead of *target/debug*. The optimizations
-make your Rust code run faster, but turning them on lengthens the time it takes
-for your program to compile. This is why there are two different profiles: one
-for development, when you want to rebuild quickly and often, and another for
-building the final program you’ll give to a user that won’t be rebuilt
-repeatedly and that will run as fast as possible. If you’re benchmarking your
-code’s running time, be sure to run `cargo build --release` and benchmark with
-the executable in *target/release*.
+Loyihangiz nihoyat nashrga tayyor bo'lgach, uni optimallashtirish bilan kompilyatsiya qilish uchun `cargo build --release` dan foydalanishingiz mumkin. Ushbu buyruq *target/debug* o'rniga *target/release* da bajariladigan fayl yaratadi. Optimizatsiya Rust kodingizni tezroq ishga tushiradi, lekin bu kompilyatsiya vaqtini uzaytiradi. Shuning uchun ikkita turli profil mavjud: biri tez va tez-tez qayta tiklamoqchi bo'lganingizda ishlab chiqish uchun, ikkinchisi esa oxirgi dasturni yaratish uchun siz foydalanuvchiga qayta tiklanmaydigan va shu qadar tez ishlaydi. mumkin. Agar siz kodingizning ishlash vaqtini solishtirmoqchi bo'lsangiz, `cargo build --release` dasturini ishga tushiring va *target/release* da bajariladigan fayl bilan taqqoslang.
 
-### Cargo as Convention
+### Konventsiya sifatida Cargo
 
-With simple projects, Cargo doesn’t provide a lot of value over just using
-`rustc`, but it will prove its worth as your programs become more intricate.
+Oddiy loyihalar bilan Cargo `rustc` dan foydalanishdan ko'ra unchalik katta foyda keltirmaydi, ammo dasturlaringiz yanada murakkablashgani sayin u o'z qiymatini isbotlaydi.
 Once programs grow to multiple files or need a dependency, it’s much easier to
 let Cargo coordinate the build.
 
-Even though the `hello_cargo` project is simple, it now uses much of the real
-tooling you’ll use in the rest of your Rust career. In fact, to work on any
-existing projects, you can use the following commands to check out the code
-using Git, change to that project’s directory, and build:
+`hello_cargo` loyihasi oddiy bo'lsa ham, u endi Rust karyerangizning qolgan qismida foydalanadigan haqiqiy asboblarning ko'p qismini ishlatadi. Haqiqatan ham, mavjud loyihalar ustida ishlash uchun siz Git yordamida kodni tekshirish, ushbu loyiha jildiga oʻzgartirish va build qilish uchun quyidagi buyruqlardan foydalanishingiz mumkin:
 
 ```console
 $ git clone example.org/someproject
@@ -168,23 +155,20 @@ $ cd someproject
 $ cargo build
 ```
 
-For more information about Cargo, check out [its documentation][cargo].
+Cargo haqida ko'proq ma'lumot olish uchun uning [texnik hujjatlarini][cargo] tekshiring.
 
-## Summary
+## Xulosa
 
-You’re already off to a great start on your Rust journey! In this chapter,
-you’ve learned how to:
+Siz allaqachon Rust sayohatingizni ajoyib boshladingiz! Ushbu bobda siz quyidagilarni o'rgandingiz:
 
-* Install the latest stable version of Rust using `rustup`
-* Update to a newer Rust version
-* Open locally installed documentation
-* Write and run a “Hello, world!” program using `rustc` directly
-* Create and run a new project using the conventions of Cargo
+* Rust-ning so'nggi barqaror versiyasini `rustup` yordamida o'rnatish
+* Rustning yangi versiyasiga yangilash
+* Mahalliy o'rnatilgan texnik hujjatlarni ochish
+* “Hello, world!” deb yozing va ishga tushiring. to'g'ridan-to'g'ri `rustc` dan foydalangan holda dastur
+* Cargo konventsiyalaridan foydalangan holda yangi loyiha yaratish va ishga tushirish
 
-This is a great time to build a more substantial program to get used to reading
-and writing Rust code. So, in Chapter 2, we’ll build a guessing game program.
-If you would rather start by learning how common programming concepts work in
-Rust, see Chapter 3 and then return to Chapter 2.
+Bu Rust kodini o'qish va yozishga odatlanish uchun yanada muhimroq dastur yaratish uchun ajoyib vaqt. Shunday qilib, 2-bobda biz taxminiy o'yin dasturini tuzamiz.
+Agar siz Rust-da umumiy dasturlash tushunchalari qanday ishlashini o'rganishni afzal ko'rsangiz, 3-bobga qarang va keyin 2-bobga qayting.
 
 [installation]: ch01-01-installation.html#installation
 [toml]: https://toml.io
