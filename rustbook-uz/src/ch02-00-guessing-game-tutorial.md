@@ -1,33 +1,21 @@
-# Programming a Guessing Game
+# Guessing o'yinini dasturlash
 
-Let’s jump into Rust by working through a hands-on project together! This
-chapter introduces you to a few common Rust concepts by showing you how to use
-them in a real program. You’ll learn about `let`, `match`, methods, associated
-functions, external crates, and more! In the following chapters, we’ll explore
-these ideas in more detail. In this chapter, you’ll just practice the
-fundamentals.
+Keling, birgalikda amaliy loyiha orqali Rustga o'taylik! Ushbu bob sizni bir nechta umumiy Rust tushunchalari bilan tanishtirib, ulardan haqiqiy dasturda qanday foydalanishni ko'rsatib beradi.  Siz `let`, `match`, usullari, bog'langan funksiyalar, external cratelardan foydalanish va boshqalar haqida bilib olasiz! Keyingi boblarda biz ushbu fikrlarni batafsilroq ko'rib chiqamiz. Ushbu bobda siz faqat asoslarni mashq qilasiz.
 
-We’ll implement a classic beginner programming problem: a guessing game. Here’s
-how it works: the program will generate a random integer between 1 and 100. It
-will then prompt the player to enter a guess. After a guess is entered, the
-program will indicate whether the guess is too low or too high. If the guess is
-correct, the game will print a congratulatory message and exit.
+Biz klassik boshlang'ich dasturlash muammosini amalga oshiramiz: taxmin qilish o'yini. Bu qanday ishlaydi: dastur 1 dan 100 gacha tasodifiy butun son hosil qiladi. Keyin u o'yinchini taxmin qilishni taklif qiladi.Tahmin kiritilgandan so'ng, dastur taxmin kichik yoki katta ekanligini ko'rsatadi. IAgar taxmin to'g'ri bo'lsa, o'yin tabrik xabarini chop etadi va chiqadi.
 
-## Setting Up a New Project
+## Yangi loyiha yaratish
 
-To set up a new project, go to the *projects* directory that you created in
-Chapter 1 and make a new project using Cargo, like so:
+Yangi loyihani o'rnatish uchun 1-bobda yaratgan *projects* jildiga o'ting va Cargo-dan foydalanib yangi loyiha yarating, masalan:
 
 ```console
 $ cargo new guessing_game
 $ cd guessing_game
 ```
 
-The first command, `cargo new`, takes the name of the project (`guessing_game`)
-as the first argument. The second command changes to the new project’s
-directory.
+Birinchi `cargo new` buyrug'i birinchi argument sifatida loyiha nomini (`guessing_game`)ni oladi. Ikkinchi buyruq yangi loyiha jildiga kiradi.
 
-Look at the generated *Cargo.toml* file:
+Yaratilgan *Cargo.toml* fayliga qarang:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial
@@ -38,33 +26,29 @@ cargo run > output.txt 2>&1
 cd ../../..
 -->
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Fayl nomi: Cargo.toml</span>
 
 ```toml
 {{#include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/Cargo.toml}}
 ```
 
-As you saw in Chapter 1, `cargo new` generates a “Hello, world!” program for
-you. Check out the *src/main.rs* file:
+1-bobda ko'rganingizdek, `cargo new` “Hello, world!”  so'zini yaratadi. siz uchun dastur. *src/main.rs* faylini tekshiring:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/src/main.rs}}
 ```
 
-Now let’s compile this “Hello, world!” program and run it in the same step
-using the `cargo run` command:
+Keling, ushbu "Hello, world!" dasturni yarating va cargo run buyrug'i yordamida ishga tushiring :
 
 ```console
 {{#include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/output.txt}}
 ```
 
-The `run` command comes in handy when you need to rapidly iterate on a project,
-as we’ll do in this game, quickly testing each iteration before moving on to
-the next one.
+`run` buyrug‘i loyihani tezda takrorlash kerak bo‘lganda foydali bo‘ladi, biz bu o‘yinda qilganimizdek, keyingisiga o‘tishdan oldin har bir iteratsiyani tezda sinab ko‘ramiz.
 
-Reopen the *src/main.rs* file. You’ll be writing all the code in this file.
+*src/main.rs* faylini qayta oching. Siz ushbu fayldagi barcha kodlarni yozasiz.
 
 ## Processing a Guess
 
