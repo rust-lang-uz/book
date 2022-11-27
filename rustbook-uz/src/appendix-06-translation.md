@@ -1,7 +1,6 @@
-## Appendix F: Translations of the Book
+## Ilova F: Kitobning tarjimalari
 
-For resources in languages other than English. Most are still in progress; see
-[the Translations label][label] to help or let us know about a new translation!
+Ingliz tilidan boshqa tillardagi manbalar uchun.Ko'pchilik hali ham davom etmoqda; yordam berish yoki yangi tarjima haqida bizga xabar berish uchun [Tarjimalar yorlig‘iga][label] qarang!
 
 [label]: https://github.com/rust-lang/book/issues?q=is%3Aopen+is%3Aissue+label%3ATranslations
 
@@ -27,3 +26,4 @@ For resources in languages other than English. Most are still in progress; see
 - [हिंदी](https://github.com/venkatarun95/rust-book-hindi)
 - [ไทย](https://github.com/rust-lang-th/book-th)
 - [Danske](https://github.com/DanKHansen/book-dk)
+- [O'zbek](https://github.com/rust-lang-uz/i10n)
