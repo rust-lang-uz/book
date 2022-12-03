@@ -29,7 +29,14 @@ cd ../../..
 <span class="filename">Fayl nomi: Cargo.toml</span>
 
 ```toml
-{{#include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/Cargo.toml}}
+[package]
+name = "guessing_game"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
 ```
 
 1-bobda ko'rganingizdek, `cargo new` “Hello, world!”  so'zini yaratadi. siz uchun dastur. *src/main.rs* faylini tekshiring:
@@ -37,13 +44,19 @@ cd ../../..
 <span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/src/main.rs}}
+fn main() {
+    println!("Hello, world!");
+}
 ```
 
 Keling, ushbu "Hello, world!" dasturni yarating va cargo run buyrug'i yordamida ishga tushiring :
 
 ```console
-{{#include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/output.txt}}
+$ cargo run
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished dev [unoptimized + debuginfo] target(s) in 1.50s
+     Running `target/debug/guessing_game`
+Hello, world!
 ```
 
 `run` buyrug‘i loyihani tezda takrorlash kerak bo‘lganda foydali bo‘ladi, biz bu o‘yinda qilganimizdek, keyingisiga o‘tishdan oldin har bir iteratsiyani tezda sinab ko‘ramiz.
@@ -57,7 +70,21 @@ Taxmin qilish o'yini dasturining birinchi qismi foydalanuvchi kiritishini so'ray
 <span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:all}}
+use std::io;
+
+fn main() {
+    println!("Raqamni topish o'yini!");
+
+    println!("Iltimos, taxminingizni kiriting.");
+
+    let mut taxmin = String::new();
+
+    io::stdin()
+        .read_line(&mut taxmin)
+        .expect("Satrni o‘qib bo‘lmadi");
+
+    println!("Sizni taxminingiz: {guess}");
+}
 ```
 
 <span class="caption">Ro'yxat 2-1: Foydalanuvchi tomonidan taxmin qilinadigan va uni chop etadigan kod</span>
@@ -65,7 +92,7 @@ Taxmin qilish o'yini dasturining birinchi qismi foydalanuvchi kiritishini so'ray
 Ushbu kod juda ko'p ma'lumotlarni o'z ichiga oladi, shuning uchun uni satrga o'tkazamiz. Foydalanuvchi kiritishini olish va natijani chiqish sifatida chop etish uchun biz `io` kirish/chiqish kutubxonasini qamrab olishimiz kerak. `io` kutubxonasi `std` deb nomlanuvchi standart kutubxonadan keladi:
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:io}}
+use std::io;
 ```
 
 Odatda, Rust standart kutubxonada belgilangan elementlar to'plamiga ega bo'lib, u har bir dastur doirasiga kiradi. Ushbu to'plam *prelude* deb ataladi va siz undagi hamma narsani [standart kutubxona texnik hujjatlarida][prelude] ko'rishingiz mumkin.
@@ -75,7 +102,7 @@ Agar siz foydalanmoqchi bo'lgan tur muqaddimada bo'lmasa, siz ushbu turni `use` 
 1-bobda ko'rganingizdek, `main` funksiya dasturga kirish nuqtasidir:
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:main}}
+fn main() {
 ```
 
 The `fn` syntax declares a new function; the parentheses, `()`, indicate there
