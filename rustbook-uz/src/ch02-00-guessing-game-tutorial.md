@@ -50,42 +50,29 @@ Keling, ushbu "Hello, world!" dasturni yarating va cargo run buyrug'i yordamida 
 
 *src/main.rs* faylini qayta oching. Siz ushbu fayldagi barcha kodlarni yozasiz.
 
-## Processing a Guess
+## Guessga o'yiniga ishlov berish
 
-The first part of the guessing game program will ask for user input, process
-that input, and check that the input is in the expected form. To start, we’ll
-allow the player to input a guess. Enter the code in Listing 2-1 into
-*src/main.rs*.
+Taxmin qilish o'yini dasturining birinchi qismi foydalanuvchi kiritishini so'raydi, ushbu kiritishni qayta ishlaydi va kirish kutilgan shaklda ekanligini tekshiradi. Boshlash uchun biz o'yinchiga taxmin kiritishga ruxsat beramiz. 2-1 ro'yxatdagi kodni *src/main.rs* ichiga kiriting.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:all}}
 ```
 
-<span class="caption">Listing 2-1: Code that gets a guess from the user and
-prints it</span>
+<span class="caption">Ro'yxat 2-1: Foydalanuvchi tomonidan taxmin qilinadigan va uni chop etadigan kod</span>
 
-This code contains a lot of information, so let’s go over it line by line. To
-obtain user input and then print the result as output, we need to bring the
-`io` input/output library into scope. The `io` library comes from the standard
-library, known as `std`:
+Ushbu kod juda ko'p ma'lumotlarni o'z ichiga oladi, shuning uchun uni satrga o'tkazamiz. Foydalanuvchi kiritishini olish va natijani chiqish sifatida chop etish uchun biz `io` kirish/chiqish kutubxonasini qamrab olishimiz kerak. `io` kutubxonasi `std` deb nomlanuvchi standart kutubxonadan keladi:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:io}}
 ```
 
-By default, Rust has a set of items defined in the standard library that it
-brings into the scope of every program. This set is called the *prelude*, and
-you can see everything in it [in the standard library documentation][prelude].
+Odatda, Rust standart kutubxonada belgilangan elementlar to'plamiga ega bo'lib, u har bir dastur doirasiga kiradi. Ushbu to'plam *prelude* deb ataladi va siz undagi hamma narsani [standart kutubxona texnik hujjatlarida][prelude] ko'rishingiz mumkin.
 
-If a type you want to use isn’t in the prelude, you have to bring that type
-into scope explicitly with a `use` statement. Using the `std::io` library
-provides you with a number of useful features, including the ability to accept
-user input.
+Agar siz foydalanmoqchi bo'lgan tur muqaddimada bo'lmasa, siz ushbu turni `use` iborasi bilan aniq kiritishingiz kerak. `std::io` kutubxonasidan foydalanish sizga bir qator foydali xususiyatlarni, jumladan, foydalanuvchi kiritishini qabul qilish imkoniyatini beradi.
 
-As you saw in Chapter 1, the `main` function is the entry point into the
-program:
+1-bobda ko'rganingizdek, `main` funksiya dasturga kirish nuqtasidir:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:main}}
