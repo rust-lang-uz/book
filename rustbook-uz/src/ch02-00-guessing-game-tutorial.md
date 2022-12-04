@@ -145,64 +145,40 @@ let mut bananlar = 5; // o'zgaruvchan
 Taxmin qilish o'yin dasturiga qaytsak, endi bilasizki, `let mut taxmin` `taxmin` nomli o'zgaruvchan o'zgaruvchini kiritadi. Teng belgisi (`=`) Rustga biz hozir biror narsani oʻzgaruvchiga bogʻlamoqchi ekanligimizni bildiradi. Tenglik belgisining o'ng tomonida `taxmin` bog'langan qiymat joylashgan bo'lib, u `String::new` funksiyasini chaqirish natijasidir, bu `String`ning yangi nusxasini qaytaradi.
 [String][string]<!-- ignore --> standart kutubxona tomonidan taqdim etilgan satr turi bo'lib, u rivojlantirib boriladigan, UTF-8 kodlangan matn bitidir.
 
-`::new` qatoridagi `::` sintaksisi `new` `String` tipidagi bog`langan funksiya ekanligini bildiradi. An *associated function* is a function that’s
-implemented on a type, in this case `String`. This `new` function creates a
-new, empty string. You’ll find a `new` function on many types because it’s a
-common name for a function that makes a new value of some kind.
+`::new` qatoridagi `::` sintaksisi `new` `String` tipidagi bog`langan funksiya ekanligini bildiradi. *Assosiatsiyalangan funksiya* bu funksiya
+turida amalga oshiriladi, bu holda `String`. Ushbu `new` funksiya yangi, bo'sh qatorni yaratadi. Siz ko'p turdagi `new` funksiyani topasiz, chunki u qandaydir yangi qiymatni yaratadigan funksiyaning umumiy nomi.
 
-In full, the `let mut guess = String::new();` line has created a mutable
-variable that is currently bound to a new, empty instance of a `String`. Whew!
+To'liq `let mut taxmin = String::new();` qatori hozirda `String` ning yangi, bo'sh nusxasiga bog'langan o'zgaruvchan o'zgaruvchini yaratadi.
 
-### Receiving User Input
+### Foydalanuvchi ma'lumotlarini qabul qilish
 
-Recall that we included the input/output functionality from the standard
-library with `use std::io;` on the first line of the program. Now we’ll call
-the `stdin` function from the `io` module, which will allow us to handle user
-input:
+Eslatib o'tamiz, biz dasturning birinchi qatoriga `use std::io;` bilan standart kutubxonadan kiritish/chiqarish funksiyasini kiritgan edik. Endi biz `io` modulidan `stdin` funksiyasini chaqiramiz, bu bizga foydalanuvchi kiritishini boshqarish imkonini beradi:
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:read}}
+    io::stdin()
+        .read_line(&mut taxmin)
 ```
 
-If we hadn’t imported the `io` library with `use std::io;` at the beginning of
-the program, we could still use the function by writing this function call as
-`std::io::stdin`. The `stdin` function returns an instance of
-[`std::io::Stdin`][iostdin]<!-- ignore -->, which is a type that represents a
-handle to the standard input for your terminal.
+Agar biz dasturning boshida `use std::io;` bilan `io` kutubxonasini import qilmagan bo'lsak, biz ushbu funktsiya chaqiruvini `std::io::stdin` sifatida yozish orqali funksiyadan foydalanishimiz xam mumkin. `stdin` funksiyasi [`std::io::Stdin`][iostdin]<!-- ignore --> misolini qaytaradi, bu sizning terminalingiz uchun standart kirish uchun asosni ifodalovchi tur.
 
-Next, the line `.read_line(&mut guess)` calls the [`read_line`][read_line]<!--
-ignore --> method on the standard input handle to get input from the user.
-We’re also passing `&mut guess` as the argument to `read_line` to tell it what
-string to store the user input in. The full job of `read_line` is to take
-whatever the user types into standard input and append that into a string
-(without overwriting its contents), so we therefore pass that string as an
-argument. The string argument needs to be mutable so the method can change the
-string’s content.
+Keyinchalik, `.read_line(&mut guess)` qatori foydalanuvchidan ma'lumot olish uchun standart kiritish nuqtasidagi [`read_line`][read_line]<!--
+ignore --> usulini chaqiradi.
+Shuningdek, foydalanuvchi kiritgan maʼlumotlarni qaysi qatorda saqlash kerakligini aytish uchun `read_line` ga argument sifatida `&mut taxmin` ni oʻtkazamiz. `read_line` ning toʻliq vazifasi foydalanuvchi nima yozganidan qatʼiy nazar standart kiritishga olish va uni satrga qoʻshishdir (uning mazmunini qayta yozmasdan), shuning uchun biz bu qatorni argument sifatida beramiz. String argumenti o'zgaruvchan bo'lishi kerak, shuning uchun usul string tarkibini o'zgartirishi mumkin.
 
-The `&` indicates that this argument is a *reference*, which gives you a way to
-let multiple parts of your code access one piece of data without needing to
-copy that data into memory multiple times. References are a complex feature,
-and one of Rust’s major advantages is how safe and easy it is to use
-references. You don’t need to know a lot of those details to finish this
-program. For now, all you need to know is that, like variables, references are
-immutable by default. Hence, you need to write `&mut guess` rather than
-`&guess` to make it mutable. (Chapter 4 will explain references more
-thoroughly.)
+`&` bu argumentning *ma'lumotnoma* ekanligini bildiradi, bu sizga kodingizning bir nechta qismlariga ushbu ma'lumotni xotiraga bir necha marta nusxalash kerak bo'lmasdan bitta ma'lumotga kirish imkonini beradi. Ma'lumotnomalar murakkab xususiyat bo'lib, Rustning asosiy afzalliklaridan biri havolalardan foydalanish qanchalik xavfsiz va oson ekanligidir. Ushbu dasturni tugatish uchun ko'p bilimlrga ega bo'lishingiz shart emas. Hozircha siz bilishingiz kerak bo'lgan narsa shundaki, o'zgaruvchilar singari, havolalar ham standard bo'yicha o'zgarmasdir. Demak, uni oʻzgaruvchan qilish uchun `&taxmin` oʻrniga `&mut taxmin` yozish kerak. (4-bobda havolalar ko'proq va yaxshiroq tushuntiriladi)
 
 <!-- Old heading. Do not remove or links may break. -->
 <a id="handling-potential-failure-with-the-result-type"></a>
 
-### Handling Potential Failure with `Result`
+### Potensial nosozlikni `Result` turi bilan hal qilish
 
-We’re still working on this line of code. We’re now discussing a third line of
-text, but note that it’s still part of a single logical line of code. The next
-part is this method:
+Biz hali ham ushbu kod qatori ustida ishlayapmiz. Biz hozir matnning uchinchi qatorini muhokama qilmoqdamiz, lekin u hali ham bitta mantiqiy kod qatorining bir qismi ekanligini unutmang. Keyingi qism bu method:
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:expect}}
+        .expect("Satrni o‘qib bo‘lmadi");
 ```
 
-We could have written this code as:
+Biz ushbu kodni quyidagicha yozishimiz mumkin edi:
 
 ```rust,ignore
 io::stdin().read_line(&mut guess).expect("Failed to read line");
