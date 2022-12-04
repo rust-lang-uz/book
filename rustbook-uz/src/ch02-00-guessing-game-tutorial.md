@@ -105,60 +105,47 @@ Agar siz foydalanmoqchi bo'lgan tur muqaddimada bo'lmasa, siz ushbu turni `use` 
 fn main() {
 ```
 
-The `fn` syntax declares a new function; the parentheses, `()`, indicate there
-are no parameters; and the curly bracket, `{`, starts the body of the function.
+`fn` sintaksisi yangi funktsiyani e'lon qiladi; Qavslar, `()`, hech qanday parametr yo'qligini bildiradi; va jingalak qavs, `{`, funksiyaning asosiy qismini boshlaydi.
 
-As you also learned in Chapter 1, `println!` is a macro that prints a string to
-the screen:
+1-bobda ham bilib olganingizdek, `println!` bu ekranga satrni chop etuvchi makros:
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:print}}
+    println!("Raqamni topish o'yini!");
+
+    println!("Iltimos, taxminingizni kiriting.");
 ```
 
-This code is printing a prompt stating what the game is and requesting input
-from the user.
+Ushbu kod o'yin nima ekanligini ko'rsatuvchi va foydalanuvchidan ma'lumot so'rashni so'rashni chop etadi.
 
-### Storing Values with Variables
+### O'zgaruvchilar bilan qiymatlarni saqlash
 
-Next, we’ll create a *variable* to store the user input, like this:
+Keyinchalik, foydalanuvchi ma'lumotlarini saqlash uchun *o'zgaruvchi* yaratamiz, masalan:
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:string}}
+    let mut taxmin = String::new();
 ```
 
-Now the program is getting interesting! There’s a lot going on in this little
-line. We use the `let` statement to create the variable. Here’s another example:
+Endi dastur qiziqarli bo'lib bormoqda! Bu kichik satrda juda ko'p narsa bor. O'zgaruvchini yaratish uchun `let` iborasidan foydalanamiz. Mana yana bir misol:
 
 ```rust,ignore
-let apples = 5;
+let olmalar = 5;
 ```
 
-This line creates a new variable named `apples` and binds it to the value 5. In
-Rust, variables are immutable by default, meaning once we give the variable a
-value, the value won’t change. We’ll be discussing this concept in detail in
-the [“Variables and Mutability”][variables-and-mutability]<!-- ignore -->
-section in Chapter 3. To make a variable mutable, we add `mut` before the
-variable name:
+Bu qator `olmalar` nomli yangi o‘zgaruvchini yaratadi va uni 5 qiymatiga bog‘laydi. Rustda o'zgaruvchilar standard bo'yicha o'zgarmasdir, ya'ni o'zgaruvchiga qiymat berganimizdan keyin qiymat o'zgarmaydi.Biz ushbu kontseptsiyani 3-bobdagi [”O'zgaruvchilar va O'zgaruvchanlik”][variables-and-mutability]<!-- ignore --> bo'limida batafsil muhokama qilamiz. Oʻzgaruvchini oʻzgaruvchan qilish uchun oʻzgaruvchi nomidan oldin `mut` qoʻshamiz:
 
 ```rust,ignore
-let apples = 5; // immutable
-let mut bananas = 5; // mutable
+let olmalar = 5; // o'zgarmas
+let mut bananlar = 5; // o'zgaruvchan
 ```
 
-> Note: The `//` syntax starts a comment that continues until the end of the
-> line. Rust ignores everything in comments. We’ll discuss comments in more
-> detail in [Chapter 3][comments]<!-- ignore -->.
+> Eslatma: `//` sintaksisi satr oxirigacha davom etadigan izohni
+> boshlaydi. Rust izohlarda hamma narsani e'tiborsiz qoldiradi.
+> Izohlarni [3-bobda][comments]<!-- ignore --> batafsilroq muhokama qilamiz.
 
-Returning to the guessing game program, you now know that `let mut guess` will
-introduce a mutable variable named `guess`. The equal sign (`=`) tells Rust we
-want to bind something to the variable now. On the right of the equal sign is
-the value that `guess` is bound to, which is the result of calling
-`String::new`, a function that returns a new instance of a `String`.
-[`String`][string]<!-- ignore --> is a string type provided by the standard
-library that is a growable, UTF-8 encoded bit of text.
+Taxmin qilish o'yin dasturiga qaytsak, endi bilasizki, `let mut taxmin` `taxmin` nomli o'zgaruvchan o'zgaruvchini kiritadi. Teng belgisi (`=`) Rustga biz hozir biror narsani oʻzgaruvchiga bogʻlamoqchi ekanligimizni bildiradi. Tenglik belgisining o'ng tomonida `taxmin` bog'langan qiymat joylashgan bo'lib, u `String::new` funksiyasini chaqirish natijasidir, bu `String`ning yangi nusxasini qaytaradi.
+[String][string]<!-- ignore --> standart kutubxona tomonidan taqdim etilgan satr turi bo'lib, u rivojlantirib boriladigan, UTF-8 kodlangan matn bitidir.
 
-The `::` syntax in the `::new` line indicates that `new` is an associated
-function of the `String` type. An *associated function* is a function that’s
+`::new` qatoridagi `::` sintaksisi `new` `String` tipidagi bog`langan funksiya ekanligini bildiradi. An *associated function* is a function that’s
 implemented on a type, in this case `String`. This `new` function creates a
 new, empty string. You’ll find a `new` function on many types because it’s a
 common name for a function that makes a new value of some kind.
