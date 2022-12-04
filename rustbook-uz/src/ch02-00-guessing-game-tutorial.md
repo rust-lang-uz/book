@@ -181,42 +181,39 @@ Biz hali ham ushbu kod qatori ustida ishlayapmiz. Biz hozir matnning uchinchi qa
 Biz ushbu kodni quyidagicha yozishimiz mumkin edi:
 
 ```rust,ignore
-io::stdin().read_line(&mut guess).expect("Failed to read line");
+io::stdin().read_line(&mut taxmin).expect("Satrni o‘qib bo‘lmadi");
 ```
 
-However, one long line is difficult to read, so it’s best to divide it. It’s
-often wise to introduce a newline and other whitespace to help break up long
-lines when you call a method with the `.method_name()` syntax. Now let’s
-discuss what this line does.
+Biroq, bitta uzun qatorni o'qish qiyin, shuning uchun uni bo'lish yaxshidir. `.method_name()` sintaksisi bilan methodni chaqirganda uzun qatorlarni ajratishga yordam berish uchun yangi qator va boshqa bo'shliqlarni kiritish ko'pincha oqilona. Endi bu kod nima qilishini muhokama qilaylik.
 
-As mentioned earlier, `read_line` puts whatever the user enters into the string
-we pass to it, but it also returns a `Result` value. [`Result`][result]<!--
-ignore --> is an [*enumeration*][enums]<!-- ignore -->, often called an *enum*,
-which is a type that can be in one of multiple possible states. We call each
-possible state a *variant*.
+Yuqorida aytib o'tilganidek, `read_line` foydalanuvchi kiritgan narsani biz unga o'tkazadigan qatorga qo'yadi, lekin u `Result` qiymatini ham qaytaradi. [`Result`][result]<!-- ignore --> - ko'pincha *enum* deb ataladigan [*enumeration*][enums]<!-- ignore -->, bu bir nechta mumkin bo'lgan holatlardan birida bo'lishi mumkin bo'lgan tur. Har bir mumkin bo'lgan holatni *variant* deb ataymiz.
 
-[Chapter 6][enums]<!-- ignore --> will cover enums in more detail. The purpose
-of these `Result` types is to encode error-handling information.
+[6-bobda][enums]<!-- ignore --> enumlar batafsilroq yoritiladi. Ushbu `Result` turlarining maqsadi xatolarni qayta ishlash ma'lumotlarini kodlashdir.
 
-`Result`’s variants are `Ok` and `Err`. The `Ok` variant indicates the
-operation was successful, and inside `Ok` is the successfully generated value.
-The `Err` variant means the operation failed, and `Err` contains information
-about how or why the operation failed.
+`Result` variantlari `Ok` va `Err`. `Ok` varianti operatsiya muvaffaqiyatli bo'lganligini bildiradi va `Ok` ichida muvaffaqiyatli yaratilgan qiymat.
+`Err` varianti operatsiya bajarilmaganligini bildiradi va `Err` operatsiya qanday yoki nima uchun bajarilmagani haqida maʼlumotni oʻz ichiga oladi.
 
-Values of the `Result` type, like values of any type, have methods defined on
-them. An instance of `Result` has an [`expect` method][expect]<!-- ignore -->
-that you can call. If this instance of `Result` is an `Err` value, `expect`
-will cause the program to crash and display the message that you passed as an
-argument to `expect`. If the `read_line` method returns an `Err`, it would
-likely be the result of an error coming from the underlying operating system.
-If this instance of `Result` is an `Ok` value, `expect` will take the return
-value that `Ok` is holding and return just that value to you so you can use it.
-In this case, that value is the number of bytes in the user’s input.
+`Result` turidagi qiymatlar, har qanday turdagi qiymatlar kabi, ularda aniqlangan usullarga ega. `Result` misolida siz murojat qilishingiz mumkin bo'lgan [`expect` methodi][expect]<!-- ignore --> mavjud. Agar `Result` ning ushbu namunasi `Err` qiymati bo'lsa, `expect` dasturning ishlamay qolishiga olib keladi va `expect` ga argument sifatida siz uzatgan xabarni ko'rsatadi. Agar `read_line` usuli `Err`ni qaytarsa, bu asosiy operatsion tizimdan kelgan xato natijasi bo'lishi mumkin.
 
-If you don’t call `expect`, the program will compile, but you’ll get a warning:
+Agar `Result`ning ushbu namunasi `Ok` qiymati bo‘lsa, `expect` `Ok` ushlab turgan qaytarish qiymatini oladi va siz undan foydalanishingiz uchun aynan shu qiymatni sizga qaytaradi.
+Bunday holda, bu qiymat foydalanuvchi kiritishidagi baytlar soni.
+
+Agar siz `expect` ga murojat qilmasangiz, dastur kompilyatsiya qilinadi, lekin siz ogohlantirish olasiz:
 
 ```console
-{{#include ../listings/ch02-guessing-game-tutorial/no-listing-02-without-expect/output.txt}}
+$ cargo build
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+warning: unused `Result` that must be used
+  --> src/main.rs:10:5
+   |
+10 |     io::stdin().read_line(&taxmin guess);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_must_use)]` on by default
+   = note: this `Result` may be an `Err` variant, which should be handled
+
+warning: `guessing_game` (bin "guessing_game") generated 1 warning
+    Finished dev [unoptimized + debuginfo] target(s) in 0.59s
 ```
 
 Rust warns that you haven’t used the `Result` value returned from `read_line`,
