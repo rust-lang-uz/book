@@ -266,19 +266,11 @@ Shu nuqtada, o'yinning birinchi qismi tugadi: biz klaviaturadan ma'lumotlarni ol
 
 Keyinchalik, foydalanuvchi taxmin qilishga harakat qiladigan maxfiy raqamni yaratishimiz kerak. Yashirin raqam har safar boshqacha bo'lishi kerak, shuning uchun o'yinni bir necha marta o'ynash qiziqarli bo'ladi. O'yin juda qiyin bo'lmasligi uchun biz 1 dan 100 gacha bo'lgan tasodifiy raqamdan foydalanamiz. Rust hali o'zining standart kutubxonasida tasodifiy raqamlar funksiyasini o'z ichiga olmaydi. Biroq, Rust jamoasi ushbu funksiyaga [`rand` crate][randcrate]i taqdim etadi.
 
-### Using a Crate to Get More Functionality
+### Ko'proq funksionallikka ega bo'lish uchun Cratedan foydalanish
 
-Remember that a crate is a collection of Rust source code files. The project
-we’ve been building is a *binary crate*, which is an executable. The `rand`
-crate is a *library crate*, which contains code that is intended to be used in
-other programs and can’t be executed on its own.
+Esda tutingki, crate Rust manba kodi fayllari to'plamidir. Biz qurayotgan loyiha *binary crate* bo'lib, u bajariladigan. `rand` crate boshqa dasturlarda foydalanish uchun moʻljallangan va mustaqil ravishda bajarib boʻlmaydigan kodni oʻz ichiga olgan *library crate*.
 
-Cargo’s coordination of external crates is where Cargo really shines. Before we
-can write code that uses `rand`, we need to modify the *Cargo.toml* file to
-include the `rand` crate as a dependency. Open that file now and add the
-following line to the bottom, beneath the `[dependencies]` section header that
-Cargo created for you. Be sure to specify `rand` exactly as we have here, with
-this version number, or the code examples in this tutorial may not work:
+Cargning tashqi cratelarni muvofiqlashtirishi bu erda Cargp haqiqatan ham ishlaydi. `rand` dan foydalanadigan kodni yozishdan oldin, biz *Cargo.toml* faylini `rand` cratesini dependency sifatida qo‘shish uchun o‘zgartirishimiz kerak. Hozir o‘sha faylni oching va Cargo siz uchun yaratgan`[dependencies]` bo‘limi sarlavhasi ostiga quyidagi qatorni qo‘shing.`rand` ni aynan bizda boʻlganidek, ushbu versiya raqami bilan belgilaganingizga ishonch hosil qiling, aks holda ushbu qoʻllanmadagi kod misollari ishlamasligi mumkin:
 
 <!-- When updating the version of `rand` used, also update the version of
 `rand` used in these files so they all match:
@@ -286,29 +278,17 @@ this version number, or the code examples in this tutorial may not work:
 * ch14-03-cargo-workspaces.md
 -->
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Fayl nomi: Cargo.toml</span>
 
 ```toml
-{{#include ../listings/ch02-guessing-game-tutorial/listing-02-02/Cargo.toml:8:}}
+rand = "0.8.3"
 ```
 
-In the *Cargo.toml* file, everything that follows a header is part of that
-section that continues until another section starts. In `[dependencies]` you
-tell Cargo which external crates your project depends on and which versions of
-those crates you require. In this case, we specify the `rand` crate with the
-semantic version specifier `0.8.5`. Cargo understands [Semantic
-Versioning][semver]<!-- ignore --> (sometimes called *SemVer*), which is a
-standard for writing version numbers. The specifier `0.8.5` is actually
-shorthand for `^0.8.5`, which means any version that is at least 0.8.5 but
-below 0.9.0.
+*Cargo.toml* faylida sarlavhadan keyingi hamma narsa boshqa bo'lim boshlanmaguncha davom etadigan bo'limning bir qismidir. `[dependencies]` da siz Cargo loyihangiz qaysi tashqi cratelarga bog'liqligini va bu cratelarning qaysi versiyalari kerakligini aytasiz. Bunday holda, biz `rand` crateni `0.8.5` semantik versiya spetsifikatsiyasi bilan belgilaymiz. Cargo versiya raqamlarini yozish uchun standart bo'lgan [Semantic Versioning][semver]<!-- ignore -->ni (ba'zan *SemVer* deb ataladi) tushunadi. `0.8.5` spetsifikatsiyasi aslida `^0.8.5` ning qisqartmasi boʻlib, kamida 0.8.5, lekin 0.9.0 dan past boʻlgan har qanday versiyani bildiradi.
 
-Cargo considers these versions to have public APIs compatible with version
-0.8.5, and this specification ensures you’ll get the latest patch release that
-will still compile with the code in this chapter. Any version 0.9.0 or greater
-is not guaranteed to have the same API as what the following examples use.
+Cargo ushbu versiyalarni 0.8.5 versiyasiga mos keladigan umumiy API-larga ega deb hisoblaydi va bu spetsifikatsiya sizga ushbu bobdagi kod bilan tuziladigan so‘nggi patch versiyasini olishingizni kafolatlaydi. 0.9.0 yoki undan kattaroq versiyalar quyidagi misollar ishlatadigan API bilan bir xil bo'lishi kafolatlanmaydi.
 
-Now, without changing any of the code, let’s build the project, as shown in
-Listing 2-2.
+Endi, hech qanday kodni o'zgartirmasdan, 2-2 ro'yxatda ko'rsatilganidek, loyihani build qilaylik.
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/listing-02-02/
@@ -337,12 +317,9 @@ $ cargo build
     Finished dev [unoptimized + debuginfo] target(s) in 2.53s
 ```
 
-<span class="caption">Listing 2-2: The output from running `cargo build` after
-adding the rand crate as a dependency</span>
+<span class="caption">Ro'yxat 2-2: rand cratesini dependency sifatida qo'shgandan so'ng `cargo build` dan olingan natija</span>
 
-You may see different version numbers (but they will all be compatible with the
-code, thanks to SemVer!) and different lines (depending on the operating
-system), and the lines may be in a different order.
+Siz turli xil versiya raqamlarini (lekin ularning barchasi SemVer tufayli kod bilan mos keladi!) va turli xil satrlarni (operatsion tizimga qarab) ko'rishingiz mumkin va satrlar boshqa tartibda bo'lishi mumkin.
 
 When we include an external dependency, Cargo fetches the latest versions of
 everything that dependency needs from the *registry*, which is a copy of data
