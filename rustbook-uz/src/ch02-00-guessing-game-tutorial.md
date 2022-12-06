@@ -321,26 +321,13 @@ $ cargo build
 
 Siz turli xil versiya raqamlarini (lekin ularning barchasi SemVer tufayli kod bilan mos keladi!) va turli xil satrlarni (operatsion tizimga qarab) ko'rishingiz mumkin va satrlar boshqa tartibda bo'lishi mumkin.
 
-When we include an external dependency, Cargo fetches the latest versions of
-everything that dependency needs from the *registry*, which is a copy of data
-from [Crates.io][cratesio]. Crates.io is where people in the Rust ecosystem
-post their open source Rust projects for others to use.
+Biz tashqi dependency qo'shganimizda, Cargo [Crates.io][cratesio] ma'lumotlarining nusxasi bo'lgan  *registry* dan dependency uchun zarur bo'lgan barcha narsalarning so'nggi versiyalarini oladi.Crates.io - bu Rust ekotizimidagi odamlar o'zlarining ochiq manbali Rust loyihalarini boshqalar foydalanishi uchun joylashtiradigan joy.
 
-After updating the registry, Cargo checks the `[dependencies]` section and
-downloads any crates listed that aren’t already downloaded. In this case,
-although we only listed `rand` as a dependency, Cargo also grabbed other crates
-that `rand` depends on to work. After downloading the crates, Rust compiles
-them and then compiles the project with the dependencies available.
+registrni yangilagandan so'ng, Cargo  `[dependencies]`  bo'limini tekshiradi va ro'yxatda hali yuklab olinmagan cratelarni yuklab oladi. Bu holatda, garchi biz faqat `rand` ni qdependency sifatida ko'rsatgan bo'lsak-da, Cargo `rand` ishlashga bog'liq bo'lgan boshqa cratelarni ham oldi. Cratelarni yuklab olgandan so'ng, Rust ularni kompilyatsiya qiladi va keyin mavjud bo'lgan dependency bilan loyihani tuzadi.
 
-If you immediately run `cargo build` again without making any changes, you
-won’t get any output aside from the `Finished` line. Cargo knows it has already
-downloaded and compiled the dependencies, and you haven’t changed anything
-about them in your *Cargo.toml* file. Cargo also knows that you haven’t changed
-anything about your code, so it doesn’t recompile that either. With nothing to
-do, it simply exits.
+Agar siz hech qanday o'zgartirishlarsiz darhol `cargo build` ni qayta ishga tushirsangiz, `Finished` qatoridan boshqa hech qanday natija olmaysiz. Cargo allaqachon dependencylarni yuklab olganini va kompilyatsiya qilganini biladi va siz *Cargo.toml* faylida ular haqida hech narsani o'zgartirmagansiz. Cargo, shuningdek, kodingiz haqida hech narsani o'zgartirmaganligingizni biladi, shuning uchun u ham uni qayta kompilyatsiya qilmaydi. Hech narsa qilmasdan, u shunchaki chiqib ketadi.
 
-If you open the *src/main.rs* file, make a trivial change, and then save it and
-build again, you’ll only see two lines of output:
+Agar siz *src/main.rs* faylini ochsangiz, ahamiyatsiz o'zgarishlarni amalga oshirsangiz va keyin uni saqlab va qayta build qilsangiz, siz faqat ikkita chiqish qatorini ko'rasiz:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/listing-02-02/
@@ -353,20 +340,11 @@ $ cargo build
     Finished dev [unoptimized + debuginfo] target(s) in 2.53 secs
 ```
 
-These lines show that Cargo only updates the build with your tiny change to the
-*src/main.rs* file. Your dependencies haven’t changed, so Cargo knows it can
-reuse what it has already downloaded and compiled for those.
+Bu satrlar shuni ko'rsatadiki, Cargo faqat *src/main.rs* fayliga kichik o'zgartirishingiz bilan buildni yangilaydi. Sizning dependencylaringiz o'zgarmadi, shuning uchun Cargo allaqachon yuklab olingan va ular uchun tuzilgan narsadan qayta foydalanishi mumkinligini biladi..
 
-#### Ensuring Reproducible Builds with the *Cargo.lock* File
+#### *Cargo.lock* fayli bilan qayta tiklanadigan tuzilmalarni ta'minlash
 
-Cargo has a mechanism that ensures you can rebuild the same artifact every time
-you or anyone else builds your code: Cargo will use only the versions of the
-dependencies you specified until you indicate otherwise. For example, say that
-next week version 0.8.6 of the `rand` crate comes out, and that version
-contains an important bug fix, but it also contains a regression that will
-break your code. To handle this, Rust creates the *Cargo.lock* file the first
-time you run `cargo build`, so we now have this in the *guessing_game*
-directory.
+Cargoda siz yoki boshqa birov kodingizni har safar yaratganingizda bir xil artefaktni qayta tiklashingiz mumkinligini ta'minlaydigan mexanizm mavjud: Siz aksini ko'rsatmaguningizcha, cargo faqat siz ko'rsatgan dependency versiyalaridan foydalanadi. Masalan, kelasi hafta `rand` cratening 0.8.6 versiyasi chiqadi va bu versiyada muhim xatoliklar tuzatilgan, lekin u sizning kodingizni buzadigan regressiyani ham o‘z ichiga oladi. Buni hal qilish uchun Rust birinchi marta  `cargo build` dasturini ishga tushirganingizda *Cargo.lock* faylini yaratadi, shuning uchun biz endi bu *guessing_game* jildida mavjud.
 
 When you build a project for the first time, Cargo figures out all the versions
 of the dependencies that fit the criteria and then writes them to the
