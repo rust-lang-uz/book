@@ -83,7 +83,7 @@ fn main() {
         .read_line(&mut taxmin)
         .expect("Satrni o‘qib bo‘lmadi");
 
-    println!("Sizni taxminingiz: {taxmin}");
+    println!("Sizning taxminingiz: {taxmin}");
 }
 ```
 
@@ -225,7 +225,7 @@ Ogohlantirishni yo'qotishning to'g'ri yo'li aslida xatolarni qayta ishlash kodin
 Yopuvchi jingalak qavsdan tashqari, kodda hozirgacha muhokama qilinadigan yana bitta satr mavjud:
 
 ```rust,ignore
-    println!("Sizni taxminingiz: {taxmin}");
+    println!("Sizning taxminingiz: {taxmin}");
 ```
 
 Ushbu satr foydalanuvchi kiritishini o'z ichiga olgan qatorni chop etadi. `{}` jingalak qavslar to'plami o'rnini egallaydi: `{}` qiymatini joyida ushlab turadigan qisqichbaqa qisqichlari deb tasavvur qiling. O'zgaruvchining qiymatini chop etishda o'zgaruvchi nomi jingalak qavslar ichiga kirishi mumkin. Ifodani baholash natijasini chop etishda format satriga bo'sh jingalak qavslarni joylashtiring, so'ngra har bir bo'sh jingalak qavs o'rnini egallagan holda bir xil tartibda chop etish uchun vergul bilan ajratilgan iboralar ro'yxati bilan format qatoriga amal qiling. O‘zgaruvchini va ifoda natijasini `println!` ga bitta chaqiruvda chop etish quyidagicha ko‘rinadi:
@@ -401,7 +401,7 @@ fn main() {
         .read_line(&mut taxmin)
         .expect("Satrni o‘qib bo‘lmadi");
 
-    println!("Sizni taxminingiz: {taxmin}");
+    println!("Sizning taxminingiz: {taxmin}");
 }
 ```
 
@@ -420,12 +420,9 @@ Keyin o'rtada ikkita qator qo'shamiz. Birinchi qatorda biz `rand::thread_rng` fu
 > funksiyalarga qiziqsangiz, masalan, `cargo doc --open` ni ishga tushiring va chap tomondagi
 > yon paneldagi `rand` tugmasini bosing.
 
-The second new line prints the secret number. This is useful while we’re
-developing the program to be able to test it, but we’ll delete it from the
-final version. It’s not much of a game if the program prints the answer as soon
-as it starts!
+Ikkinchi yangi qator maxfiy raqamni chop etadi. Bu dasturni ishlab chiqishda uni sinab ko'rishimiz uchun foydalidir, lekin biz uni oxirgi versiyadan o'chirib tashlaymiz. Agar dastur boshlanishi bilanoq javobni chop etsa, bu unchalik o'yin emas!
 
-Try running the program a few times:
+Dasturni bir necha marta ishga tushirishga harakat qiling:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/listing-02-03/
@@ -440,53 +437,53 @@ $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53s
      Running `target/debug/guessing_game`
-Guess the number!
-The secret number is: 7
-Please input your guess.
+Raqamni topish o'yini!
+Yashirin raqam: 7
+Iltimos, taxminingizni kiriting.
 4
-You guessed: 4
+Siznig taxminingiz: 4
 
 $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.02s
      Running `target/debug/guessing_game`
-Guess the number!
-The secret number is: 83
-Please input your guess.
+Raqamni topish o'yini!
+Yashirin raqam: 83
+Iltimos, taxminingizni kiriting.
 5
-You guessed: 5
+Siznig taxminingiz: 5
 ```
 
-You should get different random numbers, and they should all be numbers between
-1 and 100. Great job!
+Siz turli xil tasodifiy raqamlarni olishingiz kerak va ularning barchasi 1 dan 100 gacha raqamlar bo'lishi kerak. Ajoyib ish!
 
-## Comparing the Guess to the Secret Number
+## Guessni maxfiy raqam bilan solishtirish
 
-Now that we have user input and a random number, we can compare them. That step
-is shown in Listing 2-4. Note that this code won’t compile just yet, as we will
-explain.
+Endi bizda foydalanuvchi kiritishi va tasodifiy raqam bor, biz ularni solishtirishimiz mumkin. Ushbu qadam 2-4 ro'yxatda ko'rsatilgan. E'tibor bering, bu kod hozircha tuzilmaydi, biz tushuntiramiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-04/src/main.rs:here}}
+use rand::Rng;
+use std::cmp::Ordering;
+use std::io;
+
+fn main() {
+    // --snip--
+
+    println!("Siznig taxminingiz: {taxmin}");
+
+    match taxmin.cmp(&yashirin_raqam) {
+        Ordering::Less => println!("Raqam Kichik!"),
+        Ordering::Greater => println!("Raqam katta!"),
+        Ordering::Equal => println!("Siz yutdingiz!"),
+    }
+}
 ```
 
-<span class="caption">Listing 2-4: Handling the possible return values of
-comparing two numbers</span>
+<span class="caption">Listing 2-4: Ikki raqamni solishtirishning mumkin bo'lgan qaytish qiymatlarini boshqarish</span>
 
-First we add another `use` statement, bringing a type called
-`std::cmp::Ordering` into scope from the standard library. The `Ordering` type
-is another enum and has the variants `Less`, `Greater`, and `Equal`. These are
-the three outcomes that are possible when you compare two values.
+Avval biz standart kutubxonadan `std::cmp::Ording` deb nomlangan turni olib keladigan yana bir `use` iborasini qo'shamiz. `Ordering` turi boshqa raqam boʻlib, `Less`, `Greater` va `Equal` variantlariga ega. Bu ikkita qiymatni solishtirganda mumkin bo'lgan uchta natijadir.
 
-Then we add five new lines at the bottom that use the `Ordering` type. The
-`cmp` method compares two values and can be called on anything that can be
-compared. It takes a reference to whatever you want to compare with: here it’s
-comparing `guess` to `secret_number`. Then it returns a variant of the
-`Ordering` enum we brought into scope with the `use` statement. We use a
-[`match`][match]<!-- ignore --> expression to decide what to do next based on
-which variant of `Ordering` was returned from the call to `cmp` with the values
-in `guess` and `secret_number`.
+Keyin pastki qismida `Ordering` turidan foydalanadigan beshta yangi qator qo'shamiz. `cmp` usuli ikkita qiymatni solishtiradi va uni solishtirish mumkin bo'lgan har qanday narsani chaqirish mumkin. Siz solishtirmoqchi bo'lgan narsaga havola kerak: bu erda `taxmin` bilan `yashirin_raqam` solishtiriladi. Keyin u biz `use`  iborasi bilan qamrab olgan `Ordering`  raqamining variantini qaytaradi. Biz `taxmin` va `yashirin_raqam` qiymatlari bilan `cmp` ga murojatdan `Ordering` ning qaysi varianti qaytarilganiga qarab, keyin nima qilish kerakligini hal qilish uchun [`match`][match]<!-- ignore --> ifodasidan foydalanamiz.
 
 A `match` expression is made up of *arms*. An arm consists of a *pattern* to
 match against, and the code that should be run if the value given to `match`
