@@ -563,33 +563,16 @@ represents “newline.” (On Windows, pressing <span
 class="keystroke">enter</span> results in a carriage return and a newline,
 `\r\n`.) The `trim` method eliminates `\n` or `\r\n`, resulting in just `5`.
 
-The [`parse` method on strings][parse]<!-- ignore --> converts a string to
-another type. Here, we use it to convert from a string to a number. We need to
-tell Rust the exact number type we want by using `let guess: u32`. The colon
-(`:`) after `guess` tells Rust we’ll annotate the variable’s type. Rust has a
-few built-in number types; the `u32` seen here is an unsigned, 32-bit integer.
-It’s a good default choice for a small positive number. You’ll learn about
-other number types in [Chapter 3][integers]<!-- ignore -->.
+Satrlardagi [`parse` usuli][parse]<!-- ignore --> qatorni boshqa turga aylantiradi.
+Bu yerda biz uni satrdan raqamga aylantirish uchun foydalanamiz. Biz Rustga `let taxmin: u32` yordamida kerakli raqam turini aytishimiz kerak. `taxmin` dan keyin ikki nuqta (`:`) Rustga o'zgaruvchining turiga izoh berishimizni aytadi. Rust bir nechta o'rnatilgan raqam turlariga ega; Bu yerda koʻrilgan `u32` belgisiz, 32-bitli butun son.
+Bu kichik ijobiy raqam uchun yaxshi standart tanlovdir. Boshqa raqamlar turlari haqida [3-bobda][integers]<!-- ignore --> bilib olasiz.
 
-Additionally, the `u32` annotation in this example program and the comparison
-with `secret_number` means Rust will infer that `secret_number` should be a
-`u32` as well. So now the comparison will be between two values of the same
-type!
+Bundan tashqari, ushbu misol dasturidagi `u32` izohi va `yashirin_raqam` bilan taqqoslash Rust `yashirin_raqam` ham `u32` bo'lishi kerak degan xulosaga keladi. Shunday qilib, endi taqqoslash bir xil turdagi ikkita qiymat o'rtasida bo'ladi!
 
-The `parse` method will only work on characters that can logically be converted
-into numbers and so can easily cause errors. If, for example, the string
-contained `A👍%`, there would be no way to convert that to a number. Because it
-might fail, the `parse` method returns a `Result` type, much as the `read_line`
-method does (discussed earlier in [“Handling Potential Failure with
-`Result`”](#handling-potential-failure-with-result)<!-- ignore-->). We’ll treat
-this `Result` the same way by using the `expect` method again. If `parse`
-returns an `Err` `Result` variant because it couldn’t create a number from the
-string, the `expect` call will crash the game and print the message we give it.
-If `parse` can successfully convert the string to a number, it will return the
-`Ok` variant of `Result`, and `expect` will return the number that we want from
-the `Ok` value.
+`parse` usuli faqat mantiqiy ravishda raqamlarga aylantirilishi mumkin bo'lgan belgilarda ishlaydi va shuning uchun osongina xatolarga olib kelishi mumkin. Agar, masalan, satrda `A👍%` bo'lsa, uni raqamga aylantirishning hech qanday usuli bo'lmaydi. Muvaffaqiyatsiz bo'lishi mumkinligi sababli, `parse` usuli `read_line` usuli kabi `Result` turini qaytaradi (oldingi ["`Result` bilan potentsial muvaffaqiyatsizlikni ko'rib chiqish"] bo'limida muhokama qilingan)(#handling-potential-failure-with-result)<!-- ignore-->). Biz ushbu `Result` ga yana `expect` usulini qo'llash orqali xuddi shunday munosabatda bo'lamiz. Agar `parse` qatordan raqam yarata olmagani uchun `Err` `Result` variantini qaytarsa, `expect` chaqiruvi o‘yinni buzadi va biz bergan xabarni chop etadi.
+Agar `parse` qatorni raqamga muvaffaqiyatli aylantira olsa, u `Result`ning `Ok` variantini qaytaradi va `expect` biz xohlagan raqamni `Ok` qiymatidan qaytaradi.
 
-Let’s run the program now:
+Endi dasturni ishga tushiramiz:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/no-listing-03-convert-string-to-number/
@@ -602,31 +585,40 @@ $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/guessing_game`
-Guess the number!
-The secret number is: 58
-Please input your guess.
+Raqamni topish o'yini!
+Yashirin raqam: 58
+Iltimos, taxminingizni kiriting.
   76
-You guessed: 76
-Too big!
+Sizning taxminingiz: 76
+Raqam katta!
 ```
 
-Nice! Even though spaces were added before the guess, the program still figured
-out that the user guessed 76. Run the program a few times to verify the
-different behavior with different kinds of input: guess the number correctly,
-guess a number that is too high, and guess a number that is too low.
+Yaxshi! Tahmindan oldin bo'shliqlar qo'shilgan bo'lsa ham, dastur foydalanuvchi 76 ni taxmin qilganini aniqladi. Har xil turdagi kirishlar bilan turli xatti-harakatlarni tekshirish uchun dasturni bir necha marta ishga tushiring: raqamni to'g'ri taxmin qiling, katta raqamni taxmin qiling va kichik raqamni taxmin qiling.
 
-We have most of the game working now, but the user can make only one guess.
-Let’s change that by adding a loop!
+Hozir bizda o'yinning ko'p qismi ishlayapti, lekin foydalanuvchi faqat bitta taxmin qila oladi. Keling, buni loop qo'shish orqali o'zgartiraylik!
 
-## Allowing Multiple Guesses with Looping
+## Loop bilan bir nechta taxminlarga ruxsat berish
 
-The `loop` keyword creates an infinite loop. We’ll add a loop to give users
-more chances at guessing the number:
-
+`loop` kalit so'zi cheksiz tsiklni yaratadi. Biz foydalanuvchilarga raqamni taxmin qilishda ko'proq imkoniyat berish uchun tsikl qo'shamiz:
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-04-looping/src/main.rs:here}}
+    // --snip--
+
+    println!("Yashirin raqam: {yashirin_raqam}");
+
+    loop {
+        println!("Iltimos, taxminingizni kiriting.");
+
+        // --snip--
+
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Raqam Kichik!"),
+            Ordering::Greater => println!("Raqam katta!"),
+            Ordering::Equal => println!("Siz yutdingiz!"),
+        }
+    }
+}
 ```
 
 As you can see, we’ve moved everything from the guess input prompt onward into
