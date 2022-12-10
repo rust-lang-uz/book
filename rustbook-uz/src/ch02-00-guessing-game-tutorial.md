@@ -469,7 +469,7 @@ use std::io;
 fn main() {
     // --snip--
 
-    println!("Siznig taxminingiz: {taxmin}");
+    println!("Sizning taxminingiz: {taxmin}");
 
     match taxmin.cmp(&yashirin_raqam) {
         Ordering::Less => println!("Raqam Kichik!"),
@@ -485,30 +485,13 @@ Avval biz standart kutubxonadan `std::cmp::Ording` deb nomlangan turni olib kela
 
 Keyin pastki qismida `Ordering` turidan foydalanadigan beshta yangi qator qo'shamiz. `cmp` usuli ikkita qiymatni solishtiradi va uni solishtirish mumkin bo'lgan har qanday narsani chaqirish mumkin. Siz solishtirmoqchi bo'lgan narsaga havola kerak: bu erda `taxmin` bilan `yashirin_raqam` solishtiriladi. Keyin u biz `use`  iborasi bilan qamrab olgan `Ordering`  raqamining variantini qaytaradi. Biz `taxmin` va `yashirin_raqam` qiymatlari bilan `cmp` ga murojatdan `Ordering` ning qaysi varianti qaytarilganiga qarab, keyin nima qilish kerakligini hal qilish uchun [`match`][match]<!-- ignore --> ifodasidan foydalanamiz.
 
-A `match` expression is made up of *arms*. An arm consists of a *pattern* to
-match against, and the code that should be run if the value given to `match`
-fits that arm’s pattern. Rust takes the value given to `match` and looks
-through each arm’s pattern in turn. Patterns and the `match` construct are
-powerful Rust features: they let you express a variety of situations your code
-might encounter and they make sure you handle them all. These features will be
-covered in detail in Chapter 6 and Chapter 18, respectively.
+`Match` ifodasi *arms* dan tuzilgan. Arm mos keladigan *pattern* va agar `match` ga berilgan qiymat armning patterniga mos kelsa, bajarilishi kerak bo'lgan koddan iborat. Rust `match` ga berilgan qiymatni oladi va har bir armning patternini o'z navbatida ko'rib chiqadi. Patternlar va `match` konstruksiyasi Rust-ning kuchli xususiyatlari hisoblanadi: ular sizning kodingiz duch kelishi mumkin bo'lgan turli vaziyatlarni ifodalash imkonini beradi va ularning barchasini boshqarishingizga ishonch hosil qiladi. Bu xususiyatlar mos ravishda 6-bobda va 18-bobda batafsil yoritiladi.
 
-Let’s walk through an example with the `match` expression we use here. Say that
-the user has guessed 50 and the randomly generated secret number this time is
-38.
+Keling, bu yerda ishlatadigan `match` iborasi bilan bir misolni ko'rib chiqaylik. Aytaylik, foydalanuvchi 50 ni taxmin qilgan va bu safar tasodifiy yaratilgan maxfiy raqam 38 ni tashkil qiladi.
 
-When the code compares 50 to 38, the `cmp` method will return
-`Ordering::Greater` because 50 is greater than 38. The `match` expression gets
-the `Ordering::Greater` value and starts checking each arm’s pattern. It looks
-at the first arm’s pattern, `Ordering::Less`, and sees that the value
-`Ordering::Greater` does not match `Ordering::Less`, so it ignores the code in
-that arm and moves to the next arm. The next arm’s pattern is
-`Ordering::Greater`, which *does* match `Ordering::Greater`! The associated
-code in that arm will execute and print `Too big!` to the screen. The `match`
-expression ends after the first successful match, so it won’t look at the last
-arm in this scenario.
+Kod 50 ni 38 ga solishtirganda, `cmp` usuli `Ordering::Greater` ni qaytaradi, chunki 50 38 dan katta. `match` ifodasi `Ordering::Greater` qiymatini oladi va har bir armning patternini tekshirishni boshlaydi. U birinchi armning `Ordering::Less` patternini koʻrib chiqadi va `Ordering::Greater` qiymati `Ordering::Less` qiymatiga mos kelmasligini koʻradi, shuning uchun u armdagi kodga eʼtibor bermaydi va keyingi armga oʻtadi. Keyingi armning namunasi `Ordering::Greater` boʻlib, `Ordering::Greater` bilan *does* match  keladi! Oʻsha armdagi bogʻlangan kod ishga tushadi va ekranga `Raqam katta!` deb chop etiladi. `match` iborasi birinchi muvaffaqiyatli o'yindan keyin tugaydi, shuning uchun bu senariydagi oxirgi armni ko'rib chiqmaydi.
 
-However, the code in Listing 2-4 won’t compile yet. Let’s try it:
+Biroq, 2-4 ro'yxatdagi kod hali kompilyatsiya qilinmaydi. Keling, sinab ko'raylik:
 
 <!--
 The error numbers in this output should be that of the code **WITHOUT** the
@@ -516,51 +499,64 @@ anchor or snip comments
 -->
 
 ```console
-{{#include ../listings/ch02-guessing-game-tutorial/listing-02-04/output.txt}}
+$ cargo build
+   Compiling libc v0.2.86
+   Compiling getrandom v0.2.2
+   Compiling cfg-if v1.0.0
+   Compiling ppv-lite86 v0.2.10
+   Compiling rand_core v0.6.2
+   Compiling rand_chacha v0.3.0
+   Compiling rand v0.8.3
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+error[E0308]: mismatched types
+  --> src/main.rs:22:21
+   |
+22 |     match taxmin.cmp(&yashirin_raqam) {
+   |                     ^^^^^^^^^^^^^^ expected struct `String`, found integer
+   |
+   = note: expected reference `&String`
+              found reference `&{integer}`
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `guessing_game` due to previous error
 ```
 
-The core of the error states that there are *mismatched types*. Rust has a
-strong, static type system. However, it also has type inference. When we wrote
-`let mut guess = String::new()`, Rust was able to infer that `guess` should be
-a `String` and didn’t make us write the type. The `secret_number`, on the other
-hand, is a number type. A few of Rust’s number types can have a value between 1
-and 100: `i32`, a 32-bit number; `u32`, an unsigned 32-bit number; `i64`, a
-64-bit number; as well as others. Unless otherwise specified, Rust defaults to
-an `i32`, which is the type of `secret_number` unless you add type information
-elsewhere that would cause Rust to infer a different numerical type. The reason
-for the error is that Rust cannot compare a string and a number type.
+Xatoning asosi *mos kelmaydigan turlar* mavjudligini bildiradi. Rust kuchli, statik turdagi tizimga ega. Biroq, u ham turdagi xulosaga ega. Biz `let mut taxmin = String::new()` deb yozganimizda, Rust `taxmin` `String` bo'lishi kerak degan xulosaga keldi va bizni turni yozishga majburlamadi. Boshqa tomondan, `yashirin_raqam` raqam turidir. Rust raqamlarining bir nechta turlari 1 dan 100 gacha qiymatga ega bo'lishi mumkin: `i32`, 32 bitli raqam; `u32`, imzosiz 32-bitli raqam; `i64`, 64-bitli raqam; boshqalar kabi. Agar boshqacha koʻrsatilmagan boʻlsa, Rust standart boʻyicha `i32` ga oʻrnatiladi, bu `yashirin_raqam` turiga, agar siz Rustning boshqa raqamli turini chiqarishiga olib keladigan turdagi maʼlumotlarni boshqa joyga qoʻshmasangiz. Xatoning sababi shundaki, Rust satr va raqam turini taqqoslay olmaydi.
 
-Ultimately, we want to convert the `String` the program reads as input into a
-real number type so we can compare it numerically to the secret number. We do
-so by adding this line to the `main` function body:
+Oxir-oqibat, biz dastur tomonidan kiritilgan `String` ni haqiqiy son turiga aylantirmoqchimiz, shuning uchun uni raqamli raqam bilan yashirin raqam bilan solishtirishimiz mumkin.Buni `main` funktsiya tanasiga ushbu qatorni qo'shish orqali qilamiz:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-03-convert-string-to-number/src/main.rs:here}}
+    // --snip--
+
+    let mut taxmin = String::new();
+
+    io::stdin()
+        .read_line(&mut guess)
+        .expect("Satrni o‘qib bo‘lmadi");
+
+    let taxmin: u32 = taxmin.trim().parse().expect("Iltimos, raqam yozing!");
+
+    println!("Sizning taxminingiz: {taxmin}");
+
+    match taxmin.cmp(&yashirin_raqam) {
+        Ordering::Less => println!("Raqam Kichik!"),
+        Ordering::Greater => println!("Raqam katta!"),
+        Ordering::Equal => println!("Siz yutdingiz!"),
+    }
 ```
 
-The line is:
+Satr
 
 ```rust,ignore
-let guess: u32 = guess.trim().parse().expect("Please type a number!");
+let taxmin: u32 = taxmin.trim().parse().expect("Iltimos, raqam yozing!");
 ```
 
-We create a variable named `guess`. But wait, doesn’t the program already have
-a variable named `guess`? It does, but helpfully Rust allows us to shadow the
-previous value of `guess` with a new one. *Shadowing* lets us reuse the `guess`
-variable name rather than forcing us to create two unique variables, such as
-`guess_str` and `guess`, for example. We’ll cover this in more detail in
-[Chapter 3][shadowing]<!-- ignore -->, but for now, know that this feature is
-often used when you want to convert a value from one type to another type.
+Biz `taxmin` nomli o'zgaruvchini yaratamiz. Ammo shoshilmang, dasturda allaqachon `taxmin` nomli o'zgaruvchi mavjud emasmi? Bu shunday, lekin foydali Rust bizga `taxmin` ning oldingi qiymatini yangisi bilan ergashtirish imkonini beradi. *Shadowing* bizga ikkita noyob oʻzgaruvchini yaratish oʻrniga, `taxmin` oʻzgaruvchi nomidan qayta foydalanish imkonini beradi, masalan, `taxmin_str` va `taxmin`. Biz buni [3-bobda][shadowing]<!-- ignore --> batafsil ko'rib chiqamiz, ammo hozircha shuni bilingki, bu xususiyat ko'pincha qiymatni bir turdan boshqa turga aylantirmoqchi bo'lganingizda ishlatiladi.
 
-We bind this new variable to the expression `guess.trim().parse()`. The `guess`
-in the expression refers to the original `guess` variable that contained the
-input as a string. The `trim` method on a `String` instance will eliminate any
-whitespace at the beginning and end, which we must do to be able to compare the
-string to the `u32`, which can only contain numerical data. The user must press
-<span class="keystroke">enter</span> to satisfy `read_line` and input their
-guess, which adds a newline character to the string. For example, if the user
+Biz bu yangi o'zgaruvchini `taxmin.trim().parse()` ifodasiga bog'laymiz. Ifodadagi `taxmin` matni qator sifatida kiritilgan asl `taxmin` o'zgaruvchisiga ishora qiladi. `String` misolidagi `trim` usuli boshida va oxiridagi har qanday bo‘shliqni yo‘q qiladi, bu qatorni faqat raqamli ma’lumotlarni o‘z ichiga olishi mumkin bo‘lgan `u32` bilan solishtirishimiz uchun buni qilishimiz kerak. Foydalanuvchi `read_line` ni to'ldirish uchun <span class="keystroke">enter</span>tugmasini bosib, ularni kiritishi kerak
+satrga yangi satr belgisini qo'shadigan taxmin. For example, if the user
 types <span class="keystroke">5</span> and presses <span
 class="keystroke">enter</span>, `guess` looks like this: `5\n`. The `\n`
 represents “newline.” (On Windows, pressing <span
