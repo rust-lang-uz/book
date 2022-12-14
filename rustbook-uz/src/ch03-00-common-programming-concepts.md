@@ -1,23 +1,17 @@
-# Common Programming Concepts
+# Umumiy dasturlash tushunchalari
 
-This chapter covers concepts that appear in almost every programming language
-and how they work in Rust. Many programming languages have much in common at
-their core. None of the concepts presented in this chapter are unique to Rust,
-but we’ll discuss them in the context of Rust and explain the conventions
-around using these concepts.
+Ushbu bob deyarli barcha dasturlash tillarida paydo bo'ladigan tushunchalarni va ular Rustda qanday ishlashini o'z ichiga oladi. Ko'pgina dasturlash tillari o'rtasida juda ko'p umumiylik mavjud. Ushbu bobda keltirilgan tushunchalarning hech biri Rustga xos emas, lekin biz ularni Rust kontekstida ko'rib chiqamiz va ushbu tushunchalardan foydalanish bo'yicha konventsiyalarni tushuntiramiz.
 
-Specifically, you’ll learn about variables, basic types, functions, comments,
-and control flow. These foundations will be in every Rust program, and learning
-them early will give you a strong core to start from.
+Xususan, siz o'zgaruvchilar, asosiy turlar, funktsiyalar, sharhlar va boshqaruv oqimi haqida bilib olasiz. Ushbu asoslar har bir Rust dasturida bo'ladi va ularni erta o'rganish sizga boshlash uchun kuchli asos bo'ladi.
 
-> #### Keywords
+> #### Kalit so'zlar
 >
-> The Rust language has a set of *keywords* that are reserved for use by the
-> language only, much as in other languages. Keep in mind that you cannot use
-> these words as names of variables or functions. Most of the keywords have
-> special meanings, and you’ll be using them to do various tasks in your Rust
-> programs; a few have no current functionality associated with them but have
-> been reserved for functionality that might be added to Rust in the future. You
-> can find a list of the keywords in [Appendix A][appendix_a]<!-- ignore -->.
+> Rust tilida boshqa tillardagi kabi faqat til tomonidan foydalanish uchun ajratilgan
+> *kalit so'zlar* to'plami mavjud. Shuni yodda tutingki, siz ushbu so'zlarni 
+> o'zgaruvchilar yoki funktsiyalar nomi sifatida ishlata olmaysiz. Kalit so'zlarning aksariyati
+> maxsus ma'noga ega va siz ulardan Rust dasturlarida turli vazifalarni bajarish
+> uchun foydalanasiz; ba'zilarida ular bilan bog'liq bo'lgan joriy funksionallik
+> yo'q, lekin kelajakda Rustga qo'shilishi mumkin bo'lgan funksiyalar uchun ajratilgan.
+> Kalit so'zlar ro'yxatini [A ilovasida]<!-- ignore -->. topishingiz mumkin.
 
 [appendix_a]: appendix-01-keywords.md
