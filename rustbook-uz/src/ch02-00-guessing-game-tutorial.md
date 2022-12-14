@@ -749,30 +749,55 @@ Sizning taxminingiz: 61
 Siz yutdingiz!
 ```
 
-Awesome! With one tiny final tweak, we will finish the guessing game. Recall
-that the program is still printing the secret number. That worked well for
-testing, but it ruins the game. Let’s delete the `println!` that outputs the
-secret number. Listing 2-6 shows the final code.
+Ajoyib! Bitta kichik so'nggi tweak bilan biz taxmin qilish o'yinini tugatamiz. Eslatib o'tamiz, dastur hali ham maxfiy raqamni chop etmoqda. Bu sinov uchun yaxshi ishladi, lekin o'yinni buzadi. Maxfiy raqamni chiqaradigan `println!`ni o'chirib tashlaymiz. 2-6 ro'yxat yakuniy kodni ko'rishingiz mumkin.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-06/src/main.rs}}
+use rand::Rng;
+use std::cmp::Ordering;
+use std::io;
+
+fn main() {
+    println!("Raqamni topish o'yini!");
+
+    let yashirin_raqam = rand::thread_rng().gen_range(1..=100);
+
+    loop {
+        println!("Iltimos, taxminingizni kiriting.");
+
+        let mut taxmin = String::new();
+
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Satrni o‘qib bo‘lmadi");
+
+        let taxmin: u32 = match taxmin.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+
+        println!("Sizning taxminingiz: {taxmin}");
+
+        match taxmin.cmp(&yashirin_raqam) {
+            Ordering::Less => println!("Raqam Kichik!"),
+            Ordering::Greater => println!("Raqam katta!"),
+            Ordering::Equal => {
+                println!("Siz yutdingiz!");
+                break;
+            }
+        }
+    }
+}
 ```
 
-<span class="caption">Listing 2-6: Complete guessing game code</span>
+<span class="caption">Ro'yxat 2-6: To'liq taxmin qilish o'yin kodini</span>
 
-At this point, you’ve successfully built the guessing game. Congratulations!
+Shu nuqtada, siz taxmin qilish o'yinini muvaffaqiyatli yaratdingiz. Tabriklaymiz!
 
-## Summary
+## Xulosa
 
-This project was a hands-on way to introduce you to many new Rust concepts:
-`let`, `match`, functions, the use of external crates, and more. In the next
-few chapters, you’ll learn about these concepts in more detail. Chapter 3
-covers concepts that most programming languages have, such as variables, data
-types, and functions, and shows how to use them in Rust. Chapter 4 explores
-ownership, a feature that makes Rust different from other languages. Chapter 5
-discusses structs and method syntax, and Chapter 6 explains how enums work.
+Ushbu loyiha sizni Rustning ko'plab yangi tushunchalari bilan tanishtirishning amaliy usuli bo'ldi: `let`, `match`, funktsiyalar, tashqi cratelardan foydalanish va boshqalar. Keyingi bir necha boblarda siz ushbu tushunchalar haqida batafsilroq bilib olasiz. 3-bob ko'pchilik dasturlash tillarida mavjud bo'lgan o'zgaruvchilar, ma'lumotlar turlari va funktsiyalari kabi tushunchalarni qamrab oladi va ulardan Rustda qanday foydalanishni ko'rsatadi. 4-bobda Rust tilini boshqa tillardan ajratib turadigan egalik huquqi o‘rganiladi. 5-bobda tuzilmalar va usullar sintaksisi muhokama qilinadi va 6-bobda enumlar qanday ishlashi tushuntiriladi.
 
 [prelude]: ../std/prelude/index.html
 [variables-and-mutability]: ch03-01-variables-and-mutability.html#variables-and-mutability
