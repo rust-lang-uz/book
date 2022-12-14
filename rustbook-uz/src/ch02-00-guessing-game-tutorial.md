@@ -612,7 +612,7 @@ Hozir bizda o'yinning ko'p qismi ishlayapti, lekin foydalanuvchi faqat bitta tax
 
         // --snip--
 
-        match guess.cmp(&secret_number) {
+        match taxmin.cmp(&yashirin_raqam) {
             Ordering::Less => println!("Raqam Kichik!"),
             Ordering::Greater => println!("Raqam katta!"),
             Ordering::Equal => println!("Siz yutdingiz!"),
@@ -621,17 +621,9 @@ Hozir bizda o'yinning ko'p qismi ishlayapti, lekin foydalanuvchi faqat bitta tax
 }
 ```
 
-As you can see, we’ve moved everything from the guess input prompt onward into
-a loop. Be sure to indent the lines inside the loop another four spaces each
-and run the program again. The program will now ask for another guess forever,
-which actually introduces a new problem. It doesn’t seem like the user can quit!
+Ko'rib turganingizdek, biz hamma narsani taxminiy kiritish so'rovidan boshlab tsiklga o'tkazdik. Ilova ichidagi satrlarni har birida yana to'rtta bo'sh joydan o'tkazganingizga ishonch hosil qiling va dasturni qayta ishga tushiring. Dastur endi boshqa bir taxminni abadiy yani har doim so'raydi, bu aslida yangi muammoni keltirib chiqaradi. Foydalanuvchi chiqa olmaydiganga o'xshaydi!
 
-The user could always interrupt the program by using the keyboard shortcut
-<span class="keystroke">ctrl-c</span>. But there’s another way to escape this
-insatiable monster, as mentioned in the `parse` discussion in [“Comparing the
-Guess to the Secret Number”](#comparing-the-guess-to-the-secret-number)<!--
-ignore -->: if the user enters a non-number answer, the program will crash. We
-can take advantage of that to allow the user to quit, as shown here:
+Foydalanuvchi har doim <span class="keystroke">ctrl-c</span> klaviatura yorlig'i yordamida dasturni to'xtatishi mumkin. Ammo bu to'yib bo'lmaydigan yirtqich hayvondan qochishning yana bir yo'li bor, [“Taxminni maxfiy raqam bilan solishtirish“](#comparing-the-guess-to-the-secret-number)<!--ignore -->: mavzusidagi `parse` muhokamasida aytib o'tilganidek, agar foydalanuvchi raqam bo'lmagan javobni kiritsa, dastur buziladi. Bu yerda ko'rsatilganidek, foydalanuvchiga chiqishga ruxsat berish uchun undan foydalanishimiz mumkin:n
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/no-listing-04-looping/
@@ -647,43 +639,50 @@ $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 1.50s
      Running `target/debug/guessing_game`
-Guess the number!
-The secret number is: 59
-Please input your guess.
+Raqamni topish o'yini!
+Yashirin raqam: 59
+Iltimos, taxminingizni kiriting.
 45
-You guessed: 45
-Too small!
-Please input your guess.
+Sizning taxminingiz: 45
+Raqam Kichik!
+Iltimos, taxminingizni kiriting.
 60
-You guessed: 60
-Too big!
-Please input your guess.
+Sizning taxminingiz: 60
+Raqam katta!
+Iltimos, taxminingizni kiriting.
 59
-You guessed: 59
-You win!
-Please input your guess.
+Sizning taxminingiz: 59
+Siz yutdingiz!
+Iltimos, taxminingizni kiriting.
 quit
 thread 'main' panicked at 'Please type a number!: ParseIntError { kind: InvalidDigit }', src/main.rs:28:47
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-Typing `quit` will quit the game, but as you’ll notice, so will entering any
-other non-number input. This is suboptimal, to say the least; we want the game
-to also stop when the correct number is guessed.
+`quit` deb yozsangiz, o‘yin tugaydi, lekin siz ko‘rganingizdek, boshqa raqam bo‘lmagan ma’lumotlarni kiritish ham shunday bo‘ladi. Bu, eng kamida, suboptimaldir; Biz to'g'ri raqam taxmin qilinganda ham o'yin to'xtashini xohlaymiz.
 
-### Quitting After a Correct Guess
+### To'g'ri taxmindan keyin chiqish
 
-Let’s program the game to quit when the user wins by adding a `break` statement:
+Keling, foydalanuvchi g'alaba qozonganida `break` iborasini qo'shish orqali o'yinni to'xtatish uchun dasturlashtiramiz:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-05-quitting/src/main.rs:here}}
+        // --snip--
+
+        match taxmin.cmp(&yashirin_raqam) {
+            Ordering::Less => println!("Raqam Kichik!"),
+            Ordering::Greater => println!("Raqam katta!"),
+            Ordering::Equal => {
+                println!("Siz yutdingiz!");
+                break;
+            }
+        }
+    }
+}
 ```
 
-Adding the `break` line after `You win!` makes the program exit the loop when
-the user guesses the secret number correctly. Exiting the loop also means
-exiting the program, because the loop is the last part of `main`.
+`Siz yutdingiz!` so‘ng `break` qatorini qo‘shish foydalanuvchi maxfiy raqamni to‘g‘ri taxmin qilganda dasturni tsikldan chiqadi. Loopdan chiqish dasturdan chiqishni ham anglatadi, chunki sikl `main` ning oxirgi qismidir.
 
 ### Handling Invalid Input
 
