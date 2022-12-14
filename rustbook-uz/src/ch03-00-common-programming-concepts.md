@@ -6,7 +6,7 @@ Xususan, siz o'zgaruvchilar, asosiy turlar, funktsiyalar, sharhlar va boshqaruv 
 
 > #### Kalit so'zlar
 >
-> Rust tilida boshqa tillardagi kabi faqat til tomonidan foydalanish uchun ajratilgan
+> Rust dasturlash tilida boshqa tillardagi kabi faqat til tomonidan foydalanish uchun ajratilgan
 > *kalit so'zlar* to'plami mavjud. Shuni yodda tutingki, siz ushbu so'zlarni 
 > o'zgaruvchilar yoki funktsiyalar nomi sifatida ishlata olmaysiz. Kalit so'zlarning aksariyati
 > maxsus ma'noga ega va siz ulardan Rust dasturlarida turli vazifalarni bajarish
