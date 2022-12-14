@@ -684,45 +684,38 @@ Keling, foydalanuvchi g'alaba qozonganida `break` iborasini qo'shish orqali o'yi
 
 `Siz yutdingiz!` so‘ng `break` qatorini qo‘shish foydalanuvchi maxfiy raqamni to‘g‘ri taxmin qilganda dasturni tsikldan chiqadi. Loopdan chiqish dasturdan chiqishni ham anglatadi, chunki sikl `main` ning oxirgi qismidir.
 
-### Handling Invalid Input
+### Noto'g'ri kiritish
 
-To further refine the game’s behavior, rather than crashing the program when
-the user inputs a non-number, let’s make the game ignore a non-number so the
-user can continue guessing. We can do that by altering the line where `guess`
-is converted from a `String` to a `u32`, as shown in Listing 2-5.
+O'yinning xatti-harakatlarini yanada yaxshilash uchun, foydalanuvchi raqamlardan boshqa belgilar kiritganda dasturni ishdan chiqargandan ko'ra, foydalanuvchi taxmin qilishni davom ettirishi uchun o'yinni raqam bo'lmagan belgilarga e'tibor bermaslikka harakat qildiraylik. Buni 2-5 roʻyxatda koʻrsatilganidek, `taxmin` satrdan `u32` ga aylantirilgan qatorni oʻzgartirish orqali amalga oshirishimiz mumkin.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-05/src/main.rs:here}}
+        // --snip--
+
+        io::stdin()
+            .read_line(&mut taxmin)
+            .expect("Satrni o‘qib bo‘lmadi");
+
+        let taxmin: u32 = match taxmin.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+
+        println!("Sizning taxminingiz: {taxmin}");
+
+        // --snip--
 ```
 
-<span class="caption">Listing 2-5: Ignoring a non-number guess and asking for
-another guess instead of crashing the program</span>
+<span class="caption">Ro'yxat 2-5: Raqamsiz taxminga e'tibor bermaslik va dasturni ishdan chiqarish o'rniga boshqa taxminni so'rash</span>
 
-We switch from an `expect` call to a `match` expression to move from crashing
-on an error to handling the error. Remember that `parse` returns a `Result`
-type and `Result` is an enum that has the variants `Ok` and `Err`. We’re using
-a `match` expression here, as we did with the `Ordering` result of the `cmp`
-method.
+Xato ustida ishlamay qolishdan xatoni hal qilishga o‘tish uchun biz `expect` chaqiruvidan `match` ifodasiga o‘tamiz. Esda tutingki, `parse` `Result` turini qaytaradi, `Result` esa `Ok` va `Err` variantlariga ega bo'lgan raqamdir. Biz bu yerda `cmp` usulining `Ordering` natijasi bilan bo‘lgani kabi `match` ifodasidan foydalanmoqdamiz.
 
-If `parse` is able to successfully turn the string into a number, it will
-return an `Ok` value that contains the resultant number. That `Ok` value will
-match the first arm’s pattern, and the `match` expression will just return the
-`num` value that `parse` produced and put inside the `Ok` value. That number
-will end up right where we want it in the new `guess` variable we’re creating.
+Agar `parse` qatorni raqamga muvaffaqiyatli aylantira olsa, natijada olingan raqamni o'z ichiga olgan `Ok` qiymatini qaytaradi. Bu `Ok` qiymati birinchi armning patterniga mos keladi va `match` ifodasi `parse` ishlab chiqarilgan va `Ok` qiymatiga qo'ygan `num` qiymatini qaytaradi. Bu raqam biz yaratayotgan yangi `taxmin`  o'zgaruvchisida biz xohlagan joyda tugaydi
 
-If `parse` is *not* able to turn the string into a number, it will return an
-`Err` value that contains more information about the error. The `Err` value
-does not match the `Ok(num)` pattern in the first `match` arm, but it does
-match the `Err(_)` pattern in the second arm. The underscore, `_`, is a
-catchall value; in this example, we’re saying we want to match all `Err`
-values, no matter what information they have inside them. So the program will
-execute the second arm’s code, `continue`, which tells the program to go to the
-next iteration of the `loop` and ask for another guess. So, effectively, the
-program ignores all errors that `parse` might encounter!
+Agar `parse` satrni raqamga aylantira olmasa xato haqida qo'shimcha ma'lumotni o'z ichiga olgan `Err` qiymatini qaytaradi. `Err` qiymati birinchi `match` bo‘limidagi `Ok(num)` patterniga mos kelmaydi, lekin ikkinchi armdagi `Err(_)` patterniga mos keladi. Pastki chiziq, `_`, diqqatga sazovor qiymatdir; bu misolda biz barcha `Err` qiymatlariga, ular ichida qanday ma'lumotlar bo'lishidan qat'iy nazar, mos kelmoqchimiz deymiz. Shunday qilib, dastur ikkinchi armning `continue` kodini bajaradi, bu dasturga `loop` ning keyingi iteratsiyasiga o'tishni va boshqa taxminni so'rashni aytadi. Shunday qilib, dastur `parse` duch kelishi mumkin bo'lgan barcha xatolarga e'tibor bermaydi!
 
-Now everything in the program should work as expected. Let’s try it:
+Endi dasturdagi hamma narsa kutilganidek ishlashi kerak. Keling, sinab ko'raylik:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/listing-02-05/
@@ -738,22 +731,22 @@ $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 4.45s
      Running `target/debug/guessing_game`
-Guess the number!
-The secret number is: 61
-Please input your guess.
+Raqamni topish o'yini!
+Yashirin raqam: 61
+Iltimos, taxminingizni kiriting.
 10
-You guessed: 10
-Too small!
-Please input your guess.
+Sizning taxminingiz: 10
+Raqam Kichik!
+Iltimos, taxminingizni kiriting.
 99
-You guessed: 99
-Too big!
-Please input your guess.
+Sizning taxminingiz: 99
+Raqam katta!
+Iltimos, taxminingizni kiriting.
 foo
-Please input your guess.
+Iltimos, taxminingizni kiriting.
 61
-You guessed: 61
-You win!
+Sizning taxminingiz: 61
+Siz yutdingiz!
 ```
 
 Awesome! With one tiny final tweak, we will finish the guessing game. Recall
