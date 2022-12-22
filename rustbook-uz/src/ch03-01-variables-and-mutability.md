@@ -75,52 +75,29 @@ x qiymati: 6
 
 `mut` ishlatilganda `x` ga bog‘langan qiymatni `5` dan `6` ga o‘zgartirishga ruxsat beriladi. Oxir oqibat, o'zgaruvchanlikni qo'llash yoki qilmaslikni hal qilish sizga bog'liq va bu vaziyatda eng aniq deb o'ylagan narsangizga bog'liq.
 
-### Constants
+### Konstantalar
 
-Like immutable variables, *constants* are values that are bound to a name and
-are not allowed to change, but there are a few differences between constants
-and variables.
+O'zgarmas o'zgaruvchilar singari, *konstantalar* nomga bog'langan va o'zgarishi mumkin bo'lmagan qiymatlardir, lekin konstantalar va o'zgaruvchilar o'rtasida bir nechta farqlar mavjud.
 
-First, you aren’t allowed to use `mut` with constants. Constants aren’t just
-immutable by default—they’re always immutable. You declare constants using the
-`const` keyword instead of the `let` keyword, and the type of the value *must*
-be annotated. We’ll cover types and type annotations in the next section,
-[“Data Types,”][data-types]<!-- ignore -->, so don’t worry about the details
-right now. Just know that you must always annotate the type.
+Birinchidan, `mut` dan doimiylar bilan foydalanishga ruxsat berilmagan. Doimiylar standart bo'yicha shunchaki o'zgarmas emas - ular har doim o'zgarmasdir.Siz konstantalarni `let` kalit so'zi o'rniga `const` kalit so'zidan foydalanib e'lon qilasiz va qiymat turiga *annotatsiya qilinishi kerak*. Biz turlar va izohlarni keyingi ["Ma'lumotlar turlari"][data-types]<!-- ignore --> bo'limida ko'rib chiqamiz, shuning uchun hozir tafsilotlar haqida qayg'urmang. Bilingki, siz har doim turga izoh qo'yishingiz kerak.
 
-Constants can be declared in any scope, including the global scope, which makes
-them useful for values that many parts of code need to know about.
+Konstantalar har qanday miqyosda, shu jumladan global miqyosda e'lon qilinishi mumkin, bu ularni kodning ko'p qismlari bilishi kerak bo'lgan qiymatlar uchun foydali qiladi.
 
-The last difference is that constants may be set only to a constant expression,
-not the result of a value that could only be computed at runtime.
+Oxirgi farq shundaki, konstantalar faqat ish vaqtida hisoblanishi mumkin bo'lgan qiymatning natijasi emas, balki faqat doimiy ifodaga o'rnatilishi mumkin.
 
-Here’s an example of a constant declaration:
+Mana doimiy deklaratsiyaga misol:
 
 ```rust
-const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
+const SONIYADA_UCH_SOAT: u32 = 60 * 60 * 3;
 ```
 
-The constant’s name is `THREE_HOURS_IN_SECONDS` and its value is set to the
-result of multiplying 60 (the number of seconds in a minute) by 60 (the number
-of minutes in an hour) by 3 (the number of hours we want to count in this
-program). Rust’s naming convention for constants is to use all uppercase with
-underscores between words. The compiler is able to evaluate a limited set of
-operations at compile time, which lets us choose to write out this value in a
-way that’s easier to understand and verify, rather than setting this constant
-to the value 10,800. See the [Rust Reference’s section on constant
-evaluation][const-eval] for more information on what operations can be used
-when declaring constants.
+Konstanta nomi `SONIYADA_UCH_SOAT` va uning qiymati 60 ni (bir daqiqadagi soniyalar soni) 60 ga (bir soatdagi daqiqalar soni) 3 ga (biz hisoblamoqchi bo'lgan soatlar soni) ko'paytirish natijasiga o'rnatiladi. Rustning doimiylar uchun nomlash konventsiyasi so'zlar orasida barcha bosh harflarni pastki chiziq bilan ishlatishdir. Kompilyator kompilyatsiya vaqtida cheklangan operatsiyalar to'plamini baholashga qodir, bu bizga ushbu qiymatni 10,800 qiymatiga o'rnatmasdan, tushunish va tekshirish osonroq bo'lgan tarzda yozishni tanlash imkonini beradi.
+Konstantalarni e'lon qilishda qanday operatsiyalardan foydalanish mumkinligi haqida qo'shimcha ma'lumot olish
+[Rust Referencening konstantalar bo'limiga qarang][const-eval]
 
-Constants are valid for the entire time a program runs, within the scope in
-which they were declared. This property makes constants useful for values in
-your application domain that multiple parts of the program might need to know
-about, such as the maximum number of points any player of a game is allowed to
-earn, or the speed of light.
+Konstantalar dastur ishlayotgan butun vaqt davomida, ular e'lon qilingan doirada amal qiladi. Bu xususiyat dasturning bir nechta qismlari bilishi kerak bo'lgan, masalan, o'yinning har qanday o'yinchisi olishi mumkin bo'lgan maksimal ball soni yoki yorug'lik tezligi kabi, ilova domeningizdagi qiymatlar uchun foydali konstantalarni qiladi.
 
-Naming hardcoded values used throughout your program as constants is useful in
-conveying the meaning of that value to future maintainers of the code. It also
-helps to have only one place in your code you would need to change if the
-hardcoded value needed to be updated in the future.
+Dasturingiz davomida ishlatiladigan qattiq kodlangan qiymatlarni doimiylar sifatida nomlash ushbu qiymatning ma'nosini kodning kelajakdagi maintainerlariga yetkazishda foydalidir. Bu, shuningdek, kodingizda faqat bitta joyga ega bo'lishga yordam beradi, agar kelajakda qattiq kodlangan qiymat yangilanishi kerak bo'lsa, o'zgartirishingiz kerak bo'ladi.
 
 ### Shadowing
 
