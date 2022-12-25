@@ -1,56 +1,49 @@
-## Data Types
+## Ma'lumotlar turlari
 
-Every value in Rust is of a certain *data type*, which tells Rust what kind of
-data is being specified so it knows how to work with that data. We’ll look at
-two data type subsets: scalar and compound.
+Rust-dagi har bir qiymat ma'lum bir *ma'lumot turiga* tegishli bo'lib, Rustga qanday ma'lumotlar ko'rsatilayotganligini bildiradi, shuning uchun u ushbu ma'lumotlar bilan qanday ishlashni biladi. Biz ikkita ma'lumotlar turini ko'rib chiqamiz: skalyar va birikma.
 
-Keep in mind that Rust is a *statically typed* language, which means that it
-must know the types of all variables at compile time. The compiler can usually
-infer what type we want to use based on the value and how we use it. In cases
-when many types are possible, such as when we converted a `String` to a numeric
-type using `parse` in the [“Comparing the Guess to the Secret
-Number”][comparing-the-guess-to-the-secret-number]<!-- ignore --> section in
-Chapter 2, we must add a type annotation, like this:
+Esda tutingki, Rust *statik tarzda yozilgan* tildir, ya'ni kompilyatsiya vaqtida barcha o'zgaruvchilarning turlarini bilishi kerak. Kompilyator odatda qiymat va uni qanday ishlatishimiz asosida biz qaysi turdan foydalanmoqchi ekanligimiz haqida xulosa chiqarishi mumkin. Ko‘p turlar mumkin bo‘lgan hollarda, masalan, 2-bobdagi [“Guessing o'yinini dasturlash”][comparing-the-guess-to-the-secret-number]<!-- ignore --> bo‘limidagi `parse` yordamida `String`ni raqamli turga o‘zgartirganimizda, shunga o‘xshash turdagi izoh qo‘shishimiz kerak:
 
 ```rust
-let guess: u32 = "42".parse().expect("Not a number!");
+let taxmin: u32 = "42".parse().expect("Raqam emas!");
 ```
 
-If we don’t add the `: u32` type annotation shown in the preceding code, Rust
-will display the following error, which means the compiler needs more
-information from us to know which type we want to use:
+Oldingi kodda ko'rsatilgan `: u32` turidagi izohni qo'shmasak, Rust quyidagi xatoni ko'rsatadi, ya'ni kompilyator bizdan qaysi turdan foydalanishni xohlayotganimizni bilish uchun qo'shimcha ma'lumotga muhtoj:
 
 ```console
-{{#include ../listings/ch03-common-programming-concepts/output-only-01-no-type-annotations/output.txt}}
+$ cargo build
+   Compiling no_type_annotations v0.1.0 (file:///projects/no_type_annotations)
+error[E0282]: type annotations needed
+ --> src/main.rs:2:9
+  |
+2 |     let taxmin = "42".parse().expect("Not a number!");
+  |         ^^^^^ consider giving `taxmin` a type
+
+For more information about this error, try `rustc --explain E0282`.
+error: could not compile `no_type_annotations` due to previous error
+
 ```
 
-You’ll see different type annotations for other data types.
+Boshqa ma'lumotlar turlari uchun turli turdagi izohlarni ko'rasiz.
 
-### Scalar Types
+### Skalyar turlari
 
-A *scalar* type represents a single value. Rust has four primary scalar types:
-integers, floating-point numbers, Booleans, and characters. You may recognize
-these from other programming languages. Let’s jump into how they work in Rust.
+*Skalyar* turi bitta qiymatni ifodalaydi. Rust to'rtta asosiy skalyar turga ega: integerlar, floating-point raqamlar, Boolean va belgilar. Siz ularni boshqa dasturlash tillaridan bilishingiz mumkin. Keling, ularning Rustda qanday ishlashini ko'rib chiqaylik.
 
-#### Integer Types
+#### Integer Turlari
 
-An *integer* is a number without a fractional component. We used one integer
-type in Chapter 2, the `u32` type. This type declaration indicates that the
-value it’s associated with should be an unsigned integer (signed integer types
-start with `i` instead of `u`) that takes up 32 bits of space. Table 3-1 shows
-the built-in integer types in Rust. We can use any of these variants to declare
-the type of an integer value.
+*integer* kasr komponenti bo‘lmagan sondir. Biz 2-bobda `u32` tipidagi bitta *integer* sonni ishlatdik. Ushbu turdagi deklaratsiya u bilan bog'langan qiymat 32 bit bo'sh joyni egallagan belgisiz butun son bo'lishi kerakligini bildiradi (imzoli butun sonlar `u` o'rniga `i` bilan boshlanadi). 3-1-jadvalda Rust-da o'rnatilgan integer turlari ko'rsatilgan. integer qiymatining turini e'lon qilish uchun biz ushbu variantlardan foydalanishimiz mumkin.
 
-<span class="caption">Table 3-1: Integer Types in Rust</span>
+<span class="caption">3-1-jadval: Rustdagi Integer sonlar turlari</span>
 
-| Length  | Signed  | Unsigned |
-|---------|---------|----------|
-| 8-bit   | `i8`    | `u8`     |
-| 16-bit  | `i16`   | `u16`    |
-| 32-bit  | `i32`   | `u32`    |
-| 64-bit  | `i64`   | `u64`    |
-| 128-bit | `i128`  | `u128`   |
-| arch    | `isize` | `usize`  |
+| Uzunligi | Imzolangan | Imzosiz  |
+|----------|------------|----------|
+| 8-bit    | `i8`       | `u8`     |
+| 16-bit   | `i16`      | `u16`    |
+| 32-bit   | `i32`      | `u32`    |
+| 64-bit   | `i64`      | `u64`    |
+| 128-bit  | `i128`     | `u128`   |
+| arch     | `isize`    | `usize`  |
 
 Each variant can be either signed or unsigned and has an explicit size.
 *Signed* and *unsigned* refer to whether it’s possible for the number to be
