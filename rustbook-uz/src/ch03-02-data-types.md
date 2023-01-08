@@ -47,47 +47,31 @@ Boshqa ma'lumotlar turlari uchun turli turdagi izohlarni ko'rasiz.
 
 Signedlar kichkini `i` harfi bilan boshlanadi, Unsigned esa kichik `u` harfi bilan boshlanadi.
 
-Each variant can be either signed or unsigned and has an explicit size.
-*Signed* and *unsigned* refer to whether it’s possible for the number to be
-negative—in other words, whether the number needs to have a sign with it
-(signed) or whether it will only ever be positive and can therefore be
-represented without a sign (unsigned). It’s like writing numbers on paper: when
-the sign matters, a number is shown with a plus sign or a minus sign; however,
-when it’s safe to assume the number is positive, it’s shown with no sign.
-Signed numbers are stored using [two’s complement][twos-complement]<!-- ignore
---> representation.
+Har bir variant signed yoki unsigned bo'lishi mumkin va aniq o'lchamga ega.
+*Signed* va *Unsigned* raqam manfiy boʻlishi mumkinmi yoki yoʻqligini anglatadi, boshqacha qilib aytganda, raqam u bilan birga belgiga ega boʻlishi (signed) boʻlishi kerakmi yoki u faqat ijobiy bo'ladimi va shuning uchun belgisiz (unsigned) ifodalanishi mumkinmi. Bu raqamlarni qog'ozga yozishga o'xshaydi: belgi muhim bo'lsa, raqam ortiqcha yoki minus belgisi bilan ko'rsatiladi; ammo, agar raqamni ijobiy deb hisoblash xavfsiz bo'lsa, u hech qanday belgisiz ko'rsatiladi.
+Signed raqamlar [ikkita to'ldiruvchi][twos-complement]<!-- ignore--> ko'rinish yordamida saqlanadi.
 
-Each signed variant can store numbers from -(2<sup>n - 1</sup>) to 2<sup>n -
-1</sup> - 1 inclusive, where *n* is the number of bits that variant uses. So an
-`i8` can store numbers from -(2<sup>7</sup>) to 2<sup>7</sup> - 1, which equals
--128 to 127. Unsigned variants can store numbers from 0 to 2<sup>n</sup> - 1,
-so a `u8` can store numbers from 0 to 2<sup>8</sup> - 1, which equals 0 to 255.
 
-Additionally, the `isize` and `usize` types depend on the architecture of the
-computer your program is running on, which is denoted in the table as “arch”:
-64 bits if you’re on a 64-bit architecture and 32 bits if you’re on a 32-bit
-architecture.
+Har bir signed variant -(2<sup>n - 1</sup>) dan 2<sup>n -
+1</sup> -1 gacha bo'lgan raqamlarni saqlashi mumkin, bu erda *n* variant foydalanadigan bitlar soni.
+Shunday qilib, `i8` -(2<sup>7</sup>) dan 2<sup>7</sup> - 1, gacha bo'lgan raqamlarni saqlashi mumkin, bu tengdir -128 dan 127 gacha.
+Unsigned variantlar 0 dan 2<sup>n</sup> - 1 gacha raqamlarni saqlashi mumkin, shuning uchun `u8` 0 dan 2<sup>8</sup> - 1 gacha bo'lgan raqamlarni saqlashi mumkin, bu 0 dan 255 gacha.
 
-You can write integer literals in any of the forms shown in Table 3-2. Note
-that number literals that can be multiple numeric types allow a type suffix,
-such as `57u8`, to designate the type. Number literals can also use `_` as a
-visual separator to make the number easier to read, such as `1_000`, which will
-have the same value as if you had specified `1000`.
+Bundan tashqari, `isize` va `usize` turlari dasturingiz ishlayotgan kompyuterning arxitekturasiga bog'liq bo'lib, u jadvalda “arch” sifatida ko'rsatilgan: agar siz 64 bitli arxitekturada bo'lsangiz 64 bit va 32 bitli arxitekturada bo'lsangiz 32 bit.
 
-<span class="caption">Table 3-2: Integer Literals in Rust</span>
+Integer sonlarni 3-2-jadvalda ko'rsatilgan istalgan shaklda yozishingiz mumkin. E'tibor bering, bir nechta raqamli turlar bo'lishi mumkin bo'lgan son harflari turni belgilash uchun `57u8` kabi tur qo'shimchasiga ruxsat beradi. Raqamni o'qishni osonlashtirish uchun `_` dan raqamli harflar ham foydalanishi mumkin, masalan, `1_000`, siz `1000` ni ko'rsatganingizdek bir xil qiymatga ega bo'ladi.
 
-| Number literals  | Example       |
-|------------------|---------------|
-| Decimal          | `98_222`      |
-| Hex              | `0xff`        |
-| Octal            | `0o77`        |
-| Binary           | `0b1111_0000` |
-| Byte (`u8` only) | `b'A'`        |
+<span class="caption">3-2-jadval: Rustdagi Integer literallar</span>
 
-So how do you know which type of integer to use? If you’re unsure, Rust’s
-defaults are generally good places to start: integer types default to `i32`.
-The primary situation in which you’d use `isize` or `usize` is when indexing
-some sort of collection.
+| Raqamli harflar   | Misol         |
+|-------------------|---------------|
+| O'nlik            | `98_222`      |
+| O'n oltilik       | `0xff`        |
+| Sakkizlik         | `0o77`        |
+| Ikkilik           | `0b1111_0000` |
+| Bayt (faqat "u8") | `b'A'`        |
+
+Xo'sh, qaysi turdagi integer sonni ishlatishni qanday bilasiz? Agar ishonchingiz komil bo'lmasa, Rustning standart sozlamalari odatda boshlash uchun yaxshi joylardir: integer son turlari standart bo'yicha `i32` dir. `isize` yoki `usize` dan foydalanadigan asosiy holat to'plamning bir turini indekslashdir.
 
 > ##### Integer Overflow
 >
