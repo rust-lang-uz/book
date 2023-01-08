@@ -2,7 +2,8 @@
 
 Rust-dagi har bir qiymat ma'lum bir *ma'lumot turiga* tegishli bo'lib, Rustga qanday ma'lumotlar ko'rsatilayotganligini bildiradi, shuning uchun u ushbu ma'lumotlar bilan qanday ishlashni biladi. Biz ikkita ma'lumotlar turini ko'rib chiqamiz: skalyar va birikma.
 
-Esda tutingki, Rust *statik tarzda yozilgan* tildir, ya'ni kompilyatsiya vaqtida barcha o'zgaruvchilarning turlarini bilishi kerak. Kompilyator odatda qiymat va uni qanday ishlatishimiz asosida biz qaysi turdan foydalanmoqchi ekanligimiz haqida xulosa chiqarishi mumkin. Ko‘p turlar mumkin bo‘lgan hollarda, masalan, 2-bobdagi [“Guessing o'yinini dasturlash”][comparing-the-guess-to-the-secret-number]<!-- ignore --> bo‘limidagi `parse` yordamida `String`ni raqamli turga o‘zgartirganimizda, shunga o‘xshash turdagi izoh qo‘shishimiz kerak:
+Esda tutingki, Rust *statik tarzda yozilgan* tildir, ya'ni kompilyatsiya vaqtida barcha o'zgaruvchilarning turlarini bilishi kerak. Kompilyator odatda qiymat va uni qanday ishlatishimiz asosida biz qaysi turdan foydalanmoqchi ekanligimiz haqida xulosa chiqarishi mumkin.
+Ko‘p turlar mumkin bo‘lgan hollarda, masalan, 2-bobdagi [“Tahminni maxfiy raqam bilan solishtirish”][comparing-the-guess-to-the-secret-number]<!-- ignore --> bo‘limidagi `parse` yordamida `String`ni raqamli turga o‘zgartirganimizda, quyidagi turdagi izohni qo‘shishimiz kerak:
 
 ```rust
 let taxmin: u32 = "42".parse().expect("Raqam emas!");
@@ -17,33 +18,34 @@ error[E0282]: type annotations needed
  --> src/main.rs:2:9
   |
 2 |     let taxmin = "42".parse().expect("Not a number!");
-  |         ^^^^^ consider giving `taxmin` a type
+  |         ^^^^^ consider giving `guess` a type
 
 For more information about this error, try `rustc --explain E0282`.
 error: could not compile `no_type_annotations` due to previous error
-
 ```
 
 Boshqa ma'lumotlar turlari uchun turli turdagi izohlarni ko'rasiz.
 
-### Skalyar turlari
+### Skalyar Turlar
 
-*Skalyar* turi bitta qiymatni ifodalaydi. Rust to'rtta asosiy skalyar turga ega: integerlar, floating-point raqamlar, Boolean va belgilar. Siz ularni boshqa dasturlash tillaridan bilishingiz mumkin. Keling, ularning Rustda qanday ishlashini ko'rib chiqaylik.
+*Skalyar* turi bitta qiymatni ifodalaydi. Rust to'rtta asosiy skalyar turga ega: integerlar, floating-point number, boolean va belgilar. Siz ularni boshqa dasturlash tillaridan bilishingiz mumkin. Keling, ularning Rustda qanday ishlashini ko'rib chiqaylik.
 
 #### Integer Turlari
 
-*integer* kasr komponenti bo‘lmagan sondir. Biz 2-bobda `u32` tipidagi bitta *integer* sonni ishlatdik. Ushbu turdagi deklaratsiya u bilan bog'langan qiymat 32 bit bo'sh joyni egallagan belgisiz butun son bo'lishi kerakligini bildiradi (imzoli butun sonlar `u` o'rniga `i` bilan boshlanadi). 3-1-jadvalda Rust-da o'rnatilgan integer turlari ko'rsatilgan. integer qiymatining turini e'lon qilish uchun biz ushbu variantlardan foydalanishimiz mumkin.
+*Integer* kasr komponenti bo‘lmagan sondir. Biz 2-bobda `u32` tipidagi bitta *integer* sonni ishlatdik. Ushbu turdagi deklaratsiya u bilan bog'langan qiymat 32 bit bo'sh joyni egallagan belgisiz butun son bo'lishi kerakligini bildiradi (Signed integer sonlar `u` o'rniga `i` bilan boshlanadi). 3-1-jadvalda Rust-da o'rnatilgan integer son turlari ko'rsatilgan. Integer son qiymatining turini e'lon qilish uchun biz ushbu variantlardan foydalanishimiz mumkin.
 
 <span class="caption">3-1-jadval: Rustdagi Integer sonlar turlari</span>
 
-| Uzunligi | Imzolangan | Imzosiz  |
-|----------|------------|----------|
-| 8-bit    | `i8`       | `u8`     |
-| 16-bit   | `i16`      | `u16`    |
-| 32-bit   | `i32`      | `u32`    |
-| 64-bit   | `i64`      | `u64`    |
-| 128-bit  | `i128`     | `u128`   |
-| arch     | `isize`    | `usize`  |
+| Uzunlik | Signed  | Unsigned |
+|---------|---------|----------|
+| 8-bit   | `i8`    | `u8`     |
+| 16-bit  | `i16`   | `u16`    |
+| 32-bit  | `i32`   | `u32`    |
+| 64-bit  | `i64`   | `u64`    |
+| 128-bit | `i128`  | `u128`   |
+| arch    | `isize` | `usize`  |
+
+Signedlar kichkini `i` harfi bilan boshlanadi, Unsigned esa kichik `u` harfi bilan boshlanadi.
 
 Each variant can be either signed or unsigned and has an explicit size.
 *Signed* and *unsigned* refer to whether it’s possible for the number to be
