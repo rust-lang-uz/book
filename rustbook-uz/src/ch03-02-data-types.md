@@ -122,71 +122,52 @@ Rust barcha turdagi raqamlar uchun kutilgan asosiy matematik operatsiyalarni qo'
 Ushbu bayonotlardagi har bir ifoda matematik operatordan foydalanadi va bitta qiymatga baholanadi, keyin esa o'zgaruvchiga bog'lanadi. [B ilovasi][appendix_b]<!-- ignore --> da
 Rust taqdim etgan barcha operatorlar ro'yxati mavjud.
 
-#### The Boolean Type
+#### Boolean turi
 
-As in most other programming languages, a Boolean type in Rust has two possible
-values: `true` and `false`. Booleans are one byte in size. The Boolean type in
-Rust is specified using `bool`. For example:
+Ko'pgina boshqa dasturlash tillarida bo'lgani kabi, Rust-da ham Boolean turi ikkita mumkin bo'lgan qiymatga ega: `true` va `false`. Boolean hajmi bir baytga teng.
+Rustdagi boolean turi `bool` yordamida belgilanadi. Misol uchun:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-08-boolean/src/main.rs}}
 ```
 
-The main way to use Boolean values is through conditionals, such as an `if`
-expression. We’ll cover how `if` expressions work in Rust in the [“Control
-Flow”][control-flow]<!-- ignore --> section.
+Boolean qiymatlardan foydalanishning asosiy usuli shartlardir, masalan, `if` ifodasidir. Rustda `if` iboralari qanday ishlashini [“Control Flow”][control-flow]<!-- ignore --> bo‘limida ko‘rib chiqamiz.
 
-#### The Character Type
+#### Belgilar(Character) turi
 
-Rust’s `char` type is the language’s most primitive alphabetic type. Here are
-some examples of declaring `char` values:
+Rustning `char` turi tilning eng primitive alifbo turidir. Mana `char` qiymatlarini e'lon qilishning ba`zi misollari:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-09-char/src/main.rs}}
 ```
 
-Note that we specify `char` literals with single quotes, as opposed to string
-literals, which use double quotes. Rust’s `char` type is four bytes in size and
-represents a Unicode Scalar Value, which means it can represent a lot more than
-just ASCII. Accented letters; Chinese, Japanese, and Korean characters; emoji;
-and zero-width spaces are all valid `char` values in Rust. Unicode Scalar
-Values range from `U+0000` to `U+D7FF` and `U+E000` to `U+10FFFF` inclusive.
-However, a “character” isn’t really a concept in Unicode, so your human
-intuition for what a “character” is may not match up with what a `char` is in
-Rust. We’ll discuss this topic in detail in [“Storing UTF-8 Encoded Text with
-Strings”][strings]<!-- ignore --> in Chapter 8.
+E'tibor bering, biz qo'sh tirnoq ishlatadigan satr harflaridan farqli o'laroq, `char` harflarini bitta tirnoq bilan belgilaymiz. Rustning `char` turi to'rt bayt o'lchamga ega va Unicode Scalar qiymatini ifodalaydi, ya'ni u ASCIIdan ko'ra ko'proq narsani anglatishi mumkin.
+Urg'uli harflar; Xitoy, yapon va koreys belgilar; emoji; va nol kenglikdagi boʻshliqlar Rust-dagi barcha haqiqiy `char` qiymatlaridir. Unicode Scalar qiymatlari `U+0000`dan `U+D7FF`gacha va `U+E000`dan `U+10FFFF`gacha.
+Biroq, “character” aslida Unicode-da tushuncha emas, shuning uchun “character” nima ekanligi haqidagi Rustdagi `char` bilan mos kelmasligi mumkin. Biz ushbu mavzuni 8-bobdagi [“UTF-8 kodlangan matnni satrlar bilan saqlash”][strings]<!-- ignore --> bo'limida batafsil muhokama qilamiz.
 
-### Compound Types
+### Murakkab turlar
 
-*Compound types* can group multiple values into one type. Rust has two
-primitive compound types: tuples and arrays.
+*Murakkab turlar* bir nechta qiymatlarni bir turga to'plashi mumkin.Rust ikkita primitive birikma turiga ega: tuplelar va arraylar.
 
-#### The Tuple Type
+#### Tuple turi
 
-A *tuple* is a general way of grouping together a number of values with a
-variety of types into one compound type. Tuples have a fixed length: once
-declared, they cannot grow or shrink in size.
+*tuple* - bu turli xil turlarga ega bo'lgan bir qator qiymatlarni bitta qo'shma turga birlashtirishning umumiy usuli.Tuplelar belgilangan uzunlikka ega: bir marta e'lon qilingandan so'ng, ular o'sishi yoki kichrayishi mumkin emas.
 
-We create a tuple by writing a comma-separated list of values inside
-parentheses. Each position in the tuple has a type, and the types of the
-different values in the tuple don’t have to be the same. We’ve added optional
-type annotations in this example:
+Qavslar ichida vergul bilan ajratilgan qiymatlar ro'yxatini yozish orqali tuple yaratamiz. Tupledagi har bir pozitsiya o'z turiga ega va tupledagi turli qiymatlarning turlari bir xil bo'lishi shart emas. Ushbu misolda biz ixtiyoriy turdagi izohlarni qo'shdik:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-10-tuples/src/main.rs}}
 ```
 
-The variable `tup` binds to the entire tuple because a tuple is considered a
-single compound element. To get the individual values out of a tuple, we can
-use pattern matching to destructure a tuple value, like this:
+`tup` o'zgaruvchisi butun tuplega bog'lanadi, chunki tuple bitta birikma element hisoblanadi. Tupledan individual qiymatlarni olish uchun biz tuple qiymatini buzish uchun pattern moslashuvidan foydalanishimiz mumkin, masalan:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-11-destructuring-tuples/src/main.rs}}

@@ -1,5 +1,5 @@
 fn main() {
     let c = 'z';
-    let z: char = 'ℤ'; // with explicit type annotation
-    let heart_eyed_cat = '😻';
+    let z: char = 'ℤ'; // aniq turdagi izoh bilan
+    let yurak_kozli_mushuk = '😻';
 }
