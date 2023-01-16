@@ -12,16 +12,7 @@ let taxmin: u32 = "42".parse().expect("Raqam emas!");
 Oldingi kodda ko'rsatilgan `: u32` turidagi izohni qo'shmasak, Rust quyidagi xatoni ko'rsatadi, ya'ni kompilyator bizdan qaysi turdan foydalanishni xohlayotganimizni bilish uchun qo'shimcha ma'lumotga muhtoj:
 
 ```console
-$ cargo build
-   Compiling no_type_annotations v0.1.0 (file:///projects/no_type_annotations)
-error[E0282]: type annotations needed
- --> src/main.rs:2:9
-  |
-2 |     let taxmin = "42".parse().expect("Not a number!");
-  |         ^^^^^ consider giving `guess` a type
-
-For more information about this error, try `rustc --explain E0282`.
-error: could not compile `no_type_annotations` due to previous error
+{{#include ../listings/ch03-common-programming-concepts/output-only-01-no-type-annotations/output.txt}}
 ```
 
 Boshqa ma'lumotlar turlari uchun turli turdagi izohlarni ko'rasiz.
@@ -113,33 +104,23 @@ Bu yerda harakatdagi floating-point raqamlarni ko'rsatadigan misol:
 <span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
-fn main() {
-    let x = 2.0; // f64
-
-    let y: f32 = 3.0; // f32
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-06-floating-point/src/main.rs}}
 ```
 
-Floating-point numbers are represented according to the IEEE-754 standard. The
-`f32` type is a single-precision float, and `f64` has double precision.
+Floating-point raqamlari IEEE-754 standartiga muvofiq taqdim etiladi. `f32` turi bitta aniqlikdagi floatdir va `f64` ikki tomonlama aniqlikka ega.
 
-#### Numeric Operations
+#### Raqamli operatsiyalar
 
-Rust supports the basic mathematical operations you’d expect for all the number
-types: addition, subtraction, multiplication, division, and remainder. Integer
-division truncates toward zero to the nearest integer. The following code shows
-how you’d use each numeric operation in a `let` statement:
+Rust barcha turdagi raqamlar uchun kutilgan asosiy matematik operatsiyalarni qo'llab-quvvatlaydi: qo'shish, ayirish, ko'paytirish, bo'lish va qoldiq. Butun sonni bo'lish noldan eng yaqin butun songa qisqaradi. Quyidagi kod `let` iborasida har bir raqamli operatsiyadan qanday foydalanishni ko'rsatadi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-07-numeric-operations/src/main.rs}}
 ```
 
-Each expression in these statements uses a mathematical operator and evaluates
-to a single value, which is then bound to a variable. [Appendix
-B][appendix_b]<!-- ignore --> contains a list of all operators that Rust
-provides.
+Ushbu bayonotlardagi har bir ifoda matematik operatordan foydalanadi va bitta qiymatga baholanadi, keyin esa o'zgaruvchiga bog'lanadi. [B ilovasi][appendix_b]<!-- ignore --> da
+Rust taqdim etgan barcha operatorlar ro'yxati mavjud.
 
 #### The Boolean Type
 

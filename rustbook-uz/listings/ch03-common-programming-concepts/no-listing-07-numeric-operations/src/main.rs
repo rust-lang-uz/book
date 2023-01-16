@@ -1,17 +1,17 @@
 fn main() {
-    // addition
+    // qo'shish
     let sum = 5 + 10;
 
-    // subtraction
+    // ayirish
     let difference = 95.5 - 4.3;
 
-    // multiplication
+    // ko'paytirish
     let product = 4 * 30;
 
-    // division
+    // bo'lish
     let quotient = 56.7 / 32.2;
-    let truncated = -5 / 3; // Results in -1
+    let truncated = -5 / 3; // Natijalar -1
 
-    // remainder
+    // qoldiq
     let remainder = 43 % 5;
 }
