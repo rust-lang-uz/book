@@ -75,49 +75,49 @@ Xo'sh, qaysi turdagi integer sonni ishlatishni qanday bilasiz? Agar ishonchingiz
 
 > ##### Integer Overflow
 >
-> Let’s say you have a variable of type `u8` that can hold values between 0 and
-> 255. If you try to change the variable to a value outside that range, such as
-> 256, *integer overflow* will occur, which can result in one of two behaviors.
-> When you’re compiling in debug mode, Rust includes checks for integer overflow
-> that cause your program to *panic* at runtime if this behavior occurs. Rust
-> uses the term *panicking* when a program exits with an error; we’ll discuss
-> panics in more depth in the [“Unrecoverable Errors with
-> `panic!`”][unrecoverable-errors-with-panic]<!-- ignore --> section in Chapter
-> 9.
->
-> When you’re compiling in release mode with the `--release` flag, Rust does
-> *not* include checks for integer overflow that cause panics. Instead, if
-> overflow occurs, Rust performs *two’s complement wrapping*. In short, values
-> greater than the maximum value the type can hold “wrap around” to the minimum
-> of the values the type can hold. In the case of a `u8`, the value 256 becomes
-> 0, the value 257 becomes 1, and so on. The program won’t panic, but the
-> variable will have a value that probably isn’t what you were expecting it to
-> have. Relying on integer overflow’s wrapping behavior is considered an error.
->
-> To explicitly handle the possibility of overflow, you can use these families
-> of methods provided by the standard library for primitive numeric types:
->
-> * Wrap in all modes with the `wrapping_*` methods, such as `wrapping_add`.
-> * Return the `None` value if there is overflow with the `checked_*` methods.
-> * Return the value and a boolean indicating whether there was overflow with
->   the `overflowing_*` methods.
-> * Saturate at the value’s minimum or maximum values with the `saturating_*`
->   methods.
+> Aytaylik, sizda 0 dan 255 gacha bo'lgan qiymatlarni ushlab turadigan `u8` tipidagi o'zgaruvchi bor.
+> Agar siz o'zgaruvchini ushbu diapazondan tashqaridagi qiymatga o'zgartirishga harakat qilsangiz,
+> masalan, 256, *integer overflow* sodir bo'ladi, bu ikki xatti-harakatdan biriga olib kelishi mumkin.
+> Debug mode rejimida kompilyatsiya qilayotganingizda, Rust butun sonlarning to'lib ketishini
+> tekshirishni o'z ichiga oladi, bu esa dasturni ishga tushirish vaqtida *panic* chiqaradi. Rust
+> dastur xato bilan chiqqanda *panicking* atamasini ishlatadi; Biz panic haqida 9-bobdagi
+> [“`panic` bilan tuzatib bo'lmaydigan xatolar”][unrecoverable-errors-with-panic]<!-- ignore -->
+> bo'limda batafsil ko'rib chiqamiz
+> 
+> `--release` buyrug'i bilan reliz rejimida kompilyatsiya qilayotganingizda, Rust
+> panic keltirib chiqaradigan butun sonlarni tekshirishni *o'z ichiga olmaydi*.
+> overflow occur sodir bo'ladi Rust *ikkitasini to'ldiruvchi wrapni* bajaradi. Qisqa qilib
+> aytganda, turdagi maksimal qiymatdan kattaroq qiymatlar, tur ushlab turishi mumkin bo'lgan minimal
+> qiymatlargacha "wrap" ni tashkil qiladi. `u8` holatida 256 qiymati 0 ga, 257 qiymati
+> 1 ga aylanadi va hokazo. Dastur panic qo'ymaydi, lekin o'zgaruvchi
+> siz kutgan qiymatga ega bo'lmaydi. Butun sonlarni wrapga tayanish
+> xato hisoblanadi. Owerflow ehtimolini aniq ko'rib chiqish uchun siz prime sonlar uchun
+> standart kutubxona tomonidan taqdim etilgan ushbu usullar oilalaridan foydalanishingiz mumkin:
+> 
+> * Barcha modelarni `wrapping_*` methodlari bilan oʻrash, masalan, `wrapping_add`.
+> * Agar `checked_*` methodlari owerflow boʻlsa, `None` qiymatini qaytaring.
+> * Qiymat va boolean qiymatni qaytaring, bu `overflowing_*` methodlari
+>   bilan overflow bo'lganini ko'rsatadi.
+> * Qiymatning minimal yoki maksimal qiymatlarida `saturating_*`
+>   methodllari bilan saturate bo'lgan.
 
-#### Floating-Point Types
+#### Floating-Point Turlari
 
-Rust also has two primitive types for *floating-point numbers*, which are
-numbers with decimal points. Rust’s floating-point types are `f32` and `f64`,
-which are 32 bits and 64 bits in size, respectively. The default type is `f64`
-because on modern CPUs, it’s roughly the same speed as `f32` but is capable of
-more precision. All floating-point types are signed.
+Rust shuningdek *floating-point raqamlar* uchun ikkita primitive turga ega, ular kasrli raqamlardir.
+Rust-ning floating-point turlari `f32` va `f64` bo'lib, ular mos ravishda 32 bit va 64 bit o'lchamga ega.
+Standart tur `f64` dir, chunki zamonaviy protsessorlarda u `f32` bilan bir xil tezlikda, lekin aniqroq bo'lishga qodir.
+Barcha floating-point turlari signeddir.
 
-Here’s an example that shows floating-point numbers in action:
+Bu yerda harakatdagi floating-point raqamlarni ko'rsatadigan misol:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-06-floating-point/src/main.rs}}
+fn main() {
+    let x = 2.0; // f64
+
+    let y: f32 = 3.0; // f32
+}
 ```
 
 Floating-point numbers are represented according to the IEEE-754 standard. The
