@@ -173,73 +173,50 @@ Qavslar ichida vergul bilan ajratilgan qiymatlar ro'yxatini yozish orqali tuple 
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-11-destructuring-tuples/src/main.rs}}
 ```
 
-This program first creates a tuple and binds it to the variable `tup`. It then
-uses a pattern with `let` to take `tup` and turn it into three separate
-variables, `x`, `y`, and `z`. This is called *destructuring* because it breaks
-the single tuple into three parts. Finally, the program prints the value of
-`y`, which is `6.4`.
+Bu dastur avval tuple yaratadi va uni `tup` o'zgaruvchisiga bog'laydi.Keyin u `tup`ni olish va uni uchta alohida o‘zgaruvchiga, `x`, `y` va `z` ga aylantirish uchun `let` bilan pattern ishlatadi. Bu  *destruktura* deb ataladi, chunki u bitta tupleni uch qismga ajratadi. Nihoyat, dastur `y` qiymatini chop etadi, bu `6,4`.
 
-We can also access a tuple element directly by using a period (`.`) followed by
-the index of the value we want to access. For example:
+Shuningdek, biz to'g'ridan-to'g'ri nuqta (`.`) va undan keyin kirishni xohlagan qiymat indeksidan foydalanib, tuple elementiga kirishimiz mumkin. Misol uchun:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-12-tuple-indexing/src/main.rs}}
 ```
 
-This program creates the tuple `x` and then accesses each element of the tuple
-using their respective indices. As with most programming languages, the first
-index in a tuple is 0.
+Bu dastur `x` tuplesini yaratadi va so'ngra o'z indekslari yordamida tuplening har bir elementiga kiradi. Ko'pgina dasturlash tillarida bo'lgani kabi, tupledagi birinchi indeks 0 ga teng.
 
-The tuple without any values has a special name, *unit*. This value and its
-corresponding type are both written `()` and represent an empty value or an
-empty return type. Expressions implicitly return the unit value if they don’t
-return any other value.
+Hech qanday qiymatsiz tuple maxsus nomga, *unit* ega. Bu qiymat va unga mos keladigan tur `()` yoziladi va bo'sh qiymat yoki bo'sh qaytish turini ifodalaydi. Ifodalar, agar ular boshqa qiymatni qaytarmasa, bilvosita birlik qiymatini qaytaradi.
 
-#### The Array Type
+#### Array Turi
 
-Another way to have a collection of multiple values is with an *array*. Unlike
-a tuple, every element of an array must have the same type. Unlike arrays in
-some other languages, arrays in Rust have a fixed length.
+Bir nechta qiymatlar to'plamiga ega bo'lishning yana bir usuli *array*dir. Tupledan farqli o'laroq, arrayning har bir elementi bir xil turdagi bo'lishi kerak. Ba'zi boshqa tillardagi arraylardan farqli o'laroq, Rustdagi arraylar belgilangan uzunlikka ega.
 
-We write the values in an array as a comma-separated list inside square
-brackets:
+Biz arraydagi qiymatlarni kvadrat qavslar ichida vergul bilan ajratilgan ro'yxat sifatida yozamiz:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-13-arrays/src/main.rs}}
 ```
 
-Arrays are useful when you want your data allocated on the stack rather than
-the heap (we will discuss the stack and the heap more in [Chapter
-4][stack-and-heap]<!-- ignore -->) or when you want to ensure you always have a
-fixed number of elements. An array isn’t as flexible as the vector type,
-though. A *vector* is a similar collection type provided by the standard
-library that *is* allowed to grow or shrink in size. If you’re unsure whether
-to use an array or a vector, chances are you should use a vector. [Chapter
-8][vectors]<!-- ignore --> discusses vectors in more detail.
+Arraylar maʼlumotlaringizni toʻplamga emas, balki stekga ajratishni istasangiz foydali boʻladi (biz [4-bobda][stack-and-heap]<!-- ignore -->) stek va toʻplam haqida koʻproq gaplashamiz yoki sizda har doim maʼlum miqdordagi elementlar mavjudligini taʼminlashni istasangiz).
+Array vektor turi kabi moslashuvchan emas. *Vektor* standart kutubxona tomonidan taqdim etilgan o'xshash to'plam turi bo'lib, uning hajmini o'stirish yoki kichraytirishi mumkin. Agar array yoki vektordan foydalanishga ishonchingiz komil bo'lmasa, vektordan foydalanishingiz mumkin.
+[8-bobda][vectors]<!-- ignore --> vektorlar batafsilroq muhokama qilinadi.
 
-However, arrays are more useful when you know the number of elements will not
-need to change. For example, if you were using the names of the month in a
-program, you would probably use an array rather than a vector because you know
-it will always contain 12 elements:
+Biroq, agar elementlar sonini o'zgartirish kerak bo'lmasligini bilsangiz, arraylar foydaliroq bo'ladi. Misol uchun, agar siz dasturda oy nomlaridan foydalansangiz, vektordan ko'ra massivdan foydalanar edingiz, chunki u har doim 12 ta elementdan iborat bo'lishini bilasiz:
 
 ```rust
-let months = ["January", "February", "March", "April", "May", "June", "July",
-              "August", "September", "October", "November", "December"];
+let oylar = ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul",
+              "Avgust", "Setabr", "Oktabr", "Noyabr", "Dekabr"];
 ```
 
-You write an array’s type using square brackets with the type of each element,
-a semicolon, and then the number of elements in the array, like so:
+Siz har bir element turi, nuqta-vergul va arraydagi elementlar soni bilan kvadrat qavslar yordamida array turini yozasiz, masalan:
 
 ```rust
 let a: [i32; 5] = [1, 2, 3, 4, 5];
 ```
 
-Here, `i32` is the type of each element. After the semicolon, the number `5`
-indicates the array contains five elements.
+Bu erda `i32` har bir elementning turi. Nuqtali verguldan keyin `5` raqami array beshta elementdan iboratligini bildiradi.
 
 You can also initialize an array to contain the same value for each element by
 specifying the initial value, followed by a semicolon, and then the length of
