@@ -218,50 +218,37 @@ let a: [i32; 5] = [1, 2, 3, 4, 5];
 
 Bu erda `i32` har bir elementning turi. Nuqtali verguldan keyin `5` raqami array beshta elementdan iboratligini bildiradi.
 
-You can also initialize an array to contain the same value for each element by
-specifying the initial value, followed by a semicolon, and then the length of
-the array in square brackets, as shown here:
+Bundan tashqari, har bir element uchun bir xil qiymatni o'z ichiga olgan arrayni boshlang'ich qiymatdan keyin nuqta-vergul qo'yib, so'ngra bu yerda ko'rsatilgandek kvadrat qavs ichida array uzunligini belgilash orqali ishga tushirishingiz mumkin:
 
 ```rust
 let a = [3; 5];
 ```
 
-The array named `a` will contain `5` elements that will all be set to the value
-`3` initially. This is the same as writing `let a = [3, 3, 3, 3, 3];` but in a
-more concise way.
+`a` nomli array dastlab `3` qiymatiga o'rnatiladigan `5` elementni o'z ichiga oladi. Bu `let a = [3, 3, 3, 3, 3];` yozish bilan bir xil, ammo qisqaroq tarzda.
 
-##### Accessing Array Elements
+##### Array elementlariga kirish
 
-An array is a single chunk of memory of a known, fixed size that can be
-allocated on the stack. You can access elements of an array using indexing,
-like this:
+Array - bu stekda taqsimlanishi mumkin bo'lgan ma'lum, qat'iy o'lchamdagi xotiraning bitta bo'lagi. Siz indekslash yordamida array elementlariga kirishingiz mumkin, masalan:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-14-array-indexing/src/main.rs}}
 ```
 
-In this example, the variable named `first` will get the value `1` because that
-is the value at index `[0]` in the array. The variable named `second` will get
-the value `2` from index `[1]` in the array.
+Bu misolda `birinchi` deb nomlangan o‘zgaruvchi `1` qiymatini oladi, chunki bu arraydagi `[0]` indeksidagi qiymatdir. `ikkinchi` deb nomlangan ozgaruvchi arraydagi `[1]` indeksidan `2` qiymatini oladi.
 
-##### Invalid Array Element Access
+##### Yaroqsiz Array elementlariga kirish
 
-Let’s see what happens if you try to access an element of an array that is past
-the end of the array. Say you run this code, similar to the guessing game in
-Chapter 2, to get an array index from the user:
+Keling, array oxiridan o‘tgan array elementiga kirishga harakat qilsangiz nima bo‘lishini ko‘rib chiqamiz. Aytaylik, foydalanuvchidan array indeksini olish uchun 2-bobdagi taxminiy o‘yinga o‘xshash ushbu kodni ishlatasiz:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,panics
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/src/main.rs}}
 ```
 
-This code compiles successfully. If you run this code using `cargo run` and
-enter `0`, `1`, `2`, `3`, or `4`, the program will print out the corresponding
-value at that index in the array. If you instead enter a number past the end of
-the array, such as `10`, you’ll see output like this:
+Ushbu kod muvaffaqiyatli kompilyatsiya qilinadi.Agar siz ushbu kodni `cargo run` yordamida ishga tushirsangiz va `0`, `1`, `2`, `3` yoki `4` kiritsangiz, dastur arraydagi ushbu indeksdagi mos qiymatni chop etadi. Buning o'rniga array oxiridan o'tgan raqamni kiritsangiz, masalan, `10`, siz shunday chiqishni ko'rasiz:
 
 <!-- manual-regeneration
 cd listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access
@@ -274,21 +261,9 @@ thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-The program resulted in a *runtime* error at the point of using an invalid
-value in the indexing operation. The program exited with an error message and
-didn’t execute the final `println!` statement. When you attempt to access an
-element using indexing, Rust will check that the index you’ve specified is less
-than the array length. If the index is greater than or equal to the length,
-Rust will panic. This check has to happen at runtime, especially in this case,
-because the compiler can’t possibly know what value a user will enter when they
-run the code later.
+Dastur indekslash operatsiyasida yaroqsiz qiymatdan foydalanish nuqtasida *runtime* xatosiga olib keldi. Dastur xato xabari bilan chiqdi va yakuniy `println!` bayonotini bajarmadi. Indekslash yordamida elementga kirishga harakat qilganingizda, Rust siz ko'rsatgan indeks array uzunligidan kamroq ekanligini tekshiradi. Agar indeks uzunlikdan kattaroq yoki unga teng bo'lsa, Rust panic chiqaradi. Bu tekshirish runtimeda amalga oshirilishi kerak, ayniqsa bu holatda, chunki kompilyator foydalanuvchi kodni keyinroq ishga tushirganda qanday qiymat kiritishini bila olmaydi.
 
-This is an example of Rust’s memory safety principles in action. In many
-low-level languages, this kind of check is not done, and when you provide an
-incorrect index, invalid memory can be accessed. Rust protects you against this
-kind of error by immediately exiting instead of allowing the memory access and
-continuing. Chapter 9 discusses more of Rust’s error handling and how you can
-write readable, safe code that neither panics nor allows invalid memory access.
+Bu Rustning xotira xavfsizligi tamoyillarining amaldagi namunasidir. Ko'pgina low-leveldagi tillarda bunday tekshirish amalga oshirilmaydi va noto'g'ri indeksni taqdim etganingizda, yaroqsiz xotiraga kirish mumkin. Rust xotiraga kirishga ruxsat berish va davom ettirish o'rniga darhol chiqish orqali sizni bunday xatolardan himoya qiladi. 9-bobda Rust-ning xatolarini qanday hal qilish va siz panic qo'ymaydigan va yaroqsiz xotiraga kirishga ruxsat bermaydigan o'qilishi mumkin bo'lgan xavfsiz kodni qanday yozishingiz mumkinligi muhokama qilinadi.
 
 [comparing-the-guess-to-the-secret-number]:
 ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
