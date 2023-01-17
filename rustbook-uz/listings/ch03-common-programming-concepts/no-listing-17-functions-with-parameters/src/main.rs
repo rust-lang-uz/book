@@ -1,7 +1,7 @@
 fn main() {
-    another_function(5);
+    boshqa_funksiya(5);
 }
 
-fn another_function(x: i32) {
-    println!("The value of x is: {x}");
+fn boshqa_funksiya(x: i32) {
+    println!("x qiymati: {x}");
 }

@@ -15,66 +15,46 @@ Rust-da funksiyani `fn` so'ng funksiya nomi va qavslar to'plamini kiritish orqal
 
 Biz belgilagan har qanday funktsiyani uning nomidan keyin qavslar to'plamini kiritish orqali chaqirishimiz mumkin. Dasturda `boshqa_funksiya` ni aniqlanganligi sababli uni `main` funksiya ichidan chaqirish mumkin. E'tibor bering, biz `boshqa_funksiya` ni manba kodidagi `main` funksiyadan keyin belgilaganmiz; uni avval ham belgilashimiz mumkin edi. Rust sizning funksiyalaringizni qayerda belgilashingizning ahamiyati yo'q, faqat ular so'rov yuboruvchi tomonidan ko'rinadigan doirada aniqlangan.
 
-Let’s start a new binary project named *functions* to explore functions
-further. Place the `another_function` example in *src/main.rs* and run it. You
-should see the following output:
+Keling, funksiyalarni ko'proq o'rganish uchun *funktsiyalar* nomli yangi binary loyihani boshlaylik. `boshqa_funksiya` misolini *src/main.rs* ga joylashtiring va uni ishga tushiring.Quyidagi chiqishni ko'rishingiz kerak:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-16-functions/output.txt}}
 ```
 
-The lines execute in the order in which they appear in the `main` function.
-First the “Hello, world!” message prints, and then `another_function` is called
-and its message is printed.
+Qatorlar `main` funksiyada paydo bo'ladigan tartibda bajariladi.
+Avvaliga "Hello, world!" xabar chop etiladi, keyin `boshqa_funksiya` chaqiriladi va uning xabari chop etiladi.
 
-### Parameters
+### Parametrlar
 
-We can define functions to have *parameters*, which are special variables that
-are part of a function’s signature. When a function has parameters, you can
-provide it with concrete values for those parameters. Technically, the concrete
-values are called *arguments*, but in casual conversation, people tend to use
-the words *parameter* and *argument* interchangeably for either the variables
-in a function’s definition or the concrete values passed in when you call a
-function.
+Biz funksiyalarni *parametrlari* bo'lishi uchun belgilashimiz mumkin, ular funksiya imzosining bir qismi bo'lgan maxsus o'zgaruvchilardir. Agar funksiya parametrlarga ega bo'lsa, siz unga ushbu parametrlar uchun aniq qiymatlarni berishingiz mumkin. Texnik jihatdan aniq qiymatlar *argumentlar* deb ataladi, ammo tasodifiy suhbatda odamlar funksiya taʼrifidagi oʻzgaruvchilar yoki funksiyani chaqirganingizda qabul qilingan aniq qiymatlar uchun *parametr* va *argument* soʻzlarini bir-birining oʻrniga ishlatishga moyildirlar.
 
-In this version of `another_function` we add a parameter:
+`boshqa_funksiya` ning ushbu versiyasida biz parametr qo'shamiz:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-17-functions-with-parameters/src/main.rs}}
 ```
 
-Try running this program; you should get the following output:
+Ushbu dasturni ishga tushirishga harakat qiling; quyidagi chiqishni olishingiz kerak:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-17-functions-with-parameters/output.txt}}
 ```
 
-The declaration of `another_function` has one parameter named `x`. The type of
-`x` is specified as `i32`. When we pass `5` in to `another_function`, the
-`println!` macro puts `5` where the pair of curly brackets containing `x` was
-in the format string.
+`boshqa_funksiya` deklaratsiyasi `x` nomli bitta parametrga ega. `x` turi `i32` sifatida belgilangan. Biz `5`ni `boshqa_funksiya`ga o‘tkazganimizda, `println!` makros `5` ni `x`ni o‘z ichiga olgan jingalak qavslar juftligi format satrida joylashgan joyga qo‘yadi.
 
-In function signatures, you *must* declare the type of each parameter. This is
-a deliberate decision in Rust’s design: requiring type annotations in function
-definitions means the compiler almost never needs you to use them elsewhere in
-the code to figure out what type you mean. The compiler is also able to give
-more helpful error messages if it knows what types the function expects.
+Funksiya signaturelarda siz har bir parametr turini e'lon qilishingiz kerak. Bu Rust dizaynidagi ataylab qabul qilingan qaror: funksiya taʼriflarida turdagi izohlarni talab qilish kompilyatorga qaysi turni nazarda tutayotganingizni tushunish uchun ularni kodning boshqa joylarida ishlatishingizga deyarli hech qachon ehtiyoj sezmasligini anglatadi. Kompilyator, shuningdek, funksiya qanday turlarni kutayotganini bilsa, yanada foydali xato xabarlarini berishi mumkin.
 
-When defining multiple parameters, separate the parameter declarations with
-commas, like this:
+Bir nechta parametrlarni belgilashda parametr deklaratsiyasini vergul bilan ajrating, masalan:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/src/main.rs}}
 ```
 
-This example creates a function named `print_labeled_measurement` with two
-parameters. The first parameter is named `value` and is an `i32`. The second is
-named `unit_label` and is type `char`. The function then prints text containing
-both the `value` and the `unit_label`.
+Ushbu misol ikkita parametrli `belgilangan_vaqt` nomli funksiyani yaratadi. Birinchi parametr `value` deb nomlangan va `i32` dir. Ikkinchisi `unit_label` deb nomlanadi va `char` turidir. Keyin funksiya `value` va ``unit_label` ni o‘z ichiga olgan matnni chop etadi.
 
 Let’s try running this code. Replace the program currently in your *functions*
 project’s *src/main.rs* file with the preceding example and run it using `cargo
