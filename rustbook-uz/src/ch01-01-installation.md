@@ -11,12 +11,12 @@ Rustning barqarorligi kafolati kitobdagi kompilyatsiya qilingan barcha misollar 
 > ### Buyruqlar qatori yozuvi
 >
 > Ushbu bobda va butun kitobda biz terminalda ishlatiladigan ba'zi buyruqlarni ko'rsatamiz.
-> Terminalga kiritishingiz kerak bo'lgan barcha qatorlar "$" bilan boshlanadi.
+> Terminalga kiritishingiz kerak bo'lgan barcha qatorlar `$` bilan boshlanadi.
 > `$` belgisini kiritishingiz shart emas; bu har bir buyruqning boshlanishini ko'rsatish
 > uchun ko'rsatilgan buyruq qatori. `$` bilan boshlanmagan qatorlar odatda oldingi buyruqning
 > natijasini ko'rsatadi. Bundan tashqari, PowerShell-ga xos misollarda `$` emas, `>` ishlatiladi.
 
-### Linux yoki macOS-da  `rustup` o'rnatilmoqda
+### Linux yoki macOS-ga  `rustup` o'rnatish
 
 Agar siz Linux yoki macOS dan foydalansangiz, terminalni oching va quyidagi buyruqni kiriting:
 
@@ -30,7 +30,7 @@ Buyruq skriptni yuklab oladi va Rustning eng so'nggi barqaror versiyasini o'rnat
 Rust is installed now. Great!
 ```
 
-Shuningdek, sizga  *linker*, kerak bo'ladi, ya'ni Rust o'zining kompilyatsiya qilingan natijalarini bitta faylga birlashtirish uchun foydalanadigan dastur. Ehtimol,bu sizda allaqachon mavjud. Agar linker xatolarga duch kelsangiz, odatda linkernini o'z ichiga olgan C kompilyatorini o'rnatishingiz kerak. C kompilyatori ham foydalidir, chunki ba'zi umumiy Rust paketlari C kodiga bog'liq va C kompilyatoriga muhtoj bo'ladi.
+Shuningdek, sizga  *linker*, kerak bo'ladi, ya'ni Rust o'zining kompilyatsiya qilingan natijalarini bitta faylga birlashtirish uchun foydalanadigan dastur. Ehtimol,bu sizda allaqachon mavjud. Agar linker xatolarga duch kelsangiz, odatda linkerni o'z ichiga olgan C kompilyatorini o'rnatishingiz kerak. C kompilyatori ham foydalidir, chunki ba'zi umumiy Rust paketlari C kodiga bog'liq va C kompilyatoriga muhtoj bo'ladi.
 
 MacOS-da siz C kompilyatorini ishga tushirish orqali olishingiz mumkin:
 
@@ -40,11 +40,11 @@ $ xcode-select --install
 
 Linux foydalanuvchilari odatda distributiv texnik hujjatlariga muvofiq GCC yoki Clang o'rnatishlari kerak. Misol uchun, agar siz Ubuntu'dan foydalansangiz, `build-essential` paketini o'rnatishingiz mumkin.
 
-### Windows-da `rustup` o'rnatilmoqda
+### Windows-ga `rustup` o'rnatish
 
 Windows tizimida [https://www.rust-lang.org/tools/install][install] saytiga o'ting va Rustni o'rnatish bo'yicha ko'rsatmalarga amal qiling. O'rnatishning bir nuqtasida sizga Visual Studio 2013 yoki undan keyingi versiyalari uchun MSVC yaratish vositalari kerakligi haqida xabar keladi.
 
-Qurilish vositalarini olish uchun [Visual Studio 2022][visualstudio] ni o'rnatishingiz kerak bo'ladi. Qaysi ish dasturlarini o'rnatish kerakligi so'ralganda, quyidagilarni  kiriting:
+Build toolsini olish uchun [Visual Studio 2022][visualstudio] ni o'rnatishingiz kerak bo'ladi. Qaysi ish dasturlarini o'rnatish kerakligi so'ralganda, quyidagilarni  kiriting:
 
 * “Desktop Development with C++”
 * TWindows 10 yoki 11 SDK

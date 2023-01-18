@@ -56,7 +56,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 1-1: `Hello, world!` ni chop etuvchi dastur</span>
+<span class="caption">Ro'yxat 1-1: `Hello, world!` ni chop etuvchi dastur</span>
 
 Faylni saqlang va Terminalda *~/projects/hello_world* jildiga qayting.
 Linux yoki macOS da faylni kompilyatsiya qilish va ishga tushirish uchun quyidagi buyruqlarni kiriting:
@@ -80,7 +80,7 @@ Agar `Hello, world!` chop etilgan bo'lsa, tabriklaymiz! Siz rasmiy ravishda Rust
 
 ### Rust dasturining tuzilishi.
 
-Keling "Salom, Olam!" dasturiga chuqurroq nazar solamiz. Boshqotirmaning 1-qismi:
+Keling "Hello, world!" dasturiga chuqurroq nazar solamiz. Boshqotirmaning 1-qismi:
 
 ```rust
 fn main() {
@@ -111,7 +111,7 @@ matnni ekranga chop etadi.Bu yerda ahamiyat qaratish zarur bo'lgan
 to'rtta muhim narsalar bor.
 
 <!-- Birinchidan, Rust stili 4ta bo'sh joydan iborat 1ta tabdan emas. -->
-Birinchidan, Rust uslubi to'rtta bo'shliqdan iborat tab emas
+Birinchidan, Rust style to'rtta bo'shliqdan iborat tab emas
 
 Ikkinchidan, `println!` Rust makrosini chaqiradi. Agar u funktsiyani o'rniga chaqirgan bo'lsa, u `println` (`!` belgisiz) sifatida kiritiladi. Biz Rust makrolari haqida 19-bobda batafsilroq muhokama qilamiz.Hozircha siz shuni bilishingiz kerakki, `!` belgisidan foydalanish oddiy funksiya o‘rniga makrosni chaqirayotganingizni anglatadi va makrolar har doim ham funksiyalar bilan bir xil qoidalarga amal qilmaydi.
 
@@ -130,7 +130,7 @@ Rust dasturini ishga tushirishdan oldin uni Rust kompilyatoridan foydalanib, `ru
 $ rustc main.rs
 ```
 
-Agar siz C yoki C++ bilan ishlagan bo'lsangiz, bu `gcc` yoki `clang` ga o'xshashligini sezasiz. Muvaffaqiyatli kompilyatsiyadan so'ng Rust ikkilik bajariladigan faylni chiqaradi.
+Agar siz C yoki C++ bilan ishlagan bo'lsangiz, bu `gcc` yoki `clang` ga o'xshashligini sezasiz. Muvaffaqiyatli kompilyatsiyadan so'ng Rust binary bajariladigan faylni chiqaradi.
 
 Linux, macOS va Windows-dagi PowerShell-da siz shelldagi `ls` buyrug'ini kiritish orqali bajariladigan faylni ko'rishingiz mumkin:
 
@@ -163,8 +163,7 @@ $ ./main # or .\Windows-da main.exe
 Agar sizning *main.rs* faylingiz “Hello, world!” dasturi bo'lsa, bu dastur
 ekranga `Hello, world!` matnini chop etadi.
 
-Agar siz Ruby, Python yoki JavaScript kabi dinamik tilni yaxshi bilsangiz, dasturni alohida bosqichlar sifatida kompilyatsiya qilish va ishga tushirishga odatlanmagan bo'lishingiz mumkin. Rust *yozish davomida kompilyatsiya qilinga* til,
-dasturni kompilyatsiya qiling va bajariladigan faylni boshqa birovga bering va ular Rustni o'rnatmasdan ham uni ishga tushirishlari mumkin.Agar siz kimgadir *.rb*, *.py* yoki *.js* faylini bersangiz, ularda Ruby, Python yoki JavaScript ilovasi oʻrnatilgan boʻlishi kerak (mos ravishda). Ammo bu tillarda dasturni kompilyatsiya qilish va ishga tushirish uchun faqat bitta buyruq kerak bo'ladi. Til dizaynida hamma narsa o'zaro kelishuvdir.
+Agar siz Ruby, Python yoki JavaScript kabi dinamik tilni yaxshi bilsangiz, dasturni alohida bosqichlar sifatida kompilyatsiya qilish va ishga tushirishga odatlanmagan bo'lishingiz mumkin. Rust - bu oldindan tuzilgan kompilyatsiya tili, ya'ni siz dasturni kompilyatsiya qilishingiz va bajariladigan faylni boshqa birovga berishingiz mumkin va ular Rustni o'rnatmasdan ham uni ishga tushirishlari mumkin.Agar siz kimgadir *.rb*, *.py* yoki *.js* faylini bersangiz, ularda Ruby, Python yoki JavaScript ilovasi oʻrnatilgan boʻlishi kerak (mos ravishda). Ammo bu tillarda dasturni kompilyatsiya qilish va ishga tushirish uchun faqat bitta buyruq kerak bo'ladi. Til dizaynida hamma narsa o'zaro kelishuvdir.
 
 Oddiy dasturlar uchun `rustc` bilan kompilyatsiya qilish juda mos keladi, lekin loyihangiz o'sib borishi bilan siz barcha variantlarni boshqarishni va kodingizni almashishni osonlashtirishni xohlaysiz.
 Endi, biz siz bilan haqiqiy Rust dasturlarini tuzishda qulaylik yaratuvchi

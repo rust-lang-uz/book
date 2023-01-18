@@ -4,4 +4,4 @@ Rust sayohatingizni boshlaymiz! O'rganish uchun ko'p narsa bor, lekin har bir sa
 
 * Rustni Linux, macOS va Windows-ga o'rnatish
 * `Hello, world!` ni chop etuvchi dasturni yozish
-* `cargo` dan foydalanib, Rust paketlar menejeri va qurish tizimi
+* `cargo` dan foydalanib, Rust paketlar menejeri va build systemdan foydalanish
