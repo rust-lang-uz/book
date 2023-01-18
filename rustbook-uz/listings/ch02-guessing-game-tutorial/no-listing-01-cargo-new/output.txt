@@ -1,5 +1,5 @@
 $ cargo run
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+   Compiling taxminiy_raqam v0.1.0 (file:///projects/taxminiy_raqam)
     Finished dev [unoptimized + debuginfo] target(s) in 1.50s
-     Running `target/debug/guessing_game`
+     Running `target/debug/taxminiy_raqam`
 Hello, world!

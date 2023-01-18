@@ -1,19 +1,19 @@
-# Guessing o'yinini dasturlash
+# Taxmin qilish o'yinini dasturlash
 
 Keling, birgalikda amaliy loyiha orqali Rustga o'taylik! Ushbu bob sizni bir nechta umumiy Rust tushunchalari bilan tanishtirib, ulardan haqiqiy dasturda qanday foydalanishni ko'rsatib beradi.  Siz `let`, `match`, usullari, bog'langan funksiyalar, external cratelardan foydalanish va boshqalar haqida bilib olasiz! Keyingi boblarda biz ushbu fikrlarni batafsilroq ko'rib chiqamiz. Ushbu bobda siz faqat asoslarni mashq qilasiz.
 
-Biz klassik boshlang'ich dasturlash muammosini amalga oshiramiz: taxmin qilish o'yini. Bu qanday ishlaydi: dastur 1 dan 100 gacha tasodifiy butun son hosil qiladi. Keyin u o'yinchini taxmin qilishni taklif qiladi.Tahmin kiritilgandan so'ng, dastur taxmin kichik yoki katta ekanligini ko'rsatadi. IAgar taxmin to'g'ri bo'lsa, o'yin tabrik xabarini chop etadi va chiqadi.
+Biz klassik boshlang'ich dasturlash muammosini amalga oshiramiz: taxmin qilish o'yini. Bu qanday ishlaydi: dastur 1 dan 100 gacha tasodifiy butun son hosil qiladi. Keyin u o'yinchini taxmin qilishni taklif qiladi.Tahmin kiritilgandan so'ng, dastur taxmin kichik yoki katta ekanligini ko'rsatadi. Agar taxmin to'g'ri bo'lsa, o'yin tabrik xabarini chop etadi va chiqadi.
 
 ## Yangi loyiha yaratish
 
 Yangi loyihani o'rnatish uchun 1-bobda yaratgan *projects* jildiga o'ting va Cargo-dan foydalanib yangi loyiha yarating, masalan:
 
 ```console
-$ cargo new guessing_game
-$ cd guessing_game
+$ cargo new taxminiy_raqam
+$ cd taxminiy_raqam
 ```
 
-Birinchi `cargo new` buyrug'i birinchi argument sifatida loyiha nomini (`guessing_game`)ni oladi. Ikkinchi buyruq yangi loyiha jildiga kiradi.
+Birinchi `cargo new` buyrug'i birinchi argument sifatida loyiha nomini (`taxminiy_raqam`)ni oladi. Ikkinchi buyruq yangi loyiha jildiga kiradi.
 
 Yaratilgan *Cargo.toml* fayliga qarang:
 
@@ -29,62 +29,35 @@ cd ../../..
 <span class="filename">Fayl nomi: Cargo.toml</span>
 
 ```toml
-[package]
-name = "guessing_game"
-version = "0.1.0"
-edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
+{{#include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/Cargo.toml}}
 ```
 
-1-bobda ko'rganingizdek, `cargo new` “Hello, world!”  so'zini yaratadi. siz uchun dastur. *src/main.rs* faylini tekshiring:
+1-bobda ko'rganingizdek, `cargo new` siz uchun “Hello, world!” so'zini chop etadigan dastur yaratadi. *src/main.rs* faylini tekshiring:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
-fn main() {
-    println!("Hello, world!");
-}
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/src/main.rs}}
 ```
 
-Keling, ushbu "Hello, world!" dasturni yarating va cargo run buyrug'i yordamida ishga tushiring :
+Keling, ushbu "Hello, world!" dasturni yarating va `cargo run` buyrug'i yordamida ishga tushiring :
 
 ```console
-$ cargo run
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-    Finished dev [unoptimized + debuginfo] target(s) in 1.50s
-     Running `target/debug/guessing_game`
-Hello, world!
+{{#include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/output.txt}}
 ```
 
 `run` buyrug‘i loyihani tezda takrorlash kerak bo‘lganda foydali bo‘ladi, biz bu o‘yinda qilganimizdek, keyingisiga o‘tishdan oldin har bir iteratsiyani tezda sinab ko‘ramiz.
 
 *src/main.rs* faylini qayta oching. Siz ushbu fayldagi barcha kodlarni yozasiz.
 
-## Guessga o'yiniga ishlov berish
+## Taxmin qilish o'yiniga ishlov berish
 
 Taxmin qilish o'yini dasturining birinchi qismi foydalanuvchi kiritishini so'raydi, ushbu kiritishni qayta ishlaydi va kirish kutilgan shaklda ekanligini tekshiradi. Boshlash uchun biz o'yinchiga taxmin kiritishga ruxsat beramiz. 2-1 ro'yxatdagi kodni *src/main.rs* ichiga kiriting.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
-use std::io;
-
-fn main() {
-    println!("Raqamni topish o'yini!");
-
-    println!("Iltimos, taxminingizni kiriting.");
-
-    let mut taxmin = String::new();
-
-    io::stdin()
-        .read_line(&mut taxmin)
-        .expect("Satrni o‘qib bo‘lmadi");
-
-    println!("Sizning taxminingiz: {taxmin}");
-}
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:all}}
 ```
 
 <span class="caption">Ro'yxat 2-1: Foydalanuvchi tomonidan taxmin qilinadigan va uni chop etadigan kod</span>
