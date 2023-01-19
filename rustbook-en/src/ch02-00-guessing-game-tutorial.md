@@ -275,6 +275,8 @@ the code so far:
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:print_guess}}
 ```
 
+
+
 This line prints the string that now contains the user’s input. The `{}` set of
 curly brackets is a placeholder: think of `{}` as little crab pincers that hold
 a value in place. When printing the value of a variable, the variable name can

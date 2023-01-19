@@ -62,7 +62,7 @@ Taxmin qilish o'yini dasturining birinchi qismi foydalanuvchi kiritishini so'ray
 
 <span class="caption">Ro'yxat 2-1: Foydalanuvchi tomonidan taxmin qilinadigan va uni chop etadigan kod</span>
 
-Ushbu kod juda ko'p ma'lumotlarni o'z ichiga oladi, shuning uchun uni satrga o'tkazamiz. Foydalanuvchi kiritishini olish va natijani chiqish sifatida chop etish uchun biz `io` kirish/chiqish kutubxonasini qamrab olishimiz kerak. `io` kutubxonasi `std` deb nomlanuvchi standart kutubxonadan keladi:
+Ushbu kod juda ko'p ma'lumotlarni o'z ichiga oladi, shuning uchun uni satrga o'tkazamiz. Foydalanuvchi kiritishini olish va natijani chiqish sifatida chop etish uchun biz `io` input/output kutubxonasini qamrab olishimiz kerak. `io` kutubxonasi `std` deb nomlanuvchi standart kutubxonadan keladi:
 
 ```rust,ignore
 use std::io;
@@ -70,12 +70,12 @@ use std::io;
 
 Odatda, Rust standart kutubxonada belgilangan elementlar to'plamiga ega bo'lib, u har bir dastur doirasiga kiradi. Ushbu to'plam *prelude* deb ataladi va siz undagi hamma narsani [standart kutubxona texnik hujjatlarida][prelude] ko'rishingiz mumkin.
 
-Agar siz foydalanmoqchi bo'lgan tur muqaddimada bo'lmasa, siz ushbu turni `use` iborasi bilan aniq kiritishingiz kerak. `std::io` kutubxonasidan foydalanish sizga bir qator foydali xususiyatlarni, jumladan, foydalanuvchi kiritishini qabul qilish imkoniyatini beradi.
+Agar siz foydalanmoqchi bo'lgan tur preludeda bo'lmasa, siz ushbu turni `use` iborasi bilan aniq kiritishingiz kerak. `std::io` kutubxonasidan foydalanish sizga bir qator foydali xususiyatlarni, jumladan, foydalanuvchi kiritishini qabul qilish imkoniyatini beradi.
 
 1-bobda ko'rganingizdek, `main` funksiya dasturga kirish nuqtasidir:
 
 ```rust,ignore
-fn main() {
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:main}}
 ```
 
 `fn` sintaksisi yangi funktsiyani e'lon qiladi; Qavslar, `()`, hech qanday parametr yo'qligini bildiradi; va jingalak qavs, `{`, funksiyaning asosiy qismini boshlaydi.
@@ -83,19 +83,17 @@ fn main() {
 1-bobda ham bilib olganingizdek, `println!` bu ekranga satrni chop etuvchi makros:
 
 ```rust,ignore
-    println!("Raqamni topish o'yini!");
-
-    println!("Iltimos, taxminingizni kiriting.");
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:print}}
 ```
 
-Ushbu kod o'yin nima ekanligini ko'rsatuvchi va foydalanuvchidan ma'lumot so'rashni so'rashni chop etadi.
+Ushbu kod o'yin nima ekanligini ko'rsatuvchi va foydalanuvchidan ma'lumot so'rashni chop etadi.
 
 ### O'zgaruvchilar bilan qiymatlarni saqlash
 
 Keyinchalik, foydalanuvchi ma'lumotlarini saqlash uchun *o'zgaruvchi* yaratamiz, masalan:
 
 ```rust,ignore
-    let mut taxmin = String::new();
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:string}}
 ```
 
 Endi dastur qiziqarli bo'lib bormoqda! Bu kichik satrda juda ko'p narsa bor. O'zgaruvchini yaratish uchun `let` iborasidan foydalanamiz. Mana yana bir misol:
@@ -116,7 +114,7 @@ let mut bananlar = 5; // o'zgaruvchan
 > Izohlarni [3-bobda][comments]<!-- ignore --> batafsilroq muhokama qilamiz.
 
 Taxmin qilish o'yin dasturiga qaytsak, endi bilasizki, `let mut taxmin` `taxmin` nomli o'zgaruvchan o'zgaruvchini kiritadi. Teng belgisi (`=`) Rustga biz hozir biror narsani oʻzgaruvchiga bogʻlamoqchi ekanligimizni bildiradi. Tenglik belgisining o'ng tomonida `taxmin` bog'langan qiymat joylashgan bo'lib, u `String::new` funksiyasini chaqirish natijasidir, bu `String`ning yangi nusxasini qaytaradi.
-[String][string]<!-- ignore --> standart kutubxona tomonidan taqdim etilgan satr turi bo'lib, u rivojlantirib boriladigan, UTF-8 kodlangan matn bitidir.
+[String][string]<!-- ignore --> standart kutubxona tomonidan taqdim etilgan string turi bo'lib, u rivojlantirib boriladigan, UTF-8 kodlangan matn bitidir.
 
 `::new` qatoridagi `::` sintaksisi `new` `String` tipidagi bog`langan funksiya ekanligini bildiradi. *Assosiatsiyalangan funksiya* bu funksiya
 turida amalga oshiriladi, bu holda `String`. Ushbu `new` funksiya yangi, bo'sh qatorni yaratadi. Siz ko'p turdagi `new` funksiyani topasiz, chunki u qandaydir yangi qiymatni yaratadigan funksiyaning umumiy nomi.
@@ -125,20 +123,18 @@ To'liq `let mut taxmin = String::new();` qatori hozirda `String` ning yangi, bo'
 
 ### Foydalanuvchi ma'lumotlarini qabul qilish
 
-Eslatib o'tamiz, biz dasturning birinchi qatoriga `use std::io;` bilan standart kutubxonadan kiritish/chiqarish funksiyasini kiritgan edik. Endi biz `io` modulidan `stdin` funksiyasini chaqiramiz, bu bizga foydalanuvchi kiritishini boshqarish imkonini beradi:
+Eslatib o'tamiz, biz dasturning birinchi qatoriga `use std::io;` bilan standart kutubxonadan input/output funksiyasini kiritgan edik. Endi biz `io` modulidan `stdin` funksiyasini chaqiramiz, bu bizga foydalanuvchi kiritishini boshqarish imkonini beradi:
 
 ```rust,ignore
-    io::stdin()
-        .read_line(&mut taxmin)
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:read}}
 ```
 
 Agar biz dasturning boshida `use std::io;` bilan `io` kutubxonasini import qilmagan bo'lsak, biz ushbu funktsiya chaqiruvini `std::io::stdin` sifatida yozish orqali funksiyadan foydalanishimiz xam mumkin. `stdin` funksiyasi [`std::io::Stdin`][iostdin]<!-- ignore --> misolini qaytaradi, bu sizning terminalingiz uchun standart kirish uchun asosni ifodalovchi tur.
 
-Keyinchalik, `.read_line(&mut guess)` qatori foydalanuvchidan ma'lumot olish uchun standart kiritish nuqtasidagi [`read_line`][read_line]<!--
-ignore --> usulini chaqiradi.
+Keyinchalik, `.read_line(&mut taxmin)` qatori foydalanuvchidan ma'lumot olish uchun standart kiritish nuqtasidagi [`read_line`][read_line]<!--ignore --> usulini chaqiradi.
 Shuningdek, foydalanuvchi kiritgan maʼlumotlarni qaysi qatorda saqlash kerakligini aytish uchun `read_line` ga argument sifatida `&mut taxmin` ni oʻtkazamiz. `read_line` ning toʻliq vazifasi foydalanuvchi nima yozganidan qatʼiy nazar standart kiritishga olish va uni satrga qoʻshishdir (uning mazmunini qayta yozmasdan), shuning uchun biz bu qatorni argument sifatida beramiz. String argumenti o'zgaruvchan bo'lishi kerak, shuning uchun usul string tarkibini o'zgartirishi mumkin.
 
-`&` bu argumentning *ma'lumotnoma* ekanligini bildiradi, bu sizga kodingizning bir nechta qismlariga ushbu ma'lumotni xotiraga bir necha marta nusxalash kerak bo'lmasdan bitta ma'lumotga kirish imkonini beradi. Ma'lumotnomalar murakkab xususiyat bo'lib, Rustning asosiy afzalliklaridan biri havolalardan foydalanish qanchalik xavfsiz va oson ekanligidir. Ushbu dasturni tugatish uchun ko'p bilimlrga ega bo'lishingiz shart emas. Hozircha siz bilishingiz kerak bo'lgan narsa shundaki, o'zgaruvchilar singari, havolalar ham standard bo'yicha o'zgarmasdir. Demak, uni oʻzgaruvchan qilish uchun `&taxmin` oʻrniga `&mut taxmin` yozish kerak. (4-bobda havolalar ko'proq va yaxshiroq tushuntiriladi)
+`&` bu argument reference(havola) ekanligini bildiradi, bu sizga kodingizning bir nechta qismlariga ushbu ma'lumotni xotiraga bir necha marta nusxalash kerak bo'lmasdan bitta ma'lumotga kirish imkonini beradi. Referencelar murakkab xususiyat bo'lib, Rustning asosiy afzalliklaridan biri havolalardan foydalanish qanchalik xavfsiz va oson ekanligidir. Ushbu dasturni tugatish uchun ko'p bilimlrga ega bo'lishingiz shart emas. Hozircha siz bilishingiz kerak bo'lgan narsa shundaki, o'zgaruvchilar singari, havolalar ham standard bo'yicha o'zgarmasdir. Demak, uni oʻzgaruvchan qilish uchun `&taxmin` oʻrniga `&mut taxmin` yozish kerak. (4-bobda havolalar ko'proq va yaxshiroq tushuntiriladi)
 
 <!-- Old heading. Do not remove or links may break. -->
 <a id="handling-potential-failure-with-the-result-type"></a>
@@ -148,7 +144,7 @@ Shuningdek, foydalanuvchi kiritgan maʼlumotlarni qaysi qatorda saqlash keraklig
 Biz hali ham ushbu kod qatori ustida ishlayapmiz. Biz hozir matnning uchinchi qatorini muhokama qilmoqdamiz, lekin u hali ham bitta mantiqiy kod qatorining bir qismi ekanligini unutmang. Keyingi qism bu method:
 
 ```rust,ignore
-        .expect("Satrni o‘qib bo‘lmadi");
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:expect}}
 ```
 
 Biz ushbu kodni quyidagicha yozishimiz mumkin edi:
@@ -174,19 +170,7 @@ Bunday holda, bu qiymat foydalanuvchi kiritishidagi baytlar soni.
 Agar siz `expect` ga murojat qilmasangiz, dastur kompilyatsiya qilinadi, lekin siz ogohlantirish olasiz:
 
 ```console
-$ cargo build
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-warning: unused `Result` that must be used
-  --> src/main.rs:10:5
-   |
-10 |     io::stdin().read_line(&taxmin guess);
-   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   |
-   = note: `#[warn(unused_must_use)]` on by default
-   = note: this `Result` may be an `Err` variant, which should be handled
-
-warning: `guessing_game` (bin "guessing_game") generated 1 warning
-    Finished dev [unoptimized + debuginfo] target(s) in 0.59s
+{{#include ../listings/ch02-guessing-game-tutorial/no-listing-02-without-expect/output.txt}}
 ```
 
 Rust `read_line` dan qaytarilgan `Result` qiymatini ishlatmaganligingiz haqida ogohlantiradi, bu dastur mumkin bo'lgan xatoni hal qilmaganligini ko'rsatadi.
@@ -198,7 +182,7 @@ Ogohlantirishni yo'qotishning to'g'ri yo'li aslida xatolarni qayta ishlash kodin
 Yopuvchi jingalak qavsdan tashqari, kodda hozirgacha muhokama qilinadigan yana bitta satr mavjud:
 
 ```rust,ignore
-    println!("Sizning taxminingiz: {taxmin}");
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:print_guess}}
 ```
 
 Ushbu satr foydalanuvchi kiritishini o'z ichiga olgan qatorni chop etadi. `{}` jingalak qavslar to'plami o'rnini egallaydi: `{}` qiymatini joyida ushlab turadigan qisqichbaqa qisqichlari deb tasavvur qiling. O'zgaruvchining qiymatini chop etishda o'zgaruvchi nomi jingalak qavslar ichiga kirishi mumkin. Ifodani baholash natijasini chop etishda format satriga bo'sh jingalak qavslarni joylashtiring, so'ngra har bir bo'sh jingalak qavs o'rnini egallagan holda bir xil tartibda chop etish uchun vergul bilan ajratilgan iboralar ro'yxati bilan format qatoriga amal qiling. O‘zgaruvchini va ifoda natijasini `println!` ga bitta chaqiruvda chop etish quyidagicha ko‘rinadi:
@@ -224,9 +208,9 @@ input 6 -->
 
 ```console
 $ cargo run
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+   Compiling taxminiy_raqam v0.1.0 (file:///projects/taxminiy_raqam)
     Finished dev [unoptimized + debuginfo] target(s) in 6.44s
-     Running `target/debug/guessing_game`
+     Running `target/debug/taxminiy_raqam`
 Raqamni topish o'yini!
 Iltimos, taxminingizni kiriting.
 6
