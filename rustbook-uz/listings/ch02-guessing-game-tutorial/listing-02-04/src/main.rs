@@ -18,12 +18,12 @@ fn main() {
 
     io::stdin()
         .read_line(&mut taxmin)
-        .expect("Failed to read line");
+        .expect("Satrni o‘qib bo‘lmadi");
     // ANCHOR: here
 
     println!("Sizning taxminingiz: {taxmin}");
 
-    match guess.cmp(&secret_number) {
+    match taxmin.cmp(&yashirin_raqam) {
         Ordering::Less => println!("Raqam Kichik!"),
         Ordering::Greater => println!("Raqam katta!"),
         Ordering::Equal => println!("Siz yutdingiz!"),

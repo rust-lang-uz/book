@@ -403,17 +403,17 @@ Endi bizda foydalanuvchi kiritishi va tasodifiy raqam bor, biz ularni solishtiri
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-04/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 2-4: Ikki raqamni solishtirishning mumkin bo'lgan qaytish qiymatlarini boshqarish</span>
+<span class="caption">Ro'yxat 2-4: Ikki raqamni solishtirishning mumkin bo'lgan qaytish qiymatlarini boshqarish</span>
 
 Avval biz standart kutubxonadan `std::cmp::Ording` deb nomlangan turni olib keladigan yana bir `use` iborasini qo'shamiz. `Ordering` turi boshqa raqam boʻlib, `Less`, `Greater` va `Equal` variantlariga ega. Bu ikkita qiymatni solishtirganda mumkin bo'lgan uchta natijadir.
 
-Keyin pastki qismida `Ordering` turidan foydalanadigan beshta yangi qator qo'shamiz. `cmp` usuli ikkita qiymatni solishtiradi va uni solishtirish mumkin bo'lgan har qanday narsani chaqirish mumkin. Siz solishtirmoqchi bo'lgan narsaga havola kerak: bu erda `taxmin` bilan `yashirin_raqam` solishtiriladi. Keyin u biz `use`  iborasi bilan qamrab olgan `Ordering`  raqamining variantini qaytaradi. Biz `taxmin` va `yashirin_raqam` qiymatlari bilan `cmp` ga murojatdan `Ordering` ning qaysi varianti qaytarilganiga qarab, keyin nima qilish kerakligini hal qilish uchun [`match`][match]<!-- ignore --> ifodasidan foydalanamiz.
+Keyin pastki qismida `Ordering` turidan foydalanadigan beshta yangi qator qo'shamiz. `cmp` usuli ikkita qiymatni solishtiradi va uni solishtirish mumkin bo'lgan har qanday narsani chaqirish mumkin. Siz solishtirmoqchi bo'lgan narsaga reference kerak: bu erda `taxmin` bilan `yashirin_raqam` solishtiriladi. Keyin u biz `use`  iborasi bilan qamrab olgan `Ordering`  raqamining variantini qaytaradi. Biz `taxmin` va `yashirin_raqam` qiymatlari bilan `cmp` ga murojatdan `Ordering` ning qaysi varianti qaytarilganiga qarab, keyin nima qilish kerakligini hal qilish uchun [`match`][match]<!-- ignore --> ifodasidan foydalanamiz.
 
 `Match` ifodasi *arms* dan tuzilgan. Arm mos keladigan *pattern* va agar `match` ga berilgan qiymat armning patterniga mos kelsa, bajarilishi kerak bo'lgan koddan iborat. Rust `match` ga berilgan qiymatni oladi va har bir armning patternini o'z navbatida ko'rib chiqadi. Patternlar va `match` konstruksiyasi Rust-ning kuchli xususiyatlari hisoblanadi: ular sizning kodingiz duch kelishi mumkin bo'lgan turli vaziyatlarni ifodalash imkonini beradi va ularning barchasini boshqarishingizga ishonch hosil qiladi. Bu xususiyatlar mos ravishda 6-bobda va 18-bobda batafsil yoritiladi.
 
 Keling, bu yerda ishlatadigan `match` iborasi bilan bir misolni ko'rib chiqaylik. Aytaylik, foydalanuvchi 50 ni taxmin qilgan va bu safar tasodifiy yaratilgan maxfiy raqam 38 ni tashkil qiladi.
 
-Kod 50 ni 38 ga solishtirganda, `cmp` usuli `Ordering::Greater` ni qaytaradi, chunki 50 38 dan katta. `match` ifodasi `Ordering::Greater` qiymatini oladi va har bir armning patternini tekshirishni boshlaydi. U birinchi armning `Ordering::Less` patternini koʻrib chiqadi va `Ordering::Greater` qiymati `Ordering::Less` qiymatiga mos kelmasligini koʻradi, shuning uchun u armdagi kodga eʼtibor bermaydi va keyingi armga oʻtadi. Keyingi armning namunasi `Ordering::Greater` boʻlib, `Ordering::Greater` bilan *does* match  keladi! Oʻsha armdagi bogʻlangan kod ishga tushadi va ekranga `Raqam katta!` deb chop etiladi. `match` iborasi birinchi muvaffaqiyatli o'yindan keyin tugaydi, shuning uchun bu senariydagi oxirgi armni ko'rib chiqmaydi.
+Kod 50 ni 38 ga solishtirganda, `cmp` methodi `Ordering::Greater` ni qaytaradi, chunki 50 38 dan katta. `match` ifodasi `Ordering::Greater` qiymatini oladi va har bir armning patternini tekshirishni boshlaydi. U birinchi armning `Ordering::Less` patternini koʻrib chiqadi va `Ordering::Greater` qiymati `Ordering::Less` qiymatiga mos kelmasligini koʻradi, shuning uchun u armdagi kodga eʼtibor bermaydi va keyingi armga oʻtadi. Keyingi armning namunasi `Ordering::Greater` boʻlib, `Ordering::Greater` bilan *does* match  keladi! Oʻsha armdagi bogʻlangan kod ishga tushadi va ekranga `Raqam katta!` deb chop etiladi. `match` iborasi birinchi muvaffaqiyatli o'yindan keyin tugaydi, shuning uchun bu senariydagi oxirgi armni ko'rib chiqmaydi.
 
 Biroq, 2-4 ro'yxatdagi kod hali kompilyatsiya qilinmaydi. Keling, sinab ko'raylik:
 
@@ -423,52 +423,17 @@ anchor or snip comments
 -->
 
 ```console
-$ cargo build
-   Compiling libc v0.2.86
-   Compiling getrandom v0.2.2
-   Compiling cfg-if v1.0.0
-   Compiling ppv-lite86 v0.2.10
-   Compiling rand_core v0.6.2
-   Compiling rand_chacha v0.3.0
-   Compiling rand v0.8.3
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-error[E0308]: mismatched types
-  --> src/main.rs:22:21
-   |
-22 |     match taxmin.cmp(&yashirin_raqam) {
-   |                     ^^^^^^^^^^^^^^ expected struct `String`, found integer
-   |
-   = note: expected reference `&String`
-              found reference `&{integer}`
-
-For more information about this error, try `rustc --explain E0308`.
-error: could not compile `guessing_game` due to previous error
+{{#include ../listings/ch02-guessing-game-tutorial/listing-02-04/output.txt}}
 ```
 
-Xatoning asosi *mos kelmaydigan turlar* mavjudligini bildiradi. Rust kuchli, statik turdagi tizimga ega. Biroq, u ham turdagi xulosaga ega. Biz `let mut taxmin = String::new()` deb yozganimizda, Rust `taxmin` `String` bo'lishi kerak degan xulosaga keldi va bizni turni yozishga majburlamadi. Boshqa tomondan, `yashirin_raqam` raqam turidir. Rust raqamlarining bir nechta turlari 1 dan 100 gacha qiymatga ega bo'lishi mumkin: `i32`, 32 bitli raqam; `u32`, imzosiz 32-bitli raqam; `i64`, 64-bitli raqam; boshqalar kabi. Agar boshqacha koʻrsatilmagan boʻlsa, Rust standart boʻyicha `i32` ga oʻrnatiladi, bu `yashirin_raqam` turiga, agar siz Rustning boshqa raqamli turini chiqarishiga olib keladigan turdagi maʼlumotlarni boshqa joyga qoʻshmasangiz. Xatoning sababi shundaki, Rust satr va raqam turini taqqoslay olmaydi.
+Xatoning asosi *mos kelmaydigan turlar* mavjudligini bildiradi. Rust kuchli, statik turdagi tizimga ega. Biroq, u ham turdagi inference ega. Biz `let mut taxmin = String::new()` deb yozganimizda, Rust `taxmin` `String` bo'lishi kerak degan xulosaga keldi va bizni turni yozishga majburlamadi. Boshqa tomondan, `yashirin_raqam` raqam turidir. Rust raqamlarining bir nechta turlari 1 dan 100 gacha qiymatga ega bo'lishi mumkin: `i32`, 32 bitli raqam; `u32`, unsigned 32-bitli raqam; `i64`, 64-bitli raqam; boshqalar kabi. Agar boshqacha koʻrsatilmagan boʻlsa, Rust standart boʻyicha `i32` ga oʻrnatiladi, bu `yashirin_raqam` turiga, agar siz Rustning boshqa raqamli turini chiqarishiga olib keladigan turdagi maʼlumotlarni boshqa joyga qoʻshmasangiz. Xatoning sababi shundaki, Rust string va raqam turini taqqoslay olmaydi.
 
-Oxir-oqibat, biz dastur tomonidan kiritilgan `String` ni haqiqiy son turiga aylantirmoqchimiz, shuning uchun uni raqamli raqam bilan yashirin raqam bilan solishtirishimiz mumkin.Buni `main` funktsiya tanasiga ushbu qatorni qo'shish orqali qilamiz:
+Oxir-oqibat, biz dastur tomonidan kiritilgan `String` ni haqiqiy son turiga aylantirmoqchimiz, shuning uchun uni raqamli raqam bilan yashirin raqam bilan solishtirishimiz mumkin.Buni `main` funksiya tanasiga ushbu qatorni qo'shish orqali qilamiz:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
-    // --snip--
-
-    let mut taxmin = String::new();
-
-    io::stdin()
-        .read_line(&mut guess)
-        .expect("Satrni o‘qib bo‘lmadi");
-
-    let taxmin: u32 = taxmin.trim().parse().expect("Iltimos, raqam yozing!");
-
-    println!("Sizning taxminingiz: {taxmin}");
-
-    match taxmin.cmp(&yashirin_raqam) {
-        Ordering::Less => println!("Raqam Kichik!"),
-        Ordering::Greater => println!("Raqam katta!"),
-        Ordering::Equal => println!("Siz yutdingiz!"),
-    }
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-03-convert-string-to-number/src/main.rs:here}}
 ```
 
 Satr
@@ -480,15 +445,12 @@ let taxmin: u32 = taxmin.trim().parse().expect("Iltimos, raqam yozing!");
 Biz `taxmin` nomli o'zgaruvchini yaratamiz. Ammo shoshilmang, dasturda allaqachon `taxmin` nomli o'zgaruvchi mavjud emasmi? Bu shunday, lekin foydali Rust bizga `taxmin` ning oldingi qiymatini yangisi bilan ergashtirish imkonini beradi. *Shadowing* bizga ikkita noyob oʻzgaruvchini yaratish oʻrniga, `taxmin` oʻzgaruvchi nomidan qayta foydalanish imkonini beradi, masalan, `taxmin_str` va `taxmin`. Biz buni [3-bobda][shadowing]<!-- ignore --> batafsil ko'rib chiqamiz, ammo hozircha shuni bilingki, bu xususiyat ko'pincha qiymatni bir turdan boshqa turga aylantirmoqchi bo'lganingizda ishlatiladi.
 
 Biz bu yangi o'zgaruvchini `taxmin.trim().parse()` ifodasiga bog'laymiz. Ifodadagi `taxmin` matni qator sifatida kiritilgan asl `taxmin` o'zgaruvchisiga ishora qiladi. `String` misolidagi `trim` usuli boshida va oxiridagi har qanday bo‘shliqni yo‘q qiladi, bu qatorni faqat raqamli ma’lumotlarni o‘z ichiga olishi mumkin bo‘lgan `u32` bilan solishtirishimiz uchun buni qilishimiz kerak. Foydalanuvchi `read_line` ni to'ldirish uchun <span class="keystroke">enter</span>tugmasini bosib, ularni kiritishi kerak
-satrga yangi satr belgisini qo'shadigan taxmin. For example, if the user
-types <span class="keystroke">5</span> and presses <span
-class="keystroke">enter</span>, `guess` looks like this: `5\n`. The `\n`
-represents “newline.” (On Windows, pressing <span
-class="keystroke">enter</span> results in a carriage return and a newline,
-`\r\n`.) The `trim` method eliminates `\n` or `\r\n`, resulting in just `5`.
+satrga yangi satr belgisini qo'shadigan taxmin. Masalan, agar foydalanuvchi <span class="keystroke">5</span> raqamini kiritsa va va <span class="keystroke">enter</span> tugmasini bossa `taxmin` shunday ko'rinadi: `5\n`.
+`\n` “yangi qator”ni bildiradi. (Windows tizimida <span class="keystroke">enter</span> tugmasini bosish natijasida carriage qaytariladi va yangi qator `\r\n` chiqadi.)
+ `trim` methodi `\n` yoki `\r\n`ni yo'q qiladi, natijada atigi `5` bo`ladi.
 
-Satrlardagi [`parse` usuli][parse]<!-- ignore --> qatorni boshqa turga aylantiradi.
-Bu yerda biz uni satrdan raqamga aylantirish uchun foydalanamiz. Biz Rustga `let taxmin: u32` yordamida kerakli raqam turini aytishimiz kerak. `taxmin` dan keyin ikki nuqta (`:`) Rustga o'zgaruvchining turiga izoh berishimizni aytadi. Rust bir nechta o'rnatilgan raqam turlariga ega; Bu yerda koʻrilgan `u32` belgisiz, 32-bitli butun son.
+Satrlardagi [`parse` methodi][parse]<!-- ignore --> qatorni boshqa turga aylantiradi.
+Bu yerda biz uni stringdan raqamga aylantirish uchun foydalanamiz. Biz Rustga `let taxmin: u32` yordamida kerakli raqam turini aytishimiz kerak. `taxmin` dan keyin ikki nuqta (`:`) Rustga o'zgaruvchining turiga izoh berishimizni aytadi. Rust bir nechta o'rnatilgan raqam turlariga ega; Bu yerda koʻrilgan `u32` unsigned, 32-bitli butun son.
 Bu kichik ijobiy raqam uchun yaxshi standart tanlovdir. Boshqa raqamlar turlari haqida [3-bobda][integers]<!-- ignore --> bilib olasiz.
 
 Bundan tashqari, ushbu misol dasturidagi `u32` izohi va `yashirin_raqam` bilan taqqoslash Rust `yashirin_raqam` ham `u32` bo'lishi kerak degan xulosaga keladi. Shunday qilib, endi taqqoslash bir xil turdagi ikkita qiymat o'rtasida bo'ladi!
