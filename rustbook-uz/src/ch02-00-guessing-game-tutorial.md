@@ -453,9 +453,9 @@ Satrlardagi [`parse` methodi][parse]<!-- ignore --> qatorni boshqa turga aylanti
 Bu yerda biz uni stringdan raqamga aylantirish uchun foydalanamiz. Biz Rustga `let taxmin: u32` yordamida kerakli raqam turini aytishimiz kerak. `taxmin` dan keyin ikki nuqta (`:`) Rustga o'zgaruvchining turiga izoh berishimizni aytadi. Rust bir nechta o'rnatilgan raqam turlariga ega; Bu yerda koʻrilgan `u32` unsigned, 32-bitli butun son.
 Bu kichik ijobiy raqam uchun yaxshi standart tanlovdir. Boshqa raqamlar turlari haqida [3-bobda][integers]<!-- ignore --> bilib olasiz.
 
-Bundan tashqari, ushbu misol dasturidagi `u32` izohi va `yashirin_raqam` bilan taqqoslash Rust `yashirin_raqam` ham `u32` bo'lishi kerak degan xulosaga keladi. Shunday qilib, endi taqqoslash bir xil turdagi ikkita qiymat o'rtasida bo'ladi!
+Bundan tashqari, ushbu misol dasturidagi `u32` annotation va `yashirin_raqam` bilan taqqoslash Rust `yashirin_raqam` ham `u32` bo'lishi kerak degan xulosaga keladi. Shunday qilib, endi taqqoslash bir xil turdagi ikkita qiymat o'rtasida bo'ladi!
 
-`parse` usuli faqat mantiqiy ravishda raqamlarga aylantirilishi mumkin bo'lgan belgilarda ishlaydi va shuning uchun osongina xatolarga olib kelishi mumkin. Agar, masalan, satrda `A👍%` bo'lsa, uni raqamga aylantirishning hech qanday usuli bo'lmaydi. Muvaffaqiyatsiz bo'lishi mumkinligi sababli, `parse` usuli `read_line` usuli kabi `Result` turini qaytaradi (oldingi ["`Result` bilan potentsial muvaffaqiyatsizlikni ko'rib chiqish"] bo'limida muhokama qilingan)(#handling-potential-failure-with-result)<!-- ignore-->). Biz ushbu `Result` ga yana `expect` usulini qo'llash orqali xuddi shunday munosabatda bo'lamiz. Agar `parse` qatordan raqam yarata olmagani uchun `Err` `Result` variantini qaytarsa, `expect` chaqiruvi o‘yinni buzadi va biz bergan xabarni chop etadi.
+`parse` methodii faqat mantiqiy ravishda raqamlarga aylantirilishi mumkin bo'lgan belgilarda ishlaydi va shuning uchun osongina xatolarga olib kelishi mumkin. Agar, masalan, satrda `A👍%` bo'lsa, uni raqamga aylantirishning hech qanday usuli bo'lmaydi. Muvaffaqiyatsiz bo'lishi mumkinligi sababli, `parse` methodii `read_line` usuli kabi `Result` turini qaytaradi (oldingi ["`Result` bilan potentsial muvaffaqiyatsizlikni ko'rib chiqish"] bo'limida muhokama qilingan)(#handling-potential-failure-with-result)<!-- ignore-->). Biz ushbu `Result` ga yana `expect` methodini qo'llash orqali xuddi shunday munosabatda bo'lamiz. Agar `parse` qatordan raqam yarata olmagani uchun `Err` `Result` variantini qaytarsa, `expect` chaqiruvi o‘yinni buzadi va biz bergan xabarni chop etadi.
 Agar `parse` qatorni raqamga muvaffaqiyatli aylantira olsa, u `Result`ning `Ok` variantini qaytaradi va `expect` biz xohlagan raqamni `Ok` qiymatidan qaytaradi.
 
 Endi dasturni ishga tushiramiz:
@@ -468,9 +468,9 @@ cargo run
 
 ```console
 $ cargo run
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+   Compiling taxminiy_raqam v0.1.0 (file:///projects/taxminiy_raqam)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s
-     Running `target/debug/guessing_game`
+     Running `target/debug/taxminiy_raqam`
 Raqamni topish o'yini!
 Yashirin raqam: 58
 Iltimos, taxminingizni kiriting.
@@ -486,30 +486,15 @@ Hozir bizda o'yinning ko'p qismi ishlayapti, lekin foydalanuvchi faqat bitta tax
 ## Loop bilan bir nechta taxminlarga ruxsat berish
 
 `loop` kalit so'zi cheksiz tsiklni yaratadi. Biz foydalanuvchilarga raqamni taxmin qilishda ko'proq imkoniyat berish uchun tsikl qo'shamiz:
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
-    // --snip--
-
-    println!("Yashirin raqam: {yashirin_raqam}");
-
-    loop {
-        println!("Iltimos, taxminingizni kiriting.");
-
-        // --snip--
-
-        match taxmin.cmp(&yashirin_raqam) {
-            Ordering::Less => println!("Raqam Kichik!"),
-            Ordering::Greater => println!("Raqam katta!"),
-            Ordering::Equal => println!("Siz yutdingiz!"),
-        }
-    }
-}
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-04-looping/src/main.rs:here}}
 ```
 
 Ko'rib turganingizdek, biz hamma narsani taxminiy kiritish so'rovidan boshlab tsiklga o'tkazdik. Ilova ichidagi satrlarni har birida yana to'rtta bo'sh joydan o'tkazganingizga ishonch hosil qiling va dasturni qayta ishga tushiring. Dastur endi boshqa bir taxminni abadiy yani har doim so'raydi, bu aslida yangi muammoni keltirib chiqaradi. Foydalanuvchi chiqa olmaydiganga o'xshaydi!
 
-Foydalanuvchi har doim <span class="keystroke">ctrl-c</span> klaviatura yorlig'i yordamida dasturni to'xtatishi mumkin. Ammo bu to'yib bo'lmaydigan yirtqich hayvondan qochishning yana bir yo'li bor, [“Taxminni maxfiy raqam bilan solishtirish“](#comparing-the-guess-to-the-secret-number)<!--ignore -->: mavzusidagi `parse` muhokamasida aytib o'tilganidek, agar foydalanuvchi raqam bo'lmagan javobni kiritsa, dastur buziladi. Bu yerda ko'rsatilganidek, foydalanuvchiga chiqishga ruxsat berish uchun undan foydalanishimiz mumkin:n
+Foydalanuvchi har doim <span class="keystroke">ctrl-c</span> klaviatura yorlig'i yordamida dasturni to'xtatishi mumkin. Ammo bu to'yib bo'lmaydigan yirtqich hayvondan qochishning yana bir yo'li bor, [“Taxminni maxfiy raqam bilan solishtirish“](#comparing-the-guess-to-the-secret-number)<!--ignore -->: mavzusidagi `parse` muhokamasida aytib o'tilganidek, agar foydalanuvchi raqam bo'lmagan javobni kiritsa, dastur buziladi. Bu yerda ko'rsatilganidek, foydalanuvchiga chiqishga ruxsat berish uchun undan foydalanishimiz mumkin
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/no-listing-04-looping/
@@ -522,9 +507,9 @@ quit
 
 ```console
 $ cargo run
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+   Compiling taxminiy_raqam v0.1.0 (file:///projects/taxminiy_raqam)
     Finished dev [unoptimized + debuginfo] target(s) in 1.50s
-     Running `target/debug/guessing_game`
+     Running `target/debug/taxminiy_raqam`
 Raqamni topish o'yini!
 Yashirin raqam: 59
 Iltimos, taxminingizni kiriting.
@@ -554,18 +539,7 @@ Keling, foydalanuvchi g'alaba qozonganida `break` iborasini qo'shish orqali o'yi
 <span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
-        // --snip--
-
-        match taxmin.cmp(&yashirin_raqam) {
-            Ordering::Less => println!("Raqam Kichik!"),
-            Ordering::Greater => println!("Raqam katta!"),
-            Ordering::Equal => {
-                println!("Siz yutdingiz!");
-                break;
-            }
-        }
-    }
-}
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-05-quitting/src/main.rs:here}}
 ```
 
 `Siz yutdingiz!` so‘ng `break` qatorini qo‘shish foydalanuvchi maxfiy raqamni to‘g‘ri taxmin qilganda dasturni tsikldan chiqadi. Loopdan chiqish dasturdan chiqishni ham anglatadi, chunki sikl `main` ning oxirgi qismidir.
@@ -577,20 +551,7 @@ O'yinning xatti-harakatlarini yanada yaxshilash uchun, foydalanuvchi raqamlardan
 <span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
-        // --snip--
-
-        io::stdin()
-            .read_line(&mut taxmin)
-            .expect("Satrni o‘qib bo‘lmadi");
-
-        let taxmin: u32 = match taxmin.trim().parse() {
-            Ok(num) => num,
-            Err(_) => continue,
-        };
-
-        println!("Sizning taxminingiz: {taxmin}");
-
-        // --snip--
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-05/src/main.rs:here}}
 ```
 
 <span class="caption">Ro'yxat 2-5: Raqamsiz taxminga e'tibor bermaslik va dasturni ishdan chiqarish o'rniga boshqa taxminni so'rash</span>
