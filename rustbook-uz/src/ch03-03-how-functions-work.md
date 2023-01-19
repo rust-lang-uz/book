@@ -56,82 +56,58 @@ Bir nechta parametrlarni belgilashda parametr deklaratsiyasini vergul bilan ajra
 
 Ushbu misol ikkita parametrli `belgilangan_vaqt` nomli funksiyani yaratadi. Birinchi parametr `value` deb nomlangan va `i32` dir. Ikkinchisi `unit_label` deb nomlanadi va `char` turidir. Keyin funksiya `value` va ``unit_label` ni o‘z ichiga olgan matnni chop etadi.
 
-Let’s try running this code. Replace the program currently in your *functions*
-project’s *src/main.rs* file with the preceding example and run it using `cargo
-run`:
+Keling, ushbu kodni ishga tushirishga harakat qilaylik. Hozirda *funksiyalar* loyihangizning *src/main.rs* faylidagi dasturni oldingi misol bilan almashtiring va uni `cargo run` yordamida ishga tushiring:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/output.txt}}
 ```
 
-Because we called the function with `5` as the value for `value` and `'h'` as
-the value for `unit_label`, the program output contains those values.
+Biz funksiyani `value` qiymati sifatida `5` va `unit_label` qiymati sifatida `'h'` deb ataganimiz sababli, dastur chiqishi ushbu qiymatlarni o`z ichiga oladi.
 
-### Statements and Expressions
+### Statementlar va  Expressionlar
 
-Function bodies are made up of a series of statements optionally ending in an
-expression. So far, the functions we’ve covered haven’t included an ending
-expression, but you have seen an expression as part of a statement. Because
-Rust is an expression-based language, this is an important distinction to
-understand. Other languages don’t have the same distinctions, so let’s look at
-what statements and expressions are and how their differences affect the bodies
-of functions.
+Funksiya qismlari ixtiyoriy ravishda statement bilan tugaydigan bir qator expressionlardan iborat. Hozircha biz ko'rib chiqqan funktsiyalar yakuniy expressionni o'z ichiga olmagan, lekin siz expressionni statementning bir qismi sifatida ko'rdingiz. Rust expressionga asoslangan til bo'lganligi sababli, bu tushunish uchun muhim farqdir. Boshqa tillar bir xil farqlarga ega emas, shuning uchun keling, qanday statementlar va expressionlar ekanligini va ularning farqlari funksiyalar tanasiga qanday ta'sir qilishini ko'rib chiqaylik.
 
-* **Statements** are instructions that perform some action and do not return
-  a value.
-* **Expressions** evaluate to a resultant value. Let’s look at some examples.
+* **Statementlar** ba'zi amallarni bajaradigan va qiymat qaytarmaydigan ko'rsatmalardir.
+* **Expressionlar** qiymatga baholanadi. Keling, ba'zi misollarni ko'rib chiqaylik.
 
-We’ve actually already used statements and expressions. Creating a variable and
-assigning a value to it with the `let` keyword is a statement. In Listing 3-1,
-`let y = 6;` is a statement.
+Biz allaqachon statementlar va expressionlarni ishlatganmiz. O'zgaruvchini yaratish va unga `let` kalit so'zi bilan qiymat berish - bu statement. 3-1 ro'yxatda `let y = 6;` - bu statement.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-01/src/main.rs}}
 ```
 
-<span class="caption">Listing 3-1: A `main` function declaration containing one statement</span>
+<span class="caption">Ro'yxat 3-1: Bitta statementni o'z ichiga olgan `main` funktsiya deklaratsiyasi</span>
 
-Function definitions are also statements; the entire preceding example is a
-statement in itself.
+Funksiya definitionlari ham statementlardir; oldingi misol o'z-o'zidan bir statementdir.
 
-Statements do not return values. Therefore, you can’t assign a `let` statement
-to another variable, as the following code tries to do; you’ll get an error:
+Statementlar qiymatlarni qaytarmaydi. Shuning uchun siz boshqa o'zgaruvchiga `let` iborasini tayinlay olmaysiz, chunki quyidagi kod bunga harakat qiladi; siz xatoga duch kelasiz:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-19-statements-vs-expressions/src/main.rs}}
 ```
 
-When you run this program, the error you’ll get looks like this:
+Ushbu dasturni ishga tushirganingizda, sizda paydo bo'ladigan xato quyidagicha ko'rinadi:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-19-statements-vs-expressions/output.txt}}
 ```
 
-The `let y = 6` statement does not return a value, so there isn’t anything for
-`x` to bind to. This is different from what happens in other languages, such as
-C and Ruby, where the assignment returns the value of the assignment. In those
-languages, you can write `x = y = 6` and have both `x` and `y` have the value
-`6`; that is not the case in Rust.
+`let y = 6` statementi qiymat qaytarmaydi, shuning uchun `x` bog'lanishi uchun hech narsa yo'q. Bu boshqa tillarda sodir bo'ladigan narsadan farq qiladi, masalan, C va Ruby, bu yerda assignment assignmentning qiymatini qaytaradi. Bu tillarda siz `x = y = 6` yozishingiz mumkin va `x` va `y` ham `6` qiymatiga ega; Rustda bunday emas.
 
-Expressions evaluate to a value and make up most of the rest of the code that
-you’ll write in Rust. Consider a math operation, such as `5 + 6`, which is an
-expression that evaluates to the value `11`. Expressions can be part of
-statements: in Listing 3-1, the `6` in the statement `let y = 6;` is an
-expression that evaluates to the value `6`. Calling a function is an
-expression. Calling a macro is an expression. A new scope block created with
-curly brackets is an expression, for example:
+Expressionlar qiymatga baholanadi va siz Rust-da yozadigan kodning qolgan qismini tashkil qiladi. `5 + 6` kabi matematik amalni ko'rib chiqing, bu `11` qiymatini beruvchi expressiondir. Expressionlar statementlarning bir qismi bo'lishi mumkin: 3-1 ro'yxatdagi `let y = 6;` ifodasidagi `6`, `6` qiymatini beruvchi expressiondir. Funksiyani chaqirish expressiondir. Makroni chaqirish expressiondir. Jingalak qavslar bilan yaratilgan yangi qamrov bloki expressiondir, masalan:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-20-blocks-are-expressions/src/main.rs}}
 ```
 
-This expression:
+Bu expression:
 
 ```rust,ignore
 {
@@ -140,15 +116,9 @@ This expression:
 }
 ```
 
-is a block that, in this case, evaluates to `4`. That value gets bound to `y`
-as part of the `let` statement. Note that the `x + 1` line doesn’t have a
-semicolon at the end, which is unlike most of the lines you’ve seen so far.
-Expressions do not include ending semicolons. If you add a semicolon to the end
-of an expression, you turn it into a statement, and it will then not return a
-value. Keep this in mind as you explore function return values and expressions
-next.
+blok bo'lib, bu holda `4` ga evaluate bo'ladi. Bu qiymat `let` statementining bir qismi sifatida `y` ga bog'lanadi. E'tibor bering, "`x + 1` qatorining oxirida nuqta-vergul yo'q, bu siz ko'rgan ko'pgina qatorlardan farqli o'laroq. Expressionlar yakuniy nuqtali vergullarni o'z ichiga olmaydi. Ifodaning oxiriga nuqtali vergul qo'shsangiz, uni statementga aylantirasiz va u keyinchalik qiymatni qaytarmaydi. Keyingi funksiyani qaytarish qiymatlari va expressionlarini o'rganayotganda buni yodda tuting.
 
-### Functions with Return Values
+### Return qiymatlari bilan funksiyalar
 
 Functions can return values to the code that calls them. We don’t name return
 values, but we must declare their type after an arrow (`->`). In Rust, the
