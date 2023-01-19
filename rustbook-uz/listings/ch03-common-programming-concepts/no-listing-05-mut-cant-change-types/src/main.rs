@@ -1,6 +1,6 @@
 fn main() {
     // ANCHOR: here
-    let mut spaces = "   ";
-    spaces = spaces.len();
+    let mut joylar = "   ";
+    joylar = joylar.len();
     // ANCHOR_END: here
 }
