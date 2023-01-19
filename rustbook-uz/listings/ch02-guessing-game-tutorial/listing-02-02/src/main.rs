@@ -1,15 +1,15 @@
 use std::io;
 
 fn main() {
-    println!("Guess the number!");
+    println!("Raqamni topish o'yini!");
 
-    println!("Please input your guess.");
+    println!("Iltimos, taxminingizni kiriting.");
 
-    let mut guess = String::new();
+    let mut taxmin = String::new();
 
     io::stdin()
-        .read_line(&mut guess)
-        .expect("Failed to read line");
+        .read_line(&mut taxmin)
+        .expect("Satrni o‘qib bo‘lmadi");
 
-    println!("You guessed: {guess}");
+    println!("Sizning taxminingiz: {taxmin}");
 }

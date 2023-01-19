@@ -6,27 +6,27 @@ use std::io;
 fn main() {
     // --snip--
     // ANCHOR_END: here
-    println!("Guess the number!");
+    println!("Raqamni topish o'yini!");
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
+    let yashirin_raqam = rand::thread_rng().gen_range(1..=100);
 
-    println!("The secret number is: {secret_number}");
+    println!("Yashirin raqam: {yashirin_raqam}");
 
-    println!("Please input your guess.");
+    println!("Iltimos, taxminingizni kiriting.");
 
-    let mut guess = String::new();
+    let mut taxmin = String::new();
 
     io::stdin()
-        .read_line(&mut guess)
+        .read_line(&mut taxmin)
         .expect("Failed to read line");
     // ANCHOR: here
 
-    println!("You guessed: {guess}");
+    println!("Sizning taxminingiz: {taxmin}");
 
     match guess.cmp(&secret_number) {
-        Ordering::Less => println!("Too small!"),
-        Ordering::Greater => println!("Too big!"),
-        Ordering::Equal => println!("You win!"),
+        Ordering::Less => println!("Raqam Kichik!"),
+        Ordering::Greater => println!("Raqam katta!"),
+        Ordering::Equal => println!("Siz yutdingiz!"),
     }
 }
 // ANCHOR_END: here

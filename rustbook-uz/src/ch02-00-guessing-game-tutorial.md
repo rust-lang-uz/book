@@ -227,7 +227,7 @@ Keyinchalik, foydalanuvchi taxmin qilishga harakat qiladigan maxfiy raqamni yara
 
 Esda tutingki, crate Rust manba kodi fayllari to'plamidir. Biz qurayotgan loyiha *binary crate* bo'lib, u bajariladigan. `rand` crate boshqa dasturlarda foydalanish uchun moʻljallangan va mustaqil ravishda bajarib boʻlmaydigan kodni oʻz ichiga olgan *library crate*.
 
-Cargning tashqi cratelarni muvofiqlashtirishi bu erda Cargp haqiqatan ham ishlaydi. `rand` dan foydalanadigan kodni yozishdan oldin, biz *Cargo.toml* faylini `rand` cratesini dependency sifatida qo‘shish uchun o‘zgartirishimiz kerak. Hozir o‘sha faylni oching va Cargo siz uchun yaratgan`[dependencies]` bo‘limi sarlavhasi ostiga quyidagi qatorni qo‘shing.`rand` ni aynan bizda boʻlganidek, ushbu versiya raqami bilan belgilaganingizga ishonch hosil qiling, aks holda ushbu qoʻllanmadagi kod misollari ishlamasligi mumkin:
+Cargoning tashqi cratelarni muvofiqlashtirishi bu erda Cargp haqiqatan ham ishlaydi. `rand` dan foydalanadigan kodni yozishdan oldin, biz *Cargo.toml* faylini `rand` cratesini dependency sifatida qo‘shish uchun o‘zgartirishimiz kerak. Hozir o‘sha faylni oching va Cargo siz uchun yaratgan`[dependencies]` bo‘limi sarlavhasi ostiga quyidagi qatorni qo‘shing.`rand` ni aynan bizda boʻlganidek, ushbu versiya raqami bilan belgilaganingizga ishonch hosil qiling, aks holda ushbu qoʻllanmadagi kod misollari ishlamasligi mumkin:
 
 <!-- When updating the version of `rand` used, also update the version of
 `rand` used in these files so they all match:
@@ -238,7 +238,7 @@ Cargning tashqi cratelarni muvofiqlashtirishi bu erda Cargp haqiqatan ham ishlay
 <span class="filename">Fayl nomi: Cargo.toml</span>
 
 ```toml
-rand = "0.8.3"
+{{#include ../listings/ch02-guessing-game-tutorial/listing-02-02/Cargo.toml:8:}}
 ```
 
 *Cargo.toml* faylida sarlavhadan keyingi hamma narsa boshqa bo'lim boshlanmaguncha davom etadigan bo'limning bir qismidir. `[dependencies]` da siz Cargo loyihangiz qaysi tashqi cratelarga bog'liqligini va bu cratelarning qaysi versiyalari kerakligini aytasiz. Bunday holda, biz `rand` crateni `0.8.5` semantik versiya spetsifikatsiyasi bilan belgilaymiz. Cargo versiya raqamlarini yozish uchun standart bo'lgan [Semantic Versioning][semver]<!-- ignore -->ni (ba'zan *SemVer* deb ataladi) tushunadi. `0.8.5` spetsifikatsiyasi aslida `^0.8.5` ning qisqartmasi boʻlib, kamida 0.8.5, lekin 0.9.0 dan past boʻlgan har qanday versiyani bildiradi.
@@ -270,7 +270,7 @@ $ cargo build
    Compiling rand_core v0.6.3
    Compiling rand_chacha v0.3.1
    Compiling rand v0.8.5
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+   Compiling taxminiy_raqam v0.1.0 (file:///projects/taxminiy_raqam)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53s
 ```
 
@@ -293,7 +293,7 @@ cargo build -->
 
 ```console
 $ cargo build
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+   Compiling taxminiy_raqam v0.1.0 (file:///projects/taxminiy_raqam)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53 secs
 ```
 
@@ -303,7 +303,7 @@ Bu satrlar shuni ko'rsatadiki, Cargo faqat *src/main.rs* fayliga kichik o'zgarti
 
 Cargoda siz yoki boshqa birov kodingizni har safar yaratganingizda bir xil artefaktni qayta tiklashingiz mumkinligini ta'minlaydigan mexanizm mavjud: Siz aksini ko'rsatmaguningizcha, cargo faqat siz ko'rsatgan dependency versiyalaridan foydalanadi. Masalan, kelasi hafta `rand` cratening 0.8.6 versiyasi chiqadi va bu versiyada muhim xatoliklar tuzatilgan, lekin u sizning kodingizni buzadigan regressiyani ham o‘z ichiga oladi. Buni hal qilish uchun Rust birinchi marta  `cargo build` dasturini ishga tushirganingizda *Cargo.lock* faylini yaratadi, shuning uchun biz endi bu *guessing_game* jildida mavjud.
 
-Loyihani birinchi marta yaratganingizda, Cargo mezonlarga mos keladigan dependencylarning barcha versiyalarini aniqlaydi va keyin ularni *Cargo.lock* fayliga yozadi. Keyingi loyihangizni yaratganingizda, Cargo *Cargo.lock* fayli mavjudligini ko'radi va versiyalarni qayta aniqlash uchun barcha ishlarni bajarishdan ko'ra, u erda ko'rsatilgan versiyalardan foydalanadi. TBu sizga avtomatik ravishda takrorlanadigan tuzilishga ega bo'lish imkonini beradi. Boshqacha qilib aytganda, *Cargo.lock* fayli tufayli loyihangiz aniq yangilanmaguningizcha 0.8.5 da qoladi.
+Loyihani birinchi marta yaratganingizda, Cargo mezonlarga mos keladigan dependencylarning barcha versiyalarini aniqlaydi va keyin ularni *Cargo.lock* fayliga yozadi. Keyingi loyihangizni yaratganingizda, Cargo *Cargo.lock* fayli mavjudligini ko'radi va versiyalarni qayta aniqlash uchun barcha ishlarni bajarishdan ko'ra, u erda ko'rsatilgan versiyalardan foydalanadi. Bu sizga avtomatik ravishda takrorlanadigan tuzilishga ega bo'lish imkonini beradi. Boshqacha qilib aytganda, *Cargo.lock* fayli tufayli loyihangiz aniq yangilanmaguningizcha 0.8.5 da qoladi.
 *Cargo.lock* fayli qayta tiklanadigan tuzilmalar uchun muhim bo'lgani uchun u ko'pincha loyihangizdagi kodning qolgan qismi bilan manba nazoratida tekshiriladi.
 
 #### Yangi versiyani olish uchun Crateni yangilash
@@ -340,36 +340,17 @@ Keling, taxmin qilish uchun raqam yaratishda `rand` dan foydalanishni boshlaylik
 <span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
-use std::io;
-use rand::Rng;
-
-fn main() {
-    println!("Raqamni topish o'yini!");
-
-    let yashirin_raqam = rand::thread_rng().gen_range(1..=100);
-
-    println!("Yashirin raqam: {yashirin_raqam}");
-
-    println!("Iltimos, taxminingizni kiriting.");
-
-    let mut taxmin = String::new();
-
-    io::stdin()
-        .read_line(&mut taxmin)
-        .expect("Satrni o‘qib bo‘lmadi");
-
-    println!("Sizning taxminingiz: {taxmin}");
-}
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-03/src/main.rs:all}}
 ```
 
 <span class="caption">Ro'yxat 2-3: Tasodifiy raqam yaratish uchun kod qo'shiladi</span>
 
-Avval `use rand::Rng;` qatorini qo'shamiz. `Rng` xususiyati tasodifiy sonlar generatorlari qo'llaydigan usullarni belgilaydi va biz ushbu usullardan foydalanishimiz uchun bu xususiyat mos bo'lishi kerak. 10-bobda xususiyatlar batafsil yoritiladi.
+Avval `use rand::Rng;` qatorini qo'shamiz. `Rng` traiti tasodifiy sonlar generatorlari qo'llaydigan usullarni belgilaydi va biz ushbu usullardan foydalanishimiz uchun bu trait mos bo'lishi kerak. 10-bobda traitlar batafsil yoritiladi.
 
-Keyin o'rtada ikkita qator qo'shamiz. Birinchi qatorda biz `rand::thread_rng` funksiyasini chaqiramiz, bu bizga biz foydalanmoqchi bo'lgan tasodifiy sonlar generatorini beradi: joriy bajarilish oqimi uchun mahalliy bo'lgan va operatsion tizim tomonidan ekilgan. Keyin tasodifiy sonlar generatorida `gen_range` usulini chaqiramiz. Bu usul biz `use rand::Rng;`  iborasi bilan qamrab olgan `Rng` xususiyati bilan aniqlanadi. `gen_range` usuli argument sifatida diapazon ifodasini oladi va diapazonda tasodifiy son hosil qiladi. Biz bu yerda foydalanayotgan diapazon ifodasi turi `start..=end`  shaklini oladi va pastki va yuqori chegaralarni qamrab oladi, shuning uchun biz 1 va 100 oralig‘idagi raqamni so‘rash uchun `1..=100` ni belgilashimiz kerak. .
+Keyin o'rtada ikkita qator qo'shamiz. Birinchi qatorda biz `rand::thread_rng` funksiyasini chaqiramiz, bu bizga biz foydalanmoqchi bo'lgan tasodifiy sonlar generatorini beradi: joriy bajarilish oqimi uchun mahalliy bo'lgan va operatsion tizim tomonidan ekilgan. Keyin tasodifiy sonlar generatorida `gen_range` usulini chaqiramiz. Bu usul biz `use rand::Rng;`  iborasi bilan qamrab olgan `Rng` traiti bilan aniqlanadi. `gen_range` usuli argument sifatida diapazon ifodasini oladi va diapazonda tasodifiy son hosil qiladi. Biz bu yerda foydalanayotgan diapazon ifodasi turi `start..=end`  shaklini oladi va pastki va yuqori chegaralarni qamrab oladi, shuning uchun biz 1 va 100 oralig‘idagi raqamni so‘rash uchun `1..=100` ni belgilashimiz kerak. .
 
 
-> Eslatma: Siz faqat qaysi xususiyatlardan foydalanishni va qaysi usullar va funktsiyalarni
+> Eslatma: Siz faqat qaysi traitlardan foydalanishni va qaysi methodlar va funktsiyalarni
 > cratedan chaqirishni bila olmaysiz, shuning uchun har bir crateda foydalanish bo'yicha
 > ko'rsatmalar mavjud. Cargo-ning yana bir qulay xususiyati shundaki, `cargo doc --open` buyrug'ini
 > ishga tushirish sizning barcha dependencylar tomonidan taqdim etilgan texnik hujjatlarni
@@ -391,9 +372,9 @@ cargo run
 
 ```console
 $ cargo run
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+   Compiling taxminiy_raqam v0.1.0 (file:///projects/taxminiy_raqam)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53s
-     Running `target/debug/guessing_game`
+     Running `target/debug/taxminiy_raqam`
 Raqamni topish o'yini!
 Yashirin raqam: 7
 Iltimos, taxminingizni kiriting.
@@ -402,7 +383,7 @@ Siznig taxminingiz: 4
 
 $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.02s
-     Running `target/debug/guessing_game`
+     Running `target/debug/taxminiy_raqam`
 Raqamni topish o'yini!
 Yashirin raqam: 83
 Iltimos, taxminingizni kiriting.
@@ -412,28 +393,14 @@ Siznig taxminingiz: 5
 
 Siz turli xil tasodifiy raqamlarni olishingiz kerak va ularning barchasi 1 dan 100 gacha raqamlar bo'lishi kerak. Ajoyib ish!
 
-## Guessni maxfiy raqam bilan solishtirish
+## Taxminni maxfiy raqam bilan solishtirish
 
-Endi bizda foydalanuvchi kiritishi va tasodifiy raqam bor, biz ularni solishtirishimiz mumkin. Ushbu qadam 2-4 ro'yxatda ko'rsatilgan. E'tibor bering, bu kod hozircha tuzilmaydi, biz tushuntiramiz.
+Endi bizda foydalanuvchi kiritishi va tasodifiy raqam bor, biz ularni solishtirishimiz mumkin. Ushbu qadam 2-4 ro'yxatda ko'rsatilgan. E'tibor bering, bu kod hozircha kompilatsiya bo'lmaydi, biz tushuntiramiz.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-use rand::Rng;
-use std::cmp::Ordering;
-use std::io;
-
-fn main() {
-    // --snip--
-
-    println!("Sizning taxminingiz: {taxmin}");
-
-    match taxmin.cmp(&yashirin_raqam) {
-        Ordering::Less => println!("Raqam Kichik!"),
-        Ordering::Greater => println!("Raqam katta!"),
-        Ordering::Equal => println!("Siz yutdingiz!"),
-    }
-}
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-04/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 2-4: Ikki raqamni solishtirishning mumkin bo'lgan qaytish qiymatlarini boshqarish</span>
