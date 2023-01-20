@@ -1,3 +1,3 @@
 fn main() {
-    let lucky_number = 7; // I’m feeling lucky today
+    let omadli_raqam = 7; // Bugun o'zimni omadli his qilyapman
 }

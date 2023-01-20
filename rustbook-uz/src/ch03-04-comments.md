@@ -1,45 +1,36 @@
-## Comments
+## Izohlar
 
-All programmers strive to make their code easy to understand, but sometimes
-extra explanation is warranted. In these cases, programmers leave *comments* in
-their source code that the compiler will ignore but people reading the source
-code may find useful.
+Barcha dasturchilar o'z kodlarini tushunishni osonlashtirishga harakat qilishadi, lekin ba'zida qo'shimcha tushuntirish kerak. Bunday hollarda dasturchilar o'zlarining manba kodlarida *izohlar* qoldiradilar, ularni kompilyator e'tiborsiz qoldiradi, ammo manba kodini o'qiyotgan odamlar uchun foydali bo'lishi mumkin.
 
-Here’s a simple comment:
+Mana oddiy izoh:
 
 ```rust
 // hello, world
 ```
 
-In Rust, the idiomatic comment style starts a comment with two slashes, and the
-comment continues until the end of the line. For comments that extend beyond a
-single line, you’ll need to include `//` on each line, like this:
+Rustda idiomatik izoh uslubi izohni ikki qiyshiq chiziq bilan boshlaydi va izoh satr oxirigacha davom etadi. Bitta satrdan tashqariga chiqadigan izohlar uchun har bir satrga `//` qo'shishingiz kerak bo'ladi, masalan:
 
 ```rust
-// So we’re doing something complicated here, long enough that we need
-// multiple lines of comments to do it! Whew! Hopefully, this comment will
-// explain what’s going on.
+// Shunday qilib, biz bu erda murakkab ish qilyapmiz,
+// bizga bir nechta izohlar kerak bo'ladi! Vou! Umid qilamanki,
+// bu izoh nima bo'layotganini tushuntiradi.
 ```
 
-Comments can also be placed at the end of lines containing code:
+Izohlar, shuningdek, kodni o'z ichiga olgan qatorlar oxirida joylashtirilishi mumkin:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-24-comments-end-of-line/src/main.rs}}
 ```
 
-But you’ll more often see them used in this format, with the comment on a
-separate line above the code it’s annotating:
+Ammo siz ularni ushbu formatda ko'proq ko'rasiz, izohli kod ustidagi alohida satrda izoh bilan:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-25-comments-above-line/src/main.rs}}
 ```
-
-Rust also has another kind of comment, documentation comments, which we’ll
-discuss in the [“Publishing a Crate to Crates.io”][publishing]<!-- ignore -->
-section of Chapter 14.
+Rustda yana bir turdagi izohlar, hujjatlar izohlari mavjud, biz ularni 14-bobning [“Crates.io-ga crateni nashr qilish“][publishing]<!-- ignore --> bo'limida muhokama qilamiz.
 
 [publishing]: ch14-02-publishing-to-crates-io.html
