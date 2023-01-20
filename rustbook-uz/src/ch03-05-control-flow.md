@@ -1,64 +1,45 @@
 ## Control Flow
 
-The ability to run some code depending on whether a condition is `true` and to
-run some code repeatedly while a condition is `true` are basic building blocks
-in most programming languages. The most common constructs that let you control
-the flow of execution of Rust code are `if` expressions and loops.
+Shartning `true` yoki yo'qligiga qarab ba'zi kodlarni ishga tushirish va shart `true` bo'lganda ba'zi kodlarni qayta-qayta ishga tushirish qobiliyati ko'pchilik dasturlash tillarida asosiy building bloklari hisoblanadi. Rust kodining bajarilishini nazorat qilish imkonini beruvchi eng keng tarqalgan konstruksiyalar `if` expressionlari va looplaridir.
 
-### `if` Expressions
+### `if` ifodalari
 
-An `if` expression allows you to branch your code depending on conditions. You
-provide a condition and then state, “If this condition is met, run this block
-of code. If the condition is not met, do not run this block of code.”
+`if` ifodasi shartlarga qarab kodingizni branchga ajratish imkonini beradi. Siz shartni taqdim etasiz va keyin shunday deb aytasiz: “Agar bu shart bajarilsa, ushbu kod blokini ishga tushiring. Agar shart bajarilmasa, ushbu kod blokini ishga tushirmang."
 
-Create a new project called *branches* in your *projects* directory to explore
-the `if` expression. In the *src/main.rs* file, input the following:
+`If` ifodasini oʻrganish uchun *loyihalar* jildingizda *branchlar* nomli yangi loyiha yarating. *src/main.rs* faylida quyidagilarni kiriting:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-26-if-true/src/main.rs}}
 ```
 
-All `if` expressions start with the keyword `if`, followed by a condition. In
-this case, the condition checks whether or not the variable `number` has a
-value less than 5. We place the block of code to execute if the condition is
-`true` immediately after the condition inside curly brackets. Blocks of code
-associated with the conditions in `if` expressions are sometimes called *arms*,
-just like the arms in `match` expressions that we discussed in the [“Comparing
-the Guess to the Secret Number”][comparing-the-guess-to-the-secret-number]<!--
-ignore --> section of Chapter 2.
+Barcha `if` expressionlari `if` kalit so‘zidan boshlanadi, undan keyin shart keladi. Bunday holda, shart `raqam` o'zgaruvchisi 5 dan kichik qiymatga ega yoki yo'qligini tekshiradi. Agar shart `true` bo'lsa, biz kod blokini shartdan keyin darhol jingalak qavslar ichiga joylashtiramiz.
+`if` expressionlaridagi shartlar bilan bog‘langan kod bloklari ba’zan *arms* deb ataladi, xuddi biz 2-bobning [“Tahminni maxfiy raqam bilan solishtirish”][comparing-the-guess-to-the-secret-number]<!--ignore --> bo‘limida muhokama qilgan `match` expressionlaridagi qurollar kabi.
 
-Optionally, we can also include an `else` expression, which we chose to do
-here, to give the program an alternative block of code to execute should the
-condition evaluate to `false`. If you don’t provide an `else` expression and
-the condition is `false`, the program will just skip the `if` block and move on
-to the next bit of code.
+Ixtiyoriy ravishda, agar shart `false` deb baholansa, dasturga bajarilishi uchun muqobil kod blokini berish uchun biz tanlagan `else` expressionini ham kiritishimiz mumkin. Agar `else` ifodasini bermasangiz va shart `false` bo‘lsa, dastur shunchaki `if` blokini o‘tkazib yuboradi va kodning keyingi bitiga o‘tadi.
 
-Try running this code; you should see the following output:
+Ushbu kodni ishga tushirishga harakat qiling; quyidagi chiqishni ko'rishingiz kerak:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-26-if-true/output.txt}}
 ```
 
-Let’s try changing the value of `number` to a value that makes the condition
-`false` to see what happens:
+Keling, nima sodir bo'lishini ko'rish uchun `raqam` qiymatini shartni `false` qiladigan qiymatga o'zgartirib ko'raylik:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-27-if-false/src/main.rs:here}}
 ```
 
-Run the program again, and look at the output:
+Dasturni qayta ishga tushiring va natijaga qarang:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-27-if-false/output.txt}}
 ```
 
-It’s also worth noting that the condition in this code *must* be a `bool`. If
-the condition isn’t a `bool`, we’ll get an error. For example, try running the
-following code:
+Shuni ham ta'kidlash kerakki, ushbu koddagi shart `bool` bo'lishi kerak. Agar shart `bool` bo'lmasa, biz xatoga yo'l qo'yamiz. Masalan, quyidagi kodni ishga tushirishga harakat qiling:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-28-if-condition-must-be-bool/src/main.rs}}

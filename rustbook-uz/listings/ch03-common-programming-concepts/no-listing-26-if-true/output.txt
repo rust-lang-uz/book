@@ -1,5 +1,5 @@
 $ cargo run
-   Compiling branches v0.1.0 (file:///projects/branches)
+   Compiling branches v0.1.0 (file:///projects/branchlar)
     Finished dev [unoptimized + debuginfo] target(s) in 0.31s
-     Running `target/debug/branches`
-condition was true
+     Running `target/debug/branchlar`
+shart true edi

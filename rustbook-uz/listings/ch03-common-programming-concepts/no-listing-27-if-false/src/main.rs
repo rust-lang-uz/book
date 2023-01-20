@@ -1,11 +1,11 @@
 fn main() {
     // ANCHOR: here
-    let number = 7;
+    let raqam = 7;
     // ANCHOR_END: here
 
-    if number < 5 {
-        println!("condition was true");
+    if raqam < 5 {
+        println!("shart true edi");
     } else {
-        println!("condition was false");
+        println!("shart false edi");
     }
 }

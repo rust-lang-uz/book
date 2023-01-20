@@ -1,7 +1,7 @@
 fn main() {
-    let number = 3;
+    let raqam = 3;
 
-    if number {
-        println!("number was three");
+    if raqam {
+        println!("raqam uchta edi");
     }
 }
