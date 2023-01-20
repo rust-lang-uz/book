@@ -1,9 +1,9 @@
-fn five() -> i32 {
+fn besh() -> i32 {
     5
 }
 
 fn main() {
-    let x = five();
+    let x = besh();
 
-    println!("The value of x is: {x}");
+    println!("x qiymati: {x}");
 }

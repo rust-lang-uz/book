@@ -120,71 +120,48 @@ blok bo'lib, bu holda `4` ga evaluate bo'ladi. Bu qiymat `let` statementining bi
 
 ### Return qiymatlari bilan funksiyalar
 
-Functions can return values to the code that calls them. We don’t name return
-values, but we must declare their type after an arrow (`->`). In Rust, the
-return value of the function is synonymous with the value of the final
-expression in the block of the body of a function. You can return early from a
-function by using the `return` keyword and specifying a value, but most
-functions return the last expression implicitly. Here’s an example of a
-function that returns a value:
+Funksiyalar qiymatlarni ularni chaqiradigan kodga return qaytarishi mumkin. Return qiymatlarini nomlamaymiz, lekin ularning turini o'qdan keyin e'lon qilishimiz kerak (`->`). Rustda funksiyaning return qiymati funksiya tanasi blokidagi yakuniy ifodaning qiymati bilan sinonimdir. Siz `return` kalit so'zidan foydalanib va qiymatni belgilash orqali funksiyadan erta qaytishingiz mumkin, lekin ko'pchilik funktsiyalar oxirgi expressionni bevosita qaytaradi. Mana qiymatni return qiladigan funksiyaga misol:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-21-function-return-values/src/main.rs}}
 ```
 
-There are no function calls, macros, or even `let` statements in the `five`
-function—just the number `5` by itself. That’s a perfectly valid function in
-Rust. Note that the function’s return type is specified too, as `-> i32`. Try
-running this code; the output should look like this:
+`besh` funksiyasida funksiya chaqiruvlari, makroslar va hatto `let` iboralari ham yo‘q – faqat `5` raqamining o‘zi. Bu Rust-da juda to'g'ri funksiya. Funktsiyaning return turi ham `-> i32` sifatida ko'rsatilganligini unutmang.Ushbu kodni ishga tushirishga harakat qiling; chiqish quyidagicha ko'rinishi kerak:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-21-function-return-values/output.txt}}
 ```
 
-The `5` in `five` is the function’s return value, which is why the return type
-is `i32`. Let’s examine this in more detail. There are two important bits:
-first, the line `let x = five();` shows that we’re using the return value of a
-function to initialize a variable. Because the function `five` returns a `5`,
-that line is the same as the following:
+`besh` dagi `5` funksiyaning return qiymatidir, shuning uchun return turi `i32`dir. Keling, buni batafsilroq ko'rib chiqaylik. Ikkita muhim bit mavjud: birinchidan, `let x = besh();` qatori biz o'zgaruvchini ishga tushirish uchun funksiyaning return qiymatidan foydalanayotganimizni ko'rsatadi. Chunki `besh` funksiyasi `5`ni qaytaradi, bu qator quyidagi bilan bir xil:
 
 ```rust
 let x = 5;
 ```
 
-Second, the `five` function has no parameters and defines the type of the
-return value, but the body of the function is a lonely `5` with no semicolon
-because it’s an expression whose value we want to return.
+Ikkinchidan, `besh` funksiyasi hech qanday parametrga ega emas va return qiladigan qiymat turini belgilaydi, lekin funksiyaning tanasi nuqta-vergulsiz yolg‘iz `5` bo‘ladi, chunki bu biz qiymatini qaytarmoqchi bo‘lgan ifodadir.
 
-Let’s look at another example:
+Keling, yana bir misolni ko'rib chiqaylik:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-22-function-parameter-and-return/src/main.rs}}
 ```
 
-Running this code will print `The value of x is: 6`. But if we place a
-semicolon at the end of the line containing `x + 1`, changing it from an
-expression to a statement, we’ll get an error:
+Ushbu kodni ishga tushirish `x qiymati: 6` ni chop etadi. Ammo, agar biz `x + 1` bo'lgan satr oxiriga nuqta-vergul qo'ysak, uni expressiondan statementga o'zgartirsak, xatoga yo'l qo'yamiz:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-23-statements-dont-return-values/src/main.rs}}
 ```
 
-Compiling this code produces an error, as follows:
+Ushbu kodni kompilyatsiya qilish quyidagi kabi xatoga olib keladi:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-23-statements-dont-return-values/output.txt}}
 ```
 
-The main error message, `mismatched types`, reveals the core issue with this
-code. The definition of the function `plus_one` says that it will return an
-`i32`, but statements don’t evaluate to a value, which is expressed by `()`,
-the unit type. Therefore, nothing is returned, which contradicts the function
-definition and results in an error. In this output, Rust provides a message to
-possibly help rectify this issue: it suggests removing the semicolon, which
-would fix the error.
+Asosiy xato xabari, `mismatched types`(mos kelmaydigan turlar) ushbu kod bilan bog'liq asosiy muammoni ochib beradi. `qoshilgan_bir` funksiyasining taʼrifida aytilishicha, u `i32` ni qaytaradi, lekin statementlar birlik turi boʻlgan `()` bilan expression bo'lgan qiymatga evaluate bo'lmaydi. Shuning uchun, hech narsa return qilinmaydi, bu funksiya definitioniga zid keladi va xatolikka olib keladi. Ushbu chiqishda Rust bu muammoni tuzatishga yordam beradigan xabarni taqdim etadi: u nuqta-vergulni olib tashlashni taklif qiladi, bu xatoni tuzatadi.

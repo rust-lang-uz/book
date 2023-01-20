@@ -1,9 +1,9 @@
 fn main() {
-    let x = plus_one(5);
+    let x = qoshilgan_bir(5);
 
-    println!("The value of x is: {x}");
+    println!("x qiymati: {x}");
 }
 
-fn plus_one(x: i32) -> i32 {
+fn qoshilgan_bir(x: i32) -> i32 {
     x + 1
 }
