@@ -45,21 +45,15 @@ Shuni ham ta'kidlash kerakki, ushbu koddagi shart `bool` bo'lishi kerak. Agar sh
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-28-if-condition-must-be-bool/src/main.rs}}
 ```
 
-The `if` condition evaluates to a value of `3` this time, and Rust throws an
-error:
+`if` sharti bu safar `3` qiymatiga teng bo'ladi va Rust xato qiladi:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-28-if-condition-must-be-bool/output.txt}}
 ```
 
-The error indicates that Rust expected a `bool` but got an integer. Unlike
-languages such as Ruby and JavaScript, Rust will not automatically try to
-convert non-Boolean types to a Boolean. You must be explicit and always provide
-`if` with a Boolean as its condition. If we want the `if` code block to run
-only when a number is not equal to `0`, for example, we can change the `if`
-expression to the following:
+Xato shuni ko'rsatadiki, Rust `bool` kutgan, lekin integer(butun) son olgan. Ruby va JavaScript kabi tillardan farqli o'laroq, Rust boolean bo'lmagan turlarni boolean tilga o'zgartirishga avtomatik ravishda urinmaydi. Siz aniq bo'lishingiz va har doim `if` ni mantiqiy shart sifatida ko'rsatishingiz kerak. Agar biz `if` kod bloki faqat raqam `0` ga teng bo‘lmaganda ishlashini istasak, masalan, `if` ifodasini quyidagiga o‘zgartirishimiz mumkin:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-29-if-not-equal-0/src/main.rs}}
@@ -78,40 +72,28 @@ expression. For example:
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-30-else-if/src/main.rs}}
 ```
 
-This program has four possible paths it can take. After running it, you should
-see the following output:
+Ushbu dasturda to'rtta yo'l bor. Uni ishga tushirgandan so'ng siz quyidagi chiqishni ko'rishingiz kerak:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-30-else-if/output.txt}}
 ```
 
-When this program executes, it checks each `if` expression in turn and executes
-the first body for which the condition evaluates to `true`. Note that even
-though 6 is divisible by 2, we don’t see the output `number is divisible by 2`,
-nor do we see the `number is not divisible by 4, 3, or 2` text from the `else`
-block. That’s because Rust only executes the block for the first `true`
-condition, and once it finds one, it doesn’t even check the rest.
+Ushbu dastur bajarilganda, u har bir `if` expressionni navbatma-navbat tekshiradi va shart `true` deb baholanadigan birinchi tanani bajaradi. E'tibor bering 6, 2 ga bo'linsa ham, biz `son 2 ga bo'linmaydi` chiqishini ko'rmayapmiz va `else` blokidagi `raqam 4, 3 yoki 2 ga bo'linmaydi` matnini ko'rmaymiz.Buning sababi, Rust faqat birinchi `true` shart uchun blokni bajaradi va bir marta topilsa, qolganlarini ham tekshirmaydi.
+Juda ko'p `else if` expressionlaridan foydalanish kodingizni buzishi mumkin, shuning uchun sizda bir nechta bo'lsa, kodingizni qayta tahrirlashni xohlashingiz mumkin. 6-bobda bu holatlar uchun `match` deb nomlangan kuchli Rust tarmoqli konstruksiyasi tasvirlangan.
 
-Using too many `else if` expressions can clutter your code, so if you have more
-than one, you might want to refactor your code. Chapter 6 describes a powerful
-Rust branching construct called `match` for these cases.
+#### `let` statementida `if` dan foydalanish
 
-#### Using `if` in a `let` Statement
+`if` expression bo‘lganligi sababli, biz 3-2-listdagi kabi natijani o‘zgaruvchiga belgilash uchun `let` statementining o‘ng tomonida foydalanishimiz mumkin.
 
-Because `if` is an expression, we can use it on the right side of a `let`
-statement to assign the outcome to a variable, as in Listing 3-2.
-
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-02/src/main.rs}}
 ```
 
-<span class="caption">Listing 3-2: Assigning the result of an `if` expression
-to a variable</span>
+<span class="caption">Ro'yxat 3-2: `if` expressioni natijasini o‘zgaruvchiga tayinlash</span>
 
-The `number` variable will be bound to a value based on the outcome of the `if`
-expression. Run this code to see what happens:
+`raqam` o'zgaruvchisi `if` expressioni natijasiga asoslangan qiymatga bog'lanadi. Nima sodir bo'lishini ko'rish uchun ushbu kodni ishga tushiring:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/listing-03-02/output.txt}}

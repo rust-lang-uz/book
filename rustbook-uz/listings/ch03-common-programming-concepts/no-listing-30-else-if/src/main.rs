@@ -1,13 +1,13 @@
 fn main() {
-    let number = 6;
+    let raqam = 6;
 
-    if number % 4 == 0 {
-        println!("number is divisible by 4");
-    } else if number % 3 == 0 {
-        println!("number is divisible by 3");
-    } else if number % 2 == 0 {
-        println!("number is divisible by 2");
+    if raqam % 4 == 0 {
+        println!("raqam 4 ga bo'linadi");
+    } else if raqam % 3 == 0 {
+        println!("raqam 3 ga bo'linadi");
+    } else if raqam % 2 == 0 {
+        println!("raqam 2 ga bo'linadi");
     } else {
-        println!("number is not divisible by 4, 3, or 2");
+        println!("raqam 4, 3 yoki 2 ga bo'linmaydi");
     }
 }

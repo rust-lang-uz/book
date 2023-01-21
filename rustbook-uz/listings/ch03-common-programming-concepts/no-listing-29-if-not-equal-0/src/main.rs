@@ -1,7 +1,7 @@
 fn main() {
-    let number = 3;
+    let raqam = 3;
 
-    if number != 0 {
-        println!("number was something other than zero");
+    if raqam != 0 {
+        println!("raqam noldan boshqa narsa edi");
     }
 }
