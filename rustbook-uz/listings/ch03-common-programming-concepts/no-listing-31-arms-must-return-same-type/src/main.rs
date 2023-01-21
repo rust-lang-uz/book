@@ -1,7 +1,7 @@
 fn main() {
-    let condition = true;
+    let shart = true;
 
-    let number = if condition { 5 } else { "six" };
+    let raqam = if shart { 5 } else { "olti" };
 
-    println!("The value of number is: {number}");
+    println!("Raqamning qiymati: {raqam}");
 }

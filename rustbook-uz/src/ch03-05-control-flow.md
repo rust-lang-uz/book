@@ -99,64 +99,42 @@ Juda ko'p `else if` expressionlaridan foydalanish kodingizni buzishi mumkin, shu
 {{#include ../listings/ch03-common-programming-concepts/listing-03-02/output.txt}}
 ```
 
-Remember that blocks of code evaluate to the last expression in them, and
-numbers by themselves are also expressions. In this case, the value of the
-whole `if` expression depends on which block of code executes. This means the
-values that have the potential to be results from each arm of the `if` must be
-the same type; in Listing 3-2, the results of both the `if` arm and the `else`
-arm were `i32` integers. If the types are mismatched, as in the following
-example, we’ll get an error:
+Esda tutingki, kod bloklari ulardagi oxirgi expressiongacha evaluate qilianadi va raqamlar o'zlari ham expressionlardir. Bu holda butun `if` expressionning qiymati qaysi kod bloki bajarilishiga bog'liq. Bu `if` ning har bir armidan result bo'lish potentsialiga ega bo'lgan qiymatlar bir xil turdagi bo'lishi kerakligini anglatadi; 3-2 ro'yxatda `if` va `else` armllarining natijalari `i32` butun sonlari edi. Agar turlar mos kelmasa(mismatched), quyidagi misolda bo'lgani kabi, biz xatoga duch kelamiz:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-31-arms-must-return-same-type/src/main.rs}}
 ```
 
-When we try to compile this code, we’ll get an error. The `if` and `else` arms
-have value types that are incompatible, and Rust indicates exactly where to
-find the problem in the program:
+Ushbu kodni kompilyatsiya qilmoqchi bo'lganimizda, biz xatoga duch kelamiz. `if` va `else` armllari mos kelmaydigan qiymat turlariga ega va Rust muammoni dasturda qayerdan topish mumkinligini aniq ko'rsatadi:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-31-arms-must-return-same-type/output.txt}}
 ```
 
-The expression in the `if` block evaluates to an integer, and the expression in
-the `else` block evaluates to a string. This won’t work because variables must
-have a single type, and Rust needs to know at compile time what type the
-`number` variable is, definitively. Knowing the type of `number` lets the
-compiler verify the type is valid everywhere we use `number`. Rust wouldn’t be
-able to do that if the type of `number` was only determined at runtime; the
-compiler would be more complex and would make fewer guarantees about the code
-if it had to keep track of multiple hypothetical types for any variable.
+`if` blokidagi expression butun songa, `else` blokidagi expression esa satrga baholanadi. Bu ishlamaydi, chunki oʻzgaruvchilar bitta turga ega boʻlishi kerak va Rust kompilyatsiya vaqtida `raqam` oʻzgaruvchisi qaysi turini aniq bilishi kerak. `raqam` turini bilish kompilyatorga ushbu tur biz `raqam` ishlatadigan hamma joyda haqiqiyligini tekshirish imkonini beradi. Agar `raqam` turi faqat runtimeda aniqlangan bo'lsa, Rust buni qila olmaydi; kompilyator murakkabroq bo'lar edi va agar u har qanday o'zgaruvchi uchun bir nechta gipotetik turlarni kuzatib borishi kerak bo'lsa, kod haqida kamroq kafolatlar beradi.
 
-### Repetition with Loops
+### Looplar bilan takrorlash
 
-It’s often useful to execute a block of code more than once. For this task,
-Rust provides several *loops*, which will run through the code inside the loop
-body to the end and then start immediately back at the beginning. To experiment
-with loops, let’s make a new project called *loops*.
+Ko'pincha kod blokini bir necha marta bajarish foydali bo'ladi. Ushbu vazifani bajarish uchun Rust bir nechta *looplarni* taqdim etadi, ular tsikl tanasi ichidagi kod orqali oxirigacha ishlaydi va keyin darhol boshida boshlanadi. Looplar bilan tajriba o'tkazish uchun keling, *looplar* deb nomlangan yangi loyiha yarataylik.
 
-Rust has three kinds of loops: `loop`, `while`, and `for`. Let’s try each one.
+Rustda uch xil looplar mavjud: `loop`, `while` va `for`. Keling, har birini sinab ko'raylik.
 
-#### Repeating Code with `loop`
+#### Kodni `loop` bilan takrorlash
 
-The `loop` keyword tells Rust to execute a block of code over and over again
-forever or until you explicitly tell it to stop.
+`loop` kalit so'zi Rustga kod blokini abadiy qayta-qayta bajarishni yoki uni to'xtatishni aniq aytmaguningizcha bajarishni aytadi.
 
-As an example, change the *src/main.rs* file in your *loops* directory to look
-like this:
+Misol tariqasida, *looplar* jildingizdagi *src/main.rs* faylini quyidagicha o'zgartiring:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-loop/src/main.rs}}
 ```
 
-When we run this program, we’ll see `again!` printed over and over continuously
-until we stop the program manually. Most terminals support the keyboard
-shortcut <span class="keystroke">ctrl-c</span> to interrupt a program that is
-stuck in a continual loop. Give it a try:
+Ushbu dasturni ishga tushirganimizda, dasturni qo'lda to'xtatmagunimizcha, `yana!` so'zi doimiy ravishda chop etilishini ko'ramiz.Aksariyat terminallar uzluksiz siklda ishlab qolgan dasturni to'xtatish uchun <span class="keystroke">ctrl-c</span>  klaviatura yorliqlarini qo'llab-quvvatlaydi.
+Sinab ko'ring:
 
 <!-- manual-regeneration
 cd listings/ch03-common-programming-concepts/no-listing-32-loop
@@ -166,31 +144,22 @@ CTRL-C
 
 ```console
 $ cargo run
-   Compiling loops v0.1.0 (file:///projects/loops)
+   Compiling loops v0.1.0 (file:///projects/looplar)
     Finished dev [unoptimized + debuginfo] target(s) in 0.29s
-     Running `target/debug/loops`
-again!
-again!
-again!
-again!
-^Cagain!
+     Running `target/debug/looplar`
+yana!
+yana!
+yana!
+yana!
+^Cyana!
 ```
 
-The symbol `^C` represents where you pressed <span
-class="keystroke">ctrl-c</span>. You may or may not see the word `again!`
-printed after the `^C`, depending on where the code was in the loop when it
-received the interrupt signal.
+`^C` belgisi <span class="keystroke">ctrl-c</span> tugmalarini bosgan joyni bildiradi. Kod uzilish signalini qabul qilganda siklning qayerda bo'lganiga qarab, `^C` dan keyin chop etilgan `yana!` so'zini ko'rishingiz yoki ko'rmasligingiz mumkin.
 
-Fortunately, Rust also provides a way to break out of a loop using code. You
-can place the `break` keyword within the loop to tell the program when to stop
-executing the loop. Recall that we did this in the guessing game in the
-[“Quitting After a Correct Guess”][quitting-after-a-correct-guess]<!-- ignore
---> section of Chapter 2 to exit the program when the user won the game by
-guessing the correct number.
+Yaxshiyamki, Rust kod yordamida loopdan chiqish yo'lini ham taqdim etadi. Siz dasturga siklni bajarishni qachon to'xtatish kerakligini aytish uchun `break` kalit so'zini siklga qo'yishingiz mumkin. 
+Eslatib o'tamiz, biz buni 2-bobning [”To'g'ri taxmindan keyin chiqish”][quitting-after-a-correct-guess]<!-- ignore --> bo'limidagi taxminiy o'yinda, foydalanuvchi to'g'ri raqamni taxmin qilish orqali o'yinda g'alaba qozonganida dasturdan chiqish uchun qilganmiz.
 
-We also used `continue` in the guessing game, which in a loop tells the program
-to skip over any remaining code in this iteration of the loop and go to the
-next iteration.
+Shuningdek, biz taxmin qilish o'yinida `continue` dan foydalandik, bu siklda dasturga siklning ushbu iteratsiyasida qolgan har qanday kodni o'tkazib yuborish va keyingi iteratsiyaga o'tishni aytadi.
 
 #### Returning Values from Loops
 
