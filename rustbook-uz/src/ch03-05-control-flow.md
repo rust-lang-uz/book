@@ -161,43 +161,26 @@ Eslatib o'tamiz, biz buni 2-bobning [”To'g'ri taxmindan keyin chiqish”][quit
 
 Shuningdek, biz taxmin qilish o'yinida `continue` dan foydalandik, bu siklda dasturga siklning ushbu iteratsiyasida qolgan har qanday kodni o'tkazib yuborish va keyingi iteratsiyaga o'tishni aytadi.
 
-#### Returning Values from Loops
+#### Looplardan qiymatlarni qaytarish(return)
 
-One of the uses of a `loop` is to retry an operation you know might fail, such
-as checking whether a thread has completed its job. You might also need to pass
-the result of that operation out of the loop to the rest of your code. To do
-this, you can add the value you want returned after the `break` expression you
-use to stop the loop; that value will be returned out of the loop so you can
-use it, as shown here:
+`loop` dan foydalanishdan biri bu ish bajarilmasligi mumkin bo'lgan operatsiyani qaytadan urinish, masalan, thread o'z ishini tugatganligini tekshirish. Bundan tashqari, ushbu operatsiya natijasini kodingizning qolgan qismiga sikldan o'tkazishingiz kerak bo'lishi mumkin. Buning uchun siklni toʻxtatish uchun foydalanadigan `break` ifodasidan keyin return qilinishi kerak boʻlgan qiymatni qoʻshishingiz mumkin; bu qiymat loopdan qaytariladi, shuning uchun uni bu yerda ko'rsatilganidek ishlatishingiz mumkin:
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-33-return-value-from-loop/src/main.rs}}
 ```
 
-Before the loop, we declare a variable named `counter` and initialize it to
-`0`. Then we declare a variable named `result` to hold the value returned from
-the loop. On every iteration of the loop, we add `1` to the `counter` variable,
-and then check whether the `counter` is equal to `10`. When it is, we use the
-`break` keyword with the value `counter * 2`. After the loop, we use a
-semicolon to end the statement that assigns the value to `result`. Finally, we
-print the value in `result`, which in this case is `20`.
+Loopdan oldin biz `hisoblagich` nomli o‘zgaruvchini e’lon qilamiz va uni `0` ga ishga tushiramiz. Keyin sikldan qaytarilgan qiymatni ushlab turish uchun `natija` nomli o'zgaruvchini e'lon qilamiz. Loopning har bir iteratsiyasida biz `hisoblagich` o‘zgaruvchisiga `1` qo‘shamiz va keyin `hisoblagich` 10 ga teng yoki yo‘qligini tekshiramiz. Bu bo'lganda, biz `hisoblagich * 2` qiymati bilan `break` kalit so'zidan foydalanamiz. Loopdan so'ng biz `natija` qiymatini belgilaydigan statementni tugatish uchun nuqta-verguldan foydalanamiz. Nihoyat, biz qiymatni `natija`da chop qilamiz, bu holda `20`.
 
-#### Loop Labels to Disambiguate Between Multiple Loops
+#### Bir nechta looplar orasidagi farqni ajratish uchun loop teglari
 
-If you have loops within loops, `break` and `continue` apply to the innermost
-loop at that point. You can optionally specify a *loop label* on a loop that
-you can then use with `break` or `continue` to specify that those keywords
-apply to the labeled loop instead of the innermost loop. Loop labels must begin
-with a single quote. Here’s an example with two nested loops:
+Agar sizda looplar ichida looplaringiz bo'lsa, o'sha nuqtada eng ichki loopga `break` va `continue` amallari qo'llaniladi. Siz ixtiyoriy ravishda siklda *loop label* belgilashingiz mumkin, undan so‘ng `break` yoki  `continue` bilan o‘sha kalit so‘zlar eng ichki loop o‘rniga belgilangan loopga qo‘llanilishini belgilashingiz mumkin. Loop labellari bitta tirnoqcha bilan boshlanishi kerak. Mana ikkita ichki loop bilan bir misol:
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/src/main.rs}}
 ```
 
-The outer loop has the label `'counting_up`, and it will count up from 0 to 2.
-The inner loop without a label counts down from 10 to 9. The first `break` that
-doesn’t specify a label will exit the inner loop only. The `break
-'counting_up;` statement will exit the outer loop. This code prints:
+Tashqi loopda `'hisoblash` labeli bor va u 0 dan 2 gacha hisoblanadi.
+Labelsiz ichki loop 10 dan 9 gacha hisoblanadi. Label ko'rsatilmagan birinchi `break` faqat ichki sikldan chiqadi. `break 'hisoblash;` statementi tashqi sikldan chiqadi. Keling kodni run qilib ko'ramiz:  
 
 ```console
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/output.txt}}

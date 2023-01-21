@@ -1,21 +1,21 @@
 fn main() {
-    let mut count = 0;
-    'counting_up: loop {
-        println!("count = {count}");
-        let mut remaining = 10;
+    let mut hisob = 0;
+    'hisoblash: loop {
+        println!("hisob = {hisob}");
+        let mut qolgan = 10;
 
         loop {
-            println!("remaining = {remaining}");
-            if remaining == 9 {
+            println!("qolgan = {qolgan}");
+            if qolgan == 9 {
                 break;
             }
-            if count == 2 {
-                break 'counting_up;
+            if hisob == 2 {
+                break 'hisoblash;
             }
-            remaining -= 1;
+            qolgan -= 1;
         }
 
-        count += 1;
+        hisob += 1;
     }
-    println!("End count = {count}");
+    println!("Yakuniy hisob = {hisob}");
 }
