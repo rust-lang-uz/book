@@ -218,58 +218,37 @@ Bu erda kod arraydagi elementlar orqali hisoblanadi. U `0` indeksidan boshlanadi
 {{#include ../listings/ch03-common-programming-concepts/listing-03-04/output.txt}}
 ```
 
-All five array values appear in the terminal, as expected. Even though `index`
-will reach a value of `5` at some point, the loop stops executing before trying
-to fetch a sixth value from the array.
+Barcha besh array qiymatlari kutilganidek terminalda paydo bo'ladi. Garchi `index` bir nuqtada `5` qiymatiga yetsa ham, arraydan oltinchi qiymatni olishga urinishdan oldin sikl ishlashni to‘xtatadi.
 
-However, this approach is error prone; we could cause the program to panic if
-the index value or test condition is incorrect. For example, if you changed the
-definition of the `a` array to have four elements but forgot to update the
-condition to `while index < 4`, the code would panic. It’s also slow, because
-the compiler adds runtime code to perform the conditional check of whether the
-index is within the bounds of the array on every iteration through the loop.
+Biroq, bu yondashuv xatoga moyil; Agar indeks qiymati yoki test holati noto'g'ri bo'lsa, biz dasturni panic qo'yishimiz mumkin. Misol uchun, agar siz `a` arrayining ta'rifini to'rtta elementga o'zgartirsangiz, lekin shartni `while index < 4` bo'lganda yangilashni unutgan bo'lsangiz, kod panic qo'zg'atadi. Bu ham sekin, chunki kompilyator sikl orqali har bir iteratsiyada indeks array chegaralarida ekanligini shartli tekshirish uchun runtime kodini qo‘shadi.
 
-As a more concise alternative, you can use a `for` loop and execute some code
-for each item in a collection. A `for` loop looks like the code in Listing 3-5.
+Aniqroq variant sifatida, siz `for` siklidan foydalanishingiz va to'plamdagi har bir element uchun ba'zi kodlarni bajarishingiz mumkin. `for` sikli 3-5-ro'yxatdagi kodga o'xshaydi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-05/src/main.rs}}
 ```
 
-<span class="caption">Listing 3-5: Looping through each element of a collection
-using a `for` loop</span>
+<span class="caption">Ro'yxat 3-5: `for` `sikli yordamida to'plamning har bir elementi bo'ylab aylanish</span>
 
-When we run this code, we’ll see the same output as in Listing 3-4. More
-importantly, we’ve now increased the safety of the code and eliminated the
-chance of bugs that might result from going beyond the end of the array or not
-going far enough and missing some items.
+Ushbu kodni ishga tushirganimizda, biz 3-4 ro'yxatdagi kabi natijani ko'ramiz. Eng muhimi, biz kodning xavfsizligini oshirdik va arrayning oxiridan tashqariga chiqish yoki yetarlicha uzoqqa bormaslik va ba'zi elementlarni yetishmayotganligi sababli paydo bo'lishi mumkin bo'lgan xatolar ehtimolini yo'q qildik.
 
-Using the `for` loop, you wouldn’t need to remember to change any other code if
-you changed the number of values in the array, as you would with the method
-used in Listing 3-4.
+`for` siklidan foydalanib, agar siz 3-4 roʻyxatda qoʻllanilgan usulda boʻlgani kabi arraydagi qiymatlar sonini oʻzgartirsangiz, boshqa kodni oʻzgartirishni eslab qolishingiz shart emas.
 
-The safety and conciseness of `for` loops make them the most commonly used loop
-construct in Rust. Even in situations in which you want to run some code a
-certain number of times, as in the countdown example that used a `while` loop
-in Listing 3-3, most Rustaceans would use a `for` loop. The way to do that
-would be to use a `Range`, provided by the standard library, which generates
-all numbers in sequence starting from one number and ending before another
-number.
+`for` looplarining xavfsizligi va ixchamligi ularni Rustda eng ko‘p ishlatiladigan loop konstruksiyasiga aylantiradi. 3-3 ro'yxatdagi `while` siklidan foydalanilgan ortga hisoblash misolida bo'lgani kabi, ma'lum bir necha marta kodni ishlatmoqchi bo'lgan vaziyatlarda ham ko'pchilik Rustaceanlar `for` siklidan foydalanadilar. Buning yo'li standart kutubxona tomonidan taqdim etilgan `Range` dan foydalanish bo'lib, bir raqamdan boshlanib, boshqa raqamdan oldin tugaydigan barcha raqamlarni ketma-ketlikda hosil qiladi.
 
-Here’s what the countdown would look like using a `for` loop and another method
-we’ve not yet talked about, `rev`, to reverse the range:
+Ortga hisoblash `for` sikli va biz hali u to‘g‘risida gapirmagan boshqa usul – `rev` yordamida diapazonni teskari tomonga o‘zgartirishga o‘xshaydi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-34-for-range/src/main.rs}}
 ```
 
-This code is a bit nicer, isn’t it?
+Bu kod biroz chiroyliroq, shunday emasmi?
 
-## Summary
+## Xulosa
 
 You made it! This was a sizable chapter: you learned about variables, scalar
 and compound data types, functions, comments, `if` expressions, and loops! To
