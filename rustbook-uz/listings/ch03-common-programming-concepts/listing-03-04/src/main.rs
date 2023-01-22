@@ -3,7 +3,7 @@ fn main() {
     let mut index = 0;
 
     while index < 5 {
-        println!("the value is: {}", a[index]);
+        println!("qiymati: {}", a[index]);
 
         index += 1;
     }

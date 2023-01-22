@@ -1,9 +1,9 @@
 $ cargo run
-   Compiling loops v0.1.0 (file:///projects/loops)
+   Compiling looplar v0.1.0 (file:///projects/looplar)
     Finished dev [unoptimized + debuginfo] target(s) in 0.32s
-     Running `target/debug/loops`
-the value is: 10
-the value is: 20
-the value is: 30
-the value is: 40
-the value is: 50
+     Running `target/debug/looplar`
+qiymati: 10
+qiymati: 20
+qiymati: 30
+qiymati: 40
+qiymati: 50

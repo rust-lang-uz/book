@@ -117,7 +117,7 @@ Ushbu kodni kompilyatsiya qilmoqchi bo'lganimizda, biz xatoga duch kelamiz. `if`
 
 ### Looplar bilan takrorlash
 
-Ko'pincha kod blokini bir necha marta bajarish foydali bo'ladi. Ushbu vazifani bajarish uchun Rust bir nechta *looplarni* taqdim etadi, ular tsikl tanasi ichidagi kod orqali oxirigacha ishlaydi va keyin darhol boshida boshlanadi. Looplar bilan tajriba o'tkazish uchun keling, *looplar* deb nomlangan yangi loyiha yarataylik.
+Ko'pincha kod blokini bir necha marta bajarish foydali bo'ladi. Ushbu vazifani bajarish uchun Rust bir nechta *looplarni* taqdim etadi, ular sikl tanasi ichidagi kod orqali oxirigacha ishlaydi va keyin darhol boshida boshlanadi. Looplar bilan tajriba o'tkazish uchun keling, *looplar* deb nomlangan yangi loyiha yarataylik.
 
 Rustda uch xil looplar mavjud: `loop`, `while` va `for`. Keling, har birini sinab ko'raylik.
 
@@ -171,7 +171,7 @@ Shuningdek, biz taxmin qilish o'yinida `continue` dan foydalandik, bu siklda das
 
 Loopdan oldin biz `hisoblagich` nomli o‘zgaruvchini e’lon qilamiz va uni `0` ga ishga tushiramiz. Keyin sikldan qaytarilgan qiymatni ushlab turish uchun `natija` nomli o'zgaruvchini e'lon qilamiz. Loopning har bir iteratsiyasida biz `hisoblagich` o‘zgaruvchisiga `1` qo‘shamiz va keyin `hisoblagich` 10 ga teng yoki yo‘qligini tekshiramiz. Bu bo'lganda, biz `hisoblagich * 2` qiymati bilan `break` kalit so'zidan foydalanamiz. Loopdan so'ng biz `natija` qiymatini belgilaydigan statementni tugatish uchun nuqta-verguldan foydalanamiz. Nihoyat, biz qiymatni `natija`da chop qilamiz, bu holda `20`.
 
-#### Bir nechta looplar orasidagi farqni ajratish uchun loop teglari
+#### Bir nechta looplar orasidagi farqni ajratish uchun loop labellari
 
 Agar sizda looplar ichida looplaringiz bo'lsa, o'sha nuqtada eng ichki loopga `break` va `continue` amallari qo'llaniladi. Siz ixtiyoriy ravishda siklda *loop label* belgilashingiz mumkin, undan so‘ng `break` yoki  `continue` bilan o‘sha kalit so‘zlar eng ichki loop o‘rniga belgilangan loopga qo‘llanilishini belgilashingiz mumkin. Loop labellari bitta tirnoqcha bilan boshlanishi kerak. Mana ikkita ichki loop bilan bir misol:
 
@@ -186,49 +186,33 @@ Labelsiz ichki loop 10 dan 9 gacha hisoblanadi. Label ko'rsatilmagan birinchi `b
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/output.txt}}
 ```
 
-#### Conditional Loops with `while`
+#### `while` bilan shartli looplar
 
-A program will often need to evaluate a condition within a loop. While the
-condition is `true`, the loop runs. When the condition ceases to be `true`, the
-program calls `break`, stopping the loop. It’s possible to implement behavior
-like this using a combination of `loop`, `if`, `else`, and `break`; you could
-try that now in a program, if you’d like. However, this pattern is so common
-that Rust has a built-in language construct for it, called a `while` loop. In
-Listing 3-3, we use `while` to loop the program three times, counting down each
-time, and then, after the loop, print a message and exit.
+Dastur ko'pincha loop ichidagi shartni evaluate qilishi kerak bo'ladi. Shart `true` bo'lsa-da, loop ishlaydi. Shart `true` bo'lishni to'xtatganda, dastur loopni to'xtatib, `break` ni chaqiradi. Bu kabi xatti-harakatlarni `loop`, `if`, `else` va `break` kombinatsiyasidan foydalanib amalga oshirish mumkin; Agar xohlasangiz, buni hozir dasturda sinab ko'rishingiz mumkin. Biroq, bu pattern shunchalik keng tarqalganki, Rustda buning uchun `while` sikli deb ataladigan o'rnatilgan til konstruktsiyasi mavjud. 3-3 ro'yxatda biz dasturni uch marta aylanish uchun `while` dan foydalanamiz, har safar sanab chiqamiz, so'ngra sikldan so'ng xabarni chop etamiz va chiqamiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-03/src/main.rs}}
 ```
 
-<span class="caption">Listing 3-3: Using a `while` loop to run code while a
-condition holds true</span>
+<span class="caption">Ro'yxat 3-3: Shart to'g'ri bo'lganda kodni ishga tushirish uchun `while` siklidan foydalanish</span>
 
-This construct eliminates a lot of nesting that would be necessary if you used
-`loop`, `if`, `else`, and `break`, and it’s clearer. While a condition
-evaluates to `true`, the code runs; otherwise, it exits the loop.
+Bu konstruksiya `loop`, `if`, `else` va `break` dan foydalansangiz, zarur bo'ladigan ko'plab joylashtirishlarni yo'q qiladi va bu aniqroq bo'ladi. Shart `true` deb baholansa, kod ishlaydi; aks holda, u loopdan chiqadi.
 
-#### Looping Through a Collection with `for`
+#### `for` bilan to'plam bo'ylab aylanish
 
-You can choose to use the `while` construct to loop over the elements of a
-collection, such as an array. For example, the loop in Listing 3-4 prints each
-element in the array `a`.
+Siz `while` konstruksiyasidan array kabi to‘plam elementlari ustidan aylanishni tanlashingiz mumkin. Masalan, 3-4 ro'yxatdagi sikl `a` arrayidagi har bir elementni chop etadi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-04/src/main.rs}}
 ```
 
-<span class="caption">Listing 3-4: Looping through each element of a collection
-using a `while` loop</span>
+<span class="caption">Ro'yxat 3-4: `while` sikli yordamida to‘plamning har bir elementi bo‘ylab aylanish</span>
 
-Here, the code counts up through the elements in the array. It starts at index
-`0`, and then loops until it reaches the final index in the array (that is,
-when `index < 5` is no longer `true`). Running this code will print every
-element in the array:
+Bu erda kod arraydagi elementlar orqali hisoblanadi. U `0` indeksidan boshlanadi va keyin arraydagi yakuniy indeksga yetguncha (ya'ni, `index < 5` endi `true` bo`lmaganda) sikl davom etadi. Ushbu kodni ishga tushirish arraydagi har bir elementni chop etadi:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/listing-03-04/output.txt}}

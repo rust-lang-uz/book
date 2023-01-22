@@ -1,10 +1,10 @@
 fn main() {
-    let mut number = 3;
+    let mut raqam = 3;
 
-    while number != 0 {
-        println!("{number}!");
+    while raqam != 0 {
+        println!("{raqam}!");
 
-        number -= 1;
+        raqam -= 1;
     }
 
     println!("LIFTOFF!!!");
