@@ -250,18 +250,13 @@ Bu kod biroz chiroyliroq, shunday emasmi?
 
 ## Xulosa
 
-You made it! This was a sizable chapter: you learned about variables, scalar
-and compound data types, functions, comments, `if` expressions, and loops! To
-practice with the concepts discussed in this chapter, try building programs to
-do the following:
+Siz erishdingiz! Bu juda katta bob bo'ldi: siz o'zgaruvchilar, skalyar va compound ma'lumotlar turlari, funksiyalar, izohlar, `if` expressionlari va sikllar haqida bilib oldingiz! Ushbu bobda muhokama qilingan tushunchalar bilan mashq qilish uchun quyidagilarni amalga oshirish uchun dasturlar yaratishga harakat qiling:
 
-* Convert temperatures between Fahrenheit and Celsius.
-* Generate the *n*th Fibonacci number.
-* Print the lyrics to the Christmas carol “The Twelve Days of Christmas,”
-  taking advantage of the repetition in the song.
+* Haroratni Farengeyt va Selsiy o'rtasida o'zgartiring.
+* *n*ta Fibonachchi raqamini yarating.
+* Qo'shiqning takrorlanishidan foydalanib, “Rojdestvoning o'n ikki kuni“ Rojdestvo qo'shig'ining so'zlarini chop eting.
 
-When you’re ready to move on, we’ll talk about a concept in Rust that *doesn’t*
-commonly exist in other programming languages: ownership.
+Davom etishga tayyor bo'lganingizda, Rustda boshqa dasturlash tillarida odatda mavjud bo'lmagan ownership(egalik) tushunchasi haqida gaplashamiz.
 
 [comparing-the-guess-to-the-secret-number]:
 ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
