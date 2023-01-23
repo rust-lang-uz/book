@@ -5,4 +5,4 @@ authors = ["Steve Klabnik", "Carol Nichols", "Contributions from the Rust Commun
 [output.html]
 additional-css = ["ferris.css", "theme/2018-edition.css"]
 additional-js = ["ferris.js"]
-git-repository-url = "https://github.com/rust-lang/book"
+git-repository-url = "https://github.com/rust-lang-uz/i10n"
