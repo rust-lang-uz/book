@@ -36,7 +36,7 @@ Boshqa ma'lumotlar turlari uchun turli turdagi izohlarni ko'rasiz.
 | 128-bit | `i128`  | `u128`   |
 | arch    | `isize` | `usize`  |
 
-Signedlar kichkini `i` harfi bilan boshlanadi, Unsigned esa kichik `u` harfi bilan boshlanadi.
+Signedlar kichkina `i` harfi bilan boshlanadi, Unsigned esa kichik `u` harfi bilan boshlanadi.
 
 Har bir variant signed yoki unsigned bo'lishi mumkin va aniq o'lchamga ega.
 *Signed* va *Unsigned* raqam manfiy boʻlishi mumkinmi yoki yoʻqligini anglatadi, boshqacha qilib aytganda, raqam u bilan birga belgiga ega boʻlishi (signed) boʻlishi kerakmi yoki u faqat ijobiy bo'ladimi va shuning uchun belgisiz (unsigned) ifodalanishi mumkinmi. Bu raqamlarni qog'ozga yozishga o'xshaydi: belgi muhim bo'lsa, raqam ortiqcha yoki minus belgisi bilan ko'rsatiladi; ammo, agar raqamni ijobiy deb hisoblash xavfsiz bo'lsa, u hech qanday belgisiz ko'rsatiladi.

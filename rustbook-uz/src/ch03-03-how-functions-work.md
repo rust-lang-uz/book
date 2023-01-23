@@ -11,11 +11,11 @@ Mana, misol funksiya ta'rifini o'z ichiga olgan dastur:
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-16-functions/src/main.rs}}
 ```
 
-Rust-da funksiyani `fn` so'ng funksiya nomi va qavslar to'plamini kiritish orqali aniqlaymiz. Jingalak qavslar kompilyatorga funktsiya tanasi qayerda boshlanishi va tugashini bildiradi.
+Rust-da funksiyani `fn` so'ng funksiya nomi va qavslar to'plamini kiritish orqali aniqlaymiz. Jingalak qavslar kompilyatorga funksiya tanasi qayerda boshlanishi va tugashini bildiradi.
 
-Biz belgilagan har qanday funktsiyani uning nomidan keyin qavslar to'plamini kiritish orqali chaqirishimiz mumkin. Dasturda `boshqa_funksiya` ni aniqlanganligi sababli uni `main` funksiya ichidan chaqirish mumkin. E'tibor bering, biz `boshqa_funksiya` ni manba kodidagi `main` funksiyadan keyin belgilaganmiz; uni avval ham belgilashimiz mumkin edi. Rust sizning funksiyalaringizni qayerda belgilashingizning ahamiyati yo'q, faqat ular so'rov yuboruvchi tomonidan ko'rinadigan doirada aniqlangan.
+Biz belgilagan har qanday funksiyani uning nomidan keyin qavslar to'plamini kiritish orqali chaqirishimiz mumkin. Dasturda `boshqa_funksiya` ni aniqlanganligi sababli uni `main` funksiya ichidan chaqirish mumkin. E'tibor bering, biz `boshqa_funksiya` ni manba kodidagi `main` funksiyadan keyin belgilaganmiz; uni avval ham belgilashimiz mumkin edi. Rust sizning funksiyalaringizni qayerda belgilashingizning ahamiyati yo'q, faqat ular so'rov yuboruvchi tomonidan ko'rinadigan doirada aniqlangan.
 
-Keling, funksiyalarni ko'proq o'rganish uchun *funktsiyalar* nomli yangi binary loyihani boshlaylik. `boshqa_funksiya` misolini *src/main.rs* ga joylashtiring va uni ishga tushiring.Quyidagi chiqishni ko'rishingiz kerak:
+Keling, funksiyalarni ko'proq o'rganish uchun *funksiyalar* nomli yangi binary loyihani boshlaylik. `boshqa_funksiya` misolini *src/main.rs* ga joylashtiring va uni ishga tushiring.Quyidagi chiqishni ko'rishingiz kerak:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-16-functions/output.txt}}
@@ -66,7 +66,7 @@ Biz funksiyani `value` qiymati sifatida `5` va `unit_label` qiymati sifatida `'h
 
 ### Statementlar va  Expressionlar
 
-Funksiya qismlari ixtiyoriy ravishda statement bilan tugaydigan bir qator expressionlardan iborat. Hozircha biz ko'rib chiqqan funktsiyalar yakuniy expressionni o'z ichiga olmagan, lekin siz expressionni statementning bir qismi sifatida ko'rdingiz. Rust expressionga asoslangan til bo'lganligi sababli, bu tushunish uchun muhim farqdir. Boshqa tillar bir xil farqlarga ega emas, shuning uchun keling, qanday statementlar va expressionlar ekanligini va ularning farqlari funksiyalar tanasiga qanday ta'sir qilishini ko'rib chiqaylik.
+Funksiya qismlari ixtiyoriy ravishda statement bilan tugaydigan bir qator expressionlardan iborat. Hozircha biz ko'rib chiqqan funksiyalar yakuniy expressionni o'z ichiga olmagan, lekin siz expressionni statementning bir qismi sifatida ko'rdingiz. Rust expressionga asoslangan til bo'lganligi sababli, bu tushunish uchun muhim farqdir. Boshqa tillar bir xil farqlarga ega emas, shuning uchun keling, qanday statementlar va expressionlar ekanligini va ularning farqlari funksiyalar tanasiga qanday ta'sir qilishini ko'rib chiqaylik.
 
 * **Statementlar** ba'zi amallarni bajaradigan va qiymat qaytarmaydigan ko'rsatmalardir.
 * **Expressionlar** qiymatga baholanadi. Keling, ba'zi misollarni ko'rib chiqaylik.
@@ -79,7 +79,7 @@ Biz allaqachon statementlar va expressionlarni ishlatganmiz. O'zgaruvchini yarat
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-01/src/main.rs}}
 ```
 
-<span class="caption">Ro'yxat 3-1: Bitta statementni o'z ichiga olgan `main` funktsiya deklaratsiyasi</span>
+<span class="caption">Ro'yxat 3-1: Bitta statementni o'z ichiga olgan `main` funksiya deklaratsiyasi</span>
 
 Funksiya definitionlari ham statementlardir; oldingi misol o'z-o'zidan bir statementdir.
 
@@ -120,7 +120,7 @@ blok bo'lib, bu holda `4` ga evaluate bo'ladi. Bu qiymat `let` statementining bi
 
 ### Return qiymatlari bilan funksiyalar
 
-Funksiyalar qiymatlarni ularni chaqiradigan kodga return qaytarishi mumkin. Return qiymatlarini nomlamaymiz, lekin ularning turini o'qdan keyin e'lon qilishimiz kerak (`->`). Rustda funksiyaning return qiymati funksiya tanasi blokidagi yakuniy ifodaning qiymati bilan sinonimdir. Siz `return` kalit so'zidan foydalanib va qiymatni belgilash orqali funksiyadan erta qaytishingiz mumkin, lekin ko'pchilik funktsiyalar oxirgi expressionni bevosita qaytaradi. Mana qiymatni return qiladigan funksiyaga misol:
+Funksiyalar qiymatlarni ularni chaqiradigan kodga return qaytarishi mumkin. Return qiymatlarini nomlamaymiz, lekin ularning turini o'qdan keyin e'lon qilishimiz kerak (`->`). Rustda funksiyaning return qiymati funksiya tanasi blokidagi yakuniy ifodaning qiymati bilan sinonimdir. Siz `return` kalit so'zidan foydalanib va qiymatni belgilash orqali funksiyadan erta qaytishingiz mumkin, lekin ko'pchilik funksiyalar oxirgi expressionni bevosita qaytaradi. Mana qiymatni return qiladigan funksiyaga misol:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -128,7 +128,7 @@ Funksiyalar qiymatlarni ularni chaqiradigan kodga return qaytarishi mumkin. Retu
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-21-function-return-values/src/main.rs}}
 ```
 
-`besh` funksiyasida funksiya chaqiruvlari, makroslar va hatto `let` iboralari ham yo‘q – faqat `5` raqamining o‘zi. Bu Rust-da juda to'g'ri funksiya. Funktsiyaning return turi ham `-> i32` sifatida ko'rsatilganligini unutmang.Ushbu kodni ishga tushirishga harakat qiling; chiqish quyidagicha ko'rinishi kerak:
+`besh` funksiyasida funksiya chaqiruvlari, makroslar va hatto `let` iboralari ham yo‘q – faqat `5` raqamining o‘zi. Bu Rust-da juda to'g'ri funksiya. Funksiyaning return turi ham `-> i32` sifatida ko'rsatilganligini unutmang.Ushbu kodni ishga tushirishga harakat qiling; chiqish quyidagicha ko'rinishi kerak:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-21-function-return-values/output.txt}}
