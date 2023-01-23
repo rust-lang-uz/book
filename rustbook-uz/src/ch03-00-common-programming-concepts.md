@@ -12,6 +12,6 @@ Xususan, siz o'zgaruvchilar, asosiy turlar, funktsiyalar, izohlar va control flo
 > maxsus ma'noga ega va siz ulardan Rust dasturlarida turli vazifalarni bajarish
 > uchun foydalanasiz; ba'zilarida ular bilan bog'liq bo'lgan joriy funksionallik
 > yo'q, lekin kelajakda Rustga qo'shilishi mumkin bo'lgan funksiyalar uchun ajratilgan.
-> Kalit so'zlar ro'yxatini [A ilovasida]<!-- ignore -->. topishingiz mumkin.
+> Kalit so'zlar ro'yxatini [A ilovasida][appendix_a]<!-- ignore -->. topishingiz mumkin.
 
 [appendix_a]: appendix-01-keywords.md

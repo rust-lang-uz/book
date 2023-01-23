@@ -51,7 +51,7 @@ edition = "2021"
 
 <span class="caption">Ro'yxat 1-2: `cargo new` tomonidan yaratilgan *Cargo.toml* tarkibi</span>
 
-Bu fayl [*TOML*][toml]<!-- ignore --> da ((*Tom’s Obvious, Minimal
+Bu fayl [*TOML*][toml]<!-- ignore --> da (*Tom’s Obvious, Minimal
 Language*) formati, bu Cargo konfiguratsiya formati.
 
 Birinchi qator, `[package]`, bo'lim sarlavhasi bo'lib, quyidagi iboralar paketni sozlayotganligini bildiradi.Ushbu faylga qo'shimcha ma'lumot qo'shsak, biz boshqa bo'limlarni qo'shamiz.

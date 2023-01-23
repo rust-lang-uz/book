@@ -36,7 +36,7 @@ Rust talabalar va tizim tushunchalarini o'rganishga qiziquvchilar uchun. Rust-da
 
 Yuzlab yirik va kichik kompaniyalar ishlab chiqarishda Rust-dan buyruq qatori vositalari, veb-xizmatlar, DevOps asboblari, o'rnatilgan qurilmalar, audio va video tahlillari va transkodlar, kriptovalyutalar, bioinformatika, qidiruv tizimlari, Internet of Things ilovalari kabi turli vazifalar uchun foydalanadilar. , machine learning va hatto Firefox veb-brauzerining asosiy qismlari.
 
-### Ochiq kodli dasturchilar
+### Open Source dasturchilar
 
 Rust Rust dasturlash tilini, hamjamiyatini, ishlab chiquvchilar vositalarini va kutubxonalarini yaratmoqchi bo'lgan odamlar uchundir. Rust tiliga o'z hissangizni qo'shishingizni istardik.
 
