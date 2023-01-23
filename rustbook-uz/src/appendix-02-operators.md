@@ -1,95 +1,103 @@
-## Ilova B: Operatorlar va belgilar
+## Appendix B: Operators and Symbols
 
-Ushbu ilova Rust sintaksisining lug'atini o'z ichiga oladi, jumladan operatorlar va o'z-o'zidan yoki yo'llar, umumiy belgilar, belgilar chegaralari, makroslar, atributlar, izohlar, kortejlar va qavslar kontekstida paydo bo'ladigan boshqa belgilar.
+This appendix contains a glossary of Rust’s syntax, including operators and
+other symbols that appear by themselves or in the context of paths, generics,
+trait bounds, macros, attributes, comments, tuples, and brackets.
 
-### Operatorlar
+### Operators
 
-B-1-jadval Rust-dagi operatorlarni o'z ichiga oladi, operator kontekstda qanday paydo bo'lishiga misol, qisqa tushuntirish va bu operatorning haddan tashqari yuklanishi mumkinmi. Agar operator haddan tashqari yuklanishi mumkin bo'lsa, ushbu operatorni ortiqcha yuklash uchun foydalaniladigan tegishli xususiyat ro'yxatga olinadi.
+Table B-1 contains the operators in Rust, an example of how the operator would
+appear in context, a short explanation, and whether that operator is
+overloadable. If an operator is overloadable, the relevant trait to use to
+overload that operator is listed.
 
-<span class="caption">Jadval B-1: Operatorlar</span>
+<span class="caption">Table B-1: Operators</span>
 
-| Operator | Misol | Tushuntirish | Ko'p yuklanganmi ? |
+| Operator | Example | Explanation | Overloadable? |
 |----------|---------|-------------|---------------|
-| `!` | `ident!(...)`, `ident!{...}`, `ident![...]` | Makro kengaytirish| |
-| `!` | `!expr` | Bit yoki mantiqiy to'ldiruvchi| `Not` |
-| `!=` | `expr != expr` | Tengsizlik bilan taqqoslash | `PartialEq` |
-| `%` | `expr % expr` | Arifmetik qoldiq | `Rem` |
-| `%=` | `var %= expr` | Arifmetik qoldiq va topshiriq| `RemAssign` |
-| `&` | `&expr`, `&mut expr` | Ampersand| |
-| `&` | `&type`, `&mut type`, `&'a type`, `&'a mut type` | Ampersand ko'rsatkich turi | |
-| `&` | `expr & expr` | Bit boʻyicha AND | `BitAnd` |
-| `&=` | `var &= expr` | Bit bo'yicha AND va tayinlash | `BitAndAssign` |
-| `&&` | `expr && expr` | Qisqa tutashuv mantiqiy AND | |
-| `*` | `expr * expr` | Arifmetik ko‘paytirish | `Mul` |
-| `*=` | `var *= expr` | Arifmetik ko‘paytirish va topshiriq | `MulAssign` |
+| `!` | `ident!(...)`, `ident!{...}`, `ident![...]` | Macro expansion | |
+| `!` | `!expr` | Bitwise or logical complement | `Not` |
+| `!=` | `expr != expr` | Nonequality comparison | `PartialEq` |
+| `%` | `expr % expr` | Arithmetic remainder | `Rem` |
+| `%=` | `var %= expr` | Arithmetic remainder and assignment | `RemAssign` |
+| `&` | `&expr`, `&mut expr` | Borrow | |
+| `&` | `&type`, `&mut type`, `&'a type`, `&'a mut type` | Borrowed pointer type | |
+| `&` | `expr & expr` | Bitwise AND | `BitAnd` |
+| `&=` | `var &= expr` | Bitwise AND and assignment | `BitAndAssign` |
+| `&&` | `expr && expr` | Short-circuiting logical AND | |
+| `*` | `expr * expr` | Arithmetic multiplication | `Mul` |
+| `*=` | `var *= expr` | Arithmetic multiplication and assignment | `MulAssign` |
 | `*` | `*expr` | Dereference | `Deref` |
-| `*` | `*const type`, `*mut type` | Raw ko'rsatkich | |
-| `+` | `trait + trait`, `'a + trait` | Murakkab turdagi cheklov| |
-| `+` | `expr + expr` | Arifmetik qo'shish | `Add` |
-| `+=` | `var += expr` | Arifmetik qo‘shish va topshiriq | `AddAssign` |
-| `,` | `expr, expr` | Argument va elementlarni ajratuvchi | |
-| `-` | `- expr` | Arifmetik inkor | `Neg` |
-| `-` | `expr - expr` | Arifmetik ayirish | `Sub` |
-| `-=` | `var -= expr` | Arifmetik ayirish va topshiriq | `SubAssign` |
-| `->` | `fn(...) -> type`, <code>&vert;...&vert; -> type</code> | Funktsiya va yopilish qaytish turi | |
-| `.` | `expr.ident` | A'zoga kirish | |
-| `..` | `..`, `expr..`, `..expr`, `expr..expr` | To'g'ridan-to'g'ri eksklyuziv diapazon | `PartialOrd` |
-| `..=` | `..=expr`, `expr..=expr` | Toʻgʻri chiziqli diapazon| `PartialOrd` |
-| `..` | `..expr` | Strukturani yangilash sintaksisi | |
+| `*` | `*const type`, `*mut type` | Raw pointer | |
+| `+` | `trait + trait`, `'a + trait` | Compound type constraint | |
+| `+` | `expr + expr` | Arithmetic addition | `Add` |
+| `+=` | `var += expr` | Arithmetic addition and assignment | `AddAssign` |
+| `,` | `expr, expr` | Argument and element separator | |
+| `-` | `- expr` | Arithmetic negation | `Neg` |
+| `-` | `expr - expr` | Arithmetic subtraction | `Sub` |
+| `-=` | `var -= expr` | Arithmetic subtraction and assignment | `SubAssign` |
+| `->` | `fn(...) -> type`, <code>&vert;...&vert; -> type</code> | Function and closure return type | |
+| `.` | `expr.ident` | Member access | |
+| `..` | `..`, `expr..`, `..expr`, `expr..expr` | Right-exclusive range literal | `PartialOrd` |
+| `..=` | `..=expr`, `expr..=expr` | Right-inclusive range literal | `PartialOrd` |
+| `..` | `..expr` | Struct literal update syntax | |
 | `..` | `variant(x, ..)`, `struct_type { x, .. }` | “And the rest” pattern binding | |
-| `...` | `expr...expr` | (Eskirgan, o‘rniga `..=` dan foydalaning) Shaklda: inklyuziv diapazon namunasi | |
-| `/` | `expr / expr` | Arifmetik bo'lish | `Div` |
-| `/=` | `var /= expr` | Arifmetik bo‘linish va topshiriq | `DivAssign` |
-| `:` | `pat: type`, `ident: type` | Cheklovlar | |
-| `:` | `ident: expr` | Struktura maydonini ishga tushirish | |
+| `...` | `expr...expr` | (Deprecated, use `..=` instead) In a pattern: inclusive range pattern | |
+| `/` | `expr / expr` | Arithmetic division | `Div` |
+| `/=` | `var /= expr` | Arithmetic division and assignment | `DivAssign` |
+| `:` | `pat: type`, `ident: type` | Constraints | |
+| `:` | `ident: expr` | Struct field initializer | |
 | `:` | `'a: loop {...}` | Loop label | |
-| `;` | `expr;` | Bayonot va element terminatori | |
-| `;` | `[...; len]` | Ruxsat etilgan o'lchamli massiv sintaksisining bir qismi | |
-| `<<` | `expr << expr` | Chapga siljish | `Shl` |
-| `<<=` | `var <<= expr` | Chapga siljish va tayinlash | `ShlAssign` |
-| `<` | `expr < expr` | Taqqoslashdan kamroq | `PartialOrd` |
-| `<=` | `expr <= expr` | Taqqoslashdan kamroq yoki teng| `PartialOrd` |
-| `=` | `var = expr`, `ident = type` | Topshiriq/ekvivalentlik | |
-| `==` | `expr == expr` | Tenglikni taqqoslash | `PartialEq` |
-| `=>` | `pat => expr` | Mos qoʻl sintaksisining bir qismi | |
-| `>` | `expr > expr` | Taqqoslashdan kattaroq | `PartialOrd` |
-| `>=` | `expr >= expr` | Taqqoslashdan katta yoki teng | `PartialOrd` |
-| `>>` | `expr >> expr` | O'ngga siljish | `Shr` |
-| `>>=` | `var >>= expr` | O'ngga siljish va tayinlash | `ShrAssign` |
-| `@` | `ident @ pat` | Shaklni bog'lash | |
-| `^` | `expr ^ expr` | Bit boʻyicha eksklyuziv OR | `BitXor` |
-| `^=` | `var ^= expr` | Bit bo'yicha eksklyuziv OR va tayinlash | `BitXorAssign` |
-| <code>&vert;</code> | <code>pat &vert; pat</code> | Shaklning alternativlari | |
+| `;` | `expr;` | Statement and item terminator | |
+| `;` | `[...; len]` | Part of fixed-size array syntax | |
+| `<<` | `expr << expr` | Left-shift | `Shl` |
+| `<<=` | `var <<= expr` | Left-shift and assignment | `ShlAssign` |
+| `<` | `expr < expr` | Less than comparison | `PartialOrd` |
+| `<=` | `expr <= expr` | Less than or equal to comparison | `PartialOrd` |
+| `=` | `var = expr`, `ident = type` | Assignment/equivalence | |
+| `==` | `expr == expr` | Equality comparison | `PartialEq` |
+| `=>` | `pat => expr` | Part of match arm syntax | |
+| `>` | `expr > expr` | Greater than comparison | `PartialOrd` |
+| `>=` | `expr >= expr` | Greater than or equal to comparison | `PartialOrd` |
+| `>>` | `expr >> expr` | Right-shift | `Shr` |
+| `>>=` | `var >>= expr` | Right-shift and assignment | `ShrAssign` |
+| `@` | `ident @ pat` | Pattern binding | |
+| `^` | `expr ^ expr` | Bitwise exclusive OR | `BitXor` |
+| `^=` | `var ^= expr` | Bitwise exclusive OR and assignment | `BitXorAssign` |
+| <code>&vert;</code> | <code>pat &vert; pat</code> | Pattern alternatives | |
 | <code>&vert;</code> | <code>expr &vert; expr</code> | Bitwise OR | `BitOr` |
-| <code>&vert;=</code> | <code>var &vert;= expr</code> | Bitwise OR va topshiriq | `BitOrAssign` |
-| <code>&vert;&vert;</code> | <code>expr &vert;&vert; expr</code> | Qisqa tutashuvli mantiqiy OR | |
-| `?` | `expr?` | Xatoning tarqalishi | |
+| <code>&vert;=</code> | <code>var &vert;= expr</code> | Bitwise OR and assignment | `BitOrAssign` |
+| <code>&vert;&vert;</code> | <code>expr &vert;&vert; expr</code> | Short-circuiting logical OR | |
+| `?` | `expr?` | Error propagation | |
 
 ### Non-operator Symbols
 
-Quyidagi ro'yxatda operator sifatida ishlamaydigan barcha belgilar mavjud; ya'ni ular funktsiya yoki usul chaqiruvi kabi harakat qilmaydi.
+The following list contains all symbols that don’t function as operators; that
+is, they don’t behave like a function or method call.
 
-B-2-jadvalda o'z-o'zidan paydo bo'ladigan va turli joylarda amal qiladigan belgilar ko'rsatilgan.
+Table B-2 shows symbols that appear on their own and are valid in a variety of
+locations.
 
-<span class="caption">B-2-jadval: Mustaqil sintaksis</span>
+<span class="caption">Table B-2: Stand-Alone Syntax</span>
 
-| Belgi | Tushuntirish |
+| Symbol | Explanation |
 |--------|-------------|
-| `'ident` | Nomlangan davr yoki tsikl yorlig'i |
-| `...u8`, `...i32`, `...f64`, `...usize`, etc. | Muayyan turdagi raqamli harflar |
+| `'ident` | Named lifetime or loop label |
+| `...u8`, `...i32`, `...f64`, `...usize`, etc. | Numeric literal of specific type |
 | `"..."` | String literal |
-| `r"..."`, `r#"..."#`, `r##"..."##`, etc. | Raw string literal, escape belgilar qayta ishlanmadi |
-| `b"..."` | Byte string literal; satr o'rniga baytlar massivini tuzadi |
-| `br"..."`, `br#"..."#`, `br##"..."##`, etc. | Raw byte string literal, raw va byte string litereal birikmasi |
+| `r"..."`, `r#"..."#`, `r##"..."##`, etc. | Raw string literal, escape characters not processed |
+| `b"..."` | Byte string literal; constructs an array of bytes instead of a string |
+| `br"..."`, `br#"..."#`, `br##"..."##`, etc. | Raw byte string literal, combination of raw and byte string literal |
 | `'...'` | Character literal |
 | `b'...'` | ASCII byte literal |
-| <code>&vert;...&vert; expr</code> | Yopish |
-| `!` | Funktsiyalarni ajratish uchun har doim bo'sh pastki turi |
-| `_` | “Ignored” pattern binding; shuningdek, butun sonli harflarni o'qilishi mumkin qilish uchun ishlatiladi |
+| <code>&vert;...&vert; expr</code> | Closure |
+| `!` | Always empty bottom type for diverging functions |
+| `_` | “Ignored” pattern binding; also used to make integer literals readable |
 
-B-3-jadvalda modul ierarxiyasi orqali elementga boradigan yo'l kontekstida paydo bo'ladigan belgilar ko'rsatilgan.
+Table B-3 shows symbols that appear in the context of a path through the module
+hierarchy to an item.
 
-<span class="caption">B-3-jadval: Yo'l bilan bog'liq sintaksis</span>
+<span class="caption">Table B-3: Path-Related Syntax</span>
 
 | Symbol | Explanation |
 |--------|-------------|
