@@ -1,46 +1,46 @@
 # Rust Dasturlash Tili
 
-[The Rust Programming Language](title-page.md)
-[Foreword](foreword.md)
-[Introduction](ch00-00-introduction.md)
+[Rust dasturlash tili](title-page.md)
+[Muqaddima](foreword.md)
+[Kirish](ch00-00-introduction.md)
 
-## Getting started
+## Ishni boshlash
 
-- [Getting Started](ch01-00-getting-started.md)
-    - [Installation](ch01-01-installation.md)
+- [Ishni boshlash](ch01-00-getting-started.md)
+    - [O'rnatish](ch01-01-installation.md)
     - [Hello, World!](ch01-02-hello-world.md)
     - [Hello, Cargo!](ch01-03-hello-cargo.md)
 
-- [Programming a Guessing Game](ch02-00-guessing-game-tutorial.md)
+- [Taxmin qilish o'yinini dasturlash](ch02-00-guessing-game-tutorial.md)
 
-- [Common Programming Concepts](ch03-00-common-programming-concepts.md)
-    - [Variables and Mutability](ch03-01-variables-and-mutability.md)
-    - [Data Types](ch03-02-data-types.md)
-    - [Functions](ch03-03-how-functions-work.md)
-    - [Comments](ch03-04-comments.md)
+- [Umumiy dasturlash tushunchalari](ch03-00-common-programming-concepts.md)
+    - [O'zgaruvchilar va o'zgaruvchanlik](ch03-01-variables-and-mutability.md)
+    - [Ma'lumotlar turlari](ch03-02-data-types.md)
+    - [Funksiyalar](ch03-03-how-functions-work.md)
+    - [Izohlar](ch03-04-comments.md)
     - [Control Flow](ch03-05-control-flow.md)
 
-- [Understanding Ownership](ch04-00-understanding-ownership.md)
-    - [What is Ownership?](ch04-01-what-is-ownership.md)
+- [Ownershipni tushunish](ch04-00-understanding-ownership.md)
+    - [Ownership nima?](ch04-01-what-is-ownership.md)
     - [References and Borrowing](ch04-02-references-and-borrowing.md)
-    - [The Slice Type](ch04-03-slices.md)
+    - [Slice turi](ch04-03-slices.md)
 
 - [Using Structs to Structure Related Data](ch05-00-structs.md)
-    - [Defining and Instantiating Structs](ch05-01-defining-structs.md)
-    - [An Example Program Using Structs](ch05-02-example-structs.md)
-    - [Method Syntax](ch05-03-method-syntax.md)
+    - [Structlarni aniqlash va yaratish](ch05-01-defining-structs.md)
+    - [Structs yordamida namunaviy dastur](ch05-02-example-structs.md)
+    - [Method sintaksisi](ch05-03-method-syntax.md)
 
-- [Enums and Pattern Matching](ch06-00-enums.md)
-    - [Defining an Enum](ch06-01-defining-an-enum.md)
-    - [The `match` Control Flow Construct](ch06-02-match.md)
-    - [Concise Control Flow with `if let`](ch06-03-if-let.md)
+- [Enumlar va patternlarni moslashtirish](ch06-00-enums.md)
+    - [Enumni aniqlash](ch06-01-defining-an-enum.md)
+    - [`match` Control Flow konstruksiyasi](ch06-02-match.md)
+    - [`if let` bilan qisqacha Control Flow](ch06-03-if-let.md)
 
-## Basic Rust Literacy
+## Asosiy Rust savodxonligi
 
-- [Managing Growing Projects with Packages, Crates, and Modules](ch07-00-managing-growing-projects-with-packages-crates-and-modules.md)
-    - [Packages and Crates](ch07-01-packages-and-crates.md)
-    - [Defining Modules to Control Scope and Privacy](ch07-02-defining-modules-to-control-scope-and-privacy.md)
-    - [Paths for Referring to an Item in the Module Tree](ch07-03-paths-for-referring-to-an-item-in-the-module-tree.md)
+- [O'sib borayotgan loyihalarni Paketlar, Cratelar va Modullar bilan boshqarish](ch07-00-managing-growing-projects-with-packages-crates-and-modules.md)
+    - [Paketlar va Cratelar](ch07-01-packages-and-crates.md)
+    - [Qo'llanish doirasi va maxfiylikni nazorat qilish uchun modullarni aniqlash](ch07-02-defining-modules-to-control-scope-and-privacy.md)
+    - [Modul treedagi elementga murojaat qilish yo'llari](ch07-03-paths-for-referring-to-an-item-in-the-module-tree.md)
     - [Bringing Paths Into Scope with the `use` Keyword](ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
     - [Separating Modules into Different Files](ch07-05-separating-modules-into-different-files.md)
 
