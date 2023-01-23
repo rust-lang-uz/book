@@ -1,41 +1,15 @@
-# Foreword
+# Muqaddima
 
-It wasn’t always so clear, but the Rust programming language is fundamentally
-about *empowerment*: no matter what kind of code you are writing now, Rust
-empowers you to reach farther, to program with confidence in a wider variety of
-domains than you did before.
+Bu har doim ham unchalik aniq bo'lmagan, lekin Rust dasturlash tili asosan imkoniyatlarni kengaytirishga qaratilgan: hozir qanday kod yozayotganingizdan qat'iy nazar, Rust sizga oldinga qaraganda kengroq domenlarda ishonch bilan dasturlash imkonini beradi.
 
-Take, for example, “systems-level” work that deals with low-level details of
-memory management, data representation, and concurrency. Traditionally, this
-realm of programming is seen as arcane, accessible only to a select few who
-have devoted the necessary years learning to avoid its infamous pitfalls. And
-even those who practice it do so with caution, lest their code be open to
-exploits, crashes, or corruption.
+Masalan, memory managementning low-leveldagi tafsilotlari, ma'lumotlarni taqdim etish va parallellik bilan shug'ullanadigan "systems-leveldagi" ishni olaylik. An'anaga ko'ra, dasturlashning bu sohasi sirli bo'lib ko'rinadi, unga faqat o'zining dahshatli tuzoqlaridan qochish uchun zarur yillarini o'rganishga bag'ishlagan tanlanganlargina foydalanishi mumkin. Va hatto buni amalda qo'llayotganlar ham, ularning kodi ekspluatatsiyalar, buzilishlar yoki korruptsiyaga ochiq bo'lmasligi uchun buni ehtiyotkorlik bilan bajaradilar.
 
-Rust breaks down these barriers by eliminating the old pitfalls and providing a
-friendly, polished set of tools to help you along the way. Programmers who need
-to “dip down” into lower-level control can do so with Rust, without taking on
-the customary risk of crashes or security holes, and without having to learn
-the fine points of a fickle toolchain. Better yet, the language is designed to
-guide you naturally towards reliable code that is efficient in terms of speed
-and memory usage.
+Rust eski tuzoqlarni yo'q qilish va sizga yordam berish uchun do'stona, sayqallangan vositalar to'plamini taqdim etish orqali bu to'siqlarni yo'q qiladi. Lower-leveldagi boshqaruvga ”pastga tushishi” kerak bo'lgan dasturchilar buni Rust bilan odatiy holga tushib qolish xavfi yoki xavfsizlik teshiklarisiz va o'zgaruvchan toolchainning nozik tomonlarini o'rganmasdan amalga oshirishlari mumkin. Yaxshisi, bu til sizni tabiiy ravishda tezlik va xotiradan foydalanish jihatidan samarali bo'lgan ishonchli kodga yo'naltirish uchun mo'ljallangan.
 
-Programmers who are already working with low-level code can use Rust to raise
-their ambitions. For example, introducing parallelism in Rust is a relatively
-low-risk operation: the compiler will catch the classical mistakes for you. And
-you can tackle more aggressive optimizations in your code with the confidence
-that you won’t accidentally introduce crashes or vulnerabilities.
+low leveldagi kod bilan ishlayotgan dasturchilar o'zlarining bilimlarini oshirish uchun Rust-dan foydalanishlari mumkin. Masalan, Rust-da parallelizmni joriy qilish nisbatan low-riskli operatsiya: kompilyator siz uchun klassik xatolarni aniqlaydi. Va siz tasodifan nosozliklar yoki zaifliklarni kiritmasligingizga ishonch bilan kodingizdagi yanada tajovuzkor optimallashtirishlarni hal qilishingiz mumkin.
 
-But Rust isn’t limited to low-level systems programming. It’s expressive and
-ergonomic enough to make CLI apps, web servers, and many other kinds of code
-quite pleasant to write — you’ll find simple examples of both later in the
-book. Working with Rust allows you to build skills that transfer from one
-domain to another; you can learn Rust by writing a web app, then apply those
-same skills to target your Raspberry Pi.
+Ammo Rust low-leveldagi tizimlarni dasturlash bilan cheklanmaydi. Bu CLI ilovalari, veb-serverlar va boshqa ko'plab turdagi kodlarni yozishni juda yoqimli qilish uchun etarlicha ifodali va ergonomik - siz ikkalasining oddiy misollarini keyinroq kitobda topasiz. Rust bilan ishlash sizga bir domendan boshqasiga o'tadigan ko'nikmalarni shakllantirish imkonini beradi; veb-ilovani yozish orqali Rustni o'rganishingiz mumkin, so'ngra Raspberry Pi-ni nishonga olish uchun xuddi shu ko'nikmalarni qo'llashingiz mumkin.
 
-This book fully embraces the potential of Rust to empower its users. It’s a
-friendly and approachable text intended to help you level up not just your
-knowledge of Rust, but also your reach and confidence as a programmer in
-general. So dive in, get ready to learn—and welcome to the Rust community!
+Ushbu kitob o'z foydalanuvchilarini kuchaytirish uchun Rust imkoniyatlarini to'liq qamrab oladi. Bu sizga nafaqat Rust haqidagi bilimingizni, balki umuman dasturchi sifatidagi ishonchingizni oshirishga yordam beradigan samimiy va qulay kitob. Shunday qilib, sho'ng'in, o'rganishga tayyor bo'ling va Rust hamjamiyatiga xush kelibsiz!
 
-— Nicholas Matsakis and Aaron Turon
+— Nicholas Matsakis va Aaron Turon
