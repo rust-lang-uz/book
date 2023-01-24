@@ -111,15 +111,7 @@ fn main() {
 
 Ushbu kod hech qanday xatosiz kompilyatsiya qilinadi. Funksiya nomidagi `r#` prefiksi uning taʼrifida, shuningdek, funksiya `main`da chaqirilgan joyiga eʼtibor bering.
 
-Raw identifiers allow you to use any word you choose as an identifier, even if
-that word happens to be a reserved keyword. This gives us more freedom to
-choose identifier names, as well as lets us integrate with programs written in
-a language where these words aren’t keywords. In addition, raw identifiers
-allow you to use libraries written in a different Rust edition than your crate
-uses. For example, `try` isn’t a keyword in the 2015 edition but is in the 2018
-edition. If you depend on a library that’s written using the 2015 edition and
-has a `try` function, you’ll need to use the raw identifier syntax, `r#try` in
-this case, to call that function from your 2018 edition code. See [Appendix
-E][appendix-e]<!-- ignore --> for more information on editions.
+Raw identifikatorlari identifikator sifatida tanlagan har qanday so'zdan foydalanishga imkon beradi, hatto bu so'z zahiradagi kalit so'z bo'lsa ham. Bu bizga identifikator nomlarini tanlashda ko'proq erkinlik beradi, shuningdek, bu so'zlar kalit so'zlar bo'lmagan tilda yozilgan dasturlar bilan integratsiyalashish imkonini beradi. Bunga qo'shimcha ravishda, raw identifikatorlar sizga cratetagidan boshqa Rust nashrida yozilgan kutubxonalardan foydalanish imkonini beradi. Misol uchun, `try` 2015 yilgi nashrda kalit so'z emas, balki 2018 yilgi nashrda mavjud. Agar siz 2015-yil nashri yordamida yozilgan kutubxonaga bogʻliq boʻlsangiz va `try` funksiyasiga ega boʻlsangiz, bu funksiyani 2018-yilgi nashr kodingizdan chaqirish uchun `r#try` raw identifikator sintaksisidan foydalanishingiz kerak boʻladi.
+Nashrlar haqida qo'shimcha ma'lumot [E ilovasiga][appendix-e]<!-- ignore --> qarang.
 
 [appendix-e]: appendix-05-editions.html
