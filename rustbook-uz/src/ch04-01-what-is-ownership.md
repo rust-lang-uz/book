@@ -32,38 +32,37 @@ Ownershipni tushunganingizda, Rustni noyob qiladigan xususiyatlarni tushunish uc
 > heap kamroq tartibga solingan: ma'lumotlarni heapga qo'yganingizda, ma'lum miqdorda
 > bo'sh joy talab qilasiz. Xotira ajratuvchisi heapda etarlicha katta bo'lgan bo'sh joyni
 > topadi, uni ishlatilayotgan deb belgilaydi va o'sha joyning manzili bo'lgan
-> *pointerni* ni qaytaradi. This process is called *allocating on the
-> heap* and is sometimes abbreviated as just *allocating* (pushing values onto
-> the stack is not considered allocating). Because the pointer to the heap is a
-> known, fixed size, you can store the pointer on the stack, but when you want
-> the actual data, you must follow the pointer. Think of being seated at a
-> restaurant. When you enter, you state the number of people in your group, and
-> the host finds an empty table that fits everyone and leads you there. If
-> someone in your group comes late, they can ask where you’ve been seated to
-> find you.
+> *pointerni* ni qaytaradi. Bu jarayon *heap allocating* deb ataladi va ba'zan
+> faqat *allocating* deb qisqartiriladi (qiymatlarni stekga qo'shish ajratish
+> hisoblanmaydi). Heapga pointer ma'lum, qat'iy o'lcham bo'lgani uchun siz
+> pointerni stekda saqlashingiz mumkin, lekin haqiqiy ma'lumotlarni
+> olishni istasangiz, pointergaga amal qilishingiz kerak. Restoranda o'tirganingizni
+> o'ylab ko'ring. Kirish paytida siz guruhingizdagi odamlar sonini bildirasiz
+> va uy egasi hammaga mos keladigan bo'sh stol topadi va sizni u yerga olib boradi.
+> Agar guruhingizdagi kimdir kechikib kelsa, sizni topish uchun qayerda o'tirganingizni
+> so'rashi mumkin.
 >
-> Pushing to the stack is faster than allocating on the heap because the
-> allocator never has to search for a place to store new data; that location is
-> always at the top of the stack. Comparatively, allocating space on the heap
-> requires more work because the allocator must first find a big enough space
-> to hold the data and then perform bookkeeping to prepare for the next
-> allocation.
+> Stekga qo'shish heapda allocating qilishdan tezroq bo'ladi, chunki allacator hech
+> qachon yangi ma'lumotlarni saqlash uchun joy izlamasligi kerak; bu joy har doim
+> stackning yuqori qismida joylashgan. Nisbatan, heapda bo'sh joy ajratish ko'proq
+> mehnat talab qiladi, chunki allacator avval ma'lumotlarni saqlash uchun yetarlicha
+> katta joy topishi va keyingi allocatinga tayyorgarlik ko'rish uchun buxgalteriya
+> hisobini amalga oshirishi kerak.
 >
-> Accessing data in the heap is slower than accessing data on the stack because
-> you have to follow a pointer to get there. Contemporary processors are faster
-> if they jump around less in memory. Continuing the analogy, consider a server
-> at a restaurant taking orders from many tables. It’s most efficient to get
-> all the orders at one table before moving on to the next table. Taking an
-> order from table A, then an order from table B, then one from A again, and
-> then one from B again would be a much slower process. By the same token, a
-> processor can do its job better if it works on data that’s close to other
-> data (as it is on the stack) rather than farther away (as it can be on the
-> heap).
+> Heapdagi ma'lumotlarga kirish stekdagi ma'lumotlarga kirishdan ko'ra sekinroq, chunki u yerga 
+> borish uchun pointerga amal qilishingiz kerak. Zamonaviy protsessorlar xotirada
+> kamroq o'tishsa, tezroq ishlaydi. O'xshashlikni davom ettirib, ko'plab jadvallardan
+> buyurtmalarni qabul qiladigan restoran serverini ko'rib chiqing. Keyingi stolga o'tishdan oldin
+> barcha buyurtmalarni bitta stolda olish eng samarali hisoblanadi. A jadvalidan
+> buyurtma olish, keyin B jadvalidan buyurtma olish, keyin yana A dan va yana B dan bitta
+> buyurtma olish ancha sekinroq jarayon bo'ladi. Xuddi shu qoidaga ko'ra,
+> protsessor uzoqroqda emas (u heapda bo'lishi mumkin) emas, balki boshqa
+> ma'lumotlarga yaqin (stekdagi kabi) ma'lumotlarda ishlasa, o'z ishini yaxshiroq
+> bajarishi mumkin.
 >
-> When your code calls a function, the values passed into the function
-> (including, potentially, pointers to data on the heap) and the function’s
-> local variables get pushed onto the stack. When the function is over, those
-> values get popped off the stack.
+> Sizning kodingiz funksiyani chaqirganda, funksiyaga o'tgan qiymatlar (shu jumladan, potentsial,
+> heapdagi ma'lumotlarga pointerlar) va funksiyaning mahalliy o'zgaruvchilari
+> stekga qo'shiladi. Funktsiya tugagach, bu qiymatlar stekdan chiqariladi.
 >
 > Keeping track of what parts of code are using what data on the heap,
 > minimizing the amount of duplicate data on the heap, and cleaning up unused
