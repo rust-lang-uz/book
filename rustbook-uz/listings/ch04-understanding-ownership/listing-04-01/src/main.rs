@@ -1,9 +1,9 @@
 fn main() {
     // ANCHOR: here
-    {                      // s is not valid here, it’s not yet declared
-        let s = "hello";   // s is valid from this point forward
+    {                      // s bu erda haqiqiy emas, u hali e'lon qilinmagan
+        let s = "salom";   // s shu nuqtadan boshlab amal qiladi
 
-        // do stuff with s
-    }                      // this scope is now over, and s is no longer valid
+        // s bilan ish bajaring
+    }                      // bu scope endi tugadi va s endi haqiqiy emas
     // ANCHOR_END: here
 }
