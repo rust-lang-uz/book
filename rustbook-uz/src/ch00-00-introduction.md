@@ -4,17 +4,19 @@
 > tili][nsprust] bosma va elektron kitob formatida mavjud [No Starch
 > Press][nsp].
 
+> Eslatma: Kitobning ushbu nashri [No Starch Press][nsp]-dan bosma va elektron kitob formatida mavjud bo'lgan
+> [Rust dasturlash tili][nsprust] bilan bir xil.
+
 [nsprust]: https://nostarch.com/rust
 [nsp]: https://nostarch.com/
 
-Rust haqidagi kirish kitobi *Rust Dasturlash Tili*ga xush kelibsiz. 
+*Rust dasturlash tili*ga xush kelibsiz, Rust haqida kirish kitobi.
 Rust dasturlash tili tezroq va ishonchli dasturlarni yozishga yordam beradi.
 Yuqori darajadagi samaradorlik va low-leveldagi boshqaruv ko'pincha dasturlash tilini loyihalashda bir-biriga zid keladi; Rust bu ziddiyatga qarshi turadi. Kuchli texnik imkoniyatlar va ishlab chiquvchilarning ajoyib tajribasini muvozanatlash orqali Rust sizga an'anaviy ravishda bunday nazorat bilan bog'liq bo'lgan barcha qiyinchiliklarsiz low-leveldagi tafsilotlarni (masalan, xotiradan foydalanish) boshqarish imkoniyatini beradi.
 
 ## Rust kim uchun
 
-Rust turli sabablarga ko'ra ko'p odamlar uchun idealdir. Keling, bir nechtasini ko'rib chiqaylik
-eng muhim guruhlar.
+Rust turli sabablarga ko'ra ko'p odamlar uchun idealdir. Keling, eng muhim guruhlarning bir nechtasini ko'rib chiqaylik.
 
 ### Dasturchilar jamoalari
 
@@ -22,7 +24,7 @@ Rust turli darajadagi tizimlarni dasturlash bo'yicha bilimga ega bo'lgan yirik i
 
 Rust shuningdek, tizim dasturlash dunyosiga zamonaviy ishlab chiquvchilar vositalarini olib keladi:
 
-* Cargo  dependency menejeri va qurish vositasini o'z ichiga oladi, Rust ekotizimida bog'liqliklarni qo'shish, kompilyatsiya qilish va boshqarishni qiyinchiliksiz va davomli qiladi.
+* Cargo  dependency menejeri va build toolni o'z ichiga oladi, Rust ekotizimida bog'liqliklarni qo'shish, kompilyatsiya qilish va boshqarishni qiyinchiliksiz va davomli qiladi.
 * Rustfmt formatlash vositasi ishlab chiquvchilar orasida barqaror kodlash uslubini ta'minlaydi.
 * Rust Language Server kodni toʻldirish va inline xato xabarlari uchun Integrated Development Environment (IDE) integratsiyasini quvvatlaydi.
 
@@ -34,7 +36,7 @@ Rust talabalar va tizim tushunchalarini o'rganishga qiziquvchilar uchun. Rust-da
 
 ### Kompaniyalar
 
-Yuzlab yirik va kichik kompaniyalar ishlab chiqarishda Rust-dan buyruq qatori vositalari, veb-xizmatlar, DevOps asboblari, o'rnatilgan qurilmalar, audio va video tahlillari va transkodlar, kriptovalyutalar, bioinformatika, qidiruv tizimlari, Internet of Things ilovalari kabi turli vazifalar uchun foydalanadilar. , machine learning va hatto Firefox veb-brauzerining asosiy qismlari.
+Yuzlab yirik va kichik kompaniyalar ishlab chiqarishda Rust-dan CLI dasturlar, veb-xizmatlar, DevOps toollari, embedded qurilmalar, audio va video tahlillari va transkodlar, kriptovalyutalar, bioinformatika, qidiruv tizimlari, Internet of Things ilovalari kabi turli vazifalar uchun foydalanadilar. , machine learning va hatto Firefox veb-brauzerining asosiy qismlari.
 
 ### Open Source dasturchilar
 
@@ -42,9 +44,9 @@ Rust Rust dasturlash tilini, hamjamiyatini, ishlab chiquvchilar vositalarini va 
 
 ### Tezlik va barqarorlikni qadrlaydigan odamlar
 
-Rust dasturlash tili tezlik va barqarorlikni xohlaydigan odamlar uchundir. Tezlik deganda biz Rust kodi qanchalik tez ishlashini va Rust sizga dasturlar yozish imkonini beradigan tezligini nazarda tutamiz. Rust kompilyatorining tekshiruvlari qo'shimcha funktsiyalar va refaktoring orqali barqarorlikni ta'minlaydi. Bu ishlab chiquvchilar ko'pincha o'zgartirishdan qo'rqadigan ushbu tekshiruvlarsiz tillardagi mo'rt eski koddan farqli o'laroq. Nol xarajatli abstraktsiyalarga, qo'lda yozilgan kod kabi tezroq quyi darajadagi kodni kompilyatsiya qiladigan yuqori darajadagi funktsiyalarga intilish orqali Rust xavfsiz kodni ham tezkor kod qilishga intiladi.
+Rust dasturlash tili tezlik va barqarorlikni xohlaydigan odamlar uchundir. Tezlik deganda biz Rust kodi qanchalik tez ishlashini va Rust sizga dasturlar yozish imkonini beradigan tezligini nazarda tutamiz. Rust kompilyatorining tekshiruvlari qo'shimcha funksiyalar va refaktoring orqali barqarorlikni ta'minlaydi. Bu ishlab chiquvchilar ko'pincha o'zgartirishdan qo'rqadigan ushbu tekshiruvlarsiz tillardagi mo'rt eski koddan farqli o'laroq. Nol xarajatli abstraktsiyalarga, qo'lda yozilgan kod kabi tezroq lower-leveldagi kodni kompilyatsiya qiladigan higher-leveldagi funktsiyalarga intilish orqali Rust xavfsiz kodni ham tezkor kod qilishga intiladi.
 
-Rust tili boshqa ko'plab foydalanuvchilarni ham qo'llab-quvvatlashga umid qiladi; Bu yerda tilga olinganlar faqat eng katta manfaatdor tomonlardan biri hisoblanadi. Umuman olganda, Rustning eng katta ambitsiyalari xavfsizlik *va* unumdorlik, tezlik *va* ergonomikani ta'minlash orqali dasturchilar o'nlab yillar davomida qabul qilgan kelishuvlarni yo'q qilishdir. Rust-ni sinab ko'ring va uning tanlovlari sizga mos keladimi yoki yo'qligini tekshiring.
+Rust tili boshqa ko'plab foydalanuvchilarni ham qo'llab-quvvatlashga umid qiladi; Bu yerda tilga olinganlar faqat eng katta manfaatdor tomonlardan biri hisoblanadi. Umuman olganda, Rustning eng katta ambitsiyalari xavfsizlik *va* unumdorlik, tezlik *va* samaradorlikni ta'minlash orqali dasturchilar o'nlab yillar davomida qabul qilgan kelishuvlarni yo'q qilishdir. Rust-ni sinab ko'ring va uning tanlovlari sizga mos keladimi yoki yo'qligini tekshiring.
 
 ## Bu kitob kim uchun
 
@@ -56,28 +58,27 @@ Umuman olganda, bu kitob siz uni oldindan orqaga ketma-ket o'qiyotganingizni tax
 
 Ushbu kitobda siz ikki xil bo'limni topasiz: kontseptsiya bo'limlari va loyiha bo'limlari. Kontseptsiya boblarida siz Rustning bir tomoni haqida bilib olasiz. Loyiha bo'limlarida biz hozirgacha o'rganganlaringizni qo'llagan holda kichik dasturlarni birgalikda tuzamiz. 2, 12 va 20-boblar loyiha boblari; qolganlari kontseptsiya boblari.
 
-1-bobda Rustni qanday o'rnatish, "Hello, world!" dasturi va Cargo, Rust paket menejeri va qurish vositasidan qanday foydalanishni ko'rib chiqamiz. 2-bob Rustda dastur yozish bo'yicha amaliy kirish bo'lib, siz raqamlarni taxmin qilish o'yinini tuzasiz. Biz tushunchalarni yuqori darajada yoritamiz va keyingi boblarda qo'shimcha tafsilotlar beriladi. If you want to get your hands dirty
-right away, Chapter 2 is the place for that. 3-bobda boshqa dasturlash tillariga oʻxshash Rust funksiyalari yoritilgan va 4-bobda siz Rustning egalik tizimi haqida bilib olasiz. Agar siz keyingisiga o‘tishdan oldin har bir tafsilotni o‘rganishni ma’qul ko‘radigan, ayniqsa sinchkov o‘quvchi bo‘lsangiz, 2-bobni o‘tkazib yuborib, to‘g‘ridan-to‘g‘ri 3-bobga o‘tishingiz va loyiha ustida ishlashni hohlaganingizda 2-bobga qaytishingiz mumkin. siz o'rgangan tafsilotlar.
+1-bobda Rustni qanday o'rnatish, "Hello, world!" dasturi va Cargo, Rust paket menejeri va build tooldan qanday foydalanishni ko'rib chiqamiz. 2-bob Rustda dastur yozish bo'yicha amaliy kirish bo'lib, siz raqamlarni taxmin qilish o'yinini tuzasiz. Bu yerda biz tushunchalarni yuqori darajada yoritamiz va keyingi boblarda qo'shimcha tafsilotlar beriladi. Agar siz darhol qo'llaringizni ifloslantirmoqchi bo'lsangiz, 2-bob buning uchun joy. 3-bobda boshqa dasturlash tillariga oʻxshash Rust funksiyalari yoritilgan va 4-bobda siz Rustning ownershp tizimi haqida bilib olasiz. Agar siz keyingisiga o‘tishdan oldin har bir tafsilotni o‘rganishni ma’qul ko‘radigan, ayniqsa sinchkov o‘quvchi bo‘lsangiz, 2-bobni o‘tkazib yuborib, to‘g‘ridan-to‘g‘ri 3-bobga o‘tishingiz va loyiha ustida ishlashni hohlaganingizda 2-bobga qaytishingiz mumkin. siz o'rgangan tafsilotlar.
 
-5-bobda tuzilmalar va usullar muhokama qilinadi, 6-bob esa raqamlar, “match” ifodalari va “if let” oqim konstruksiyasini nazorat qiladi. Rust-da maxsus turlarni yaratish uchun tuzilmalar va enumlardan foydalanasiz.
+5-bobda structlar va methodlar muhokama qilinadi, 6-bob esa enumlar, `match` expressionlari va `if let` control flow konstruksiyasini qamrab oladi. Rust-da maxsus turlarni yaratish uchun struclar va enumlardan foydalanasiz.
 
-7-bobda siz Rust modul tizimi va kodingizni va uning umumiy amaliy dasturlash interfeysini (API) tashkil qilish uchun maxfiylik qoidalari haqida bilib olasiz. 8-bobda standart kutubxona taqdim etadigan vektorlar, satrlar va xesh-xaritalar kabi umumiy yig'ish ma'lumotlar tuzilmalari muhokama qilinadi. 9-bob Rustning xatolarni hal qilish falsafasi va usullarini o'rganadi.
+7-bobda siz Rust modul tizimi va kodingizni va uning umumiy amaliy dasturlash interfeysini (API) tashkil qilish uchun maxfiylik qoidalari haqida bilib olasiz. 8-bobda standart kutubxona taqdim etadigan vektorlar, stringlar va hash maplar kabi umumiy yig'ish ma'lumotlar tuzilmalari muhokama qilinadi. 9-bob Rustning xatolarni hal qilish falsafasi va usullarini o'rganadi.
 
-10-bob generiklar, xususiyatlar va umr ko'rishni o'rganadi, bu sizga bir nechta turlarga tegishli kodni aniqlash imkoniyatini beradi. 11-bob sinovdan o'tadi, bu hatto Rustning xavfsizlik kafolatlari bilan ham dasturingiz mantig'ining to'g'riligini ta'minlash uchun zarurdir. I12-bobda biz fayllar ichidagi matnni qidiradigan `grep` buyruq qatori vositasidan o'zimizning funksiyalar to'plamini yaratamiz. Buning uchun biz oldingi boblarda muhokama qilgan ko'plab tushunchalardan foydalanamiz.
+10-bob generiklar, traitlar va lifetimeni o'rganadi, bu sizga bir nechta turlarga tegishli kodni aniqlash imkoniyatini beradi. 11-bob sinovdan o'tadi, bu hatto Rustning xavfsizlik kafolatlari bilan ham dasturingiz mantig'ining to'g'riligini ta'minlash uchun zarurdir. 12-bobda biz fayllar ichidagi matnni qidiradigan `grep` buyruq qatori vositasidan o'zimizning funksiyalar to'plamini yaratamiz. Buning uchun biz oldingi boblarda muhokama qilgan ko'plab tushunchalardan foydalanamiz.
 
 13-bob yopilishlar va iteratorlarni o'rganadi: Rustning funktsional dasturlash tillaridan kelib chiqadigan xususiyatlari. 14-bobda biz Cargolarni chuqurroq ko'rib chiqamiz va kutubxonalaringizni boshqalar bilan baham ko'rishning eng yaxshi amaliyotlari haqida gaplashamiz.
-15-bobda standart kutubxona taqdim etadigan aqlli ko'rsatkichlar va ularning funksionalligini ta'minlaydigan xususiyatlar muhokama qilinadi.
+15-bobda standart kutubxona taqdim etadigan smart pointerlar va ularning funksionalligini ta'minlaydigan traitlar muhokama qilinadi.
 
 16-bobda biz bir vaqtning o'zida dasturlashning turli modellarini ko'rib chiqamiz va Rust sizga bir nechta mavzularda qo'rqmasdan dasturlashda qanday yordam berishi haqida gaplashamiz.
-17-bobda Rust idiomalari sizga tanish bo'lishi mumkin bo'lgan ob'ektga yo'naltirilgan dasturlash tamoyillari bilan qanday taqqoslanishi ko'rib chiqiladi.
+17-bobda Rust idiomlari sizga tanish bo'lishi mumkin bo'lgan obyektga yo'naltirilgan(OOP) dasturlash tamoyillari bilan qanday taqqoslanishi ko'rib chiqiladi.
 
 18-bobda Rust dasturlari bo'ylab g'oyalarni ifodalashning kuchli usullari bo'lgan patternlar va patternlarni moslashtirish haqida ma'lumot berilgan. 19-bobda ilg'or qiziqarli mavzular, jumladan xavfli Rust, makroslar va boshqa ko'p narsalar mavjud.
 
 20-bobda biz low-leveldagi ko'p tarmoqli veb-serverni amalga oshiradigan loyihani yakunlaymiz!
 
-Va nihoyat, ba'zi qo'shimchalarda til haqida foydali ma'lumotlar ko'proq mos yozuvlar formatida mavjud. A ilovasida Rustning kalit so'zlari, B ilovasida Rust operatorlari va belgilari, C ilovasi standart kutubxona tomonidan taqdim etilgan hosila belgilarini o'z ichiga oladi, D ilovasi ba'zi foydali ishlab chiqish vositalarini qamrab oladi va E ilovasida Rust nashrlari tushuntiriladi. F ilovasida siz kitobning tarjimalarini topishingiz mumkin, G ilovasida esa Rust qanday qilinganligi va  nightlyli Rust nima ekanligini ko'rib chiqamiz.
+Va nihoyat, ba'zi qo'shimchalarda til haqida foydali ma'lumotlar ko'proq mos yozuvlar formatida mavjud. A ilovasida Rustning kalit so'zlari, B ilovasida Rust operatorlari va belgilari, C ilovasi standart kutubxona tomonidan taqdim etilgan hosila traitlarini o'z ichiga oladi, D ilovasi ba'zi foydali ishlab chiqish vositalarini qamrab oladi va E ilovasida Rust nashrlari tushuntiriladi. F ilovasida siz kitobning tarjimalarini topishingiz mumkin, G ilovasida esa Rust qanday qilinganligi va  nightlyli Rust nima ekanligini ko'rib chiqamiz.
 
-Ushbu kitobni o'qishning noto'g'ri usuli yo'q: agar siz oldinga o'tmoqchi bo'lsangiz, unga boring! Agar chalkashliklarga duch kelsangiz, avvalgi boblarga qaytishingiz kerak bo'lishi mumkin. Lekin siz uchun nima ish qilsa, uni qiling.
+Ushbu kitobni o'qishning noto'g'ri usuli yo'q: agar siz oldinga o'tmoqchi bo'lsangiz, unga boring! Agar chalkashliklarga duch kelsangiz, avvalgi boblarga qaytishingiz kerak bo'lishi mumkin. Lekin siz uchun nima ish qilsa, shuni qiling.
 
 <span id="ferris"></span>
 
@@ -94,7 +95,6 @@ Aksariyat hollarda biz sizni kompilyatsiya qilinmagan har qanday kodning to'g'ri
 
 ## Manba kodi
 
-Ushbu kitob yaratilgan manba fayllarni quyidagi manzilda topish mumkin
-[GitHub][book].
+Ushbu kitob yaratilgan manba fayllarni [GitHub][book]da topish mumkin.
 
 [book]: https://github.com/rust-lang/book/tree/main/src

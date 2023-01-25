@@ -59,14 +59,13 @@ Xato shuni ko'rsatadiki, Rust `bool` kutgan, lekin integer(butun) son olgan. Rub
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-29-if-not-equal-0/src/main.rs}}
 ```
 
-Running this code will print `number was something other than zero`.
+Ushbu kodni ishga tushirish `raqam noldan boshqa narsa edi` chop etiladi.
 
-#### Handling Multiple Conditions with `else if`
+#### `else if` bilan bir nechta shartlarni boshqarish
 
-You can use multiple conditions by combining `if` and `else` in an `else if`
-expression. For example:
+`if` va `else` ni `else if` ifodasida birlashtirib, bir nechta shartlardan foydalanishingiz mumkin.Misol uchun:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-30-else-if/src/main.rs}}
