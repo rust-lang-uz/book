@@ -1,10 +1,10 @@
 fn main() {
     // ANCHOR: here
     {
-        let s = String::from("hello"); // s is valid from this point forward
+        let s = String::from("salom"); // s shu nuqtadan boshlab amal qiladi
 
-        // do stuff with s
-    }                                  // this scope is now over, and s is no
-                                       // longer valid
+        // s bilan ish bajaring
+    }                                  // bu scope endi tugadi va s yo'q
+                                       // uzoqroq amal qiladi
     // ANCHOR_END: here
 }
