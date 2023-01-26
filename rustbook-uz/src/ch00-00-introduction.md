@@ -1,9 +1,5 @@
 # Kirish
 
-> Eslatma: Kitobning ushbu nashri [ Rust dasturlash 
-> tili][nsprust] bosma va elektron kitob formatida mavjud [No Starch
-> Press][nsp].
-
 > Eslatma: Kitobning ushbu nashri [No Starch Press][nsp]-dan bosma va elektron kitob formatida mavjud bo'lgan
 > [Rust dasturlash tili][nsprust] bilan bir xil.
 

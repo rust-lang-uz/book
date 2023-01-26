@@ -244,55 +244,33 @@ Bundan tashqari, dizayn tanlovi ham mavjud: Rust hech qachon avtomatik ravishda 
 
 #### Clone bilan o'zaro ta'sir qiluvchi o'zgaruvchilar va ma'lumotlar
 
-If we *do* want to deeply copy the heap data of the `String`, not just the
-stack data, we can use a common method called `clone`. We’ll discuss method
-syntax in Chapter 5, but because methods are a common feature in many
-programming languages, you’ve probably seen them before.
+Agar biz faqat stack ma'lumotlarini emas, balki `String` ning heap ma'lumotlarini deeply copyni istasak, `clone` deb nomlangan umumiy methoddan foydalanishimiz mumkin. Method sintaksisini 5-bobda muhokama qilamiz, lekin methodlar ko‘p dasturlash tillarida umumiy xususiyat bo‘lgani uchun siz ularni avval ko‘rgan bo‘lsangiz kerak.
 
-Here’s an example of the `clone` method in action:
+Mana amaldagi `clone` usuliga misol:
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-05-clone/src/main.rs:here}}
 ```
 
-This works just fine and explicitly produces the behavior shown in Figure 4-3,
-where the heap data *does* get copied.
+Bu juda yaxshi ishlaydi va 4-3-rasmda ko'rsatilgan xatti-harakatni aniq ishlab chiqaradi, bu erda heap ma'lumotlar nusxalanadi.
 
-When you see a call to `clone`, you know that some arbitrary code is being
-executed and that code may be expensive. It’s a visual indicator that something
-different is going on.
+`clone` ga murojatni ko'rsangiz, ba'zi bir ixtiyoriy kod bajarilayotganini va bu kod qimmat bo'lishi mumkinligini bilasiz. Bu boshqa narsa sodir bo'layotganining vizual ko'rsatkichidir.
 
-#### Stack-Only Data: Copy
+#### Faqat stack ma'lumotlari: nusxalash
 
-There’s another wrinkle we haven’t talked about yet. This code using
-integers—part of which was shown in Listing 4-2—works and is valid:
+Biz hali gapirmagan yana bir narsa bor. Integer sonlardan foydalanadigan ushbu kod - bir qismi 4-2 ro'yxatda ko'rsatilgan - ishlaydi va amal qiladi:
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-06-copy/src/main.rs:here}}
 ```
 
-But this code seems to contradict what we just learned: we don’t have a call to
-`clone`, but `x` is still valid and wasn’t moved into `y`.
+Ammo bu kod biz bilib olgan narsaga zid ko'rinadi: bizda `clone` uchun murojat yo'q, lekin `x` hali ham amal qiladi va `y` ga o'tkazilmagan.
 
-The reason is that types such as integers that have a known size at compile
-time are stored entirely on the stack, so copies of the actual values are quick
-to make. That means there’s no reason we would want to prevent `x` from being
-valid after we create the variable `y`. In other words, there’s no difference
-between deep and shallow copying here, so calling `clone` wouldn’t do anything
-different from the usual shallow copying, and we can leave it out.
+Sababi, kompilyatsiya vaqtida ma'lum o'lchamga ega bo'lgan integer sonlar kabi turlar to'liq stekda saqlanadi, shuning uchun haqiqiy qiymatlarning nusxalari tezda tayyorlanadi. Bu shuni anglatadiki, biz `y` o'zgaruvchisini yaratganimizdan keyin `x` ning haqiqiy bo'lishiga to'sqinlik qilish uchun hech qanday sabab yo'q. Boshqacha qilib aytadigan bo'lsak, bu erda deep va shallow nusxa ko'chirish o'rtasida farq yo'q, shuning uchun `clone` ni chaqirish odatdagi shallow copydan farq qilmaydi va biz uni tark etishimiz mumkin.
 
-Rust has a special annotation called the `Copy` trait that we can place on
-types that are stored on the stack, as integers are (we’ll talk more about
-traits in [Chapter 10][traits]<!-- ignore -->). If a type implements the `Copy`
-trait, variables that use it do not move, but rather are trivially copied,
-making them still valid after assignment to another variable.
+Rust `Copy` traiti deb nomlangan maxsus izohga ega bo'lib, uni butun sonlar kabi stekda saqlanadigan turlarga joylashtirishimiz mumkin (biz [10-bobda][traits]<!-- ignore --> traitlar haqida ko'proq gaplashamiz). Agar tur  `Copy` traitini amalga oshirsa, undan foydalanadigan o‘zgaruvchilar harakatlanmaydi, aksincha, ahamiyatsiz tarzda ko‘chiriladi, bu esa boshqa o‘zgaruvchiga tayinlangandan keyin ham amal qiladi.
 
-Rust won’t let us annotate a type with `Copy` if the type, or any of its parts,
-has implemented the `Drop` trait. If the type needs something special to happen
-when the value goes out of scope and we add the `Copy` annotation to that type,
-we’ll get a compile-time error. To learn about how to add the `Copy` annotation
-to your type to implement the trait, see [“Derivable
-Traits”][derivable-traits]<!-- ignore --> in Appendix C.
+Rust turi yoki uning biron bir qismi `Drop` traitini qo‘llagan bo‘lsa, `Copy` bilan turga annotation qo‘yishimizga ruxsat bermaydi. Qiymat doirasidan chiqib ketganda turga maxsus biror narsa kerak bo'lsa va biz ushbu turga `Copy` annotationni qo'shsak, biz kompilyatsiya vaqtida xatolikni olamiz. Traitni amalga oshirish uchun turingizga `Copy` annotationni qanday qo‘shish haqida bilish uchun C ilovasidagi [“Derivable Traitlar”][derivable-traits]<!-- ignore -->ga qarang.
 
 So, what types implement the `Copy` trait? You can check the documentation for
 the given type to be sure, but as a general rule, any group of simple scalar
