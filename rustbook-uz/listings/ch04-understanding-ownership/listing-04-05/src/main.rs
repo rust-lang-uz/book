@@ -1,13 +1,13 @@
 fn main() {
-    let s1 = String::from("hello");
+    let s1 = String::from("salom");
 
-    let (s2, len) = calculate_length(s1);
+    let (s2, len) = uzunlikni_hisoblash(s1);
 
-    println!("The length of '{}' is {}.", s2, len);
+    println!("'{}' uzunligi {}.", s2, len);
 }
 
-fn calculate_length(s: String) -> (String, usize) {
-    let length = s.len(); // len() returns the length of a String
+fn uzunlikni_hisoblash(s: String) -> (String, usize) {
+    let length = s.len(); // len() string uzunligini qaytaradi
 
     (s, length)
 }

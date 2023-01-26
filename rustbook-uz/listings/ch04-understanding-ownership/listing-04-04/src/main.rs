@@ -1,29 +1,29 @@
 fn main() {
-    let s1 = gives_ownership();         // gives_ownership moves its return
-                                        // value into s1
+    let s1 = egalik_beradi();         // egalik_beradi o'zining return qiymatini
+                                        // s1 ga o'tkazadi
 
-    let s2 = String::from("hello");     // s2 comes into scope
+    let s2 = String::from("salom");     // s2 scopega kiradi
 
-    let s3 = takes_and_gives_back(s2);  // s2 is moved into
-                                        // takes_and_gives_back, which also
-                                        // moves its return value into s3
-} // Here, s3 goes out of scope and is dropped. s2 was moved, so nothing
-  // happens. s1 goes out of scope and is dropped.
+    let s3 = oladi_va_qaytaradi(s2);  // s2 oladi_va_qaytaradi ichiga 
+                                        // ko'chiriladi, u ham o'zining return
+                                        // qiymatini s3 ga o'tkazadi
+} // Bu erda s3 scopedan chiqib ketadi va o'chiriladi. s2 ko'chirildi, shuning uchun
+  // hech narsa sodir bo'lmaydi. s1 scopedan chiqib ketadi va o'chiriladi.
 
-fn gives_ownership() -> String {             // gives_ownership will move its
-                                             // return value into the function
-                                             // that calls it
+fn egalik_beradi() -> String {             // egalik_beradi o'zining return
+                                             // qiymatini uni chaqiradigan
+                                             // funksiyaga o'tkazadi
 
-    let some_string = String::from("yours"); // some_string comes into scope
+    let some_string = String::from("rust"); // some_string scopea kiradi
 
-    some_string                              // some_string is returned and
-                                             // moves out to the calling
-                                             // function
+    some_string                              // some_string return qilinadi va
+                                             // chaqiruv funksiyasiga 
+                                             // o'tadi
 }
 
-// This function takes a String and returns one
-fn takes_and_gives_back(a_string: String) -> String { // a_string comes into
-                                                      // scope
+// Bu funksiya Stringni oladi va bittasini qaytaradi
+fn oladi_va_qaytaradi(a_string: String) -> String { // a_string scopega 
+                                                      // kiradi
 
-    a_string  // a_string is returned and moves out to the calling function
+    a_string  // a_string qaytariladi va chaqiruv funksiyasiga o'tadi
 }
