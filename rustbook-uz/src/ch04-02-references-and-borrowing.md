@@ -1,42 +1,32 @@
-## References and Borrowing
+## Reference va Borrowing
 
-The issue with the tuple code in Listing 4-5 is that we have to return the
-`String` to the calling function so we can still use the `String` after the
-call to `calculate_length`, because the `String` was moved into
-`calculate_length`. Instead, we can provide a reference to the `String` value.
-A *reference* is like a pointer in that it’s an address we can follow to access
-the data stored at that address; that data is owned by some other variable.
-Unlike a pointer, a reference is guaranteed to point to a valid value of a
-particular type for the life of that reference.
+Ro'yxat 4-5dagi tuple kodi bilan bog'liq muammo shundaki, biz `String` ni chaqiruvchi funksiyaga qaytarishimiz kerak, shunda biz `uzunlikni_hisoblash` ga chaqiruvdan keyin ham `String` dan foydalanishimiz mumkin, chunki `String` `uzunlikni_hisoblash` ga ko'chirildi. Buning o'rniga biz `String` qiymatiga reference(havola) berishimiz mumkin.
 
-Here is how you would define and use a `calculate_length` function that has a
-reference to an object as a parameter instead of taking ownership of the value:
+*Reference* pointerga o'xshaydi, chunki u biz ushbu manzilda saqlangan ma'lumotlarga kirish uchun amal qilishimiz mumkin bo'lgan manzildir; bu ma'lumotlar boshqa o'zgaruvchilarga tegishli.
+Pointerdan farqli o'laroq, reference ma'lumotnomaning amal qilish muddati davomida ma'lum turdagi haqiqiy qiymatni ko'rsatishi kafolatlanadi.
 
-<span class="filename">Filename: src/main.rs</span>
+Qiymatga egalik qilish o'rniga parametr sifatida obyektga referencega ega bo'lgan `uzunlikni_hisoblash` funksiyasini qanday aniqlash va ishlatishingiz mumkin:
+
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-07-reference/src/main.rs:all}}
 ```
 
-First, notice that all the tuple code in the variable declaration and the
-function return value is gone. Second, note that we pass `&s1` into
-`calculate_length` and, in its definition, we take `&String` rather than
-`String`. These ampersands represent *references*, and they allow you to refer
-to some value without taking ownership of it. Figure 4-5 depicts this concept.
+Birinchidan, o'zgaruvchilar deklaratsiyasidagi barcha tuple kodi va funksiyani qaytarish qiymati yo'qolganiga e'tibor bering. Ikkinchidan, `&s1` ni `uzunlikni_hisoblash` ga o'tkazamiz va uning definitionida biz `String` emas, `&String`ni olamiz. Ushbu ampersandlar *reference* ni ifodalaydi va ular sizga biron bir qiymatga ownershiplik qilmasdan murojaat qilish imkonini beradi. 4-5-rasmda ushbu tushuncha tasvirlangan.
 
 <img alt="Three tables: the table for s contains only a pointer to the table
 for s1. The table for s1 contains the stack data for s1 and points to the
 string data on the heap." src="img/trpl04-05.svg" class="center" />
 
-<span class="caption">Figure 4-5: A diagram of `&String s` pointing at `String
-s1`</span>
+<span class="caption">4-5-rasm: `&String s` chizmasi `String s1`ga ishora qiladi</span>
 
-> Note: The opposite of referencing by using `&` is *dereferencing*, which is
-> accomplished with the dereference operator, `*`. We’ll see some uses of the
-> dereference operator in Chapter 8 and discuss details of dereferencing in
-> Chapter 15.
+> Eslatma: `&` yordamida reference qilishning teskarisi *dereferencing* bo`lib,
+> u `*` dereference operatori yordamida amalga oshiriladi. Biz 8-bobda dereference
+> operatoridan baʼzi foydalanishni koʻrib chiqamiz va 15-bobda dereference tafsilotlarini 
+> muhokama qilamiz.
 
-Let’s take a closer look at the function call here:
+Keling, bu yerda funksiya chaqiruvini batafsil ko'rib chiqaylik:
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-07-reference/src/main.rs:here}}
