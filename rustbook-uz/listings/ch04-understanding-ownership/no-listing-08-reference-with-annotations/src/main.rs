@@ -1,14 +1,14 @@
 fn main() {
-    let s1 = String::from("hello");
+    let s1 = String::from("salom");
 
-    let len = calculate_length(&s1);
+    let len = uzunlikni_hisoblash(&s1);
 
-    println!("The length of '{}' is {}.", s1, len);
+    println!("'{}' uzunligi {}.", s1, len);
 }
 
 // ANCHOR: here
-fn calculate_length(s: &String) -> usize { // s is a reference to a String
+fn uzunlikni_hisoblash(s: &String) -> usize { // s - Stringga reference(havola)
     s.len()
-} // Here, s goes out of scope. But because it does not have ownership of what
-  // it refers to, it is not dropped.
+} // Bu erda s scopedan chiqib ketadi. Lekin u nazarda tutgan narsaga ownership qilmagani
+  // uchun u tashlanmaydi.
 // ANCHOR_END: here
