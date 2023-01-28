@@ -35,7 +35,7 @@ Ownershipni tushunganingizda, Rustni noyob qiladigan xususiyatlarni tushunish uc
 > *pointerni* ni qaytaradi. Bu jarayon *heap allocating* deb ataladi va ba'zan
 > faqat *allocating* deb qisqartiriladi (qiymatlarni stekga qo'shish ajratish
 > hisoblanmaydi). Heapga pointer ma'lum, qat'iy o'lcham bo'lgani uchun siz
-> pointerni stekda saqlashingiz mumkin, lekin haqiqiy ma'lumotlarni
+> pointerni stekda saqlashingiz mumkin, lekin yaroqli ma'lumotlarni
 > olishni istasangiz, pointergaga amal qilishingiz kerak. Restoranda o'tirganingizni
 > o'ylab ko'ring. Kirish paytida siz guruhingizdagi odamlar sonini bildirasiz
 > va uy egasi hammaga mos keladigan bo'sh stol topadi va sizni u yerga olib boradi.
@@ -103,7 +103,7 @@ Boshqacha qilib aytganda, bu yerda ikkita muhim nuqta bor:
 * Qachonki `s` *scopega* kirsa, u amal qiladi.
 * U scopedan tashqariga *chiqmaguncha* amal qiladi.
 
-Ushbu nuqtada, scopelar va o'zgaruvchilarning haqiqiyligi o'rtasidagi munosabatlar boshqa dasturlash tillaridagiga o'xshaydi. Endi biz `String` turini joriy qilish orqali ushbu tushunchaga asoslanamiz.
+Ushbu nuqtada, scopelar va o'zgaruvchilarning yaroqliligi o'rtasidagi munosabatlar boshqa dasturlash tillaridagiga o'xshaydi. Endi biz `String` turini joriy qilish orqali ushbu tushunchaga asoslanamiz.
 
 ### `String` turi
 

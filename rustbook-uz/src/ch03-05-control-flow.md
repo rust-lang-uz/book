@@ -112,7 +112,7 @@ Ushbu kodni kompilyatsiya qilmoqchi bo'lganimizda, biz xatoga duch kelamiz. `if`
 {{#include ../listings/ch03-common-programming-concepts/no-listing-31-arms-must-return-same-type/output.txt}}
 ```
 
-`if` blokidagi expression butun songa, `else` blokidagi expression esa satrga baholanadi. Bu ishlamaydi, chunki oʻzgaruvchilar bitta turga ega boʻlishi kerak va Rust kompilyatsiya vaqtida `raqam` oʻzgaruvchisi qaysi turini aniq bilishi kerak. `raqam` turini bilish kompilyatorga ushbu tur biz `raqam` ishlatadigan hamma joyda haqiqiyligini tekshirish imkonini beradi. Agar `raqam` turi faqat runtimeda aniqlangan bo'lsa, Rust buni qila olmaydi; kompilyator murakkabroq bo'lar edi va agar u har qanday o'zgaruvchi uchun bir nechta gipotetik turlarni kuzatib borishi kerak bo'lsa, kod haqida kamroq kafolatlar beradi.
+`if` blokidagi expression butun songa, `else` blokidagi expression esa satrga baholanadi. Bu ishlamaydi, chunki oʻzgaruvchilar bitta turga ega boʻlishi kerak va Rust kompilyatsiya vaqtida `raqam` oʻzgaruvchisi qaysi turini aniq bilishi kerak. `raqam` turini bilish kompilyatorga ushbu tur biz `raqam` ishlatadigan hamma joyda yaroqliligini tekshirish imkonini beradi. Agar `raqam` turi faqat runtimeda aniqlangan bo'lsa, Rust buni qila olmaydi; kompilyator murakkabroq bo'lar edi va agar u har qanday o'zgaruvchi uchun bir nechta gipotetik turlarni kuzatib borishi kerak bo'lsa, kod haqida kamroq kafolatlar beradi.
 
 ### Looplar bilan takrorlash
 
