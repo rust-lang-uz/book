@@ -1,13 +1,13 @@
 fn main() {
     // ANCHOR: here
-    let mut s = String::from("hello");
+    let mut s = String::from("salom");
 
-    let r1 = &s; // no problem
-    let r2 = &s; // no problem
-    println!("{} and {}", r1, r2);
-    // variables r1 and r2 will not be used after this point
+    let r1 = &s; // muammo yo'q
+    let r2 = &s; // muammo yo'q
+    println!("{} va {}", r1, r2);
+    // r1 va r2 o'zgaruvchilari bu nuqtadan keyin ishlatilmaydi
 
-    let r3 = &mut s; // no problem
+    let r3 = &mut s; // muammo yo'q
     println!("{}", r3);
     // ANCHOR_END: here
 }

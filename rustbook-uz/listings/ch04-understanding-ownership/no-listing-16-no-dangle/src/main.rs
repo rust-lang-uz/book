@@ -1,10 +1,10 @@
 fn main() {
-    let string = no_dangle();
+    let string = dangle_yoq();
 }
 
 // ANCHOR: here
-fn no_dangle() -> String {
-    let s = String::from("hello");
+fn dangle_yoq() -> String {
+    let s = String::from("salom");
 
     s
 }
