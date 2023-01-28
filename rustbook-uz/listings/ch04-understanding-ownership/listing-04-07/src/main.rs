@@ -1,11 +1,11 @@
 // ANCHOR: here
-fn first_word(s: &String) -> usize {
+fn birinchi_soz(s: &String) -> usize {
     // ANCHOR: as_bytes
-    let bytes = s.as_bytes();
+    let bayt = s.as_bytes();
     // ANCHOR_END: as_bytes
 
     // ANCHOR: iter
-    for (i, &item) in bytes.iter().enumerate() {
+    for (i, &item) in bayt.iter().enumerate() {
         // ANCHOR_END: iter
         // ANCHOR: inside_for
         if item == b' ' {
