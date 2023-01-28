@@ -1,11 +1,11 @@
 fn main() {
     // ANCHOR: here
-    let mut s = String::from("hello");
+    let mut s = String::from("salom");
 
-    let r1 = &s; // no problem
-    let r2 = &s; // no problem
-    let r3 = &mut s; // BIG PROBLEM
+    let r1 = &s; // muammo yo'q
+    let r2 = &s; // muammo yo'q
+    let r3 = &mut s; // KATTA MUAMMO
 
-    println!("{}, {}, and {}", r1, r2, r3);
+    println!("{}, {}, va {}", r1, r2, r3);
     // ANCHOR_END: here
 }
