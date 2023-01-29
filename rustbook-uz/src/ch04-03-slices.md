@@ -32,47 +32,31 @@ Keyinchalik, `iter` methodi yordamida baytlar arrayida iterator yaratamiz:
 ```rust,ignore
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:iter}}
 ```
+Biz iteratorlarni [13-bobda][ch13]<!-- ignore --> batafsilroq muhokama qilamiz.
+Hozircha bilingki, `iter` to‘plamdagi har bir elementni return qiladigan va `enumerate` `iter` natijasini o‘rab, har bir elementni tuplening bir qismi sifatida return qiladigan methoddir. `enumerate` dan qaytarilgan tuplening birinchi elementi indeks, ikkinchi element esa elementga referencedir.
+Bu indeksni o'zimiz hisoblashdan ko'ra biroz qulayroqdir.
 
-We’ll discuss iterators in more detail in [Chapter 13][ch13]<!-- ignore -->.
-For now, know that `iter` is a method that returns each element in a collection
-and that `enumerate` wraps the result of `iter` and returns each element as
-part of a tuple instead. The first element of the tuple returned from
-`enumerate` is the index, and the second element is a reference to the element.
-This is a bit more convenient than calculating the index ourselves.
+`enumerate` methodi tupleni qaytarganligi sababli, biz ushbu tupleni destructure qilish uchun patternlardan foydalanishimiz mumkin. Biz [6-bobda][ch6]<!-- ignore --> patternlarni ko'proq muhokama qilamiz. `for` siklida biz tupledagi indeks uchun `i` va bitta bayt uchun `&element` ga ega bo‘lgan patternni belgilaymiz.
+Biz `.iter().enumerate()` dan elementga referenceni olganimiz uchun biz patternda `&` dan foydalanamiz.
 
-Because the `enumerate` method returns a tuple, we can use patterns to
-destructure that tuple. We’ll be discussing patterns more in [Chapter
-6][ch6]<!-- ignore -->. In the `for` loop, we specify a pattern that has `i`
-for the index in the tuple and `&item` for the single byte in the tuple.
-Because we get a reference to the element from `.iter().enumerate()`, we use
-`&` in the pattern.
-
-Inside the `for` loop, we search for the byte that represents the space by
-using the byte literal syntax. If we find a space, we return the position.
-Otherwise, we return the length of the string by using `s.len()`.
+`for` sikli ichida biz bayt literal sintaksisidan foydalanib, bo'sh joyni ifodalovchi baytni qidiramiz. Agar bo'sh joy topsak, biz pozitsiyani return qilamiz.
+Aks holda, `s.len()` yordamida satr uzunligini qaytaramiz.
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:inside_for}}
 ```
 
-We now have a way to find out the index of the end of the first word in the
-string, but there’s a problem. We’re returning a `usize` on its own, but it’s
-only a meaningful number in the context of the `&String`. In other words,
-because it’s a separate value from the `String`, there’s no guarantee that it
-will still be valid in the future. Consider the program in Listing 4-8 that
-uses the `first_word` function from Listing 4-7.
+Endi bizda satrdagi birinchi so'zning oxirgi indeksini aniqlashning usuli bor, ammo muammo bor. Biz `usize` ni o'z-o'zidan qaytarmoqdamiz, lekin bu `&String` kontekstida faqat meaningful raqam. Boshqacha qilib aytadigan bo'lsak, bu `String` dan alohida qiymat bo'lganligi sababli, uning kelajakda ham amal qilishiga kafolat yo'q. Ro'yxat 4-8da 4-7 ro'yxatdagi `birinchi_soz` funksiyasidan foydalanadigan dasturni ko'rib chiqing.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-08/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 4-8: Storing the result from calling the
-`first_word` function and then changing the `String` contents</span>
+<span class="caption">Ro'yxat 4-8: `birinchi_soz` funksiyasini chaqirish natijasida olingan natijani saqlash va keyin `String` tarkibini o'zgartirish</span>
 
-This program compiles without any errors and would also do so if we used `word`
-after calling `s.clear()`. Because `word` isn’t connected to the state of `s`
+Bu dastur hech qanday xatosiz kompilyatsiya qiladi va agar biz `s.clear()` ga murojat qilgandan keyin `soz` ishlatgan bo'lsak ham shunday bo'lardi. Because `word` isn’t connected to the state of `s`
 at all, `word` still contains the value `5`. We could use that value `5` with
 the variable `s` to try to extract the first word out, but this would be a bug
 because the contents of `s` have changed since we saved `5` in `word`.
