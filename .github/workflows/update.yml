@@ -1,0 +1,52 @@
+name: Update
+
+on:
+  schedule:
+    - cron: "0 0 * * SUN"
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  update:
+    name: Update the english book
+    runs-on: ubuntu-latest
+    outputs:
+      repo-updated: ${{ steps.git-step.outputs.updated }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cleaning up the repository
+        run: |
+          DIR="./rustbook-en"
+          if [ -d "$DIR" ]; then
+            echo "Deleting ${DIR}..."
+            rm -rf ./rustbook-en
+            echo "Deleted ${DIR}..."
+          fi
+
+      - name: Clone the current state repo
+        uses: actions/checkout@v3
+        with:
+          repository: rust-lang/book
+          path: rustbook-en
+
+      - name: Remove git reference
+        run: |
+          # Delete the cloned data
+          sudo rm -rf ./rustbook-en/.git
+
+      - name: Setup git credentials
+        run: |
+          # Use github actions default username and email
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Push the content
+        run: |
+          git add .
+          [[ -z $(git status -uno --porcelain) ]] && echo "this branch is clean, no need to push..." && exit 0;
+          git commit -m "[BOT] Updating $GITHUB_SHA content"
+          git push origin main --force
+  
