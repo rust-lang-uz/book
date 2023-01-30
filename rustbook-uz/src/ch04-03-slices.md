@@ -56,45 +56,29 @@ Endi bizda satrdagi birinchi so'zning oxirgi indeksini aniqlashning usuli bor, a
 
 <span class="caption">Ro'yxat 4-8: `birinchi_soz` funksiyasini chaqirish natijasida olingan natijani saqlash va keyin `String` tarkibini o'zgartirish</span>
 
-Bu dastur hech qanday xatosiz kompilyatsiya qiladi va agar biz `s.clear()` ga murojat qilgandan keyin `soz` ishlatgan bo'lsak ham shunday bo'lardi. Because `word` isn’t connected to the state of `s`
-at all, `word` still contains the value `5`. We could use that value `5` with
-the variable `s` to try to extract the first word out, but this would be a bug
-because the contents of `s` have changed since we saved `5` in `word`.
+Bu dastur hech qanday xatosiz kompilyatsiya qiladi va agar biz `s.clear()` ga murojat qilgandan keyin `soz` ishlatgan bo'lsak ham shunday bo'lardi. Chunki `soz` `s` holatiga umuman bog‘lanmagan, `soz` hali ham `5` qiymatini o‘z ichiga oladi. Birinchi so‘zni chiqarish uchun biz ushbu `5` qiymatini `s` o‘zgaruvchisi bilan ishlatishimiz mumkin, ammo bu xato bo‘lishi mumkin, chunki `soz`da `5` ni saqlaganimizdan so‘ng `s` tarkibi o‘zgargan.
 
 Having to worry about the index in `word` getting out of sync with the data in
-`s` is tedious and error prone! Managing these indices is even more brittle if
-we write a `second_word` function. Its signature would have to look like this:
-
+`s` is tedious and error prone! Agar biz `ikkinchi_soz` funksiyasini yozsak, bu indekslarni boshqarish yanada mo'rt bo'ladi. Uning signaturesi quyidagicha ko'rinishi kerak:
 ```rust,ignore
-fn second_word(s: &String) -> (usize, usize) {
+fn ikkinchi_soz(s: &String) -> (usize, usize) {
 ```
 
-Now we’re tracking a starting *and* an ending index, and we have even more
-values that were calculated from data in a particular state but aren’t tied to
-that state at all. We have three unrelated variables floating around that need
-to be kept in sync.
+Endi biz boshlang'ich va tugash indeksini kuzatmoqdamiz va bizda ma'lum bir holatdagi ma'lumotlardan hisoblangan, ammo bu holatga umuman bog'liq bo'lmagan ko'proq qiymatlar mavjud. Bizda bir-biriga bog'liq bo'lmagan uchta o'zgaruvchi mavjud bo'lib, ular sinxronlashtirilishi kerak.
 
-Luckily, Rust has a solution to this problem: string slices.
+Yaxshiyamki, Rust bu muammoni hal qildi: string slicelar.
 
-### String Slices
+### String Slicelar
 
-A *string slice* is a reference to part of a `String`, and it looks like this:
+*string slice* `String` qismiga reference boʻlib, u quyidagicha koʻrinadi:
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-17-slice/src/main.rs:here}}
 ```
 
-Rather than a reference to the entire `String`, `hello` is a reference to a
-portion of the `String`, specified in the extra `[0..5]` bit. We create slices
-using a range within brackets by specifying `[starting_index..ending_index]`,
-where `starting_index` is the first position in the slice and `ending_index` is
-one more than the last position in the slice. Internally, the slice data
-structure stores the starting position and the length of the slice, which
-corresponds to `ending_index` minus `starting_index`. So, in the case of `let
-world = &s[6..11];`, `world` would be a slice that contains a pointer to the
-byte at index 6 of `s` with a length value of `5`.
+Butun `String`ga reference oʻrniga `salom` qoʻshimcha `[0..5]` bitida koʻrsatilgan `String` qismiga referencedir. Biz `[starting_index..ending_index]` ni belgilash orqali qavslar ichidagi diapazondan foydalangan holda slicelarni yaratamiz, bu yerda `starting_index` bo'limdagi birinchi pozitsiyadir va `ending_index` slicedagi oxirgi pozitsiyadan bittaga ko'p. Ichkarida, slice ma'lumotlar tuzilmasi `ending_index` minus `starting_index` ga mos keladigan boshlang'ich pozitsiyasini va slice uzunligini saqlaydi. Demak, `let rust = &s[6..11];` holatida rust so'zi `s` ning 6 indeksidagi baytga ko‘rsatgichni o‘z ichiga olgan bo‘lak bo‘lib, uzunligi 5 ga teng bo‘ladi.
 
-Figure 4-6 shows this in a diagram.
+4-6-rasmda bu diagrammada ko'rsatilgan.
 
 <img alt="Three tables: a table representing the stack data of s, which points
 to the byte at index 0 in a table of the string data &quot;hello world&quot; on
@@ -102,8 +86,7 @@ the heap. The third table rep-resents the stack data of the slice world, which
 has a length value of 5 and points to byte 6 of the heap data table."
 src="img/trpl04-06.svg" class="center" style="width: 50%;" />
 
-<span class="caption">Figure 4-6: String slice referring to part of a
-`String`</span>
+<span class="caption">4-6-rasm: `String`ning bir qismiga referal qiluvchi String slice</span>
 
 With Rust’s `..` range syntax, if you want to start at index 0, you can drop
 the value before the two periods. In other words, these are equal:
