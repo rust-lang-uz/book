@@ -4,7 +4,12 @@ error[E0282]: type annotations needed
  --> src/main.rs:2:9
   |
 2 |     let taxmin = "42".parse().expect("Raqam emas!");
-  |         ^^^^^ consider giving `guess` a type
+  |         ^^^^^
+  |
+help: consider giving `taxmin` an explicit type
+  |
+2 |     let taxmin: _ = "42".parse().expect("Raqam emas!");
+  |              +++
 
 For more information about this error, try `rustc --explain E0282`.
 error: could not compile `no_type_annotations` due to previous error
