@@ -21,7 +21,7 @@ Rustning barqarorligi kafolati kitobdagi kompilyatsiya qilingan barcha misollar 
 Agar siz Linux yoki macOS dan foydalansangiz, terminalni oching va quyidagi buyruqni kiriting:
 
 ```console
-$ curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh
+$ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 ```
 
 Buyruq skriptni yuklab oladi va Rustning eng so'nggi barqaror versiyasini o'rnatadigan `rustup` vositasini o'rnatishni boshlaydi. Sizdan parol so'ralishi mumkin. O'rnatish muvaffaqiyatli bo'lsa, quyidagi qator paydo bo'ladi:

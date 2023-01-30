@@ -194,7 +194,7 @@ let y = 10;
 println!("x = {x} va y + 2 = {}", y + 2);
 ```
 
-Bu kod `x = 5 va y = 12` ni chop etadi.
+Bu kod `x = 5 va y + 2 = 12` ni chop etadi.
 
 ### Birinchi qismni sinovdan o'tkazish
 

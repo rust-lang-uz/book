@@ -3,7 +3,7 @@
 > Eslatma: Kitobning ushbu nashri [No Starch Press][nsp]-dan bosma va elektron kitob formatida mavjud bo'lgan
 > [Rust dasturlash tili][nsprust] bilan bir xil.
 
-[nsprust]: https://nostarch.com/rust
+[nsprust]: https://nostarch.com/rust-programming-language-2nd-edition
 [nsp]: https://nostarch.com/
 
 *Rust dasturlash tili*ga xush kelibsiz, Rust haqida kirish kitobi.
