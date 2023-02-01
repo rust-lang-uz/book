@@ -1,7 +1,7 @@
-fn first_word(s: &String) -> &str {
-    let bytes = s.as_bytes();
+fn birinchi_soz(s: &String) -> &str {
+    let baytlar = s.as_bytes();
 
-    for (i, &item) in bytes.iter().enumerate() {
+    for (i, &item) in baytlar.iter().enumerate() {
         if item == b' ' {
             return &s[0..i];
         }
@@ -12,12 +12,12 @@ fn first_word(s: &String) -> &str {
 
 // ANCHOR: here
 fn main() {
-    let mut s = String::from("hello world");
+    let mut s = String::from("salom rust");
 
-    let word = first_word(&s);
+    let soz = birinchi_soz(&s);
 
     s.clear(); // error!
 
-    println!("the first word is: {}", word);
+    println!("birinchi so'z: {}", soz);
 }
 // ANCHOR_END: here

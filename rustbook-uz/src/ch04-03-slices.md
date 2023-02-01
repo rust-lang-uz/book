@@ -135,75 +135,51 @@ Ushbu ma'lumotlarning barchasini hisobga olgan holda, sliceni qaytarish uchun `b
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-18-first-word-slice/src/main.rs:here}}
 ```
 
-We get the index for the end of the word the same way we did in Listing 4-7, by
-looking for the first occurrence of a space. When we find a space, we return a
-string slice using the start of the string and the index of the space as the
-starting and ending indices.
+Biz so'z oxiri indeksini 4-7 ro'yxatdagi kabi bo'shliqning birinchi marta paydo bo'lishini qidirib olamiz. Bo'shliqni topganimizda, satrning boshi va bo'sh joy indeksidan boshlang'ich va yakuniy indekslar sifatida foydalanib, satr bo'lagini qaytaramiz.
 
-Now when we call `first_word`, we get back a single value that is tied to the
-underlying data. The value is made up of a reference to the starting point of
-the slice and the number of elements in the slice.
+Endi biz `birinchi_soz` ni chaqirganimizda, biz asosiy ma'lumotlarga bog'langan bitta qiymatni olamiz. Qiymat slicening boshlang'ich nuqtasiga va bo'limdagi elementlar soniga referencedan iborat.
 
-Returning a slice would also work for a `second_word` function:
+Sliceni return qilish `ikkinchi_soz` funksiyasi uchun ham ishlaydi:
 
 ```rust,ignore
-fn second_word(s: &String) -> &str {
+fn ikkinchi_soz(s: &String) -> &str {
 ```
 
-We now have a straightforward API that’s much harder to mess up because the
-compiler will ensure the references into the `String` remain valid. Remember
-the bug in the program in Listing 4-8, when we got the index to the end of the
-first word but then cleared the string so our index was invalid? That code was
-logically incorrect but didn’t show any immediate errors. The problems would
-show up later if we kept trying to use the first word index with an emptied
-string. Slices make this bug impossible and let us know we have a problem with
-our code much sooner. Using the slice version of `first_word` will throw a
-compile-time error:
+Endi bizda oddiy API mavjud, uni buzish ancha qiyin, chunki kompilyator `String` ga referencelar haqiqiyligini ta'minlaydi. 4-8 ro'yxatdagi dasturdagi xatoni eslaysizmi, biz indeksni birinchi so'zning oxirigacha olib, keyin qatorni o'chirib tashlaganimizda, indeksimiz yaroqsiz edi? Bu kod mantiqan noto'g'ri edi, lekin darhol xatoliklarni ko'rsatmadi. Agar biz birinchi so'z indeksini bo'shatilgan qator bilan ishlatishga harakat qilsak, muammolar keyinroq paydo bo'ladi. Slicelar bu xatoni imkonsiz qiladi va kodimiz bilan bog'liq muammo borligini bizga tezroq bildiradi. `birinchi_soz` slice versiyasidan foydalanish kompilyatsiya vaqtida xatolikka olib keladi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/src/main.rs:here}}
 ```
 
-Here’s the compiler error:
+Mana kompilyator xatosi:
 
 ```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/output.txt}}
 ```
 
-Recall from the borrowing rules that if we have an immutable reference to
-something, we cannot also take a mutable reference. Because `clear` needs to
-truncate the `String`, it needs to get a mutable reference. The `println!`
-after the call to `clear` uses the reference in `word`, so the immutable
-reference must still be active at that point. Rust disallows the mutable
-reference in `clear` and the immutable reference in `word` from existing at the
-same time, and compilation fails. Not only has Rust made our API easier to use,
-but it has also eliminated an entire class of errors at compile time!
+Borrowing qoidalarini eslang, agar bizda biror narsaga o'zgarmas reference bo'lsa, biz o'zgaruvchan referenceni ham qabul qila olmaymiz. Chunki `clear` `String`ni qisqartirishi kerak, u o'zgaruvchan referenceni olishi kerak. `clear` chaqiruvidan keyingi `println!` `soz` dagi referencedan foydalanadi, shuning uchun o‘zgarmas reference shu nuqtada faol bo‘lishi kerak. Rust bir vaqtning o'zida `clear` va `soz` dagi o'zgarmas referenceni bir vaqtning o'zida mavjud bo'lishiga yo'l qo'ymaydi va kompilyatsiya bajarilmaydi. Rust nafaqat API-dan foydalanishni osonlashtirdi, balki kompilyatsiya vaqtidagi xatolarning butun sinfini ham yo'q qildi!
 
 <!-- Old heading. Do not remove or links may break. -->
 <a id="string-literals-are-slices"></a>
 
-#### String Literals as Slices
+#### String literallar Slice sifatida
 
-Recall that we talked about string literals being stored inside the binary. Now
-that we know about slices, we can properly understand string literals:
+Eslatib o'tamiz, biz binary tizimda saqlanadigan string literallari haqida gapirgan edik. Endi biz slicelar haqida bilganimizdan so'ng, biz string literallarini to'g'ri tushunishimiz mumkin:
 
 ```rust
 let s = "Hello, world!";
 ```
 
-The type of `s` here is `&str`: it’s a slice pointing to that specific point of
-the binary. This is also why string literals are immutable; `&str` is an
-immutable reference.
+Bu erda `s` turi `&str`: bu binary faylning o'ziga xos nuqtasiga ishora qiluvchi slice. Shu sababli ham string literallari o'zgarmasdir; `&str` - o'zgarmas reference.
 
-#### String Slices as Parameters
+#### Parametrlar sifatida String Slicelar
 
-Knowing that you can take slices of literals and `String` values leads us to
-one more improvement on `first_word`, and that’s its signature:
+Siz literal va `String` qiymatlarini olish mumkinligini bilish bizni `birinchi_soz`ni yana bir takomillashtirishga olib keladi va bu uning signaturesi:
 
 ```rust,ignore
-fn first_word(s: &String) -> &str {
+fn birinchi_soz(s: &String) -> &str {
 ```
 
 A more experienced Rustacean would write the signature shown in Listing 4-9
