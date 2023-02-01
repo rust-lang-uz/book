@@ -1,9 +1,9 @@
 // ANCHOR: here
-fn first_word(s: &str) -> &str {
+fn birinchi_soz(s: &str) -> &str {
     // ANCHOR_END: here
-    let bytes = s.as_bytes();
+    let baytlar = s.as_bytes();
 
-    for (i, &item) in bytes.iter().enumerate() {
+    for (i, &item) in baytlar.iter().enumerate() {
         if item == b' ' {
             return &s[0..i];
         }
@@ -14,23 +14,23 @@ fn first_word(s: &str) -> &str {
 
 // ANCHOR: usage
 fn main() {
-    let my_string = String::from("hello world");
+    let mening_stringim = String::from("hello world");
 
-    // `first_word` works on slices of `String`s, whether partial or whole
-    let word = first_word(&my_string[0..6]);
-    let word = first_word(&my_string[..]);
-    // `first_word` also works on references to `String`s, which are equivalent
-    // to whole slices of `String`s
-    let word = first_word(&my_string);
+    // `birinchi_soz` `String` ning qisman yoki to'liq slicelarida ishlaydi
+    let soz = birinchi_soz(&mening_stringim[0..6]);
+    let soz = birinchi_soz(&mening_stringim[..]);
+    // `birinchi_soz`, shuningdek, `String` ning butun slicelariga ekvivalent bo`lgan
+    // `String`-ga referencelar ustida ham ishlaydi.
+    let soz = birinchi_soz(&mening_stringim);
 
-    let my_string_literal = "hello world";
+    let mening_literal_stringim = "hello world";
 
-    // `first_word` works on slices of string literals, whether partial or whole
-    let word = first_word(&my_string_literal[0..6]);
-    let word = first_word(&my_string_literal[..]);
+    // `birinchi_soz` qisman yoki to'liq bo'lgan string literallari slicelarida ishlaydi
+    let soz = birinchi_soz(&mening_literal_stringim [0..6]);
+    let soz = birinchi_soz(&mening_literal_stringim [..]);
 
-    // Because string literals *are* string slices already,
-    // this works too, without the slice syntax!
-    let word = first_word(my_string_literal);
+    // String literallari  allaqachon string slicelari bo'lganligi sababli,
+    // bu slice sintaksisisiz ham ishlaydi!
+    let soz = birinchi_soz(mening_literal_stringim );
 }
 // ANCHOR_END: usage
