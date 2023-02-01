@@ -88,51 +88,48 @@ src="img/trpl04-06.svg" class="center" style="width: 50%;" />
 
 <span class="caption">4-6-rasm: `String`ning bir qismiga referal qiluvchi String slice</span>
 
-With Rust’s `..` range syntax, if you want to start at index 0, you can drop
-the value before the two periods. In other words, these are equal:
+Rustning `..` diapazoni sintaksisi bilan, agar siz 0 indeksidan boshlamoqchi bo'lsangiz, qiymatni ikki davr oldidan tushirishingiz mumkin. Boshqacha qilib aytganda, ular tengdir:
 
 ```rust
-let s = String::from("hello");
+let s = String::from("salom");
 
 let slice = &s[0..2];
 let slice = &s[..2];
 ```
 
-By the same token, if your slice includes the last byte of the `String`, you
-can drop the trailing number. That means these are equal:
+Xuddi shu qoidaga ko'ra, agar sizning slicesingiz `String` ning oxirgi baytini o'z ichiga olgan bo'lsa, siz keyingi raqamni qo'yishingiz mumkin. Bu shuni anglatadiki, ular tengdir:
 
 ```rust
-let s = String::from("hello");
+let s = String::from("salom");
 
-let len = s.len();
+let uzunlik = s.len();
 
-let slice = &s[3..len];
+let slice = &s[3..uzunlik];
 let slice = &s[3..];
 ```
 
-You can also drop both values to take a slice of the entire string. So these
-are equal:
+Shuningdek, butun satrning bir qismini olish uchun ikkala qiymatni ham tashlab qo'yishingiz mumkin. Shunday qilib, ular teng:
 
 ```rust
-let s = String::from("hello");
+let s = String::from("salom");
 
-let len = s.len();
+let uzunlik = s.len();
 
-let slice = &s[0..len];
+let slice = &s[0..uzunlik];
 let slice = &s[..];
 ```
 
-> Note: String slice range indices must occur at valid UTF-8 character
-> boundaries. If you attempt to create a string slice in the middle of a
-> multibyte character, your program will exit with an error. For the purposes
-> of introducing string slices, we are assuming ASCII only in this section; a
-> more thorough discussion of UTF-8 handling is in the [“Storing UTF-8 Encoded
-> Text with Strings”][strings]<!-- ignore --> section of Chapter 8.
+> Eslatma: String diapazoni indekslari yaroqli UTF-8 belgilar chegaralarida
+> bo'lishi kerak. Agar siz ko'p baytli belgi o'rtasida string slice yaratishga
+> harakat qilsangiz, dasturingiz xato bilan chiqadi. String slicelarini kiritish uchun
+> biz faqat ushbu bo'limda ASCII ni qabul qilamiz; UTF-8 bilan ishlash bo'yicha batafsilroq
+> muhokama 8-bobning [”UTF-8 kodlangan matnni satrlar bilan saqlash”][strings]<!-- ignore -->
+> bo'limida keltirilgan.
 
-With all this information in mind, let’s rewrite `first_word` to return a
-slice. The type that signifies “string slice” is written as `&str`:
 
-<span class="filename">Filename: src/main.rs</span>
+Ushbu ma'lumotlarning barchasini hisobga olgan holda, sliceni qaytarish uchun `birinchi_soz` ni qayta yozamiz. “String slice”ni bildiruvchi tur `&str` sifatida yoziladi:
+
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-18-first-word-slice/src/main.rs:here}}
