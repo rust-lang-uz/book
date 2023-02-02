@@ -1,19 +1,11 @@
-## Defining and Instantiating Structs
+## Structlarni aniqlash va yaratish
 
-Structs are similar to tuples, discussed in [“The Tuple Type”][tuples]<!--
-ignore --> section, in that both hold multiple related values. Like tuples, the
-pieces of a struct can be different types. Unlike with tuples, in a struct
-you’ll name each piece of data so it’s clear what the values mean. Adding these
-names means that structs are more flexible than tuples: you don’t have to rely
-on the order of the data to specify or access the values of an instance.
+Structlar [“Tuple turi“][tuples]<!-- ignore --> bo'limida muhokama qilingan tuplelarga o'xshaydi, chunki ikkalasi ham bir-biriga bog'liq bo'lgan bir nechta qiymatlarga ega.
+Tuplelar singari, structning qismlari ham har xil turdagi bo'lishi mumkin. Tuplelardan farqli o'laroq, structda siz har bir ma'lumot qismini nomlaysiz, shunda qiymatlar nimani anglatishini tushunasiz. Ushbu nomlarni qo'shish structlar tuplelardan ko'ra moslashuvchanroq ekanligini anglatadi: misol qiymatlarini belgilash yoki ularga kirish uchun ma'lumotlar tartibiga ishonishingiz shart emas.
 
-To define a struct, we enter the keyword `struct` and name the entire struct. A
-struct’s name should describe the significance of the pieces of data being
-grouped together. Then, inside curly brackets, we define the names and types of
-the pieces of data, which we call *fields*. For example, Listing 5-1 shows a
-struct that stores information about a user account.
+Structni aniqlash uchun biz `struct` kalit so`zini kiritamiz va butun tuzilishga nom beramiz. Struct nomi birgalikda guruhlangan ma'lumotlar bo'laklarining ahamiyatini tavsiflashi kerak. Keyin, jingalak qavslar ichida biz *maydonlar* deb ataydigan ma'lumotlar qismlarining nomlari va turlarini aniqlaymiz. Masalan, 5-1 ro'yxati foydalanuvchi hisobi haqidagi ma'lumotlarni saqlaydigan structni ko'rsatadi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-01/src/main.rs:here}}
