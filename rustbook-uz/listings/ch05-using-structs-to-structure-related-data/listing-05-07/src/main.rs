@@ -1,8 +1,8 @@
-struct User {
-    active: bool,
-    username: String,
+struct Foydalanuvchi {
+    faollik: bool,
+    foydalanuvchi: String,
     email: String,
-    sign_in_count: u64,
+    kirish_hisobi: u64,
 }
 
 // ANCHOR: here
@@ -10,17 +10,17 @@ fn main() {
     // --snip--
     // ANCHOR_END: here
 
-    let user1 = User {
-        email: String::from("someone@example.com"),
-        username: String::from("someusername123"),
-        active: true,
-        sign_in_count: 1,
+    let foydalanuvchi1 = Foydalanuvchi {
+        email: String::from("ismoilovdev@example.com"),
+        foydalanuvchi: String::from("ismoilovdev"),
+        faollik: true,
+        kirish_hisobi: 1,
     };
     // ANCHOR: here
 
-    let user2 = User {
-        email: String::from("another@example.com"),
-        ..user1
+    let foydalanuvchi2 = Foydalanuvchi {
+        email: String::from("asilbek@example.com"),
+        ..foydalanuvchi1
     };
 }
 // ANCHOR_END: here

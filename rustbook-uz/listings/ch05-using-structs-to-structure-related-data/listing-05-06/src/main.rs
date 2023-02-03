@@ -1,28 +1,29 @@
-struct User {
-    active: bool,
-    username: String,
+struct Foydalanuvchi {
+    faollik: bool,
+    foydalanuvchi: String,
     email: String,
-    sign_in_count: u64,
+    kirish_hisobi: u64,
 }
+
 
 // ANCHOR: here
 fn main() {
     // --snip--
     // ANCHOR_END: here
 
-    let user1 = User {
-        email: String::from("someone@example.com"),
-        username: String::from("someusername123"),
-        active: true,
-        sign_in_count: 1,
+    let foydalanuvchi1 = Foydalanuvchi {
+        email: String::from("ismoilovdev@example.com"),
+        foydalanuvchi: String::from("ismoilovdev"),
+        faollik: true,
+        kirish_hisobi: 1,
     };
     // ANCHOR: here
 
-    let user2 = User {
-        active: user1.active,
-        username: user1.username,
-        email: String::from("another@example.com"),
-        sign_in_count: user1.sign_in_count,
+    let foydalanuvchi2 = Foydalanuvchi {
+        faollik: foydalanuvchi1.faollik,
+        foydalanuvchi: foydalanuvchi1.foydalanuvchi,
+        email: String::from("asilbek@example.com"),
+        kirish_hisobi: foydalanuvchi1.kirish_hisobi,
     };
 }
 // ANCHOR_END: here
