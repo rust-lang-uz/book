@@ -1,24 +1,24 @@
-struct User {
-    active: bool,
-    username: String,
+struct Foydalanuvchi {
+    faollik: bool,
+    foydalanuvchi: String,
     email: String,
-    sign_in_count: u64,
+    kirish_hisobi: u64,
 }
 
 // ANCHOR: here
-fn build_user(email: String, username: String) -> User {
-    User {
-        active: true,
-        username: username,
+fn foydalanuvchi_yaratish(email: String, foydalanuvchi: String) -> Foydalanuvchi {
+    Foydalanuvchi {
+        faollik: true,
+        foydalanuvchi: foydalanuvchi,
         email: email,
-        sign_in_count: 1,
+        kirish_hisobi: 1,
     }
 }
 // ANCHOR_END: here
 
 fn main() {
-    let user1 = build_user(
-        String::from("someone@example.com"),
-        String::from("someusername123"),
+    let foydalanuvchi1 = foydalanuvchi_yaratish(
+        String::from("ismoilovdev@example.com"),
+        String::from("ismoilovdev"),
     );
 }

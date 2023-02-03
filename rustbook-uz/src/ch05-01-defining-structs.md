@@ -36,43 +36,31 @@ Structdan ma'lum bir qiymat olish uchun biz nuqta belgilaridan foydalanamiz. Mas
 
 E'tibor bering, butun misol o'zgaruvchan bo'lishi kerak; Rust bizga faqat ma'lum maydonlarni o'zgaruvchan deb belgilashga ruxsat bermaydi. Har qanday ifodada bo'lgani kabi, biz ushbu yangi misolni bilvosita qaytarish uchun funksiya tanasidagi oxirgi ifoda sifatida structning yangi nusxasini qurishimiz mumkin.
 
-Listing 5-4 shows a `build_user` function that returns a `User` instance with
-the given email and username. The `active` field gets the value of `true`, and
-the `sign_in_count` gets a value of `1`.
+5-4 roʻyxatda berilgan email va foydalanuvchi nomi bilan `Foydalanuvchi` misolini qaytaruvchi `foydalanuvchi_yaratish` funksiyasi koʻrsatilgan. `faollik` maydoni `true` qiymatini, `kirish_hisobi` esa `1` qiymatini oladi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-04/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 5-4: A `build_user` function that takes an email
-and username and returns a `User` instance</span>
+<span class="caption">Roʻyxat 5-4: `foydalanuvchi_yaratish` funksiyasi email va foydalanuvchi nomini oladi va `Foydalanuvchi` misolini qaytaradi</span>
 
-It makes sense to name the function parameters with the same name as the struct
-fields, but having to repeat the `email` and `username` field names and
-variables is a bit tedious. If the struct had more fields, repeating each name
-would get even more annoying. Luckily, there’s a convenient shorthand!
-
+Funksiya parametrlarini struct maydonlari bilan bir xil nom bilan nomlash mantiqan to‘g‘ri keladi, lekin `email` va `foydalanuvchi` maydon nomlari va o‘zgaruvchilarini takrorlash biroz zerikarli. Agar structda ko'proq maydonlar bo'lsa, har bir nomni takrorlash yanada zerikarli bo'ladi. Yaxshiyamki, qulay Shorthand bor!
 <!-- Old heading. Do not remove or links may break. -->
 <a id="using-the-field-init-shorthand-when-variables-and-fields-have-the-same-name"></a>
 
-### Using the Field Init Shorthand
+### Field Init Shorthandan foydalanish
 
-Because the parameter names and the struct field names are exactly the same in
-Listing 5-4, we can use the *field init shorthand* syntax to rewrite
-`build_user` so it behaves exactly the same but doesn’t have the repetition of
-`username` and `email`, as shown in Listing 5-5.
+Parametr nomlari va struct maydonlarining nomlari 5-4 ro'yxatda aynan bir xil bo'lgani uchun, `foydalanuvchi_yaratish`ni qayta yozish uchun *init shorthand* sintaksisidan foydalanishimiz mumkin, shuning uchun u xuddi shunday ishlaydi, lekin `foydalanuvchi` va `email`ni takrorlamaydi, 5-5 ro'yxatda ko'rsatilganidek.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-05/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 5-5: A `build_user` function that uses field init
-shorthand because the `username` and `email` parameters have the same name as
-struct fields</span>
+<span class="caption">Roʻyxat 5-5: `foydalanuvchi` va `email` parametrlari struct maydonlari bilan bir xil nomga ega boʻlgani uchun init shorthanddan foydalanadigan `foydalanuvchi_yaratish` funksiyasi</span>
 
 Here, we’re creating a new instance of the `User` struct, which has a field
 named `email`. We want to set the `email` field’s value to the value in the
