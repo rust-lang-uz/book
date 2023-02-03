@@ -1,17 +1,17 @@
-struct User {
-    active: bool,
-    username: String,
+struct Foydalanuvchi {
+    faollik: bool,
+    foydalanuvchi: String,
     email: String,
-    sign_in_count: u64,
+    kirish_hisobi: u64,
 }
 
 // ANCHOR: here
 fn main() {
-    let user1 = User {
-        active: true,
-        username: String::from("someusername123"),
-        email: String::from("someone@example.com"),
-        sign_in_count: 1,
+    let foydalanuvchi1 = Foydalanuvchi {
+        faollik: true,
+        foydalanuvchi: String::from("ismoilovdev"),
+        email: String::from("ismoilovdev@example.com"),
+        kirish_hisobi: 1,
     };
 }
 // ANCHOR_END: here

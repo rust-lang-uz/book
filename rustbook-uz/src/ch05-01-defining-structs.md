@@ -11,46 +11,30 @@ Structni aniqlash uchun biz `struct` kalit so`zini kiritamiz va butun tuzilishga
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-01/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 5-1: A `User` struct definition</span>
+<span class="caption">Ro'yxat 5-1: `Foydalanuvchi` structi ta'rifi</span>
 
-To use a struct after we’ve defined it, we create an *instance* of that struct
-by specifying concrete values for each of the fields. We create an instance by
-stating the name of the struct and then add curly brackets containing *key:
-value* pairs, where the keys are the names of the fields and the values are the
-data we want to store in those fields. We don’t have to specify the fields in
-the same order in which we declared them in the struct. In other words, the
-struct definition is like a general template for the type, and instances fill
-in that template with particular data to create values of the type. For
-example, we can declare a particular user as shown in Listing 5-2.
+Struct aniqlangandan so'ng, tegishli ma'lumotlar turiga ega bo'lgan har bir maydonga ma'lum bir qiymat berish orqali uni yaratish mumkin. Biz structning nomini ko'rsatish orqali misol yaratamiz va keyin *kalit: qiymat*(key: value) juftlarini o'z ichiga olgan jingalak qavslarni qo'shamiz, bu erda kalitlar maydonlarning nomlari va qiymatlar biz o'sha maydonlarda saqlamoqchi bo'lgan ma'lumotlardir.Biz maydonlarni structda e'lon qilgan tartibda ko'rsatishimiz shart emas. Boshqacha qilib aytganda, structning ta'rifi tur uchun umumiy shablonga o'xshaydi va misollar tur qiymatlarini yaratish uchun ushbu shablonni ma'lum ma'lumotlar bilan to'ldiradi. Misol uchun, biz 5-2 ro'yxatda ko'rsatilganidek, ma'lum bir foydalanuvchini e'lon qilishimiz mumkin.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-02/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 5-2: Creating an instance of the `User`
-struct</span>
+<span class="caption">Ro'yxat 5-2: `Foydalanuvchi` nusxasini yaratish
+structi</span>
 
-To get a specific value from a struct, we use dot notation. For example, to
-access this user’s email address, we use `user1.email`. If the instance is
-mutable, we can change a value by using the dot notation and assigning into a
-particular field. Listing 5-3 shows how to change the value in the `email`
-field of a mutable `User` instance.
+Structdan ma'lum bir qiymat olish uchun biz nuqta belgilaridan foydalanamiz. Masalan, ushbu foydalanuvchining elektron pochta manziliga kirish uchun biz `foydalanuvchi1.email` dan foydalanamiz. Agar misol o'zgaruvchan bo'lsa, biz nuqta belgisi yordamida qiymatni o'zgartirishimiz va ma'lum bir maydonga belgilashimiz mumkin. 5-3 ro'yxatda o'zgaruvchan `Foydalanuvchi` misolining `email` maydonidagi qiymatni qanday o'zgartirish mumkinligi ko'rsatilgan.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-03/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 5-3: Changing the value in the `email` field of a
-`User` instance</span>
+<span class="caption">Ro'yxat 5-3: `Foydalanuvchi` misolining `email` maydonidagi qiymatni o'zgartirish</span>
 
-Note that the entire instance must be mutable; Rust doesn’t allow us to mark
-only certain fields as mutable. As with any expression, we can construct a new
-instance of the struct as the last expression in the function body to
-implicitly return that new instance.
+E'tibor bering, butun misol o'zgaruvchan bo'lishi kerak; Rust bizga faqat ma'lum maydonlarni o'zgaruvchan deb belgilashga ruxsat bermaydi. Har qanday ifodada bo'lgani kabi, biz ushbu yangi misolni bilvosita qaytarish uchun funksiya tanasidagi oxirgi ifoda sifatida structning yangi nusxasini qurishimiz mumkin.
 
 Listing 5-4 shows a `build_user` function that returns a `User` instance with
 the given email and username. The `active` field gets the value of `true`, and
