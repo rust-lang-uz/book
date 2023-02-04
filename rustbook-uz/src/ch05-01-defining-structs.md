@@ -97,7 +97,7 @@ E'tibor bering, strukturani yangilash sintaksisi topshiriq kabi `=` dan foydalan
 Rust shuningdek, *tuple struct*lar deb ataladigan tuplelarga o'xshash structlarni qo'llab-quvvatlaydi.
 Tuple structlari struct nomi taqdim etadigan qo'shimcha ma'noga ega, ammo ularning maydonlari bilan bog'langan nomlari yo'q; aksincha, ular faqat maydonlarning turlariga ega. Tuple structlari butun tuplega nom berish va tupleni boshqa tuplelardan farqli turga aylantirish zarur bo‘lganda foydali bo‘ladi va har bir maydonni oddiy structdagi kabi nomlashda batafsil yoki ortiqcha bo‘ladi.
 
-Tuple structini aniqlash uchun `struct` kalit so‘zi va struct nomidan keyin tupledagi turlardan boshlang. Masalan, bu yerda biz `Rang` va `Point` nomli ikkita tuple structini aniqlaymiz va foydalanamiz:
+Tuple structini aniqlash uchun `struct` kalit so‘zi va struct nomidan keyin tupledagi turlardan boshlang. Masalan, bu yerda biz `Rang` va `Nuqta` nomli ikkita tuple structini aniqlaymiz va foydalanamiz:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -105,40 +105,19 @@ Tuple structini aniqlash uchun `struct` kalit so‘zi va struct nomidan keyin tu
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-01-tuple-structs/src/main.rs}}
 ```
 
-Note that the `black` and `origin` values are different types because they’re
-instances of different tuple structs. Each struct you define is its own type,
-even though the fields within the struct might have the same types. For
-example, a function that takes a parameter of type `Color` cannot take a
-`Point` as an argument, even though both types are made up of three `i32`
-values. Otherwise, tuple struct instances are similar to tuples in that you can
-destructure them into their individual pieces, and you can use a `.` followed
-by the index to access an individual value.
+Esda tutingki, `qora` va `kelib_chiqishi` qiymatlari har xil turdagi, chunki ular turli xil tuple structlarining namunalaridir. Structdagi maydonlar bir xil turlarga ega bo'lishi mumkin bo'lsa ham, siz belgilagan har bir struct o'z turiga ega. Masalan, `Rang` turidagi parametrni qabul qiladigan funksiya, har ikkala tur ham uchta `i32` qiymatidan iborat bo‘lsa ham, `Nuqta`ni argument sifatida qabul qila olmaydi. Aks holda, tuple structi namunalari tupelarga o'xshaydi, chunki siz ularni alohida qismlarga ajratishingiz mumkin va individual qiymatga kirish uchun `.` va keyin indeksdan foydalanishingiz mumkin.
 
-### Unit-Like Structs Without Any Fields
+### Hech qanday maydonsiz unit kabi structlar
 
-You can also define structs that don’t have any fields! These are called
-*unit-like structs* because they behave similarly to `()`, the unit type that
-we mentioned in [“The Tuple Type”][tuples]<!-- ignore --> section. Unit-like
-structs can be useful when you need to implement a trait on some type but don’t
-have any data that you want to store in the type itself. We’ll discuss traits
-in Chapter 10. Here’s an example of declaring and instantiating a unit struct
-named `AlwaysEqual`:
+Shuningdek, siz hech qanday maydonga ega bo'lmagan structlarni belgilashingiz mumkin! Ular *unita o'xshash structlar* deb ataladi, chunki ular biz [”Tuple turi”][tuples]<!-- ignore --> bo'limida aytib o'tgan unit turiga `()` o'xshash harakat qiladilar. Unitga o'xshash structlar qaysidir turdagi traitni qo'llash kerak bo'lganda foydali bo'lishi mumkin, ammo sizda turning o'zida saqlash uchun ma'lumotlaringiz yo'q. Traitlarni 10-bobda muhokama qilamiz. Mana `AlwaysEqual` nomli unit structini e’lon qilish va instantsiyalash misoli:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-04-unit-like-structs/src/main.rs}}
 ```
 
-To define `AlwaysEqual`, we use the `struct` keyword, the name we want, and
-then a semicolon. No need for curly brackets or parentheses! Then we can get an
-instance of `AlwaysEqual` in the `subject` variable in a similar way: using the
-name we defined, without any curly brackets or parentheses. Imagine that later
-we’ll implement behavior for this type such that every instance of
-`AlwaysEqual` is always equal to every instance of any other type, perhaps to
-have a known result for testing purposes. We wouldn’t need any data to
-implement that behavior! You’ll see in Chapter 10 how to define traits and
-implement them on any type, including unit-like structs.
+`AlwaysEqual` ni aniqlash uchun biz `struct` kalit so'zidan, kerakli nomdan va keyin nuqta-verguldan foydalanamiz. Jingalak qavslar yoki qavslar kerak emas! Shunda biz `subject` o'zgaruvchisida `AlwaysEqual` misolini xuddi shunday tarzda olishimiz mumkin: biz belgilagan nomdan foydalanib, hech qanday jingalak qavs yoki qavslarsiz. Tasavvur qiling-a, keyinchalik biz ushbu turdagi xatti-harakatlarni shunday amalga oshiramizki, `AlwaysEqual` ning har bir nusxasi har doim boshqa turdagi har bir misolga teng bo'ladi, ehtimol sinov uchun ma'lum natijaga ega bo'lishi mumkin. Ushbu xatti-harakatni amalga oshirish uchun bizga hech qanday ma'lumot kerak emas! Traitlarni qanday aniqlash va ularni har qanday turdagi, shu jumladan unitga o'xshash structlarda amalga oshirishni 10-bobda ko'rasiz.
 
 > ### Ownership of Struct Data
 >
