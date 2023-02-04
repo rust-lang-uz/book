@@ -119,42 +119,42 @@ Shuningdek, siz hech qanday maydonga ega bo'lmagan structlarni belgilashingiz mu
 
 `AlwaysEqual` ni aniqlash uchun biz `struct` kalit so'zidan, kerakli nomdan va keyin nuqta-verguldan foydalanamiz. Jingalak qavslar yoki qavslar kerak emas! Shunda biz `subject` o'zgaruvchisida `AlwaysEqual` misolini xuddi shunday tarzda olishimiz mumkin: biz belgilagan nomdan foydalanib, hech qanday jingalak qavs yoki qavslarsiz. Tasavvur qiling-a, keyinchalik biz ushbu turdagi xatti-harakatlarni shunday amalga oshiramizki, `AlwaysEqual` ning har bir nusxasi har doim boshqa turdagi har bir misolga teng bo'ladi, ehtimol sinov uchun ma'lum natijaga ega bo'lishi mumkin. Ushbu xatti-harakatni amalga oshirish uchun bizga hech qanday ma'lumot kerak emas! Traitlarni qanday aniqlash va ularni har qanday turdagi, shu jumladan unitga o'xshash structlarda amalga oshirishni 10-bobda ko'rasiz.
 
-> ### Ownership of Struct Data
+> ### Strukturaviy ma'lumotlarga ownershiplik qilish
 >
-> In the `User` struct definition in Listing 5-1, we used the owned `String`
-> type rather than the `&str` string slice type. This is a deliberate choice
-> because we want each instance of this struct to own all of its data and for
-> that data to be valid for as long as the entire struct is valid.
+> 5-1 roʻyxatdagi `Foydalanuvchi` structi taʼrifida biz `&str` string slice turidan
+> koʻra tegishli `String` turidan foydalandik. Bu ataylab qilingan tanlov, chunki
+> biz ushbu structning har bir nusxasi uning barcha maʼlumotlariga ega boʻlishini
+> va bu maʼlumotlar butun struct amalda boʻlgunga qadar amal qilishini istaymiz.
 >
-> It’s also possible for structs to store references to data owned by something
-> else, but to do so requires the use of *lifetimes*, a Rust feature that we’ll
-> discuss in Chapter 10. Lifetimes ensure that the data referenced by a struct
-> is valid for as long as the struct is. Let’s say you try to store a reference
-> in a struct without specifying lifetimes, like the following; this won’t work:
+> Structlar boshqa narsaga tegishli maʼlumotlarga referencelarni saqlashi ham mumkin,
+> ammo buning uchun biz 10-bobda muhokama qiladigan Rust xususiyatidan  *lifetimelar*
+> foydalanishni talab qiladi. Lifetime struct tomonidan reference qilingan ma'lumotlar
+> struct mavjud bo'lgunga qadar amal qilishini ta'minlaydi. Aytaylik, siz ma'lumotnomani
+> lifetimeni ko'rsatmasdan structda saqlashga harakat qildingiz, quyidagi kabi; bu ishlamaydi:
 >
-> <span class="filename">Filename: src/main.rs</span>
+> <span class="filename">Fayl nomi: src/main.rs</span>
 >
 > <!-- CAN'T EXTRACT SEE https://github.com/rust-lang/mdBook/issues/1127 -->
 >
 > ```rust,ignore,does_not_compile
-> struct User {
->     active: bool,
->     username: &str,
+> struct Foydalanuvchi {
+>     faollik: bool,
+>     foydalanuvchi: &str,
 >     email: &str,
->     sign_in_count: u64,
+>     kirish_hisobi: u64,
 > }
 >
 > fn main() {
->     let user1 = User {
->         active: true,
->         username: "someusername123",
->         email: "someone@example.com",
->         sign_in_count: 1,
+>     let foydalanuvchi1 = Foydalanuvchi {
+>         faollik: true,
+>         foydalanuvchi: "ismoilovdev",
+>         email: "ismoilovdev@example.com",
+>         kirish_hisobi: 1,
 >     };
 > }
 > ```
 >
-> The compiler will complain that it needs lifetime specifiers:
+> Kompilyator referencelarning lifetimeni aniqlash zarurati haqida shikoyat qiladi:
 >
 > ```console
 > $ cargo run
@@ -162,14 +162,14 @@ Shuningdek, siz hech qanday maydonga ega bo'lmagan structlarni belgilashingiz mu
 > error[E0106]: missing lifetime specifier
 >  --> src/main.rs:3:15
 >   |
-> 3 |     username: &str,
+> 3 |     foydalanuvchi: &str,
 >   |               ^ expected named lifetime parameter
 >   |
 > help: consider introducing a named lifetime parameter
 >   |
-> 1 ~ struct User<'a> {
-> 2 |     active: bool,
-> 3 ~     username: &'a str,
+> 1 ~ struct Foydalanuvchi<'a> {
+> 2 |     faollik: bool,
+> 3 ~     foydalanuvchi: &'a str,
 >   |
 >
 > error[E0106]: missing lifetime specifier
@@ -180,9 +180,9 @@ Shuningdek, siz hech qanday maydonga ega bo'lmagan structlarni belgilashingiz mu
 >   |
 > help: consider introducing a named lifetime parameter
 >   |
-> 1 ~ struct User<'a> {
-> 2 |     active: bool,
-> 3 |     username: &str,
+> 1 ~ struct Foydalanuvchi<'a> {
+> 2 |     faollik: bool,
+> 3 |     foydalanuvchi: &str,
 > 4 ~     email: &'a str,
 >   |
 >
@@ -190,9 +190,9 @@ Shuningdek, siz hech qanday maydonga ega bo'lmagan structlarni belgilashingiz mu
 > error: could not compile `structs` due to 2 previous errors
 > ```
 >
-> In Chapter 10, we’ll discuss how to fix these errors so you can store
-> references in structs, but for now, we’ll fix errors like these using owned
-> types like `String` instead of references like `&str`.
+> 10-bobda biz ushbu xatolarni qanday tuzatishni muhokama qilamiz, shunda siz
+> referencelarni structlarda saqlashingiz mumkin, ammo hozircha biz bu kabi
+> xatolarni `&str` kabi referencelar oʻrniga `String` kabi tegishli turlardan foydalanib tuzatamiz.
 
 <!-- manual-regeneration
 for the error above
