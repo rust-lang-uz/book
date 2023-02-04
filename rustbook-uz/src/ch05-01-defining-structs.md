@@ -88,39 +88,18 @@ Strukturani yangilash sintaksisidan foydalanib, biz 5-7 ro'yxatda ko'rsatilganid
 
 <span class="caption">Ro'yxat 5-7: `Foydalanuvchi` misoli uchun yangi `email` qiymatini o'rnatish, lekin `foydalanuvchi1` dagi qolgan qiymatlardan foydalanish uchun structni yangilash sintaksisidan foydalanish</span>
 
-The code in Listing 5-7 also creates an instance in `user2` that has a
-different value for `email` but has the same values for the `username`,
-`active`, and `sign_in_count` fields from `user1`. The `..user1` must come last
-to specify that any remaining fields should get their values from the
-corresponding fields in `user1`, but we can choose to specify values for as
-many fields as we want in any order, regardless of the order of the fields in
-the struct’s definition.
+5-7 roʻyxatdagi kod `foydalanuvchi2` da `email` uchun boshqa qiymatga ega, lekin `foydalanuvchi1` dan `foydalanuvchi`, `faollik` va `kirish_hisobi` maydonlari uchun bir xil qiymatlarga ega boʻlgan misol yaratadi. `..foydalanuvchi1` qolgan maydonlar o‘z qiymatlarini `foydalanuvchi1` dagi tegishli maydonlardan olishi kerakligini ko‘rsatish uchun oxirgi o‘rinda turishi kerak, lekin biz istalgan tartibda xohlagancha ko'p maydonlar uchun qiymatlarni belgilashni tanlashimiz mumkin, strukturaning ta'rifidagi maydonlar tartibidan qat'i nazar.
 
-Note that the struct update syntax uses `=` like an assignment; this is because
-it moves the data, just as we saw in the [“Variables and Data Interacting with
-Move”][move]<!-- ignore --> section. In this example, we can no longer use
-`user1` as a whole after creating `user2` because the `String` in the
-`username` field of `user1` was moved into `user2`. If we had given `user2` new
-`String` values for both `email` and `username`, and thus only used the
-`active` and `sign_in_count` values from `user1`, then `user1` would still be
-valid after creating `user2`. Both `active` and `sign_in_count` are types that
-implement the `Copy` trait, so the behavior we discussed in the [“Stack-Only
-Data: Copy”][copy]<!-- ignore --> section would apply.
+E'tibor bering, strukturani yangilash sintaksisi topshiriq kabi `=` dan foydalanadi; Buning sababi, biz [”O'zgaruvchilar va ma'lumotlarni ko'chirish bilan o'zaro ta'sir qilish”][move]<!-- ignore --> bo'limida ko'rganimizdek, u ma'lumotlarni harakatlantiradi. Ushbu misolda biz `foydalanuvchi2` ni yaratganimizdan keyin `foydalanuvchi1` dan bir butun sifatida foydalana olmaymiz, chunki `foydalanuvchi1`ning `foydalanuvchi` maydonidagi `String` `foydalanuvchi2` ga koʻchirilgan. Agar biz `foydalanuvchi2` ga `email` va `foydalanuvchi` uchun yangi `String` qiymatlarini bergan bo‘lsak va shuning uchun `foydalanuvchi1`dan faqat `faollik` va `kirish_hisobi` qiymatlarini ishlatgan bo‘lsak, keyin `foydalanuvchi1` `foydalanuvchi2` yaratilgandan keyin ham amal qiladi. `faollik` va `kirish_hisobi` turlari nusxa ko'chirish xususiyatini amalga oshiradigan turlardir, shuning uchun biz [”Stek ma'lumotlari: Nusxalash”][copy]<!-- ignore --> bo'limida muhokama qilgan xatti-harakatlar qo'llaniladi.
 
-### Using Tuple Structs Without Named Fields to Create Different Types
+### Har xil turlarni yaratish uchun nomli maydonlarsiz tuplelardan foydalanish
 
-Rust also supports structs that look similar to tuples, called *tuple structs*.
-Tuple structs have the added meaning the struct name provides but don’t have
-names associated with their fields; rather, they just have the types of the
-fields. Tuple structs are useful when you want to give the whole tuple a name
-and make the tuple a different type from other tuples, and when naming each
-field as in a regular struct would be verbose or redundant.
+Rust shuningdek, *tuple struct*lar deb ataladigan tuplelarga o'xshash structlarni qo'llab-quvvatlaydi.
+Tuple structlari struct nomi taqdim etadigan qo'shimcha ma'noga ega, ammo ularning maydonlari bilan bog'langan nomlari yo'q; aksincha, ular faqat maydonlarning turlariga ega. Tuple structlari butun tuplega nom berish va tupleni boshqa tuplelardan farqli turga aylantirish zarur bo‘lganda foydali bo‘ladi va har bir maydonni oddiy structdagi kabi nomlashda batafsil yoki ortiqcha bo‘ladi.
 
-To define a tuple struct, start with the `struct` keyword and the struct name
-followed by the types in the tuple. For example, here we define and use two
-tuple structs named `Color` and `Point`:
+Tuple structini aniqlash uchun `struct` kalit so‘zi va struct nomidan keyin tupledagi turlardan boshlang. Masalan, bu yerda biz `Rang` va `Point` nomli ikkita tuple structini aniqlaymiz va foydalanamiz:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-01-tuple-structs/src/main.rs}}
