@@ -10,8 +10,8 @@ fn main() {
 }
 
 // ANCHOR: here
-fn area(width: u32, height: u32) -> u32 {
+fn area(kenglik: u32, balandlik: u32) -> u32 {
     // ANCHOR_END: here
-    width * height
+    kenglik * balandlik
 }
 // ANCHOR_END: all

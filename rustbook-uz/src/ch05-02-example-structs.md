@@ -26,39 +26,25 @@ Ushbu kod bilan bog'liq muammo `area` signaturesida aniq ko'rinadi:
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/src/main.rs:here}}
 ```
 
-The `area` function is supposed to calculate the area of one rectangle, but the
-function we wrote has two parameters, and it’s not clear anywhere in our
-program that the parameters are related. It would be more readable and more
-manageable to group width and height together. We’ve already discussed one way
-we might do that in [“The Tuple Type”][the-tuple-type]<!-- ignore --> section
-of Chapter 3: by using tuples.
+`area` funksiyasi bitta to'rtburchakning maydonini hisoblashi kerak, lekin biz yozgan funksiya ikkita parametrga ega va bizning dasturimizning hech bir joyida parametrlar o'zaro bog'liqligi aniq emas. Kenglik va balandlikni birgalikda guruhlash yanada o'qilishi va boshqarilishi oson bo'lishi mumkin edi.3-bobning [”Tuple Turi”][the-tuple-type]<!-- ignore --> bo'limida biz buni amalga oshirishning bir usulini, ya'ni tuplelardan foydalanishni muhokama qildik.
 
-### Refactoring with Tuples
+### Tuplelar yordamida qayta tiklash
 
-Listing 5-9 shows another version of our program that uses tuples.
+5-9 ro'yxatda tuplelardan foydalanadigan dasturimizning boshqa versiyasi ko'rsatilgan.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-09/src/main.rs}}
 ```
 
-<span class="caption">Listing 5-9: Specifying the width and height of the
-rectangle with a tuple</span>
+<span class="caption">Ro'yxat 5-9: To'rtburchakning kengligi va balandligini tuple yordamida aniqlash</span>
 
-In one way, this program is better. Tuples let us add a bit of structure, and
-we’re now passing just one argument. But in another way, this version is less
-clear: tuples don’t name their elements, so we have to index into the parts of
-the tuple, making our calculation less obvious.
+Bir tomondan, bu dastur yaxshiroq. Tuplar bizga biroz struct qo'shishga imkon beradi va biz hozir faqat bitta argumentni keltiramiz. Ammo boshqa yo'l bilan, bu versiya unchalik aniq emas: tuplelar o'z elementlarini nomlamaydi, shuning uchun biz hisob-kitobimizni kamroq aniq qilib, tuple qismlariga indeks qilishimiz kerak.
 
-Mixing up the width and height wouldn’t matter for the area calculation, but if
-we want to draw the rectangle on the screen, it would matter! We would have to
-keep in mind that `width` is the tuple index `0` and `height` is the tuple
-index `1`. This would be even harder for someone else to figure out and keep in
-mind if they were to use our code. Because we haven’t conveyed the meaning of
-our data in our code, it’s now easier to introduce errors.
+Kenglik va balandlikni aralashtirish maydonni hisoblash uchun muhim emas, lekin agar biz ekranda to'rtburchak chizmoqchi bo'lsak, bu muhim bo'ladi! Shuni yodda tutishimiz kerakki, `kenglik` indeks `0` da, `balandlik` esa `1` indeksda. Agar kimdir bizning kodimizdan foydalansa, buni tushunish va yodda tutish qiyinroq bo'ladi. Kodimizda ma'lumotlarimizning ma'nosini etkazmaganimiz sababli, endi xatolarni kiritish osonroq.
 
-### Refactoring with Structs: Adding More Meaning
+### Struktuctlar bilan qayta ishlash: ko'proq ma'no qo'shish
 
 We use structs to add meaning by labeling the data. We can transform the tuple
 we’re using into a struct with a name for the whole as well as names for the
