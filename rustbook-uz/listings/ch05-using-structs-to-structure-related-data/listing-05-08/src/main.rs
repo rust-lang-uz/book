@@ -1,11 +1,11 @@
 // ANCHOR: all
 fn main() {
-    let width1 = 30;
-    let height1 = 50;
+    let kenglik1 = 30;
+    let balandlik1 = 50;
 
     println!(
-        "The area of the rectangle is {} square pixels.",
-        area(width1, height1)
+        "To'rtburchakning maydoni {} kvadrat piksel.",
+        area(kenglik1, balandlik1)
     );
 }
 

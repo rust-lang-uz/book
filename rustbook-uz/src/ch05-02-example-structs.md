@@ -1,34 +1,26 @@
-## An Example Program Using Structs
+## Structlar yordamida namunaviy dastur
 
-To understand when we might want to use structs, let’s write a program that
-calculates the area of a rectangle. We’ll start by using single variables, and
-then refactor the program until we’re using structs instead.
+Structlarni qachon ishlatishimiz mumkinligini tushunish uchun to'rtburchakning maydonini hisoblaydigan dastur yozaylik. Biz bitta o'zgaruvchilardan foydalanishni boshlaymiz, so'ngra uning o'rniga structlardan foydalanmagunimizcha dasturni qayta yaxshilab boramiz.
 
-Let’s make a new binary project with Cargo called *rectangles* that will take
-the width and height of a rectangle specified in pixels and calculate the area
-of the rectangle. Listing 5-8 shows a short program with one way of doing
-exactly that in our project’s *src/main.rs*.
+Keling, cargo bilan *kvadratlar* deb nomlangan yangi binary loyihani yarataylik, u piksellarda ko'rsatilgan to'rtburchakning kengligi va balandligini oladi va to'rtburchakning maydonini hisoblaydi. 5-8 ro'yxatda loyihaning *src/main.rs* faylida nima qilishimiz kerakligini aniq bajarishga imkon beradigan bitta qisqa kod ko'rsatilgan.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/src/main.rs:all}}
 ```
 
-<span class="caption">Listing 5-8: Calculating the area of a rectangle
-specified by separate width and height variables</span>
+<span class="caption">Ro'yxat 5-8: Alohida kenglik va balandlik o'zgaruvchilari bilan belgilangan to'rtburchaklar maydonini hisoblash</span>
 
-Now, run this program using `cargo run`:
+Endi ushbu dasturni `cargo run` yordamida ishga tushiring:
 
 ```console
 {{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/output.txt}}
 ```
 
-This code succeeds in figuring out the area of the rectangle by calling the
-`area` function with each dimension, but we can do more to make this code clear
-and readable.
+Ushbu kod har bir o'lcham bilan `area` funksiyasini chaqirish orqali to'rtburchakning maydonini aniqlashga muvaffaq bo'ladi, ammo biz ushbu kodni aniq va o'qilishi uchun ko'proq narsani qilishimiz mumkin.
 
-The issue with this code is evident in the signature of `area`:
+Ushbu kod bilan bog'liq muammo `area` signaturesida aniq ko'rinadi:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/src/main.rs:here}}
