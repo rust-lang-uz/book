@@ -1,15 +1,15 @@
 var ferrisTypes = [
   {
     attr: 'does_not_compile',
-    title: 'This code does not compile!'
+    title: 'Bu kod kompilyatsiya qilinmaydi!'
   },
   {
     attr: 'panics',
-    title: 'This code panics!'
+    title: 'Bu kod panics!'
   },
   {
     attr: 'not_desired_behavior',
-    title: 'This code does not produce the desired behavior.'
+    title: 'Ushbu kod kerakli xatti-harakatni keltirib chiqarmaydi.'
   }
 ]
 
