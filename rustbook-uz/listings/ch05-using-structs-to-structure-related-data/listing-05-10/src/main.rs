@@ -1,20 +1,20 @@
-struct Rectangle {
-    width: u32,
-    height: u32,
+struct Kvadrat {
+    kenglik: u32,
+    balandlik: u32,
 }
 
 fn main() {
-    let rect1 = Rectangle {
-        width: 30,
-        height: 50,
+    let kvadrat1 = Kvadrat {
+        kenglik: 30,
+        balandlik: 50,
     };
 
     println!(
-        "The area of the rectangle is {} square pixels.",
-        area(&rect1)
+        "To'rtburchakning maydoni {} kvadrat pikselga teng.",
+        area(&kvadrat1)
     );
 }
 
-fn area(rectangle: &Rectangle) -> u32 {
-    rectangle.width * rectangle.height
+fn area(kvadrat: &Kvadrat) -> u32 {
+    kvadrat.kenglik * kvadrat.balandlik
 }

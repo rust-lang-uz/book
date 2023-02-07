@@ -1,12 +1,12 @@
 fn main() {
-    let rect1 = (30, 50);
+    let kvadrat1 = (30, 50);
 
     println!(
-        "The area of the rectangle is {} square pixels.",
-        area(rect1)
+        "To'rtburchakning maydoni {} kvadrat pikselga teng.",
+        area(kvadrat1)
     );
 }
 
-fn area(dimensions: (u32, u32)) -> u32 {
-    dimensions.0 * dimensions.1
+fn area(olchamlari: (u32, u32)) -> u32 {
+    olchamlari.0 * olchamlari.1
 }
