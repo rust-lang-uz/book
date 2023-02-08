@@ -149,19 +149,9 @@ Ushbu misolning natijasi quyidagicha ko'rinadi:
 
 Biz birinchi debuggingda *src/main.rs* ning 10-qatoridan kelganini ko'rishimiz mumkin, bu erda biz *30 * masshtab* ifodani debugging qilamiz va uning natijaviy qiymati `60` (butun sonlar uchun `Debug` formati faqat ularning qiymatini chop etish uchun ishlatiladi). *src/main.rs* ning 14-qatoridagi `dbg!` chaqiruvi `&kvadrat1` qiymatini chiqaradi, bu `Kvadrat` structidir. Ushbu chiqishda `Kvadrat` turidagi chiroyli `Debug` formatlash qo'llaniladi. `dbg!` makrosi sizning kodingiz nima qilayotganini aniqlashga harakat qilayotganingizda juda foydali bo'lishi mumkin!
 
-In addition to the `Debug` trait, Rust has provided a number of traits for us
-to use with the `derive` attribute that can add useful behavior to our custom
-types. Those traits and their behaviors are listed in [Appendix C][app-c]<!--
-ignore -->. We’ll cover how to implement these traits with custom behavior as
-well as how to create your own traits in Chapter 10. There are also many
-attributes other than `derive`; for more information, see [the “Attributes”
-section of the Rust Reference][attributes].
+Rust `Debug` traitiga qo‘shimcha ravishda `derive` atributi bilan foydalanishimiz uchun bir qancha taritlarni taqdim etdi, ular bizning odatiy turlarimizga foydali xatti-harakatlar qo‘shishi mumkin.Ushbu traitlar va ularning xatti-harakatlari [C ilovasida][app-c]<!-- ignore --> keltirilgan. Biz 10-bobda ushbu traittlarni odatiy xatti-harakatlar bilan qanday implement qilishni, shuningdek, o'z traitlaringizni qanday yaratishni ko'rib chiqamiz.Bundan tashqari, 'derive' dan boshqa ko'plab atributlar mavjud; qo'shimcha ma'lumot olish uchun [Rust Referencening "Atributlar" bo'limiga][attributes] qarang.
 
-Our `area` function is very specific: it only computes the area of rectangles.
-It would be helpful to tie this behavior more closely to our `Rectangle` struct
-because it won’t work with any other type. Let’s look at how we can continue to
-refactor this code by turning the `area` function into an `area` *method*
-defined on our `Rectangle` type.
+Bizning `area` funksiyamiz juda aniq: u faqat to'rtburchaklar maydonini hisoblaydi. Ushbu xatti-harakatni `Kvadrat` structimiz bilan yaqinroq bog'lash foydali bo'ladi, chunki u boshqa turlar bilan ishlamaydi. Keling, ushbu kodni qanday qilib qayta ishlashni davom ettirishimiz mumkinligini ko'rib chiqaylik, bu `area` funksiyasini `Kvadrat` turida aniqlangan `area` *method* ga aylantiradi.
 
 [the-tuple-type]: ch03-02-data-types.html#the-tuple-type
 [app-c]: appendix-03-derivable-traits.md
