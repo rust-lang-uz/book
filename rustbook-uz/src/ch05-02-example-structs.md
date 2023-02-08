@@ -128,36 +128,26 @@ Yaxshi! Bu eng yaxshi natija emas, lekin u ushbu misol uchun barcha maydonlarnin
 
 `Debug` formati yordamida qiymatni chop etishning yana bir usuli [`dbg!` macro][dbg]<!-- ignore --> Ifodaga egalik qiluvchi macro (mos referencelar oladigan println! dan farqli o'laroq) o'sha `dbg!` qayerda fayl va satr raqamini chop etadi! macro murojati sizning kodingizda ushbu ifodaning natijaviy qiymati bilan birga sodir bo'ladi va qiymatga egalik huquqini qaytaradi.
 
-> Note: Calling the `dbg!` macro prints to the standard error console stream
-> (`stderr`), as opposed to `println!`, which prints to the standard output
-> console stream (`stdout`). We’ll talk more about `stderr` and `stdout` in the
-> [“Writing Error Messages to Standard Error Instead of Standard Output”
-> section in Chapter 12][err]<!-- ignore -->.
+> Eslatma: `dbg!` makrosini chaqirish standart chiqish konsoli stremiga
+> (`stdout`) chop qiluvchi `println!`dan farqli ravishda standart xato
+> konsoli stremiga (`stderr`) chop etadi. Biz 12-bobdagi [”Xato xabarlarini standart
+> chiqish o‘rniga standart xatoga yozish”][err]<!-- ignore --> bo‘limida `stderr` va `stdout` haqida ko‘proq
+> gaplashamiz.
 
-Here’s an example where we’re interested in the value that gets assigned to the
-`width` field, as well as the value of the whole struct in `rect1`:
+Mana bizni `kenglik` maydoniga tayinlanadigan qiymat, shuningdek `kvadrat1`dagi butun structning qiymati qiziqtiradigan misol:
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-05-dbg-macro/src/main.rs}}
 ```
 
-We can put `dbg!` around the expression `30 * scale` and, because `dbg!`
-returns ownership of the expression’s value, the `width` field will get the
-same value as if we didn’t have the `dbg!` call there. We don’t want `dbg!` to
-take ownership of `rect1`, so we use a reference to `rect1` in the next call.
-Here’s what the output of this example looks like:
+Biz `30 * masshtab` iborasi atrofida `dbg!` qo'yishimiz mumkin va `dbg!` ifoda qiymatiga egalik huquqini qaytargani uchun, `kenglik` maydoni bizda `dbg!` chaqiruvi bo'lmagani kabi bir xil qiymatga ega bo'ladi. Biz `dbg!` `kvadrat1`ga egalik qilishini istamaymiz, shuning uchun keyingi chaqiruvda `kvadrat1` ga referencedan foydalanamiz.
+Ushbu misolning natijasi quyidagicha ko'rinadi:
 
 ```console
 {{#include ../listings/ch05-using-structs-to-structure-related-data/no-listing-05-dbg-macro/output.txt}}
 ```
 
-We can see the first bit of output came from *src/main.rs* line 10 where we’re
-debugging the expression `30 * scale`, and its resultant value is `60` (the
-`Debug` formatting implemented for integers is to print only their value). The
-`dbg!` call on line 14 of *src/main.rs* outputs the value of `&rect1`, which is
-the `Rectangle` struct. This output uses the pretty `Debug` formatting of the
-`Rectangle` type. The `dbg!` macro can be really helpful when you’re trying to
-figure out what your code is doing!
+Biz birinchi debuggingda *src/main.rs* ning 10-qatoridan kelganini ko'rishimiz mumkin, bu erda biz *30 * masshtab* ifodani debugging qilamiz va uning natijaviy qiymati `60` (butun sonlar uchun `Debug` formati faqat ularning qiymatini chop etish uchun ishlatiladi). *src/main.rs* ning 14-qatoridagi `dbg!` chaqiruvi `&kvadrat1` qiymatini chiqaradi, bu `Kvadrat` structidir. Ushbu chiqishda `Kvadrat` turidagi chiroyli `Debug` formatlash qo'llaniladi. `dbg!` makrosi sizning kodingiz nima qilayotganini aniqlashga harakat qilayotganingizda juda foydali bo'lishi mumkin!
 
 In addition to the `Debug` trait, Rust has provided a number of traits for us
 to use with the `derive` attribute that can add useful behavior to our custom
