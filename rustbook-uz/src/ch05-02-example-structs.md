@@ -56,58 +56,42 @@ Biz ma'lumotlarni etiketlash orqali ma'no qo'shish uchun structlardan foydalanam
 
 <span class="caption">Ro'yxat 5-10: `Kvadrat` strukturasini aniqlash</span>
 
-Bu erda biz structi aniqladik va uni `Kvadrat` deb nomladik. Jingalak qavslar ichida biz maydonlarni `kenglik` va `balandlik` sifatida belgiladik, ularning ikkalasi ham `u32` turiga ega. Keyin, `main` da biz `Kvadrat` ning ma'lum bir misolini yaratdik, uning kengligi `30` va balandligi `50`.
+Bu yerda biz structni aniqladik va uni `Kvadrat` deb nomladik. Jingalak qavslar ichida biz maydonlarni `kenglik` va `balandlik` sifatida belgiladik, ularning ikkalasi ham `u32` turiga ega. Keyin, `main` da biz `Kvadrat` ning ma'lum bir misolini yaratdik, uning kengligi `30` va balandligi `50`.
 
 Bizning `area` funksiyamiz endi biz `kvadrat` deb nomlagan bitta parametr bilan aniqlanadi, uning turi `Kvadrat` structi misolining o‘zgarmas borrowidir. 4-bobda aytib o'tilganidek, biz unga ownershiplik qilishdan ko'ra, structi borrow qilishni xohlaymiz. Shunday qilib, `main` o'z ownershipini saqlab qoladi va `kvadrat1` dan foydalanishni davom ettirishi mumkin, shuning uchun biz funktsiya signaturesida `&` dan foydalanamiz va biz funktiyani chaqiramiz.
 
 `area` funksiyasi `Kvadrat` misolining `kenglik` va `balandlik`  maydonlariga kiradi (esda tutingki, borrow qilingan struct misolining maydonlariga kirish maydon qiymatlarini ko'chirmaydi, shuning uchun siz ko'pincha structlarning borrowlarini ko'rasiz). Endi `area` funksiyasi signaturesi biz nimani nazarda tutayotganimizni aniq aytadi: `Kvadrat` maydonini uning `kenglik` va `balandlik` maydonlaridan foydalanib hisoblang. Bu kenglik va balandlik bir-biri bilan bog'liqligini bildiradi va `0` va `1` qator indeks qiymatlarini ishlatishdan ko'ra, qiymatlarga tavsiflovchi nomlar beradi. Bu aniqlik uchun g'alaba.
 
-### Adding Useful Functionality with Derived Traits
+### Olingan Traitlar bilan foydali funksionallikni qo'shish
 
-It’d be useful to be able to print an instance of `Rectangle` while we’re
-debugging our program and see the values for all its fields. Listing 5-11 tries
-using the [`println!` macro][println]<!-- ignore --> as we have used in
-previous chapters. This won’t work, however.
+Dasturimizni debug qilish va uning barcha maydonlari uchun qiymatlarni ko'rish paytida `Kvadrat` misolini chop etish foydali bo'lar edi. 5-11 ro'yxatda biz avvalgi boblarda foydalanganimizdek [`println!` makrosidan][println]<!-- ignore --> foydalanishga harakat qiladi. Biroq, bu ishlamaydi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/src/main.rs}}
 ```
 
-<span class="caption">Listing 5-11: Attempting to print a `Rectangle`
-instance</span>
+<span class="caption">Ro'yxat 5-11: `Kvadrat`ni chop etishga urinish
+misoli</span>
 
-When we compile this code, we get an error with this core message:
+Ushbu kodni kompilyatsiya qilishda, biz ushbu asosiy xabar bilan xatoga duch kelamiz:
 
 ```text
 {{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/output.txt:3}}
 ```
 
-The `println!` macro can do many kinds of formatting, and by default, the curly
-brackets tell `println!` to use formatting known as `Display`: output intended
-for direct end user consumption. The primitive types we’ve seen so far
-implement `Display` by default because there’s only one way you’d want to show
-a `1` or any other primitive type to a user. But with structs, the way
-`println!` should format the output is less clear because there are more
-display possibilities: Do you want commas or not? Do you want to print the
-curly brackets? Should all the fields be shown? Due to this ambiguity, Rust
-doesn’t try to guess what we want, and structs don’t have a provided
-implementation of `Display` to use with `println!` and the `{}` placeholder.
+`println!` makrosi ko'plab formatlash turlarini amalga oshirishi mumkin va standart bo'yicha jingalak qavslar `println!`ga `Display` deb nomlanuvchi formatlashdan foydalanishni bildiradi: to'g'ridan-to'g'ri oxirgi foydalanuvchi iste'moli uchun mo'ljallangan chiqish. Biz hozirgacha ko'rgan primitiv turlar standart bo'yicha `Display` ni qo'llaydi, chunki foydalanuvchiga `1` yoki boshqa primitiv turni ko'rsatishning faqat bitta usuli bor. Lekin structlar bilan `println!` ning chiqishni formatlash usuli unchalik aniq emas, chunki koʻproq koʻrsatish imkoniyatlari mavjud: vergul qoʻyishni xohlaysizmi yoki yoʻqmi? Jingalak qavslarni chop qilmoqchimisiz? Barcha maydonlar ko'rsatilishi kerakmi? Ushbu noaniqlik tufayli Rust biz xohlagan narsani taxmin qilishga urinmaydi va structlarda `println!` va `{}` to'ldiruvchisi bilan foydalanish uchun `Display` ning taqdim etilgan ilovasi yo'q.
 
-If we continue reading the errors, we’ll find this helpful note:
+Agar xatolarni o'qishda davom etsak, biz ushbu foydali eslatmani topamiz:
 
 ```text
 {{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/output.txt:9:10}}
 ```
 
-Let’s try it! The `println!` macro call will now look like `println!("rect1 is
-{:?}", rect1);`. Putting the specifier `:?` inside the curly brackets tells
-`println!` we want to use an output format called `Debug`. The `Debug` trait
-enables us to print our struct in a way that is useful for developers so we can
-see its value while we’re debugging our code.
+Keling, sinab ko'raylik! `println!` macro chaqiruvi endi `println!("kvadrat1 bu {}", kvadrat1);` kabi ko'rinadi. `:?` spetsifikatsiyasini jingalak qavslar ichiga qo'yish `println!` biz `Debug` deb nomlangan chiqish formatidan foydalanmoqchi ekanligimizni bildiradi. `Debug` traiti bizga sturctni ishlab chiquvchilar uchun foydali bo'lgan tarzda chop etish imkonini beradi, shuning uchun biz kodimizni tuzatish paytida uning qiymatini ko'rishimiz mumkin.
 
-Compile the code with this change. Drat! We still get an error:
+Keling, ushbu o'zgarishlar bilan kodni kompilyatsiya qilaylik. Ehh! Biz hali ham xatoni olamiz:
 
 ```text
 {{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-01-debug/output.txt:3}}
