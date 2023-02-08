@@ -1,14 +1,13 @@
 #[derive(Debug)]
-struct Rectangle {
-    width: u32,
-    height: u32,
+struct Kvadrat {
+    kenglik: u32,
+    balandlik: u32,
 }
-
 fn main() {
-    let rect1 = Rectangle {
-        width: 30,
-        height: 50,
+    let kvadrat1 = Kvadrat {
+        kenglik: 30,
+        balandlik: 50,
     };
 
-    println!("rect1 is {:?}", rect1);
+    println!("kvadrat1 - {}", kvadrat1);
 }

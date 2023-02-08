@@ -97,48 +97,36 @@ Keling, ushbu o'zgarishlar bilan kodni kompilyatsiya qilaylik. Ehh! Biz hali ham
 {{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-01-debug/output.txt:3}}
 ```
 
-But again, the compiler gives us a helpful note:
+Ammo yana, kompilyator bizga foydali eslatma beradi:
 
 ```text
 {{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-01-debug/output.txt:9:10}}
 ```
 
-Rust *does* include functionality to print out debugging information, but we
-have to explicitly opt in to make that functionality available for our struct.
-To do that, we add the outer attribute `#[derive(Debug)]` just before the
-struct definition, as shown in Listing 5-12.
+Rust debug ma'lumotlarini chop etish funksiyasini o'z ichiga oladi, lekin biz ushbu funksiyani structimiz uchun mavjud qilish uchun ochiqdan-ochiq rozi bo'lishimiz kerak.
+Buni amalga oshirish uchun 5-12 ro'yxatda ko'rsatilganidek, struct ta'rifidan oldin `#[derive(Debug)]` tashqi atributini qo'shamiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-12/src/main.rs}}
 ```
 
-<span class="caption">Listing 5-12: Adding the attribute to derive the `Debug`
-trait and printing the `Rectangle` instance using debug formatting</span>
+<span class="caption">Ro'yxat 5-12: `Debug` traitini olish uchun atribut qo‘shish va debug formatlash yordamida `Kvadrat` misolini chop etish</span>
 
-Now when we run the program, we won’t get any errors, and we’ll see the
-following output:
+Endi dasturni ishga tushirganimizda, biz hech qanday xatolikka yo'l qo'ymaymiz va biz quyidagi natijani ko'ramiz:
 
 ```console
 {{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-12/output.txt}}
 ```
 
-Nice! It’s not the prettiest output, but it shows the values of all the fields
-for this instance, which would definitely help during debugging. When we have
-larger structs, it’s useful to have output that’s a bit easier to read; in
-those cases, we can use `{:#?}` instead of `{:?}` in the `println!` string. In
-this example, using the `{:#?}` style will output the following:
+Yaxshi! Bu eng yaxshi natija emas, lekin u ushbu misol uchun barcha maydonlarning qiymatlarini ko'rsatadi, bu disk raskadrovka paytida albatta yordam beradi. Kattaroq structlarga ega bo'lsak, o'qishni biroz osonlashtiradigan chiqishga ega bo'lish foydalidir; bunday hollarda `println!` qatoridagi `{:?}` o'rniga `{:#?}` dan foydalanishimiz mumkin. Ushbu misolda `{:#?}` uslubidan foydalanish quyidagi natijalarni beradi:
 
 ```console
 {{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-02-pretty-debug/output.txt}}
 ```
 
-Another way to print out a value using the `Debug` format is to use the [`dbg!`
-macro][dbg]<!-- ignore -->, which takes ownership of an expression (as opposed
-to `println!`, which takes a reference), prints the file and line number of
-where that `dbg!` macro call occurs in your code along with the resultant value
-of that expression, and returns ownership of the value.
+`Debug` formati yordamida qiymatni chop etishning yana bir usuli [`dbg!` macro][dbg]<!-- ignore --> Ifodaga egalik qiluvchi macro (mos referencelar oladigan println! dan farqli o'laroq) o'sha `dbg!` qayerda fayl va satr raqamini chop etadi! macro murojati sizning kodingizda ushbu ifodaning natijaviy qiymati bilan birga sodir bo'ladi va qiymatga egalik huquqini qaytaradi.
 
 > Note: Calling the `dbg!` macro prints to the standard error console stream
 > (`stderr`), as opposed to `println!`, which prints to the standard output
