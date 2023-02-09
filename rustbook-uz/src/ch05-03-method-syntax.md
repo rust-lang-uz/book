@@ -14,44 +14,16 @@ Parametr sifatida `Kvadrat` misoliga ega bo‘lgan `area` funksiyasini o‘zgart
 
 <span class="caption">Ro'yxat 5-13: `Kvadrat` structida `area` metodini aniqlash</span>
 
-`Kvadrat` kontekstida funksiyani aniqlash uchun `Kvadrat` uchun `impl` (implementation) blokini ishga tushiramiz. Ushbu `impl` blokidagi hamma narsa `Kvadrat` turi bilan bog'lanadi. Then we move the `area` function
-within the `impl` curly brackets and change the first (and in this case, only)
-parameter to be `self` in the signature and everywhere within the body. In
-`main`, where we called the `area` function and passed `rect1` as an argument,
-we can instead use *method syntax* to call the `area` method on our `Rectangle`
-instance. The method syntax goes after an instance: we add a dot followed by
-the method name, parentheses, and any arguments.
+`Kvadrat` kontekstida funksiyani aniqlash uchun `Kvadrat` uchun `impl` (implementation) blokini ishga tushiramiz. Ushbu `impl` blokidagi hamma narsa `Kvadrat` turi bilan bog'lanadi. Keyin biz  `area` funksiyasini `impl` jingalak qavslar ichida harakatlantiramiz va birinchi (va bu holda, faqat) parametrni signatureda va tananing hamma joyida `self` o‘zgartiramiz. `main` da, biz `area` funksiyasini chaqirib, argument sifatida `kvadrat1` ni topshirgan bo‘lsak, o‘rniga `Kvadrat` misolida `area` metodini chaqirish uchun *metod sintaksisi* dan foydalanishimiz mumkin. Metod sintaksisi misoldan keyin keladi: biz nuqta qo'shamiz, undan keyin metod nomi, qavslar va har qanday argumentlar qo'shiladi.
 
-In the signature for `area`, we use `&self` instead of `rectangle: &Rectangle`.
-The `&self` is actually short for `self: &Self`. Within an `impl` block, the
-type `Self` is an alias for the type that the `impl` block is for. Methods must
-have a parameter named `self` of type `Self` for their first parameter, so Rust
-lets you abbreviate this with only the name `self` in the first parameter spot.
-Note that we still need to use the `&` in front of the `self` shorthand to
-indicate that this method borrows the `Self` instance, just as we did in
-`rectangle: &Rectangle`. Methods can take ownership of `self`, borrow `self`
-immutably, as we’ve done here, or borrow `self` mutably, just as they can any
-other parameter.
+`area` uchun signatureda `kvadrat: &Kvadrat` o‘rniga `&self` dan foydalanamiz. `&self` aslida  `self: &Self` ning qisqartmasi. `impl` blokida `Self` turi `impl` bloki uchun bo'lgan turdagi taxallusdir. Metodlar birinchi parametri uchun `Self` turidagi `self` deb nomlangan parametrga ega bo'lishi kerak, shuning uchun Rust birinchi parametr joyida faqat `self` nomi bilan qisqartirish imkonini beradi.
+Esda tutingki, biz hali ham `kvadrat: &Kvadrat` da qilganimizdek, bu metod `Self` misolini olishini koʻrsatish uchun `Self` stenografiyasi oldida `&` dan foydalanishimiz kerak. Boshqa har qanday parametr singari, metodlar `self` egallashi, o'zgarmas `self` borrow qilishi mumkin, xuddi biz bu yerda qilganimizdek yoki o'zgaruvchan `self`ni borrow qilishi mumkin.
 
-We chose `&self` here for the same reason we used `&Rectangle` in the function
-version: we don’t want to take ownership, and we just want to read the data in
-the struct, not write to it. If we wanted to change the instance that we’ve
-called the method on as part of what the method does, we’d use `&mut self` as
-the first parameter. Having a method that takes ownership of the instance by
-using just `self` as the first parameter is rare; this technique is usually
-used when the method transforms `self` into something else and you want to
-prevent the caller from using the original instance after the transformation.
+Biz bu yerda funksiya versiyasida `&Kvadrat` dan foydalanganimiz uchun xuddi shu sababga ko‘ra `&self` tanladik: biz ownershiplik qilishni istamaymiz va faqat structdagi ma’lumotlarni o‘qishni istaymiz, unga yozishni emas. Agar biz ushbu metodning bir qismi sifatida chaqirgan misolni o'zgartirmoqchi bo'lsak, birinchi parametr sifatida `&mut self` dan foydalanamiz. Birinchi parametr sifatida faqat `self`ni ishlatib, misolga ownershiplik qiladigan metod kamdan-kam uchraydi; bu metod odatda `self`ni boshqa narsaga aylantirganda va siz murojat qiluvchiga transformatsiyadan keyin asl nusxadan foydalanishiga yo'l qo'ymaslikni istasangiz ishlatiladi.
 
-The main reason for using methods instead of functions, in addition to
-providing method syntax and not having to repeat the type of `self` in every
-method’s signature, is for organization. We’ve put all the things we can do
-with an instance of a type in one `impl` block rather than making future users
-of our code search for capabilities of `Rectangle` in various places in the
-library we provide.
+Funktsiyalar o'rniga metodlardan foydalanishning asosiy sababi, har bir metod signaturesida `self`turini takrorlashning hojati bo'lmagan metod sintaksisidan tashqari, kodni tashkil qilishdir. Biz kelajakdagi kod foydalanuvchilarini biz taqdim etayotgan kutubxonaning turli joylarida `Kvadrat` imkoniyatlarini izlashga majburlashdan ko‘ra, biz tur namunasi bilan qila oladigan barcha narsalarni bitta `impl` blokiga joylashtirdik.
 
-Note that we can choose to give a method the same name as one of the struct’s
-fields. For example, we can define a method on `Rectangle` that is also named
-`width`:
+E'tibor bering, biz metodga structning maydonlaridan biri bilan bir xil nom berishni tanlashimiz mumkin. Misol uchun, biz `Kvadrat` da `kenglik `deb nomlangan metodni belgilashimiz mumkin:
 
 <span class="filename">Filename: src/main.rs</span>
 
