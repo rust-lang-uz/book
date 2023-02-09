@@ -21,7 +21,7 @@ fn birinchi_soz(s: &String) -> ?
 
 <span class="caption">Ro'yxat 4-7: `String` parametriga bayt indeks qiymatini qaytaradigan `birinchi_soz` funksiyasi</span>
 
-Biz `String` elementini element bo'yicha ko'rib chiqishimiz va qiymat bo'sh joy yoki yo'qligini tekshirishimiz kerakligi sababli, `as_bytes` usuli yordamida `String`ni baytlar arrayiga aylantiramiz.
+Biz `String` elementini element bo'yicha ko'rib chiqishimiz va qiymat bo'sh joy yoki yo'qligini tekshirishimiz kerakligi sababli, `as_bytes` metodi yordamida `String`ni baytlar arrayiga aylantiramiz.
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:as_bytes}}
@@ -46,7 +46,7 @@ Aks holda, `s.len()` yordamida satr uzunligini qaytaramiz.
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:inside_for}}
 ```
 
-Endi bizda satrdagi birinchi so'zning oxirgi indeksini aniqlashning usuli bor, ammo muammo bor. Biz `usize` ni o'z-o'zidan qaytarmoqdamiz, lekin bu `&String` kontekstida faqat meaningful raqam. Boshqacha qilib aytadigan bo'lsak, bu `String` dan alohida qiymat bo'lganligi sababli, uning kelajakda ham amal qilishiga kafolat yo'q. Ro'yxat 4-8da 4-7 ro'yxatdagi `birinchi_soz` funksiyasidan foydalanadigan dasturni ko'rib chiqing.
+Endi bizda satrdagi birinchi so'zning oxirgi indeksini aniqlashning metodi bor, ammo muammo bor. Biz `usize` ni o'z-o'zidan qaytarmoqdamiz, lekin bu `&String` kontekstida faqat meaningful raqam. Boshqacha qilib aytadigan bo'lsak, bu `String` dan alohida qiymat bo'lganligi sababli, uning kelajakda ham amal qilishiga kafolat yo'q. Ro'yxat 4-8da 4-7 ro'yxatdagi `birinchi_soz` funksiyasidan foydalanadigan dasturni ko'rib chiqing.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 

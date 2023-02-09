@@ -83,7 +83,7 @@ Xo'sh, qaysi turdagi integer sonni ishlatishni qanday bilasiz? Agar ishonchingiz
 > 1 ga aylanadi va hokazo. Dastur panic qo'ymaydi, lekin o'zgaruvchi
 > siz kutgan qiymatga ega bo'lmaydi. Butun sonlarni wrapga tayanish
 > xato hisoblanadi. Owerflow ehtimolini aniq ko'rib chiqish uchun siz prime sonlar uchun
-> standart kutubxona tomonidan taqdim etilgan ushbu usullar oilalaridan foydalanishingiz mumkin:
+> standart kutubxona tomonidan taqdim etilgan ushbu metodlar oilalaridan foydalanishingiz mumkin:
 > 
 > * Barcha modelarni `wrapping_*` methodlari bilan oʻrash, masalan, `wrapping_add`.
 > * Agar `checked_*` methodlari owerflow boʻlsa, `None` qiymatini qaytaring.
@@ -133,7 +133,7 @@ Rustdagi boolean turi `bool` yordamida belgilanadi. Misol uchun:
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-08-boolean/src/main.rs}}
 ```
 
-Boolean qiymatlardan foydalanishning asosiy usuli shartlardir, masalan, `if` ifodasidir. Rustda `if` iboralari qanday ishlashini [“Control Flow”][control-flow]<!-- ignore --> bo‘limida ko‘rib chiqamiz.
+Boolean qiymatlardan foydalanishning asosiy metodi shartlardir, masalan, `if` ifodasidir. Rustda `if` iboralari qanday ishlashini [“Control Flow”][control-flow]<!-- ignore --> bo‘limida ko‘rib chiqamiz.
 
 #### Belgilar(Character) turi
 
@@ -155,7 +155,7 @@ Biroq, “character” aslida Unicode-da tushuncha emas, shuning uchun “charac
 
 #### Tuple turi
 
-*tuple* - bu turli xil turlarga ega bo'lgan bir qator qiymatlarni bitta qo'shma turga birlashtirishning umumiy usuli.Tuplelar belgilangan uzunlikka ega: bir marta e'lon qilingandan so'ng, ular o'sishi yoki kichrayishi mumkin emas.
+*tuple* - bu turli xil turlarga ega bo'lgan bir qator qiymatlarni bitta qo'shma turga birlashtirishning umumiy metodi.Tuplelar belgilangan uzunlikka ega: bir marta e'lon qilingandan so'ng, ular o'sishi yoki kichrayishi mumkin emas.
 
 Qavslar ichida vergul bilan ajratilgan qiymatlar ro'yxatini yozish orqali tuple yaratamiz. Tupledagi har bir pozitsiya o'z turiga ega va tupledagi turli qiymatlarning turlari bir xil bo'lishi shart emas. Ushbu misolda biz ixtiyoriy turdagi izohlarni qo'shdik:
 

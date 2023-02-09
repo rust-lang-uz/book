@@ -233,11 +233,11 @@ Aniqroq variant sifatida, siz `for` siklidan foydalanishingiz va to'plamdagi har
 
 Ushbu kodni ishga tushirganimizda, biz 3-4 ro'yxatdagi kabi natijani ko'ramiz. Eng muhimi, biz kodning xavfsizligini oshirdik va arrayning oxiridan tashqariga chiqish yoki yetarlicha uzoqqa bormaslik va ba'zi elementlarni yetishmayotganligi sababli paydo bo'lishi mumkin bo'lgan xatolar ehtimolini yo'q qildik.
 
-`for` siklidan foydalanib, agar siz 3-4 roʻyxatda qoʻllanilgan usulda boʻlgani kabi arraydagi qiymatlar sonini oʻzgartirsangiz, boshqa kodni oʻzgartirishni eslab qolishingiz shart emas.
+`for` siklidan foydalanib, agar siz 3-4 roʻyxatda qoʻllanilgan metodda boʻlgani kabi arraydagi qiymatlar sonini oʻzgartirsangiz, boshqa kodni oʻzgartirishni eslab qolishingiz shart emas.
 
 `for` looplarining xavfsizligi va ixchamligi ularni Rustda eng ko‘p ishlatiladigan loop konstruksiyasiga aylantiradi. 3-3 ro'yxatdagi `while` siklidan foydalanilgan ortga hisoblash misolida bo'lgani kabi, ma'lum bir necha marta kodni ishlatmoqchi bo'lgan vaziyatlarda ham ko'pchilik Rustaceanlar `for` siklidan foydalanadilar. Buning yo'li standart kutubxona tomonidan taqdim etilgan `Range` dan foydalanish bo'lib, bir raqamdan boshlanib, boshqa raqamdan oldin tugaydigan barcha raqamlarni ketma-ketlikda hosil qiladi.
 
-Ortga hisoblash `for` sikli va biz hali u to‘g‘risida gapirmagan boshqa usul – `rev` yordamida diapazonni teskari tomonga o‘zgartirishga o‘xshaydi:
+Ortga hisoblash `for` sikli va biz hali u to‘g‘risida gapirmagan boshqa metod – `rev` yordamida diapazonni teskari tomonga o‘zgartirishga o‘xshaydi:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 

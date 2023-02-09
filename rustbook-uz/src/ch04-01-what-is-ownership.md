@@ -180,7 +180,7 @@ Endi `String` versiyasini ko'rib chiqamiz:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-03-string-move/src/main.rs:here}}
 ```
 
-Bu juda o'xshash ko'rinadi, shuning uchun biz uning ishlash usuli bir xil bo'ladi deb taxmin qilishimiz mumkin: ya'ni ikkinchi qator `s1` qiymatining nusxasini yaratadi va uni `s2` bilan bog'laydi. Ammo bu sodir bo'ladigan narsa emas.
+Bu juda o'xshash ko'rinadi, shuning uchun biz uning ishlash metodi bir xil bo'ladi deb taxmin qilishimiz mumkin: ya'ni ikkinchi qator `s1` qiymatining nusxasini yaratadi va uni `s2` bilan bog'laydi. Ammo bu sodir bo'ladigan narsa emas.
 
 Qopqoq ostidagi `String` bilan nima sodir bo'layotganini ko'rish uchun 4-1-rasmga qarang. `String` chap tomonda ko'rsatilgan uchta qismdan iborat: satr tarkibini saqlaydigan xotiraga ko'rsatgich, uzunlik(len) va sig'im(capacity).
 Ushbu ma'lumotlar guruhi stekda saqlanadi. O'ng tomonda tarkibni saqlaydigan heap xotira joylashgan.
@@ -246,7 +246,7 @@ Bundan tashqari, dizayn tanlovi ham mavjud: Rust hech qachon avtomatik ravishda 
 
 Agar biz faqat stack ma'lumotlarini emas, balki `String` ning heap ma'lumotlarini deeply copyni istasak, `clone` deb nomlangan umumiy methoddan foydalanishimiz mumkin. Method sintaksisini 5-bobda muhokama qilamiz, lekin methodlar ko‘p dasturlash tillarida umumiy xususiyat bo‘lgani uchun siz ularni avval ko‘rgan bo‘lsangiz kerak.
 
-Mana amaldagi `clone` usuliga misol:
+Mana amaldagi `clone` metodiga misol:
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-05-clone/src/main.rs:here}}
