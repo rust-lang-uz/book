@@ -61,36 +61,32 @@ Ko'pincha, lekin har doim emas, biz metodga maydon bilan bir xil nom berganimizd
 > # }
 > #
 > # impl Point {
-> #    fn distance(&self, other: &Point) -> f64 {
-> #        let x_squared = f64::powi(other.x - self.x, 2);
-> #        let y_squared = f64::powi(other.y - self.y, 2);
+> #    fn masofa(&self, other: &Point) -> f64 {
+> #        let x_kvadrat = f64::powi(other.x - self.x, 2);
+> #        let y_kvadrat = f64::powi(other.y - self.y, 2);
 > #
-> #        f64::sqrt(x_squared + y_squared)
+> #        f64::sqrt(x_kvadrat + y_kvadrat)
 > #    }
 > # }
 > # let p1 = Point { x: 0.0, y: 0.0 };
 > # let p2 = Point { x: 5.0, y: 6.5 };
-> p1.distance(&p2);
-> (&p1).distance(&p2);
+> p1.masofa(&p2);
+> (&p1).masofa(&p2);
 > ```
 >
-> The first one looks much cleaner. This automatic referencing behavior works
-> because methods have a clear receiver—the type of `self`. Given the receiver
-> and name of a method, Rust can figure out definitively whether the method is
-> reading (`&self`), mutating (`&mut self`), or consuming (`self`). The fact
-> that Rust makes borrowing implicit for method receivers is a big part of
-> making ownership ergonomic in practice.
+> Birinchisi ancha toza ko'rinadi. Ushbu avtomatik reference qilish harakati,
+> metodlar aniq qabul qiluvchiga ega bo'lganligi sababli ishlaydi - `self` turi. Qabul qiluvchi
+> va metod nomini hisobga olgan holda, Rust ma'lum bir holatda kod nima qilayotganini aniq aniqlashi mumkin:
+> o'qish `(&self)`, o'zgartirish (`&mut self`) yoki iste'mol qilish  (`self`). Rust metodi
+> qabul qiluvchilar uchun borrow qilishni yashirin qilib qo'yganligi amalda ownershipni
+> ergonomik qilishning katta qismidir.
 
-### Methods with More Parameters
+### Ko'proq parametrlarga ega metodlar
 
-Let’s practice using methods by implementing a second method on the `Rectangle`
-struct. This time we want an instance of `Rectangle` to take another instance
-of `Rectangle` and return `true` if the second `Rectangle` can fit completely
-within `self` (the first `Rectangle`); otherwise, it should return `false`.
-That is, once we’ve defined the `can_hold` method, we want to be able to write
-the program shown in Listing 5-14.
+`Kvadrat` structida ikkinchi metodni implement qilish orqali metodlardan foydalanishni mashq qilaylik. Bu safar biz `Kvadrat` misoli `Kvadrat` ning boshqa nusxasini olishini va agar ikkinchi `Kvadrat` to'liq o'ziga (birinchi `Kvadrat`) sig'ishi mumkin bo'lsa, `true` qiymatini qaytarishini istaymiz; aks holda u `false`ni qaytarishi kerak.
+Ya'ni, `can_hold` metodini aniqlaganimizdan so'ng, biz 5-14 ro'yxatda ko'rsatilgan dasturni yozish imkoniyatiga ega bo'lishni xohlaymiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-14/src/main.rs}}
