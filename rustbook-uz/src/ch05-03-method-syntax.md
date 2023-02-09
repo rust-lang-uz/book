@@ -1,32 +1,20 @@
-## Method Syntax
+## Metod Sintaksisi
 
-*Methods* are similar to functions: we declare them with the `fn` keyword and a
-name, they can have parameters and a return value, and they contain some code
-that’s run when the method is called from somewhere else. Unlike functions,
-methods are defined within the context of a struct (or an enum or a trait
-object, which we cover in [Chapter 6][enums]<!-- ignore --> and [Chapter
-17][trait-objects]<!-- ignore -->, respectively), and their first parameter is
-always `self`, which represents the instance of the struct the method is being
-called on.
+*Metodlar* funksiyalarga oʻxshaydi: biz ularni `fn` kalit soʻzi va nomi bilan eʼlon qilamiz, ular parametrlari va qaytish qiymatiga ega boʻlishi mumkin va ular boshqa joydan metod chaqirilganda ishga tushadigan kodni oʻz ichiga oladi. Funktsiyalardan farqli o'laroq, metodlar struct (yoki biz mos ravishda [6-bob][enums]<!-- ignore --> va [17-bobda][trait-objects]<!-- ignore --> ko'rib chiqiladigan enum yoki trait obyekti) kontekstida aniqlanadi va ularning birinchi parametri har doim `self` dir metod chaqirilayotgan structning namunasini ifodalaydi.
 
-### Defining Methods
+### Metodlarni aniqlash
 
-Let’s change the `area` function that has a `Rectangle` instance as a parameter
-and instead make an `area` method defined on the `Rectangle` struct, as shown
-in Listing 5-13.
+Parametr sifatida `Kvadrat` misoliga ega bo‘lgan `area` funksiyasini o‘zgartiramiz va uning o‘rniga 5-13 ro‘yxatda ko'rsatilganidek, `Kvadrat` structida belgilangan `area` metodini yaratamiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-13/src/main.rs}}
 ```
 
-<span class="caption">Listing 5-13: Defining an `area` method on the
-`Rectangle` struct</span>
+<span class="caption">Ro'yxat 5-13: `Kvadrat` structida `area` metodini aniqlash</span>
 
-To define the function within the context of `Rectangle`, we start an `impl`
-(implementation) block for `Rectangle`. Everything within this `impl` block
-will be associated with the `Rectangle` type. Then we move the `area` function
+`Kvadrat` kontekstida funksiyani aniqlash uchun `Kvadrat` uchun `impl` (implementation) blokini ishga tushiramiz. Ushbu `impl` blokidagi hamma narsa `Kvadrat` turi bilan bog'lanadi. Then we move the `area` function
 within the `impl` curly brackets and change the first (and in this case, only)
 parameter to be `self` in the signature and everywhere within the body. In
 `main`, where we called the `area` function and passed `rect1` as an argument,
