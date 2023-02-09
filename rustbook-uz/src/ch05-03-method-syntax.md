@@ -23,45 +23,34 @@ Biz bu yerda funksiya versiyasida `&Kvadrat` dan foydalanganimiz uchun xuddi shu
 
 Funktsiyalar o'rniga metodlardan foydalanishning asosiy sababi, har bir metod signaturesida `self`turini takrorlashning hojati bo'lmagan metod sintaksisidan tashqari, kodni tashkil qilishdir. Biz kelajakdagi kod foydalanuvchilarini biz taqdim etayotgan kutubxonaning turli joylarida `Kvadrat` imkoniyatlarini izlashga majburlashdan ko‘ra, biz tur namunasi bilan qila oladigan barcha narsalarni bitta `impl` blokiga joylashtirdik.
 
-E'tibor bering, biz metodga structning maydonlaridan biri bilan bir xil nom berishni tanlashimiz mumkin. Misol uchun, biz `Kvadrat` da `kenglik `deb nomlangan metodni belgilashimiz mumkin:
+E'tibor bering, biz metodga structning maydonlaridan biri bilan bir xil nom berishni tanlashimiz mumkin. Misol uchun, biz `Kvadrat` da `kenglik` deb nomlangan metodni belgilashimiz mumkin:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-06-method-field-interaction/src/main.rs:here}}
 ```
 
-Here, we’re choosing to make the `width` method return `true` if the value in
-the instance’s `width` field is greater than `0` and `false` if the value is
-`0`: we can use a field within a method of the same name for any purpose. In
-`main`, when we follow `rect1.width` with parentheses, Rust knows we mean the
-method `width`. When we don’t use parentheses, Rust knows we mean the field
-`width`.
+Bu yerda, agar misolning `kenglik` maydonidagi qiymat `0` dan katta bo‘lsa, `kenglik` metodi `true` qiymatini qaytaradi, agar qiymat `0` bo'lsa, `false` bo‘lishini tanlaymiz: biz bir xil nomdagi metod ichidagi maydonni istalgan maqsadda ishlatishimiz mumkin. `main` da, biz qavslar bilan `kvadrat1.kenglik` ga amal qilsak, Rust `kenglik` metodini nazarda tutayotganimizni biladi. Qavslardan foydalanmasak, Rust `kenglik` maydonini nazarda tutayotganimizni biladi.
 
-Often, but not always, when we give a method the same name as a field we want
-it to only return the value in the field and do nothing else. Methods like this
-are called *getters*, and Rust does not implement them automatically for struct
-fields as some other languages do. Getters are useful because you can make the
-field private but the method public, and thus enable read-only access to that
-field as part of the type’s public API. We will discuss what public and private
-are and how to designate a field or method as public or private in [Chapter
-7][public]<!-- ignore -->.
+Ko'pincha, lekin har doim emas, biz metodga maydon bilan bir xil nom berganimizda, biz u faqat maydondagi qiymatni qaytarishini va boshqa hech narsa qilmasligini xohlaymiz. Shunga o'xshash metodlar *getters* deb ataladi va Rust ularni boshqa tillarda bo'lgani kabi tizim maydonlari uchun avtomatik ravishda amalga oshirmaydi. Getterslar foydalidir, chunki siz maydonni shaxsiy, lekin metodni hammaga ochiq qilib qo'yishingiz mumkin va shu tariqa ushbu maydonga umumiy API ning bir qismi sifatida faqat o'qish uchun ruxsatni yoqishingiz mumkin. Biz [7-bobda][public]<!-- ignore --> public va private nima ekanligini va qanday qilib maydon yoki metodni public yoki private deb belgilashni muhokama qilamiz.
 
-> ### Where’s the `->` Operator?
+> ### `->` operatori qayerda ishlatiladi?
 >
-> In C and C++, two different operators are used for calling methods: you use
-> `.` if you’re calling a method on the object directly and `->` if you’re
-> calling the method on a pointer to the object and need to dereference the
-> pointer first. In other words, if `object` is a pointer,
-> `object->something()` is similar to `(*object).something()`.
+> C va C++ tillarida metodlarni chaqirish uchun ikki xil operator qo'llaniladi:
+> obyektdagi metodni to'g'ridan-to'g'ri chaqirayotgan bo'lsangiz `.` va agar
+> siz ko'rsatgichdagi metodni obyektga chaqirayotgan bo'lsangiz va avval
+> ko'rsatgichni yo'qotishingiz kerak bo'lsa `->` dan foydalanasiz. Boshqacha qilib aytganda,
+> agar `object` havola bo'lsa, u holda `object->something()` va `(*object).something()` metodi
+> chaqiruvlari bir xil bo'ladi.
 >
-> Rust doesn’t have an equivalent to the `->` operator; instead, Rust has a
-> feature called *automatic referencing and dereferencing*. Calling methods is
-> one of the few places in Rust that has this behavior.
+> Rust `->` operatoriga ekvivalentga ega emas;  Buning o'rniga Rustda
+> *avtomatik reference va dereferencing* deb nomlangan xususiyat mavjud. Metodni chaqirish
+> Rustda bunday xatti-harakatlarga ega bo'lgan kam sonli joylardan biridir.
 >
-> Here’s how it works: when you call a method with `object.something()`, Rust
-> automatically adds in `&`, `&mut`, or `*` so `object` matches the signature of
-> the method. In other words, the following are the same:
+> Bu shunday ishlaydi: `object.something()` bilan metodni chaqirganingizda,
+> Rust avtomatik ravishda `&`, `&mut` yoki `*` ni qo'shadi, shuning uchun `object`
+> metod signaturega mos keladi. Boshqacha qilib aytganda, quyidagilar bir xil:
 >
 > <!-- CAN'T EXTRACT SEE BUG https://github.com/rust-lang/mdBook/issues/1127 -->
 > ```rust

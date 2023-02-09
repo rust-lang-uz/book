@@ -1,24 +1,24 @@
 #[derive(Debug)]
-struct Rectangle {
-    width: u32,
-    height: u32,
+struct Kvadrat {
+    kenglik: u32,
+    balandlik: u32,
 }
 
 // ANCHOR: here
-impl Rectangle {
-    fn width(&self) -> bool {
-        self.width > 0
+impl Kvadrat {
+    fn kenglik(&self) -> bool {
+        self.kenglik > 0
     }
 }
 
 fn main() {
-    let rect1 = Rectangle {
-        width: 30,
-        height: 50,
+    let kvadrat1 = Kvadrat {
+        kenglik: 30,
+        balandlik: 50,
     };
 
-    if rect1.width() {
-        println!("The rectangle has a nonzero width; it is {}", rect1.width);
+    if kvadrat1.kenglik() {
+        println!("To'rtburchakning kengligi nolga teng bo'lmagan; bu {}", kvadrat1.kenglik);
     }
 }
 // ANCHOR_END: here
