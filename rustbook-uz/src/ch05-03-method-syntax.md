@@ -139,24 +139,15 @@ Har bir structga bir nechta `impl` bloklari ruxsat etiladi. Masalan, 5-15 ro'yxa
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-16/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 5-16: Rewriting Listing 5-15 using multiple `impl`
-blocks</span>
+<span class="caption">Ro'yxat 5-16: Bir nechta `impl` bloklari yordamida 5-15 ro'yxatini qayta yozish</span>
 
-There’s no reason to separate these methods into multiple `impl` blocks here,
-but this is valid syntax. We’ll see a case in which multiple `impl` blocks are
-useful in Chapter 10, where we discuss generic types and traits.
+Bu metodlarni bir nechta `impl` bloklariga ajratish uchun hech qanday sabab yo'q, lekin bu to'g'ri sintaksis. Biz 10-bobda bir nechta `impl` bloklari foydali bo'lgan holatni ko'rib chiqamiz, bu yerda biz umumiy turlar va taritlarni muhokama qilamiz.
 
-## Summary
+## Xulosa
 
-Structs let you create custom types that are meaningful for your domain. By
-using structs, you can keep associated pieces of data connected to each other
-and name each piece to make your code clear. In `impl` blocks, you can define
-functions that are associated with your type, and methods are a kind of
-associated function that let you specify the behavior that instances of your
-structs have.
+Structlar sizning domeningiz uchun mazmunli bo'lgan maxsus turlarni yaratishga imkon beradi. Structlardan foydalanib, siz bog'langan ma'lumotlar qismlarini bir-biriga bog'lab qo'yishingiz va kodingizni aniq qilish uchun har bir qismga nom berishingiz mumkin. `impl` bloklarida siz o'zingizning turingiz bilan bog'liq bo'lgan funksiyalarni belgilashingiz mumkin va metodlar - bu sizning structlaringiz misollarining xatti-harakatlarini belgilashga imkon beruvchi associated funksiyaning bir turi.
 
-But structs aren’t the only way you can create custom types: let’s turn to
-Rust’s enum feature to add another tool to your toolbox.
+Ammo structlar maxsus turlarni yaratishning yagona usuli emas: toolboxga boshqa toolni qo'shish uchun Rust enum xususiyatiga murojaat qilaylik.
 
 [enums]: ch06-00-enums.html
 [trait-objects]: ch17-02-trait-objects.md
