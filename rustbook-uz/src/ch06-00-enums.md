@@ -1,11 +1,4 @@
-# Enums and Pattern Matching
+# Enumlar va Pattern Match
 
-In this chapter, we’ll look at *enumerations*, also referred to as *enums*.
-Enums allow you to define a type by enumerating its possible *variants*. First
-we’ll define and use an enum to show how an enum can encode meaning along with
-data. Next, we’ll explore a particularly useful enum, called `Option`, which
-expresses that a value can be either something or nothing. Then we’ll look at
-how pattern matching in the `match` expression makes it easy to run different
-code for different values of an enum. Finally, we’ll cover how the `if let`
-construct is another convenient and concise idiom available to handle enums in
-your code.
+Ushbu bobda biz *enumlar* deb ham ataladigan *enumerations*ni ko'rib chiqamiz.
+Enumlar sizga turni uning mumkin bo'lgan *variantlarini* sanab aniqlash imkonini beradi. Avval enum ma'lumotarni qanday birlashtirishi mumkinligini ko'rsatish uchun enumni aniqlaymiz va ishlatamiz. Keyinchalik, qiymatning biror narsa yoki hech narsa bo'lishi mumkinligini ifodalovchi `Option` deb nomlangan juda foydali enumni o'rganamiz. Keyin biz `match` iborasida pattern matching  enumning turli qiymatlari uchun turli kodlarni ishga tushirishni qanday osonlashtirishini ko'rib chiqamiz. Nihoyat, `if let` konstruksiyasi sizning kodingizdagi enumlar bilan ishlash uchun qanday qulay va ixcham idioma ekanligini ko'rib chiqamiz.
