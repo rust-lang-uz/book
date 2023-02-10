@@ -12,6 +12,6 @@ fn main() {
         balandlik: 45,
     };
 
-    println!("kvadrat1 kvadrat2ni ushlab turadimi? {}", kvadrat1.can_hold(&kvadrat2));
-    println!("kvadrat1 kvadrat3ni ushlab turadimi? {}", kvadrat1.can_hold(&kvadrat3));
+    println!("kvadrat1 kvadrat2ni ushlab turadimi? {}", kvadrat1.ushlab_tur(&kvadrat2));
+    println!("kvadrat1 kvadrat3ni ushlab turadimi? {}", kvadrat1.ushlab_tur(&kvadrat3));
 }

@@ -84,7 +84,7 @@ Ko'pincha, lekin har doim emas, biz metodga maydon bilan bir xil nom berganimizd
 ### Ko'proq parametrlarga ega metodlar
 
 `Kvadrat` structida ikkinchi metodni implement qilish orqali metodlardan foydalanishni mashq qilaylik. Bu safar biz `Kvadrat` misoli `Kvadrat` ning boshqa nusxasini olishini va agar ikkinchi `Kvadrat` to'liq o'ziga (birinchi `Kvadrat`) sig'ishi mumkin bo'lsa, `true` qiymatini qaytarishini istaymiz; aks holda u `false`ni qaytarishi kerak.
-Ya'ni, `can_hold` metodini aniqlaganimizdan so'ng, biz 5-14 ro'yxatda ko'rsatilgan dasturni yozish imkoniyatiga ega bo'lishni xohlaymiz.
+Ya'ni, `ushlab_tur` metodini aniqlaganimizdan so'ng, biz 5-14 ro'yxatda ko'rsatilgan dasturni yozish imkoniyatiga ega bo'lishni xohlaymiz.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -92,40 +92,25 @@ Ya'ni, `can_hold` metodini aniqlaganimizdan so'ng, biz 5-14 ro'yxatda ko'rsatilg
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-14/src/main.rs}}
 ```
 
-<span class="caption">Listing 5-14: Using the as-yet-unwritten `can_hold`
-method</span>
+<span class="caption">Ro'yxat 5-14: Hali yozilmagan `ushlab_tur` dan foydalanish
+metodi</span>
 
-The expected output would look like the following because both dimensions of
-`rect2` are smaller than the dimensions of `rect1`, but `rect3` is wider than
-`rect1`:
+Kutilgan natija quyidagicha ko‘rinadi, chunki `kvadrat2` ning ikkala o‘lchami `kvadrat1` o‘lchamidan kichikroq, lekin `kvadrat3` `kvadrat1` dan kengroq:
 
 ```text
-Can rect1 hold rect2? true
-Can rect1 hold rect3? false
+kvadrat1 kvadrat2ni ushlab turadimi? true
+kvadrat1 kvadrat3ni ushlab turadimi? false
 ```
 
-We know we want to define a method, so it will be within the `impl Rectangle`
-block. The method name will be `can_hold`, and it will take an immutable borrow
-of another `Rectangle` as a parameter. We can tell what the type of the
-parameter will be by looking at the code that calls the method:
-`rect1.can_hold(&rect2)` passes in `&rect2`, which is an immutable borrow to
-`rect2`, an instance of `Rectangle`. This makes sense because we only need to
-read `rect2` (rather than write, which would mean we’d need a mutable borrow),
-and we want `main` to retain ownership of `rect2` so we can use it again after
-calling the `can_hold` method. The return value of `can_hold` will be a
-Boolean, and the implementation will check whether the width and height of
-`self` are greater than the width and height of the other `Rectangle`,
-respectively. Let’s add the new `can_hold` method to the `impl` block from
-Listing 5-13, shown in Listing 5-15.
+Biz metodni aniqlamoqchi ekanligimizni bilamiz, shuning uchun u `impl Kvadrat` blokida bo'ladi. Metod nomi `ushlab_tur` bo'ladi va u parametr sifatida boshqa `Kvadrat` ning o'zgarmas borrowini oladi. Parametrning turi qanday bo'lishini metodni chaqiruvchi kodga qarab aniqlashimiz mumkin: `kvadrat1.ushlab_tur(&kvadrat2)` `&kvadrat2` da o'tadi, bu `kvadrat2` ga o'zgarmas borrow, `Kvadrat` misoli. Bu mantiqqa to'g'ri keladi, chunki biz faqat `kvadrat2` ni o'qishimiz kerak (yozishdan ko'ra, bu bizga o'zgaruvchan borrow kerak degan ma'noni anglatadi), va biz `main` `kvadrat2` ownershipligini saqlab qolishini istaymiz, shuning uchun `ushlab_tur` metodini chaqirganimizdan keyin uni qayta ishlatishimiz mumkin. `ushlab_tur` ning return qiymati mantiqiy qiymat bo'ladi va implement `self` ning kengligi va balandligi mos ravishda boshqa `Kvadrat` ning kengligi va balandligidan katta ekanligini tekshiradi. Keling, 5-15 ro'yxatda ko'rsatilgan 5-13 ro'yxatdagi `impl` blokiga yangi `ushlab_tur` metodini qo'shamiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-15/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 5-15: Implementing the `can_hold` method on
-`Rectangle` that takes another `Rectangle` instance as a parameter</span>
+<span class="caption">Ro'yxat 5-15: Parametr sifatida boshqa `Kvadrat` misolini oladigan `ushlab_tur` metodini `Kvadrat`da qo'llash</span>
 
 When we run this code with the `main` function in Listing 5-14, we’ll get our
 desired output. Methods can take multiple parameters that we add to the
