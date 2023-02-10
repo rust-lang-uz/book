@@ -127,21 +127,13 @@ Metod bo'lmagan associated funktsiyalar ko'pincha structning yangi nusxasini qay
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-03-associated-functions/src/main.rs:here}}
 ```
 
-The `Self` keywords in the return type and in the body of the function are
-aliases for the type that appears after the `impl` keyword, which in this case
-is `Rectangle`.
+Return turidagi va funksiya tanasidagi `Self` kalit so'zlari `impl` kalit so'zidan keyin paydo bo'ladigan turning taxalluslari bo'lib, bu holda `Kvadrat` bo'ladi.We’ll discuss modules in [Chapter 7][modules]<!-- ignore -->.
 
-To call this associated function, we use the `::` syntax with the struct name;
-`let sq = Rectangle::square(3);` is an example. This function is namespaced by
-the struct: the `::` syntax is used for both associated functions and
-namespaces created by modules. We’ll discuss modules in [Chapter
-7][modules]<!-- ignore -->.
+Ushbu associated funktsiyani chaqirish uchun biz struct nomi bilan `::` sintaksisidan foydalanamiz; `let kv = Kvadrat::kvadrat(3);` misol bo'la oladi. Bu funksiya struct tomonidan nom maydoniga ega: `::` sintaksisi ham associated funksiyalar, ham modullar tomonidan yaratilgan nomlar bo'shliqlari uchun ishlatiladi. Biz modullarni [7-bobda][modules]<!-- ignore --> muhokama qilamiz.
 
-### Multiple `impl` Blocks
+### Bir nechta `impl` bloklari
 
-Each struct is allowed to have multiple `impl` blocks. For example, Listing
-5-15 is equivalent to the code shown in Listing 5-16, which has each method in
-its own `impl` block.
+Har bir structga bir nechta `impl` bloklari ruxsat etiladi. Masalan, 5-15 ro'yxati 5-16 ro'yxatida ko'rsatilgan kodga ekvivalent bo'lib, har bir metod o'zining `impl` blokiga ega yani har bir metod o'z `impl` blokida.
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-16/src/main.rs:here}}
