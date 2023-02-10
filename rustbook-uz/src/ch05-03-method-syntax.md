@@ -112,29 +112,16 @@ Biz metodni aniqlamoqchi ekanligimizni bilamiz, shuning uchun u `impl Kvadrat` b
 
 <span class="caption">Ro'yxat 5-15: Parametr sifatida boshqa `Kvadrat` misolini oladigan `ushlab_tur` metodini `Kvadrat`da qo'llash</span>
 
-When we run this code with the `main` function in Listing 5-14, we’ll get our
-desired output. Methods can take multiple parameters that we add to the
-signature after the `self` parameter, and those parameters work just like
-parameters in functions.
+Ushbu kodni 5-14 ro'yxatdagi `main` funksiya bilan ishga tushirganimizda, biz kerakli natijani olamiz. Metodlar biz signaturega `self` parametridan keyin qo'shadigan bir nechta parametrlarni olishi mumkin va bu parametrlar funksiyalardagi parametrlar kabi ishlaydi.
 
-### Associated Functions
+### Associate Funksiyalar
 
-All functions defined within an `impl` block are called *associated functions*
-because they’re associated with the type named after the `impl`. We can define
-associated functions that don’t have `self` as their first parameter (and thus
-are not methods) because they don’t need an instance of the type to work with.
-We’ve already used one function like this: the `String::from` function that’s
-defined on the `String` type.
+Associate Funksiyalar (Bog'langan Funktsiyalar).`impl` blokida aniqlangan barcha funksiyalar *associated funksiyalar* deb ataladi, chunki ular `impl` nomi bilan atalgan tur bilan bog‘langan. Biz birinchi parametr sifatida `self` ega bo'lmagan associated funksiyalarni belgilashimiz mumkin (va shuning uchun metodlar emas), chunki ular bilan ishlash uchun turdagi namuna kerak emas.
+Biz allaqachon shunday funksiyadan foydalanganmiz: `String` turida aniqlangan `String::from` funksiyasi.
 
-Associated functions that aren’t methods are often used for constructors that
-will return a new instance of the struct. These are often called `new`, but
-`new` isn’t a special name and isn’t built into the language. For example, we
-could choose to provide an associated function named `square` that would have
-one dimension parameter and use that as both width and height, thus making it
-easier to create a square `Rectangle` rather than having to specify the same
-value twice:
+Metod bo'lmagan associated funktsiyalar ko'pincha structning yangi nusxasini qaytaradigan konstruktorlar uchun ishlatiladi. Ular ko'pincha `new` deb ataladi, ammo `new` maxsus nom emas va tilga kiritilmagan. Masalan, biz bir o‘lchamli parametrga ega bo‘lgan `kvadrat` nomli associated funksiyani taqdim etishimiz va undan kenglik va balandlik sifatida foydalanishimiz mumkin, bu esa bir xil qiymatni ikki marta belgilashdan ko‘ra `Kvadrat` kvadratini yaratishni osonlashtiradi. :
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-03-associated-functions/src/main.rs:here}}
