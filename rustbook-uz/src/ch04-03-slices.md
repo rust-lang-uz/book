@@ -11,7 +11,7 @@ Keling, slicelar hal qiladigan muammoni tushunish uchun ushbu funksiyaning imzos
 fn birinchi_soz(s: &String) -> ?
 ```
 
-`birinchi_soz` funksiyasi parametr sifatida `&String` ga ega. Biz ownershiplik qilishni xohlamaymiz, shuning uchun bu yaxshi. Ammo biz nimani return qilishimiz kerak? Bizda satrning *qismi* haqida gapirishning methodi yo'q. Biroq, biz bo'sh joy bilan ko'rsatilgan so'z oxiri indeksini qaytarishimiz mumkin. 4-7 ro'yxatda ko'rsatilganidek, buni sinab ko'raylik.
+`birinchi_soz` funksiyasi parametr sifatida `&String` ga ega. Biz ownershiplik qilishni xohlamaymiz, shuning uchun bu yaxshi. Ammo biz nimani return qilishimiz kerak? Bizda satrning *qismi* haqida gapirishning metodi yo'q. Biroq, biz bo'sh joy bilan ko'rsatilgan so'z oxiri indeksini qaytarishimiz mumkin. 4-7 ro'yxatda ko'rsatilganidek, buni sinab ko'raylik.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -27,16 +27,16 @@ Biz `String` elementini element bo'yicha ko'rib chiqishimiz va qiymat bo'sh joy 
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:as_bytes}}
 ```
 
-Keyinchalik, `iter` methodi yordamida baytlar arrayida iterator yaratamiz:
+Keyinchalik, `iter` metodi yordamida baytlar arrayida iterator yaratamiz:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:iter}}
 ```
 Biz iteratorlarni [13-bobda][ch13]<!-- ignore --> batafsilroq muhokama qilamiz.
-Hozircha bilingki, `iter` to‘plamdagi har bir elementni return qiladigan va `enumerate` `iter` natijasini o‘rab, har bir elementni tuplening bir qismi sifatida return qiladigan methoddir. `enumerate` dan qaytarilgan tuplening birinchi elementi indeks, ikkinchi element esa elementga referencedir.
+Hozircha bilingki, `iter` to‘plamdagi har bir elementni return qiladigan va `enumerate` `iter` natijasini o‘rab, har bir elementni tuplening bir qismi sifatida return qiladigan metoddir. `enumerate` dan qaytarilgan tuplening birinchi elementi indeks, ikkinchi element esa elementga referencedir.
 Bu indeksni o'zimiz hisoblashdan ko'ra biroz qulayroqdir.
 
-`enumerate` methodi tupleni qaytarganligi sababli, biz ushbu tupleni destructure qilish uchun patternlardan foydalanishimiz mumkin. Biz [6-bobda][ch6]<!-- ignore --> patternlarni ko'proq muhokama qilamiz. `for` siklida biz tupledagi indeks uchun `i` va bitta bayt uchun `&element` ga ega bo‘lgan patternni belgilaymiz.
+`enumerate` metodi tupleni qaytarganligi sababli, biz ushbu tupleni destructure qilish uchun patternlardan foydalanishimiz mumkin. Biz [6-bobda][ch6]<!-- ignore --> patternlarni ko'proq muhokama qilamiz. `for` siklida biz tupledagi indeks uchun `i` va bitta bayt uchun `&element` ga ega bo‘lgan patternni belgilaymiz.
 Biz `.iter().enumerate()` dan elementga referenceni olganimiz uchun biz patternda `&` dan foydalanamiz.
 
 `for` sikli ichida biz bayt literal sintaksisidan foydalanib, bo'sh joyni ifodalovchi baytni qidiramiz. Agar bo'sh joy topsak, biz pozitsiyani return qilamiz.
@@ -190,7 +190,7 @@ Tajribali Rustacean buni o'rniga 4-9 ro'yxatda ko'rsatilgan signatureni yozadi, 
 
 <span class="caption">Ro'yxat 4-9: `birinchi_soz` funksiyasini `s` parametri turi uchun string slicedan foydalanish orqali yaxshilash</span>
 
-Agar bizda string slice bo'lsa, biz uni to'g'ridan-to'g'ri o'tkazishimiz mumkin. Agar bizda `String` bo'lsa, biz `String` slicesini yoki `String` ga referenceni o'tkazishimiz mumkin. Ushbu moslashuvchanlik *deref coercionlari* dan foydalanadi, bu xususiyatni biz 15-bobning [“Funktsiyalar va methodlar bilan Implicit Deref Coercionlari”][deref-coercions]<!--ignore-->  da ko‘rib chiqamiz.
+Agar bizda string slice bo'lsa, biz uni to'g'ridan-to'g'ri o'tkazishimiz mumkin. Agar bizda `String` bo'lsa, biz `String` slicesini yoki `String` ga referenceni o'tkazishimiz mumkin. Ushbu moslashuvchanlik *deref coercionlari* dan foydalanadi, bu xususiyatni biz 15-bobning [“Funktsiyalar va metodlar bilan Implicit Deref Coercionlari”][deref-coercions]<!--ignore-->  da ko‘rib chiqamiz.
 
 `String` ga reference o‘rniga string sliceni olish funksiyasini belgilash bizning API’ni hech qanday funksionallikni yo‘qotmasdan umumiyroq va foydali qiladi:
 

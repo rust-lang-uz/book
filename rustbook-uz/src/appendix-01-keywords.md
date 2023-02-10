@@ -37,7 +37,7 @@ Quyida hozirda foydalanilayotgan kalit so‘zlar ro‘yxati keltirilgan, ularnin
 * `ref` - reference orqali bog'lash
 * `return` - funksiyadan qaytish(return)
 * `Self` - biz belgilayotgan yoki implement qilayotgan tur uchun turdagi alias
-* `self` - method mavzusi yoki joriy modul
+* `self` - metod mavzusi yoki joriy modul
 * `static` - global o'zgaruvchi yoki butun dasturning bajarilishi uchun lifetime
 * `struct` - structurani aniqlash
 * `super` - joriy modulning parent moduli

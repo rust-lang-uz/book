@@ -120,7 +120,7 @@ let s = String::from("salom");
 ```
 
 Ikki nuqtali `::` operatori bizga `string_from` kabi qandaydir nomdan foydalanish o'rniga `String` turi ostida ushbu `from` funksiyasini nom maydoniga qo`yish imkonini beradi.
-Biz ushbu sintaksisni 5-bobning [”Method sintaksisi”][method-syntax]<!-- ignore --> bo'limida ko'proq muhokama qilamiz va 7-bobdagi [”Modul treedagi elementga murojaat qilish yo'llari”][paths-module-tree]<!-- ignore --> da modullar bilan nomlar oralig'i haqida gapiramiz.
+Biz ushbu sintaksisni 5-bobning [”Mehod sintaksisi”][method-syntax]<!-- ignore --> bo'limida ko'proq muhokama qilamiz va 7-bobdagi [”Modul treedagi elementga murojaat qilish yo'llari”][paths-module-tree]<!-- ignore --> da modullar bilan nomlar oralig'i haqida gapiramiz.
 
 Ushbu turdagi *string* mutatsiyaga uchragan bo'lishi mumkin:
 
@@ -244,7 +244,7 @@ Bundan tashqari, dizayn tanlovi ham mavjud: Rust hech qachon avtomatik ravishda 
 
 #### Clone bilan o'zaro ta'sir qiluvchi o'zgaruvchilar va ma'lumotlar
 
-Agar biz faqat stack ma'lumotlarini emas, balki `String` ning heap ma'lumotlarini deeply copyni istasak, `clone` deb nomlangan umumiy methoddan foydalanishimiz mumkin. Method sintaksisini 5-bobda muhokama qilamiz, lekin methodlar ko‘p dasturlash tillarida umumiy xususiyat bo‘lgani uchun siz ularni avval ko‘rgan bo‘lsangiz kerak.
+Agar biz faqat stack ma'lumotlarini emas, balki `String` ning heap ma'lumotlarini deeply copyni istasak, `clone` deb nomlangan umumiy metoddan foydalanishimiz mumkin. Metod sintaksisini 5-bobda muhokama qilamiz, lekin metodlar ko‘p dasturlash tillarida umumiy xususiyat bo‘lgani uchun siz ularni avval ko‘rgan bo‘lsangiz kerak.
 
 Mana amaldagi `clone` metodiga misol:
 

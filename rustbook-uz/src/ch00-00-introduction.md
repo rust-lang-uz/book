@@ -56,7 +56,7 @@ Ushbu kitobda siz ikki xil bo'limni topasiz: kontseptsiya bo'limlari va loyiha b
 
 1-bobda Rustni qanday o'rnatish, "Hello, world!" dasturi va Cargo, Rust paket menejeri va build tooldan qanday foydalanishni ko'rib chiqamiz. 2-bob Rustda dastur yozish bo'yicha amaliy kirish bo'lib, siz raqamlarni taxmin qilish o'yinini tuzasiz. Bu yerda biz tushunchalarni yuqori darajada yoritamiz va keyingi boblarda qo'shimcha tafsilotlar beriladi. Agar siz darhol qo'llaringizni ifloslantirmoqchi bo'lsangiz, 2-bob buning uchun joy. 3-bobda boshqa dasturlash tillariga oʻxshash Rust funksiyalari yoritilgan va 4-bobda siz Rustning ownershp tizimi haqida bilib olasiz. Agar siz keyingisiga o‘tishdan oldin har bir tafsilotni o‘rganishni ma’qul ko‘radigan, ayniqsa sinchkov o‘quvchi bo‘lsangiz, 2-bobni o‘tkazib yuborib, to‘g‘ridan-to‘g‘ri 3-bobga o‘tishingiz va loyiha ustida ishlashni hohlaganingizda 2-bobga qaytishingiz mumkin. siz o'rgangan tafsilotlar.
 
-5-bobda structlar va methodlar muhokama qilinadi, 6-bob esa enumlar, `match` expressionlari va `if let` control flow konstruksiyasini qamrab oladi. Rust-da maxsus turlarni yaratish uchun struclar va enumlardan foydalanasiz.
+5-bobda structlar va metodlar muhokama qilinadi, 6-bob esa enumlar, `match` expressionlari va `if let` control flow konstruksiyasini qamrab oladi. Rust-da maxsus turlarni yaratish uchun struclar va enumlardan foydalanasiz.
 
 7-bobda siz Rust modul tizimi va kodingizni va uning umumiy amaliy dasturlash interfeysini (API) tashkil qilish uchun maxfiylik qoidalari haqida bilib olasiz. 8-bobda standart kutubxona taqdim etadigan vektorlar, stringlar va hash maplar kabi umumiy yig'ish ma'lumotlar tuzilmalari muhokama qilinadi. 9-bob Rustning xatolarni hal qilish falsafasi va usullarini o'rganadi.
 

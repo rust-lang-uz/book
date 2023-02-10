@@ -141,7 +141,7 @@ Shuningdek, foydalanuvchi kiritgan maʼlumotlarni qaysi qatorda saqlash keraklig
 
 ### Potensial nosozlikni `Result` turi bilan hal qilish
 
-Biz hali ham ushbu kod qatori ustida ishlayapmiz. Biz hozir matnning uchinchi qatorini muhokama qilmoqdamiz, lekin u hali ham bitta mantiqiy kod qatorining bir qismi ekanligini unutmang. Keyingi qism bu method:
+Biz hali ham ushbu kod qatori ustida ishlayapmiz. Biz hozir matnning uchinchi qatorini muhokama qilmoqdamiz, lekin u hali ham bitta mantiqiy kod qatorining bir qismi ekanligini unutmang. Keyingi qism bu metod:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:expect}}
@@ -153,7 +153,7 @@ Biz ushbu kodni quyidagicha yozishimiz mumkin edi:
 io::stdin().read_line(&mut taxmin).expect("Satrni o‘qib bo‘lmadi");
 ```
 
-Biroq, bitta uzun qatorni o'qish qiyin, shuning uchun uni bo'lish yaxshidir. `.method_name()` sintaksisi bilan methodni chaqirganda uzun qatorlarni ajratishga yordam berish uchun yangi qator va boshqa bo'shliqlarni kiritish ko'pincha oqilona. Endi bu kod nima qilishini muhokama qilaylik.
+Biroq, bitta uzun qatorni o'qish qiyin, shuning uchun uni bo'lish yaxshidir. `.method_name()` sintaksisi bilan metodni chaqirganda uzun qatorlarni ajratishga yordam berish uchun yangi qator va boshqa bo'shliqlarni kiritish ko'pincha oqilona. Endi bu kod nima qilishini muhokama qilaylik.
 
 Yuqorida aytib o'tilganidek, `read_line` foydalanuvchi kiritgan narsani biz unga o'tkazadigan qatorga qo'yadi, lekin u `Result` qiymatini ham qaytaradi. [`Result`][result]<!-- ignore --> - ko'pincha *enum* deb ataladigan [*enumeration*][enums]<!-- ignore -->, bu bir nechta mumkin bo'lgan holatlardan birida bo'lishi mumkin bo'lgan tur. Har bir mumkin bo'lgan holatni *variant* deb ataymiz.
 
@@ -162,7 +162,7 @@ Yuqorida aytib o'tilganidek, `read_line` foydalanuvchi kiritgan narsani biz unga
 `Result` variantlari `Ok` va `Err`. `Ok` varianti operatsiya muvaffaqiyatli bo'lganligini bildiradi va `Ok` ichida muvaffaqiyatli yaratilgan qiymat.
 `Err` varianti operatsiya bajarilmaganligini bildiradi va `Err` operatsiya qanday yoki nima uchun bajarilmagani haqida maʼlumotni oʻz ichiga oladi.
 
-`Result` turidagi qiymatlar, har qanday turdagi qiymatlar kabi, ularda aniqlangan metodlarga ega. `Result` misolida siz murojat qilishingiz mumkin bo'lgan [`expect` methodi][expect]<!-- ignore --> mavjud. Agar `Result` ning ushbu namunasi `Err` qiymati bo'lsa, `expect` dasturning ishlamay qolishiga olib keladi va `expect` ga argument sifatida siz uzatgan xabarni ko'rsatadi. Agar `read_line` metodi `Err`ni qaytarsa, bu asosiy operatsion tizimdan kelgan xato natijasi bo'lishi mumkin.
+`Result` turidagi qiymatlar, har qanday turdagi qiymatlar kabi, ularda aniqlangan metodlarga ega. `Result` misolida siz murojat qilishingiz mumkin bo'lgan [`expect` metodi][expect]<!-- ignore --> mavjud. Agar `Result` ning ushbu namunasi `Err` qiymati bo'lsa, `expect` dasturning ishlamay qolishiga olib keladi va `expect` ga argument sifatida siz uzatgan xabarni ko'rsatadi. Agar `read_line` metodi `Err`ni qaytarsa, bu asosiy operatsion tizimdan kelgan xato natijasi bo'lishi mumkin.
 
 Agar `Result`ning ushbu namunasi `Ok` qiymati bo‘lsa, `expect` `Ok` ushlab turgan qaytarish qiymatini oladi va siz undan foydalanishingiz uchun aynan shu qiymatni sizga qaytaradi.
 Bunday holda, bu qiymat foydalanuvchi kiritishidagi baytlar soni.
@@ -350,7 +350,7 @@ Avval `use rand::Rng;` qatorini qo'shamiz. `Rng` traiti tasodifiy sonlar generat
 Keyin o'rtada ikkita qator qo'shamiz. Birinchi qatorda biz `rand::thread_rng` funksiyasini chaqiramiz, bu bizga biz foydalanmoqchi bo'lgan tasodifiy sonlar generatorini beradi: joriy bajarilish oqimi uchun mahalliy bo'lgan va operatsion tizim tomonidan ekilgan. Keyin tasodifiy sonlar generatorida `gen_range` metodini chaqiramiz. Bu metod biz `use rand::Rng;`  iborasi bilan qamrab olgan `Rng` traiti bilan aniqlanadi. `gen_range` metodi argument sifatida diapazon ifodasini oladi va diapazonda tasodifiy son hosil qiladi. Biz bu yerda foydalanayotgan diapazon ifodasi turi `start..=end`  shaklini oladi va pastki va yuqori chegaralarni qamrab oladi, shuning uchun biz 1 va 100 oralig‘idagi raqamni so‘rash uchun `1..=100` ni belgilashimiz kerak. .
 
 
-> Eslatma: Siz faqat qaysi traitlardan foydalanishni va qaysi methodlar va funktsiyalarni
+> Eslatma: Siz faqat qaysi traitlardan foydalanishni va qaysi metodlar va funktsiyalarni
 > cratedan chaqirishni bila olmaysiz, shuning uchun har bir crateda foydalanish bo'yicha
 > ko'rsatmalar mavjud. Cargo-ning yana bir qulay xususiyati shundaki, `cargo doc --open` buyrug'ini
 > ishga tushirish sizning barcha dependencylar tomonidan taqdim etilgan texnik hujjatlarni
@@ -413,7 +413,7 @@ Keyin pastki qismida `Ordering` turidan foydalanadigan beshta yangi qator qo'sha
 
 Keling, bu yerda ishlatadigan `match` iborasi bilan bir misolni ko'rib chiqaylik. Aytaylik, foydalanuvchi 50 ni taxmin qilgan va bu safar tasodifiy yaratilgan maxfiy raqam 38 ni tashkil qiladi.
 
-Kod 50 ni 38 ga solishtirganda, `cmp` methodi `Ordering::Greater` ni qaytaradi, chunki 50 38 dan katta. `match` ifodasi `Ordering::Greater` qiymatini oladi va har bir armning patternini tekshirishni boshlaydi. U birinchi armning `Ordering::Less` patternini koʻrib chiqadi va `Ordering::Greater` qiymati `Ordering::Less` qiymatiga mos kelmasligini koʻradi, shuning uchun u armdagi kodga eʼtibor bermaydi va keyingi armga oʻtadi. Keyingi armning namunasi `Ordering::Greater` boʻlib, `Ordering::Greater` bilan *does* match  keladi! Oʻsha armdagi bogʻlangan kod ishga tushadi va ekranga `Raqam katta!` deb chop etiladi. `match` iborasi birinchi muvaffaqiyatli o'yindan keyin tugaydi, shuning uchun bu senariydagi oxirgi armni ko'rib chiqmaydi.
+Kod 50 ni 38 ga solishtirganda, `cmp` metodi `Ordering::Greater` ni qaytaradi, chunki 50 38 dan katta. `match` ifodasi `Ordering::Greater` qiymatini oladi va har bir armning patternini tekshirishni boshlaydi. U birinchi armning `Ordering::Less` patternini koʻrib chiqadi va `Ordering::Greater` qiymati `Ordering::Less` qiymatiga mos kelmasligini koʻradi, shuning uchun u armdagi kodga eʼtibor bermaydi va keyingi armga oʻtadi. Keyingi armning namunasi `Ordering::Greater` boʻlib, `Ordering::Greater` bilan *does* match  keladi! Oʻsha armdagi bogʻlangan kod ishga tushadi va ekranga `Raqam katta!` deb chop etiladi. `match` iborasi birinchi muvaffaqiyatli o'yindan keyin tugaydi, shuning uchun bu senariydagi oxirgi armni ko'rib chiqmaydi.
 
 Biroq, 2-4 ro'yxatdagi kod hali kompilyatsiya qilinmaydi. Keling, sinab ko'raylik:
 
@@ -447,15 +447,15 @@ Biz `taxmin` nomli o'zgaruvchini yaratamiz. Ammo shoshilmang, dasturda allaqacho
 Biz bu yangi o'zgaruvchini `taxmin.trim().parse()` ifodasiga bog'laymiz. Ifodadagi `taxmin` matni qator sifatida kiritilgan asl `taxmin` o'zgaruvchisiga ishora qiladi. `String` misolidagi `trim` metodi boshida va oxiridagi har qanday bo‘shliqni yo‘q qiladi, bu qatorni faqat raqamli ma’lumotlarni o‘z ichiga olishi mumkin bo‘lgan `u32` bilan solishtirishimiz uchun buni qilishimiz kerak. Foydalanuvchi `read_line` ni to'ldirish uchun <span class="keystroke">enter</span>tugmasini bosib, ularni kiritishi kerak
 satrga yangi satr belgisini qo'shadigan taxmin. Masalan, agar foydalanuvchi <span class="keystroke">5</span> raqamini kiritsa va va <span class="keystroke">enter</span> tugmasini bossa `taxmin` shunday ko'rinadi: `5\n`.
 `\n` “yangi qator”ni bildiradi. (Windows tizimida <span class="keystroke">enter</span> tugmasini bosish natijasida carriage qaytariladi va yangi qator `\r\n` chiqadi.)
- `trim` methodi `\n` yoki `\r\n`ni yo'q qiladi, natijada atigi `5` bo`ladi.
+ `trim` metodi `\n` yoki `\r\n`ni yo'q qiladi, natijada atigi `5` bo`ladi.
 
-Satrlardagi [`parse` methodi][parse]<!-- ignore --> qatorni boshqa turga aylantiradi.
+Satrlardagi [`parse` metodi][parse]<!-- ignore --> qatorni boshqa turga aylantiradi.
 Bu yerda biz uni stringdan raqamga aylantirish uchun foydalanamiz. Biz Rustga `let taxmin: u32` yordamida kerakli raqam turini aytishimiz kerak. `taxmin` dan keyin ikki nuqta (`:`) Rustga o'zgaruvchining turiga izoh berishimizni aytadi. Rust bir nechta o'rnatilgan raqam turlariga ega; Bu yerda koʻrilgan `u32` unsigned, 32-bitli butun son.
 Bu kichik ijobiy raqam uchun yaxshi standart tanlovdir. Boshqa raqamlar turlari haqida [3-bobda][integers]<!-- ignore --> bilib olasiz.
 
 Bundan tashqari, ushbu misol dasturidagi `u32` annotation va `yashirin_raqam` bilan taqqoslash Rust `yashirin_raqam` ham `u32` bo'lishi kerak degan xulosaga keladi. Shunday qilib, endi taqqoslash bir xil turdagi ikkita qiymat o'rtasida bo'ladi!
 
-`parse` methodii faqat mantiqiy ravishda raqamlarga aylantirilishi mumkin bo'lgan belgilarda ishlaydi va shuning uchun osongina xatolarga olib kelishi mumkin. Agar, masalan, satrda `A👍%` bo'lsa, uni raqamga aylantirishning hech qanday metodi bo'lmaydi. Muvaffaqiyatsiz bo'lishi mumkinligi sababli, `parse` methodii `read_line` metodi kabi `Result` turini qaytaradi (oldingi ["`Result` bilan potentsial muvaffaqiyatsizlikni ko'rib chiqish"] bo'limida muhokama qilingan)(#handling-potential-failure-with-result)<!-- ignore-->). Biz ushbu `Result` ga yana `expect` methodini qo'llash orqali xuddi shunday munosabatda bo'lamiz. Agar `parse` qatordan raqam yarata olmagani uchun `Err` `Result` variantini qaytarsa, `expect` chaqiruvi o‘yinni buzadi va biz bergan xabarni chop etadi.
+`parse` metodii faqat mantiqiy ravishda raqamlarga aylantirilishi mumkin bo'lgan belgilarda ishlaydi va shuning uchun osongina xatolarga olib kelishi mumkin. Agar, masalan, satrda `A👍%` bo'lsa, uni raqamga aylantirishning hech qanday metodi bo'lmaydi. Muvaffaqiyatsiz bo'lishi mumkinligi sababli, `parse` metodii `read_line` metodi kabi `Result` turini qaytaradi (oldingi ["`Result` bilan potentsial muvaffaqiyatsizlikni ko'rib chiqish"] bo'limida muhokama qilingan)(#handling-potential-failure-with-result)<!-- ignore-->). Biz ushbu `Result` ga yana `expect` metodini qo'llash orqali xuddi shunday munosabatda bo'lamiz. Agar `parse` qatordan raqam yarata olmagani uchun `Err` `Result` variantini qaytarsa, `expect` chaqiruvi o‘yinni buzadi va biz bergan xabarni chop etadi.
 Agar `parse` qatorni raqamga muvaffaqiyatli aylantira olsa, u `Result`ning `Ok` variantini qaytaradi va `expect` biz xohlagan raqamni `Ok` qiymatidan qaytaradi.
 
 Endi dasturni ishga tushiramiz:
@@ -610,7 +610,7 @@ Shu nuqtada, siz taxmin qilish o'yinini muvaffaqiyatli yaratdingiz. Tabriklaymiz
 
 ## Xulosa
 
-Ushbu loyiha sizni Rustning ko'plab yangi tushunchalari bilan tanishtirishning amaliy usuli bo'ldi: `let`, `match`, funktsiyalar, tashqi cratelardan foydalanish va boshqalar. Keyingi bir necha boblarda siz ushbu tushunchalar haqida batafsilroq bilib olasiz. 3-bob ko'pchilik dasturlash tillarida mavjud bo'lgan o'zgaruvchilar, ma'lumotlar turlari va funktsiyalari kabi tushunchalarni qamrab oladi va ulardan Rustda qanday foydalanishni ko'rsatadi. 4-bobda Rust tilini boshqa tillardan ajratib turadigan egalik huquqi o‘rganiladi. 5-bobda tuzilmalar va methodlar sintaksisi muhokama qilinadi va 6-bobda enumlar qanday ishlashi tushuntiriladi.
+Ushbu loyiha sizni Rustning ko'plab yangi tushunchalari bilan tanishtirishning amaliy usuli bo'ldi: `let`, `match`, funktsiyalar, tashqi cratelardan foydalanish va boshqalar. Keyingi bir necha boblarda siz ushbu tushunchalar haqida batafsilroq bilib olasiz. 3-bob ko'pchilik dasturlash tillarida mavjud bo'lgan o'zgaruvchilar, ma'lumotlar turlari va funktsiyalari kabi tushunchalarni qamrab oladi va ulardan Rustda qanday foydalanishni ko'rsatadi. 4-bobda Rust tilini boshqa tillardan ajratib turadigan egalik huquqi o‘rganiladi. 5-bobda tuzilmalar va metodlar sintaksisi muhokama qilinadi va 6-bobda enumlar qanday ishlashi tushuntiriladi.
 
 [prelude]: ../std/prelude/index.html
 [variables-and-mutability]: ch03-01-variables-and-mutability.html#variables-and-mutability

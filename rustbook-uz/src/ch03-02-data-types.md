@@ -85,12 +85,12 @@ Xo'sh, qaysi turdagi integer sonni ishlatishni qanday bilasiz? Agar ishonchingiz
 > xato hisoblanadi. Owerflow ehtimolini aniq ko'rib chiqish uchun siz prime sonlar uchun
 > standart kutubxona tomonidan taqdim etilgan ushbu metodlar oilalaridan foydalanishingiz mumkin:
 > 
-> * Barcha modelarni `wrapping_*` methodlari bilan oʻrash, masalan, `wrapping_add`.
-> * Agar `checked_*` methodlari owerflow boʻlsa, `None` qiymatini qaytaring.
-> * Qiymat va boolean qiymatni qaytaring, bu `overflowing_*` methodlari
+> * Barcha modelarni `wrapping_*` metodlari bilan oʻrash, masalan, `wrapping_add`.
+> * Agar `checked_*` metodlari owerflow boʻlsa, `None` qiymatini qaytaring.
+> * Qiymat va boolean qiymatni qaytaring, bu `overflowing_*` metodlari
 >   bilan overflow bo'lganini ko'rsatadi.
 > * Qiymatning minimal yoki maksimal qiymatlarida `saturating_*`
->   methodllari bilan saturate bo'lgan.
+>   metodllari bilan saturate bo'lgan.
 
 #### Floating-Point Turlari
 

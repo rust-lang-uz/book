@@ -151,7 +151,7 @@ Biz birinchi debuggingda *src/main.rs* ning 10-qatoridan kelganini ko'rishimiz m
 
 Rust `Debug` traitiga qo‘shimcha ravishda `derive` atributi bilan foydalanishimiz uchun bir qancha taritlarni taqdim etdi, ular bizning odatiy turlarimizga foydali xatti-harakatlar qo‘shishi mumkin.Ushbu traitlar va ularning xatti-harakatlari [C ilovasida][app-c]<!-- ignore --> keltirilgan. Biz 10-bobda ushbu traittlarni odatiy xatti-harakatlar bilan qanday implement qilishni, shuningdek, o'z traitlaringizni qanday yaratishni ko'rib chiqamiz.Bundan tashqari, 'derive' dan boshqa ko'plab atributlar mavjud; qo'shimcha ma'lumot olish uchun [Rust Referencening "Atributlar" bo'limiga][attributes] qarang.
 
-Bizning `area` funksiyamiz juda aniq: u faqat to'rtburchaklar maydonini hisoblaydi. Ushbu xatti-harakatni `Kvadrat` structimiz bilan yaqinroq bog'lash foydali bo'ladi, chunki u boshqa turlar bilan ishlamaydi. Keling, ushbu kodni qanday qilib qayta ishlashni davom ettirishimiz mumkinligini ko'rib chiqaylik, bu `area` funksiyasini `Kvadrat` turida aniqlangan `area` *method* ga aylantiradi.
+Bizning `area` funksiyamiz juda aniq: u faqat to'rtburchaklar maydonini hisoblaydi. Ushbu xatti-harakatni `Kvadrat` structimiz bilan yaqinroq bog'lash foydali bo'ladi, chunki u boshqa turlar bilan ishlamaydi. Keling, ushbu kodni qanday qilib qayta ishlashni davom ettirishimiz mumkinligini ko'rib chiqaylik, bu `area` funksiyasini `Kvadrat` turida aniqlangan `area` *metod* ga aylantiradi.
 
 [the-tuple-type]: ch03-02-data-types.html#the-tuple-type
 [app-c]: appendix-03-derivable-traits.md
