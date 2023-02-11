@@ -6,18 +6,18 @@ fn main() {
     }
 
     struct IpAddr {
-        kind: IpAddrKind,
-        address: String,
+        tur: IpAddrKind,
+        manzil: String,
     }
 
-    let home = IpAddr {
-        kind: IpAddrKind::V4,
-        address: String::from("127.0.0.1"),
+    let asosiy = IpAddr {
+        tur: IpAddrKind::V4,
+        manzil: String::from("127.0.0.1"),
     };
 
-    let loopback = IpAddr {
-        kind: IpAddrKind::V6,
-        address: String::from("::1"),
+    let orqaga_qaytish = IpAddr {
+        tur: IpAddrKind::V6,
+        manzil: String::from("::1"),
     };
     // ANCHOR_END: here
 }
