@@ -45,29 +45,15 @@ Enumlardan foydalanish yanada ko'proq afzalliklarga ega. Bizning IP manzilimiz t
 
 Bu yerda biz ikkita maydonga ega boʻlgan `IpAddr` structini aniqladik: `IpAddrKind` turidagi `tur` maydoni (biz avvalroq belgilagan raqam) va `String` tipidagi `manzil` maydoni. Bizda bu structning ikkita misoli bor. Birinchisi `asosiy` boʻlib, u `127.0.0.1` bogʻlangan manzil maʼlumotlari bilan `tur` sifatida `IpAddrKind::V4` qiymatiga ega. Ikkinchi misol - `orqaga_qaytish`. U `tur` qiymati sifatida `IpAddrKind` ning boshqa variantiga ega, `V6` va u bilan bog'langan `::1` manzili mavjud. Biz `tur` va `manzil` qiymatlarini birlashtirish uchun structdan foydalanganmiz, shuning uchun endi variant qiymat bilan bog'langan.
 
-However, representing the same concept using just an enum is more concise:
-rather than an enum inside a struct, we can put data directly into each enum
-variant. This new definition of the `IpAddr` enum says that both `V4` and `V6`
-variants will have associated `String` values:
+Shu bilan birga, bir xil kontseptsiyani faqat enum yordamida ifodalash yanada ixchamroqdir: struct ichidagi enum o'rniga, biz ma'lumotlarni to'g'ridan-to'g'ri har bir enum variantiga qo'yishimiz mumkin. `IpAddr` enumining ushbu yangi ta'rifida aytilishicha, `V4` va `V6` variantlari ham associated `String` qiymatlariga ega bo'ladi:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-02-enum-with-data/src/main.rs:here}}
 ```
 
-We attach data to each variant of the enum directly, so there is no need for an
-extra struct. Here, it’s also easier to see another detail of how enums work:
-the name of each enum variant that we define also becomes a function that
-constructs an instance of the enum. That is, `IpAddr::V4()` is a function call
-that takes a `String` argument and returns an instance of the `IpAddr` type. We
-automatically get this constructor function defined as a result of defining the
-enum.
+Biz to'g'ridan-to'g'ri enumning har bir variantiga ma'lumotlarni biriktiramiz, shuning uchun qo'shimcha structga ehtiyoj qolmaydi. Bu yerda, shuningdek, enumlar qanday ishlashining yana bir tafsilotini ko'rish osonroq bo'ladi: biz belgilagan har bir enum variantining nomi, shuningdek, enum nusxasini yaratuvchi funktsiyaga aylanadi. Ya'ni, `IpAddr::V4()` funksiya chaqiruvi bo'lib, u `String` argumentini oladi va `IpAddr` tipidagi misolni qaytaradi. Enumni aniqlash natijasida aniqlangan ushbu konstruktor funksiyasini avtomatik ravishda olamiz.
 
-There’s another advantage to using an enum rather than a struct: each variant
-can have different types and amounts of associated data. Version four IP
-addresses will always have four numeric components that will have values
-between 0 and 255. If we wanted to store `V4` addresses as four `u8` values but
-still express `V6` addresses as one `String` value, we wouldn’t be able to with
-a struct. Enums handle this case with ease:
+Structdan ko'ra enumdan foydalanishning yana bir afzalligi bor: har bir variantda bog'langan ma'lumotlarning har xil turlari va miqdori bo'lishi mumkin. To'rtinchi versiyada IP-manzillar har doim 0 dan 255 gacha bo'lgan qiymatlarga ega bo'lgan to'rtta raqamli komponentga ega bo'ladi. Agar biz `V4` manzillarini to‘rtta `u8` qiymati sifatida saqlamoqchi bo‘lsak-da, `V6` manzillarini bitta `String` qiymati sifatida ifodalasak, biz struct bilan buni qila olmaymiz. Enumlar bu ishni osonlik bilan hal qiladi:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-03-variants-with-different-data/src/main.rs:here}}
