@@ -7,8 +7,8 @@ enum IpAddrKind {
 
 fn main() {
     // ANCHOR: instance
-    let four = IpAddrKind::V4;
-    let six = IpAddrKind::V6;
+    let tort = IpAddrKind::V4;
+    let olti = IpAddrKind::V6;
     // ANCHOR_END: instance
 
     // ANCHOR: fn_call
@@ -18,5 +18,5 @@ fn main() {
 }
 
 // ANCHOR: fn
-fn route(ip_kind: IpAddrKind) {}
+fn route(ip_turi: IpAddrKind) {}
 // ANCHOR_END: fn

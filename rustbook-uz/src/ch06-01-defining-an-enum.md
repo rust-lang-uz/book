@@ -1,34 +1,19 @@
-## Defining an Enum
+## Enumni aniqlash
 
-Where structs give you a way of grouping together related fields and data, like
-a `Rectangle` with its `width` and `height`, enums give you a way of saying a
-value is one of a possible set of values. For example, we may want to say that
-`Rectangle` is one of a set of possible shapes that also includes `Circle` and
-`Triangle`. To do this, Rust allows us to encode these possibilities as an enum.
+Structlar sizga tegishli maydonlar va ma'lumotlarni, masalan, `kenglik` va `balandlik` bilan `Kvadrat` ni guruhlash usulini beradigan bo'lsa, enumlar qiymatni mumkin bo'lgan qiymatlar to'plamidan biri deb aytish metodini beradi. Masalan, `Kvadrat` bu mumkin bo‘lgan shakllar to‘plamidan biri bo‘lib, `Doira` va `Uchburchak`ni ham o‘z ichiga oladi, demoqchimiz. Buning uchun Rust bizga ushbu imkoniyatlarni enum sifatida kodlash imkonini beradi.
 
-Let’s look at a situation we might want to express in code and see why enums
-are useful and more appropriate than structs in this case. Say we need to work
-with IP addresses. Currently, two major standards are used for IP addresses:
-version four and version six. Because these are the only possibilities for an
-IP address that our program will come across, we can *enumerate* all possible
-variants, which is where enumeration gets its name.
+Keling, kodda ifodalashni xohlashimiz mumkin bo'lgan vaziyatni ko'rib chiqaylik va bu holda nima uchun enumlar foydali va structlardan ko'ra mosroq ekanligini bilib olaylik. Aytaylik, biz IP manzillar bilan ishlashimiz kerak. Hozirgi vaqtda IP manzillar uchun ikkita asosiy standart qo'llaniladi: to'rtinchi versiya va oltinchi versiya. Bular bizning dasturimiz duch keladigan IP-manzilning yagona imkoniyatlari bo'lgani uchun biz barcha mumkin bo'lgan variantlarni *enumerate* qilishimiz mumkin, bu yerda enumeration o'z nomini oladi.
 
-Any IP address can be either a version four or a version six address, but not
-both at the same time. That property of IP addresses makes the enum data
-structure appropriate because an enum value can only be one of its variants.
-Both version four and version six addresses are still fundamentally IP
-addresses, so they should be treated as the same type when the code is handling
-situations that apply to any kind of IP address.
+Har qanday IP manzil to'rtinchi versiya yoki oltinchi versiya manzili bo'lishi mumkin, lekin ikkalasi bir vaqtning o'zida emas. IP-manzillarning bu xususiyati enum ma'lumotlar structini mos qiladi, chunki enum qiymati faqat uning variantlaridan biri bo'lishi mumkin.
+To'rtinchi versiya va oltinchi versiya manzillari hali ham IP-manzillardir, shuning uchun kod har qanday IP-manzilga tegishli vaziyatlarni ko'rib chiqayotganda ular bir xil turdagi sifatida ko'rib chiqilishi kerak.
 
-We can express this concept in code by defining an `IpAddrKind` enumeration and
-listing the possible kinds an IP address can be, `V4` and `V6`. These are the
-variants of the enum:
+Biz ushbu kontseptsiyani kodda `IpAddrKind` ro'yxatini belgilash va IP-manzil bo'lishi mumkin bo'lgan `V4` va `V6` turlarini enumeration qilish orqali ifodalashimiz mumkin. Bular enumning variantlari:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-01-defining-enums/src/main.rs:def}}
 ```
 
-`IpAddrKind` is now a custom data type that we can use elsewhere in our code.
+`IpAddrKind` endi biz kodimizning boshqa joylarida foydalanishimiz mumkin bo'lgan maxsus ma'lumotlar turidir.
 
 ### Enum Values
 
