@@ -59,14 +59,7 @@ Structdan ko'ra enumdan foydalanishning yana bir afzalligi bor: har bir variantd
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-03-variants-with-different-data/src/main.rs:here}}
 ```
 
-We’ve shown several different ways to define data structures to store version
-four and version six IP addresses. However, as it turns out, wanting to store
-IP addresses and encode which kind they are is so common that [the standard
-library has a definition we can use!][IpAddr]<!-- ignore --> Let’s look at how
-the standard library defines `IpAddr`: it has the exact enum and variants that
-we’ve defined and used, but it embeds the address data inside the variants in
-the form of two different structs, which are defined differently for each
-variant:
+Biz to'rtinchi versiya va oltinchi versiya IP manzillarini saqlash uchun ma'lumotlar tuzilmalarini aniqlashning bir necha xil usullarini ko'rsatdik. Biroq, ma'lum bo'lishicha, IP-manzillarni saqlash va ularning qaysi turini kodlash istagi shunchalik keng tarqalganki, [standart kutubxonada biz foydalanishimiz mumkin bo'lgan defination mavjud!][IpAddr]<!-- ignore --> . Keling, standart kutubxona `IpAddr` ni qanday aniqlashini ko'rib chiqaylik: u biz aniqlagan va ishlatgan aniq enum va variantlarga ega, lekin u manzil ma'lumotlarini variantlar ichida ikki xil struct shaklida joylashtiradi, har bir variant uchun turlicha belgilanadi:
 
 ```rust
 struct Ipv4Addr {
@@ -83,18 +76,11 @@ enum IpAddr {
 }
 ```
 
-This code illustrates that you can put any kind of data inside an enum variant:
-strings, numeric types, or structs, for example. You can even include another
-enum! Also, standard library types are often not much more complicated than
-what you might come up with.
+Ushbu kod har qanday turdagi ma'lumotlarni enum variantiga qo'yish mumkinligini ko'rsatadi: masalan, stringlar, raqamli turlar yoki structlar. Siz hatto boshqa raqamni ham qo'shishingiz mumkin! Bundan tashqari, standart kutubxona turlari ko'pincha siz o'ylab topganingizdan ancha murakkab emas.
 
-Note that even though the standard library contains a definition for `IpAddr`,
-we can still create and use our own definition without conflict because we
-haven’t brought the standard library’s definition into our scope. We’ll talk
-more about bringing types into scope in Chapter 7.
+E'tibor bering, standart kutubxonada `IpAddr` uchun definition mavjud bo'lsa ham, biz o'z definitionimizni ziddiyatli holda yaratishimiz va foydalanishimiz mumkin, chunki biz standart kutubxonaning definitionini o'z doiramizga kiritmaganmiz. Biz 7-bobda turlarni qamrab olish haqida ko'proq gaplashamiz.
 
-Let’s look at another example of an enum in Listing 6-2: this one has a wide
-variety of types embedded in its variants.
+Keling, 6-2 ro'yxatdagi enumning yana bir misolini ko'rib chiqaylik: bu o'z variantlarida ko'p turdagi turlarga ega.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-02/src/main.rs:here}}
