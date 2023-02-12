@@ -1,19 +1,19 @@
 fn main() {
-    enum Message {
-        Quit,
-        Move { x: i32, y: i32 },
-        Write(String),
-        ChangeColor(i32, i32, i32),
+    enum Xabar {
+        Chiqish,
+        Kochirish { x: i32, y: i32 },
+        Yozish(String),
+        RangTanlash(i32, i32, i32),
     }
 
     // ANCHOR: here
-    impl Message {
-        fn call(&self) {
-            // method body would be defined here
+    impl Xabar {
+        fn chaqiruv(&self) {
+            // metod tanasi bu yerda aniqlanadi
         }
     }
 
-    let m = Message::Write(String::from("hello"));
-    m.call();
+    let m = Xabar::Yozish(String::from("salom"));
+    m.chaqiruv();
     // ANCHOR_END: here
 }

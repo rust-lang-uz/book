@@ -86,33 +86,24 @@ Keling, 6-2 ro'yxatdagi enumning yana bir misolini ko'rib chiqaylik: bu o'z vari
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-02/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 6-2: A `Message` enum whose variants each store
-different amounts and types of values</span>
+<span class="caption">Ro'yxat 6-2: `Xabar` enumi, uning variantlari har xil miqdor va qiymat turlarini saqlaydi</span>
 
-This enum has four variants with different types:
+Ushbu enum har xil turdagi to'rtta variantga ega:
 
-* `Quit` has no data associated with it at all.
-* `Move` has named fields, like a struct does.
-* `Write` includes a single `String`.
-* `ChangeColor` includes three `i32` values.
+* `Chiqish`da u bilan bogʻliq hech qanday maʼlumot yoʻq.
+* `Kochirish` da struct kabi maydonlarni nomlagan.
+* `Yozish` bitta `String` ni o'z ichiga oladi.
+* `RangTanla` uchta `i32` qiymatini o'z ichiga oladi.
 
-Defining an enum with variants such as the ones in Listing 6-2 is similar to
-defining different kinds of struct definitions, except the enum doesn’t use the
-`struct` keyword and all the variants are grouped together under the `Message`
-type. The following structs could hold the same data that the preceding enum
-variants hold:
+Enumni 6-2-roʻyxatdagi kabi variantlar bilan belgilash strukturaviy definitionlarning har xil turlarini aniqlashga oʻxshaydi, faqat enum `struct` kalit soʻzidan foydalanmaydi va barcha variantlar `Xabar` turi ostida birlashtiriladi. Quyidagi structlar oldingi enum variantlari bilan bir xil ma'lumotlarni saqlashi mumkin:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-04-structs-similar-to-message-enum/src/main.rs:here}}
 ```
 
-But if we used the different structs, each of which has its own type, we
-couldn’t as easily define a function to take any of these kinds of messages as
-we could with the `Message` enum defined in Listing 6-2, which is a single type.
+Lekin biz o'z turlariga ega bo'lgan turli structlardan foydalanganimizda, biz har qanday xabar turini qabul qiladigan funksiyalarni osonlikcha aniqlay olmadik, buni bitta tur bo'lgan 6-2 ro'yxatda e'lon qilingan `Xabar` turini enum bilan amalga oshirish mumkin.
 
-There is one more similarity between enums and structs: just as we’re able to
-define methods on structs using `impl`, we’re also able to define methods on
-enums. Here’s a method named `call` that we could define on our `Message` enum:
+Enumlar va structlar o'rtasida yana bir o'xshashlik bor: biz `impl` yordamida structlarda metodlarni aniqlay olganimizdek, enumlarda ham metodlarni belgilashimiz mumkin. Bu yerda biz `Xabar` enumimizda aniqlashimiz mumkin bo'lgan `call` deb nomlangan method:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-05-methods-on-enums/src/main.rs:here}}

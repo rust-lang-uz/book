@@ -1,11 +1,11 @@
 // ANCHOR: here
-struct QuitMessage; // unit struct
-struct MoveMessage {
+struct ChiqishXabar; // unit struct
+struct KochirishXabar {
     x: i32,
     y: i32,
 }
-struct WriteMessage(String); // tuple struct
-struct ChangeColorMessage(i32, i32, i32); // tuple struct
+struct YozishXabar(String); // tuple struct
+struct RangTanshlaXabar(i32, i32, i32); // tuple struct
                                           // ANCHOR_END: here
 
 fn main() {}
