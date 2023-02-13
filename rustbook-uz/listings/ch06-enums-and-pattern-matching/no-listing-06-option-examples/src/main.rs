@@ -1,8 +1,8 @@
 fn main() {
     // ANCHOR: here
-    let some_number = Some(5);
-    let some_char = Some('e');
+    let raqam = Some(5);
+    let belgi = Some('e');
 
-    let absent_number: Option<i32> = None;
+    let yoq_raqam: Option<i32> = None;
     // ANCHOR_END: here
 }
