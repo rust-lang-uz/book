@@ -123,27 +123,20 @@ Dasturlash tilining dizayni ko'pincha siz qaysi xususiyatlarni o'z ichiga olganl
 
 2009 yilgi "Null References: The Million Dollar Mistake" taqdimotida null ixtirochisi Tony Hoare shunday deydi:
 
-> I call it my billion-dollar mistake. At that time, I was designing the first
-> comprehensive type system for references in an object-oriented language. My
-> goal was to ensure that all use of references should be absolutely safe, with
-> checking performed automatically by the compiler. But I couldn’t resist the
-> temptation to put in a null reference, simply because it was so easy to
-> implement. This has led to innumerable errors, vulnerabilities, and system
-> crashes, which have probably caused a billion dollars of pain and damage in
-> the last forty years.
+> Men buni milliard dollarlik xatoyim deb atayman. O'sha paytda men object-oriented language
+> referencelar uchun birinchi keng qamrovli turdagi tizimni loyihalashtirgan edim. Mening maqsadim
+> referencelardan foydalanishning mutlaqo xavfsiz bo'lishini ta'minlash edi, tekshirish kompilyator
+> tomonidan avtomatik ravishda amalga oshiriladi. Lekin men null reference qo'yish vasvasasiga
+> qarshi tura olmadim, chunki uni amalga oshirish juda oson edi.
+> Bu so'nggi qirq yil ichida bir milliard dollar og'riq va zarar keltirgan
+> son-sanoqsiz xatolar, zaifliklar va tizimning ishdan chiqishiga olib keldi.
 
-The problem with null values is that if you try to use a null value as a
-not-null value, you’ll get an error of some kind. Because this null or not-null
-property is pervasive, it’s extremely easy to make this kind of error.
+Null qiymatlari bilan bog'liq muammo shundaki, agar siz null qiymatdan a sifatida foydalanishga harakat qilsangiz
+no-null qiymat bo'lsa, siz qandaydir xatoga duch kelasiz. Ushbu null yoki not-null xususiyat keng tarqalganligi sababli, bunday xatoga yo'l qo'yish juda oson.
 
-However, the concept that null is trying to express is still a useful one: a
-null is a value that is currently invalid or absent for some reason.
+Biroq, null ifodalamoqchi bo'lgan kontseptsiya hali ham foydalidir: null hozirda yaroqsiz yoki biron sababga ko'ra mavjud bo'lmagan qiymatdir.
 
-The problem isn’t really with the concept but with the particular
-implementation. As such, Rust does not have nulls, but it does have an enum
-that can encode the concept of a value being present or absent. This enum is
-`Option<T>`, and it is [defined by the standard library][option]<!-- ignore -->
-as follows:
+Muammo aslida kontseptsiyada emas, balki muayyan amalga oshirishda. Shunday qilib, Rust nulllarga ega emas, lekin u mavjud yoki yo'q qiymat tushunchasini kodlay oladigan enumga ega. Bu enum `Option<T>` bo'lib, u [standart kutubxona tomonidan][option]<!-- ignore --> quyidagicha aniqlanadi: 
 
 ```rust
 enum Option<T> {
@@ -152,19 +145,10 @@ enum Option<T> {
 }
 ```
 
-The `Option<T>` enum is so useful that it’s even included in the prelude; you
-don’t need to bring it into scope explicitly. Its variants are also included in
-the prelude: you can use `Some` and `None` directly without the `Option::`
-prefix. The `Option<T>` enum is still just a regular enum, and `Some(T)` and
-`None` are still variants of type `Option<T>`.
+`Option<T>` enumi shunchalik foydaliki, u hatto muqaddimaga ham kiritilgan; uni aniq doiraga kiritishingiz shart emas. Uning variantlari ham muqaddima tarkibiga kiritilgan: `Some` va `None` dan `Option::` prefiksisiz bevosita foydalanishingiz mumkin. `Option<T>` enum hali ham oddiy enum bo'lib, `Some(T)` va `None` hali ham `Option<T>` turidagi variantlardir.
 
-The `<T>` syntax is a feature of Rust we haven’t talked about yet. It’s a
-generic type parameter, and we’ll cover generics in more detail in Chapter 10.
-For now, all you need to know is that `<T>` means that the `Some` variant of
-the `Option` enum can hold one piece of data of any type, and that each
-concrete type that gets used in place of `T` makes the overall `Option<T>` type
-a different type. Here are some examples of using `Option` values to hold
-number types and string types:
+`<T>` sintaksisi Rustning oʻziga xos xususiyati boʻlib, biz hali gaplashmaganmiz. Bu umumiy turdagi parametr va biz 10-bobda genericlarni batafsil ko'rib chiqamiz.
+Hozircha siz bilishingiz kerak bo'lgan narsa shuki, `<T>` `Option` enumining `Some` varianti har qanday turdagi ma'lumotlarning bir qismini saqlashi mumkinligini va o'rniga qo'llaniladigan har bir konkret turni bildiradi. `T` umumiy `Option<T>` turini boshqa turga aylantiradi. Raqam turlari va qator turlarini saqlash uchun `Option` qiymatlaridan foydalanishga misollar keltiramiz:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-06-option-examples/src/main.rs:here}}
