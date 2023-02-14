@@ -5,7 +5,7 @@ enum UsState {
     // --snip--
 }
 
-enum Coin {
+enum Tanga {
     Penny,
     Nickel,
     Dime,
@@ -13,13 +13,13 @@ enum Coin {
 }
 
 // ANCHOR: here
-fn value_in_cents(coin: Coin) -> u8 {
-    match coin {
-        Coin::Penny => 1,
-        Coin::Nickel => 5,
-        Coin::Dime => 10,
-        Coin::Quarter(state) => {
-            println!("State quarter from {:?}!", state);
+fn sentdagi_qiymat(tanga: Tanga) -> u8 {
+    match tanga {
+        Tanga::Penny => 1,
+        Tanga::Nickel => 5,
+        Tanga::Dime => 10,
+        Tanga::Quarter(shtat) => {
+            println!("{:?} dan shtat quarter!", shtat);
             25
         }
     }
@@ -27,5 +27,5 @@ fn value_in_cents(coin: Coin) -> u8 {
 // ANCHOR_END: here
 
 fn main() {
-    value_in_cents(Coin::Quarter(UsState::Alaska));
+    sentdagi_qiymat(Tanga::Quarter(UsState::Alaska));
 }

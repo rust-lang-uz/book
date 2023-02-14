@@ -6,7 +6,7 @@ enum UsState {
     // --snip--
 }
 
-enum Coin {
+enum Tanga {
     Penny,
     Nickel,
     Dime,

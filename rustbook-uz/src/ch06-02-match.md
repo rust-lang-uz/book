@@ -30,35 +30,22 @@ Agar mos keladigan arm kodi qisqa bo'lsa, biz odatda jingalak qavslardan foydala
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-08-match-arm-multiple-lines/src/main.rs:here}}
 ```
 
-### Patterns That Bind to Values
+### Qiymatlarni bog'laydigan patternlar
 
-Another useful feature of match arms is that they can bind to the parts of the
-values that match the pattern. This is how we can extract values out of enum
-variants.
+match armlarining yana bir foydali xususiyati shundaki, ular patternga mos keladigan qiymatlarning qismlarini bog'lashlari mumkin. Enum variantlaridan qiymatlarni shunday chiqarishimiz mumkin.
 
-As an example, let’s change one of our enum variants to hold data inside it.
-From 1999 through 2008, the United States minted quarters with different
-designs for each of the 50 states on one side. No other coins got state
-designs, so only quarters have this extra value. We can add this information to
-our `enum` by changing the `Quarter` variant to include a `UsState` value
-stored inside it, which we’ve done in Listing 6-4.
+Misol tariqasida, uning ichida ma'lumotlarni saqlash uchun enum variantlarimizdan birini o'zgartiraylik.
+1999 yildan 2008 yilgacha Qo'shma Shtatlar bir tomondan 50 shtatning har biri uchun turli dizayndagi tangalarni bosib chiqardi. Boshqa hech qanday tangalar davlat dizayniga ega emas, shuning uchun faqat quarterlarda bunday qo'shimcha qiymat mavjud. Biz ushbu maʼlumotni `Quarter` variantini uning ichida saqlangan `UsState` qiymatini kiritish uchun oʻzgartirish orqali `enum`ga qoʻshishimiz mumkin, biz buni 6-4 roʻyxatda qilganmiz.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-04/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 6-4: A `Coin` enum in which the `Quarter` variant
-also holds a `UsState` value</span>
+<span class="caption">Roʻyxat 6-4: `Quarter` varianti ham `UsState` qiymatiga ega boʻlgan `Tanga` enumi</span>
 
-Let’s imagine that a friend is trying to collect all 50 state quarters. While
-we sort our loose change by coin type, we’ll also call out the name of the
-state associated with each quarter so that if it’s one our friend doesn’t have,
-they can add it to their collection.
+Tasavvur qiling-a, sizning do'stingiz barcha 50 shtatdan quarter yig'ishga harakat qilmoqda. Biz tangalar turi bo'yicha saralashimiz bilan birga, agar do'stimizda yo'q bo'lsa, ular uni o'z kollektsiyasiga qo'shishlari uchun har quarter bilan bog'liq shtat nomini ham chaqiramiz.
 
-In the match expression for this code, we add a variable called `state` to the
-pattern that matches values of the variant `Coin::Quarter`. When a
-`Coin::Quarter` matches, the `state` variable will bind to the value of that
-quarter’s state. Then we can use `state` in the code for that arm, like so:
+Ushbu kod uchun match ifodasida biz `Tanga::Quarter` varianti qiymatlariga mos keladigan patternga `shtat` deb nomlangan o'zgaruvchini qo‘shamiz. `Tanga::Quarter` mos kelganda, `shtat` o'zgaruvchisi o'sha quarter holati qiymatiga bog'lanadi. Keyin biz ushbu arm uchun kodda `shtat` dan foydalanishimiz mumkin, masalan:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-09-variable-in-pattern/src/main.rs:here}}
