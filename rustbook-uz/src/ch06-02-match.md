@@ -1,35 +1,20 @@
 <!-- Old heading. Do not remove or links may break. -->
 <a id="the-match-control-flow-operator"></a>
-## The `match` Control Flow Construct
+## `match` Control Flow konstruksiyasi
 
-Rust has an extremely powerful control flow construct called `match` that
-allows you to compare a value against a series of patterns and then execute
-code based on which pattern matches. Patterns can be made up of literal values,
-variable names, wildcards, and many other things; [Chapter
-18][ch18-00-patterns]<!-- ignore --> covers all the different kinds of patterns
-and what they do. The power of `match` comes from the expressiveness of the
-patterns and the fact that the compiler confirms that all possible cases are
-handled.
+Rust `match` deb nomlangan juda kuchli control flow konstruksiyasiga ega, bu sizga qiymatni bir qator patternlar bilan solishtirish va keyin qaysi pattern mos kelishiga qarab kodni bajarish imkonini beradi. Patternlar literal qiymatlar, o'zgaruvchilar nomlari, wildcardlar va boshqa ko'plab narsalardan iborat bo'lishi mumkin; [18-bobda][ch18-00-patterns]<!-- ignore --> har xil turdagi patternlar va ular bajaradigan ishlar yoritilgan. `match`ning kuchi patternlarning ifodaliligidan va kompilyator barcha mumkin bo'lgan holatlar ko'rib chiqilishini tasdiqlashidan kelib chiqadi.
 
-Think of a `match` expression as being like a coin-sorting machine: coins slide
-down a track with variously sized holes along it, and each coin falls through
-the first hole it encounters that it fits into. In the same way, values go
-through each pattern in a `match`, and at the first pattern the value “fits,”
-the value falls into the associated code block to be used during execution.
+`match` iborasini tanga saralash mashinasiga o'xshatib tasavvur qiling: tangalar bo'ylab turli o'lchamdagi teshiklari bo'lgan yo'ldan pastga siljiydi va har bir tanga o'zi mos keladigan birinchi teshikdan tushadi. Xuddi shu tarzda, qiymatlar `match` dagi har bir patterndan o'tadi va birinchi patternda qiymat “fits,”, qiymat bajarish paytida ishlatiladigan tegishli kod blokiga tushadi.
 
-Speaking of coins, let’s use them as an example using `match`! We can write a
-function that takes an unknown US coin and, in a similar way as the counting
-machine, determines which coin it is and returns its value in cents, as shown
-in Listing 6-3.
+Tangalar haqida gap ketganda, keling, ularni `match` yordamida misol qilib olaylik! Biz noma'lum AQSH tangasini oladigan funksiyani yozishimiz mumkin va xuddi sanash mashinasiga o'xshab uning qaysi tanga ekanligini aniqlaydi va 6-3 ro'yxatda ko'rsatilganidek, uning qiymatini sentlarda qaytaradi.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-03/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 6-3: An enum and a `match` expression that has
-the variants of the enum as its patterns</span>
+<span class="caption">Ro'yxat 6-3: Enum va `match` ifodasi, uning namunalari sifatida enumning variantlari mavjud</span>
 
-Let’s break down the `match` in the `value_in_cents` function. First we list
+Keling, `sentdagi_qiymat` funksiyasidagi `match` ni ajratamiz. First we list
 the `match` keyword followed by an expression, which in this case is the value
 `coin`. This seems very similar to a conditional expression used with `if`, but
 there’s a big difference: with `if`, the condition needs to evaluate to a
