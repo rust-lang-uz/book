@@ -14,34 +14,17 @@ Tangalar haqida gap ketganda, keling, ularni `match` yordamida misol qilib olayl
 
 <span class="caption">Ro'yxat 6-3: Enum va `match` ifodasi, uning namunalari sifatida enumning variantlari mavjud</span>
 
-Keling, `sentdagi_qiymat` funksiyasidagi `match` ni ajratamiz. First we list
-the `match` keyword followed by an expression, which in this case is the value
-`coin`. This seems very similar to a conditional expression used with `if`, but
-there’s a big difference: with `if`, the condition needs to evaluate to a
-Boolean value, but here it can be any type. The type of `coin` in this example
-is the `Coin` enum that we defined on the first line.
+Keling, `sentdagi_qiymat` funksiyasidagi `match` ni ajratamiz. Avval biz `match` kalit so'zidan keyin ifodani keltiramiz, bu holda bu qiymat `tanga` bo'ladi. Bu `if` bilan ishlatiladigan shartli ifodaga juda o'xshaydi, lekin
+katta farq bor: `if` bilan shart mantiqiy qiymatga baholanishi kerak, ammo bu yerda u har qanday turdagi bo'lishi mumkin. Ushbu misoldagi `tanga` turi biz birinchi qatorda belgilagan `Tanga` enumidir.
 
-Next are the `match` arms. An arm has two parts: a pattern and some code. The
-first arm here has a pattern that is the value `Coin::Penny` and then the `=>`
-operator that separates the pattern and the code to run. The code in this case
-is just the value `1`. Each arm is separated from the next with a comma.
+Keyingi `match` armlari. Arm ikki qismdan iborat: pattern va ba'zi kod. Bu yerdagi birinchi arm `Tanga::Penny` qiymati boʻlgan patternga ega, soʻngra ishlash uchun pattern va kodni ajratuvchi `=>` operatori. Bu holatda kod faqat `1` qiymatidan iborat. Har bir arm keyingisidan vergul bilan ajratiladi.
 
-When the `match` expression executes, it compares the resultant value against
-the pattern of each arm, in order. If a pattern matches the value, the code
-associated with that pattern is executed. If that pattern doesn’t match the
-value, execution continues to the next arm, much as in a coin-sorting machine.
-We can have as many arms as we need: in Listing 6-3, our `match` has four arms.
+`match` ifodasi bajarilganda, natijaviy qiymatni har bir armning patterniga solishtiradi. Agar pattern qiymatga mos kelsa, ushbu pattern bilan bog'langan kod bajariladi. Agar bu pattern qiymatga mos kelmasa, ijro tanga saralash mashinasida bo'lgani kabi keyingi armda davom etadi.
+Bizda qancha arm kerak bo'lsa, shuncha arm bo'lishi mumkin: 6-3 ro'yxatda bizning `match`imizda to'rtta arm bor.
 
-The code associated with each arm is an expression, and the resultant value of
-the expression in the matching arm is the value that gets returned for the
-entire `match` expression.
+Har bir arm bilan bog'langan kod ifodadir va mos keladigan qismdagi ifodaning natijaviy qiymati butun `match` ifodasi uchun qaytariladigan qiymatdir.
 
-We don’t typically use curly brackets if the match arm code is short, as it is
-in Listing 6-3 where each arm just returns a value. If you want to run multiple
-lines of code in a match arm, you must use curly brackets, and the comma
-following the arm is then optional. For example, the following code prints
-“Lucky penny!” every time the method is called with a `Coin::Penny`, but still
-returns the last value of the block, `1`:
+Agar mos keladigan arm kodi qisqa bo'lsa, biz odatda jingalak qavslardan foydalanmaymiz, chunki bu ro'yxat 6-3da bo'lgani kabi, har bir arm shunchaki qiymat qaytaradi. Agar siz mos keladigan chiziqda bir nechta kod qatorlarini ishlatmoqchi bo'lsangiz, jingalak qavslardan foydalaning va armdan keyingi vergul ixtiyoriy bo'ladi. Masalan, quyidagi kodda `Omadli tanga!` metod har safar `Tanga::Penny` bilan chaqirilganda, lekin baribir blokning oxirgi qiymatini qaytaradi, `1`:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-08-match-arm-multiple-lines/src/main.rs:here}}

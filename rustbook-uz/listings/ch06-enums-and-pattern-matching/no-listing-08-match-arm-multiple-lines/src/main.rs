@@ -1,4 +1,4 @@
-enum Coin {
+enum Tanga {
     Penny,
     Nickel,
     Dime,
@@ -6,15 +6,15 @@ enum Coin {
 }
 
 // ANCHOR: here
-fn value_in_cents(coin: Coin) -> u8 {
-    match coin {
-        Coin::Penny => {
-            println!("Lucky penny!");
+fn sentdagi_qiymat(tanga: Tanga) -> u8 {
+    match tanga {
+        Tanga::Penny => {
+            println!("Omadli tanga!");
             1
         }
-        Coin::Nickel => 5,
-        Coin::Dime => 10,
-        Coin::Quarter => 25,
+        Tanga::Nickel => 5,
+        Tanga::Dime => 10,
+        Tanga::Quarter => 25,
     }
 }
 // ANCHOR_END: here
