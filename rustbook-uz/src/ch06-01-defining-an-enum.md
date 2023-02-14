@@ -174,30 +174,12 @@ Kuchli! Aslida, bu xato xabari Rust `i8` va `Option<i8>` ni qanday qo'shishni tu
 
 Boshqacha qilib aytganda, `T` amallarini bajarishdan oldin `Option<T>`ni `T` ga aylantirishingiz kerak. Umuman olganda, bu null bilan bog'liq eng keng tarqalgan muammolardan birini hal qilishga yordam beradi: agar biror narsa bo'lsa, u null emas deb taxmin qilish.
 
-Eliminating the risk of incorrectly assuming a not-null value helps you to be
-more confident in your code. In order to have a value that can possibly be
-null, you must explicitly opt in by making the type of that value `Option<T>`.
-Then, when you use that value, you are required to explicitly handle the case
-when the value is null. Everywhere that a value has a type that isn’t an
-`Option<T>`, you *can* safely assume that the value isn’t null. This was a
-deliberate design decision for Rust to limit null’s pervasiveness and increase
-the safety of Rust code.
+Null bo'lmagan qiymatni noto'g'ri qabul qilish xavfini yo'q qilish kodingizga ko'proq ishonch hosil qilishingizga yordam beradi. Null bo'lishi mumkin bo'lgan qiymatga ega bo'lish uchun, siz ushbu qiymatning turini `Option<T>` qilib aniq belgilashingiz kerak.
+Keyin, ushbu qiymatdan foydalanganda, qiymat null bo'lsa, ishni aniq ko'rib chiqishingiz talab qilinadi. Qiymat `Option<T>` bo'lmagan turga ega bo'lgan har bir joyda, qiymat null emas deb ishonch bilan taxmin qilishingiz mumkin. Bu Rust uchun nullning tarqalishini cheklash va Rust kodining xavfsizligini oshirish uchun ataylab qilingan dizayn qarori edi.
 
-So how do you get the `T` value out of a `Some` variant when you have a value
-of type `Option<T>` so that you can use that value? The `Option<T>` enum has a
-large number of methods that are useful in a variety of situations; you can
-check them out in [its documentation][docs]<!-- ignore -->. Becoming familiar
-with the methods on `Option<T>` will be extremely useful in your journey with
-Rust.
+Xo'sh, `Option<T>` turidagi qiymatga ega bo'lganingizda, `Some` variantidan `T` qiymatini qanday qilib olish mumkin, shunda siz ushbu qiymatdan foydalanishingiz mumkin? `Option<T>` enumi turli vaziyatlarda foydali boʻlgan koʻp sonli usullarga ega; siz ularni uning [hujjatlarida][docs]<!-- ignore --> tekshirishingiz mumkin. `Option<T>` dagi metodlar bilan tanishish Rust bilan sayohatingizda juda foydali bo`ladi.
 
-In general, in order to use an `Option<T>` value, you want to have code that
-will handle each variant. You want some code that will run only when you have a
-`Some(T)` value, and this code is allowed to use the inner `T`. You want some
-other code to run only if you have a `None` value, and that code doesn’t have a
-`T` value available. The `match` expression is a control flow construct that
-does just this when used with enums: it will run different code depending on
-which variant of the enum it has, and that code can use the data inside the
-matching value.
+Umuman olganda, `Option<T>` qiymatidan foydalanish uchun siz har bir variantni boshqaradigan kodga ega bo'lishni xohlaysiz. Siz faqat `Some(T)` qiymatiga ega bo'lganingizda ishlaydigan ba'zi kodni xohlaysiz va bu kod ichki `T` dan foydalanishga ruxsat etiladi. Agar sizda `None` qiymati bo'lsa va bu kodda `T` qiymati bo'lmasa, ishlaydigan boshqa kod ham kerak bo'ladi. `match` ifodasi control flow konstruksiyasi bo‘lib, u enumlar bilan foydalanilganda aynan shunday qiladi: u enumning qaysi variantiga ega bo‘lishiga qarab turli xil kodlarni ishga tushiradi va bu kod mos keladigan qiymat ichidagi ma’lumotlardan foydalanishi mumkin.
 
 [IpAddr]: ../std/net/enum.IpAddr.html
 [option]: ../std/option/enum.Option.html
