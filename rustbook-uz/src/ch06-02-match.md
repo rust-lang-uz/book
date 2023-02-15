@@ -51,39 +51,23 @@ Ushbu kod uchun match ifodasida biz `Tanga::Quarter` varianti qiymatlariga mos k
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-09-variable-in-pattern/src/main.rs:here}}
 ```
 
-If we were to call `value_in_cents(Coin::Quarter(UsState::Alaska))`, `coin`
-would be `Coin::Quarter(UsState::Alaska)`. When we compare that value with each
-of the match arms, none of them match until we reach `Coin::Quarter(state)`. At
-that point, the binding for `state` will be the value `UsState::Alaska`. We can
-then use that binding in the `println!` expression, thus getting the inner
-state value out of the `Coin` enum variant for `Quarter`.
+Agar biz `sentdagi_qiymat(Tanga::Quarter(UsState::Alaska))` deb ataydigan bo'lsak, `tanga` `Tanga::Quarter(UsState::Alaska)` bo'ladi. Ushbu qiymatni har bir match armi bilan solishtirganda, biz `Tanga::Quarter(shtat)` ga yetguncha ularning hech biri mos kelmaydi. O'sha paytda `shtat` uchun majburiy `UsState::Alaska` qiymati bo'ladi. Keyin biz bu bog'lanishni `println!` ifodasida qo'llashimiz mumkin, shu bilan `Quarter` uchun `Tanga` enum variantidan ichki holat qiymatini olamiz.
 
-### Matching with `Option<T>`
+### `Option<T>` uchun Match
 
-In the previous section, we wanted to get the inner `T` value out of the `Some`
-case when using `Option<T>`; we can also handle `Option<T>` using `match`, as
-we did with the `Coin` enum! Instead of comparing coins, we’ll compare the
-variants of `Option<T>`, but the way the `match` expression works remains the
-same.
+Oldingi bo'limda biz `Option<T>` dan foydalanilganda `Some` holatidan ichki `T` qiymatini olishni xohladik; Biz, shuningdek, `Tanga` enum bilan qilganimizdek, `match` yordamida `Option<T>`ni boshqarishimiz mumkin! Tangalarni solishtirish o'rniga, biz `Option<T>` variantlarini solishtiramiz, lekin `match` ifodasining ishlash usuli bir xil bo'lib qoladi.
 
-Let’s say we want to write a function that takes an `Option<i32>` and, if
-there’s a value inside, adds 1 to that value. If there isn’t a value inside,
-the function should return the `None` value and not attempt to perform any
-operations.
+Aytaylik, biz `Option<i32>` ni oladigan funksiya yozmoqchimiz va agar ichida qiymat bo'lsa, bu qiymatga 1 qo'shiladi. Agar ichida qiymat bo'lmasa, funktsiya `None` qiymatini qaytarishi va hech qanday operatsiyani bajarishga urinmasligi kerak.
 
-This function is very easy to write, thanks to `match`, and will look like
-Listing 6-5.
+Ushbu funktsiyani yozish juda oson,  `match` tufayli va 6-5-Ro'yxatga o'xshaydi.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 6-5: A function that uses a `match` expression on
-an `Option<i32>`</span>
+<span class="caption">Roʻyxat 6-5: `Option`da `match` ifodasidan foydalanadigan funksiya<i32>`</span>
 
-Let’s examine the first execution of `plus_one` in more detail. When we call
-`plus_one(five)`, the variable `x` in the body of `plus_one` will have the
-value `Some(5)`. We then compare that against each match arm:
+Keling, `bir_qoshish` ning birinchi bajarilishini batafsilroq ko'rib chiqamiz. Biz `bir_qoshish(besh)` ni chaqirganimizda, `bir_qoshish` tanasidagi `x` o'zgaruvchisi `Some(5)` qiymatiga ega bo'ladi. Keyin biz buni har bir matchning armi bilan taqqoslaymiz:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:first_arm}}

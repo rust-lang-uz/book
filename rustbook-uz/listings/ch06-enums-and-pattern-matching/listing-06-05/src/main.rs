@@ -1,6 +1,6 @@
 fn main() {
     // ANCHOR: here
-    fn plus_one(x: Option<i32>) -> Option<i32> {
+    fn bir_qoshish(x: Option<i32>) -> Option<i32> {
         match x {
             // ANCHOR: first_arm
             None => None,
@@ -11,8 +11,8 @@ fn main() {
         }
     }
 
-    let five = Some(5);
-    let six = plus_one(five);
-    let none = plus_one(None);
+    let besh = Some(5);
+    let olti = bir_qoshish(besh);
+    let yoq = bir_qoshish(None);
     // ANCHOR_END: here
 }
