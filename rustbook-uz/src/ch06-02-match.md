@@ -73,40 +73,27 @@ Keling, `bir_qoshish` ning birinchi bajarilishini batafsilroq ko'rib chiqamiz. B
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:first_arm}}
 ```
 
-The `Some(5)` value doesn’t match the pattern `None`, so we continue to the
-next arm:
+`Some(5)` qiymati `None` patterniga mos kelmaydi, shuning uchun keyingi armga o'tamiz:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:second_arm}}
 ```
 
-Does `Some(5)` match `Some(i)`? It does! We have the same variant. The `i`
-binds to the value contained in `Some`, so `i` takes the value `5`. The code in
-the match arm is then executed, so we add 1 to the value of `i` and create a
-new `Some` value with our total `6` inside.
+`Some(5)` ga `Some(i)` pattern mos keladimi? Ha bu shunday! Bizda ham xuddi shunday variant bor. Keyin `i` o'zgaruvchisi `Some` ichidagi qiymatga bog'lanadi, shuning uchun `i` `5` qiymatini oladi. Shundan so'ng match armidagi kod bajariladi, shuning uchun biz `i` qiymatiga 1 qo'shamiz va ichida jami `6` bo'lgan yangi `Some` qiymatini yaratamiz.
 
-Now let’s consider the second call of `plus_one` in Listing 6-5, where `x` is
-`None`. We enter the `match` and compare to the first arm:
+Keling, 6-5-Ro'yxatdagi `bir_qoshish` ning ikkinchi chaqiruvini ko'rib chiqaylik, bunda `x` `None`. Biz `match` ga kiramiz va birinchi arm bilan taqqoslaymiz:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:first_arm}}
 ```
 
-It matches! There’s no value to add to, so the program stops and returns the
-`None` value on the right side of `=>`. Because the first arm matched, no other
-arms are compared.
+Bu mos keladi! Qo'shiladigan qiymat yo'q, shuning uchun dastur to'xtaydi va `=>` o'ng tomonidagi `None` qiymatini qaytaradi. Birinchi arm mos kelganligi sababli, boshqa armlar taqqoslanmaydi.
 
-Combining `match` and enums is useful in many situations. You’ll see this
-pattern a lot in Rust code: `match` against an enum, bind a variable to the
-data inside, and then execute code based on it. It’s a bit tricky at first, but
-once you get used to it, you’ll wish you had it in all languages. It’s
-consistently a user favorite.
+`match` va enumlarni birlashtirish ko'p holatlarda foydalidir. Rust kodida siz ushbu patterni juda ko'p ko'rasiz: enum bilan `match`, o'zgaruvchini ichidagi ma'lumotlarga bog'lang va keyin unga asoslangan kodni bajaring. Avvaliga bu biroz qiyin, lekin ko'nikkaningizdan so'ng uni barcha tillarda bo'lishini xohlaysiz. Bu har doim foydalanuvchilarning sevimli texnikasi.
 
-### Matches Are Exhaustive
+### Match barcha qiymat variantlarini qamrab oladi
 
-There’s one other aspect of `match` we need to discuss: the arms’ patterns must
-cover all possibilities. Consider this version of our `plus_one` function,
-which has a bug and won’t compile:
+Biz muhokama qilishimiz kerak bo'lgan `match` ning yana bir jihati bor: arm patterlari barcha imkoniyatlarni qamrab olishi kerak. Xatoga ega va kompilyatsiya qilinmaydigan `bir_qoshish` funksiyamizning ushbu versiyasini ko'rib chiqing:
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-10-non-exhaustive-match/src/main.rs:here}}
