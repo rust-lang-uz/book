@@ -1,13 +1,13 @@
 fn main() {
     // ANCHOR: here
-    let dice_roll = 9;
-    match dice_roll {
-        3 => add_fancy_hat(),
-        7 => remove_fancy_hat(),
+    let narda_toshi = 9;
+    match narda_toshi {
+        3 => chiroyli_shlyapa_qoshish(),
+        7 => chiroyli_shlyapani_ochirish(),
         _ => (),
     }
 
-    fn add_fancy_hat() {}
-    fn remove_fancy_hat() {}
+    fn chiroyli_shlyapa_qoshish() {}
+    fn chiroyli_shlyapani_ochirish() {}
     // ANCHOR_END: here
 }
