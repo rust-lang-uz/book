@@ -127,26 +127,18 @@ Keling, o'yin qoidalarini shunday o'zgartiraylik: agar 3 yoki 7 dan boshqa narda
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-16-underscore-catchall/src/main.rs:here}}
 ```
 
-This example also meets the exhaustiveness requirement because we’re explicitly
-ignoring all other values in the last arm; we haven’t forgotten anything.
+Bu misol, shuningdek, to'liqlik talabiga javob beradi, chunki biz oxirgi qismdagi barcha boshqa qiymatlarni e'tiborsiz qoldiramiz; biz hech narsani unutmadik.
 
-Finally, we’ll change the rules of the game one more time so that nothing else
-happens on your turn if you roll anything other than a 3 or a 7. We can express
-that by using the unit value (the empty tuple type we mentioned in [“The Tuple
-Type”][tuples]<!-- ignore --> section) as the code that goes with the `_` arm:
+Nihoyat, biz o'yin qoidalarini yana bir bor o'zgartiramiz, shunda siz 3 yoki 7 ni o'tkazmaguningizcha sizning navbatingizda hech narsa sodir bo'lmaydi. Biz buni birlik qiymatidan (biz ["Tuple turi"][tuples]<!-- ignore --> section da aytib o'tgan bo'sh tuple turi) `_` armi bilan birga keladigan kod sifatida ifodalashimiz mumkin:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-17-underscore-unit/src/main.rs:here}}
 ```
 
-Here, we’re telling Rust explicitly that we aren’t going to use any other value
-that doesn’t match a pattern in an earlier arm, and we don’t want to run any
-code in this case.
+Bu yerda biz Rustga aniq aytamizki, biz avvalgi armdagi patterga mos kelmaydigan boshqa qiymatdan foydalanmaymiz va bu holda hech qanday kodni ishga tushirishni xohlamaymiz.
 
-There’s more about patterns and matching that we’ll cover in [Chapter
-18][ch18-00-patterns]<!-- ignore -->. For now, we’re going to move on to the
-`if let` syntax, which can be useful in situations where the `match` expression
-is a bit wordy.
+[18-bobda][ch18-00-patterns]<!-- ignore --> biz ko'rib chiqadigan patternlar va match haqida ko'proq ma'lumot bor.
+Hozircha biz `if let` sintaksisiga o‘tamiz, bu `match` ifodasi juda batafsil bo'lgan holatlarda foydali bo'lishi mumkin.
 
 [tuples]: ch03-02-data-types.html#the-tuple-type
 [ch18-00-patterns]: ch18-00-patterns.html
