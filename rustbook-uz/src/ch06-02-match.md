@@ -99,32 +99,17 @@ Biz muhokama qilishimiz kerak bo'lgan `match` ning yana bir jihati bor: arm patt
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-10-non-exhaustive-match/src/main.rs:here}}
 ```
 
-We didn’t handle the `None` case, so this code will cause a bug. Luckily, it’s
-a bug Rust knows how to catch. If we try to compile this code, we’ll get this
-error:
+Biz `None` holatini ko‘rib chiqmadik, shuning uchun bu kod xatolikka olib keladi. Yaxshiyamki, bu xato Rust qanday tutishni biladi. Agar biz ushbu kodni kompilyatsiya qilishga harakat qilsak, biz ushbu xatoni olamiz:
 
 ```console
 {{#include ../listings/ch06-enums-and-pattern-matching/no-listing-10-non-exhaustive-match/output.txt}}
 ```
 
-Rust knows that we didn’t cover every possible case, and even knows which
-pattern we forgot! Matches in Rust are *exhaustive*: we must exhaust every last
-possibility in order for the code to be valid. Especially in the case of
-`Option<T>`, when Rust prevents us from forgetting to explicitly handle the
-`None` case, it protects us from assuming that we have a value when we might
-have null, thus making the billion-dollar mistake discussed earlier impossible.
+Rust biz barcha mumkin bo'lgan holatlarni qamrab olmaganimizni biladi va hatto qaysi patterni unutganimizni biladi! Rust-da matchlar to'liq: kod to'g'ri bo'lishi uchun biz barcha mumkin bo'lgan holatlarni qamrab olishimiz kerak. Ayniqsa, `Option<T>` holatida, Rust bizni `None` holatini aniq ko'rib chiqishni unutib qo'yishimizga to'sqinlik qilsa, bizni null bo'lishi mumkin bo'lgan qiymatga ega bo`lishimizdan himoya qiladi, shunday qilib, ilgari muhokama qilingan milliard dollarlik xatoni imkonsiz qiladi.
 
-### Catch-all Patterns and the `_` Placeholder
+### Hammasini ushlash patternlari va `_` placeholder
 
-Using enums, we can also take special actions for a few particular values, but
-for all other values take one default action. Imagine we’re implementing a game
-where, if you roll a 3 on a dice roll, your player doesn’t move, but instead
-gets a new fancy hat. If you roll a 7, your player loses a fancy hat. For all
-other values, your player moves that number of spaces on the game board. Here’s
-a `match` that implements that logic, with the result of the dice roll
-hardcoded rather than a random value, and all other logic represented by
-functions without bodies because actually implementing them is out of scope for
-this example:
+Enumlardan foydalanib, biz bir nechta ma'lum qiymatlar uchun maxsus harakatlarni amalga oshirishimiz mumkin, ammo boshqa barcha qiymatlar uchun bitta standart amalni bajaramiz. Tasavvur qiling-a, biz o'yinni amalga oshirmoqdamiz, unda 3 ta o'yinda o'yinchi qimirlamaydi, aksincha, chiroyli yangi shlyapa oladi. Agar siz 7 ni aylantirsangiz, o'yinchingiz chiroyli shlyapasini yo'qotadi. Boshqa barcha qiymatlar uchun o'yinchi o'yin taxtasida shuncha bo'sh joyni siljitadi. Mana, bu mantiqni amalga oshiradigan `match`, bu erda zarlarni o'rash natijasi tasodifiy qiymat emas, balki qattiq kodlangan va mantiqning qolgan qismi jismlarsiz funktsiyalar bilan ifodalanadi, chunki ularni amalga oshirish ushbu doiradan tashqarida. misol:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-15-binding-catchall/src/main.rs:here}}
