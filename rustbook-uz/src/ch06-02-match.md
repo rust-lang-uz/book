@@ -135,7 +135,7 @@ Nihoyat, biz o'yin qoidalarini yana bir bor o'zgartiramiz, shunda siz 3 yoki 7 n
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-17-underscore-unit/src/main.rs:here}}
 ```
 
-Bu yerda biz Rustga aniq aytamizki, biz avvalgi armdagi patterga mos kelmaydigan boshqa qiymatdan foydalanmaymiz va bu holda hech qanday kodni ishga tushirishni xohlamaymiz.
+Bu yerda biz Rustga aniq aytamizki, biz avvalgi armdagi patternga mos kelmaydigan boshqa qiymatdan foydalanmaymiz va bu holda hech qanday kodni ishga tushirishni xohlamaymiz.
 
 [18-bobda][ch18-00-patterns]<!-- ignore --> biz ko'rib chiqadigan patternlar va match haqida ko'proq ma'lumot bor.
 Hozircha biz `if let` sintaksisiga o‘tamiz, bu `match` ifodasi juda batafsil bo'lgan holatlarda foydali bo'lishi mumkin.
