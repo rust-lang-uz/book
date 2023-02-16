@@ -109,32 +109,19 @@ Rust biz barcha mumkin bo'lgan holatlarni qamrab olmaganimizni biladi va hatto q
 
 ### Hammasini ushlash patternlari va `_` placeholder
 
-Enumlardan foydalanib, biz bir nechta ma'lum qiymatlar uchun maxsus harakatlarni amalga oshirishimiz mumkin, ammo boshqa barcha qiymatlar uchun bitta standart amalni bajaramiz. Tasavvur qiling-a, biz o'yinni amalga oshirmoqdamiz, unda 3 ta o'yinda o'yinchi qimirlamaydi, aksincha, chiroyli yangi shlyapa oladi. Agar siz 7 ni aylantirsangiz, o'yinchingiz chiroyli shlyapasini yo'qotadi. Boshqa barcha qiymatlar uchun o'yinchi o'yin taxtasida shuncha bo'sh joyni siljitadi. Mana, bu mantiqni amalga oshiradigan `match`, bu erda zarlarni o'rash natijasi tasodifiy qiymat emas, balki qattiq kodlangan va mantiqning qolgan qismi jismlarsiz funktsiyalar bilan ifodalanadi, chunki ularni amalga oshirish ushbu doiradan tashqarida. misol:
+Enumlardan foydalanib, biz bir nechta ma'lum qiymatlar uchun maxsus harakatlarni amalga oshirishimiz mumkin, ammo boshqa barcha qiymatlar uchun bitta standart amalni bajaramiz. Tasavvur qiling-a, biz o'yinni amalga oshirmoqdamiz, unda 3 ta o'yinda o'yinchi qimirlamaydi, aksincha, chiroyli yangi shlyapa oladi. Agar siz 7 ni aylantirsangiz, o'yinchingiz chiroyli shlyapasini yo'qotadi. Boshqa barcha qiymatlar uchun o'yinchi o'yin taxtasida shuncha bo'sh joyni siljitadi. Mana, bu mantiqni amalga oshiradigan `match`, bu erda narda toshlarni o'rash natijasi tasodifiy qiymat emas, balki qattiq kodlangan va mantiqning qolgan qismi jismlarsiz funktsiyalar bilan ifodalanadi, chunki ularni amalga oshirish ushbu doiradan tashqarida. misol:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-15-binding-catchall/src/main.rs:here}}
 ```
 
-For the first two arms, the patterns are the literal values `3` and `7`. For
-the last arm that covers every other possible value, the pattern is the
-variable we’ve chosen to name `other`. The code that runs for the `other` arm
-uses the variable by passing it to the `move_player` function.
+Dastlabki ikkita arm uchun patternlar `3` va `7` harfli qiymatlardir. Boshqa barcha mumkin bo'lgan qiymatlarni qamrab oladigan oxirgi arm uchun pattern biz `boshqa` deb nomlash uchun tanlagan o'zgaruvchidir. `boshqa` arm uchun ishlaydigan kod o'zgaruvchini `player_harakati` funksiyasiga o'tkazish orqali ishlatadi.
 
-This code compiles, even though we haven’t listed all the possible values a
-`u8` can have, because the last pattern will match all values not specifically
-listed. This catch-all pattern meets the requirement that `match` must be
-exhaustive. Note that we have to put the catch-all arm last because the
-patterns are evaluated in order. If we put the catch-all arm earlier, the other
-arms would never run, so Rust will warn us if we add arms after a catch-all!
+Ushbu kod kompilatsiya qilinadi, garchi biz `u8` ga ega bo'lishi mumkin bo'lgan barcha qiymatlarni sanab o'tmagan bo'lsak ham, chunki oxirgi pattern maxsus sanab o'tilmagan barcha qiymatlarga mos keladi. Bu `match` toʻliq boʻlishi kerakligi haqidagi talabga javob beradi. E'tibor bering, biz armni eng oxirgi qo'yishimiz kerak, chunki patternlar tartibda baholanadi. Agar biz ushlovchi armni oldinroq qo'ysak, boshqa armlar hech qachon run bo'lmaydi, shuning uchun biz hammamizni tutgandan keyin arm qo'shsak, Rust bizni ogohlantiradi!
 
-Rust also has a pattern we can use when we want a catch-all but don’t want to
-*use* the value in the catch-all pattern: `_` is a special pattern that matches
-any value and does not bind to that value. This tells Rust we aren’t going to
-use the value, so Rust won’t warn us about an unused variable.
+Rustda umumiy patterda qiymatdan foydalanishni istamaganimizda foydalanish mumkin bo'lgan pattern ham mavjud: `_` - har qanday qiymatga mos keladigan va bu qiymatga bog'lanmaydigan maxsus pattern. Bu Rustga biz qiymatdan foydalanmasligimizni bildiradi, shuning uchun Rust bizni foydalanilmagan o'zgaruvchi haqida ogohlantirmaydi.
 
-Let’s change the rules of the game: now, if you roll anything other than a 3 or
-a 7, you must roll again. We no longer need to use the catch-all value, so we
-can change our code to use `_` instead of the variable named `other`:
+Keling, o'yin qoidalarini shunday o'zgartiraylik: agar 3 yoki 7 dan boshqa narda toshi paydo bo'lsa, siz yana boshqatdan aylantirib tashlashingiz  kerak. Biz endi catch-all qiymatidan foydalanishimiz shart emas, shuning uchun biz kodimizni `boshqa` deb nomlangan o‘zgaruvchi o‘rniga `_` ishlatish uchun o‘zgartirishimiz mumkin:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-16-underscore-catchall/src/main.rs:here}}
