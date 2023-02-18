@@ -16,30 +16,14 @@ Buning o'rniga, biz buni qisqaroq qilib `if let` yordamida yozishimiz mumkin. Qu
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-12-if-let/src/main.rs:here}}
 ```
 
-The syntax `if let` takes a pattern and an expression separated by an equal
-sign. It works the same way as a `match`, where the expression is given to the
-`match` and the pattern is its first arm. In this case, the pattern is
-`Some(max)`, and the `max` binds to the value inside the `Some`. We can then
-use `max` in the body of the `if let` block in the same way we used `max` in
-the corresponding `match` arm. The code in the `if let` block isn’t run if the
-value doesn’t match the pattern.
+`if let` sintaksisi teng belgisi bilan ajratilgan pattern va ifodani oladi. U xuddi `match` bilan ishlaydi, bunda ifoda `match`ga beriladi va pattern uning birinchi armi hisoblanadi. Bunday holda, pattern `Some(max)` bo'lib, `max`  `Some` ichidagi qiymatga bog'lanadi. Shundan so'ng biz `if let` blokining tanasida `max` dan xuddi mos keladigan `match` armida `max` dan foydalanganimiz kabi foydalanishimiz mumkin. Qiymat patternga mos kelmasa, `if let` blokidagi kod ishga tushmaydi.
 
-Using `if let` means less typing, less indentation, and less boilerplate code.
-However, you lose the exhaustive checking that `match` enforces. Choosing
-between `match` and `if let` depends on what you’re doing in your particular
-situation and whether gaining conciseness is an appropriate trade-off for
-losing exhaustive checking.
+`if let` dan foydalanish kamroq yozish, kamroq chekinish va kamroq kodli kodni bildiradi.
+Biroq, siz `match` amal qiladigan to'liq tekshirishni yo'qotasiz. `match` va `if let` o‘rtasida tanlov qilish sizning muayyan vaziyatingizda nima qilayotganingizga va ixchamlikka ega bo‘lish to‘liq tekshirishni yo‘qotish uchun to‘g‘ri kelishilganligiga bog‘liq.
 
-In other words, you can think of `if let` as syntax sugar for a `match` that
-runs code when the value matches one pattern and then ignores all other values.
+Boshqacha qilib aytganda, siz `if let` konstruktsiyasini `match` uchun sintaktik shakar sifatida o'ylab ko'rishingiz mumkin, agar kiritilgan qiymat bitta patterga mos kelsa va boshqa barcha qiymatlarga e'tibor bermasa, kodni bajaradi.
 
-We can include an `else` with an `if let`. The block of code that goes with the
-`else` is the same as the block of code that would go with the `_` case in the
-`match` expression that is equivalent to the `if let` and `else`. Recall the
-`Coin` enum definition in Listing 6-4, where the `Quarter` variant also held a
-`UsState` value. If we wanted to count all non-quarter coins we see while also
-announcing the state of the quarters, we could do that with a `match`
-expression, like this:
+Biz `else`ni `if let` bilan kiritishimiz mumkin. `else` bilan birlashtirilgan kod bloki `if let` va `else`ga ekvivalent bo‘lgan `match` ifodasidagi `_` registriga mos keladigan kod bloki bilan bir xil. 6-4 roʻyxatdagi `Tanga` definitionni eslang, bunda `Quarter` varianti ham `UsState` qiymatiga ega edi. Agar biz quarterlarning holatini e'lon qilishda ko'rgan barcha quarter bo'lmagan tangalarni sanashni istasak, buni quyidagi kabi `match` ifodasi bilan qilishimiz mumkin:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-13-count-and-announce-match/src/main.rs:here}}
