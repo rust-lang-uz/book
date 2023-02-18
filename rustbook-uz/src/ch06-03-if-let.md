@@ -1,26 +1,16 @@
-## Concise Control Flow with `if let`
+##  `if let` bilan  Control Flow
 
-The `if let` syntax lets you combine `if` and `let` into a less verbose way to
-handle values that match one pattern while ignoring the rest. Consider the
-program in Listing 6-6 that matches on an `Option<u8>` value in the
-`config_max` variable but only wants to execute code if the value is the `Some`
-variant.
+`if let` sintaksisi sizga `if` va `let` ni birlashtirib, qolganlarini e'tiborsiz qoldirib, bitta patternga mos keladigan qiymatlarni boshqarishning kamroq batafsil metodiga imkon beradi. 6-6 ro'yxatdagi dasturni ko'rib chiqaylik, u `max_sozlama` o'zgaruvchisidagi `Variant<u8>` qiymatiga mos keladigan, lekin `Some` varianti boʻlsagina kodni bajarishni xohlaydigan dasturni koʻrib chiqamiz.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-06/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 6-6: A `match` that only cares about executing
-code when the value is `Some`</span>
+<span class="caption">Ro'yxat 6-6. Qiymat `Some` bo'lsagina kodni bajaradigan `match` ifoda</span>
 
-If the value is `Some`, we print out the value in the `Some` variant by binding
-the value to the variable `max` in the pattern. We don’t want to do anything
-with the `None` value. To satisfy the `match` expression, we have to add `_ =>
-()` after processing just one variant, which is annoying boilerplate code to
-add.
+Agar qiymat `Some` bo'lsa, biz qiymatni patterndagi `max` o'zgaruvchisiga bog'lash orqali `Some` variantidagi qiymatni chop qilamiz. Biz `None` qiymati bilan hech narsa qilishni xohlamaymiz. `match` ifodasini qondirish uchun faqat bitta variantni qayta ishlagandan so‘ng `_ => ()` qo‘shishimiz kerak, bu esa qo‘shish uchun zerikarli boilerplate koddir.
 
-Instead, we could write this in a shorter way using `if let`. The following
-code behaves the same as the `match` in Listing 6-6:
+Buning o'rniga, biz buni qisqaroq qilib `if let` yordamida yozishimiz mumkin. Quyidagi kod 6-6 ro'yxatdagi `match` bilan bir xil ishlaydi:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-12-if-let/src/main.rs:here}}
