@@ -5,7 +5,7 @@ enum UsState {
     // --snip--
 }
 
-enum Coin {
+enum Tanga {
     Penny,
     Nickel,
     Dime,
@@ -13,12 +13,12 @@ enum Coin {
 }
 
 fn main() {
-    let coin = Coin::Penny;
+    let tanga = Tanga::Penny;
     // ANCHOR: here
-    let mut count = 0;
-    match coin {
-        Coin::Quarter(state) => println!("State quarter from {:?}!", state),
-        _ => count += 1,
+    let mut hisobchi = 0;
+    match tanga {
+        Tanga::Quarter(shtat) => println!("{:?} dan shtat kvartal!", shtat),
+        _ => hisobchi += 1,
     }
     // ANCHOR_END: here
 }
