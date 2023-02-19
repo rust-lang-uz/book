@@ -1,8 +1,8 @@
-use crate::garden::vegetables::Asparagus;
+use crate::poliz::sabzavotlar::Pomidor;
 
-pub mod garden;
+pub mod poliz;
 
 fn main() {
-    let plant = Asparagus {};
-    println!("I'm growing {:?}!", plant);
+    let ekin = Pomidor {};
+    println!("Men {:?} o'stiryapman!", ekin);
 }

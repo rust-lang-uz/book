@@ -26,41 +26,38 @@ Kompilyator modul kodini quyidagi joylarda qidiradi:
 Bu erda biz ushbu qoidalarni aks ettiruvchi `orqa_hovli` nomli binary crate yaratamiz. Crate jildi, shuningdek, `orqa_hovli` deb nomlangan, quyidagi fayllar va jildlarni o'z ichiga oladi:
 
 ```text
-backyard
+orqa_hovli
 ├── Cargo.lock
 ├── Cargo.toml
 └── src
-    ├── garden
-    │   └── vegetables.rs
-    ├── garden.rs
+    ├── poliz
+    │   └── sabzavotlar.rs
+    ├── poliz.rs
     └── main.rs
 ```
 
-The crate root file in this case is *src/main.rs*, and it contains:
+Bu holda cratening ildiz fayli *src/main.rs* bo'lib, u quyidagilarni o'z ichiga oladi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,noplayground,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/main.rs}}
 ```
+`pub mod poliz;` qatori kompilyatorga *src/poliz.rs* da topilgan kodni kiritishni aytadi, ya'ni:
 
-The `pub mod garden;` line tells the compiler to include the code it finds in
-*src/garden.rs*, which is:
-
-<span class="filename">Filename: src/garden.rs</span>
+<span class="filename">Fayl nomi: src/poliz.rs</span>
 
 ```rust,noplayground,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/garden.rs}}
 ```
 
-Here, `pub mod vegetables;` means the code in *src/garden/vegetables.rs* is
-included too. That code is:
+Bu yerda `pub mod sabzavotlar;` *src/poliz/sabzavotlar.rs* dagi kod ham kiritilganligini bildiradi. That code is:
 
 ```rust,noplayground,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/garden/vegetables.rs}}
 ```
 
-Now let’s get into the details of these rules and demonstrate them in action!
+Keling, ushbu qoidalarning tafsilotlari bilan tanishamiz va ularni amalda ko'rsatamiz!
 
 ### Grouping Related Code in Modules
 
