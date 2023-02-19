@@ -10,38 +10,20 @@ Bu yerda biz modullar, pathlar, `use` kalit soʻzi va `pub` kalit soʻzining kom
 work.
 
 - **Cratening ildizidan boshlang**: Crateni kompilyatsiya qilishda kompilyator kodni kompilyatsiya qilish uchun avval cratening ildiz fayliga (odatda kutubxona cratesi uchun *src/lib.rs* yoki binary crate uchun *src/main.rs*) qaraydi.
-- **Declaring modules**: In the crate root file, you can declare new modules;
-say, you declare a “garden” module with `mod garden;`. The compiler will look
-for the module’s code in these places:
-  - Inline, within curly brackets that replace the semicolon following `mod
-    garden`
-  - In the file *src/garden.rs*
-  - In the file *src/garden/mod.rs*
-- **Declaring submodules**: In any file other than the crate root, you can
-  declare submodules. For example, you might declare `mod vegetables;` in
-  *src/garden.rs*. The compiler will look for the submodule’s code within the
-  directory named for the parent module in these places:
-  - Inline, directly following `mod vegetables`, within curly brackets instead
-    of the semicolon
-  - In the file *src/garden/vegetables.rs*
-  - In the file *src/garden/vegetables/mod.rs*
-- **Paths to code in modules**: Once a module is part of your crate, you can
-  refer to code in that module from anywhere else in that same crate, as long
-  as the privacy rules allow, using the path to the code. For example, an
-  `Asparagus` type in the garden vegetables module would be found at
-  `crate::garden::vegetables::Asparagus`.
-- **Private vs public**: Code within a module is private from its parent
-  modules by default. To make a module public, declare it with `pub mod`
-  instead of `mod`. To make items within a public module public as well, use
-  `pub` before their declarations.
-- **The `use` keyword**: Within a scope, the `use` keyword creates shortcuts to
-  items to reduce repetition of long paths. In any scope that can refer to
-  `crate::garden::vegetables::Asparagus`, you can create a shortcut with `use
-  crate::garden::vegetables::Asparagus;` and from then on you only need to
-  write `Asparagus` to make use of that type in the scope.
+- **Modullarni e'lon qilish**: Cratening ildiz faylida siz yangi modullarni e'lon qilishingiz mumkin; aytaylik, siz `mod poliz` bilan `poliz` modulini e'lon qilasiz; 
+Kompilyator modul kodini quyidagi joylarda qidiradi:
+  - Inline, jingalak qavs ichida `mod poliz` dan keyingi nuqta-vergul o'rnini egallaydi
+  - *src/poliz.rs* faylida
+  - *src/poliz/mod.rs* faylida
+- **Submodullarni e'lon qilish**: Crate ildizidan boshqa har qanday faylda siz submodullarni e'lon qilishingiz mumkin. Masalan, *src/poliz.rs* da `mod sabzavotlar;` deb e`lon qilishingiz mumkin. Kompilyator quyi modul kodini quyidagi joylarda ota-modul uchun nomlangan jilddan qidiradi:
+  - Inline, to'g'ridan-to'g'ri `mod sabzavotlar` dan keyin, nuqta-vergul o'rniga jingalak qavslar ichida
+  - *src/poliz/sabzavotlar.rs* faylida
+  - *src/poliz/sabzavotlar/mod.rs* faylida
+- **Modullarda kodlash yo'llari**: Modul sizning cratengizning bir qismi bo'lgandan so'ng, maxfiylik qoidalari ruxsat bergan bo'lsa, kod yo'lidan foydalanib, xuddi shu cratening istalgan joyidan ushbu moduldagi kodga murojaat qilishingiz mumkin. Misol uchun, poliz sabzavotlari modulidagi `Pomidor` turi `Crate::poliz::sabzavotlar::Pomidor` da topiladi.
+- **Shaxsiy va ommaviy**: Modul ichidagi kod standart bo'yicha uning ota-modullaridan maxfiydir. Modulni ommaviy qilish uchun uni `mod` o'rniga `pub mod` bilan e’lon qiling. Ommaviy moduldagi elementlarni ham hammaga ochiq qilish uchun ularni e'lon qilishdan oldin `pub` dan foydalaning.
+- **`use` kalit so'zi**: Bir doirada `use` kalit so'zidan foydalanish uzoq yo'llarning takrorlanishini kamaytirish uchun elementlar uchun taxalluslarni yaratadi. `Crate::poliz::sabzavotlar::Pomidor` ga murojaat qilishi mumkin bo'lgan har qanday sohada siz `use crate::poliz::sabzavotlar::Pomidor;` bilan taxallus yaratishingiz mumkin va shundan so'ng siz ushbu turdagi ushbu doirada foydalanish uchun `Pomidor `deb yozishingiz kerak.
 
-Here we create a binary crate named `backyard` that illustrates these rules. The
-crate’s directory, also named `backyard`, contains these files and directories:
+Bu erda biz ushbu qoidalarni aks ettiruvchi `orqa_hovli` nomli binary crate yaratamiz. Crate jildi, shuningdek, `orqa_hovli` deb nomlangan, quyidagi fayllar va jildlarni o'z ichiga oladi:
 
 ```text
 backyard
