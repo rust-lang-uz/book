@@ -12,46 +12,25 @@ Ko'pincha Rustaceanlar  “crate” deganda, ular kutubxona crateni anglatadi va
 
 *Crate root* bu Rust kompilyatori cratengizning ildiz modulini yaratishni boshlaydigan manba fayldir (biz modullarni [“Qo'llanish doirasi va maxfiylikni nazorat qilish uchun modullarni aniqlash”][modules]<!-- ignore --> bo‘limida chuqur tushuntiramiz).
 
-A *package* is a bundle of one or more crates that provides a set of
-functionality. A package contains a *Cargo.toml* file that describes how to
-build those crates. Cargo is actually a package that contains the binary crate
-for the command-line tool you’ve been using to build your code. The Cargo
-package also contains a library crate that the binary crate depends on. Other
-projects can depend on the Cargo library crate to use the same logic the Cargo
-command-line tool uses.
+*Paket* - bu bir yoki bir nechta cratelar to'plami bo'lib, u funksiyalar to'plamini ta'minlaydi. Paketda ushbu cratelarni qanday build qilishni tavsiflovchi *Cargo.toml* fayli mavjud. Cargo - bu sizning kodingizni yaratishda foydalanayotgan buyruq qatori vositasi uchun binary crateni o'z ichiga olgan paket. Cargo paketida binary crate bog'liq bo'lgan kutubxona cratesi ham mavjud. Boshqa loyihalar Cargo buyruq qatori vositasi ishlatadigan mantiqdan foydalanish uchun cargo kutubxonasi cratesiga bog'liq bo'lishi mumkin.
 
-A package can contain as many binary crates as you like, but at most only one
-library crate. A package must contain at least one crate, whether that’s a
-library or binary crate.
+Paket siz xohlagancha ko'p ikkilik binary cratelarni o'z ichiga olishi mumkin, lekin bitta kutubxona cratesidan ko'p bo'lmasligi kerak. Paketda kamida bitta crate bo'lishi kerak, u kutubxona yoki binary crate bo'lishi kerak.
 
-Let’s walk through what happens when we create a package. First, we enter the
-command `cargo new`:
+Keling, paketni yaratganimizda nima sodir bo'lishini ko'rib chiqaylik. Birinchidan, biz `cargo new` buyrug'ini kiritamiz:
 
 ```console
-$ cargo new my-project
-     Created binary (application) `my-project` package
-$ ls my-project
+$ cargo new mening-paketim
+     Created binary (application) `mening-paketim` package
+$ ls mening-paketim
 Cargo.toml
 src
-$ ls my-project/src
+$ ls mening-paketim/src
 main.rs
 ```
 
-After we run `cargo new`, we use `ls` to see what Cargo creates. In the project
-directory, there’s a *Cargo.toml* file, giving us a package. There’s also a
-*src* directory that contains *main.rs*. Open *Cargo.toml* in your text editor,
-and note there’s no mention of *src/main.rs*. Cargo follows a convention that
-*src/main.rs* is the crate root of a binary crate with the same name as the
-package. Likewise, Cargo knows that if the package directory contains
-*src/lib.rs*, the package contains a library crate with the same name as the
-package, and *src/lib.rs* is its crate root. Cargo passes the crate root files
-to `rustc` to build the library or binary.
+Biz `cargo new` ni ishga tushirgandan so'ng, biz cargo nima yaratganini ko'rish uchun `ls` dan foydalanamiz. `mening-paketim` jildida bizga paketni taqdim qiluvchi *Cargo.toml* fayli mavjud. Shuningdek, *main.rs* ni o'z ichiga olgan *src* jildi ham mavjud. Matn muharririda *Cargo.toml* ni oching va *src/main.rs* haqida hech qanday eslatma yo‘qligiga e'tibor bering. Cargo, *src/main.rs* paket bilan bir xil nomga ega binary cratening crate ildizi ekanligi haqidagi konventsiyaga amal qiladi. Xuddi shunday, Cargo ham biladiki, agar paket jildida *src/lib.rs* bo'lsa, paketda paket bilan bir xil nomdagi kutubxona cratesi mavjud va *src/lib.rs* uning crate ildizi hisoblanadi. Cargo kutubxona yoki binaryni yaratish uchun cratening ildiz fayllarini `rustc` ga o'tkazadi.
 
-Here, we have a package that only contains *src/main.rs*, meaning it only
-contains a binary crate named `my-project`. If a package contains *src/main.rs*
-and *src/lib.rs*, it has two crates: a binary and a library, both with the same
-name as the package. A package can have multiple binary crates by placing files
-in the *src/bin* directory: each file will be a separate binary crate.
+Bu yerda bizda faqat *src/main.rs* ni o'z ichiga olgan paket bor, ya'ni u faqat `mening-paketim` nomli binary crateni o'z ichiga oladi. Agar paketda `src/main.rs` va `src/lib.rs` bo'lsa, unda ikkita crate, binary crate va kutubxona cratesi mavjud bo'lib, ikkalasi ham paket bilan bir xil nomga ega. Paketda fayllarni *src/bin* jildiga joylashtirish orqali bir nechta binary cratelar bo'lishi mumkin: har bir fayl alohida binary crate bo'ladi.
 
 [modules]: ch07-02-defining-modules-to-control-scope-and-privacy.html
 [rand]: ch02-00-guessing-game-tutorial.html#generating-a-random-number
