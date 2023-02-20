@@ -1,29 +1,19 @@
-## Paths for Referring to an Item in the Module Tree
+## Modul daraxtidagi elementga murojaat qilish yo'llari
 
-To show Rust where to find an item in a module tree, we use a path in the same
-way we use a path when navigating a filesystem. To call a function, we need to
-know its path.
+Rust-ga modul daraxtidagi elementni qayerdan topish mumkinligini ko'rsatish uchun biz fayl tizimida harakat qilishda qanday yo'l(path) ishlatgan bo'lsak, xuddi shunday yo'ldan foydalanamiz. Funksiyani chaqirish uchun biz uning yo'lini bilishimiz kerak.
 
-A path can take two forms:
+Yo'l ikki shaklda bo'lishi mumkin:
 
-* An *absolute path* is the full path starting from a crate root; for code
-  from an external crate, the absolute path begins with the crate name, and for
-  code from the current crate, it starts with the literal `crate`.
-* A *relative path* starts from the current module and uses `self`, `super`, or
-  an identifier in the current module.
+* *Absolyut yo'l* - bu crate ildizidan boshlanadigan to'liq yo'l; tashqi cretedagi kod uchun mutlaq yo'l crate nomidan boshlanadi va joriy cratedagi kod uchun esa `crate` bilan boshlanadi..
+* *N   isbiy yo‘l* joriy moduldan boshlanadi va joriy modulda `self`, `super` yoki identifikatordan foydalanadi.
 
-Both absolute and relative paths are followed by one or more identifiers
-separated by double colons (`::`).
+Mutlaq va nisbiy yo‘llardan keyin ikki nuqta (`::`) bilan ajratilgan bir yoki bir nechta identifikatorlar keladi.
 
-Returning to Listing 7-1, say we want to call the `add_to_waitlist` function.
-This is the same as asking: what’s the path of the `add_to_waitlist` function?
-Listing 7-3 contains Listing 7-1 with some of the modules and functions
-removed.
+7-1 ro'yxatiga qaytsak, biz `navbat_listiga_qoshish` funksiyasini chaqirmoqchimiz deylik.
+Bu so'rash bilan bir xil: `navbat_listiga_qoshish` funksiyasining yo'li nima?
+7-3 ro'yxatda 7-1 ro'yxati mavjud bo'lib, ba'zi modullar va funksiyalar olib tashlangan.
 
-We’ll show two ways to call the `add_to_waitlist` function from a new function
-`eat_at_restaurant` defined in the crate root. These paths are correct, but
-there’s another problem remaining that will prevent this example from compiling
-as-is. We’ll explain why in a bit.
+Biz quti ildizida belgilangan yangi `restoranda_ovqatlanish` funksiyasidan `navbat_listiga_qoshish` funksiyasini chaqirishning ikkita usulini ko‘rsatamiz. Bu yoʻllar toʻgʻri, ammo bu misolni avvalgidek tuzishga toʻsqinlik qiladigan yana bir muammo bor. Sababini birozdan keyin tushuntiramiz.
 
 The `eat_at_restaurant` function is part of our library crate’s public API, so
 we mark it with the `pub` keyword. In the [“Exposing Paths with the `pub`
