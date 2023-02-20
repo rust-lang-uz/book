@@ -1,15 +1,15 @@
-mod front_of_house {
-    mod hosting {
-        fn add_to_waitlist() {}
+mod uyning_oldi {
+    mod xizmat {
+        fn navbat_listiga_qoshish() {}
 
-        fn seat_at_table() {}
+        fn stolga_otirish() {}
     }
 
     mod serving {
-        fn take_order() {}
+        fn buyurtma_olish() {}
 
-        fn serve_order() {}
+        fn buyurtma_berish() {}
 
-        fn take_payment() {}
+        fn tolovni_qabul_qilish() {}
     }
 }
