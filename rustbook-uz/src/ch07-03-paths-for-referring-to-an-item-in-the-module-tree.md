@@ -13,29 +13,19 @@ Mutlaq va nisbiy yo‘llardan keyin ikki nuqta (`::`) bilan ajratilgan bir yoki 
 Bu so'rash bilan bir xil: `navbat_listiga_qoshish` funksiyasining yo'li nima?
 7-3 ro'yxatda 7-1 ro'yxati mavjud bo'lib, ba'zi modullar va funksiyalar olib tashlangan.
 
-Biz quti ildizida belgilangan yangi `restoranda_ovqatlanish` funksiyasidan `navbat_listiga_qoshish` funksiyasini chaqirishning ikkita usulini ko‘rsatamiz. Bu yoʻllar toʻgʻri, ammo bu misolni avvalgidek tuzishga toʻsqinlik qiladigan yana bir muammo bor. Sababini birozdan keyin tushuntiramiz.
+Biz crate ildizida belgilangan yangi `restoranda_ovqatlanish` funksiyasidan `navbat_listiga_qoshish` funksiyasini chaqirishning ikkita usulini ko‘rsatamiz. Bu yoʻllar toʻgʻri, ammo bu misolni avvalgidek tuzishga toʻsqinlik qiladigan yana bir muammo bor. Sababini birozdan keyin tushuntiramiz.
 
-The `eat_at_restaurant` function is part of our library crate’s public API, so
-we mark it with the `pub` keyword. In the [“Exposing Paths with the `pub`
-Keyword”][pub]<!-- ignore --> section, we’ll go into more detail about `pub`.
+`restoranda_ovqatlanish` funksiyasi kutubxonamizning umumiy API-ning bir qismidir, shuning uchun biz uni `pub` kalit so'zi bilan belgilaymiz. [“`pub` kalit so'zi bilan yo'llarni ochish”][pub]<!-- ignore --> bo‘limida biz `pub` haqida batafsilroq to‘xtalib o'tamiz.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-03/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-3: Calling the `add_to_waitlist` function using
-absolute and relative paths</span>
+<span class="caption">Ro'yxat 7-3: `navbat_listiga_qoshish` funksiyasini mutlaq va nisbiy yo'llar yordamida chaqirish</span>
 
-The first time we call the `add_to_waitlist` function in `eat_at_restaurant`,
-we use an absolute path. The `add_to_waitlist` function is defined in the same
-crate as `eat_at_restaurant`, which means we can use the `crate` keyword to
-start an absolute path. We then include each of the successive modules until we
-make our way to `add_to_waitlist`. You can imagine a filesystem with the same
-structure: we’d specify the path `/front_of_house/hosting/add_to_waitlist` to
-run the `add_to_waitlist` program; using the `crate` name to start from the
-crate root is like using `/` to start from the filesystem root in your shell.
+Biz birinchi marta `restoranda_ovqatlanish` ichida `navbat_listiga_qoshish` funksiyasini chaqirganimizda mutlaq yo'ldan foydalanamiz. `navbat_listiga_qoshish` funksiyasi `restoranda_ovqatlanish` bilan bir xil crateda belgilangan, ya'ni mutlaq yoʻlni boshlash uchun `crate` kalit soʻzidan foydalanishimiz mumkin. Keyin biz `navbat_listiga_qoshish` ga o'tgunimizcha ketma-ket modullarning har birini o'z ichiga olamiz. Siz bir xil strukturaga ega fayl tizimini tasavvur qilishingiz mumkin: biz `navbat_listiga_qoshish` dasturini ishga tushirish uchun `/uyning_oldi/xizmat/navbat_listiga_qoshish` yo'lini belgilaymiz; crate ildizidan boshlash uchun `crate` nomidan foydalanish shelldagi fayl tizimi ildizidan boshlash uchun `/` dan foydalanishga o'xshaydi.
 
 The second time we call `add_to_waitlist` in `eat_at_restaurant`, we use a
 relative path. The path starts with `front_of_house`, the name of the module
