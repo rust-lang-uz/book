@@ -27,44 +27,23 @@ Biz crate ildizida belgilangan yangi `restoranda_ovqatlanish` funksiyasidan `nav
 
 Biz birinchi marta `restoranda_ovqatlanish` ichida `navbat_listiga_qoshish` funksiyasini chaqirganimizda mutlaq yo'ldan foydalanamiz. `navbat_listiga_qoshish` funksiyasi `restoranda_ovqatlanish` bilan bir xil crateda belgilangan, ya'ni mutlaq yoʻlni boshlash uchun `crate` kalit soʻzidan foydalanishimiz mumkin. Keyin biz `navbat_listiga_qoshish` ga o'tgunimizcha ketma-ket modullarning har birini o'z ichiga olamiz. Siz bir xil strukturaga ega fayl tizimini tasavvur qilishingiz mumkin: biz `navbat_listiga_qoshish` dasturini ishga tushirish uchun `/uyning_oldi/xizmat/navbat_listiga_qoshish` yo'lini belgilaymiz; crate ildizidan boshlash uchun `crate` nomidan foydalanish shelldagi fayl tizimi ildizidan boshlash uchun `/` dan foydalanishga o'xshaydi.
 
-The second time we call `add_to_waitlist` in `eat_at_restaurant`, we use a
-relative path. The path starts with `front_of_house`, the name of the module
-defined at the same level of the module tree as `eat_at_restaurant`. Here the
-filesystem equivalent would be using the path
-`front_of_house/hosting/add_to_waitlist`. Starting with a module name means
-that the path is relative.
+Biz `restoranda_ovqatlanish` ichida `navbat_listiga_qoshish` ni ikkinchi marta chaqirganimizda nisbiy yo'ldan foydalanamiz. Yo'l `uyning_oldi` bilan boshlanadi, modul nomi `restoranda_ovqatlanish` bilan bir xil modul daraxti darajasida belgilangan. Bu yerda fayl tizimi ekvivalenti `uyning_oldi/xizmat/navbat_listiga_qoshish` yo'lidan foydalaniladi. Modul nomi bilan boshlash yo'l nisbiy ekanligini bildiradi.
 
-Choosing whether to use a relative or absolute path is a decision you’ll make
-based on your project, and depends on whether you’re more likely to move item
-definition code separately from or together with the code that uses the item.
-For example, if we move the `front_of_house` module and the `eat_at_restaurant`
-function into a module named `customer_experience`, we’d need to update the
-absolute path to `add_to_waitlist`, but the relative path would still be valid.
-However, if we moved the `eat_at_restaurant` function separately into a module
-named `dining`, the absolute path to the `add_to_waitlist` call would stay the
-same, but the relative path would need to be updated. Our preference in general
-is to specify absolute paths because it’s more likely we’ll want to move code
-definitions and item calls independently of each other.
+Nisbiy yoki mutlaq yo‘ldan foydalanishni tanlash loyihangiz asosida qabul qilinadigan qaror bo‘lib, element definitioni kodini elementdan foydalanadigan koddan alohida yoki birga ko‘chirish ehtimoli ko‘proq ekanligiga bog‘liq.
+Masalan, `uyning_oldi` moduli va `restoranda_ovqatlanish` funksiyasini `mijoz_tajribasi` nomli modulga o‘tkazsak, mutlaq yo‘lni `navbat_listiga_qoshish`ga yangilashimiz kerak bo‘ladi, lekin nisbiy yo‘l baribir amal qiladi.
+Biroq, agar biz `restoranda_ovqatlanish` funksiyasini `ovqatlanish` nomli modulga alohida ko'chirsak, `restoranda_ovqatlanish` chaqiruvining mutlaq yo'li bir xil bo'lib qoladi, lekin nisbiy yo'l yangilanishi kerak bo'ladi. Umuman olganda, bizning afzal ko'rganimiz mutlaq yo'llarni belgilashdir, chunki biz kod definitionlari va element chaqiruvlarini bir-biridan mustaqil ravishda ko'chirishni xohlaymiz.
 
-Let’s try to compile Listing 7-3 and find out why it won’t compile yet! The
-error we get is shown in Listing 7-4.
+Keling, 7-3 ro'yxatini kompilatsiya qilishga harakat qilaylik va nima uchun u hali kompilatsiya bo'lmaganligini bilib olaylik! Biz olgan xato 7-4 ro'yxatda ko'rsatilgan.
 
 ```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-03/output.txt}}
 ```
 
-<span class="caption">Listing 7-4: Compiler errors from building the code in
-Listing 7-3</span>
+<span class="caption">Ro'yxat 7-4: 7-3 ro'yxatdagi kodni kompilyatsiya qilishda kompilyator xatolari</span>
 
-The error messages say that module `hosting` is private. In other words, we
-have the correct paths for the `hosting` module and the `add_to_waitlist`
-function, but Rust won’t let us use them because it doesn’t have access to the
-private sections. In Rust, all items (functions, methods, structs, enums,
-modules, and constants) are private to parent modules by default. If you want
-to make an item like a function or struct private, you put it in a module.
+Xato xabarlari `xizmat` moduli shaxsiy ekanligini aytadi. Boshqacha qilib aytadigan bo'lsak, bizda `xizmat` moduli va `navbat_listiga_qoshish` funksiyasi uchun to'g'ri yo'llar mavjud, ammo Rust ulardan foydalanishimizga ruxsat bermaydi, chunki u shaxsiy bo'limlarga kirish imkoniga ega emas. Rust-da barcha elementlar (funktsiyalar, metodlar, structlar, enumlar, modullar va konstantalar) standart bo'yicha ota-modullar uchun shaxsiydir. Agar siz funksiya yoki struktura kabi elementni yaratmoqchi bo'lsangiz, uni modulga joylashtirasiz.
 
-Items in a parent module can’t use the private items inside child modules, but
-items in child modules can use the items in their ancestor modules. This is
+Ota-moduldagi elementlar ichki modullar ichidagi shaxsiy elementlardan foydalana olmaydi, lekin bolalar modullaridagi elementlar o'zlarining ota-modullaridagi elementlardan foydalanishi mumkin. This is
 because child modules wrap and hide their implementation details, but the child
 modules can see the context in which they’re defined. To continue with our
 metaphor, think of the privacy rules as being like the back office of a

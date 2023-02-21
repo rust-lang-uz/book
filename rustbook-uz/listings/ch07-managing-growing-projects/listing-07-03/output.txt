@@ -1,27 +1,27 @@
 $ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
-error[E0603]: module `hosting` is private
+error[E0603]: module `xizmat` is private
  --> src/lib.rs:9:28
   |
-9 |     crate::front_of_house::hosting::add_to_waitlist();
+9 |     crate::uyning_oldi::xizmat::navbat_listiga_qoshish();
   |                            ^^^^^^^ private module
   |
-note: the module `hosting` is defined here
+note: the module `xizmat` is defined here
  --> src/lib.rs:2:5
   |
-2 |     mod hosting {
+2 |     mod xizmat {
   |     ^^^^^^^^^^^
 
-error[E0603]: module `hosting` is private
+error[E0603]: module `xizmat` is private
   --> src/lib.rs:12:21
    |
-12 |     front_of_house::hosting::add_to_waitlist();
+12 |     uyning_oldi::xizmat::navbat_listiga_qoshish();
    |                     ^^^^^^^ private module
    |
-note: the module `hosting` is defined here
+note: the module `xizmat` is defined here
   --> src/lib.rs:2:5
    |
-2  |     mod hosting {
+2  |     mod xizmat {
    |     ^^^^^^^^^^^
 
 For more information about this error, try `rustc --explain E0603`.
