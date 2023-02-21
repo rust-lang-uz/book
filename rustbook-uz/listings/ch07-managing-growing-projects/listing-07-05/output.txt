@@ -1,27 +1,27 @@
 $ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
-error[E0603]: function `add_to_waitlist` is private
+error[E0603]: function `navbat_listiga_qoshish` is private
  --> src/lib.rs:9:37
   |
-9 |     crate::front_of_house::hosting::add_to_waitlist();
+9 |     crate::uyning_oldi::xizmat::navbat_listiga_qoshish();
   |                                     ^^^^^^^^^^^^^^^ private function
   |
-note: the function `add_to_waitlist` is defined here
+note: the function `navbat_listiga_qoshish` is defined here
  --> src/lib.rs:3:9
   |
-3 |         fn add_to_waitlist() {}
+3 |         fn navbat_listiga_qoshish() {}
   |         ^^^^^^^^^^^^^^^^^^^^
 
-error[E0603]: function `add_to_waitlist` is private
+error[E0603]: function `navbat_listiga_qoshish` is private
   --> src/lib.rs:12:30
    |
-12 |     front_of_house::hosting::add_to_waitlist();
+12 |     uyning_oldi::xizmat::navbat_listiga_qoshish();
    |                              ^^^^^^^^^^^^^^^ private function
    |
-note: the function `add_to_waitlist` is defined here
+note: the function `navbat_listiga_qoshish` is defined here
   --> src/lib.rs:3:9
    |
-3  |         fn add_to_waitlist() {}
+3  |         fn navbat_listiga_qoshish() {}
    |         ^^^^^^^^^^^^^^^^^^^^
 
 For more information about this error, try `rustc --explain E0603`.

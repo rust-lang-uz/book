@@ -43,44 +43,29 @@ Keling, 7-3 ro'yxatini kompilatsiya qilishga harakat qilaylik va nima uchun u ha
 
 Xato xabarlari `xizmat` moduli shaxsiy ekanligini aytadi. Boshqacha qilib aytadigan bo'lsak, bizda `xizmat` moduli va `navbat_listiga_qoshish` funksiyasi uchun to'g'ri yo'llar mavjud, ammo Rust ulardan foydalanishimizga ruxsat bermaydi, chunki u shaxsiy bo'limlarga kirish imkoniga ega emas. Rust-da barcha elementlar (funktsiyalar, metodlar, structlar, enumlar, modullar va konstantalar) standart bo'yicha ota-modullar uchun shaxsiydir. Agar siz funksiya yoki struktura kabi elementni yaratmoqchi bo'lsangiz, uni modulga joylashtirasiz.
 
-Ota-moduldagi elementlar ichki modullar ichidagi shaxsiy elementlardan foydalana olmaydi, lekin bolalar modullaridagi elementlar o'zlarining ota-modullaridagi elementlardan foydalanishi mumkin. This is
-because child modules wrap and hide their implementation details, but the child
-modules can see the context in which they’re defined. To continue with our
-metaphor, think of the privacy rules as being like the back office of a
-restaurant: what goes on in there is private to restaurant customers, but
-office managers can see and do everything in the restaurant they operate.
+Ota-moduldagi elementlar ichki modullar ichidagi shaxsiy elementlardan foydalana olmaydi, lekin bolalar modullaridagi elementlar o'zlarining ota-modullaridagi elementlardan foydalanishi mumkin. Buning sababi shundaki, bolalar modullari o'zlarining amalga oshirish tafsilotlarini o'rab oladi va yashiradi, lekin bolalar modullari ular aniqlangan kontekstni ko'rishlari mumkin. Bizning metaforamizni davom ettirish uchun, maxfiylik qoidalarini restoranning orqa ofisi kabi tasavvur qiling: u erda nima sodir bo'layotgani restoran mijozlari uchun shaxsiy, ammo ofis menejerlari o'zlari ishlayotgan restoranda hamma narsani ko'rishlari va qilishlari mumkin.
 
-Rust chose to have the module system function this way so that hiding inner
-implementation details is the default. That way, you know which parts of the
-inner code you can change without breaking outer code. However, Rust does give
-you the option to expose inner parts of child modules’ code to outer ancestor
-modules by using the `pub` keyword to make an item public.
+Rust modul tizimining shu tarzda ishlashini tanladi, shuning uchun ichki dastur tafsilotlarini yashirish standart bo'yichadir. Shunday qilib, siz ichki kodning qaysi qismlarini tashqi kodni buzmasdan o'zgartirishingiz mumkinligini bilasiz. Biroq, Rust sizga obyektni hammaga ochiq qilish uchun `pub` kalit so'zidan foydalanib, tashqi ajdod modullariga ichki modullar kodining ichki qismlarini ochish imkoniyatini beradi.
 
-### Exposing Paths with the `pub` Keyword
+### `pub` kalit so'zi bilan yo'llarni ochish
 
-Let’s return to the error in Listing 7-4 that told us the `hosting` module is
-private. We want the `eat_at_restaurant` function in the parent module to have
-access to the `add_to_waitlist` function in the child module, so we mark the
-`hosting` module with the `pub` keyword, as shown in Listing 7-5.
+Keling, 7-4 ro'yxatdagi xatoga qaytaylik, bu bizga `xizmat` moduli shaxsiy ekanligini aytdi. Biz ota-moduldagi `restoranda_ovqatlanish` funksiyasi bolalar modulidagi `navbat_listiga_qoshish` funksiyasiga kirishini xohlaymiz, shuning uchun biz `xizmat` modulini `pub` kalit so'zi bilan belgilaymiz, ro'yxat 7-5da ko`rsatilganidek.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-05/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-5: Declaring the `hosting` module as `pub` to
-use it from `eat_at_restaurant`</span>
+<span class="caption">Ro'yxat 7-5: `xizmat` modulini `restoranda_ovqatlanish` dan foydalanish uchun `pub` deb e'lon qilish</span>
 
-Unfortunately, the code in Listing 7-5 still results in an error, as shown in
-Listing 7-6.
+Afsuski, 7-5 ro'yxatdagi kod hali ham 7-6 ro'yxatda ko'rsatilganidek xatolikka olib keladi.
 
 ```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-05/output.txt}}
 ```
 
-<span class="caption">Listing 7-6: Compiler errors from building the code in
-Listing 7-5</span>
+<span class="caption">Ro'yxat 7-6: 7-5 ro'yxatdagi kodni build qilishda kompilyator xatolari</span>
 
 What happened? Adding the `pub` keyword in front of `mod hosting` makes the
 module public. With this change, if we can access `front_of_house`, we can
