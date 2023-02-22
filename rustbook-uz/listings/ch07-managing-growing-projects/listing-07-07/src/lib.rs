@@ -1,13 +1,13 @@
-mod front_of_house {
-    pub mod hosting {
-        pub fn add_to_waitlist() {}
+mod uyning_oldi {
+    pub mod xizmat {
+        pub fn navbat_listiga_qoshish() {}
     }
 }
 
-pub fn eat_at_restaurant() {
-    // Absolute path
-    crate::front_of_house::hosting::add_to_waitlist();
+pub fn restoranda_ovqatlanish() {
+    // Mutlaq yo'l (Absolute path)
+    crate::uyning_oldi::xizmat::navbat_listiga_qoshish();
 
-    // Relative path
-    front_of_house::hosting::add_to_waitlist();
+    // Nisbiy yo'l (Relative path)
+    uyning_oldi::xizmat::navbat_listiga_qoshish();
 }

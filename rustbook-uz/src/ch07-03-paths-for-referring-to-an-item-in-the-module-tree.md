@@ -67,35 +67,23 @@ Afsuski, 7-5 ro'yxatdagi kod hali ham 7-6 ro'yxatda ko'rsatilganidek xatolikka o
 
 <span class="caption">Ro'yxat 7-6: 7-5 ro'yxatdagi kodni build qilishda kompilyator xatolari</span>
 
-What happened? Adding the `pub` keyword in front of `mod hosting` makes the
-module public. With this change, if we can access `front_of_house`, we can
-access `hosting`. But the *contents* of `hosting` are still private; making the
-module public doesn’t make its contents public. The `pub` keyword on a module
-only lets code in its ancestor modules refer to it, not access its inner code.
-Because modules are containers, there’s not much we can do by only making the
-module public; we need to go further and choose to make one or more of the
-items within the module public as well.
+Nima bo'ldi? `mod xizmat` oldiga `pub` kalit so‘zini qo‘shish modulni hammaga ochiq qiladi. Ushbu o'zgarish bilan, agar biz `uyning_oldi` ga kira olsak, biz `xizmat` ga kira olamiz. Lekin `xizmat` ning *tarkibi* hamon shaxsiy; modulni ommaviy qilish uning mazmunini ochiq qilmaydi. Moduldagi `pub` kalit so‘zi faqat uning ota-modullaridagi kodni unga murojaat qilish imkonini beradi, uning ichki kodiga kirishga ruxsat bermaydi.
+Modullar konteyner bo'lgani uchun modulni faqat ommaviy qilish orqali biz ko'p narsa qila olmaymiz; biz oldinga borishimiz va modul ichidagi bir yoki bir nechta narsalarni ham hammaga ochiq qilishni tanlashimiz kerak.
 
-The errors in Listing 7-6 say that the `add_to_waitlist` function is private.
-The privacy rules apply to structs, enums, functions, and methods as well as
-modules.
+7-6 roʻyxatdagi xatolar `navbat_listiga_qoshish` funksiyasi shaxsiy ekanligini bildiradi.
+Maxfiylik qoidalari structlar, enumlar, funksiyalar va metodlar hamda modullarga nisbatan qo'llaniladi.
 
-Let’s also make the `add_to_waitlist` function public by adding the `pub`
-keyword before its definition, as in Listing 7-7.
+7-7 ro'yxatda ko'rsatilganidek, definitiondan oldin `pub` kalit so'zini qo'shish orqali `navbat_listiga_qoshish` funksiyasini ham hammaga ochiq qilaylik.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground,test_harness
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-07/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-7: Adding the `pub` keyword to `mod hosting`
-and `fn add_to_waitlist` lets us call the function from
-`eat_at_restaurant`</span>
+<span class="caption">Ro'yxat 7-7: `mod xizmat` va `fn navbat_listiga_qoshish` ga `pub` kalit so'zini qo'shish bizga `restoranda_ovqatlanish` funksiyasini chaqirish imkonini beradi.</span>
 
-Now the code will compile! To see why adding the `pub` keyword lets us use
-these paths in `add_to_waitlist` with respect to the privacy rules, let’s look
-at the absolute and the relative paths.
+Endi kod kompilyatsiya qilinadi! Nima uchun`pub` kalit soʻzini qoʻshish ushbu yoʻllardan `navbat_listiga_qoshish` da maxfiylik qoidalariga nisbatan foydalanish imkonini berishini bilish uchun mutlaq va nisbiy yoʻllarni koʻrib chiqamiz.
 
 In the absolute path, we start with `crate`, the root of our crate’s module
 tree. The `front_of_house` module is defined in the crate root. While
