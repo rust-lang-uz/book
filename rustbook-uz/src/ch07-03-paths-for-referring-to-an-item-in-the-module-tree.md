@@ -85,36 +85,17 @@ Maxfiylik qoidalari structlar, enumlar, funksiyalar va metodlar hamda modullarga
 
 Endi kod kompilyatsiya qilinadi! Nima uchun`pub` kalit soʻzini qoʻshish ushbu yoʻllardan `navbat_listiga_qoshish` da maxfiylik qoidalariga nisbatan foydalanish imkonini berishini bilish uchun mutlaq va nisbiy yoʻllarni koʻrib chiqamiz.
 
-In the absolute path, we start with `crate`, the root of our crate’s module
-tree. The `front_of_house` module is defined in the crate root. While
-`front_of_house` isn’t public, because the `eat_at_restaurant` function is
-defined in the same module as `front_of_house` (that is, `eat_at_restaurant`
-and `front_of_house` are siblings), we can refer to `front_of_house` from
-`eat_at_restaurant`. Next is the `hosting` module marked with `pub`. We can
-access the parent module of `hosting`, so we can access `hosting`. Finally, the
-`add_to_waitlist` function is marked with `pub` and we can access its parent
-module, so this function call works!
+Mutlaq yo'lda biz crate modul daraxtining ildizi bo'lgan `crate` dan boshlaymiz. `uyning_oldi` moduli crate ildizida belgilangan. `uyning_oldi` ochiq boʻlmasa-da, `restoranda_ovqatlanish` funksiyasi `uyning_oldi` bilan bir xil modulda aniqlanganligi sababli (yaʼni, `restoranda_ovqatlanish` va `uyning_oldi` siblingdir ya'ni aka-uka), biz `restoranda_ovqatlanish` dan `uyning_oldi`ga murojaat qilishimiz mumkin. Keyingi o'rinda `pub` bilan belgilangan `xizmat` moduli. Biz `xizmat` ning ota-moduliga kira olamiz, shuning uchun biz `xizmat` ga kira olamiz. Nihoyat, `navbat_listiga_qoshish` funksiyasi `pub` bilan belgilangan va biz uning asosiy moduliga kira olamiz, shuning uchun bu funksiya chaqiruvi ishlaydi!
 
-In the relative path, the logic is the same as the absolute path except for the
-first step: rather than starting from the crate root, the path starts from
-`front_of_house`. The `front_of_house` module is defined within the same module
-as `eat_at_restaurant`, so the relative path starting from the module in which
-`eat_at_restaurant` is defined works. Then, because `hosting` and
-`add_to_waitlist` are marked with `pub`, the rest of the path works, and this
-function call is valid!
+Nisbiy yo'lda mantiq birinchi qadamdan tashqari mutlaq yo'l bilan bir xil bo'ladi: yo'l crate ildizidan emas, `uyning_oldi`dan boshlanadi. `uyning_oldi` moduli `restoranda_ovqatlanish` bilan bir xil modul ichida aniqlanadi, shuning uchun `restoranda_ovqatlanish` belgilangan moduldan boshlanadigan nisbiy yo‘l ishlaydi. Keyin, `xizmat` va `navbat_listiga_qoshish` `pub` bilan belgilanganligi sababli, qolgan yo‘l ishlaydi va bu funksiya chaqiruvi amal qiladi!
 
-If you plan on sharing your library crate so other projects can use your code,
-your public API is your contract with users of your crate that determines how
-they can interact with your code. There are many considerations around managing
-changes to your public API to make it easier for people to depend on your
-crate. These considerations are out of the scope of this book; if you’re
-interested in this topic, see [The Rust API Guidelines][api-guidelines].
+Agar siz kutubxona crateyingizni boshqa loyihalar sizning kodingizdan foydalanishi uchun baham ko'rishni rejalashtirmoqchi bo'lsangiz, umumiy API sizning crateyingiz foydalanuvchilari bilan tuzilgan shartnoma bo'lib, ular sizning kodingiz bilan qanday aloqada bo'lishini belgilaydi. Odamlar sizning crateyingizga bog'liq bo'lishini osonlashtirish uchun umumiy API-ga o'zgartirishlarni boshqarish bo'yicha ko'plab fikrlar mavjud. Bu mulohazalar ushbu kitob doirasidan tashqarida; agar sizni ushbu mavzu qiziqtirsa, [Rust API ko'rsatmalari][api-guidelines]ga qarang.
 
-> #### Best Practices for Packages with a Binary and a Library
+> #### Binary va kutubxonaga ega paketlar uchun eng yaxshi amaliyotlar
 >
-> We mentioned a package can contain both a *src/main.rs* binary crate root as
-> well as a *src/lib.rs* library crate root, and both crates will have the
-> package name by default. Typically, packages with this pattern of containing
+> Paketda *src/main.rs* binary crate ildizi ham, *src/lib.rs* kutubxona cratesi ildizi
+> ham bo‘lishi mumkinligini aytib o'tdik va ikkala crate ham standart bo‘yicha
+> paket nomiga ega bo‘ladi. Typically, packages with this pattern of containing
 > both a library and a binary crate will have just enough code in the binary
 > crate to start an executable that calls code with the library crate. This
 > lets other projects benefit from the most functionality that the package
