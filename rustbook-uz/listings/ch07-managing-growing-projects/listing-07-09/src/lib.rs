@@ -1,27 +1,28 @@
-mod back_of_house {
-    pub struct Breakfast {
-        pub toast: String,
-        seasonal_fruit: String,
+mod uyning_orqasi {
+    pub struct Nonushta {
+        pub yopilgan_non: String,
+        mavsumiy_meva: String,
     }
 
-    impl Breakfast {
-        pub fn summer(toast: &str) -> Breakfast {
-            Breakfast {
-                toast: String::from(toast),
-                seasonal_fruit: String::from("peaches"),
+    impl Nonushta {
+        pub fn yoz(yopilgan_non: &str) -> Nonushta {
+            Nonushta {
+                yopilgan_non: String::from(yopilgan_non),
+                mavsumiy_meva: String::from("shaftoli"),
             }
         }
     }
 }
 
-pub fn eat_at_restaurant() {
-    // Order a breakfast in the summer with Rye toast
-    let mut meal = back_of_house::Breakfast::summer("Rye");
-    // Change our mind about what bread we'd like
-    meal.toast = String::from("Wheat");
-    println!("I'd like {} toast please", meal.toast);
+pub fn restoranda_ovqatlanish() {
+    // Yozda javdar yopilgan noni bilan nonushta buyurtma qiling
+    let mut ovqat = uyning_orqasi::Nonushta::yoz("Javdar");
+    // Qaysi nonni xohlashimiz haqidagi fikrimizni o'zgartiring
+    ovqat.yopilgan_non = String::from("Bug'doy");
+    println!("Iltimos, {}li yopilgan nonni istayman", ovqat.yopilgan_non);
 
-    // The next line won't compile if we uncomment it; we're not allowed
-    // to see or modify the seasonal fruit that comes with the meal
-    // meal.seasonal_fruit = String::from("blueberries");
+    // Agar izohni olib tashlasak, keyingi qator kompilyatsiya qilinmaydi;
+    // ovqat bilan birga keladigan mavsumiy mevalarni ko'rish yoki 
+    // o'zgartirishga ruxsat berilmagan
+    // ovqat.mavsumiy_meva = String::from("ko'katlar");
 }

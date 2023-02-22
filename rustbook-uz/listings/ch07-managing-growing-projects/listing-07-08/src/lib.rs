@@ -1,10 +1,10 @@
-fn deliver_order() {}
+fn yetkazib_berish() {}
 
-mod back_of_house {
-    fn fix_incorrect_order() {
-        cook_order();
-        super::deliver_order();
+mod uyning_orqasi {
+    fn buyurtmani_tuzatish() {
+        oshpaz();
+        super::yetkazib_berish();
     }
 
-    fn cook_order() {}
+    fn oshpaz() {}
 }

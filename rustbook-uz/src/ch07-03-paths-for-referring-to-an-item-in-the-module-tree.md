@@ -15,7 +15,7 @@ Bu so'rash bilan bir xil: `navbat_listiga_qoshish` funksiyasining yo'li nima?
 
 Biz crate ildizida belgilangan yangi `restoranda_ovqatlanish` funksiyasidan `navbat_listiga_qoshish` funksiyasini chaqirishning ikkita usulini ko‘rsatamiz. Bu yoʻllar toʻgʻri, ammo bu misolni avvalgidek tuzishga toʻsqinlik qiladigan yana bir muammo bor. Sababini birozdan keyin tushuntiramiz.
 
-`restoranda_ovqatlanish` funksiyasi kutubxonamizning umumiy API-ning bir qismidir, shuning uchun biz uni `pub` kalit so'zi bilan belgilaymiz. [“`pub` kalit so'zi bilan yo'llarni ochish”][pub]<!-- ignore --> bo‘limida biz `pub` haqida batafsilroq to‘xtalib o'tamiz.
+`restoranda_ovqatlanish` funksiyasi kutubxonamizning ommaviy API-ning bir qismidir, shuning uchun biz uni `pub` kalit so'zi bilan belgilaymiz. [“`pub` kalit so'zi bilan yo'llarni ochish”][pub]<!-- ignore --> bo‘limida biz `pub` haqida batafsilroq to‘xtalib o'tamiz.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -89,7 +89,7 @@ Mutlaq yo'lda biz crate modul daraxtining ildizi bo'lgan `crate` dan boshlaymiz.
 
 Nisbiy yo'lda mantiq birinchi qadamdan tashqari mutlaq yo'l bilan bir xil bo'ladi: yo'l crate ildizidan emas, `uyning_oldi`dan boshlanadi. `uyning_oldi` moduli `restoranda_ovqatlanish` bilan bir xil modul ichida aniqlanadi, shuning uchun `restoranda_ovqatlanish` belgilangan moduldan boshlanadigan nisbiy yo‘l ishlaydi. Keyin, `xizmat` va `navbat_listiga_qoshish` `pub` bilan belgilanganligi sababli, qolgan yo‘l ishlaydi va bu funksiya chaqiruvi amal qiladi!
 
-Agar siz kutubxona crateyingizni boshqa loyihalar sizning kodingizdan foydalanishi uchun baham ko'rishni rejalashtirmoqchi bo'lsangiz, umumiy API sizning crateyingiz foydalanuvchilari bilan tuzilgan shartnoma bo'lib, ular sizning kodingiz bilan qanday aloqada bo'lishini belgilaydi. Odamlar sizning crateyingizga bog'liq bo'lishini osonlashtirish uchun umumiy API-ga o'zgartirishlarni boshqarish bo'yicha ko'plab fikrlar mavjud. Bu mulohazalar ushbu kitob doirasidan tashqarida; agar sizni ushbu mavzu qiziqtirsa, [Rust API ko'rsatmalari][api-guidelines]ga qarang.
+Agar siz kutubxona crateyingizni boshqa loyihalar sizning kodingizdan foydalanishi uchun baham ko'rishni rejalashtirmoqchi bo'lsangiz, ommaviy API sizning crateyingiz foydalanuvchilari bilan tuzilgan shartnoma bo'lib, ular sizning kodingiz bilan qanday aloqada bo'lishini belgilaydi. Odamlar sizning crateyingizga bog'liq bo'lishini osonlashtirish uchun ommaviy API-ga o'zgartirishlarni boshqarish bo'yicha ko'plab fikrlar mavjud. Bu mulohazalar ushbu kitob doirasidan tashqarida; agar sizni ushbu mavzu qiziqtirsa, [Rust API ko'rsatmalari][api-guidelines]ga qarang.
 
 > #### Binary va kutubxonaga ega paketlar uchun eng yaxshi amaliyotlar
 >
@@ -99,12 +99,12 @@ Agar siz kutubxona crateyingizni boshqa loyihalar sizning kodingizdan foydalanis
 > ushbu patternli paketlar kutubxona cratesi bilan kod chaqiradigan bajariladigan
 > faylni ishga tushirish uchun binary crateda yetarli kodga ega bo'ladi. Bu boshqa
 > loyihalarga paket taqdim etadigan eng ko'p funksiyalardan foydalanish imkonini
-> beradi, chunki kutubxona cratesi kodi umumiy bo'lishi mumkin.
+> beradi, chunki kutubxona cratesi kodi ommaviy bo'lishi mumkin.
 >
-> Modul daraxti *src/lib.rs* da aniqlanishi kerak. Keyin har qanday umumiy obyektlar
+> Modul daraxti *src/lib.rs* da aniqlanishi kerak. Keyin har qanday ommaviy obyektlar
 > binary crateda paket nomi bilan yo'llarni boshlash orqali ishlatilishi mumkin.
 > Binary crate kutubxona cratesidan foydalanuvchiga aylanadi, xuddi butunlay tashqi
-> crate kutubxona cratesidan foydalanadi: u faqat umumiy APIdan foydalanishi mumkin.
+> crate kutubxona cratesidan foydalanadi: u faqat ommaviy APIdan foydalanishi mumkin.
 > Bu sizga yaxshi API yaratishga yordam beradi; Siz nafaqat muallif, balki
 > mijoz hamsiz!
 >
@@ -115,44 +115,24 @@ Agar siz kutubxona crateyingizni boshqa loyihalar sizning kodingizdan foydalanis
 
 Yo'l boshida `super` dan foydalanib, joriy modul yoki crate ildizi emas, balki ota-modulda boshlanadigan nisbiy yo'llarni qurishimiz mumkin. Bu fayl tizimi yoʻlini `..` sintaksisi bilan boshlashga oʻxshaydi. `super` dan foydalanish bizga ota-modulda ekanligini biladigan elementga murojaat qilish imkonini beradi, bu modul ota-ona bilan chambarchas bog'liq bo'lsa, modul daraxtini qayta tartibga solishni osonlashtiradi, lekin ota-ona bir kun kelib modul daraxtining boshqa joyiga ko'chirilishi mumkin.
 
-Consider the code in Listing 7-8 that models the situation in which a chef
-fixes an incorrect order and personally brings it out to the customer. The
-function `fix_incorrect_order` defined in the `back_of_house` module calls the
-function `deliver_order` defined in the parent module by specifying the path to
-`deliver_order` starting with `super`:
+7-8 ro'yxatdagi kodni ko'rib chiqing, unda oshpaz noto'g'ri buyurtmani tuzatgan va uni mijozga shaxsan yetkazgan vaziyatni modellashtiradi. `uyning_orqasi` modulida aniqlangan `buyurtmani_tuzatish` funksiyasi `super` bilan boshlanadigan `yetkazib_berish` yo‘lini belgilash orqali asosiy modulda belgilangan `yetkazib_berish` funksiyasini chaqiradi:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground,test_harness
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-08/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-8: Calling a function using a relative path
-starting with `super`</span>
+<span class="caption">Ro'yxat 7-8: `super` bilan boshlanadigan nisbiy yo'l yordamida funksiyani chaqirish</span>
 
-The `fix_incorrect_order` function is in the `back_of_house` module, so we can
-use `super` to go to the parent module of `back_of_house`, which in this case
-is `crate`, the root. From there, we look for `deliver_order` and find it.
-Success! We think the `back_of_house` module and the `deliver_order` function
-are likely to stay in the same relationship to each other and get moved
-together should we decide to reorganize the crate’s module tree. Therefore, we
-used `super` so we’ll have fewer places to update code in the future if this
-code gets moved to a different module.
+`buyurtmani_tuzatish` funksiyasi `uyning_orqasi` modulida joylashgan, shuning uchun biz `super` dan `uyning_orqasi` ota-moduliga o'tishimiz mumkin. U yerdan `yetkazib_berish` ni qidiramiz va uni topamiz.
+Muvaffaqiyat! Bizning fikrimizcha, `uyning_orqasi` moduli va `yetkazib_berish` funksiyasi bir-biri bilan bir xil munosabatda bo'lib qoladi va agar biz cratening modul daraxtini qayta tashkil etishga qaror qilsak, birgalikda harakatlanadi. Shu sababli, biz `super` dan foydalandik, shuning uchun kelajakda bu kod boshqa modulga ko‘chirilsa, kodni yangilash uchun kamroq joylarga ega bo‘lamiz.
 
-### Making Structs and Enums Public
+### Structlar va Enumlarni ommaviy qilish(Public)
 
-We can also use `pub` to designate structs and enums as public, but there are a
-few details extra to the usage of `pub` with structs and enums. If we use `pub`
-before a struct definition, we make the struct public, but the struct’s fields
-will still be private. We can make each field public or not on a case-by-case
-basis. In Listing 7-9, we’ve defined a public `back_of_house::Breakfast` struct
-with a public `toast` field but a private `seasonal_fruit` field. This models
-the case in a restaurant where the customer can pick the type of bread that
-comes with a meal, but the chef decides which fruit accompanies the meal based
-on what’s in season and in stock. The available fruit changes quickly, so
-customers can’t choose the fruit or even see which fruit they’ll get.
+Shuningdek, structlar va enumlarni ommaviy sifatida belgilash uchun `pub` dan foydalanishimiz mumkin, ammo `pub` dan structlar va enumlar bilan foydalanish uchun qo'shimcha tafsilotlar mavjud. Agar struct definitiondan oldin `pub` dan foydalansak, biz structni hammaga ommaviy qilamiz, lekin structning maydonlari hali ham shaxsiy bo'lib qoladi. Biz har bir sohani alohida-alohida ommaviy qilishimiz yoki qilmasligimiz mumkin. 7-9 roʻyxatda biz ommaviy `qizdirilgan_non` maydoni, lekin shaxsiy `mavsumiy_meva` maydoni bilan ommaviy `uyning_orqasi:: nonushta` structini belgilab oldik. Bu restoranda mijoz ovqat bilan birga keladigan non turini tanlashi mumkin bo'lgan holatni modellashtiradi, ammo oshpaz qaysi meva mavsumda va omborda borligiga qarab ovqatga hamroh bo'lishini hal qiladi. Mavjud mevalar tezda o'zgaradi, shuning uchun mijozlar mevani tanlay olmaydi yoki hatto qaysi mevani olishini ko'ra olmaydi.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-09/src/lib.rs}}
