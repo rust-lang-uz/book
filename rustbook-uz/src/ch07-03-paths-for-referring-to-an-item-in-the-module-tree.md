@@ -95,32 +95,25 @@ Agar siz kutubxona crateyingizni boshqa loyihalar sizning kodingizdan foydalanis
 >
 > Paketda *src/main.rs* binary crate ildizi ham, *src/lib.rs* kutubxona cratesi ildizi
 > ham bo‘lishi mumkinligini aytib o'tdik va ikkala crate ham standart bo‘yicha
-> paket nomiga ega bo‘ladi. Typically, packages with this pattern of containing
-> both a library and a binary crate will have just enough code in the binary
-> crate to start an executable that calls code with the library crate. This
-> lets other projects benefit from the most functionality that the package
-> provides, because the library crate’s code can be shared.
+> paket nomiga ega bo‘ladi. Odatda, kutubxona va binary crateni o'z ichiga olgan
+> ushbu patternli paketlar kutubxona cratesi bilan kod chaqiradigan bajariladigan
+> faylni ishga tushirish uchun binary crateda yetarli kodga ega bo'ladi. Bu boshqa
+> loyihalarga paket taqdim etadigan eng ko'p funksiyalardan foydalanish imkonini
+> beradi, chunki kutubxona cratesi kodi umumiy bo'lishi mumkin.
 >
-> The module tree should be defined in *src/lib.rs*. Then, any public items can
-> be used in the binary crate by starting paths with the name of the package.
-> The binary crate becomes a user of the library crate just like a completely
-> external crate would use the library crate: it can only use the public API.
-> This helps you design a good API; not only are you the author, you’re also a
-> client!
+> Modul daraxti *src/lib.rs* da aniqlanishi kerak. Keyin har qanday umumiy obyektlar
+> binary crateda paket nomi bilan yo'llarni boshlash orqali ishlatilishi mumkin.
+> Binary crate kutubxona cratesidan foydalanuvchiga aylanadi, xuddi butunlay tashqi
+> crate kutubxona cratesidan foydalanadi: u faqat umumiy APIdan foydalanishi mumkin.
+> Bu sizga yaxshi API yaratishga yordam beradi; Siz nafaqat muallif, balki
+> mijoz hamsiz!
 >
-> In [Chapter 12][ch12]<!-- ignore -->, we’ll demonstrate this organizational
-> practice with a command-line program that will contain both a binary crate
-> and a library crate.
+> [12-bobda][ch12]<!-- ignore --> biz ushbu tashkiliy amaliyotni binary crate va
+> kutubxona cratesini o'z ichiga olgan buyruq qatori dasturi bilan ko'rsatamiz.
 
-### Starting Relative Paths with `super`
+### Nisbiy yo'llarni `super` bilan boshlash
 
-We can construct relative paths that begin in the parent module, rather than
-the current module or the crate root, by using `super` at the start of the
-path. This is like starting a filesystem path with the `..` syntax. Using
-`super` allows us to reference an item that we know is in the parent module,
-which can make rearranging the module tree easier when the module is closely
-related to the parent, but the parent might be moved elsewhere in the module
-tree someday.
+Yo'l boshida `super` dan foydalanib, joriy modul yoki crate ildizi emas, balki ota-modulda boshlanadigan nisbiy yo'llarni qurishimiz mumkin. Bu fayl tizimi yoʻlini `..` sintaksisi bilan boshlashga oʻxshaydi. `super` dan foydalanish bizga ota-modulda ekanligini biladigan elementga murojaat qilish imkonini beradi, bu modul ota-ona bilan chambarchas bog'liq bo'lsa, modul daraxtini qayta tartibga solishni osonlashtiradi, lekin ota-ona bir kun kelib modul daraxtining boshqa joyiga ko'chirilishi mumkin.
 
 Consider the code in Listing 7-8 that models the situation in which a chef
 fixes an incorrect order and personally brings it out to the customer. The
