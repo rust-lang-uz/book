@@ -14,47 +14,35 @@ Funksiyalarni chaqirish yo'llarini yozishga to'g'ri kelishi noqulay va takroriy 
 
 `use` va sohaga yo'lni qo'shish fayl tizimida ramziy havola yaratishga o'xshaydi. Crate ildiziga `use crate::uyning_oldi::xizmat` ni qo‘shish orqali `xizmat` endi bu doirada haqiqiy nom bo‘lib qoladi, xuddi `xizmat` moduli crate ildizida aniqlangandek. `use` doirasiga kiritilgan yo'llar boshqa yo'llar kabi maxfiylikni ham tekshiradi.
 
-Note that `use` only creates the shortcut for the particular scope in which the
-`use` occurs. Listing 7-12 moves the `eat_at_restaurant` function into a new
-child module named `customer`, which is then a different scope than the `use`
-statement, so the function body won’t compile:
+E'tibor bering, `use` faqat `use` ishlaydigan aniq doira uchun yorliqni yaratadi. 7-12 roʻyxat `restoranda_ovqatlanish` funksiyasini `mijoz` nomli yangi bolalar moduliga oʻtkazadi, bu keyinchalik `use` statementidan farq qiladi, shuning uchun funksiyaning tanasi kompilyatsiya qilinmaydi:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground,test_harness,does_not_compile,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-12/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-12: A `use` statement only applies in the scope
-it’s in</span>
+<span class="caption">Ro'yxat 7-12: `use` statementi faqat u joylashgan doirada qo'llaniladi</span>
 
-The compiler error shows that the shortcut no longer applies within the
-`customer` module:
+Kompilyator xatosi yorliq endi `mijoz` modulida qo'llanilmasligini ko'rsatadi:
 
 ```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-12/output.txt}}
 ```
 
-Notice there’s also a warning that the `use` is no longer used in its scope! To
-fix this problem, move the `use` within the `customer` module too, or reference
-the shortcut in the parent module with `super::hosting` within the child
-`customer` module.
+E'tibor bering, `use` endi uning doirasida qo'llanilmasligi haqida ogohlantirish ham bor! Bu muammoni hal qilish uchun `use` ni `mijoz` moduliga ham o‘tkazing yoki `mijoz` modulidagi `super::xizmat` bilan ota-moduldagi yorliqlarga murojaat qiling.
 
-### Creating Idiomatic `use` Paths
+### `use` bilan idiomatik yo'llarni yaratish
 
-In Listing 7-11, you might have wondered why we specified `use
-crate::front_of_house::hosting` and then called `hosting::add_to_waitlist` in
-`eat_at_restaurant` rather than specifying the `use` path all the way out to
-the `add_to_waitlist` function to achieve the same result, as in Listing 7-13.
+7-11 ro'yxatda siz shunday deb hayron bo'lishingiz mumkin,Nima uchun biz bir xil natijaga erishish uchun `navbat_listiga_qoshish` funksiyasigacha toʻliq yoʻlni ishlatish oʻrniga, `crate::uyning_oldi::xizmat` ni ishlatishni belgilab qoʻydik va keyin `restoranda_ovqatlanish` ichidagi `xizmat::navbat_listiga_qoshish` ga murojat qildik, 7-13 ro'yxatdagi kabi.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground,test_harness
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-13/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-13: Bringing the `add_to_waitlist` function
-into scope with `use`, which is unidiomatic</span>
+<span class="caption">Ro'yxat 7-13: `navbat_listiga_qoshish` funksiyasini `use` bilan qamrab olish, bu unidiomatikdir</span>
 
 Although both Listing 7-11 and 7-13 accomplish the same task, Listing 7-11 is
 the idiomatic way to bring a function into scope with `use`. Bringing the

@@ -1,16 +1,16 @@
 $ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
-error[E0433]: failed to resolve: use of undeclared crate or module `hosting`
+error[E0433]: failed to resolve: use of undeclared crate or module `xizmat`
   --> src/lib.rs:11:9
    |
-11 |         hosting::add_to_waitlist();
-   |         ^^^^^^^ use of undeclared crate or module `hosting`
+11 |         xizmat::navbat_listiga_qoshish();
+   |         ^^^^^^ use of undeclared crate or module `xizmat`
 
-warning: unused import: `crate::front_of_house::hosting`
+warning: unused import: `crate::uyning_oldi::xizmat`
  --> src/lib.rs:7:5
   |
-7 | use crate::front_of_house::hosting;
-  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+7 | use crate::uyning_oldi::xizmat;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
   |
   = note: `#[warn(unused_imports)]` on by default
 
