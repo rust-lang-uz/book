@@ -1,31 +1,18 @@
-## Bringing Paths into Scope with the `use` Keyword
+## `use` kalit so'zi bilan yo'llarni doiraga kiritish
 
-Having to write out the paths to call functions can feel inconvenient and
-repetitive. In Listing 7-7, whether we chose the absolute or relative path to
-the `add_to_waitlist` function, every time we wanted to call `add_to_waitlist`
-we had to specify `front_of_house` and `hosting` too. Fortunately, there’s a
-way to simplify this process: we can create a shortcut to a path with the `use`
-keyword once, and then use the shorter name everywhere else in the scope.
+Funksiyalarni chaqirish yo'llarini yozishga to'g'ri kelishi noqulay va takroriy tuyulishi mumkin. 7-7-Ro'yxatda `navbat_listiga_qoshish` funksiyasiga mutlaq yoki nisbiy yoʻlni tanladikmi, har safar `navbat_listiga_qoshish` funksiyasiga murojat qilmoqchi boʻlganimizda, `uyning_oldi` va `xizmat`ni ham belgilashimiz kerak edi. Yaxshiyamki, bu jarayonni soddalashtirishning bir usuli bor: biz bir marta `use` kalit so‘zi bilan yo‘lga nom yaratishimiz mumkin, so‘ngra boshqa hamma joyda qisqaroq nomdan foydalanishimiz mumkin.
 
-In Listing 7-11, we bring the `crate::front_of_house::hosting` module into the
-scope of the `eat_at_restaurant` function so we only have to specify
-`hosting::add_to_waitlist` to call the `add_to_waitlist` function in
-`eat_at_restaurant`.
+7-11 ro'yxatda biz `crate::uyning_oldi::xizmat` modulini `restoranda_ovqatlanish` funksiyasi doirasiga kiritamiz, shuning uchun `restoranda_ovqatlanish`dagi `navbat_listiga_qoshish` funksiyasini chaqirish uchun faqat `xizmat::navbat_listiga_qoshish` ni belgilashimiz kerak.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground,test_harness
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-11/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-11: Bringing a module into scope with
-`use`</span>
+<span class="caption">Ro'yxat 7-11: Modulni `use` bilan qamrab olish</span>
 
-Adding `use` and a path in a scope is similar to creating a symbolic link in
-the filesystem. By adding `use crate::front_of_house::hosting` in the crate
-root, `hosting` is now a valid name in that scope, just as though the `hosting`
-module had been defined in the crate root. Paths brought into scope with `use`
-also check privacy, like any other paths.
+`use` va sohaga yo'lni qo'shish fayl tizimida ramziy havola yaratishga o'xshaydi. Crate ildiziga `use crate::uyning_oldi::xizmat` ni qo‘shish orqali `xizmat` endi bu doirada haqiqiy nom bo‘lib qoladi, xuddi `xizmat` moduli crate ildizida aniqlangandek. `use` doirasiga kiritilgan yo'llar boshqa yo'llar kabi maxfiylikni ham tekshiradi.
 
 Note that `use` only creates the shortcut for the particular scope in which the
 `use` occurs. Listing 7-12 moves the `eat_at_restaurant` function into a new

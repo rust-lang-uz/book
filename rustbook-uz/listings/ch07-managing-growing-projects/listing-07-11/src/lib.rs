@@ -1,11 +1,11 @@
-mod front_of_house {
-    pub mod hosting {
-        pub fn add_to_waitlist() {}
+mod uyning_oldi {
+    pub mod xizmat {
+        pub fn navbat_listiga_qoshish() {}
     }
 }
 
-use crate::front_of_house::hosting;
+use crate::uyning_oldi::xizmat;
 
-pub fn eat_at_restaurant() {
-    hosting::add_to_waitlist();
+pub fn restoranda_ovqatlanish() {
+    xizmat::navbat_listiga_qoshish();
 }
