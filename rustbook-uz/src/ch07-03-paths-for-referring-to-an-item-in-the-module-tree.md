@@ -138,46 +138,28 @@ Shuningdek, structlar va enumlarni ommaviy sifatida belgilash uchun `pub` dan fo
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-09/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-9: A struct with some public fields and some
-private fields</span>
+<span class="caption">Ro'yxat 7-9: Ba'zi ommaviy maydonlari va ba'zilari bo'lgan struct
+xususiy maydonlar</span>
 
-Because the `toast` field in the `back_of_house::Breakfast` struct is public,
-in `eat_at_restaurant` we can write and read to the `toast` field using dot
-notation. Notice that we can’t use the `seasonal_fruit` field in
-`eat_at_restaurant` because `seasonal_fruit` is private. Try uncommenting the
-line modifying the `seasonal_fruit` field value to see what error you get!
+`uyning_orqasi::Nonushta` structdagi `yopilgan_non` maydoni ommaviy bo'lgani uchun `restoranda_ovqatlanish` da biz `yopilgan_non` maydoniga nuqta belgisi yordamida yozishimiz va o'qishimiz mumkin. Esda tutingki, biz `mavsumiy_meva` maydonidan `restoranda_ovqatlanish`da foydalana olmaymiz, chunki `mavsumiy_meva` shaxsiydir. Qaysi xatoga yo'l qo'yganingizni bilish uchun `mavsumiy_meva` maydoni qiymatini o'zgartiruvchi qatorni izohdan chiqarib ko'ring!
 
-Also, note that because `back_of_house::Breakfast` has a private field, the
-struct needs to provide a public associated function that constructs an
-instance of `Breakfast` (we’ve named it `summer` here). If `Breakfast` didn’t
-have such a function, we couldn’t create an instance of `Breakfast` in
-`eat_at_restaurant` because we couldn’t set the value of the private
-`seasonal_fruit` field in `eat_at_restaurant`.
+Shuni ham yodda tutingki, `uyning_orqasi::Nonushta` shaxsiy maydonga ega bo'lgani uchun struct `Nonushta` misolini yaratuvchi ommaviy bog'langan funksiyani ta'minlashi kerak (biz uni bu yerda `yoz` deb nomladik).Agar `Nonushta` bunday funksiyaga ega boʻlmagan boʻlsa, biz `restoranda_ovqatlanish`da `Nonushta` misolini yarata olmadik, chunki biz `restoranda_ovqatlanish`da shaxsiy `mavsumiy_meva` maydonining qiymatini oʻrnata olmadik.
 
-In contrast, if we make an enum public, all of its variants are then public. We
-only need the `pub` before the `enum` keyword, as shown in Listing 7-10.
+Aksincha, agar biz enumni ommaviy qilsak, uning barcha variantlari ommaviy bo'ladi. 7 10 roʻyxatda koʻrsatilganidek, bizga faqat `enum` kalit soʻzidan oldin `pub` kerak boʻladi.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-10/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-10: Designating an enum as public makes all its
-variants public</span>
+<span class="caption">Ro'yxat 7-10: Enumni ommaviy deb belgilash uning barcha variantlarini hammaga ochiq qiladi</span>
 
-Because we made the `Appetizer` enum public, we can use the `Soup` and `Salad`
-variants in `eat_at_restaurant`.
+Biz `Taom` ro‘yxatini hammaga ommaviy qilganimiz uchun `restoranda_ovqatlanish`da `Palov` va `Salat` variantlaridan foydalanishimiz mumkin.
 
-Enums aren’t very useful unless their variants are public; it would be annoying
-to have to annotate all enum variants with `pub` in every case, so the default
-for enum variants is to be public. Structs are often useful without their
-fields being public, so struct fields follow the general rule of everything
-being private by default unless annotated with `pub`.
+Enumlar, agar ularning variantlari ommaviy bo'lmasa, unchalik foydali emas; Har bir holatda `pub` bilan barcha enum variantlariga izoh qo'yish zerikarli bo'lar edi, shuning uchun enum variantlari uchun standart umumiy bo'lishi kerak. Structlar ko'pincha maydonlari ommaviy bo'lmasdan foydali bo'ladi, shuning uchun struct maydonlari, agar `pub` bilan izohlanmagan bo'lsa, standart bo'yicha hamma narsa shaxsiy bo'lishining umumiy qoidasiga amal qiladi.
 
-There’s one more situation involving `pub` that we haven’t covered, and that is
-our last module system feature: the `use` keyword. We’ll cover `use` by itself
-first, and then we’ll show how to combine `pub` and `use`.
+`pub` bilan bog'liq yana bir holat bor, biz uni ko'rib chiqmaganmiz va bu bizning modul tizimining oxirgi xususiyati: `use` kalit so'zi. Biz avval `use` ni o'z ichiga olamiz, so'ngra `pub` va `use` ni qanday birlashtirishni ko'rsatamiz.
 
 [pub]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#exposing-paths-with-the-pub-keyword
 [api-guidelines]: https://rust-lang.github.io/api-guidelines/

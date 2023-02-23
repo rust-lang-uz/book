@@ -1,11 +1,11 @@
-mod back_of_house {
-    pub enum Appetizer {
-        Soup,
-        Salad,
+mod uyning_orqasi {
+    pub enum Taom {
+        Palov,
+        Salat,
     }
 }
 
-pub fn eat_at_restaurant() {
-    let order1 = back_of_house::Appetizer::Soup;
-    let order2 = back_of_house::Appetizer::Salad;
+pub fn restoranda_ovqatlanish() {
+    let buyurtma1 = uyning_orqasi::Taom::Palov;
+    let buyurtma2 = uyning_orqasi::Taom::Salat;
 }
