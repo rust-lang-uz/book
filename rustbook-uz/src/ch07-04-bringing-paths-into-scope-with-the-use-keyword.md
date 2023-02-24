@@ -68,45 +68,30 @@ Bu idiomadan istisno shundaki, biz bir xil nomdagi ikkita elementni `use` statem
 
 <span class="caption">Ro'yxat 7-15: Bir xil nomdagi ikkita turni bir xil doiraga kiritish uchun ularning ota-modullaridan foydalanish talab etiladi.</span>
 
-As you can see, using the parent modules distinguishes the two `Result` types.
-If instead we specified `use std::fmt::Result` and `use std::io::Result`, we’d
-have two `Result` types in the same scope and Rust wouldn’t know which one we
-meant when we used `Result`.
+Ko'rib turganingizdek, ota-modullardan foydalanish ikkita `Result` turini ajratib turadi.
+Buning o'rniga `use std::fmt::Result` va `us std::io::Result` ni belgilagan bo'lsak, bizda bir xil miqyosda ikkita `Result` turi bo'lar edi va Rust `Result` dan foydalanganda qaysi birini nazarda tutganimizni bilmas edi.
 
-### Providing New Names with the `as` Keyword
+### `as` kalit so'zi bilan yangi nomlarni taqdim etish
 
-There’s another solution to the problem of bringing two types of the same name
-into the same scope with `use`: after the path, we can specify `as` and a new
-local name, or *alias*, for the type. Listing 7-16 shows another way to write
-the code in Listing 7-15 by renaming one of the two `Result` types using `as`.
+Bir xil nomdagi ikkita turni `use` bilan bir xil doiraga olib kirish muammosining yana bir yechimi bor: yoʻldan soʻng biz `as` va yangi mahalliy nom yoki tur uchun *taxallus* belgilashimiz mumkin. 7-16 ro'yxatda ikkita `Result` turidan birini `as` yordamida qayta nomlash orqali 7-15 ro'yxatdagi kodni yozishning yana bir usuli ko'rsatilgan.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-16/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 7-16: Renaming a type when it’s brought into
-scope with the `as` keyword</span>
+<span class="caption">Ro'yxat 7-16: `as` kalit so'zi bilan qamrovga kiritilgan tur nomini o'zgartirish</span>
 
-In the second `use` statement, we chose the new name `IoResult` for the
-`std::io::Result` type, which won’t conflict with the `Result` from `std::fmt`
-that we’ve also brought into scope. Listing 7-15 and Listing 7-16 are
-considered idiomatic, so the choice is up to you!
+Ikkinchi `use` statementida biz `std::io::Result` turi uchun yangi `IoResult` nomini tanladik, bu endi `std::fmt` dan `Result` turiga zid kelmaydi, u ham doiraga kiradi. 7-15 va 7-16 ro'yxatlar idiomatik hisoblanadi, shuning uchun tanlov sizga bog'liq!
 
-### Re-exporting Names with `pub use`
+### `pub use` bilan nomlarni qayta eksport(re-eksport) qilish
 
-When we bring a name into scope with the `use` keyword, the name available in
-the new scope is private. To enable the code that calls our code to refer to
-that name as if it had been defined in that code’s scope, we can combine `pub`
-and `use`. This technique is called *re-exporting* because we’re bringing
-an item into scope but also making that item available for others to bring into
-their scope.
+`use` kalit so'zidan foydalanib, nomni qamrovga kiritganimizda, yangi doirada mavjud bo'lgan nom shaxsiy bo'ladi. Bizning kodimizni chaqiradigan kodni xuddi shu kod doirasida aniqlangandek ushbu nomga murojaat qilishini yoqish uchun biz `pub` va `use` ni birlashtira olamiz. Bu usul *re-eksport* deb nomlanadi, chunki biz obyektni qamrovga kiritmoqdamiz, lekin elementni boshqa qamrovlarga kiritish uchun ham mavjud qilamiz.
 
-Listing 7-17 shows the code in Listing 7-11 with `use` in the root module
-changed to `pub use`.
+7-17 ro'yxatda 7-11 ro'yxatdagi kod ko'rsatilgan, ildiz modulidagi `use` `pub use` ga o'zgartirilgan.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground,test_harness
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-17/src/lib.rs}}
