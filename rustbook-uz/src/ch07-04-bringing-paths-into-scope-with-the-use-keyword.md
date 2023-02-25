@@ -122,36 +122,25 @@ Qayta eksport qilish sizning kodingizning ichki tuzilishi sizning kodingizni cha
 
 *Cargo.toml*-ga `rand`ni dependency sifatida qo'shish Cargo-ga [crates.io](crates.io)-dan `rand` paketini va har qanday bog'liqliklarni yuklab olishni va `rand`ni loyihamiz uchun ishlatishni aytadi.
 
-Keyin, `rand` ta'riflarini paketimiz doirasiga kiritish uchun biz crate nomidan boshlanadigan `use` qatorini qo'shdik, `rand` va biz qamrab olmoqchi bo'lgan narsalarni sanab o'tdik. Eslatib o‘tamiz, 2-bobdagi [“Tasodifiy raqamni yaratish”][rand]<!-- ignore --> bo‘limida biz `Rng` traitini qamrab oldik va `rand::thread_rng` funksiyasini chaqirdik:
+Keyin, `rand` ta'riflarini paketimiz doirasiga kiritish uchun biz crate nomidan boshlanadigan `use` qatorini qo'shdik, `rand` va biz qamrab olmoqchi bo'lgan elementlarni sanab o'tdik. Eslatib o‘tamiz, 2-bobdagi [“Tasodifiy raqamni yaratish”][rand]<!-- ignore --> bo‘limida biz `Rng` traitini qamrab oldik va `rand::thread_rng` funksiyasini chaqirdik:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-03/src/main.rs:ch07-04}}
 ```
 
-Members of the Rust community have made many packages available at
-[crates.io](https://crates.io/), and pulling any of them into your package
-involves these same steps: listing them in your package’s *Cargo.toml* file and
-using `use` to bring items from their crates into scope.
+Rust hamjamiyatining a'zolari [crates.io](crates.io) saytida ko'plab paketlarni taqdim etishdi va ulardan birini o'z paketingizga olish xuddi shu bosqichlarni o'z ichiga oladi: ularni paketingizning *Cargo.toml* faylida roʻyxatga kiriting va `use` dan foydalanib, ularni cratelaridagi elementlarni qamrab oling.
 
-Note that the standard `std` library is also a crate that’s external to our
-package. Because the standard library is shipped with the Rust language, we
-don’t need to change *Cargo.toml* to include `std`. But we do need to refer to
-it with `use` to bring items from there into our package’s scope. For example,
-with `HashMap` we would use this line:
+E'tibor bering, standart `std` kutubxonasi bizning paketimizdan tashqarida joylashgan cratedir. Standart kutubxona Rust tili bilan birga kelganligi sababli, biz *Cargo.toml* ni `std` qo'shish uchun o'zgartirishimiz shart emas. Ammo biz u yerdan elementlarni paketimiz doirasiga olib kirish uchun `use` bilan murojaat qilishimiz kerak. Masalan, `HashMap` bilan biz ushbu qatordan foydalanamiz:
 
 ```rust
 use std::collections::HashMap;
 ```
 
-This is an absolute path starting with `std`, the name of the standard library
-crate.
+Bu standart kutubxona cratesining nomi bo'lgan `std` bilan boshlanadigan mutlaq yo'ldir.
 
-### Using Nested Paths to Clean Up Large `use` Lists
+### Uzun `use` ro'yxatini qisqartirish uchun ichki yo'llardan foydalanish
 
-If we’re using multiple items defined in the same crate or same module,
-listing each item on its own line can take up a lot of vertical space in our
-files. For example, these two `use` statements we had in the Guessing Game in
-Listing 2-4 bring items from `std` into scope:
+Agar biz bir xil crate yoki bir xil modulda belgilangan bir nechta elementlardan foydalansak, har bir elementni o'z qatoriga qo'yish bizning fayllarimizda juda ko'p vertikal joy egallashi mumkin. Masalan, 2-4 roʻyxatdagi raqamlarni taxmin qilish dasturida mavjud boʻlgan ushbu ikkita `use` statementi `std` dagi elementlarni qamrab oladi:
 
 <span class="filename">Filename: src/main.rs</span>
 
