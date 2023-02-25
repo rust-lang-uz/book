@@ -97,32 +97,16 @@ Ikkinchi `use` statementida biz `std::io::Result` turi uchun yangi `IoResult` no
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-17/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-17: Making a name available for any code to use
-from a new scope with `pub use`</span>
+<span class="caption">Ro'yxat 7-17. `pub use` bilan yangi doiradagi istalgan kod tomonidan foydalanish uchun nom berish</span>
 
-Before this change, external code would have to call the `add_to_waitlist`
-function by using the path
-`restaurant::front_of_house::hosting::add_to_waitlist()`. Now that this `pub
-use` has re-exported the `hosting` module from the root module, external code
-can now use the path `restaurant::hosting::add_to_waitlist()` instead.
+Ushbu o'zgarishdan oldin tashqi kod `restoran::uyning_oldi::xizmat::navbat_listiga_qoshish()` yo'lidan foydalanib, `navbat_listiga_qoshish` funksiyasini chaqirishi kerak bo'ladi. Endi bu `pub use` `xizmat` modulini ildiz modulidan qayta eksport qilgan bo‘lsa, tashqi kod endi `restoran::xizmat::navbat_listiga_qoshish()` yo‘lidan foydalanishi mumkin..
 
-Re-exporting is useful when the internal structure of your code is different
-from how programmers calling your code would think about the domain. For
-example, in this restaurant metaphor, the people running the restaurant think
-about “front of house” and “back of house.” But customers visiting a restaurant
-probably won’t think about the parts of the restaurant in those terms. With
-`pub use`, we can write our code with one structure but expose a different
-structure. Doing so makes our library well organized for programmers working on
-the library and programmers calling the library. We’ll look at another example
-of `pub use` and how it affects your crate’s documentation in the [“Exporting a
-Convenient Public API with `pub use`”][ch14-pub-use]<!-- ignore --> section of
-Chapter 14.
+Qayta eksport qilish sizning kodingizning ichki tuzilishi sizning kodingizni chaqirayotgan dasturchilarning domen haqida o'ylashlaridan farq qilganda foydali bo'ladi. Misol uchun, ushbu restoran metaforasida restoranni boshqaradigan odamlar "uyning old tomoni" va "uyning orqasi" haqida o'ylashadi. Ammo restoranga tashrif buyurgan mijozlar, ehtimol, restoranning qismlari haqida o'ylamaydilar. `pub use` bilan biz kodimizni bitta struct bilan yozishimiz mumkin, lekin boshqa structni ko'rsatamiz. Bu bizning kutubxonamizni kutubxonada ishlaydigan dasturchilar va kutubxonaga murojat qilayotgan dasturchilar uchun uchun yaxshi tashkil etilgan holda saqlaydi. Biz 14-bobning [“`pub use` bilan qulay umumiy APIni eksport qilish”][ch14-pub-use]<!-- ignore --> bo‘limida `pub use`ning yana bir misolini va uning cratengiz hujjatlariga qanday ta’sir qilishini ko‘rib chiqamiz.
 
-### Using External Packages
 
-In Chapter 2, we programmed a guessing game project that used an external
-package called `rand` to get random numbers. To use `rand` in our project, we
-added this line to *Cargo.toml*:
+### Tashqi paketlardan foydalanish
+
+2-bobda biz tasodifiy raqamlarni olish uchun `rand` deb nomlangan tashqi paketdan foydalangan holda taxminiy o'yin loyihasini dasturlashtirdik. Loyihamizda `rand` dan foydalanish uchun biz ushbu qatorni *Cargo.toml* ga qo'shdik:
 
 <!-- When updating the version of `rand` used, also update the version of
 `rand` used in these files so they all match:
@@ -130,21 +114,15 @@ added this line to *Cargo.toml*:
 * ch14-03-cargo-workspaces.md
 -->
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Fayl nomi: Cargo.toml</span>
 
 ```toml
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-02/Cargo.toml:9:}}
 ```
 
-Adding `rand` as a dependency in *Cargo.toml* tells Cargo to download the
-`rand` package and any dependencies from [crates.io](https://crates.io/) and
-make `rand` available to our project.
+*Cargo.toml*-ga `rand`ni dependency sifatida qo'shish Cargo-ga [crates.io](crates.io)-dan `rand` paketini va har qanday bog'liqliklarni yuklab olishni va `rand`ni loyihamiz uchun ishlatishni aytadi.
 
-Then, to bring `rand` definitions into the scope of our package, we added a
-`use` line starting with the name of the crate, `rand`, and listed the items
-we wanted to bring into scope. Recall that in the [“Generating a Random
-Number”][rand]<!-- ignore --> section in Chapter 2, we brought the `Rng` trait
-into scope and called the `rand::thread_rng` function:
+Keyin, `rand` ta'riflarini paketimiz doirasiga kiritish uchun biz crate nomidan boshlanadigan `use` qatorini qo'shdik, `rand` va biz qamrab olmoqchi bo'lgan narsalarni sanab o'tdik. Eslatib o‘tamiz, 2-bobdagi [“Tasodifiy raqamni yaratish”][rand]<!-- ignore --> bo‘limida biz `Rng` traitini qamrab oldik va `rand::thread_rng` funksiyasini chaqirdik:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-03/src/main.rs:ch07-04}}
