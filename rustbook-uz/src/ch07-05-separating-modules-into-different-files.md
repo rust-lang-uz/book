@@ -1,32 +1,22 @@
-## Separating Modules into Different Files
+## Modullarni turli fayllarga ajratish
 
-So far, all the examples in this chapter defined multiple modules in one file.
-When modules get large, you might want to move their definitions to a separate
-file to make the code easier to navigate.
+Hozirgacha ushbu bobdagi barcha misollar bitta faylda bir nechta modullarni aniqladi.
+Modullar kattalashganda, kodni boshqarishni osonlashtirish uchun ularning definitionlarini alohida faylga ko'chirishingiz mumkin.
 
-For example, let’s start from the code in Listing 7-17 that had multiple
-restaurant modules. We’ll extract modules into files instead of having all the
-modules defined in the crate root file. In this case, the crate root file is
-*src/lib.rs*, but this procedure also works with binary crates whose crate root
-file is *src/main.rs*.
+Masalan, 7-17 ro'yxatdagi bir nechta restoran moduliga ega bo'lgan koddan boshlaylik. Biz cratening ildiz modulidagi barcha modullarni aniqlash o'rniga modullarni fayllarga ajratamiz. Bunday holda, cratening ildiz fayli *src/lib.rs* bo'ladi, lekin bu protsedura crate ildiz fayli *src/main.rs* bo'lgan binary cratelar bilan ham ishlaydi.
 
-First, we’ll extract the `front_of_house` module to its own file. Remove the
-code inside the curly brackets for the `front_of_house` module, leaving only
-the `mod front_of_house;` declaration, so that *src/lib.rs* contains the code
-shown in Listing 7-21. Note that this won’t compile until we create the
-*src/front_of_house.rs* file in Listing 7-22.
+Birinchidan, biz `uyning_oldi` modulini o'z fayliga chiqaramiz. `uyning_oldi` moduli uchun jingalak qavslar ichidagi kodni olib tashlang va faqat `mod uyning_oldi` deklaratsiyasini qoldiring, shunda *src/lib.rs* ro'yxat 7-21da ko'rsatilgan kodni o`z ichiga oladi. E'tibor bering, biz 7-22 ro'yxatda *src/uyning_oldi.rs* faylini yaratmagunimizcha, bu kompilyatsiya qilinmaydi.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-21: Declaring the `front_of_house` module whose
-body will be in *src/front_of_house.rs*</span>
+<span class="caption">Ro'yxat 7-21. Tarkibi `src/uyning_oldi.rs` da joylashgan `uyning_oldi` modulini e'lon qilish</span>
 
-Next, place the code that was in the curly brackets into a new file named
-*src/front_of_house.rs*, as shown in Listing 7-22. The compiler knows to look
+Keyin, jingalak qavslardagi kodni yangi faylga joylashtiring
+7-22 ro'yxatda ko'rsatilganidek *src/uyning_oldi.rs* deb nomlangan. The compiler knows to look
 in this file because it came across the module declaration in the crate root
 with the name `front_of_house`.
 
