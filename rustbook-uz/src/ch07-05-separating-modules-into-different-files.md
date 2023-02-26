@@ -16,46 +16,31 @@ Birinchidan, biz `uyning_oldi` modulini o'z fayliga chiqaramiz. `uyning_oldi` mo
 <span class="caption">Ro'yxat 7-21. Tarkibi `src/uyning_oldi.rs` da joylashgan `uyning_oldi` modulini e'lon qilish</span>
 
 Keyin, jingalak qavslardagi kodni yangi faylga joylashtiring
-7-22 ro'yxatda ko'rsatilganidek *src/uyning_oldi.rs* deb nomlangan. The compiler knows to look
-in this file because it came across the module declaration in the crate root
-with the name `front_of_house`.
+7-22 ro'yxatda ko'rsatilganidek *src/uyning_oldi.rs* deb nomlangan. Kompilyator bu faylda nimani izlash kerakligini biladi, chunki u `uyning_oldi` deb nomlangan cratening ildiz modulida modul deklaratsiyasiga duch keldi.
 
-<span class="filename">Filename: src/front_of_house.rs</span>
+<span class="filename">Fayl nomi: src/uyning_oldi.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/front_of_house.rs}}
 ```
 
-<span class="caption">Listing 7-22: Definitions inside the `front_of_house`
-module in *src/front_of_house.rs*</span>
+<span class="caption">Ro'yxat 7-22. *src/uyning_oldi.rs* faylida `uyning_oldi` modulining mazmunini aniqlash</span>
 
-Note that you only need to load a file using a `mod` declaration *once* in your
-module tree. Once the compiler knows the file is part of the project (and knows
-where in the module tree the code resides because of where you’ve put the `mod`
-statement), other files in your project should refer to the loaded file’s code
-using a path to where it was declared, as covered in the [“Paths for Referring
-to an Item in the Module Tree”][paths]<!-- ignore --> section. In other words,
-`mod` is *not* an “include” operation that you may have seen in other
-programming languages.
+Esda tutingki, modul daraxtida *bir marta* `mod` deklaratsiyasidan foydalanib faylni yuklashingiz kerak. Kompilyator fayl loyihaning bir qismi ekanligini bilgandan so'ng (va `mod` statementi qo'ygan joyingiz tufayli kod modul daraxtining qayerida joylashganligini biladi), loyihangizdagi boshqa fayllar yuklangan fayl kodiga u e'lon qilingan joyga yo'l orqali murojaat qilishi kerak, bu ["Modul daraxtidagi elementga murojaat qilish yo'llari"][paths]<!-- ignore --> bo'limida yoritilgan. Boshqacha qilib aytganda, `mod` boshqa dasturlash tillarida ko'rishingiz mumkin bo'lgan “include” operatsiyasi emas.
 
-Next, we’ll extract the `hosting` module to its own file. The process is a bit
-different because `hosting` is a child module of `front_of_house`, not of the
-root module. We’ll place the file for `hosting` in a new directory that will be
-named for its ancestors in the module tree, in this case *src/front_of_house/*.
+Keyinchalik, biz `xizmat` modulini o'z fayliga chiqaramiz. Jarayon biroz boshqacha, chunki `xizmat` ildiz modulining emas, balki `uyning_oldi` ichki modulidir.Biz `xizmat` faylini modul daraxtidagi ajdodlari nomi bilan ataladigan yangi directoryga joylashtiramiz, bu holda *src/uyning_oldi/*.
 
-To start moving `hosting`, we change *src/front_of_house.rs* to contain only the
-declaration of the `hosting` module:
+`xizmat`ni ko‘chirishni boshlash uchun biz *src/uyning_oldi.rs* ni faqat `xizmat` moduli deklaratsiyasini o‘z ichiga olgan holda o‘zgartiramiz:
 
-<span class="filename">Filename: src/front_of_house.rs</span>
+<span class="filename">Fayl nomi: src/uyning_oldi.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house.rs}}
 ```
 
-Then we create a *src/front_of_house* directory and a file *hosting.rs* to
-contain the definitions made in the `hosting` module:
+Keyin biz *src/uyning_oldi* directorysini va `xizmat` modulida berilgan definitionlarni o'z ichiga olgan *xizmat.rs* faylini yaratamiz:
 
-<span class="filename">Filename: src/front_of_house/hosting.rs</span>
+<span class="filename">Fayl nomi: src/uyning_oldi/xizmat.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house/hosting.rs}}
