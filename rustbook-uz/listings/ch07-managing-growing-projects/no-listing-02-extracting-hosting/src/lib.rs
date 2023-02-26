@@ -1,7 +1,7 @@
-mod front_of_house;
+mod uyning_oldi;
 
-pub use crate::front_of_house::hosting;
+pub use crate::uyning_oldi::xizmat;
 
-pub fn eat_at_restaurant() {
-    hosting::add_to_waitlist();
+pub fn restoranda_ovqatlanish() {
+    xizmat::navbat_listiga_qoshish();
 }

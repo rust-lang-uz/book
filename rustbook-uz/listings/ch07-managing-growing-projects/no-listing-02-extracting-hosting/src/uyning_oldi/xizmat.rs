@@ -1,1 +1,1 @@
-pub fn add_to_waitlist() {}
+pub fn navbat_listiga_qoshish() {}

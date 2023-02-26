@@ -46,40 +46,33 @@ Keyin biz *src/uyning_oldi* directorysini va `xizmat` modulida berilgan definiti
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house/hosting.rs}}
 ```
 
-If we instead put *hosting.rs* in the *src* directory, the compiler would
-expect the *hosting.rs* code to be in a `hosting` module declared in the crate
-root, and not declared as a child of the `front_of_house` module. The
-compiler’s rules for which files to check for which modules’ code means the
-directories and files more closely match the module tree.
+Agar biz *src* jildiga *xizmat.rs* ni qo'ysak, kompilyator *xizmat.rs* kodi crate ildizida e'lon qilingan va `uyning_oldi` modulining yordamchisi sifatida e'lon qilinmagan `xizmat` modulida bo'lishini kutadi. Kompilyator qoidalari qaysi modullarning kodini o'z ichiga olgan fayllarni tekshirish uchun jildlar va fayllar modul daraxtiga to'liq mos kelishini taxmin qiladi.
 
-> ### Alternate File Paths
+> ### Muqobil fayl yo'llari
 >
-> So far we’ve covered the most idiomatic file paths the Rust compiler uses,
-> but Rust also supports an older style of file path. For a module named
-> `front_of_house` declared in the crate root, the compiler will look for the
+> Hozirgacha biz Rust kompilyatori foydalanadigan eng idiomatik fayl yo'llarini ko'rib chiqdik,
+> lekin Rust fayl yo'lining eski uslubini ham qo'llab-quvvatlaydi. Crate ildizida e'lon qilingan
+> `uyning_oldi` nomli modul uchun kompilyator modul kodini quyidagilardan qidiradi:
 > module’s code in:
 >
-> * *src/front_of_house.rs* (what we covered)
-> * *src/front_of_house/mod.rs* (older style, still supported path)
+> * *src/front_of_house.rs* (biz nimani qamrab oldik)
+> * *src/front_of_house/mod.rs* (eski uslub, hali ham qo'llab-quvvatlanadigan yo'l)
 >
-> For a module named `hosting` that is a submodule of `front_of_house`, the
-> compiler will look for the module’s code in:
+> `uyning_oldi` submodul bo'lgan `xizmat` nomli modul uchun kompilyator modul kodini qidiradi:
 >
-> * *src/front_of_house/hosting.rs* (what we covered)
-> * *src/front_of_house/hosting/mod.rs* (older style, still supported path)
+> * *src/front_of_house/hosting.rs* (biz nimani qamrab oldik)
+> * *src/front_of_house/hosting/mod.rs* (eski uslub, hali ham qo'llab-quvvatlanadigan yo'l)
 >
-> If you use both styles for the same module, you’ll get a compiler error. Using
-> a mix of both styles for different modules in the same project is allowed, but
-> might be confusing for people navigating your project.
+> Agar bir xil modul uchun ikkala uslubdan foydalansangiz, kompilyator xatosi paydo bo'ladi. Bitta
+> loyihada turli modullar uchun ikkala uslubning aralashmasidan foydalanishga ruxsat
+> beriladi, lekin loyihangizni boshqarayotgan odamlar uchun chalkash bo'lishi mumkin.
 >
-> The main downside to the style that uses files named *mod.rs* is that your
-> project can end up with many files named *mod.rs*, which can get confusing
-> when you have them open in your editor at the same time.
+> *mod.rs* nomli fayllardan foydalanadigan uslubning asosiy kamchiligi
+> shundaki, sizning loyihangiz *mod.rs* nomli ko‘plab fayllar bilan
+> tugashi mumkin, ular bir vaqtning o‘zida muharriringizda ochilganda
+> chalkash bo‘lishi mumkin.
 
-We’ve moved each module’s code to a separate file, and the module tree remains
-the same. The function calls in `eat_at_restaurant` will work without any
-modification, even though the definitions live in different files. This
-technique lets you move modules to new files as they grow in size.
+Biz har bir modul kodini alohida faylga ko'chirdik va modul daraxti o'zgarishsiz qoldi. `restoranda_ovqatlanish` funksiyasi chaqiruvlari, definitionlar turli fayllarda bo'lsa ham, hech qanday o'zgartirishlarsiz ishlaydi. Ushbu texnika modullarni hajmi oshgani sayin yangi fayllarga ko'chirish imkonini beradi.
 
 Note that the `pub use crate::front_of_house::hosting` statement in
 *src/lib.rs* also hasn’t changed, nor does `use` have any impact on what files
