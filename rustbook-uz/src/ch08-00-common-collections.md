@@ -1,25 +1,13 @@
-# Common Collections
+# Umumiy to'plamlar
 
-Rust’s standard library includes a number of very useful data structures called
-*collections*. Most other data types represent one specific value, but
-collections can contain multiple values. Unlike the built-in array and tuple
-types, the data these collections point to is stored on the heap, which means
-the amount of data does not need to be known at compile time and can grow or
-shrink as the program runs. Each kind of collection has different capabilities
-and costs, and choosing an appropriate one for your current situation is a
-skill you’ll develop over time. In this chapter, we’ll discuss three
-collections that are used very often in Rust programs:
+Rustning standart kutubxonasi *kolleksiyalar* deb nomlangan juda foydali ma'lumotlar tuzilmalarini o'z ichiga oladi. Ko'pgina boshqa ma'lumotlar turlari bitta ma'lum qiymatni ifodalaydi, lekin to'plamlar bir nechta qiymatlarni o'z ichiga olishi mumkin. O'rnatilgan array va tuple turlaridan farqli o'laroq, ushbu to'plamlar ko'rsatadigan ma'lumotlar heapda saqlanadi, ya'ni ma'lumotlar miqdori kompilyatsiya vaqtida ma'lum bo'lishi shart emas va dastur ishga tushganda o'sishi yoki qisqarishi mumkin. To'plamning har bir turi o'z imkoniyatlariga ega va ishlash jihatidan farq qiladi, shuning uchun ma'lum bir to'plamni tanlash vaziyatga bog'liq va vaqt o'tishi bilan ishlab chiquvchining mahoratidir. Ushbu bobda biz Rust dasturlarida tez-tez ishlatiladigan uchta to'plamni muhokama qilamiz:
 
-* A *vector* allows you to store a variable number of values next to each other.
-* A *string* is a collection of characters. We’ve mentioned the `String` type
-  previously, but in this chapter we’ll talk about it in depth.
-* A *hash map* allows you to associate a value with a particular key. It’s a
-  particular implementation of the more general data structure called a *map*.
+* *vector* o'zgaruvchan sonli qiymatlarni bir-birining yonida saqlashga imkon beradi.
+* *string* - bu belgilar to'plami. Biz `String` turini avval aytib o'tgan edik, ammo bu bobda biz bu haqda chuqurroq gaplashamiz.
+* *hash map* ma'lum bir kalit bilan qiymatni bog'lash imkonini beradi.Bu *map* deb nomlangan umumiy ma'lumotlar strukturasining o'ziga xos tatbiqidir.
 
-To learn about the other kinds of collections provided by the standard library,
-see [the documentation][collections].
+Standart kutubxona tomonidan taqdim etilgan boshqa turdagi to'plamlar haqida bilish uchun [texnik hujjatlarga][collections] qarang.
 
-We’ll discuss how to create and update vectors, strings, and hash maps, as well
-as what makes each special.
+Biz vectorlarni, stringlarni va hash-maplarni qanday yaratish va yangilashni, shuningdek, har birining o'ziga xosligini muhokama qilamiz.
 
 [collections]: ../std/collections/index.html
