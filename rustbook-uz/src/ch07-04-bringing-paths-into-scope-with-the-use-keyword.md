@@ -148,30 +148,21 @@ Agar biz bir xil crate yoki bir xil modulda belgilangan bir nechta elementlardan
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-01-use-std-unnested/src/main.rs:here}}
 ```
 
-Instead, we can use nested paths to bring the same items into scope in one
-line. We do this by specifying the common part of the path, followed by two
-colons, and then curly brackets around a list of the parts of the paths that
-differ, as shown in Listing 7-18.
+Buning o'rniga, biz bir xil elementlarni bir qatorga kiritish uchun ichki yo'llardan foydalanishimiz mumkin. Buni 7-18 roʻyxatda koʻrsatilganidek, yoʻlning umumiy qismini, keyin ikkita nuqta qoʻyib, soʻngra yoʻllarning bir-biridan farq qiladigan qismlari roʻyxati atrofida jingalak qavslarni belgilash orqali qilamiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-18/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 7-18: Specifying a nested path to bring multiple
-items with the same prefix into scope</span>
+<span class="caption">Ro'yxat 7-18. Qo'llash sohasiga bir xil prefiksli bir nechta elementlarni qo'shish uchun ichki yo'lni belgilash</span>
 
-In bigger programs, bringing many items into scope from the same crate or
-module using nested paths can reduce the number of separate `use` statements
-needed by a lot!
+Kattaroq dasturlarda bir xil crate yoki moduldan ko'plab elementlarni o'rnatilgan yo'llar yordamida qamrab olish juda ko'p talab qilinadigan alohida `use` statementlari sonini kamaytirishi mumkin!
 
-We can use a nested path at any level in a path, which is useful when combining
-two `use` statements that share a subpath. For example, Listing 7-19 shows two
-`use` statements: one that brings `std::io` into scope and one that brings
-`std::io::Write` into scope.
+Siz har qanday darajadagi ichki yo'ldan foydalanishingiz mumkin, bu yo'l qismini ulashuvchi ikkita `use` statementini birlashtirishda foydalidir. Masalan, 7-19 ro'yxat ikkita `use` statementini ko'rsatadi: biri `std::io` ni qamrab oladi va ikkinchisi `std::io::Write` ni qamrab oladi.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-19/src/lib.rs}}

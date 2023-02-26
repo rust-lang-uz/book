@@ -6,27 +6,27 @@ use std::{cmp::Ordering, io};
 // ANCHOR_END: here
 
 fn main() {
-    println!("Guess the number!");
+    println!("Raqamni topish o'yini!");
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
+    let yashirin_raqam = rand::thread_rng().gen_range(1..=100);
 
-    println!("The secret number is: {secret_number}");
+    println!("Yashirin raqam: {yashirin_raqam}");
 
-    println!("Please input your guess.");
+    println!("Iltimos, taxminingizni kiriting.");
 
-    let mut guess = String::new();
+    let mut taxmin = String::new();
 
     io::stdin()
-        .read_line(&mut guess)
-        .expect("Failed to read line");
+        .read_line(&mut taxmin)
+        .expect("Satrni o'qib bo'lmadi");
 
-    let guess: u32 = guess.trim().parse().expect("Please type a number!");
+    let taxmin: u32 = taxmin.trim().parse().expect("Iltimos, raqam yozing!");
 
-    println!("You guessed: {guess}");
+    println!("Sizning taxminingiz: {taxmin}");
 
-    match guess.cmp(&secret_number) {
-        Ordering::Less => println!("Too small!"),
-        Ordering::Greater => println!("Too big!"),
-        Ordering::Equal => println!("You win!"),
+    match taxmin.cmp(&yashirin_raqam) {
+        Ordering::Less => println!("Raqam Kichik!"),
+        Ordering::Greater => println!("Raqam katta!"),
+        Ordering::Equal => println!("Siz yutdingiz!"),
     }
 }
