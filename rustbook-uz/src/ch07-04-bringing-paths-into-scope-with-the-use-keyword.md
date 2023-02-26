@@ -168,44 +168,32 @@ Siz har qanday darajadagi ichki yo'ldan foydalanishingiz mumkin, bu yo'l qismini
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-19/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-19: Two `use` statements where one is a subpath
-of the other</span>
+<span class="caption">Ro'yxat 7-19: biri ikkinchisining bir qismi bo'lgan ikkita `use` statementi</span>
 
-The common part of these two paths is `std::io`, and that’s the complete first
-path. To merge these two paths into one `use` statement, we can use `self` in
-the nested path, as shown in Listing 7-20.
+Ushbu ikkita yo'lning umumiy qismi `std::io` va to'liq birinchi yo'ldir. Ushbu ikkita yo'lni bitta `use` statementiga birlashtirish uchun biz 7-20 ro'yxatda ko'rsatilganidek, ichki yo'lda `self` dan foydalanishimiz mumkin.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-20/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-20: Combining the paths in Listing 7-19 into
-one `use` statement</span>
+<span class="caption">Ro'yxat 7-20: Ro'yxat 7-19dagi yo'llarni bitta `use` statementiga birlashtirish</span>
 
-This line brings `std::io` and `std::io::Write` into scope.
+Bu satr `std::io` va `std::io::Write` ni qamrab oladi.
 
-### The Glob Operator
+### Glob operatori
 
-If we want to bring *all* public items defined in a path into scope, we can
-specify that path followed by the `*` glob operator:
+Agar biz yo'lda belgilangan *barcha* umumiy elementlarni qamrovga kiritmoqchi bo'lsak, biz `*` glob operatori tomonidan keyingi yo'lni belgilashimiz mumkin:
 
 ```rust
 use std::collections::*;
 ```
 
-This `use` statement brings all public items defined in `std::collections` into
-the current scope. Be careful when using the glob operator! Glob can make it
-harder to tell what names are in scope and where a name used in your program
-was defined.
+Ushbu `use` statementi `std::collections` da aniqlangan barcha ommaviy elementlarni joriy doiraga olib keladi. Glob operatoridan foydalanganda ehtiyot bo'ling! Glob qaysi nomlar qamrovda ekanligini va dasturingizda ishlatiladigan nom qayerda aniqlanganligini aniqlashni qiyinlashtirishi mumkin.
 
-The glob operator is often used when testing to bring everything under test
-into the `tests` module; we’ll talk about that in the [“How to Write
-Tests”][writing-tests]<!-- ignore --> section in Chapter 11. The glob operator
-is also sometimes used as part of the prelude pattern: see [the standard
-library documentation](../std/prelude/index.html#other-preludes)<!-- ignore -->
-for more information on that pattern.
+Glob operatori ko'pincha sinovdan o'tgan hamma narsani `tests` moduliga kiritish uchun test paytida ishlatiladi; biz bu haqda 11-bobdagi ["Testlarni qanday yozish kerak"][writing-tests]<!-- ignore --> bo'limida gaplashamiz. Glob operatori ba'zan prelude patterning bir qismi sifatida ham qo'llaniladi: ushbu pattern haqida qo'shimcha ma'lumot olish uchun [standart kutubxona texnik hujjatlariga](../std/prelude/index.html#other-preludes)<!-- ignore --> qarang.
+
 
 [ch14-pub-use]: ch14-02-publishing-to-crates-io.html#exporting-a-convenient-public-api-with-pub-use
 [rand]: ch02-00-guessing-game-tutorial.html#generating-a-random-number
