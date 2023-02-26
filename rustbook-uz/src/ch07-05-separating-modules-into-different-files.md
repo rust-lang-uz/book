@@ -28,7 +28,7 @@ Keyin, jingalak qavslardagi kodni yangi faylga joylashtiring
 
 Esda tutingki, modul daraxtida *bir marta* `mod` deklaratsiyasidan foydalanib faylni yuklashingiz kerak. Kompilyator fayl loyihaning bir qismi ekanligini bilgandan so'ng (va `mod` statementi qo'ygan joyingiz tufayli kod modul daraxtining qayerida joylashganligini biladi), loyihangizdagi boshqa fayllar yuklangan fayl kodiga u e'lon qilingan joyga yo'l orqali murojaat qilishi kerak, bu ["Modul daraxtidagi elementga murojaat qilish yo'llari"][paths]<!-- ignore --> bo'limida yoritilgan. Boshqacha qilib aytganda, `mod` boshqa dasturlash tillarida ko'rishingiz mumkin bo'lgan “include” operatsiyasi emas.
 
-Keyinchalik, biz `xizmat` modulini o'z fayliga chiqaramiz. Jarayon biroz boshqacha, chunki `xizmat` ildiz modulining emas, balki `uyning_oldi` ichki modulidir.Biz `xizmat` faylini modul daraxtidagi ajdodlari nomi bilan ataladigan yangi directoryga joylashtiramiz, bu holda *src/uyning_oldi/*.
+Keyinchalik, biz `xizmat` modulini o'z fayliga chiqaramiz. Jarayon biroz boshqacha, chunki `xizmat` ildiz modulining emas, balki `uyning_oldi` ichki modulidir.Biz `xizmat` faylini modul daraxtidagi ajdodlari nomi bilan ataladigan yangi jildga joylashtiramiz, bu holda *src/uyning_oldi/*.
 
 `xizmat`ni ko‘chirishni boshlash uchun biz *src/uyning_oldi.rs* ni faqat `xizmat` moduli deklaratsiyasini o‘z ichiga olgan holda o‘zgartiramiz:
 
@@ -38,7 +38,7 @@ Keyinchalik, biz `xizmat` modulini o'z fayliga chiqaramiz. Jarayon biroz boshqac
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house.rs}}
 ```
 
-Keyin biz *src/uyning_oldi* directorysini va `xizmat` modulida berilgan definitionlarni o'z ichiga olgan *xizmat.rs* faylini yaratamiz:
+Keyin biz *src/uyning_oldi* jildini va `xizmat` modulida berilgan definitionlarni o'z ichiga olgan *xizmat.rs* faylini yaratamiz:
 
 <span class="filename">Fayl nomi: src/uyning_oldi/xizmat.rs</span>
 
@@ -55,13 +55,13 @@ Agar biz *src* jildiga *xizmat.rs* ni qo'ysak, kompilyator *xizmat.rs* kodi crat
 > `uyning_oldi` nomli modul uchun kompilyator modul kodini quyidagilardan qidiradi:
 > module’s code in:
 >
-> * *src/front_of_house.rs* (biz nimani qamrab oldik)
-> * *src/front_of_house/mod.rs* (eski uslub, hali ham qo'llab-quvvatlanadigan yo'l)
+> * *src/uyning_oldi.rs* (biz nimani qamrab oldik)
+> * *src/uyning_oldi/mod.rs* (eski uslub, hali ham qo'llab-quvvatlanadigan yo'l)
 >
 > `uyning_oldi` submodul bo'lgan `xizmat` nomli modul uchun kompilyator modul kodini qidiradi:
 >
-> * *src/front_of_house/hosting.rs* (biz nimani qamrab oldik)
-> * *src/front_of_house/hosting/mod.rs* (eski uslub, hali ham qo'llab-quvvatlanadigan yo'l)
+> * *src/uyning_oldi/xizmat.rs* (biz nimani qamrab oldik)
+> * *src/uyning_oldi/xizmat/mod.rs* (eski uslub, hali ham qo'llab-quvvatlanadigan yo'l)
 >
 > Agar bir xil modul uchun ikkala uslubdan foydalansangiz, kompilyator xatosi paydo bo'ladi. Bitta
 > loyihada turli modullar uchun ikkala uslubning aralashmasidan foydalanishga ruxsat
@@ -74,22 +74,12 @@ Agar biz *src* jildiga *xizmat.rs* ni qo'ysak, kompilyator *xizmat.rs* kodi crat
 
 Biz har bir modul kodini alohida faylga ko'chirdik va modul daraxti o'zgarishsiz qoldi. `restoranda_ovqatlanish` funksiyasi chaqiruvlari, definitionlar turli fayllarda bo'lsa ham, hech qanday o'zgartirishlarsiz ishlaydi. Ushbu texnika modullarni hajmi oshgani sayin yangi fayllarga ko'chirish imkonini beradi.
 
-Note that the `pub use crate::front_of_house::hosting` statement in
-*src/lib.rs* also hasn’t changed, nor does `use` have any impact on what files
-are compiled as part of the crate. The `mod` keyword declares modules, and Rust
-looks in a file with the same name as the module for the code that goes into
-that module.
+Esda tutingki, *src/lib.rs* dagi `pub use crate::uyning_oldi::xizmat` statementi ham o'zgarmagan va `use` qaysi fayllar cratening bir qismi sifatida tuzilganiga ta'sir qilmaydi. `mod` kalit so'zi modullarni e'lon qiladi va Rust ushbu modulga kiradigan kod moduli bilan bir xil nomdagi faylga qaraydi.
 
-## Summary
+## Xulosa
 
-Rust lets you split a package into multiple crates and a crate into modules
-so you can refer to items defined in one module from another module. You can do
-this by specifying absolute or relative paths. These paths can be brought into
-scope with a `use` statement so you can use a shorter path for multiple uses of
-the item in that scope. Module code is private by default, but you can make
-definitions public by adding the `pub` keyword.
+Rust sizga paketni bir nechta cratelarga va crateni modullarga bo'lish imkonini beradi, shunda siz bir modulda belgilangan elementlarga boshqa moduldan murojaat qilishingiz mumkin. Buni mutlaq yoki nisbiy yo'llarni belgilash orqali amalga oshirishingiz mumkin. Ushbu yo'llar `use` statementi bilan qamrab olinishi mumkin, shuning uchun siz ushbu doiradagi elementdan bir nechta foydalanish uchun qisqaroq yo'ldan foydalanishingiz mumkin. Modul kodi standart boʻyicha maxfiydir, lekin `pub` kalit soʻzini qoʻshish orqali definitionlarni hammaga ommaviy qilishingiz mumkin.
 
-In the next chapter, we’ll look at some collection data structures in the
-standard library that you can use in your neatly organized code.
+Keyingi bobda biz standart kutubxonadagi ma'lumotlar tuzilmalarining ba'zi to'plamlarini ko'rib chiqamiz, ulardan siz o'zingizning aniq tartiblangan kodingizda foydalanishingiz mumkin.
 
 [paths]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
