@@ -1,31 +1,20 @@
-## Storing Lists of Values with Vectors
+## Vectorlar bilan qiymatlar ro'yxatini saqlash
 
-The first collection type we’ll look at is `Vec<T>`, also known as a *vector*.
-Vectors allow you to store more than one value in a single data structure that
-puts all the values next to each other in memory. Vectors can only store values
-of the same type. They are useful when you have a list of items, such as the
-lines of text in a file or the prices of items in a shopping cart.
+Biz ko'rib chiqadigan birinchi to'plam turi `Vec<T>` bo'lib, u *vector* sifatida ham tanilgan.
+Vectorlar xotirada barcha qiymatlarni yonma-yon joylashtirgan yagona ma'lumotlar strukturasida bir nechta qiymatlarni saqlash imkonini beradi. Vektorlar faqat bir xil turdagi qiymatlarni saqlashi mumkin. Ular sizda fayldagi matn satrlari yoki xarid qilish savatidagi narsalarning narxlari kabi elementlar ro'yxatiga ega bo'lsangiz foydali bo'ladi.
 
-### Creating a New Vector
+### Yangi vector yaratish
 
-To create a new empty vector, we call the `Vec::new` function, as shown in
-Listing 8-1.
+Yangi bo'sh vector yaratish uchun biz 8-1 ro'yxatda ko'rsatilganidek, `Vec::new` funksiyasini chaqiramiz.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-01/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-1: Creating a new, empty vector to hold values
-of type `i32`</span>
+<span class="caption">Roʻyxat 8-1: `i32` turidagi qiymatlarni saqlash uchun yangi, boʻsh vector yaratish</span>
 
-Note that we added a type annotation here. Because we aren’t inserting any
-values into this vector, Rust doesn’t know what kind of elements we intend to
-store. This is an important point. Vectors are implemented using generics;
-we’ll cover how to use generics with your own types in Chapter 10. For now,
-know that the `Vec<T>` type provided by the standard library can hold any type.
-When we create a vector to hold a specific type, we can specify the type within
-angle brackets. In Listing 8-1, we’ve told Rust that the `Vec<T>` in `v` will
-hold elements of the `i32` type.
+E'tibor bering, biz bu erda annation tur qo'shdik. Biz ushbu vectorga hech qanday qiymat kiritmayotganimiz sababli, Rust biz qanday elementlarni saqlashni xohlayotganimizni bilmaydi. Bu muhim nuqta. Vektorlar generiklar yordamida amalga oshiriladi; Biz 10-bobda o'zingizning turlaringiz bilan generiklardan qanday foydalanishni ko'rib chiqamiz. Hozircha shuni bilingki, standart kutubxona tomonidan taqdim etilgan `Vec<T>` turi har qanday turni sig'dira oladi.
+Muayyan turni ushlab turish uchun vektor yaratganimizda, burchakli qavslar([]) ichida turni belgilashimiz mumkin. 8-1 roʻyxatida biz Rustga `v`dagi `Vec<T>` `i32` turidagi elementlarni saqlashini aytdik.
 
 More often, you’ll create a `Vec<T>` with initial values and Rust will infer
 the type of value you want to store, so you rarely need to do this type
