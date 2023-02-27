@@ -1,7 +1,7 @@
 ## Vectorlar bilan qiymatlar ro'yxatini saqlash
 
 Biz ko'rib chiqadigan birinchi to'plam turi `Vec<T>` bo'lib, u *vector* sifatida ham tanilgan.
-Vectorlar xotirada barcha qiymatlarni yonma-yon joylashtirgan yagona ma'lumotlar strukturasida bir nechta qiymatlarni saqlash imkonini beradi. Vektorlar faqat bir xil turdagi qiymatlarni saqlashi mumkin. Ular sizda fayldagi matn satrlari yoki xarid qilish savatidagi narsalarning narxlari kabi elementlar ro'yxatiga ega bo'lsangiz foydali bo'ladi.
+Vectorlar xotirada barcha qiymatlarni yonma-yon joylashtirgan yagona ma'lumotlar strukturasida bir nechta qiymatlarni saqlash imkonini beradi. Vectorlar faqat bir xil turdagi qiymatlarni saqlashi mumkin. Ular sizda fayldagi matn satrlari yoki xarid qilish savatidagi narsalarning narxlari kabi elementlar ro'yxatiga ega bo'lsangiz foydali bo'ladi.
 
 ### Yangi vector yaratish
 
@@ -13,53 +13,36 @@ Yangi bo'sh vector yaratish uchun biz 8-1 ro'yxatda ko'rsatilganidek, `Vec::new`
 
 <span class="caption">Roʻyxat 8-1: `i32` turidagi qiymatlarni saqlash uchun yangi, boʻsh vector yaratish</span>
 
-E'tibor bering, biz bu erda annation tur qo'shdik. Biz ushbu vectorga hech qanday qiymat kiritmayotganimiz sababli, Rust biz qanday elementlarni saqlashni xohlayotganimizni bilmaydi. Bu muhim nuqta. Vektorlar generiklar yordamida amalga oshiriladi; Biz 10-bobda o'zingizning turlaringiz bilan generiklardan qanday foydalanishni ko'rib chiqamiz. Hozircha shuni bilingki, standart kutubxona tomonidan taqdim etilgan `Vec<T>` turi har qanday turni sig'dira oladi.
-Muayyan turni ushlab turish uchun vektor yaratganimizda, burchakli qavslar([]) ichida turni belgilashimiz mumkin. 8-1 roʻyxatida biz Rustga `v`dagi `Vec<T>` `i32` turidagi elementlarni saqlashini aytdik.
+E'tibor bering, biz bu erda annation tur qo'shdik. Biz ushbu vectorga hech qanday qiymat kiritmayotganimiz sababli, Rust biz qanday elementlarni saqlashni xohlayotganimizni bilmaydi. Bu muhim nuqta. Vectorlar generiklar yordamida amalga oshiriladi; Biz 10-bobda o'zingizning turlaringiz bilan generiklardan qanday foydalanishni ko'rib chiqamiz. Hozircha shuni bilingki, standart kutubxona tomonidan taqdim etilgan `Vec<T>` turi har qanday turni sig'dira oladi.
+Muayyan turni ushlab turish uchun vector yaratganimizda, burchakli qavslar([]) ichida turni belgilashimiz mumkin. 8-1 roʻyxatida biz Rustga `v`dagi `Vec<T>` `i32` turidagi elementlarni saqlashini aytdik.
 
-More often, you’ll create a `Vec<T>` with initial values and Rust will infer
-the type of value you want to store, so you rarely need to do this type
-annotation. Rust conveniently provides the `vec!` macro, which will create a
-new vector that holds the values you give it. Listing 8-2 creates a new
-`Vec<i32>` that holds the values `1`, `2`, and `3`. The integer type is `i32`
-because that’s the default integer type, as we discussed in the [“Data
-Types”][data-types]<!-- ignore --> section of Chapter 3.
+Ko'pincha siz boshlang'ich qiymatlari bilan `Vec<T>` ni yaratasiz va Rust siz saqlamoqchi bo'lgan qiymat turini aniqlaydi, shuning uchun kamdan-kam hollarda bu turdagi annotionni bajarishingiz kerak bo'ladi. Rust qulay tarzda `vec!` makrosini taqdim etadi, bu esa siz bergan qiymatlarni saqlaydigan yangi vectorni yaratadi. 8-2 roʻyxati `1`, `2` va `3` qiymatlariga ega boʻlgan yangi `Vec<i32>`ni yaratadi. Butun son turi `i32` dir, chunki bu standart butun son turi, biz 3-bobning ["Ma'lumotlar turlari"][data-types]<!-- ignore --> bo'limida muhokama qilganimizdek.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-02/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-2: Creating a new vector containing
-values</span>
+<span class="caption">Ro'yxat 8-2: qiymatlarni o'z ichiga olgan yangi vector yaratish</span>
 
-Because we’ve given initial `i32` values, Rust can infer that the type of `v`
-is `Vec<i32>`, and the type annotation isn’t necessary. Next, we’ll look at how
-to modify a vector.
+Biz boshlang‘ich `i32` qiymatlarini berganimiz sababli, Rust `v` turi `Vec<i32>` ekanligini va tur izohi shart emas degan xulosaga kelishi mumkin. Keyinchalik vectorni qanday o'zgartirishni ko'rib chiqamiz.
 
-### Updating a Vector
+### Vectorni yangilash
 
-To create a vector and then add elements to it, we can use the `push` method,
-as shown in Listing 8-3.
+Vector yaratish va unga elementlar qo'shish uchun biz 8-3 ro'yxatda ko'rsatilganidek, `push` metodidan foydalanishimiz mumkin.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-03/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-3: Using the `push` method to add values to a
-vector</span>
+<span class="caption">Ro'yxat 8-3: vectorga qiymatlar qo'shish uchun `push` metodidan foydalanish</span>
 
-As with any variable, if we want to be able to change its value, we need to
-make it mutable using the `mut` keyword, as discussed in Chapter 3. The numbers
-we place inside are all of type `i32`, and Rust infers this from the data, so
-we don’t need the `Vec<i32>` annotation.
+Har qanday o'zgaruvchida bo'lgani kabi, agar biz uning qiymatini o'zgartirish imkoniyatiga ega bo'lishni istasak, 3-bobda muhokama qilinganimizdek, `mut` kalit so'zidan foydalanib, uni o'zgaruvchan qilishimiz kerak. Biz joylashtirgan raqamlarning barchasi `i32` turiga kiradi va Rust buni maʼlumotlardan chiqaradi, shuning uchun bizga `Vec<i32>` annotationi kerak emas.
 
-### Reading Elements of Vectors
+### Vector elementlarini o'qish
 
-There are two ways to reference a value stored in a vector: via indexing or
-using the `get` method. In the following examples, we’ve annotated the types of
-the values that are returned from these functions for extra clarity.
+Vectorda saqlangan qiymatga murojaat qilishning ikki yo'li mavjud: indekslash yoki `get` metodi yordamida. Quyidagi misollarda biz qo'shimcha aniqlik uchun ushbu funksiyalardan qaytariladigan qiymatlar turlarini izohladik.
 
-Listing 8-4 shows both methods of accessing a value in a vector, with indexing
-syntax and the `get` method.
+8-4 ro'yxatda indekslash sintaksisi va `get` metodi bilan vectordagi qiymatga kirishning ikkala usuli ko'rsatilgan.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-04/src/main.rs:here}}
