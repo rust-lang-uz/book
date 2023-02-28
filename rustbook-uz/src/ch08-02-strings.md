@@ -1,37 +1,15 @@
-## Storing UTF-8 Encoded Text with Strings
+## UTF-8 kodlangan matnni String bilan saqlash
 
-We talked about strings in Chapter 4, but we’ll look at them in more depth now.
-New Rustaceans commonly get stuck on strings for a combination of three
-reasons: Rust’s propensity for exposing possible errors, strings being a more
-complicated data structure than many programmers give them credit for, and
-UTF-8. These factors combine in a way that can seem difficult when you’re
-coming from other programming languages.
+Biz 4-bobda stringlar haqida gapirgan edik, ammo hozir ularni batafsil ko'rib chiqamiz.
+Yangi Rustaceanlar odatda uchta sababning kombinatsiyasiga ko'ra stringlarga yopishib qolishadi: Rustning mumkin bo'lgan xatolarni ochishga moyilligi, stringlar ko'plab dasturchilar tushunganidan ko'ra murakkabroq ma'lumotlar tuzilishi va UTF-8. Bu omillar shunday birlashadiki, agar siz boshqa dasturlash tillaridan kelgan bo'lsangiz, mavzu murakkab ko'rinishi mumkin.
 
-We discuss strings in the context of collections because strings are
-implemented as a collection of bytes, plus some methods to provide useful
-functionality when those bytes are interpreted as text. In this section, we’ll
-talk about the operations on `String` that every collection type has, such as
-creating, updating, and reading. We’ll also discuss the ways in which `String`
-is different from the other collections, namely how indexing into a `String` is
-complicated by the differences between how people and computers interpret
-`String` data.
+To'plamlar kontekstida stringlarni muhokama qilish foydalidir, chunki stringlar baytlar to'plami sifatida amalga oshiriladi, shuningdek, bu baytlar matn sifatida talqin qilinganda foydali funksiyalarni ta'minlashning ba'zi usullari. Ushbu bo'limda biz `String` bo'yicha har bir to'plam turiga ega bo'lgan yaratish, yangilash va o'qish kabi operatsiyalar haqida gapiramiz. Shuningdek, biz `String` ning boshqa to'plamlardan qanday farq qilishini, ya'ni `String` ga indekslash odamlar va kompyuterlarning `String` ma'lumotlarini qanday talqin qilishlari o'rtasidagi farqlar tufayli qanday murakkablashishini muhokama qilamiz.
 
-### What Is a String?
+### String nima?
 
-We’ll first define what we mean by the term *string*. Rust has only one string
-type in the core language, which is the string slice `str` that is usually seen
-in its borrowed form `&str`. In Chapter 4, we talked about *string slices*,
-which are references to some UTF-8 encoded string data stored elsewhere. String
-literals, for example, are stored in the program’s binary and are therefore
-string slices.
+Biz birinchi navbatda *string* atamasi bilan nimani nazarda tutayotganimizni aniqlaymiz. Rust asosiy tilda faqat bitta string turiga ega, bu `str` qator slice boʻlib, odatda uning `&str` shaklida koʻrinadi. 4-bobda biz boshqa joyda saqlangan ba'zi UTF-8 kodlangan string ma'lumotlariga referencelar bo'lgan *string slicelar* haqida gaplashdik. Masalan, satr literallari dasturning binary tizimida saqlanadi va shuning uchun satr slicedir.
 
-The `String` type, which is provided by Rust’s standard library rather than
-coded into the core language, is a growable, mutable, owned, UTF-8 encoded
-string type. When Rustaceans refer to “strings” in Rust, they might be
-referring to either the `String` or the string slice `&str` types, not just one
-of those types. Although this section is largely about `String`, both types are
-used heavily in Rust’s standard library, and both `String` and string slices
-are UTF-8 encoded.
+Rust standart kutubxonasi tomonidan taqdim etilgan `String` turi asosiy tilga o'rnatilmagan va kengaytiriladigan, o'zgaruvchan, ega bo'lgan, UTF-8 kodlangan string turidir. Rustaceanlar Rust tilidagi "stringlar" ga murojaat qilganda, ular bu turlardan birini emas, balki `String` yoki string slice `&str` turlarini nazarda tutishi mumkin. Garchi bu bo'lim asosan String haqida bo'lsa-da, ikkala tur ham Rust standart kutubxonasida ko'p qo'llaniladi, `String` va string slicelari UTF-8 da kodlangan.
 
 ### Creating a New String
 
