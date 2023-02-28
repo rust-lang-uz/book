@@ -103,43 +103,23 @@ Shuningdek, biz barcha elementlarga o'zgartirish kiritish uchun o'zgaruvchan vec
 
 <span class="caption">Ro'yxat 8-8: Vectordagi elementlarga o'zgaruvchan referencelarni takrorlash</span>
 
-To change the value that the mutable reference refers to, we have to use the
-`*` dereference operator to get to the value in `i` before we can use the `+=`
-operator. We’ll talk more about the dereference operator in the [“Following the
-Pointer to the Value with the Dereference Operator”][deref]<!-- ignore -->
-section of Chapter 15.
+O'zgaruvchan  reference nazarda tutilgan qiymatni o'zgartirish uchun biz `+=` operatoridan foydalanishimizdan oldin `i` qiymatiga o'tish uchun `*` dereference operatoridan foydalanishimiz kerak. Biz 15-bobning ["Dereference operatori bilan ko'rsatgichni qiymatga kuzatib borish"][deref]<!-- ignore --> bo'limida dereference operatori haqida ko'proq gaplashamiz.
 
-Iterating over a vector, whether immutably or mutably, is safe because of the
-borrow checker's rules. If we attempted to insert or remove items in the `for`
-loop bodies in Listing 8-7 and Listing 8-8, we would get a compiler error
-similar to the one we got with the code in Listing 8-6. The reference to the
-vector that the `for` loop holds prevents simultaneous modification of the
-whole vector.
+O'zgarmas yoki o'zgaruvchan bo'lsin, vector bo'yicha takrorlash, borrow tekshiruvi qoidalari tufayli xavfsizdir. Agar biz 8-7 va 8-8 ro'yxatlardagi `for` siklining tanasiga elementlarni qo'shishga yoki olib tashlashga harakat qilsak, biz 8-6 ro'yxatdagi kodga o'xshash kompilyator xatosiga duch kelamiz. `for` siklidagi vectorga murojaat qilish butun vektorni bir vaqtning o'zida o'zgartirishni oldini oladi.
 
-### Using an Enum to Store Multiple Types
+### Bir nechta turlarni saqlash uchun enumdan foydalanish
 
-Vectors can only store values that are the same type. This can be inconvenient;
-there are definitely use cases for needing to store a list of items of
-different types. Fortunately, the variants of an enum are defined under the
-same enum type, so when we need one type to represent elements of different
-types, we can define and use an enum!
+Vectorlar faqat bir xil turdagi qiymatlarni saqlashi mumkin. Bu noqulay bo'lishi mumkin; Har xil turdagi elementlar ro'yxatini saqlash zarurati uchun, albatta, foydalanish holatlari mavjud. Yaxshiyamki, enumlashning variantlari bir xil enum turi ostida aniqlanadi, shuning uchun bizga har xil turdagi elementlarni ko'rsatish uchun bitta tur kerak bo'lganda, enumni aniqlashimiz va ishlatishimiz mumkin!
 
-For example, say we want to get values from a row in a spreadsheet in which
-some of the columns in the row contain integers, some floating-point numbers,
-and some strings. We can define an enum whose variants will hold the different
-value types, and all the enum variants will be considered the same type: that
-of the enum. Then we can create a vector to hold that enum and so, ultimately,
-holds different types. We’ve demonstrated this in Listing 8-9.
+Misol uchun, biz elektron jadvalning bir qator ustunlarida integer sonlar, ba'zi float raqamlar va ba'zi stringlar mavjud bo'lgan satrdan qiymatlarni olishni xohlaymiz. Variantlari turli qiymat turlariga ega bo'lgan enumni aniqlashimiz mumkin va barcha enum variantlari bir xil turdagi hisoblanadi: enum. Keyin biz ushbu enumni ushlab turish uchun vektorni yaratishimiz mumkin va natijada har xil turlarni ushlab turadi. Biz buni 8-9 ro'yxatda ko'rsatdik.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-09/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-9: Defining an `enum` to store values of
-different types in one vector</span>
+<span class="caption">Ro'yxat 8-9: Har xil turdagi qiymatlarni bitta vektorda saqlash uchun `enum`ni aniqlash</span>
 
-Rust needs to know what types will be in the vector at compile time so it knows
-exactly how much memory on the heap will be needed to store each element. We
+Rust kompilyatsiya vaqtida vectorda qanday turlar bo'lishini bilishi kerak, shuning uchun u har bir elementni saqlash uchun heapda qancha xotira kerakligini aniq biladi. We
 must also be explicit about what types are allowed in this vector. If Rust
 allowed a vector to hold any type, there would be a chance that one or more of
 the types would cause errors with the operations performed on the elements of
