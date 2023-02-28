@@ -62,7 +62,7 @@ Rust elementga reference qilishning ushbu ikki usulini taqdim etishining sababi 
 
 Ushbu kodni ishga tushirganimizda, birinchi `[]` metodi dasturda panic chiqaradi, chunki u mavjud bo'lmagan elementga murojaat qiladi. Ushbu usul vector oxiridan o'tgan elementga kirishga urinish bo'lsa, dasturingiz ishdan chiqishini xohlasangiz yaxshi qo'llaniladi.
 
-`get` metodi vektordan tashqaridagi indeksdan o'tganda, panic qo'ymasdan  `None`ni qaytaradi. Vector doirasidan tashqaridagi elementga kirish vaqti-vaqti bilan oddiy sharoitlarda sodir bo'lishi mumkin bo'lsa, siz ushbu usuldan foydalanasiz. Keyin sizning kodingiz 6-bobda muhokama qilinganidek, `Some(&element)`  yoki `None`ga ega bo'lish mantiqiga ega bo'ladi.Misol uchun, indeks raqamni kiritgan odamdan kelib chiqishi mumkin. Agar ular tasodifan juda katta raqamni kiritsa va dastur  `None` qiymatiga ega bo'lsa, siz foydalanuvchiga joriy vectorda nechta element borligini aytishingiz va ularga to'g'ri qiymat kiritish uchun yana bir imkoniyat berishingiz mumkin.Bu imlo xatosi tufayli dasturni buzishdan ko'ra foydalanuvchilar uchun qulayroq bo'lar edi!
+`get` metodi vectordan tashqaridagi indeksdan o'tganda, panic qo'ymasdan  `None`ni qaytaradi. Vector doirasidan tashqaridagi elementga kirish vaqti-vaqti bilan oddiy sharoitlarda sodir bo'lishi mumkin bo'lsa, siz ushbu usuldan foydalanasiz. Keyin sizning kodingiz 6-bobda muhokama qilinganidek, `Some(&element)`  yoki `None`ga ega bo'lish mantiqiga ega bo'ladi.Misol uchun, indeks raqamni kiritgan odamdan kelib chiqishi mumkin. Agar ular tasodifan juda katta raqamni kiritsa va dastur  `None` qiymatiga ega bo'lsa, siz foydalanuvchiga joriy vectorda nechta element borligini aytishingiz va ularga to'g'ri qiymat kiritish uchun yana bir imkoniyat berishingiz mumkin.Bu imlo xatosi tufayli dasturni buzishdan ko'ra foydalanuvchilar uchun qulayroq bo'lar edi!
 
 Dasturda tegishli reference mavjud bo'lsa, borrow tekshiruvi ushbu reference va vector mazmuniga boshqa har qanday referencelar haqiqiyligini ta'minlash uchun ownership va borrowing qoidalarini (4-bobda ko'rsatilgan) amalga oshiradi. Bir xil doirada o'zgaruvchan va o'zgarmas referencelarga ega bo'lolmaysiz degan qoidani eslang. Ushbu qoida 8-6 ro'yxatda qo'llaniladi, bu yerda biz vectordagi birinchi elementga o'zgarmas referenceni ushlab turamiz va elementni oxiriga qo'shishga harakat qilamiz. Agar biz ushbu elementga keyinroq funksiyada murojaat qilsak, bu dastur ishlamaydi:
 
@@ -71,53 +71,37 @@ Dasturda tegishli reference mavjud bo'lsa, borrow tekshiruvi ushbu reference va 
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-06/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-6: Attempting to add an element to a vector
-while holding a reference to an item</span>
+<span class="caption">Ro'yxat 8-6. Vector elementiga reference mavjud bo'lganda vectorga biron bir element qo'shishga urinish</span>
 
-Compiling this code will result in this error:
+Ushbu kodni kompilyatsiya qilish ushbu xatoga olib keladi:
 
 
 ```console
 {{#include ../listings/ch08-common-collections/listing-08-06/output.txt}}
 ```
 
-The code in Listing 8-6 might look like it should work: why should a reference
-to the first element care about changes at the end of the vector? This error is
-due to the way vectors work: because vectors put the values next to each other
-in memory, adding a new element onto the end of the vector might require
-allocating new memory and copying the old elements to the new space, if there
-isn’t enough room to put all the elements next to each other where the vector
-is currently stored. In that case, the reference to the first element would be
-pointing to deallocated memory. The borrowing rules prevent programs from
-ending up in that situation.
+8-6 ro'yxatdagi kod ishlashi kerakdek ko'rinishi mumkin: nima uchun birinchi elementga reference vector oxiridagi o'zgarishlar haqida qayg'urishi kerak? Bu xato vectorlarning ishlash usuli bilan bog'liq: vectorlar qiymatlarni xotirada bir-birining yoniga qo'yganligi sababli vector oxiriga yangi element qo'shish yangi xotira ajratishni va eski elementlarni yangi bo'sh joyga ko'chirishni talab qilishi mumkin. Hozirda vector saqlanadigan barcha elementlarni bir-birining yoniga qo'yish uchun joy etarli emas. Bunday holda, birinchi elementga reference ajratilgan xotiraga ishora qiladi. Borrowing qoidalari dasturlarning bunday vaziyatga tushishiga yo'l qo'ymaydi.
 
-> Note: For more on the implementation details of the `Vec<T>` type, see [“The
-> Rustonomicon”][nomicon].
+> Eslatma: `Vec<T>` turini implement qilish haqida ko'proq ma'lumot olish uchun
+> ["Rustonomikon"][nomicon] ga qarang.
 
-### Iterating over the Values in a Vector
+### Vectordagi qiymatlarni takrorlash
 
-To access each element in a vector in turn, we would iterate through all of the
-elements rather than use indices to access one at a time. Listing 8-7 shows how
-to use a `for` loop to get immutable references to each element in a vector of
-`i32` values and print them.
+Vectordagi har bir elementga navbatma-navbat kirish uchun biz indekslarni birma-bir kirish uchun ishlatmasdan, barcha elementlarni takrorlaymiz. 8-7 ro'yxatda `i32` qiymatlari vectoridagi har bir elementga o'zgarmas referencelarni olish va ularni chop etish uchun `for` siklidan qanday foydalanish ko'rsatilgan.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-07/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-7: Printing each element in a vector by
-iterating over the elements using a `for` loop</span>
+<span class="caption">Ro'yxat 8-7: `for` sikli yordamida elementlarni takrorlash orqali vectordagi har bir elementni chop etish</span>
 
-We can also iterate over mutable references to each element in a mutable vector
-in order to make changes to all the elements. The `for` loop in Listing 8-8
-will add `50` to each element.
+Shuningdek, biz barcha elementlarga o'zgartirish kiritish uchun o'zgaruvchan vectordagi har bir elementga o'zgaruvchan referencelarni takrorlashimiz mumkin. 8-8 ro'yxatdagi `for` sikli har bir elementga `50` qo'shadi.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-08/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-8: Iterating over mutable references to
-elements in a vector</span>
+<span class="caption">Ro'yxat 8-8: Vectordagi elementlarga o'zgaruvchan referencelarni takrorlash</span>
 
 To change the value that the mutable reference refers to, we have to use the
 `*` dereference operator to get to the value in `i` before we can use the `+=`
