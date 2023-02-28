@@ -105,54 +105,40 @@ Shuningdek, biz barcha elementlarga o'zgartirish kiritish uchun o'zgaruvchan vec
 
 O'zgaruvchan  reference nazarda tutilgan qiymatni o'zgartirish uchun biz `+=` operatoridan foydalanishimizdan oldin `i` qiymatiga o'tish uchun `*` dereference operatoridan foydalanishimiz kerak. Biz 15-bobning ["Dereference operatori bilan ko'rsatgichni qiymatga kuzatib borish"][deref]<!-- ignore --> bo'limida dereference operatori haqida ko'proq gaplashamiz.
 
-O'zgarmas yoki o'zgaruvchan bo'lsin, vector bo'yicha takrorlash, borrow tekshiruvi qoidalari tufayli xavfsizdir. Agar biz 8-7 va 8-8 ro'yxatlardagi `for` siklining tanasiga elementlarni qo'shishga yoki olib tashlashga harakat qilsak, biz 8-6 ro'yxatdagi kodga o'xshash kompilyator xatosiga duch kelamiz. `for` siklidagi vectorga murojaat qilish butun vektorni bir vaqtning o'zida o'zgartirishni oldini oladi.
+O'zgarmas yoki o'zgaruvchan bo'lsin, vector bo'yicha takrorlash, borrow tekshiruvi qoidalari tufayli xavfsizdir. Agar biz 8-7 va 8-8 ro'yxatlardagi `for` siklining tanasiga elementlarni qo'shishga yoki olib tashlashga harakat qilsak, biz 8-6 ro'yxatdagi kodga o'xshash kompilyator xatosiga duch kelamiz. `for` siklidagi vectorga murojaat qilish butun vectorni bir vaqtning o'zida o'zgartirishni oldini oladi.
 
 ### Bir nechta turlarni saqlash uchun enumdan foydalanish
 
 Vectorlar faqat bir xil turdagi qiymatlarni saqlashi mumkin. Bu noqulay bo'lishi mumkin; Har xil turdagi elementlar ro'yxatini saqlash zarurati uchun, albatta, foydalanish holatlari mavjud. Yaxshiyamki, enumlashning variantlari bir xil enum turi ostida aniqlanadi, shuning uchun bizga har xil turdagi elementlarni ko'rsatish uchun bitta tur kerak bo'lganda, enumni aniqlashimiz va ishlatishimiz mumkin!
 
-Misol uchun, biz elektron jadvalning bir qator ustunlarida integer sonlar, ba'zi float raqamlar va ba'zi stringlar mavjud bo'lgan satrdan qiymatlarni olishni xohlaymiz. Variantlari turli qiymat turlariga ega bo'lgan enumni aniqlashimiz mumkin va barcha enum variantlari bir xil turdagi hisoblanadi: enum. Keyin biz ushbu enumni ushlab turish uchun vektorni yaratishimiz mumkin va natijada har xil turlarni ushlab turadi. Biz buni 8-9 ro'yxatda ko'rsatdik.
+Misol uchun, biz elektron jadvalning bir qator ustunlarida integer sonlar, ba'zi float raqamlar va ba'zi stringlar mavjud bo'lgan satrdan qiymatlarni olishni xohlaymiz. Variantlari turli qiymat turlariga ega bo'lgan enumni aniqlashimiz mumkin va barcha enum variantlari bir xil turdagi hisoblanadi: enum. Keyin biz ushbu enumni ushlab turish uchun vectorni yaratishimiz mumkin va natijada har xil turlarni ushlab turadi. Biz buni 8-9 ro'yxatda ko'rsatdik.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-09/src/main.rs:here}}
 ```
 
-<span class="caption">Ro'yxat 8-9: Har xil turdagi qiymatlarni bitta vektorda saqlash uchun `enum`ni aniqlash</span>
+<span class="caption">Ro'yxat 8-9: Har xil turdagi qiymatlarni bitta vectorda saqlash uchun `enum`ni aniqlash</span>
 
-Rust kompilyatsiya vaqtida vectorda qanday turlar bo'lishini bilishi kerak, shuning uchun u har bir elementni saqlash uchun heapda qancha xotira kerakligini aniq biladi. We
-must also be explicit about what types are allowed in this vector. If Rust
-allowed a vector to hold any type, there would be a chance that one or more of
-the types would cause errors with the operations performed on the elements of
-the vector. Using an enum plus a `match` expression means that Rust will ensure
-at compile time that every possible case is handled, as discussed in Chapter 6.
+Rust kompilyatsiya vaqtida vectorda qanday turlar bo'lishini bilishi kerak, shuning uchun u har bir elementni saqlash uchun heapda qancha xotira kerakligini aniq biladi. Shuningdek, ushbu vectorda qanday turlarga ruxsat berilganligini aniq bilishimiz kerak. Agar Rust vectorga har qanday turni ushlab turishga ruxsat bergan bo'lsa, bir yoki bir nechta tur vector elementlari ustida bajarilgan operatsiyalarda xatoliklarni keltirib chiqarishi mumkin edi. Enum va `match` ifodasidan foydalanish Rust kompilyatsiya vaqtida 6-bobda muhokama qilinganidek, barcha mumkin bo'lgan holatlar ko'rib chiqilishini ta'minlaydi.
 
-If you don’t know the exhaustive set of types a program will get at runtime to
-store in a vector, the enum technique won’t work. Instead, you can use a trait
-object, which we’ll cover in Chapter 17.
+Agar siz vectorda saqlash uchun dastur runtimeda oladigan turlarning to'liq to'plamini bilmasangiz, enum texnikasi ishlamaydi. Buning o'rniga, biz 17-bobda ko'rib chiqiladigan trait obyektidan foydalanishingiz mumkin.
 
-Now that we’ve discussed some of the most common ways to use vectors, be sure
-to review [the API documentation][vec-api]<!-- ignore --> for all the many
-useful methods defined on `Vec<T>` by the standard library. For example, in
-addition to `push`, a `pop` method removes and returns the last element.
 
-### Dropping a Vector Drops Its Elements
+Endi biz vectorlardan foydalanishning eng keng tarqalgan usullarini ko'rib chiqdik, standart kutubxona tomonidan `Vec<T>` da belgilangan barcha foydali usullar uchun [API texnik hujjatlarini][vec-api]<!-- ignore --> ko'rib chiqishni unutmang. Masalan, `push` dan tashqari, `pop` usuli oxirgi elementni olib tashlaydi va qaytaradi.
 
-Like any other `struct`, a vector is freed when it goes out of scope, as
-annotated in Listing 8-10.
+### Vectordan elementlarni olib tashlash
+
+`struct`lar singari, vector ham 8-10 ro'yxatda ko'rsatilganidek, amal qilish doirasidan tashqariga chiqqanda xotirasini bo'shatadi.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-10/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-10: Showing where the vector and its elements
-are dropped</span>
+<span class="caption">Ro'yxat 8-10. Vector va uning elementlarini qanday o'chirishni ko'rsatadi</span>
 
-When the vector gets dropped, all of its contents are also dropped, meaning the
-integers it holds will be cleaned up. The borrow checker ensures that any
-references to contents of a vector are only used while the vector itself is
-valid.
+Vector o'chirilganda, uning barcha tarkibi ham o'chiriladi: vectorni o'chirish uning tarkibidagi qiymatlarni o'chirishni anglatadi. Borrow tekshiruvi vector mazmuniga har qanday referencelar faqat vectorning o'zi haqiqiy bo'lganda ishlatilishini ta'minlaydi.
 
-Let’s move on to the next collection type: `String`!
+Keling, keyingi to'plam turiga o'tamiz: `String`!
 
 [data-types]: ch03-02-data-types.html#data-types
 [nomicon]: ../nomicon/vec/vec.html

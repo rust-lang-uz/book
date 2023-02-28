@@ -3,7 +3,7 @@ fn main() {
     {
         let v = vec![1, 2, 3, 4];
 
-        // do stuff with v
-    } // <- v goes out of scope and is freed here
+        // v bilan ish
+    } // <- v doiradan chiqib ketadi va bu erda bo'shatiladi
       // ANCHOR_END: here
 }
