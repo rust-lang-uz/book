@@ -41,50 +41,39 @@ Satr literalidan `String` yaratish uchun `String::from` funksiyasidan ham foydal
 
 Stringlar juda ko'p narsalar uchun ishlatilganligi sababli, biz stringlar uchun juda ko'p turli xil umumiy API'lardan foydalanishimiz mumkin, bu bizga juda ko'p imkoniyatlarni taqdim etadi. Ulardan ba'zilari ortiqcha bo'lib tuyulishi mumkin, ammo ularning barchasi o'z joylariga ega! Bunday holda, `String::from` va `to_string` bir xil ishni bajaradi, shuning uchun tanlov sizga eng yoqqan uslubga bog'liq.
 
-Remember that strings are UTF-8 encoded, so we can include any properly encoded
-data in them, as shown in Listing 8-14.
+Yodda tutingki, stringlar UTF-8 bilan kodlangan, shuning uchun 8-14 ro'yxatda ko'rsatilganidek, biz ularga har qanday to'g'ri kodlangan ma'lumotlarni kiritishimiz mumkin.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-14: Storing greetings in different languages in
-strings</span>
+<span class="caption">Ro'yxat 8-14: Salom so'zini turli tillarda stringlarda saqlash</span>
 
-All of these are valid `String` values.
+Bularning barchasi yaroqli `String` qiymatlari.
 
-### Updating a String
+### Stringni yangilash
 
-A `String` can grow in size and its contents can change, just like the contents
-of a `Vec<T>`, if you push more data into it. In addition, you can conveniently
-use the `+` operator or the `format!` macro to concatenate `String` values.
+Agar siz unga ko'proq ma'lumot kiritsangiz, `String` hajmi kattalashishi mumkin va uning tarkibi `Vec<T>` tarkibidagi kabi o'zgarishi mumkin. Bundan tashqari, `String` qiymatlarini birlashtirish uchun `+` operatori yoki `format!` makrosidan qulay foydalanish mumkin.
 
-#### Appending to a String with `push_str` and `push`
+#### `push_str` va `push` yordamida stringga biriktirish
 
-We can grow a `String` by using the `push_str` method to append a string slice,
-as shown in Listing 8-15.
+Biz 8-15 roʻyxatda koʻrsatilganidek, string boʻlagini qoʻshish uchun `push_str` metodidan foydalanib `String`ni kengaytirishimiz mumkin.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-15/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-15: Appending a string slice to a `String`
-using the `push_str` method</span>
+<span class="caption">Roʻyxat 8-15: `push_str` metodi yordamida `String` ga satr boʻlagini qoʻshish</span>
 
-After these two lines, `s` will contain `foobar`. The `push_str` method takes a
-string slice because we don’t necessarily want to take ownership of the
-parameter. For example, in the code in Listing 8-16, we want to be able to use
-`s2` after appending its contents to `s1`.
+Ushbu ikki qatordan keyin `s` tarkibida `dasturchi` bo'ladi. `push_str` metodi string bo'lagini oladi, chunki biz parametrga egalik qilishni xohlamaymiz. Masalan, 8-16 roʻyxatdagi kodda biz uning mazmunini `s1` ga qoʻshgandan soʻng `s2` dan foydalanish imkoniyatiga ega boʻlishni xohlaymiz.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-16/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-16: Using a string slice after appending its
-contents to a `String`</span>
+<span class="caption">Ro'yxat 8-16: Tarkibni `String` ga qo'shgandan so'ng, string bo'lagidan foydalanish</span>
 
-If the `push_str` method took ownership of `s2`, we wouldn’t be able to print
-its value on the last line. However, this code works as we’d expect!
+Agar `push_str` metodi `s2` ga egalik qilgan bo‘lsa, biz uning qiymatini oxirgi satrda chop eta olmaymiz. Biroq, bu kod biz kutgandek ishlaydi!
 
 The `push` method takes a single character as a parameter and adds it to the
 `String`. Listing 8-17 adds the letter “l” to a `String` using the `push`

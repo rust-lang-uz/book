@@ -1,8 +1,8 @@
 fn main() {
     // ANCHOR: here
-    let mut s1 = String::from("foo");
-    let s2 = "bar";
+    let mut s1 = String::from("dastur");
+    let s2 = "chi";
     s1.push_str(s2);
-    println!("s2 is {s2}");
+    println!("s2 - {s2}");
     // ANCHOR_END: here
 }
