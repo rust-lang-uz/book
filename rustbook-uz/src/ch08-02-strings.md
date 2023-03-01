@@ -75,52 +75,37 @@ Ushbu ikki qatordan keyin `s` tarkibida `dasturchi` bo'ladi. `push_str` metodi s
 
 Agar `push_str` metodi `s2` ga egalik qilgan bo‘lsa, biz uning qiymatini oxirgi satrda chop eta olmaymiz. Biroq, bu kod biz kutgandek ishlaydi!
 
-The `push` method takes a single character as a parameter and adds it to the
-`String`. Listing 8-17 adds the letter “l” to a `String` using the `push`
-method.
+`push` metodi parametr sifatida bitta belgini oladi va uni `String` ga qo'shadi. 8-17 ro'yxatda `push` metodi yordamida `String` ga `v` harfi qo'shiladi.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-17/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-17: Adding one character to a `String` value
-using `push`</span>
+<span class="caption">Roʻyxat 8-17: `push` yordamida `String` qiymatiga bitta belgi qoʻshish</span>
 
-As a result, `s` will contain `lol`.
+Natijada, `s` tarkibida `suv` bo'ladi.
 
-#### Concatenation with the `+` Operator or the `format!` Macro
+#### `+` operatori yoki `format!` makrosidan foydalanib satrlarni birlashtirish
 
-Often, you’ll want to combine two existing strings. One way to do so is to use
-the `+` operator, as shown in Listing 8-18.
+Ko'pincha siz ikkita mavjud satrni birlashtirishni xohlaysiz. Buning usullaridan biri 8-18 ro'yxatda ko'rsatilganidek, `+` operatoridan foydalanishdir.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-18/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-18: Using the `+` operator to combine two
-`String` values into a new `String` value</span>
+<span class="caption">Roʻyxat 8-18: Ikkita `String` qiymatini yangi `String` qiymatiga birlashtirish uchun `+` operatoridan foydalanish</span>
 
-The string `s3` will contain `Hello, world!`. The reason `s1` is no longer
-valid after the addition, and the reason we used a reference to `s2`, has to do
-with the signature of the method that’s called when we use the `+` operator.
-The `+` operator uses the `add` method, whose signature looks something like
-this:
+`s3` qatorida `Salom, Rust!` bo'ladi. Qo‘shishdan keyin `s1` ning endi haqiqiy emasligi va `s2`ga referenceni qo‘llaganimiz sababi `+` operatoridan foydalanganda chaqirilayotgan metodning imzosi bilan bog‘liq.
+`+` operatori `add` metodidan foydalanadi, uning imzosi quyidagicha ko'rinadi:
 
 ```rust,ignore
 fn add(self, s: &str) -> String {
 ```
 
-In the standard library, you'll see `add` defined using generics and associated
-types. Here, we’ve substituted in concrete types, which is what happens when we
-call this method with `String` values. We’ll discuss generics in Chapter 10.
-This signature gives us the clues we need to understand the tricky bits of the
-`+` operator.
+Standart kutubxonada siz umumiy va tegishli turlar yordamida aniqlangan `add`ni ko'rasiz. Bu erda biz aniq turlarni almashtirdik, bu metodni `String` qiymatlari bilan chaqirganimizda sodir bo'ladi. Biz 10-bobda generiklarni muhokama qilamiz.
+Ushbu imzo bizga `+` operatorining murakkab bitlarini tushunishimiz kerak bo'lgan maslahatlarni beradi.
 
-First, `s2` has an `&`, meaning that we’re adding a *reference* of the second
-string to the first string. This is because of the `s` parameter in the `add`
-function: we can only add a `&str` to a `String`; we can’t add two `String`
-values together. But wait—the type of `&s2` is `&String`, not `&str`, as
-specified in the second parameter to `add`. So why does Listing 8-18 compile?
+Birinchidan, `s2` `&` belgisiga ega, ya'ni biz birinchi satrga ikkinchi satrning *reference*ni qo'shmoqdamiz. Buning sababi `add` funksiyasidagi `s` parametri: biz faqat `String`ga `&str` qo'shishimiz mumkin; biz ikkita `String` qiymatini qo'sha olmaymiz. Lekin kuting – `&s2` turi `add` uchun ikkinchi parametrda ko‘rsatilganidek, `&str` emas, `&String`dir. Xo'sh, nima uchun 8-18 ro'yxatdagi kod kompilyatsiya bo'ladi?
 
 The reason we’re able to use `&s2` in the call to `add` is that the compiler
 can *coerce* the `&String` argument into a `&str`. When we call the `add`
