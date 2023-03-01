@@ -1,10 +1,10 @@
 fn main() {
     // ANCHOR: here
-    let data = "initial contents";
+    let malumot = "dastlabki tarkib";
 
-    let s = data.to_string();
+    let s = malumot.to_string();
 
     // the method also works on a literal directly:
-    let s = "initial contents".to_string();
+    let s = "dastlabki tarkib".to_string();
     // ANCHOR_END: here
 }
