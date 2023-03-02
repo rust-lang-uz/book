@@ -144,47 +144,30 @@ Ushbu kod quyidagi xatoga olib keladi:
 
 Xato va eslatma Rust indekslashni qo'llab-quvvatlamasligini aytadi. Lekin nega yo'q? Bu savolga javob berish uchun Rust stringlarni xotirada qanday saqlashini muhokama qilishimiz kerak.
 
-#### Internal Representation
+#### Ichki vakillik
 
-A `String` is a wrapper over a `Vec<u8>`. Let’s look at some of our properly
-encoded UTF-8 example strings from Listing 8-14. First, this one:
+`String` turi - bu `Vec<u8>` turidagi wrapper. Keling, 8-14 ro'yxatdagi to'g'ri kodlangan UTF-8 misol stringlarini ko'rib chiqaylik. Birinchidan, bu:
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:spanish}}
 ```
 
-In this case, `len` will be 4, which means the vector storing the string “Hola”
-is 4 bytes long. Each of these letters takes 1 byte when encoded in UTF-8. The
-following line, however, may surprise you. (Note that this string begins with
-the capital Cyrillic letter Ze, not the Arabic number 3.)
+Bunday holda, `len` 4 bo'ladi, ya'ni "Hola" qatorini saqlaydigan vektor 4 bayt uzunlikda. Bu harflarning har biri UTF-8 da kodlanganda 1 baytni oladi. Biroq, keyingi qator sizni hayratda qoldirishi mumkin. (E'tibor bering, bu qator arabcha 3 raqami emas, kirill alifbosining bosh harfi Ze bilan boshlanadi.)
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:russian}}
 ```
 
-Asked how long the string is, you might say 12. In fact, Rust’s answer is 24:
-that’s the number of bytes it takes to encode “Здравствуйте” in UTF-8, because
-each Unicode scalar value in that string takes 2 bytes of storage. Therefore,
-an index into the string’s bytes will not always correlate to a valid Unicode
-scalar value. To demonstrate, consider this invalid Rust code:
+String uzunligi so'ralganda, siz 12 deb aytishingiz mumkin. Aslida, Rustning javobi 24: bu UTF 8 da “Здравствуйте” ni kodlash uchun zarur bo'lgan baytlar soni, chunki bu satrdagi har bir Unicode skalyar qiymati 2 bayt xotirani oladi. Shuning uchun, satr baytlaridagi indeks har doim ham haqiqiy Unicode skalyar qiymatiga mos kelmaydi. Namoyish qilish uchun ushbu yaroqsiz Rust kodini ko'rib chiqing:
 
 ```rust,ignore,does_not_compile
-let hello = "Здравствуйте";
-let answer = &hello[0];
+let salom = "Здравствуйте";
+let javob = &salom[0];
 ```
 
-You already know that `answer` will not be `З`, the first letter. When encoded
-in UTF-8, the first byte of `З` is `208` and the second is `151`, so it would
-seem that `answer` should in fact be `208`, but `208` is not a valid character
-on its own. Returning `208` is likely not what a user would want if they asked
-for the first letter of this string; however, that’s the only data that Rust
-has at byte index 0. Users generally don’t want the byte value returned, even
-if the string contains only Latin letters: if `&"hello"[0]` were valid code
-that returned the byte value, it would return `104`, not `h`.
+Siz allaqachon bilasizki, `javob` birinchi harf bo'lgan `З` bo'lmaydi. UTF-8 da kodlanganda, `З` birinchi bayti `208`, ikkinchisi esa `151`, shuning uchun `javob` aslida `208` bo'lishi kerakdek tuyuladi, lekin `208` o'z-o'zidan haqiqiy belgi emas. Agar foydalanuvchi ushbu qatorning birinchi harfini so'ragan bo'lsa, `208` ni qaytarish, ehtimol bu emas; ammo, bu Rust bayt indeksi 0 bo'lgan yagona ma'lumotdir. Foydalanuvchilar odatda bayt qiymatini qaytarishni xohlamaydilar, hatto satrda faqat lotin harflari bo‘lsa ham: agar `&“hello”[0]` bayt qiymatini qaytaruvchi yaroqli kod bo‘lsa, u `h` emas, `104`ni qaytaradi. .
 
-The answer, then, is that to avoid returning an unexpected value and causing
-bugs that might not be discovered immediately, Rust doesn’t compile this code
-at all and prevents misunderstandings early in the development process.
+Javob shundaki, kutilmagan qiymatni qaytarmaslik va darhol topilmasligi mumkin bo'lgan xatolarni keltirib chiqarmaslik uchun Rust ushbu kodni umuman kompilyatsiya qilmaydi va ishlab chiqish jarayonida tushunmovchiliklarning oldini oladi.
 
 #### Bytes and Scalar Values and Grapheme Clusters! Oh My!
 
