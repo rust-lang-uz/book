@@ -169,48 +169,34 @@ Siz allaqachon bilasizki, `javob` birinchi harf bo'lgan `З` bo'lmaydi. UTF-8 da
 
 Javob shundaki, kutilmagan qiymatni qaytarmaslik va darhol topilmasligi mumkin bo'lgan xatolarni keltirib chiqarmaslik uchun Rust ushbu kodni umuman kompilyatsiya qilmaydi va ishlab chiqish jarayonida tushunmovchiliklarning oldini oladi.
 
-#### Bytes and Scalar Values and Grapheme Clusters! Oh My!
+#### Baytlar va skalyar qiymatlar va grafema klasterlari!
 
-Another point about UTF-8 is that there are actually three relevant ways to
-look at strings from Rust’s perspective: as bytes, scalar values, and grapheme
-clusters (the closest thing to what we would call *letters*).
+UTF-8 bilan bog'liq yana bir nuqta shundaki, Rust nuqtai nazaridan satrlarga qarashning uchta mos usuli mavjud: baytlar, skalyar qiymatlar va grafema klasterlari (biz *harflar* deb ataydigan narsaga eng yaqin narsa).
 
-If we look at the Hindi word “नमस्ते” written in the Devanagari script, it is
-stored as a vector of `u8` values that looks like this:
+Devanagari skriptida yozilgan hindcha “नमस्ते” so'ziga qarasak, u `u8` qiymatlari vektori sifatida saqlanadi, bu quyidagicha ko'rinadi:
 
 ```text
 [224, 164, 168, 224, 164, 174, 224, 164, 184, 224, 165, 141, 224, 164, 164,
 224, 165, 135]
 ```
 
-That’s 18 bytes and is how computers ultimately store this data. If we look at
-them as Unicode scalar values, which are what Rust’s `char` type is, those
-bytes look like this:
+Bu 18 bayt va kompyuterlar oxir-oqibat bu ma'lumotlarni qanday saqlaydi. Agar biz ularni Rustning `char` turiga ega bo'lgan Unicode skalyar qiymatlari sifatida qarasak, bu baytlar quyidagicha ko'rinadi:
 
 ```text
 ['न', 'म', 'स', '्', 'त', 'े']
 ```
 
-There are six `char` values here, but the fourth and sixth are not letters:
-they’re diacritics that don’t make sense on their own. Finally, if we look at
-them as grapheme clusters, we’d get what a person would call the four letters
-that make up the Hindi word:
+Bu yerda oltita `char` qiymati bor, lekin to'rtinchi va oltinchi harflar emas: ular o'z-o'zidan ma'noga ega bo'lmagan diakritikdir. Nihoyat, agar baytlarni grafema klasterlari sifatida ko'rib chiqsak, inson to'rt harfli hindcha so'z deb ataydigan narsani olamiz:
 
 ```text
 ["न", "म", "स्", "ते"]
 ```
 
-Rust provides different ways of interpreting the raw string data that computers
-store so that each program can choose the interpretation it needs, no matter
-what human language the data is in.
+Rust kompyuterlar saqlaydigan ma'lumotlar qatorini talqin qilishning turli usullarini taqdim etadi, shunda ma'lumotlar qaysi inson tilida bo'lishidan qat'i nazar, har bir dastur kerakli talqinni tanlashi mumkin.
 
-A final reason Rust doesn’t allow us to index into a `String` to get a
-character is that indexing operations are expected to always take constant time
-(O(1)). But it isn’t possible to guarantee that performance with a `String`,
-because Rust would have to walk through the contents from the beginning to the
-index to determine how many valid characters there were.
+Rust bizga belgini olish uchun `String` ga indekslashga ruxsat bermasligining yakuniy sababi shundaki, indekslash operatsiyalari doimo konstanta(doimiy) vaqtni oladi (O(1)). Ammo `Strin`g bilan ishlashni kafolatlab bo‘lmaydi, chunki Rust qancha to‘g‘ri belgilar mavjudligini aniqlash uchun tarkibni boshidan indeksgacha bosib o‘tishi kerak edi.
 
-### Slicing Strings
+### String bo'laklari
 
 Indexing into a string is often a bad idea because it’s not clear what the
 return type of the string-indexing operation should be: a byte value, a
