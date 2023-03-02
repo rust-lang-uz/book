@@ -1,41 +1,23 @@
-## Storing Keys with Associated Values in Hash Maps
+## Hash Maplarda bog'langan qiymatlarga ega kalitlarni saqlash
 
-The last of our common collections is the *hash map*. The type `HashMap<K, V>`
-stores a mapping of keys of type `K` to values of type `V` using a
-*hashing function*, which determines how it places these keys and values into
-memory. Many programming languages support this kind of data structure, but
-they often use a different name, such as hash, map, object, hash table,
-dictionary, or associative array, just to name a few.
+Umumiy to'plamlarimizning oxirgisi *hash map*. `HashMap<K, V>` turi `K` turidagi kalitlarning `V` turidagi qiymatlarga xaritasini *xeshlash funksiyasi* yordamida saqlaydi, bu kalit va qiymatlarni xotiraga qanday joylashtirishini belgilaydi. Ko'pgina dasturlash tillari bunday ma'lumotlar strukturasini qo'llab-quvvatlaydi, lekin ular ko'pincha bir nechtasini nomlash uchun hash, map, object, hash table, dictionary, yoki associative array kabi boshqa nomlardan foydalanadilar.
 
-Hash maps are useful when you want to look up data not by using an index, as
-you can with vectors, but by using a key that can be of any type. For example,
-in a game, you could keep track of each team’s score in a hash map in which
-each key is a team’s name and the values are each team’s score. Given a team
-name, you can retrieve its score.
+Hash maplar ma'lumotlarni vektorlar bilan bo'lgani kabi indeks yordamida emas, balki har qanday turdagi kalit yordamida qidirmoqchi bo'lsangiz foydali bo'ladi. Misol uchun, o'yinda siz har bir jamoaning balini hesh-mapda kuzatib borishingiz mumkin, unda har bir kalit jamoaning nomi va qiymatlar har bir jamoaning ballidir. Jamoa nomi berilgan bo'lsa, siz uning ballini olishingiz mumkin.
 
-We’ll go over the basic API of hash maps in this section, but many more goodies
-are hiding in the functions defined on `HashMap<K, V>` by the standard library.
-As always, check the standard library documentation for more information.
+Ushbu bo'limda biz hesh-mapllarining asosiy API-ni ko'rib chiqamiz, ammo yana ko'plab foydali funksiyalar standart kutubxona tomonidan `HashMap<K, V>` da belgilangan funksiyalarda yashiringan.
+Har doimgidek, qo'shimcha ma'lumot olish uchun standart kutubxona texnik hujjatlarini tekshiring.
 
-### Creating a New Hash Map
+### Yangi Hash Map yaratish
 
-One way to create an empty hash map is using `new` and adding elements with
-`insert`. In Listing 8-20, we’re keeping track of the scores of two teams whose
-names are *Blue* and *Yellow*. The Blue team starts with 10 points, and the
-Yellow team starts with 50.
+Bo'sh hesh mapni yaratishning bir usuli - `new` dan foydalanish va `insert` bilan elementlarni qo'shish. 8-20 ro'yxatda biz nomlari *Yashil* va *Sariq* bo'lgan ikkita jamoaning ballarini kuzatib boramiz. Yashil jamoa 10 ball bilan, Sariq jamoa esa 50 ball bilan boshlanadi.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-20/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-20: Creating a new hash map and inserting some
-keys and values</span>
+<span class="caption">Ro'yxat 8-20: Yangi hesh mapni yaratish va ba'zi kalitlar va qiymatlarni kiritish</span>
 
-Note that we need to first `use` the `HashMap` from the collections portion of
-the standard library. Of our three common collections, this one is the least
-often used, so it’s not included in the features brought into scope
-automatically in the prelude. Hash maps also have less support from the
-standard library; there’s no built-in macro to construct them, for example.
+E'tibor bering, biz birinchi navbatda standart kutubxonaning to'plamlar qismidagi `HashMap` dan foydalanishimiz kerak. Bu quyidagicha bo'ladi `use std::collections::HashMap;`. Bizning uchta keng tarqalgan to'plamlarimiz orasida bu eng kam qo'llaniladi, shuning uchun u muqaddimada avtomatik ravishda kiritilgan funtsiyalarga kiritilmagan. Hash Maplar standart kutubxonadan ham kamroq qo'llab-quvvatlanadi; masalan, ularni yaratish uchun o'rnatilgan makros mavjud emas.
 
 Just like vectors, hash maps store their data on the heap. This `HashMap` has
 keys of type `String` and values of type `i32`. Like vectors, hash maps are
