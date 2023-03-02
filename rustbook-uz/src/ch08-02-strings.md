@@ -198,41 +198,30 @@ Rust bizga belgini olish uchun `String` ga indekslashga ruxsat bermasligining ya
 
 ### String bo'laklari
 
-Indexing into a string is often a bad idea because it’s not clear what the
-return type of the string-indexing operation should be: a byte value, a
-character, a grapheme cluster, or a string slice. If you really need to use
-indices to create string slices, therefore, Rust asks you to be more specific.
+Satrni indekslash ko'pincha noto'g'ri fikrdir, chunki satrni indekslash operatsiyasining qaytish turi qanday bo'lishi kerakligi aniq emas: bayt qiymati, belgi, grafema klasteri yoki satr bo'lagi. Agar chindan ham string bo'laklarini yaratish uchun indekslardan foydalanish kerak bo'lsa, Rust sizdan aniqroq bo'lishingizni so'raydi.
 
-Rather than indexing using `[]` with a single number, you can use `[]` with a
-range to create a string slice containing particular bytes:
+Bitta raqam bilan `[]` yordamida indeksatsiya qilish o'rniga, muayyan baytlarni o'z ichiga olgan string bo'laklarini yaratish uchun diapazon bilan `[]` dan foydalanishingiz mumkin:
 
 ```rust
-let hello = "Здравствуйте";
+let salom = "Здравствуйте";
 
-let s = &hello[0..4];
+let s = &salom[0..4];
 ```
 
-Here, `s` will be a `&str` that contains the first 4 bytes of the string.
-Earlier, we mentioned that each of these characters was 2 bytes, which means
-`s` will be `Зд`.
+Bu erda `s` qatorning dastlabki 4 baytini o'z ichiga olgan `&str` bo'ladi.
+Avvalroq, biz ushbu belgilarning har biri 2 baytdan iborat bo'lganligini aytib o'tgan edik, ya'ni `s` `Зд` bo'ladi.
 
-If we were to try to slice only part of a character’s bytes with something like
-`&hello[0..1]`, Rust would panic at runtime in the same way as if an invalid
-index were accessed in a vector:
+Agar biz `&salom[0..1]` kabi belgi baytlarining faqat bir qismini kesishga harakat qilsak, Rust ish runtimeda xuddi vektordagi yaroqsiz indeksga kirish kabi panic qo'yadi:
 
 ```console
 {{#include ../listings/ch08-common-collections/output-only-01-not-char-boundary/output.txt}}
 ```
 
-You should use ranges to create string slices with caution, because doing so
-can crash your program.
+Ehtiyotkorlik bilan string bo'laklarni yaratish uchun diapazonlardan foydalanishingiz kerak, chunki bu dasturni buzishi mumkin.
 
-### Methods for Iterating Over Strings
+### Stringlarni takrorlash usullari
 
-The best way to operate on pieces of strings is to be explicit about whether
-you want characters or bytes. For individual Unicode scalar values, use the
-`chars` method. Calling `chars` on “Зд” separates out and returns two values
-of type `char`, and you can iterate over the result to access each element:
+String bo'laklari bilan ishlashning eng yaxshi usuli - belgilar yoki baytlarni xohlaysizmi, aniq bo'lishdir. Unicode skalyar qiymatlari uchun `chars` metodidan foydalaning. “Зд” da `chars`ni chaqirish `char` turidagi ikkita qiymatni ajratib turadi va qaytaradi va har bir elementga kirish uchun natijani takrorlashingiz mumkin:
 
 ```rust
 for c in "Зд".chars() {
@@ -240,15 +229,14 @@ for c in "Зд".chars() {
 }
 ```
 
-This code will print the following:
+Ushbu kod quyidagilarni chop etadi:
 
 ```text
 З
 д
 ```
 
-Alternatively, the `bytes` method returns each raw byte, which might be
-appropriate for your domain:
+Shu bilan bir qatorda, `bytes` metodi boshqa domenga mos kelishi mumkin bo'lgan har bir baytni qaytaradi:
 
 ```rust
 for b in "Зд".bytes() {
@@ -256,7 +244,7 @@ for b in "Зд".bytes() {
 }
 ```
 
-This code will print the four bytes that make up this string:
+Ushbu kod ushbu satrni tashkil etuvchi to'rt baytni chop etadi:
 
 ```text
 208
@@ -265,29 +253,14 @@ This code will print the four bytes that make up this string:
 180
 ```
 
-But be sure to remember that valid Unicode scalar values may be made up of more
-than 1 byte.
+Lekin esda tutingki, joriy Unicode skalyar qiymatlari 1 baytdan ortiq bo'lishi mumkin.
 
-Getting grapheme clusters from strings as with the Devanagari script is
-complex, so this functionality is not provided by the standard library. Crates
-are available on [crates.io](https://crates.io/)<!-- ignore --> if this is the
-functionality you need.
+Devanagari skriptidagi kabi satrlardan grafema klasterlarini olish juda murakkab, shuning uchun bu funksiya standart kutubxona tomonidan ta'minlanmagan. Agar sizga ushbu funksiya kerak bo'lsa, [crates.io](https://crates.io/)<!-- ignore --> saytida cratelar mavjud.
 
-### Strings Are Not So Simple
+### Stringlar unchalik oddiy emas
 
-To summarize, strings are complicated. Different programming languages make
-different choices about how to present this complexity to the programmer. Rust
-has chosen to make the correct handling of `String` data the default behavior
-for all Rust programs, which means programmers have to put more thought into
-handling UTF-8 data upfront. This trade-off exposes more of the complexity of
-strings than is apparent in other programming languages, but it prevents you
-from having to handle errors involving non-ASCII characters later in your
-development life cycle.
+Xulosa qilib aytganda, satrlar murakkab. Turli xil dasturlash tillari ushbu murakkablikni dasturchiga qanday taqdim etish bo'yicha turli xil tanlovlar qiladi. Rust `String` ma'lumotlarini to'g'ri ishlashni barcha Rust dasturlari uchun standart xatti-harakatga aylantirishni tanladi, bu esa dasturchilar UTF-8 ma'lumotlari bilan ishlash haqida oldindan ko'proq o'ylashlari kerakligini anglatadi. Ushbu o'zaro kelishuv boshqa dasturlash tillarida ko'rinadiganidan ko'ra ko'proq stringlarning murakkabligini ochib beradi, lekin keyinchalik ishlab chiqish jarayonida paydo bo'lishi mumkin bo'lgan ASCII bo'lmagan belgilar xatolarini qayta ishlash zaruratini oldini oladi.
 
-The good news is that the standard library offers a lot of functionality built
-off the `String` and `&str` types to help handle these complex situations
-correctly. Be sure to check out the documentation for useful methods like
-`contains` for searching in a string and `replace` for substituting parts of a
-string with another string.
+Yaxshi xabar shundaki, standart kutubxona ushbu murakkab vaziyatlarni to'g'ri hal qilishga yordam beradigan `String` va `&str` turlaridan iborat ko'plab funksiyalarni taklif etadi. Satrda qidirish uchun `contains` va qator qismlarini boshqa satr bilan almashtirish uchun `replace` kabi foydali metodlar uchun texnik hujjatlarni ko'rib chiqing.
 
-Let’s switch to something a bit less complex: hash maps!
+Keling, biroz murakkabroq narsaga o'taylik: HashMap!
