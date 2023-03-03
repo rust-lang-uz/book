@@ -19,56 +19,42 @@ Bo'sh hesh mapni yaratishning bir usuli - `new` dan foydalanish va `insert` bila
 
 E'tibor bering, biz birinchi navbatda standart kutubxonaning to'plamlar qismidagi `HashMap` dan foydalanishimiz kerak. Bu quyidagicha bo'ladi `use std::collections::HashMap;`. Bizning uchta keng tarqalgan to'plamlarimiz orasida bu eng kam qo'llaniladi, shuning uchun u muqaddimada avtomatik ravishda kiritilgan funtsiyalarga kiritilmagan. Hash Maplar standart kutubxonadan ham kamroq qo'llab-quvvatlanadi; masalan, ularni yaratish uchun o'rnatilgan makros mavjud emas.
 
-Just like vectors, hash maps store their data on the heap. This `HashMap` has
-keys of type `String` and values of type `i32`. Like vectors, hash maps are
-homogeneous: all of the keys must have the same type as each other, and all of
-the values must have the same type.
+Vectorlar singari, hash maplar ham o'z ma'lumotlarini heapda saqlaydi. Ushbu `HashMap`da `String` turidagi kalitlar va `i32` turidagi qiymatlar mavjud. Vectorlar singari, hash maplar ham bir xildir: barcha kalitlar bir-biri bilan bir xil turdagi va barcha qiymatlar bir xil turga ega bo'lishi kerak.
 
-### Accessing Values in a Hash Map
+### HashMap-dagi ma'lumotlarga kirish
 
-We can get a value out of the hash map by providing its key to the `get`
-method, as shown in Listing 8-21.
+Biz 8-21 ro'yxatda ko'rsatilganidek, `get` metodiga kalitni taqdim etish orqali hash mapdan qiymat olishimiz mumkin.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-21/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-21: Accessing the score for the Blue team
-stored in the hash map</span>
+<span class="caption">Ro'yxat 8-21: Hesh-Mapda saqlangan Yashil jamoa hisobiga kirish</span>
 
-Here, `score` will have the value that’s associated with the Blue team, and the
-result will be `10`. The `get` method returns an `Option<&V>`; if there’s no
-value for that key in the hash map, `get` will return `None`. This program
-handles the `Option` by calling `copied` to get an `Option<i32>` rather than an
-`Option<&i32>`, then `unwrap_or` to set `score` to zero if `scores` doesn't
-have an entry for the key.
+Bu yerda `ball` Yashil jamoa bilan bog'liq qiymatga ega bo'ladi va natija `10` bo'ladi. `get` metodi `Option<&V>`ni qaytaradi; agar hesh-mapda ushbu kalit uchun qiymat bo'lmasa, `get` `None` ni qaytaradi. Bu dastur `Option<&i32>` emas, `Option<i32>` olish uchun `copied` ga murojaat qilib `Option`ni boshqaradi, so'ngra `unwrap_or` `ballar` da ushbu kalit uchun ma'lumotlar bo'lmasa, ballni nolga o'rnatish uchun.
 
-We can iterate over each key/value pair in a hash map in a similar manner as we
-do with vectors, using a `for` loop:
+Biz hesh-mapdagi har bir kalit/qiymat juftligini vectorlar bilan bo'lgani kabi, `for` siklidan foydalangan holda takrorlashimiz mumkin:
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/no-listing-03-iterate-over-hashmap/src/main.rs:here}}
 ```
 
-This code will print each pair in an arbitrary order:
+Ushbu kod har bir juftlikni tasodifiy tartibda chop etadi:
 
 ```text
-Yellow: 50
-Blue: 10
+Sariq: 50
+Yashil: 10
 ```
 
-### Hash Maps and Ownership
+### Hash Maplar va Ownership(Egalik)
 
-For types that implement the `Copy` trait, like `i32`, the values are copied
-into the hash map. For owned values like `String`, the values will be moved and
-the hash map will be the owner of those values, as demonstrated in Listing 8-22.
+`Copy` traitini amalga oshiradigan turlar uchun, masalan, `i32`, qiymatlar hesh-mapiga ko'chiriladi. `String` kabi tegishli qiymatlar uchun qiymatlar boshqa joyga koʻchiriladi va 8-22 roʻyxatda koʻrsatilganidek, hesh-map ushbu qiymatlarning egasi boʻladi.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-22/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-22: Showing that keys and values are owned by
-the hash map once they’re inserted</span>
+<span class="caption">Ro'yxat 8-22: kalitlar va qiymatlar kiritilgandan so'ng ular hesh-mapda tegishli ekanligini ko'rsatish</span>
 
 We aren’t able to use the variables `field_name` and `field_value` after
 they’ve been moved into the hash map with the call to `insert`.
