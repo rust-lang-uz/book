@@ -85,46 +85,27 @@ Bu kod `{"Yashil": 25}`ni chop etadi. `10`ning asl qiymati ustiga yozildi.
 
 Hash Mapda ma'lum bir kalit allaqachon qiymatga ega yoki yo'qligini tekshirish odatiy holdir, keyin quyidagi amallarni bajaring: agar kalit hash-mapda mavjud bo'lsa, mavjud qiymat avvalgidek qolishi kerak. Agar kalit mavjud bo'lmasa, insert va uning qiymatini kiriting.
 
-Hash Mapda buning uchun `entry` deb nomlangan maxsus API mavjud bo'lib, siz tekshirmoqchi bo'lgan kalitni parametr sifatida qabul qiladi. The return value of the `entry` method is an enum
-called `Entry` that represents a value that might or might not exist. Let’s say
-we want to check whether the key for the Yellow team has a value associated
-with it. If it doesn’t, we want to insert the value 50, and the same for the
-Blue team. Using the `entry` API, the code looks like Listing 8-24.
+Hash Mapda buning uchun `entry` deb nomlangan maxsus API mavjud bo'lib, siz tekshirmoqchi bo'lgan kalitni parametr sifatida qabul qiladi. `entry` metodining qaytish qiymati `Entry` nomli enum bo‘lib, u mavjud yoki bo‘lmasligi mumkin bo‘lgan qiymatni ifodalaydi. Aytaylik, biz Sariq jamoa uchun kalitning u bilan bog'liq qiymati bor-yo'qligini tekshirmoqchimiz. Agar shunday bo'lmasa, biz 50 qiymatini qo'shishni xohlaymiz va Yashil jamoa uchun ham xuddi shunday. `Entry` API-dan foydalanib, kod Ro'yxat 8-24 kabi ko'rinadi.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-24/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-24: Using the `entry` method to only insert if
-the key does not already have a value</span>
+<span class="caption">Ro'yxat 8-24: `entry` metodidan faqat kalitda qiymat mavjud bo'lmasa, kiritish uchun foydalanish</span>
 
-The `or_insert` method on `Entry` is defined to return a mutable reference to
-the value for the corresponding `Entry` key if that key exists, and if not,
-inserts the parameter as the new value for this key and returns a mutable
-reference to the new value. This technique is much cleaner than writing the
-logic ourselves and, in addition, plays more nicely with the borrow checker.
+`Entry` da `or_insert` metodi mos keladigan `Entry` kaliti qiymatiga o'zgaruvchan referenceni qaytarish uchun belgilangan, agar bu kalit mavjud bo'lsa,  parametrni ushbu kalit uchun yangi qiymat sifatida kiritadi va yangi qiymatga o'zgaruvchan referenceni qaytaradi. Ushbu metod mantiqni o'zingiz yozishdan ko'ra ancha toza va u xavfsizroq va borrowing qoidalariga mos keladi.
 
-Running the code in Listing 8-24 will print `{"Yellow": 50, "Blue": 10}`. The
-first call to `entry` will insert the key for the Yellow team with the value
-50 because the Yellow team doesn’t have a value already. The second call to
-`entry` will not change the hash map because the Blue team already has the
-value 10.
+8-24-raqamdagi kodni ishga tushirish `{"Sariq": 50, "Yashil": 10}` chop etiladi. `entry` ga birinchi chaqiruv 50 qiymatiga ega Sariq jamoa uchun kalitni kiritadi, chunki sariq jamoada allaqachon qiymat yo'q.  `entry` ga ikkinchi chaqiruv hash-mapni o'zgartirmaydi, chunki Yashil jamoa allaqachon 10 qiymatiga ega.
 
-#### Updating a Value Based on the Old Value
+#### Eski qiymat asosida yangi qiymatni yangilash
 
-Another common use case for hash maps is to look up a key’s value and then
-update it based on the old value. For instance, Listing 8-25 shows code that
-counts how many times each word appears in some text. We use a hash map with
-the words as keys and increment the value to keep track of how many times we’ve
-seen that word. If it’s the first time we’ve seen a word, we’ll first insert
-the value 0.
+Hash-Maplar uchun yana bir keng tarqalgan foydalanish holati kalit qiymatini izlash va keyin uni eski qiymat asosida yangilashdir. Misol uchun, 8-25 ro'yxatda har bir so'z ba'zi matnda necha marta takrorlanganini hisoblaydigan kodni ko'rsatadi. Biz kalit sifatida so'zlar bilan hash-mapdan foydalanamiz va bu so'zni necha marta ko'rganimizni kuzatib borish uchun qiymatni oshiramiz. Agar so'zni birinchi marta ko'rayotgan bo'lsak, avval 0 qiymatini kiritamiz.
 
-```rust
+```rustword
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-25/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-25: Counting occurrences of words using a hash
-map that stores words and counts</span>
+<span class="caption">Ro'yxat 8-25: So'zlar va hisoblarni saqlaydigan hash-mapi yordamida so'zlarning necha marta takrorlanganini hisoblash</span>
 
 This code will print `{"world": 2, "hello": 1, "wonderful": 1}`. You might see
 the same key/value pairs printed in a different order: recall from the
