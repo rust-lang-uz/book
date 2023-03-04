@@ -56,60 +56,36 @@ Yashil: 10
 
 <span class="caption">Ro'yxat 8-22: kalitlar va qiymatlar kiritilgandan so'ng ular hesh-mapda tegishli ekanligini ko'rsatish</span>
 
-We aren’t able to use the variables `field_name` and `field_value` after
-they’ve been moved into the hash map with the call to `insert`.
+`maydon_nomi` va `maydon_qiymati` o'zgaruvchilari qiymatlari `insert` metodini chaqirish orqali HashMap-ga ko'chirilgandan keyin foydalana olmaymiz.
 
-If we insert references to values into the hash map, the values won’t be moved
-into the hash map. The values that the references point to must be valid for at
-least as long as the hash map is valid. We’ll talk more about these issues in
-the [“Validating References with
-Lifetimes”][validating-references-with-lifetimes]<!-- ignore --> section in
-Chapter 10.
+Agar biz HashMap-ga qiymatlarga referencelar kiritsak, ular HashMap-ga ko'chirilmaydi. Murojaatlar ko'rsatadigan qiymatlar hech bo'lmaganda hesh-mapda amal qiladigan vaqt davomida amal qilishi kerak. Biz ushbu muammolar haqida 10-bobning ["Lifetime bilan referencelarni tekshirish"][validating-references-with-lifetimes]<!-- ignore --> bo'limida ko'proq gaplashamiz.
 
-### Updating a Hash Map
+### Hash Mapni yangilash
 
-Although the number of key and value pairs is growable, each unique key can
-only have one value associated with it at a time (but not vice versa: for
-example, both the Blue team and the Yellow team could have value 10 stored in
-the `scores` hash map).
+Kalit va qiymat juftlarining soni o'sishi mumkin bo'lsa-da, har bir noyob kalit bir vaqtning o'zida u bilan bog'langan faqat bitta qiymatga ega bo'lishi mumkin (lekin aksincha emas: masalan, Yashil jamoa ham, Sariq jamoa ham `ballar` hash-mapida saqlangan 10 qiymatiga ega bo'lishi mumkin).
 
-When you want to change the data in a hash map, you have to decide how to
-handle the case when a key already has a value assigned. You could replace the
-old value with the new value, completely disregarding the old value. You could
-keep the old value and ignore the new value, only adding the new value if the
-key *doesn’t* already have a value. Or you could combine the old value and the
-new value. Let’s look at how to do each of these!
+Hash-mapdagi ma'lumotlarni o'zgartirmoqchi bo'lganingizda, kalit allaqachon tayinlangan qiymatga ega bo'lgan holatda qanday ishlashni hal qilishingiz kerak. Eski qiymatni butunlay e'tiborsiz qoldirib, eski qiymatni yangi qiymat bilan almashtirishingiz mumkin. Eski qiymatni saqlab qolishingiz va yangi qiymatni e'tiborsiz qoldirishingiz mumkin, faqat kalitda *qiymat bo'lmasa*, yangi qiymat qo'shishingiz mumkin. Yoki eski qiymat va yangi qiymatni birlashtira olasiz. Keling, bularning har birini qanday qilishni ko'rib chiqaylik!
 
-#### Overwriting a Value
+#### Qiymatni qayta yozish
 
-If we insert a key and a value into a hash map and then insert that same key
-with a different value, the value associated with that key will be replaced.
-Even though the code in Listing 8-23 calls `insert` twice, the hash map will
-only contain one key/value pair because we’re inserting the value for the Blue
-team’s key both times.
+Agar biz kalit va qiymatni hash-mapga kiritsak va keyin boshqa qiymat bilan bir xil kalitni kiritsak, bu kalit bilan bog'langan qiymat almashtiriladi. Ro'yxat 8-23dagi kod ikki marta `insert` ni chaqirsa ham, hash-mapda faqat bitta kalit/qiymat juftligi bo'ladi, chunki biz har ikki marta Yashil jamoa kaliti qiymatini kiritamiz.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-23/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-23: Replacing a value stored with a particular
-key</span>
+<span class="caption">Ro'yxat 8-23: Saqlangan qiymatni ma'lum bir kalit bilan almashtirish</span>
 
-This code will print `{"Blue": 25}`. The original value of `10` has been
-overwritten.
+Bu kod `{"Yashil": 25}`ni chop etadi. `10`ning asl qiymati ustiga yozildi.
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="only-inserting-a-value-if-the-key-has-no-value"></a>
 
-#### Adding a Key and Value Only If a Key Isn’t Present
+#### Kalit va qiymatni faqat kalit mavjud bo'lmaganda qo'shish
 
-It’s common to check whether a particular key already exists in the hash map
-with a value then take the following actions: if the key does exist in the hash
-map, the existing value should remain the way it is. If the key doesn’t exist,
-insert it and a value for it.
+Hash Mapda ma'lum bir kalit allaqachon qiymatga ega yoki yo'qligini tekshirish odatiy holdir, keyin quyidagi amallarni bajaring: agar kalit hash-mapda mavjud bo'lsa, mavjud qiymat avvalgidek qolishi kerak. Agar kalit mavjud bo'lmasa, insert va uning qiymatini kiriting.
 
-Hash maps have a special API for this called `entry` that takes the key you
-want to check as a parameter. The return value of the `entry` method is an enum
+Hash Mapda buning uchun `entry` deb nomlangan maxsus API mavjud bo'lib, siz tekshirmoqchi bo'lgan kalitni parametr sifatida qabul qiladi. The return value of the `entry` method is an enum
 called `Entry` that represents a value that might or might not exist. Let’s say
 we want to check whether the key for the Yellow team has a value associated
 with it. If it doesn’t, we want to insert the value 50, and the same for the
