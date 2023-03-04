@@ -2,7 +2,7 @@
 
 Umumiy to'plamlarimizning oxirgisi *hash map*. `HashMap<K, V>` turi `K` turidagi kalitlarning `V` turidagi qiymatlarga xaritasini *xeshlash funksiyasi* yordamida saqlaydi, bu kalit va qiymatlarni xotiraga qanday joylashtirishini belgilaydi. Ko'pgina dasturlash tillari bunday ma'lumotlar strukturasini qo'llab-quvvatlaydi, lekin ular ko'pincha bir nechtasini nomlash uchun hash, map, object, hash table, dictionary, yoki associative array kabi boshqa nomlardan foydalanadilar.
 
-Hash maplar ma'lumotlarni vektorlar bilan bo'lgani kabi indeks yordamida emas, balki har qanday turdagi kalit yordamida qidirmoqchi bo'lsangiz foydali bo'ladi. Misol uchun, o'yinda siz har bir jamoaning balini hesh-mapda kuzatib borishingiz mumkin, unda har bir kalit jamoaning nomi va qiymatlar har bir jamoaning ballidir. Jamoa nomi berilgan bo'lsa, siz uning ballini olishingiz mumkin.
+Hash maplar ma'lumotlarni vectorlar bilan bo'lgani kabi indeks yordamida emas, balki har qanday turdagi kalit yordamida qidirmoqchi bo'lsangiz foydali bo'ladi. Misol uchun, o'yinda siz har bir jamoaning balini hesh-mapda kuzatib borishingiz mumkin, unda har bir kalit jamoaning nomi va qiymatlar har bir jamoaning ballidir. Jamoa nomi berilgan bo'lsa, siz uning ballini olishingiz mumkin.
 
 Ushbu bo'limda biz hesh-mapllarining asosiy API-ni ko'rib chiqamiz, ammo yana ko'plab foydali funksiyalar standart kutubxona tomonidan `HashMap<K, V>` da belgilangan funksiyalarda yashiringan.
 Har doimgidek, qo'shimcha ma'lumot olish uchun standart kutubxona texnik hujjatlarini tekshiring.
@@ -107,61 +107,28 @@ Hash-Maplar uchun yana bir keng tarqalgan foydalanish holati kalit qiymatini izl
 
 <span class="caption">Ro'yxat 8-25: So'zlar va hisoblarni saqlaydigan hash-mapi yordamida so'zlarning necha marta takrorlanganini hisoblash</span>
 
-This code will print `{"world": 2, "hello": 1, "wonderful": 1}`. You might see
-the same key/value pairs printed in a different order: recall from the
-[“Accessing Values in a Hash Map”][access]<!-- ignore --> section that
-iterating over a hash map happens in an arbitrary order.
+Bu kod `{"qiziqarli": 1, "salom": 1, "rust": 2}`ni chop etadi. Siz boshqa tartibda chop etilgan bir xil kalit/qiymat juftliklarini ko'rishingiz mumkin: [“Hash-Mapdagi qiymatlarga kirish”][access]<!-- ignore --> bo'limidan hash-mapni takrorlash ixtiyoriy tartibda sodir bo'lishini eslang.
 
-The `split_whitespace` method returns an iterator over sub-slices, separated by
-whitespace, of the value in `text`. The `or_insert` method returns a mutable
-reference (`&mut V`) to the value for the specified key. Here we store that
-mutable reference in the `count` variable, so in order to assign to that value,
-we must first dereference `count` using the asterisk (`*`). The mutable
-reference goes out of scope at the end of the `for` loop, so all of these
-changes are safe and allowed by the borrowing rules.
+`split_whitespace` metodi `matn` qiymatining bo'sh joy bilan ajratilgan pastki bo'limlari ustidan iteratorni qaytaradi.`or_insert` metodi belgilangan kalit qiymatiga o'zgaruvchan havolani (`&mut V`) qaytaradi. Bu yerda biz o'zgaruvchan referenceni `hisoblash` o'zgaruvchisida saqlaymiz, shuning uchun bu qiymatni belgilash uchun avval yulduzcha (`*`) yordamida `hisoblash` ga murojaat qilishimiz kerak. O'zgaruvchan reference `for` siklining oxirida ko'lamdan chiqib ketadi, shuning uchun bu o'zgarishlarning barchasi xavfsiz va borrowing qoidalari bilan ruxsat etiladi.
 
-### Hashing Functions
+### Hashing funksiyalari
 
-By default, `HashMap` uses a hashing function called *SipHash* that can provide
-resistance to Denial of Service (DoS) attacks involving hash
-tables[^siphash]<!-- ignore -->. This is not the fastest hashing algorithm
-available, but the trade-off for better security that comes with the drop in
-performance is worth it. If you profile your code and find that the default
-hash function is too slow for your purposes, you can switch to another function
-by specifying a different hasher. A *hasher* is a type that implements the
-`BuildHasher` trait. We’ll talk about traits and how to implement them in
-Chapter 10. You don’t necessarily have to implement your own hasher from
-scratch; [crates.io](https://crates.io/)<!-- ignore --> has libraries shared by
-other Rust users that provide hashers implementing many common hashing
-algorithms.
+Odatda, `HashMap` *SipHash* nomli hashlash funksiyasidan foydalanadi, u [^siphash]<!-- ignore --> hash-jadvallari ishtirokidagi Xizmatni rad etish (DoS) hujumlariga qarshilik ko'rsatishi mumkin. Bu mavjud bo'lgan eng tezkor hashlash algoritmi emas, lekin ishlashning pasayishi bilan birga keladigan yaxshi xavfsizlik uchun kelishuv bunga arziydi. Agar siz kodingizni profilga kiritsangiz va standart hash funksiyasi sizning maqsadlaringiz uchun juda sekin ekanligini aniqlasangiz, boshqa hasherni belgilash orqali boshqa funksiyaga o'tishingiz mumkin. *hasher* bu `BuildHasher` traitini amalga oshiradigan tur. Traitlar va ularni qanday implement qilish haqida 10-bobda gaplashamiz. Siz o'zingizning hasheringizni noldan implement qilishingiz shart emas; [crates.io](https://crates.io/)<!-- ignore -->-da boshqa Rust foydalanuvchilari tomonidan baham ko'rilgan kutubxonalar mavjud bo'lib, ular ko'plab umumiy hashlash algoritmlarini implement qiladigan hasherlarni ta'minlaydi.
 
 [^siphash]: [https://en.wikipedia.org/wiki/SipHash](https://en.wikipedia.org/wiki/SipHash)
 
-## Summary
+## Xulosa
 
-Vectors, strings, and hash maps will provide a large amount of functionality
-necessary in programs when you need to store, access, and modify data. Here are
-some exercises you should now be equipped to solve:
+Vectorlar, stringlar va hash-maplar ma'lumotlarni saqlash, kirish va o'zgartirish kerak bo'lganda dasturlarda zarur bo'lgan katta hajmdagi funksionallikni ta'minlaydi. Mana endi hal qilish uchun tayyorlanishingiz kerak bo'lgan ba'zi mashqlar:
 
-* Given a list of integers, use a vector and return the median (when sorted,
-  the value in the middle position) and mode (the value that occurs most often;
-  a hash map will be helpful here) of the list.
-* Convert strings to pig latin. The first consonant of each word is moved to
-  the end of the word and “ay” is added, so “first” becomes “irst-fay.” Words
-  that start with a vowel have “hay” added to the end instead (“apple” becomes
-  “apple-hay”). Keep in mind the details about UTF-8 encoding!
-* Using a hash map and vectors, create a text interface to allow a user to add
-  employee names to a department in a company. For example, “Add Sally to
-  Engineering” or “Add Amir to Sales.” Then let the user retrieve a list of all
-  people in a department or all people in the company by department, sorted
-  alphabetically.
+* Butun sonlar roʻyxati berilgan boʻlsa, vectordan foydalaning va roʻyxatning medianasini (tartiblanganda, oʻrtadagi qiymat) va  rejimni (koʻpincha sodir boʻladigan qiymat; bu yerda hash-map foydali boʻladi) qaytaring.
 
-The standard library API documentation describes methods that vectors, strings,
-and hash maps have that will be helpful for these exercises!
+* Satrlarni pig lotin tiliga aylantiring. Har bir so'zning birinchi undoshi so'z oxiriga ko'chiriladi va "ay" qo'shiladi, shuning uchun "birinchi" "birinchi-ay" bo'ladi. Unli tovush bilan boshlangan so‘zlarning oxiriga “hay” qo‘shiladi (“olma” “olma-hay”ga aylanadi). UTF-8 kodlash haqidagi tafsilotlarni yodda tuting!
+* Hash Map va vectorlardan foydalanib, foydalanuvchiga kompaniyadagi bo'limga xodimlarning ismlarini qo'shishga ruxsat berish uchun matn interfeysini yarating. Masalan, "Asilbekni muhandislikka qo'shish" yoki "Sardorni savdoga qo'shish". Keyin foydalanuvchi bo'limdagi barcha odamlar yoki kompaniyadagi barcha odamlar ro'yxatini bo'limlar bo'yicha, alifbo tartibida tartiblangan holda olishiga ruxsat bering.
 
-We’re getting into more complex programs in which operations can fail, so, it’s
-a perfect time to discuss error handling. We’ll do that next!
+Standart kutubxona API texnik hujjatlari vectorlar, stringlar va hash-maplarda ushbu mashqlar uchun foydali bo'lgan usullarni tavsiflaydi!
 
-[validating-references-with-lifetimes]:
-ch10-03-lifetime-syntax.html#validating-references-with-lifetimes
+Biz operatsiyalar muvaffaqiyatsiz bo'lishi mumkin bo'lgan yanada murakkab dasturlarga kirishmoqdamiz, shuning uchun xatolarni hal qilishni muhokama qilish uchun ajoyib vaqt. Qani kettik.
+
+[validating-references-with-lifetimes]: ch10-03-lifetime-syntax.html#validating-references-with-lifetimes
 [access]: #accessing-values-in-a-hash-map
