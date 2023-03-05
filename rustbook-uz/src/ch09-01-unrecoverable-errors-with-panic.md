@@ -1,35 +1,29 @@
-## Unrecoverable Errors with `panic!`
+## `panic!` bilan tuzatib bo'lmaydigan xatolar
 
-Sometimes, bad things happen in your code, and there’s nothing you can do about
-it. In these cases, Rust has the `panic!` macro. There are two ways to cause a
-panic in practice: by taking an action that causes our code to panic (such as
-accessing an array past the end) or by explicitly calling the `panic!` macro.
-In both cases, we cause a panic in our program. By default, these panics will
-print a failure message, unwind, clean up the stack, and quit. Via an
-environment variable, you can also have Rust display the call stack when a
-panic occurs to make it easier to track down the source of the panic.
+Ba'zida sizning kodingizda yomon narsalar sodir bo'ladi va siz bu haqda hech narsa qila olmaysiz. Bunday hollarda Rustda `panic!` makrosi mavjud. Amalda panic chaqirishning ikki yo'li mavjud: kodimizni panic chiqaradigan harakatni amalga oshirish (masalan, arrayning oxiridan o'tib kirish) yoki aniq `panic!` makrosini chaqirish.
+Ikkala holatda ham biz dasturimizda panicni keltirib chiqaramiz. Odatiy bo'lib, bu panic muvaffaqiyatsizlik xabarini chop etadi, dasturni bajarish paytida ajratilgan resurslarni tozalaydi, stackni tozalaydi va ishdan chiqadi. Atrof-muhit o'zgaruvchisi orqali siz panic paydo bo'lganda panic manbasini kuzatishni osonlashtirish uchun Rust chaqiruvlar srackini ko'rsatishi ham mumkin.
 
-> ### Unwinding the Stack or Aborting in Response to a Panic
+> ### panicga javoban stackni bo'shatish yoki bekor qilish
 >
-> By default, when a panic occurs, the program starts *unwinding*, which
-> means Rust walks back up the stack and cleans up the data from each function
-> it encounters. However, this walking back and cleanup is a lot of work. Rust,
-> therefore, allows you to choose the alternative of immediately *aborting*,
-> which ends the program without cleaning up.
+> Odatiy bo'lib, panic paydo bo'lganda, dastur o'chiriladi, ya'ni Rust
+> stekni zaxiraga olib chiqadi va duch kelgan har bir funksiyadan ma'lumotlarni
+> tozalaydi. Biroq, bu orqaga qaytish va tozalash juda ko'p ishdir. Rust,
+> shuning uchun dasturni tozalamasdan tugatadigan darhol bekor
+> qilishning muqobilini tanlashga imkon beradi.
 >
-> Memory that the program was using will then need to be cleaned
-> up by the operating system. If in your project you need to make the resulting
-> binary as small as possible, you can switch from unwinding to aborting upon a
-> panic by adding `panic = 'abort'` to the appropriate `[profile]` sections in
-> your *Cargo.toml* file. For example, if you want to abort on panic in release
-> mode, add this:
+> Dastur ishlatgan xotira keyinchalik operatsion tizim tomonidan
+> tozalanishi kerak bo'ladi. Agar loyihangizda natijada olingan binary faylni
+> iloji boricha kichikroq qilishingiz kerak bo'lsa, *Cargo.toml* faylingizdagi
+> tegishli `[profile]` bo'limlariga `panic = 'abort'` qo'shish orqali panic
+> bo'yicha bo'shatishdan bekor qilishga o'tishingiz mumkin. Misol uchun, agar siz
+> bo'shatish rejimida panic holatini to'xtatmoqchi bo'lsangiz, quyidagilarni qo'shing:
 >
 > ```toml
 > [profile.release]
 > panic = 'abort'
 > ```
 
-Let’s try calling `panic!` in a simple program:
+Keling, oddiy dasturda `panic!` deb chaqirib ko'raylik:
 
 <span class="filename">Filename: src/main.rs</span>
 
