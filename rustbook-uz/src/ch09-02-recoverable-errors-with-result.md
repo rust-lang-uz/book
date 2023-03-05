@@ -1,14 +1,9 @@
-## Recoverable Errors with `Result`
+## `Result` bilan tiklanadigan xatolar
 
-Most errors aren’t serious enough to require the program to stop entirely.
-Sometimes, when a function fails, it’s for a reason that you can easily
-interpret and respond to. For example, if you try to open a file and that
-operation fails because the file doesn’t exist, you might want to create the
-file instead of terminating the process.
+Ko'pgina xatolar dasturni butunlay to'xtatishni talab qiladigan darajada jiddiy emas.
+Ba'zan, funksiya bajarilmasa, bu siz osongina talqin qilishingiz va javob berishingiz mumkin bo'lgan sababdir. Misol uchun, agar siz faylni ochishga urinib ko'rsangiz va fayl mavjud bo'lmagani uchun bu operatsiya bajarilmasa, jarayonni tugatish o'rniga faylni yaratishni xohlashingiz mumkin.
 
-Recall from [“Handling Potential Failure with `Result`”][handle_failure]<!--
-ignore --> in Chapter 2 that the `Result` enum is defined as having two
-variants, `Ok` and `Err`, as follows:
+2-bobdagi [“Potentsial muvaffaqiyatsizlikni `Result` bilan hal qilish”][handle_failure]<!-- ignore --> bo'limini eslang: biz u yerda muvaffaqiyatsizliklarni hal qilish uchun ikkita variantga ega bo'lgan `Ok` va `Err` varianti bo'lgan `Result` enumidan foydalanganmiz. Enumning o'zi quyidagicha aniqlanadi:
 
 ```rust
 enum Result<T, E> {
@@ -17,25 +12,17 @@ enum Result<T, E> {
 }
 ```
 
-The `T` and `E` are generic type parameters: we’ll discuss generics in more
-detail in Chapter 10. What you need to know right now is that `T` represents
-the type of the value that will be returned in a success case within the `Ok`
-variant, and `E` represents the type of the error that will be returned in a
-failure case within the `Err` variant. Because `Result` has these generic type
-parameters, we can use the `Result` type and the functions defined on it in
-many different situations where the successful value and error value we want to
-return may differ.
+`T` va `E` umumiy turdagi parametrlardir: biz generiklarni 10-bobda batafsilroq muhokama qilamiz. Siz hozir bilishingiz kerak bo'lgan narsa shundaki, `T` `Ok` variantida muvaffaqiyatli holatda qaytariladigan qiymat turini bildiradi, va `E` `Err`(Xato) variantida xatolik holatida qaytariladigan xato turini ifodalaydi. `Result`da ushbu umumiy turdagi parametrlar mavjud bo'lganligi sababli, biz qaytarmoqchi bo'lgan muvaffaqiyatli qiymat va xato qiymati har xil bo'lishi mumkin bo'lgan turli vaziyatlarda `Result` turidan va unda belgilangan funksiyalardan foydalanishimiz mumkin.
 
-Let’s call a function that returns a `Result` value because the function could
-fail. In Listing 9-3 we try to open a file.
+Keling, `Result` qiymatini qaytaruvchi funksiyani chaqiraylik, chunki funksiya bajarilmasligi mumkin. 9-3 ro'yxatda biz faylni ochishga harakat qilamiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-03/src/main.rs}}
 ```
 
-<span class="caption">Listing 9-3: Opening a file</span>
+<span class="caption">Ro'yxat 9-3: Faylni ochish</span>
 
 The return type of `File::open` is a `Result<T, E>`. The generic parameter `T`
 has been filled in by the implementation of `File::open` with the type of the
