@@ -25,53 +25,37 @@ Ikkala holatda ham biz dasturimizda panicni keltirib chiqaramiz. Odatiy bo'lib, 
 
 Keling, oddiy dasturda `panic!` deb chaqirib ko'raylik:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,should_panic,panics
 {{#rustdoc_include ../listings/ch09-error-handling/no-listing-01-panic/src/main.rs}}
 ```
 
-When you run the program, you’ll see something like this:
+Dasturni ishga tushirganingizda, siz shunga o'xshash narsani ko'rasiz:
 
 ```console
 {{#include ../listings/ch09-error-handling/no-listing-01-panic/output.txt}}
 ```
 
-The call to `panic!` causes the error message contained in the last two lines.
-The first line shows our panic message and the place in our source code where
-the panic occurred: *src/main.rs:2:5* indicates that it’s the second line,
-fifth character of our *src/main.rs* file.
+`panic!` chaqiruvi oxirgi ikki qatordagi xato xabarini keltirib chiqaradi.
+Birinchi qatorda panic haqidagi xabarimiz va manba kodimizdagi panic sodir bo'lgan joy ko'rsatilgan: *src/main.rs:2:5* bu bizning *src/main.rs* faylimizning ikkinchi qatori, beshinchi belgisi ekanligini bildiradi.
 
-In this case, the line indicated is part of our code, and if we go to that
-line, we see the `panic!` macro call. In other cases, the `panic!` call might
-be in code that our code calls, and the filename and line number reported by
-the error message will be someone else’s code where the `panic!` macro is
-called, not the line of our code that eventually led to the `panic!` call. We
-can use the backtrace of the functions the `panic!` call came from to figure
-out the part of our code that is causing the problem. We’ll discuss backtraces
-in more detail next.
+Bunday holda, ko'rsatilgan qator bizning kodimizning bir qismidir va agar biz ushbu qatorga o'tsak, biz `panic!` makro chaqiruvini ko'ramiz. Boshqa hollarda, `panic!` chaqiruvi bizning kodimiz chaqiradigan kodda bo'lishi mumkin, va xato xabari tomonidan bildirilgan fayl nomi va satr raqami boshqa birovning kodi bo'ladi, bu yerda `panic!` makro chaqiriladi, kodimizning oxir-oqibat `panic!` chaqiruviga olib kelgan qatori emas. Kodimizning muammoga sabab bo'lgan qismini aniqlash uchun `panic!` chaqiruvidan kelgan funksiyalarning backtracedan foydalanishimiz mumkin. Keyinchalik orqaga qaytish(backtraces) haqida batafsilroq gaplashamiz.
 
-### Using a `panic!` Backtrace
+### `panic!` Backtracedan foydalanish
 
-Let’s look at another example to see what it’s like when a `panic!` call comes
-from a library because of a bug in our code instead of from our code calling
-the macro directly. Listing 9-1 has some code that attempts to access an
-index in a vector beyond the range of valid indexes.
+Yana bir misolni ko‘rib chiqaylik, `panic!` chaqiruvi to‘g‘ridan-to‘g‘ri makroni chaqiruvchi kodimizdan emas, balki kodimizdagi xato tufayli kutubxonadan kelganida qanday bo‘lishini ko‘raylik. 9-1 ro'yxatida joriy indekslar doirasidan tashqarida vectordagi indeksga kirishga harakat qiladigan ba'zi kodlar mavjud.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,should_panic,panics
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-01/src/main.rs}}
 ```
 
-<span class="caption">Listing 9-1: Attempting to access an element beyond the
-end of a vector, which will cause a call to `panic!`</span>
+<span class="caption">Roʻyxat 9-1: Vector oxiridan tashqaridagi elementga kirishga urinish, bu esa `panic!` chaqiruviga sabab boʻladi.</span>
 
-Here, we’re attempting to access the 100th element of our vector (which is at
-index 99 because indexing starts at zero), but the vector has only 3 elements.
-In this situation, Rust will panic. Using `[]` is supposed to return an
-element, but if you pass an invalid index, there’s no element that Rust could
-return here that would be correct.
+Bu erda biz vectorimizning 100-elementiga kirishga harakat qilyapmiz (bu indeks 99-da, chunki indekslash noldan boshlanadi), lekin vektorda faqat 3 ta element mavjud.
+Bunday vaziyatda Rust panic qo'yadi. `[]` dan foydalanish elementni qaytarishi kerak, lekin siz noto'g'ri indeksni o'tkazyapsiz: Rust qaytara oladigan element yo'q.
 
 In C, attempting to read beyond the end of a data structure is undefined
 behavior. You might get whatever is at the location in memory that would
