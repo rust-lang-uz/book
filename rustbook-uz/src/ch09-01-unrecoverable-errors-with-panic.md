@@ -57,34 +57,15 @@ Yana bir misolni ko‘rib chiqaylik, `panic!` chaqiruvi to‘g‘ridan-to‘g‘
 Bu erda biz vectorimizning 100-elementiga kirishga harakat qilyapmiz (bu indeks 99-da, chunki indekslash noldan boshlanadi), lekin vektorda faqat 3 ta element mavjud.
 Bunday vaziyatda Rust panic qo'yadi. `[]` dan foydalanish elementni qaytarishi kerak, lekin siz noto'g'ri indeksni o'tkazyapsiz: Rust qaytara oladigan element yo'q.
 
-In C, attempting to read beyond the end of a data structure is undefined
-behavior. You might get whatever is at the location in memory that would
-correspond to that element in the data structure, even though the memory
-doesn’t belong to that structure. This is called a *buffer overread* and can
-lead to security vulnerabilities if an attacker is able to manipulate the index
-in such a way as to read data they shouldn’t be allowed to that is stored after
-the data structure.
+C tilida ma'lumotlar strukturasining oxiridan tashqarida o'qishga urinish aniqlanmagan xatti-harakatlardir. Siz xotirada ma'lumotlar strukturasidagi ushbu elementga mos keladigan har qanday joyni olishingiz mumkin, garchi xotira ushbu tuzilishga tegishli bo'lmasa ham. Bu *buffer overread* deb ataladi va agar tajovuzkor indeksni ma'lumotlar tuzilmasidan keyin saqlanadigan ma'lumotlarni o'qishga ruxsat etilmasligi kerak bo'lgan tarzda o'zgartira olsa, xavfsizlik zaifliklariga olib kelishi mumkin.
 
-To protect your program from this sort of vulnerability, if you try to read an
-element at an index that doesn’t exist, Rust will stop execution and refuse to
-continue. Let’s try it and see:
+Dasturingizni bunday zaiflikdan himoya qilish uchun, agar siz mavjud bo'lmagan indeksdagi elementni o'qishga harakat qilsangiz, Rust ishlashni to'xtatadi va davom etishni rad etadi. Keling, sinab ko'raylik va ko'ramiz:
 
 ```console
 {{#include ../listings/ch09-error-handling/listing-09-01/output.txt}}
 ```
 
-This error points at line 4 of our `main.rs` where we attempt to access index
-99. The next note line tells us that we can set the `RUST_BACKTRACE`
-environment variable to get a backtrace of exactly what happened to cause the
-error. A *backtrace* is a list of all the functions that have been called to
-get to this point. Backtraces in Rust work as they do in other languages: the
-key to reading the backtrace is to start from the top and read until you see
-files you wrote. That’s the spot where the problem originated. The lines above
-that spot are code that your code has called; the lines below are code that
-called your code. These before-and-after lines might include core Rust code,
-standard library code, or crates that you’re using. Let’s try getting a
-backtrace by setting the `RUST_BACKTRACE` environment variable to any value
-except 0. Listing 9-2 shows output similar to what you’ll see.
+Bu xatolik `main.rs` ning 4-qatoriga ishora qiladi, bu yerda biz 99 indeksiga kirishga harakat qilamiz. Keyingi eslatma satrida biz xatoga nima sabab bo'lganligining backtraceni olish uchun `RUST_BACKTRACE` muhit o'zgaruvchisini o'rnatishimiz mumkinligini aytadi. *backtrace* - bu dastur bajarilishining ma'lum bir nuqtasiga qadar chaqirilgan barcha funktsiyalar ro'yxatini. Backtrace boshqa tillarda bo'lgani kabi Rust tilida ham xuddi shunday ishlaydi. Shuning uchun, biz boshqa joylarda bo'lgani kabi, backtrace ma'lumotlarini o'qishni tavsiya qilamiz - siz yozgan fayllar haqidagi ma'lumotlarni ko'rmaguningizcha yuqoridan pastga o'qing. Bu muammo paydo bo'lgan joy. Yuqoridagi satrlar sizning kodingiz chaqirgan koddir; Quyidagi satrlar sizning kodingiz deb ataladigan koddir. Ushbu oldingi va keyingi qatorlar asosiy Rust kodini, standart kutubxona kodi yoki siz foydalanayotgan cratelarni o'z ichiga olishi mumkin. `RUST_BACKTRACE` muhit oʻzgaruvchisini 0 dan tashqari istalgan qiymatga oʻrnatish orqali backtraceni olishga harakat qilaylik. 9-2 ro'yxati siz ko'rgan narsaga o'xshash natijani ko'rsatadi.
 
 <!-- manual-regeneration
 cd listings/ch09-error-handling/listing-09-01
