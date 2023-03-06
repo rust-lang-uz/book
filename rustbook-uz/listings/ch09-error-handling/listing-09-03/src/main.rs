@@ -1,5 +1,5 @@
 use std::fs::File;
 
 fn main() {
-    let greeting_file_result = File::open("hello.txt");
+    let fayl_natijasi = File::open("olma.txt");
 }
