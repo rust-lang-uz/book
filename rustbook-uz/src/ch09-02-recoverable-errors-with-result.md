@@ -67,32 +67,20 @@ tests to fail lol -->
 
 <span class="caption">Ro'yxat 9-5: Har xil turdagi xatolarni turli yo'llar bilan hal qilish</span>
 
-The type of the value that `File::open` returns inside the `Err` variant is
-`io::Error`, which is a struct provided by the standard library. This struct
-has a method `kind` that we can call to get an `io::ErrorKind` value. The enum
-`io::ErrorKind` is provided by the standard library and has variants
-representing the different kinds of errors that might result from an `io`
-operation. The variant we want to use is `ErrorKind::NotFound`, which indicates
-the file we’re trying to open doesn’t exist yet. So we match on
-`greeting_file_result`, but we also have an inner match on `error.kind()`.
+`File::open` `Err` variantida qaytaradigan qiymat turi `io::Error` bo'lib, bu standart kutubxona tomonidan taqdim etilgan strukturadir. Ushbu strukturada `io::ErrorKind` qiymatini olish uchun chaqirishimiz mumkin bo'lgan `kind` metodi mavjud. `io::ErrorKind` enumi standart kutubxona tomonidan taqdim etilgan va `io` operatsiyasi natijasida yuzaga kelishi mumkin bo'lgan turli xil xatolarni ifodalovchi variantlarga ega. Biz foydalanmoqchi boʻlgan variant `ErrorKind::NotFound` boʻlib, biz ochmoqchi boʻlgan fayl hali mavjud emasligini bildiradi. Shunday qilib, biz `fayl_ochish` bo'yicha mos kelamiz, lekin bizda `error.kind()` da ichki match ham bor.
 
-The condition we want to check in the inner match is whether the value returned
-by `error.kind()` is the `NotFound` variant of the `ErrorKind` enum. If it is,
-we try to create the file with `File::create`. However, because `File::create`
-could also fail, we need a second arm in the inner `match` expression. When the
-file can’t be created, a different error message is printed. The second arm of
-the outer `match` stays the same, so the program panics on any error besides
-the missing file error.
+Biz ichki matchni tekshirmoqchi bo'lgan shart - `error.kind()` tomonidan qaytarilgan qiymat `ErrorKind` enumining `NotFound` variantidir. Agar shunday bo'lsa, biz faylni `File::create` yordamida yaratishga harakat qilamiz. Biroq, `File::create` ham muvaffaqiyatsiz bo'lishi mumkinligi sababli, bizga ichki `match` ifodasida ikkinchi arm kerak. Faylni yaratib bo'lmaganda, boshqa xato xabari chop etiladi. Tashqi `match` ning ikkinchi armi bir xil bo'lib qoladi, shuning uchun dastur yetishmayotgan fayl xatosidan tashqari har qanday xato haqida panic qo'yadi.
 
-> ### Alternatives to Using `match` with `Result<T, E>`
+> ### `Result<T, E>` bilan `match` dan foydalanishning muqobillari
 >
-> That’s a lot of `match`! The `match` expression is very useful but also very
-> much a primitive. In Chapter 13, you’ll learn about closures, which are used
-> with many of the methods defined on `Result<T, E>`. These methods can be more
-> concise than using `match` when handling `Result<T, E>` values in your code.
+> Bu juda ko'p `match`! `match` ifodasi juda foydali, lekin ayni paytda
+> juda primitivdir. 13-bobda siz `Result<T, E>` da belgilangan koʻplab
+> metodlarda qoʻllaniladigan yopilishlar(closures) haqida bilib olasiz. Ushbu
+> metodlar kodingizdagi `Result<T, E>` qiymatlari bilan ishlashda `match` 
+> dan foydalanishdan ko'ra qisqaroq bo'lishi mumkin.
 >
-> For example, here’s another way to write the same logic as shown in Listing
-> 9-5, this time using closures and the `unwrap_or_else` method:
+> Misol uchun, 9-5 ro'yxatda ko'rsatilgan mantiqni yozishning yana bir
+> usuli, bu safar closures va `unwrap_or_else` metodi yordamida:
 >
 > <!-- CAN'T EXTRACT SEE https://github.com/rust-lang/mdBook/issues/1127 -->
 >
@@ -101,25 +89,25 @@ the missing file error.
 > use std::io::ErrorKind;
 >
 > fn main() {
->     let greeting_file = File::open("hello.txt").unwrap_or_else(|error| {
+>     let fayl_ochish = File::open("olma.txt").unwrap_or_else(|error| {
 >         if error.kind() == ErrorKind::NotFound {
->             File::create("hello.txt").unwrap_or_else(|error| {
->                 panic!("Problem creating the file: {:?}", error);
+>             File::create("olma.txt").unwrap_or_else(|error| {
+>                 panic!("Fayl yaratishda muammo: {:?}", error);
 >             })
 >         } else {
->             panic!("Problem opening the file: {:?}", error);
+>             panic!("Faylni ochishda muammo: {:?}", error);
 >         }
 >     });
 > }
 > ```
 >
-> Although this code has the same behavior as Listing 9-5, it doesn’t contain
-> any `match` expressions and is cleaner to read. Come back to this example
-> after you’ve read Chapter 13, and look up the `unwrap_or_else` method in the
-> standard library documentation. Many more of these methods can clean up huge
-> nested `match` expressions when you’re dealing with errors.
+> Garchi bu kod 9-5 roʻyxatdagi kabi harakatga ega boʻlsa-da, unda
+> `match` iboralari mavjud emas va oʻqish uchun qulayroq. 13-bobni o‘qib bo‘lgach,
+> ushbu misolga qayting va standart kutubxona hujjatlarida `unwrap_or_else`
+> metodini qidiring. Ushbu metodlarning ko'pchiligi xatolar bilan
+> shug'ullanayotganda katta o'rinli `match`  iboralarni tozalashi mumkin.
 
-### Shortcuts for Panic on Error: `unwrap` and `expect`
+### Xatoda panic uchun yorliqlar: `unwrap` va `expect`
 
 Using `match` works well enough, but it can be a bit verbose and doesn’t always
 communicate intent well. The `Result<T, E>` type has many helper methods
