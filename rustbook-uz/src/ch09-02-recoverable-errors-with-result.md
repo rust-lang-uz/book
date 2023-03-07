@@ -26,8 +26,8 @@ Keling, `Result` qiymatini qaytaruvchi funksiyani chaqiraylik, chunki funksiya b
 
 `File::open` return(qaytish) turi `Result<T, E>`dir. `File::open`ni amalga oshirishdagi umumiy `T` turi muvaffaqiyatli qabul qilingan qiymat turiga, `std::fs::File`ga, ya'ni fayl deskriptoriga mos keladi. Xato qiymatida ishlatiladigan `E` turi `std::io::Error`. Qaytish(return) turi `File::open` ga chaqiruv muvaffaqiyatli bo'lishi va biz o'qishimiz yoki yozishimiz mumkin bo'lgan fayl handleni qaytarishi mumkinligini anglatadi. Funksiya chaqiruvi ham muvaffaqiyatsiz bo'lishi mumkin: masalan, fayl mavjud bo'lmasligi yoki faylga kirish uchun ruxsatimiz bo'lmasligi mumkin. `File::open` funksiyasi muvaffaqiyatli yoki muvaffaqiyatsiz bo'lganligini va bir vaqtning o'zida bizga fayl identifikatori yoki xato haqida ma'lumot beradigan metodga ega bo'lishi kerak. Ushbu ma'lumot aynan `Result` enumini bildiradi.
 
-Agar `File::open` muvaffaqiyatli bo'lsa, `fayl_natijasi` qiymati fayl identifikatorini o'z ichiga olgan `Ok` misoli bo'ladi.
-Muvaffaqiyatsiz bo'lgan taqdirda, `fayl_natijasi` dagi qiymat `Err` misoli bo'lib, sodir bo'lgan xato turi haqida qo'shimcha ma'lumotni o'z ichiga oladi.
+Agar `File::open` muvaffaqiyatli bo'lsa, `fayl_ochish` qiymati fayl identifikatorini o'z ichiga olgan `Ok` misoli bo'ladi.
+Muvaffaqiyatsiz bo'lgan taqdirda, `fayl_ochish` dagi qiymat `Err` misoli bo'lib, sodir bo'lgan xato turi haqida qo'shimcha ma'lumotni o'z ichiga oladi.
 
 `File::open` qiymatiga qarab turli amallarni bajarish uchun 9-3-Ro'yxatdagi kodga o'zgartirishimiz kerak. 9-4 ro'yxatda biz 6-bobda muhokama qilgan asosiy tool - `match` ifodasi yordamida `Result` ni boshqarishning bir usuli ko'rsatilgan.
 
@@ -41,33 +41,22 @@ Muvaffaqiyatsiz bo'lgan taqdirda, `fayl_natijasi` dagi qiymat `Err` misoli bo'li
 
 E'tibor bering, `Option` enumi kabi, `Result` enumi va uning variantlari avtomatik import (prelude) orqali kiritilgan, shuning uchun biz `match`  qatoridagi `Ok` va `Err`  variantlaridan oldin `Result::` ni belgilashimiz shart emas.
 
-When the result is `Ok`, this code will return the inner `file` value out of
-the `Ok` variant, and we then assign that file handle value to the variable
-`greeting_file`. After the `match`, we can use the file handle for reading or
-writing.
+Natija `Ok` bo'lsa, bu kod `Ok` variantidan ichki `file` qiymatini qaytaradi va biz ushbu faylni ishlov berish qiymatini `fayl_ochish` o'zgaruvchisiga tayinlaymiz. `match`dan so'ng biz o'qish yoki yozish uchun fayl boshqaruvidan foydalanishimiz mumkin.
 
-The other arm of the `match` handles the case where we get an `Err` value from
-`File::open`. In this example, we’ve chosen to call the `panic!` macro. If
-there’s no file named *hello.txt* in our current directory and we run this
-code, we’ll see the following output from the `panic!` macro:
+`match`ning boshqa qismi `File::open` dan `Err` qiymatini oladigan holatni boshqaradi. Ushbu misolda biz `panic!`  makrosini tanladik. Agar joriy jildimizda *olma.txt* nomli fayl bo‘lmasa va biz ushbu kodni ishga tushirsak, biz `panic!` makrosidan quyidagi natijani ko‘ramiz:
 
 ```console
 {{#include ../listings/ch09-error-handling/listing-09-04/output.txt}}
 ```
 
-As usual, this output tells us exactly what has gone wrong.
+Odatdagidek, bu chiqish bizga nima noto'g'ri ketganligini aniq aytadi.
 
-### Matching on Different Errors
+### Turli xil xatolarga moslashish
 
-The code in Listing 9-4 will `panic!` no matter why `File::open` failed.
-However, we want to take different actions for different failure reasons: if
-`File::open` failed because the file doesn’t exist, we want to create the file
-and return the handle to the new file. If `File::open` failed for any other
-reason—for example, because we didn’t have permission to open the file—we still
-want the code to `panic!` in the same way as it did in Listing 9-4. For this we
-add an inner `match` expression, shown in Listing 9-5.
+9-4 roʻyxatdagi kod nima uchun `File::open` muvaffaqiyatsiz boʻlishidan qatʼiy nazar `panic!` qoʻyadi.
+Biroq, biz turli sabablarga ko'ra turli xil harakatlarni amalga oshirishni xohlaymiz: agar fayl mavjud bo'lmagani uchun `File::open` muvaffaqiyatsiz bo'lsa, biz faylni yaratmoqchimiz va fayl boshqaruvini yangi faylga qaytaramiz. Agar `File::open` boshqa sabablarga ko'ra, masalan, faylni ochishga ruxsatimiz yo'qligi sababli muvaffaqiyatsiz bo'lsa, biz hali ham kodga 9-4 ro'yxatdagi kabi `panic!` qo'yishini xohlaymiz. Buning uchun biz 9-5 ro'yxatda ko'rsatilgan ichki `match` ifodasini qo'shamiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 <!-- ignore this test because otherwise it creates hello.txt which causes other
 tests to fail lol -->
@@ -76,8 +65,7 @@ tests to fail lol -->
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-05/src/main.rs}}
 ```
 
-<span class="caption">Listing 9-5: Handling different kinds of errors in
-different ways</span>
+<span class="caption">Ro'yxat 9-5: Har xil turdagi xatolarni turli yo'llar bilan hal qilish</span>
 
 The type of the value that `File::open` returns inside the `Err` variant is
 `io::Error`, which is a struct provided by the standard library. This struct
