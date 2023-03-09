@@ -108,22 +108,22 @@
 
 ## Kengaytirilgan mavzular
 
-- [Patterns and Matching](ch18-00-patterns.md)
+- [Patternlar va Matching](ch18-00-patterns.md)
     - [All the Places Patterns Can Be Used](ch18-01-all-the-places-for-patterns.md)
     - [Refutability: Whether a Pattern Might Fail to Match](ch18-02-refutability.md)
-    - [Pattern Syntax](ch18-03-pattern-syntax.md)
+    - [Pattern Sintaksisi](ch18-03-pattern-syntax.md)
 
-- [Advanced Features](ch19-00-advanced-features.md)
-    - [Unsafe Rust](ch19-01-unsafe-rust.md)
-    - [Advanced Traits](ch19-03-advanced-traits.md)
-    - [Advanced Types](ch19-04-advanced-types.md)
-    - [Advanced Functions and Closures](ch19-05-advanced-functions-and-closures.md)
-    - [Macros](ch19-06-macros.md)
+- [Kengaytirilgan Xususiyatlar](ch19-00-advanced-features.md)
+    - [Xavfsiz Rust](ch19-01-unsafe-rust.md)
+    - [Murakkab Traitlar](ch19-03-advanced-traits.md)
+    - [Kengaytirilgan Turlar](ch19-04-advanced-types.md)
+    - [Kengaytirilgan funksiyalar va closurelar](ch19-05-advanced-functions-and-closures.md)
+    - [Makrolar](ch19-06-macros.md)
 
-- [Final Project: Building a Multithreaded Web Server](ch20-00-final-project-a-web-server.md)
-    - [Building a Single-Threaded Web Server](ch20-01-single-threaded.md)
-    - [Turning Our Single-Threaded Server into a Multithreaded Server](ch20-02-multithreaded.md)
-    - [Graceful Shutdown and Cleanup](ch20-03-graceful-shutdown-and-cleanup.md)
+- [Yakuniy loyiha: Ko'p tarmoqli veb-serverni qurish](ch20-00-final-project-a-web-server.md)
+    - [Yagona tarmoqli veb-serverni qurish](ch20-01-single-threaded.md)
+    - [Bizning yagona tarmoqli serverimizni ko'p tarmoqli serverga aylantirish](ch20-02-multithreaded.md)
+    - [Ajoyib o'chirish va tozalash](ch20-03-graceful-shutdown-and-cleanup.md)
 
 - [Ilova](appendix-00.md)
     - [A - Kalit so'zlar](appendix-01-keywords.md)

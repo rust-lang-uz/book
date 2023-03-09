@@ -109,22 +109,15 @@ Biz ichki matchni tekshirmoqchi bo'lgan shart - `error.kind()` tomonidan qaytari
 
 ### Xatoda panic uchun yorliqlar: `unwrap` va `expect`
 
-Using `match` works well enough, but it can be a bit verbose and doesn’t always
-communicate intent well. The `Result<T, E>` type has many helper methods
-defined on it to do various, more specific tasks. The `unwrap` method is a
-shortcut method implemented just like the `match` expression we wrote in
-Listing 9-4. If the `Result` value is the `Ok` variant, `unwrap` will return
-the value inside the `Ok`. If the `Result` is the `Err` variant, `unwrap` will
-call the `panic!` macro for us. Here is an example of `unwrap` in action:
+`match` dan foydalanish yetarlicha yaxshi ishlaydi, lekin u biroz batafsil bo'lishi mumkin va har doim ham maqsadni yaxshi bildirmaydi. `Result<T, E>` turida turli, aniqroq vazifalarni bajarish uchun belgilangan koʻplab yordamchi metodlar mavjud. `unwrap` metodi biz 9-4 ro'yxatda yozgan `match` iborasi kabi implemen qilinadigan yorliq metodidir. Agar `Result` qiymati `Ok` varianti bo'lsa, `unwrap` qiymati `Ok` ichidagi qiymatni qaytaradi. Agar `Result` `Err` varianti bo‘lsa, `unwrap` biz uchun `panic!` makrosini chaqiradi. Mana amaldagi `unwrap` misoli:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,should_panic
 {{#rustdoc_include ../listings/ch09-error-handling/no-listing-04-unwrap/src/main.rs}}
 ```
 
-If we run this code without a *hello.txt* file, we’ll see an error message from
-the `panic!` call that the `unwrap` method makes:
+Agar biz ushbu kodni *olma.txt* faylisiz ishga tushiradigan bo‘lsak, biz `panic!` chaqiruvidan xato xabarini ko‘ramiz.
 
 <!-- manual-regeneration
 cd listings/ch09-error-handling/no-listing-04-unwrap
@@ -138,21 +131,16 @@ code: 2, kind: NotFound, message: "No such file or directory" }',
 src/main.rs:4:49
 ```
 
-Similarly, the `expect` method lets us also choose the `panic!` error message.
-Using `expect` instead of `unwrap` and providing good error messages can convey
-your intent and make tracking down the source of a panic easier. The syntax of
-`expect` looks like this:
+Xuddi shunday, `expect` metodi bizga `panic!` xato xabarini tanlash imkonini beradi.
+`unwrap` o'rniga `expect` dan foydalanish va yaxshi xato xabarlarini taqdim etish niyatingizni bildirishi va panic manbasini kuzatishni osonlashtirishi mumkin. `expect` sintaksisi quyidagicha ko'rinadi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,should_panic
 {{#rustdoc_include ../listings/ch09-error-handling/no-listing-05-expect/src/main.rs}}
 ```
 
-We use `expect` in the same way as `unwrap`: to return the file handle or call
-the `panic!` macro. The error message used by `expect` in its call to `panic!`
-will be the parameter that we pass to `expect`, rather than the default
-`panic!` message that `unwrap` uses. Here’s what it looks like:
+Biz `expect` dan xuddi `unwrap` kabi foydalanamiz: fayl boshqaruvini qaytarish yoki `panic!` makrosini chaqirish uchun.`panic!` chaqiruvida `expect` tomonidan foydalanilgan xato xabari `unwrap` ishlatadigan standart `panic!` xabari emas, balki `expect` parametriga o‘tadigan parametr bo‘ladi. Bu qanday ko'rinishga ega:
 
 <!-- manual-regeneration
 cd listings/ch09-error-handling/no-listing-05-expect
@@ -161,7 +149,7 @@ copy and paste relevant text
 -->
 
 ```text
-thread 'main' panicked at 'hello.txt should be included in this project: Os {
+thread 'main' panicked at 'olma.txt should be included in this project: Os {
 code: 2, kind: NotFound, message: "No such file or directory" }',
 src/main.rs:5:10
 ```

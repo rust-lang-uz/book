@@ -1,6 +1,6 @@
 use std::fs::File;
 
 fn main() {
-    let greeting_file = File::open("hello.txt")
-        .expect("hello.txt should be included in this project");
+    let fayl_ochish = File::open("olma.txt")
+        .expect("olma.txt ushbu loyihaga kiritilishi kerak");
 }
