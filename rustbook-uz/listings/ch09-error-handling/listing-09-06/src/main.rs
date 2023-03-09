@@ -2,23 +2,23 @@
 use std::fs::File;
 use std::io::{self, Read};
 
-fn read_username_from_file() -> Result<String, io::Error> {
-    let username_file_result = File::open("hello.txt");
+fn fayldan_foydalanuvchi_nomini_olis() -> Result<String, io::Error> {
+    let foydalanuvchi_fayli_natijasi = File::open("hello.txt");
 
-    let mut username_file = match username_file_result {
+    let mut foydalanuvchi_fayli = match foydalanuvchi_fayli_natijasi {
         Ok(file) => file,
         Err(e) => return Err(e),
     };
 
-    let mut username = String::new();
+    let mut foydalanuvchi = String::new();
 
-    match username_file.read_to_string(&mut username) {
-        Ok(_) => Ok(username),
+    match foydalanuvchi_fayli.read_to_string(&mut foydalanuvchi) {
+        Ok(_) => Ok(foydalanuvchi),
         Err(e) => Err(e),
     }
 }
 // ANCHOR_END: here
 
 fn main() {
-    let username = read_username_from_file().expect("Unable to get username");
+    let foydalanuvchi = fayldan_foydalanuvchi_nomini_olis().expect("Foydalanuvchi nomini olish imkonsiz");
 }

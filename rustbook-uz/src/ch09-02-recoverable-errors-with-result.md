@@ -154,25 +154,15 @@ code: 2, kind: NotFound, message: "No such file or directory" }',
 src/main.rs:5:10
 ```
 
-In production-quality code, most Rustaceans choose `expect` rather than
-`unwrap` and give more context about why the operation is expected to always
-succeed. That way, if your assumptions are ever proven wrong, you have more
-information to use in debugging.
+Ishlab chiqarish sifati kodida ko'pchilik Rustaceanlar `unwrap` o'rniga  `expect` ni tanlaydilar va nima uchun operatsiya har doim muvaffaqiyatli bo'lishi kutilayotgani haqida ko'proq kontekst beradi. Shunday qilib, agar sizning taxminlaringiz noto'g'ri ekanligi isbotlangan bo'lsa, debuggingda foydalanish uchun ko'proq ma'lumotga ega bo'lasiz.
 
-### Propagating Errors
+### Xatoni yo'naltirish - Propagating
 
-When a function’s implementation calls something that might fail, instead of
-handling the error within the function itself, you can return the error to the
-calling code so that it can decide what to do. This is known as *propagating*
-the error and gives more control to the calling code, where there might be more
-information or logic that dictates how the error should be handled than what
-you have available in the context of your code.
+Funksiyani amalga oshirish muvaffaqiyatsiz bo'lishi mumkin bo'lgan narsani chaqirganda, xatoni funksiyaning o'zida hal qilish o'rniga, nima qilish kerakligini hal qilish uchun xatoni chaqiruvchi kodga qaytarishingiz mumkin. Bu xatoni *propagating* deb nomlanadi va chaqiruv kodini ko'proq nazorat qiladi, bu yerda kodingiz kontekstida mavjud bo'lgan narsadan ko'ra xatoni qanday hal qilish kerakligini ko'rsatadigan ko'proq ma'lumot yoki mantiq bo'lishi mumkin.
 
-For example, Listing 9-6 shows a function that reads a username from a file. If
-the file doesn’t exist or can’t be read, this function will return those errors
-to the code that called the function.
+Misol uchun, 9-6 ro'yxati fayldan foydalanuvchi nomini o'qiydigan funksiyani ko'rsatadi. Agar fayl mavjud bo'lmasa yoki o'qib bo'lmasa, bu funksiya ushbu xatolarni funksiya chaqirgan kodga qaytaradi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 <!-- Deliberately not using rustdoc_include here; the `main` function in the
 file panics. We do want to include it for reader experimentation purposes, but
@@ -182,26 +172,11 @@ don't want to include it for rustdoc testing purposes. -->
 {{#include ../listings/ch09-error-handling/listing-09-06/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 9-6: A function that returns errors to the
-calling code using `match`</span>
+<span class="caption">Ro'yxat 9-6: `match` yordamida chaqiruv kodiga xatoliklarni qaytaruvchi funksiya</span>
 
-This function can be written in a much shorter way, but we’re going to start by
-doing a lot of it manually in order to explore error handling; at the end,
-we’ll show the shorter way. Let’s look at the return type of the function
-first: `Result<String, io::Error>`. This means the function is returning a
-value of the type `Result<T, E>` where the generic parameter `T` has been
-filled in with the concrete type `String`, and the generic type `E` has been
-filled in with the concrete type `io::Error`.
+Bu funksiyani ancha qisqaroq tarzda yozish mumkin, lekin biz xatolarni qayta ishlashni o'rganish uchun uning ko'p qismini qo'lda qilishdan boshlaymiz; oxirida biz qisqaroq yo'lni ko'rsatamiz. Avval funksiyaning qaytish turini ko'rib chiqamiz: `Result<String, io::Error>`. Bu funksiya `Result<T, E>` turidagi qiymatni qaytarayotganini bildiradi, bunda parametr `T` aniq turdagi `String` bilan to'ldirilgan, va `E` umumiy turi aniq turdagi `io::Error` bilan to`ldirilgan.
 
-If this function succeeds without any problems, the code that calls this
-function will receive an `Ok` value that holds a `String`—the username that
-this function read from the file. If this function encounters any problems, the
-calling code will receive an `Err` value that holds an instance of `io::Error`
-that contains more information about what the problems were. We chose
-`io::Error` as the return type of this function because that happens to be the
-type of the error value returned from both of the operations we’re calling in
-this function’s body that might fail: the `File::open` function and the
-`read_to_string` method.
+Agar bu funksiya hech qanday muammosiz muvaffaqiyatli bajarilsa, ushbu funksiyani chaqiruvchi kod `String` ga ega boʻlgan `Ok` qiymatini oladi – bu funksiya fayldan o'qigan foydalanuvchi nomi. Agar bu funksiya biron bir muammoga duch kelsa, murojaat qiluvchi kod `io::Error` misolini o'z ichiga olgan `Err` qiymatini oladi, unda muammolar nima bo'lganligi haqida qo'shimcha ma'lumot mavjud. Biz ushbu funktsiyaning qaytish turi sifatida `io::Error` ni tanladik, chunki bu funksiyaning tanasida bajarilmay qolishi mumkin bo‘lgan ikkala operatsiyadan qaytarilgan xato qiymatining turi: `File::open` funksiyasi va `read_to_string` metodi.
 
 The body of the function starts by calling the `File::open` function. Then we
 handle the `Result` value with a `match` similar to the `match` in Listing 9-4.
