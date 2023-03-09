@@ -178,38 +178,14 @@ Bu funksiyani ancha qisqaroq tarzda yozish mumkin, lekin biz xatolarni qayta ish
 
 Agar bu funksiya hech qanday muammosiz muvaffaqiyatli bajarilsa, ushbu funksiyani chaqiruvchi kod `String` ga ega boʻlgan `Ok` qiymatini oladi – bu funksiya fayldan o'qigan foydalanuvchi nomi. Agar bu funksiya biron bir muammoga duch kelsa, murojaat qiluvchi kod `io::Error` misolini o'z ichiga olgan `Err` qiymatini oladi, unda muammolar nima bo'lganligi haqida qo'shimcha ma'lumot mavjud. Biz ushbu funktsiyaning qaytish turi sifatida `io::Error` ni tanladik, chunki bu funksiyaning tanasida bajarilmay qolishi mumkin bo‘lgan ikkala operatsiyadan qaytarilgan xato qiymatining turi: `File::open` funksiyasi va `read_to_string` metodi.
 
-The body of the function starts by calling the `File::open` function. Then we
-handle the `Result` value with a `match` similar to the `match` in Listing 9-4.
-If `File::open` succeeds, the file handle in the pattern variable `file`
-becomes the value in the mutable variable `username_file` and the function
-continues. In the `Err` case, instead of calling `panic!`, we use the `return`
-keyword to return early out of the function entirely and pass the error value
-from `File::open`, now in the pattern variable `e`, back to the calling code as
-this function’s error value.
+Funksiyaning asosiy qismi `File::open` funksiyasini chaqirish orqali boshlanadi. Keyin biz `Result` qiymatini 9-4 ro'yxatdagi `match`ga o'xshash `match` bilan ishlaymiz.
+Agar `File::open` muvaffaqiyatli bajarilsa, `file` pattern o'zgaruvchisidagi fayl ishlovi `foydalanuvchi_fayli` o'zgaruvchan o'zgaruvchisidagi qiymatga aylanadi va funksiya davom etadi. `Err` holatida, `panic!` deb chaqirish o‘rniga, biz `return`  kalit so‘zidan funksiyadan to‘liq chiqib ketish uchun foydalanamiz va xato qiymatini `File::open` dan, endi `e` pattern o‘zgaruvchisiga o‘tkazamiz, bu funksiya xato qiymati sifatida chaqiruvchi kodga qaytaradi.
 
-So if we have a file handle in `username_file`, the function then creates a new
-`String` in variable `username` and calls the `read_to_string` method on
-the file handle in `username_file` to read the contents of the file into
-`username`. The `read_to_string` method also returns a `Result` because it
-might fail, even though `File::open` succeeded. So we need another `match` to
-handle that `Result`: if `read_to_string` succeeds, then our function has
-succeeded, and we return the username from the file that’s now in `username`
-wrapped in an `Ok`. If `read_to_string` fails, we return the error value in the
-same way that we returned the error value in the `match` that handled the
-return value of `File::open`. However, we don’t need to explicitly say
-`return`, because this is the last expression in the function.
+Shunday qilib, agar bizda `foydalanuvchi_fayli` da fayl boshqaruvi mavjud bo'lsa, keyin funksiya `foydalanuvchi` o'zgaruvchisida yangi `String` yaratadi va fayl mazmunini `foydalanuvchi` ni o'qish uchun `foydalanuvchi_fayli` da fayl boshqaruvidagi `read_to_string` metodini chaqiradi. `read_to_string` metodi ham `Result`ni qaytaradi, chunki u `File::open` muvaffaqiyatli bo'lishi ham mumkin, muvaffaqiyatsiz bo'lishi ham mumkin. Demak, ushbu `Result` bilan ishlash uchun bizga yana bir `match` kerak bo'ladi: agar `read_to_string` muvaffaqiyatli bo'lsa, demak, bizning funksiyamiz muvaffaqiyatli bo'ldi va biz foydalanuvchi nomini hozirda `Ok` bilan o'ralgan `foydalanuvchi` faylidan qaytaramiz. Agar `read_to_string` bajarilmasa, biz xato qiymatini xuddi `File::open` qiymatini qayta ishlagan `match` da xato qiymatini qaytarganimizdek qaytaramiz. Biroq, biz `return` ni aniq aytishimiz shart emas, chunki bu funksiyadagi oxirgi ifoda.
 
-The code that calls this code will then handle getting either an `Ok` value
-that contains a username or an `Err` value that contains an `io::Error`. It’s
-up to the calling code to decide what to do with those values. If the calling
-code gets an `Err` value, it could call `panic!` and crash the program, use a
-default username, or look up the username from somewhere other than a file, for
-example. We don’t have enough information on what the calling code is actually
-trying to do, so we propagate all the success or error information upward for
-it to handle appropriately.
+Ushbu kodni chaqiruvchi kod foydalanuvchi nomini o'z ichiga olgan `Ok`  qiymatini yoki `io::Error` ni o'z ichiga olgan `Err` qiymatini olishni boshqaradi. Ushbu qiymatlar bilan nima qilishni hal qilish chaqiruv kodiga bog'liq. Agar chaqiruv kodi `Err` qiymatini olsa, u `panic!` deb chaqirishi va dasturni buzishi mumkin, standart foydalanuvchi nomidan foydalaning yoki foydalanuvchi nomini fayldan boshqa joydan qidiring, masalan. Bizda chaqiruv kodi aslida nima qilmoqchi ekanligi haqida yetarli ma'lumot yo'q, shuning uchun biz barcha muvaffaqiyat yoki xato ma'lumotlarini to'g'ri ishlashi uchun xatolarni propagate qilamiz.
 
-This pattern of propagating errors is so common in Rust that Rust provides the
-question mark operator `?` to make this easier.
+Xatolarni propagating qilish namunasi Rustda shu qadar keng tarqalganki, Rust buni osonlashtirish uchun savol belgisi operatori `?` beradi.
 
 #### A Shortcut for Propagating Errors: the `?` Operator
 
