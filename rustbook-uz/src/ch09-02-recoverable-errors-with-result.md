@@ -223,21 +223,13 @@ don't want to include it for rustdoc testing purposes. -->
 {{#include ../listings/ch09-error-handling/listing-09-08/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 9-8: Chaining method calls after the `?`
-operator</span>
+<span class="caption">Ro'yxat 9-8: `?` operatoridan keyin zanjirlash(chaining) metodi chaqiruvlari</span>
 
-We’ve moved the creation of the new `String` in `username` to the beginning of
-the function; that part hasn’t changed. Instead of creating a variable
-`username_file`, we’ve chained the call to `read_to_string` directly onto the
-result of `File::open("hello.txt")?`. We still have a `?` at the end of the
-`read_to_string` call, and we still return an `Ok` value containing `username`
-when both `File::open` and `read_to_string` succeed rather than returning
-errors. The functionality is again the same as in Listing 9-6 and Listing 9-7;
-this is just a different, more ergonomic way to write it.
+Biz `foydalanuvchi` da yangi `String` yaratishni funksiya boshiga o‘tkazdik; bu qism o'zgarmagan. `foydalanuvchi_fayli` oʻzgaruvchisini yaratish oʻrniga, `File::open("olma.txt")?` natijasiga toʻgʻridan-toʻgʻri `read_to_string` chaqiruvlarini bogʻladik. Bizda `read_to_string`  chaqiruvi oxirida hali ham `?` bor va biz xatoliklarni qaytarish oʻrniga `File::open` va `read_to_string` muvaffaqiyatli boʻlganda ham `foydalanuvchi`ni oʻz ichiga olgan `OK` qiymatini qaytaramiz. Funksionallik yana 9-6 va 9-7 ro'yxatdagi kabi; Bu uni yozishning boshqacha, ergonomik usuli.
 
-Listing 9-9 shows a way to make this even shorter using `fs::read_to_string`.
+9-9 ro'yxati `fs::read_to_string` yordamida buni yanada qisqartirish yo'lini ko'rsatadi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 <!-- Deliberately not using rustdoc_include here; the `main` function in the
 file panics. We do want to include it for reader experimentation purposes, but
@@ -247,25 +239,13 @@ don't want to include it for rustdoc testing purposes. -->
 {{#include ../listings/ch09-error-handling/listing-09-09/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 9-9: Using `fs::read_to_string` instead of
-opening and then reading the file</span>
+<span class="caption">Roʻyxat 9-9: faylni ochish va keyin oʻqish oʻrniga `fs::read_to_string` dan foydalanish</span>
 
-Reading a file into a string is a fairly common operation, so the standard
-library provides the convenient `fs::read_to_string` function that opens the
-file, creates a new `String`, reads the contents of the file, puts the contents
-into that `String`, and returns it. Of course, using `fs::read_to_string`
-doesn’t give us the opportunity to explain all the error handling, so we did it
-the longer way first.
+Faylni stringda o'qish juda keng tarqalgan operatsiya, shuning uchun standart kutubxona faylni ochadigan, yangi `String` yaratadigan qulay `fs::read_to_string` funksiyasini ta'minlaydi fayl mazmunini o'qiydi, mazmunini o'sha `String` ga qo'yadi va uni qaytaradi. Albatta, `fs::read_to_string` dan foydalanish bizga xatolarni qanday hal qilishni tushuntirishga imkon bermaydi, shuning uchun biz birinchi navbatda uzoq yo'lni o'rgandik.
 
-#### Where The `?` Operator Can Be Used
+#### `?` Operatoridan qayerda foydalanish mumkin
 
-The `?` operator can only be used in functions whose return type is compatible
-with the value the `?` is used on. This is because the `?` operator is defined
-to perform an early return of a value out of the function, in the same manner
-as the `match` expression we defined in Listing 9-6. In Listing 9-6, the
-`match` was using a `Result` value, and the early return arm returned an
-`Err(e)` value. The return type of the function has to be a `Result` so that
-it’s compatible with this `return`.
+`?` operatori faqat qaytarish turi `?` ishlatiladigan qiymatga mos keladigan funksiyalarda ishlatilishi mumkin. Buning sababi, `?` operatori biz 9-6 ro'yxatda belgilagan `match` ifodasi kabi funksiyadan tashqari qiymatni erta qaytarish uchun belgilangan. 9-6 roʻyxatda `match` `Result` qiymatidan foydalanilgan va erta qaytish armi `Err(e)` qiymatini qaytargan. Funksiyaning qaytish turi `Result` bo'lishi kerak, shunda u ushbu `return` bilan mos keladi.
 
 In Listing 9-10, let’s look at the error we’ll get if we use the `?` operator
 in a `main` function with a return type incompatible with the type of the value
