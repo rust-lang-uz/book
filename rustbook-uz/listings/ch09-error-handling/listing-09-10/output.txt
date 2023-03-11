@@ -5,7 +5,7 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
   |
 3 | fn main() {
   | --------- this function should return `Result` or `Option` to accept `?`
-4 |     let greeting_file = File::open("hello.txt")?;
+4 |     let fayl_ochish = File::open("olma.txt")?;
   |                                                ^ cannot use the `?` operator in a function that returns `()`
   |
   = help: the trait `FromResidual<Result<Infallible, std::io::Error>>` is not implemented for `()`

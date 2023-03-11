@@ -247,57 +247,37 @@ Faylni stringda o'qish juda keng tarqalgan operatsiya, shuning uchun standart ku
 
 `?` operatori faqat qaytarish turi `?` ishlatiladigan qiymatga mos keladigan funksiyalarda ishlatilishi mumkin. Buning sababi, `?` operatori biz 9-6 ro'yxatda belgilagan `match` ifodasi kabi funksiyadan tashqari qiymatni erta qaytarish uchun belgilangan. 9-6 roʻyxatda `match` `Result` qiymatidan foydalanilgan va erta qaytish armi `Err(e)` qiymatini qaytargan. Funksiyaning qaytish turi `Result` bo'lishi kerak, shunda u ushbu `return` bilan mos keladi.
 
-In Listing 9-10, let’s look at the error we’ll get if we use the `?` operator
-in a `main` function with a return type incompatible with the type of the value
-we use `?` on:
+9-10 ro'yxatda, agar biz `?` dan foydalanadigan qiymat turiga mos kelmaydigan qaytish turi bilan `main` funksiyada `?` operatoridan foydalansak, qanday xatoga duch kelamiz:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-10/src/main.rs}}
 ```
 
-<span class="caption">Listing 9-10: Attempting to use the `?` in the `main`
-function that returns `()` won’t compile</span>
+<span class="caption">Roʻyxat 9-10: `()` qaytaradigan `main`  funksiyadagi `?` dan foydalanishga urinish kompilyatsiya qilinmaydi.</span>
 
-This code opens a file, which might fail. The `?` operator follows the `Result`
-value returned by `File::open`, but this `main` function has the return type of
-`()`, not `Result`. When we compile this code, we get the following error
-message:
+Ushbu kod faylni ochadi, bu muvaffaqiyatsiz bo'lishi mumkin. `?` operatori `File::open` tomonidan qaytarilgan `Result` qiymatiga amal qiladi, lekin bu `main` funksiya `Result` emas, `()` qaytish turiga ega. Ushbu kodni kompilyatsiya qilganimizda, biz quyidagi xato xabarini olamiz:
+
 
 ```console
 {{#include ../listings/ch09-error-handling/listing-09-10/output.txt}}
 ```
 
-This error points out that we’re only allowed to use the `?` operator in a
-function that returns `Result`, `Option`, or another type that implements
-`FromResidual`.
+Bu xato bizga `?` operatoridan faqat `Result`, `Option` yoki `FromResidual`ni qo'llaydigan boshqa turdagi qaytaruvchi funksiyada foydalanishga ruxsat berilganligini ko`rsatadi.
 
-To fix the error, you have two choices. One choice is to change the return type
-of your function to be compatible with the value you’re using the `?` operator
-on as long as you have no restrictions preventing that. The other technique is
-to use a `match` or one of the `Result<T, E>` methods to handle the `Result<T,
-E>` in whatever way is appropriate.
+Xatoni tuzatish uchun sizda ikkita variant bor. Tanlovlardan biri, funksiyangizning qaytish turini `?` operatoridan foydalanayotgan qiymatga mos keladigan qilib o'zgartirish, agar bunga hech qanday cheklovlar bo'lmasa. Boshqa usul esa, `Result<T, E>` ni mos keladigan usulda boshqarish uchun `match` yoki `Result<T, E>` metodlaridan birini qo`llashdir.
 
-The error message also mentioned that `?` can be used with `Option<T>` values
-as well. As with using `?` on `Result`, you can only use `?` on `Option` in a
-function that returns an `Option`. The behavior of the `?` operator when called
-on an `Option<T>` is similar to its behavior when called on a `Result<T, E>`:
-if the value is `None`, the `None` will be returned early from the function at
-that point. If the value is `Some`, the value inside the `Some` is the
-resulting value of the expression and the function continues. Listing 9-11 has
-an example of a function that finds the last character of the first line in the
-given text:
+Xato xabarida, shuningdek, `?` ni `Option<T>` qiymatlari bilan ham foydalanish mumkinligi aytilgan. `Result`da `?` dan foydalanish kabi, siz `?` dan faqat `Option` ni qaytaradigan funksiyada foydalanishingiz mumkin. `?` operatorining `Option<T>` bo'yicha chaqirilgandagi xatti-harakati `Result<T, E>` da chaqirilgandagi xatti-harakatiga o'xshaydi: agar qiymat `None` bo'lsa `None` bo'ladi o'sha paytda  funksiyadan erta qaytariladi. Agar qiymat `Some` bo'lsa, `Some` ichidagi qiymat ifodaning natijaviy qiymati bo`lib, funksiya davom etadi. 9-11 ro'yxatda berilgan matndagi birinchi qatorning oxirgi belgisini topadigan funksiya misoli mavjud:
 
 ```rust
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 9-11: Using the `?` operator on an `Option<T>`
+<span class="caption">Roʻyxat 9-11: `Option`da `?` operatoridan foydalanish<T>`
 value</span>
 
-This function returns `Option<char>` because it’s possible that there is a
-character there, but it’s also possible that there isn’t. This code takes the
+Bu funksiya `Option<char>`ni qaytaradi, chunki u yerda belgi(character) boʻlishi mumkin, lekin yoʻq boʻlishi ham mumkin. This code takes the
 `text` string slice argument and calls the `lines` method on it, which returns
 an iterator over the lines in the string. Because this function wants to
 examine the first line, it calls `next` on the iterator to get the first value

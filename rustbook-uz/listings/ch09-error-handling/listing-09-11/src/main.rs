@@ -1,15 +1,15 @@
 // ANCHOR: here
-fn last_char_of_first_line(text: &str) -> Option<char> {
-    text.lines().next()?.chars().last()
+fn birinchi_satrning_oxirgi_belgisi(matn: &str) -> Option<char> {
+    matn.lines().next()?.chars().last()
 }
 // ANCHOR_END: here
 
 fn main() {
     assert_eq!(
-        last_char_of_first_line("Hello, world\nHow are you today?"),
-        Some('d')
+        birinchi_satrning_oxirgi_belgisi("Salom Do'stim\n Ahvollaring qanday?"),
+        Some('m')
     );
 
-    assert_eq!(last_char_of_first_line(""), None);
-    assert_eq!(last_char_of_first_line("\nhi"), None);
+    assert_eq!(birinchi_satrning_oxirgi_belgisi(""), None);
+    assert_eq!(birinchi_satrning_oxirgi_belgisi("\nhi"), None);
 }
