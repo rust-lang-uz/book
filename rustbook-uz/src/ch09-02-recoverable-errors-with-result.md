@@ -277,42 +277,16 @@ Xato xabarida, shuningdek, `?` ni `Option<T>` qiymatlari bilan ham foydalanish m
 <span class="caption">Roʻyxat 9-11: `Option`da `?` operatoridan foydalanish<T>`
 value</span>
 
-Bu funksiya `Option<char>`ni qaytaradi, chunki u yerda belgi(character) boʻlishi mumkin, lekin yoʻq boʻlishi ham mumkin. This code takes the
-`text` string slice argument and calls the `lines` method on it, which returns
-an iterator over the lines in the string. Because this function wants to
-examine the first line, it calls `next` on the iterator to get the first value
-from the iterator. If `text` is the empty string, this call to `next` will
-return `None`, in which case we use `?` to stop and return `None` from
-`last_char_of_first_line`. If `text` is not the empty string, `next` will
-return a `Some` value containing a string slice of the first line in `text`.
+Bu funksiya `Option<char>`ni qaytaradi, chunki u yerda belgi(character) boʻlishi mumkin, lekin yoʻq boʻlishi ham mumkin. Bu kod `matn` string argumentini oladi va undagi `lines` metodini chaqiradi, bu esa satrdagi satrlar ustidan iteratorni qaytaradi. Ushbu funksiya birinchi qatorni tekshirmoqchi bo'lganligi sababli, iteratordan birinchi qiymatni olish uchun iteratorda `next` ni chaqiradi. Agar `matn` boʻsh qator boʻlsa, `next` ga murojat qilish `None`ni qaytaradi, bu holda biz `birinchi_satrning_oxirgi_belgisi`dan `None`ni toʻxtatish va qaytarish uchun `?` operatoridan foydalanamiz. Agar `matn` bo'sh qator bo'lmasa, `next` `matn`dagi birinchi qatorning string sliceni o'z ichiga olgan `Some` qiymatini qaytaradi.
 
-The `?` extracts the string slice, and we can call `chars` on that string slice
-to get an iterator of its characters. We’re interested in the last character in
-this first line, so we call `last` to return the last item in the iterator.
-This is an `Option` because it’s possible that the first line is the empty
-string, for example if `text` starts with a blank line but has characters on
-other lines, as in `"\nhi"`. However, if there is a last character on the first
-line, it will be returned in the `Some` variant. The `?` operator in the middle
-gives us a concise way to express this logic, allowing us to implement the
-function in one line. If we couldn’t use the `?` operator on `Option`, we’d
-have to implement this logic using more method calls or a `match` expression.
+`?` operatori satr bo'lagini chiqaradi va biz uning belgilarining iteratorini olish uchun ushbu qator bo'limidagi `chars`larni chaqirishimiz mumkin. Bizni ushbu birinchi qatordagi oxirgi belgi qiziqtiradi, shuning uchun biz iteratordagi oxirgi elementni qaytarish uchun `last` deb chaqiramiz.
+Bu `Option`dir, chunki birinchi qator boʻsh satr boʻlishi mumkin, masalan, `matn` boʻsh satr bilan boshlansa, lekin `"\nhi"`dagi kabi boshqa qatorlarda belgilar boʻlsa. Biroq, agar birinchi qatorda oxirgi belgi bo'lsa, u `Some` variantida qaytariladi. O'rtadagi `?` operatori bu mantiqni ifodalashning ixcham usulini beradi, bu funksiyani bir qatorda amalga oshirish imkonini beradi. Agar biz `Option` da`?` operatoridan foydalana olmasak, biz bu mantiqni ko'proq metod chaqiruvlari yoki `match` ifodasi yordamida amalga oshirishimiz kerak edi.
 
-Note that you can use the `?` operator on a `Result` in a function that returns
-`Result`, and you can use the `?` operator on an `Option` in a function that
-returns `Option`, but you can’t mix and match. The `?` operator won’t
-automatically convert a `Result` to an `Option` or vice versa; in those cases,
-you can use methods like the `ok` method on `Result` or the `ok_or` method on
-`Option` to do the conversion explicitly.
+Esda tutingki, `?` operatoridan `Result` qaytaruvchi funksiyada `Result`da foydalanishingiz mumkin, va `?` operatoridan `Option` qaytaradigan funksiyada `Option`da foydalanishingiz mumkin, lekin siz aralashtirib, moslashtira olmaysiz. `?` operatori `Result`ni avtomatik ravishda `Option`ga yoki aksincha o'zgartirmaydi; Bunday hollarda konvertatsiyani aniq amalga oshirish uchun `Result`dagi `ok` metodi yoki `Option`dagi `ok_or` kabi metodlardan foydalanishingiz mumkin.
 
-So far, all the `main` functions we’ve used return `()`. The `main` function is
-special because it’s the entry and exit point of executable programs, and there
-are restrictions on what its return type can be for the programs to behave as
-expected.
+Hozirgacha biz ishlatgan barcha `main` funksiyalar `()` ni qaytaradi. `main` funksiya maxsus, chunki u bajariladigan dasturlarning kirish va chiqish nuqtasi bo'lib, dasturlar kutilgandek harakat qilishi uchun uning qaytish(return) turi qanday bo'lishi mumkinligiga cheklovlar mavjud.
 
-Luckily, `main` can also return a `Result<(), E>`. Listing 9-12 has the
-code from Listing 9-10 but we’ve changed the return type of `main` to be
-`Result<(), Box<dyn Error>>` and added a return value `Ok(())` to the end. This
-code will now compile:
+Yaxshiyamki, `main` `Result<(), E>`ni ham qaytarishi mumkin. 9-12 ro'yxatda 9-10 ro'yxatdagi kod mavjud, biroq biz `main` ning qaytish turini `Result<(),  Box<dyn Error>>` qilib o'zgartirdik va oxiriga `Ok(())`  qaytish qiymatini qo'shdik. Ushbu kod endi kompilyatsiya qilinadi:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
