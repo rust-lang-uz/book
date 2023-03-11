@@ -292,35 +292,16 @@ Yaxshiyamki, `main` `Result<(), E>`ni ham qaytarishi mumkin. 9-12 ro'yxatda 9-10
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-12/src/main.rs}}
 ```
 
-<span class="caption">Listing 9-12: Changing `main` to return `Result<(), E>`
-allows the use of the `?` operator on `Result` values</span>
+<span class="caption">Roʻyxat 9-12: `main`ni `Result<(), E>` qaytarishga oʻzgartirish `Result` qiymatlarida `?` operatoridan foydalanish imkonini beradi.</span>
 
-The `Box<dyn Error>` type is a *trait object*, which we’ll talk about in the
-[“Using Trait Objects that Allow for Values of Different
-Types”][trait-objects]<!-- ignore --> section in Chapter 17. For now, you can
-read `Box<dyn Error>` to mean “any kind of error.” Using `?` on a `Result`
-value in a `main` function with the error type `Box<dyn Error>` is allowed,
-because it allows any `Err` value to be returned early. Even though the body of
-this `main` function will only ever return errors of type `std::io::Error`, by
-specifying `Box<dyn Error>`, this signature will continue to be correct even if
-more code that returns other errors is added to the body of `main`.
+`Box<dyn Error>` turi bu *trait ob'ekti* bo'lib, biz 17-bobning ["Turli turdagi qiymatlarga ruxsat beruvchi trait ob'ektlaridan foydalanish"][trait-objects]<!-- ignore -->  bo'limida gaplashamiz. Hozircha siz `Box<dyn Error>`ni “har qanday xato” degan ma'noni anglatadi deb o'ylashingiz mumkin. `Box<dyn Error>` xato turi bilan `main` funksiyadagi `Result` qiymatida `?` dan foydalanishga ruxsat beriladi, chunki bu har qanday `Err` qiymatini erta qaytarish imkonini beradi. Garchi bu `main` funksiyaning tanasi faqat `std::io::Error` turidagi xatolarni qaytarsa ham, `Box<dyn Error>` ni belgilab, `main` funksiyaga boshqa xatolarni qaytaruvchi ko'proq kod qo'shilsa ham, bu kod to'g'ri bo'lib qoladi.
 
-When a `main` function returns a `Result<(), E>`, the executable will
-exit with a value of `0` if `main` returns `Ok(())` and will exit with a
-nonzero value if `main` returns an `Err` value. Executables written in C return
-integers when they exit: programs that exit successfully return the integer
-`0`, and programs that error return some integer other than `0`. Rust also
-returns integers from executables to be compatible with this convention.
+`main`  funksiya `Result<(), E>`ni qaytarsa, bajariladigan fayl(executable file) `0` qiymati bilan chiqadi, agar `main` `Ok(())` qaytarsa va `main` `Err` qiymatini qaytarsa nolga teng bo'lmagan qiymat bilan chiqadi. C tilida yozilgan bajariladigan fayllar(executable file) chiqqanda butun sonlarni qaytaradi: muvaffaqiyatli chiqqan dasturlar `0` butun sonini qaytaradi, xatoga yo'l qo'ygan dasturlar esa `0` dan boshqa butun sonni qaytaradi. Rust shuningdek, ushbu konventsiyaga mos kelishi uchun bajariladigan fayllardan butun(integer) sonlarni qaytaradi.
 
-The `main` function may return any types that implement [the
-`std::process::Termination` trait][termination]<!-- ignore -->, which contains
-a function `report` that returns an `ExitCode`. Consult the standard library
-documentation for more information on implementing the `Termination` trait for
-your own types.
 
-Now that we’ve discussed the details of calling `panic!` or returning `Result`,
-let’s return to the topic of how to decide which is appropriate to use in which
-cases.
+`main` funksiya [`std::process::Termination` traitini][termination]<!-- ignore --> amalga oshiradigan har qanday turlarni qaytarishi mumkin, bunda `ExitCode` qaytaruvchi `report` funksiyasi mavjud. O'zingizning turlaringiz uchun `Termination` traitini qo'llash bo'yicha qo'shimcha ma'lumot olish uchun standart kutubxona texnik hujjatlariga murojaat qiling.
+
+Endi biz `panic!` chaqirish yoki `Result`ni qaytarish tafsilotlarini muhokama qilganimizdan so‘ng, keling, qaysi hollarda qaysi biri to‘g‘ri kelishini hal qilish mavzusiga qaytaylik.
 
 [handle_failure]: ch02-00-guessing-game-tutorial.html#handling-potential-failure-with-result
 [trait-objects]: ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types
