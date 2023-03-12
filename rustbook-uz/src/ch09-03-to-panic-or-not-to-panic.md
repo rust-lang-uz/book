@@ -28,37 +28,16 @@ Ushbu IP-manzil qattiq kodlangan degan taxminni eslatib o'tsak, agar kelajakda I
 
 Agar kodingiz yomon holatda bo'lishi mumkin bo'lsa, kodingiz panic qo'yishi tavsiya etiladi. Shu nuqtai nazardan, *yomon holat* deganda baʼzi taxminlar(assumption), kafolatlar(guarantee), shartnomalar(contract,) yoki oʻzgarmasliklar buzilganda, masalan, notoʻgʻri qiymatlar, qarama-qarshi qiymatlar yoki yetishmayotgan qiymatlar kodingizga oʻtkazilganda, shuningdek quyidagilardan biri yoki bir nechtasi:
 
-* The bad state is something that is unexpected, as opposed to something that
-  will likely happen occasionally, like a user entering data in the wrong
-  format.
-* Your code after this point needs to rely on not being in this bad state,
-  rather than checking for the problem at every step.
-* There’s not a good way to encode this information in the types you use. We’ll
-  work through an example of what we mean in the [“Encoding States and Behavior
-  as Types”][encoding]<!-- ignore --> section of Chapter 17.
+* Yomon holat - foydalanuvchi noto'g'ri formatda ma'lumotlarni kiritishi kabi vaqti-vaqti bilan sodir bo'lishi mumkin bo'lgan narsadan farqli o'laroq, kutilmagan narsa.
+* Ushbu nuqtadan keyin sizning kodingiz har qadamda muammoni tekshirishdan ko'ra, bu yomon holatda bo'lmaslikka tayanishi kerak.
+* Siz foydalanadigan turlarda ushbu ma'lumotni kodlashning yaxshi usuli yo'q. Biz 17-bobning ["Turlar sifatida kodlash holatlari va behaviorlari"][encoding]<!-- ignore --> bo'limida nimani nazarda tutayotganimizni misol qilib ko'rib chiqamiz.
 
-If someone calls your code and passes in values that don’t make sense, it’s
-best to return an error if you can so the user of the library can decide what
-they want to do in that case. However, in cases where continuing could be
-insecure or harmful, the best choice might be to call `panic!` and alert the
-person using your library to the bug in their code so they can fix it during
-development. Similarly, `panic!` is often appropriate if you’re calling
-external code that is out of your control and it returns an invalid state that
-you have no way of fixing.
+Agar kimdir sizning kodingizga chaqiruv qilsa va mantiqiy bo'lmagan qiymatlarni o'tkazsa, kutubxona foydalanuvchisi bu holatda nima qilishni xohlashini hal qilishi uchun xatolikni qaytarish yaxshidir. Biroq, davom etish xavfli yoki zararli bo'lishi mumkin bo'lgan hollarda, eng yaxshi tanlov `panic!` deb chaqiruv qilish va kutubxonangizdan foydalanuvchini kodidagi xatolik haqida ogohlantirish bo'lishi mumkin, shunda ular ishlab chiqish jarayonida uni tuzatishi mumkin. Xuddi shunday, `panic!`ko'pincha sizning nazoratingizdan tashqarida bo'lgan tashqi kodga chaqiruv qilsangiz va uni tuzatishning imkoni bo'lmagan yaroqsiz holatni qaytarsangiz mos keladi.
 
-However, when failure is expected, it’s more appropriate to return a `Result`
-than to make a `panic!` call. Examples include a parser being given malformed
-data or an HTTP request returning a status that indicates you have hit a rate
-limit. In these cases, returning a `Result` indicates that failure is an
-expected possibility that the calling code must decide how to handle.
+Biroq, muvaffaqiyatsizlik kutilganda, `panic!` chaqiruv qilishdan ko'ra, `Result`ni qaytarish maqsadga muvofiqdir. Misollar, tahlilchiga noto'g'ri tuzilgan ma'lumotlar yoki tarif chegarasiga yetganingizni bildiruvchi holatni qaytaruvchi HTTP so'rovini o'z ichiga oladi. Bunday hollarda, `Result` ni qaytarish, chaqiruv kodi qanday ishlov berishni hal qilishi kerak bo'lgan muvaffaqiyatsizlik kutilgan imkoniyat ekanligini ko'rsatadi.
 
-When your code performs an operation that could put a user at risk if it’s
-called using invalid values, your code should verify the values are valid first
-and panic if the values aren’t valid. This is mostly for safety reasons:
-attempting to operate on invalid data can expose your code to vulnerabilities.
-This is the main reason the standard library will call `panic!` if you attempt
-an out-of-bounds memory access: trying to access memory that doesn’t belong to
-the current data structure is a common security problem. Functions often have
+Agar kodingiz noto'g'ri qiymatlar yordamida chaqirilgan bo'lsa, foydalanuvchini xavf ostiga qo'yishi mumkin bo'lgan operatsiyani bajarganda, kodingiz avval qiymatlarning haqiqiyligini tekshirishi va qiymatlar noto'g'ri bo'lsa panic qo'yishi kerak.Bu asosan xavfsizlik nuqtai nazaridan: noto'g'ri ma'lumotlar bilan ishlashga urinish kodingizni zaifliklarga olib kelishi mumkin.
+Agar siz chegaradan tashqari xotiraga kirishga harakat qilsangiz, standart kutubxona `panic!` deb chaqirishining asosiy sababi shu: joriy ma'lumotlar tuzilishiga tegishli bo'lmagan xotiraga kirishga urinish umumiy xavfsizlik muammosidir. Functions often have
 *contracts*: their behavior is only guaranteed if the inputs meet particular
 requirements. Panicking when the contract is violated makes sense because a
 contract violation always indicates a caller-side bug and it’s not a kind of
