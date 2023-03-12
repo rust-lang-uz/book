@@ -54,17 +54,9 @@ Buning usullaridan biri potentsial manfiy raqamlarga ruxsat berish uchun taxminn
 
 `If` ifodasi bizning qiymatimiz diapazondan tashqarida yoki yo‘qligini tekshiradi, foydalanuvchiga muammo haqida xabar beradi va siklning keyingi iteratsiyasini boshlash uchun `continue` ni chaqiradi va yana bir taxminni so‘raydi. `if` ifodasidan keyin `taxmin` 1 dan 100 gacha ekanligini bilgan holda `taxmin` va maxfiy raqam o‘rtasidagi taqqoslashni davom ettirishimiz mumkin.
 
-However, this is not an ideal solution: if it was absolutely critical that the
-program only operated on values between 1 and 100, and it had many functions
-with this requirement, having a check like this in every function would be
-tedious (and might impact performance).
+Biroq, bu ideal echim emas: agar dastur faqat 1 dan 100 gacha bo'lgan qiymatlarda ishlaganligi juda muhim bo'lsa va bu talab bilan ko'plab funksiyalarga ega bo'lsa, har bir funksiyada bunday tekshiruvga ega bo'lish zerikarli bo'ladi (va ishlashga ta'sir qilishi mumkin).
 
-Instead, we can make a new type and put the validations in a function to create
-an instance of the type rather than repeating the validations everywhere. That
-way, it’s safe for functions to use the new type in their signatures and
-confidently use the values they receive. Listing 9-13 shows one way to define a
-`Guess` type that will only create an instance of `Guess` if the `new` function
-receives a value between 1 and 100.
+Buning o'rniga, biz yangi turni yaratishimiz va tekshirishlarni hamma joyda takrorlashdan ko'ra, turdagi namunani yaratish uchun funksiyaga qo'yishimiz mumkin. Shunday qilib, funksiyalar o'zlarining imzolarida yangi turdan foydalanishlari va ular olgan qiymatlardan ishonchli foydalanishlari xavfsiz bo'ladi. 9-13 roʻyxatda `Taxmin` turini aniqlashning bir usuli koʻrsatilgan, bu `new` funksiya 1 dan 100 gacha boʻlgan qiymatni qabul qilsagina `Taxmin` misolini yaratadi.
 
 <!-- Deliberately not using rustdoc_include here; the `main` function in the
 file requires the `rand` crate. We do want to include it for reader
@@ -75,11 +67,9 @@ purposes. -->
 {{#include ../listings/ch09-error-handling/listing-09-13/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 9-13: A `Guess` type that will only continue with
-values between 1 and 100</span>
+<span class="caption">Roʻyxat 9-13: `Taxmin` turi, u faqat 1 dan 100 gacha qiymatlar bilan davom etadi</span>
 
-First, we define a struct named `Guess` that has a field named `value` that
-holds an `i32`. This is where the number will be stored.
+Birinchidan, biz `i32` ga ega `qiymat` nomli maydonga ega `Taxmin` nomli strukturani aniqlaymiz. Bu yerda raqam saqlanadi.
 
 Then we implement an associated function named `new` on `Guess` that creates
 instances of `Guess` values. The `new` function is defined to have one

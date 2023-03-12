@@ -3,41 +3,41 @@ use std::cmp::Ordering;
 use std::io;
 
 fn main() {
-    println!("Guess the number!");
+    println!("Raqamni topish o'yini!");
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
+    let yashirin_raqam = rand::thread_rng().gen_range(1..=100);
 
     // ANCHOR: here
     loop {
         // --snip--
 
         // ANCHOR_END: here
-        println!("Please input your guess.");
+        println!("Iltimos, taxminingizni kiriting.");
 
-        let mut guess = String::new();
+        let mut taxmin = String::new();
 
         io::stdin()
-            .read_line(&mut guess)
-            .expect("Failed to read line");
+            .read_line(&mut taxmin)
+            .expect("Satrni o‘qib bo‘lmadi");
 
         // ANCHOR: here
-        let guess: i32 = match guess.trim().parse() {
+        let taxmin: i32 = match taxmin.trim().parse() {
             Ok(num) => num,
             Err(_) => continue,
         };
 
-        if guess < 1 || guess > 100 {
-            println!("The secret number will be between 1 and 100.");
+        if taxmin < 1 || taxmin > 100 {
+            println!("Yashirin raqam 1 dan 100 gacha bo'ladi.");
             continue;
         }
 
-        match guess.cmp(&secret_number) {
+        match taxmin.cmp(&yashirin_raqam) {
             // --snip--
             // ANCHOR_END: here
-            Ordering::Less => println!("Too small!"),
-            Ordering::Greater => println!("Too big!"),
+            Ordering::Less => println!("Raqam Kichik!"),
+            Ordering::Greater => println!("Raqam katta!"),
             Ordering::Equal => {
-                println!("You win!");
+                println!("Siz yutdingiz!");
                 break;
             }
         }

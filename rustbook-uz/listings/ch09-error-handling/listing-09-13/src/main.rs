@@ -3,51 +3,51 @@ use std::cmp::Ordering;
 use std::io;
 
 // ANCHOR: here
-pub struct Guess {
-    value: i32,
+pub struct Taxmin {
+    qiymat: i32,
 }
 
-impl Guess {
-    pub fn new(value: i32) -> Guess {
-        if value < 1 || value > 100 {
-            panic!("Guess value must be between 1 and 100, got {}.", value);
+impl Taxmin {
+    pub fn new(qiymat: i32) -> Taxmin {
+        if qiymat < 1 || qiymat > 100 {
+            panic!("Taxmin qilingan qiymat 1 dan 100 gacha bo'lishi kerak, {} qabul qilnmaydi.", qiymat);
         }
 
-        Guess { value }
+        Taxmin { qiymat }
     }
 
-    pub fn value(&self) -> i32 {
-        self.value
+    pub fn qiymat(&self) -> i32 {
+        self.qiymat
     }
 }
 // ANCHOR_END: here
 
 fn main() {
-    println!("Guess the number!");
+    println!("Raqamni topish o'yini!");
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
+    let yashirin_raqam = rand::thread_rng().gen_range(1..=100);
 
     loop {
-        println!("Please input your guess.");
+        println!("Iltimos, taxminingizni kiriting.");
 
-        let mut guess = String::new();
+        let mut taxmin = String::new();
 
         io::stdin()
-            .read_line(&mut guess)
-            .expect("Failed to read line");
+            .read_line(&mut taxmin)
+            .expect("Satrni o‘qib bo‘lmadi");
 
-        let guess: i32 = match guess.trim().parse() {
+        let taxmin: i32 = match taxmin.trim().parse() {
             Ok(num) => num,
             Err(_) => continue,
         };
 
-        let guess = Guess::new(guess);
+        let taxmin = Taxmin::new(taxmin);
 
-        match guess.value().cmp(&secret_number) {
-            Ordering::Less => println!("Too small!"),
-            Ordering::Greater => println!("Too big!"),
+        match taxmin.qiymat().cmp(&yashirin_raqam) {
+            Ordering::Less => println!("Raqam Kichik!"),
+            Ordering::Greater => println!("Raqam katta!"),
             Ordering::Equal => {
-                println!("You win!");
+                println!("Siz yutdingiz!");
                 break;
             }
         }
