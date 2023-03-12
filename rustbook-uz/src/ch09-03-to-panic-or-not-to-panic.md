@@ -37,54 +37,22 @@ Agar kimdir sizning kodingizga chaqiruv qilsa va mantiqiy bo'lmagan qiymatlarni 
 Biroq, muvaffaqiyatsizlik kutilganda, `panic!` chaqiruv qilishdan ko'ra, `Result`ni qaytarish maqsadga muvofiqdir. Misollar, tahlilchiga noto'g'ri tuzilgan ma'lumotlar yoki tarif chegarasiga yetganingizni bildiruvchi holatni qaytaruvchi HTTP so'rovini o'z ichiga oladi. Bunday hollarda, `Result` ni qaytarish, chaqiruv kodi qanday ishlov berishni hal qilishi kerak bo'lgan muvaffaqiyatsizlik kutilgan imkoniyat ekanligini ko'rsatadi.
 
 Agar kodingiz noto'g'ri qiymatlar yordamida chaqirilgan bo'lsa, foydalanuvchini xavf ostiga qo'yishi mumkin bo'lgan operatsiyani bajarganda, kodingiz avval qiymatlarning haqiqiyligini tekshirishi va qiymatlar noto'g'ri bo'lsa panic qo'yishi kerak.Bu asosan xavfsizlik nuqtai nazaridan: noto'g'ri ma'lumotlar bilan ishlashga urinish kodingizni zaifliklarga olib kelishi mumkin.
-Agar siz chegaradan tashqari xotiraga kirishga harakat qilsangiz, standart kutubxona `panic!` deb chaqirishining asosiy sababi shu: joriy ma'lumotlar tuzilishiga tegishli bo'lmagan xotiraga kirishga urinish umumiy xavfsizlik muammosidir. Functions often have
-*contracts*: their behavior is only guaranteed if the inputs meet particular
-requirements. Panicking when the contract is violated makes sense because a
-contract violation always indicates a caller-side bug and it’s not a kind of
-error you want the calling code to have to explicitly handle. In fact, there’s
-no reasonable way for calling code to recover; the calling *programmers* need
-to fix the code. Contracts for a function, especially when a violation will
-cause a panic, should be explained in the API documentation for the function.
+Agar siz chegaradan tashqari xotiraga kirishga harakat qilsangiz, standart kutubxona `panic!` deb chaqirishining asosiy sababi shu: joriy ma'lumotlar tuzilishiga tegishli bo'lmagan xotiraga kirishga urinish umumiy xavfsizlik muammosidir. Funksiyalarda ko'pincha *shartnomalar(contracts)* mavjud: agar kirish ma'lum talablarga javob bersa, ularning xatti-harakati kafolatlanadi. Shartnoma buzilganda panic qo'yish mantiqan to'g'ri keladi, chunki shartnoma buzilishi har doim chaqiruv qiluvchi tomonidagi xatolikni ko'rsatadi va bu siz chaqiruv kodini aniq ko'rib chiqishni xohlagan xatolik emas. Aslida, chaqiruv kodini tiklashning oqilona usuli yo'q; kodni chaqiruvchi *dasturchilar* kodni tuzatishi kerak. Funksiya uchun shartnomalar, ayniqsa buzilish panic keltirib chiqaradigan bo'lsa, funksiya uchun API texnik hujjatlarida tushuntirilishi kerak.
 
-However, having lots of error checks in all of your functions would be verbose
-and annoying. Fortunately, you can use Rust’s type system (and thus the type
-checking done by the compiler) to do many of the checks for you. If your
-function has a particular type as a parameter, you can proceed with your code’s
-logic knowing that the compiler has already ensured you have a valid value. For
-example, if you have a type rather than an `Option`, your program expects to
-have *something* rather than *nothing*. Your code then doesn’t have to handle
-two cases for the `Some` and `None` variants: it will only have one case for
-definitely having a value. Code trying to pass nothing to your function won’t
-even compile, so your function doesn’t have to check for that case at runtime.
-Another example is using an unsigned integer type such as `u32`, which ensures
-the parameter is never negative.
+Biroq, barcha funksiyalaringizda ko'plab xatolarni tekshirish batafsil va zerikarli bo'ladi. Yaxshiyamki, siz Rustning turdagi tizimidan (va shunday qilib, kompilyator tomonidan amalga oshiriladigan turdagi tekshirish) siz uchun ko'plab tekshiruvlarni amalga oshiradi. Agar funksiyangiz parametr sifatida ma'lum bir turga ega bo'lsa, kompilyator sizda haqiqiy qiymatga ega ekanligiga ishonch hosil qilgan holda kodingiz mantig'ini davom ettirishingiz mumkin. Misol uchun, agar sizda `Option` emas, balki turingiz bo'lsa, dasturingiz *nothing(hech narsa)* emas, balki *something(nimadir)* bo'lishini kutadi. Sizning kodingiz `Some` va `None` variantlari uchun ikkita holatni ko'rib chiqishi shart emas: aniq qiymatga ega bo'lish uchun faqat bitta holat bo'ladi. Funksiyangizga hech narsa o'tkazmaslikka harakat qiladigan kodni kompilyatsiya qilinmaydi, shuning uchun funksiyangiz runtimeda bu holatni tekshirishi shart emas.
+Yana bir misol, parametr hech qachon manfiy bo'lmasligini ta'minlaydigan `u32` kabi belgisiz butun son turidan foydalanishdir.
 
-### Creating Custom Types for Validation
+### Tasdiqlash uchun maxsus turlarni yaratish
 
-Let’s take the idea of using Rust’s type system to ensure we have a valid value
-one step further and look at creating a custom type for validation. Recall the
-guessing game in Chapter 2 in which our code asked the user to guess a number
-between 1 and 100. We never validated that the user’s guess was between those
-numbers before checking it against our secret number; we only validated that
-the guess was positive. In this case, the consequences were not very dire: our
-output of “Too high” or “Too low” would still be correct. But it would be a
-useful enhancement to guide the user toward valid guesses and have different
-behavior when a user guesses a number that’s out of range versus when a user
-types, for example, letters instead.
+Keling, bir qadam oldin haqiqiy qiymatga ega ekanligimizga ishonch hosil qilish uchun Rust turi tizimidan foydalanish g'oyasini olaylik va tekshirish uchun maxsus turni yaratishni ko'rib chiqaylik. 2-bobdagi taxmin qilish o'yinini eslang, unda bizning kodimiz foydalanuvchidan 1 dan 100 gacha bo'lgan raqamni taxmin qilishni so'radi. Biz hech qachon foydalanuvchining taxmini o'sha raqamlar o'rtasida ekanligini tasdiqlaganimiz yo'q, uni bizning maxfiy raqamimizga nisbatan tekshirishdan oldin; biz faqat taxmin ijobiy ekanligini tasdiqladik. Bunday holda, natijalar unchalik dahshatli emas edi: bizning "Raqam katta!" yoki "Raqam Kichik!" chiqishimiz hali ham to'g'ri bo'lar edi. Lekin foydalanuvchini to'g'ri taxmin qilishga va foydalanuvchi diapazondan tashqaridagi raqamni taklif qilganda va foydalanuvchi, masalan, raqamlar o'rniga harflarni kiritganda, boshqacha xatti-harakatlarga ega bo'lishga undash yaxshi bo'lardi.
 
-One way to do this would be to parse the guess as an `i32` instead of only a
-`u32` to allow potentially negative numbers, and then add a check for the
-number being in range, like so:
+Buning usullaridan biri potentsial manfiy raqamlarga ruxsat berish uchun taxminni faqat `u32` o‘rniga `i32` sifatida tahlil qilish va keyin diapazondagi raqamni tekshirishni qo‘shishdir, masalan:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch09-error-handling/no-listing-09-guess-out-of-range/src/main.rs:here}}
 ```
 
-The `if` expression checks whether our value is out of range, tells the user
-about the problem, and calls `continue` to start the next iteration of the loop
-and ask for another guess. After the `if` expression, we can proceed with the
-comparisons between `guess` and the secret number knowing that `guess` is
-between 1 and 100.
+`If` ifodasi bizning qiymatimiz diapazondan tashqarida yoki yo‘qligini tekshiradi, foydalanuvchiga muammo haqida xabar beradi va siklning keyingi iteratsiyasini boshlash uchun `continue` ni chaqiradi va yana bir taxminni so‘raydi. `if` ifodasidan keyin `taxmin` 1 dan 100 gacha ekanligini bilgan holda `taxmin` va maxfiy raqam o‘rtasidagi taqqoslashni davom ettirishimiz mumkin.
 
 However, this is not an ideal solution: if it was absolutely critical that the
 program only operated on values between 1 and 100, and it had many functions
