@@ -69,49 +69,20 @@ purposes. -->
 
 <span class="caption">Roʻyxat 9-13: `Taxmin` turi, u faqat 1 dan 100 gacha qiymatlar bilan davom etadi</span>
 
-Birinchidan, biz `i32` ga ega `qiymat` nomli maydonga ega `Taxmin` nomli strukturani aniqlaymiz. Bu yerda raqam saqlanadi.
+Birinchidan, biz `i32` ga ega `qiymat` nomli maydonga ega `Taxmin` nomli structni aniqlaymiz. Bu yerda raqam saqlanadi.
 
-Then we implement an associated function named `new` on `Guess` that creates
-instances of `Guess` values. The `new` function is defined to have one
-parameter named `value` of type `i32` and to return a `Guess`. The code in the
-body of the `new` function tests `value` to make sure it’s between 1 and 100.
-If `value` doesn’t pass this test, we make a `panic!` call, which will alert
-the programmer who is writing the calling code that they have a bug they need
-to fix, because creating a `Guess` with a `value` outside this range would
-violate the contract that `Guess::new` is relying on. The conditions in which
-`Guess::new` might panic should be discussed in its public-facing API
-documentation; we’ll cover documentation conventions indicating the possibility
-of a `panic!` in the API documentation that you create in Chapter 14. If
-`value` does pass the test, we create a new `Guess` with its `value` field set
-to the `value` parameter and return the `Guess`.
+Keyin biz `Taxmin` da `new` nomli bog'langan funktsiyani amalga oshiramiz, u `Taxmin` qiymatlari misollarini yaratadi. `new` funksiya `i32` turidagi `qiymat` nomli bitta parametrga ega bo‘lishi va `Taxmin`ni qaytarishi uchun belgilangan. `new` funksiyaning asosiy qismidagi kod `qiymat`ni 1 dan 100 gacha ekanligiga ishonch hosil qilish uchun tekshiradi.
+Agar `qiymat` bu sinovdan o‘tmasa, biz `panic!` chaqiruvini qilamiz, bu chaqiruv kodini yozayotgan dasturchini tuzatishi kerak bo‘lgan xatolik haqida ogohlantiradi, chunki bu diapazondan tashqarida `qiymat` bilan `Taxmin` yaratish `Taxmin::new` tayanadigan qoidani buzadi. `Taxmin::new` panic qo'zg'atishi mumkin bo'lgan shartlar uning API texnik hujjatlarida muhokama qilinishi kerak; biz 14-bobda yaratgan API texnik hujjatlarida `panic!` ehtimolini ko‘rsatuvchi hujjatlar konventsiyalarini qamrab olamiz. Agar `qiymat` testdan o'tgan bo'lsa, biz uning `qiymat` maydoni `qiymat` parametriga o'rnatilgan yangi `Taxmin` yaratamiz va `Taxmin`ni qaytaramiz.
 
-Next, we implement a method named `value` that borrows `self`, doesn’t have any
-other parameters, and returns an `i32`. This kind of method is sometimes called
-a *getter*, because its purpose is to get some data from its fields and return
-it. This public method is necessary because the `value` field of the `Guess`
-struct is private. It’s important that the `value` field be private so code
-using the `Guess` struct is not allowed to set `value` directly: code outside
-the module *must* use the `Guess::new` function to create an instance of
-`Guess`, thereby ensuring there’s no way for a `Guess` to have a `value` that
-hasn’t been checked by the conditions in the `Guess::new` function.
+Keyinchalik, biz `self` ni oladigan, boshqa parametrlarga ega bo'lmagan va `i32` ni qaytaradigan `qiymat` nomli metodni qo'llaymiz. Bunday usul ba'zan *getter(oluvchi)* deb ataladi, chunki uning maqsadi o'z maydonlaridan ba'zi ma'lumotlarni olish va uni qaytarishdir. Ushbu umumiy metod zarur, chunki `Taxmin` strukturasining `qiymat` maydoni shaxsiydir(private). `qiymat` maydoni shaxsiy(private) bo'lishi juda muhim, shuning uchun `Taxmin` strukturasi yordamida kod to'g'ridan-to'g'ri `qiymat` ni o'rnatishga ruxsat berilmaydi: moduldan tashqaridagi kod `Taxmin::new` funksiyasidan `Taxmin` misolini yaratish uchun foydalanishi kerak, shunday qilib, `Taxmin` ning `Taxmin::new` funksiyasidagi shartlar bo‘yicha tekshirilmagan `qiymat`ga ega bo‘lishining imkoni yo‘qligini ta’minlaydi.
 
-A function that has a parameter or returns only numbers between 1 and 100 could
-then declare in its signature that it takes or returns a `Guess` rather than an
-`i32` and wouldn’t need to do any additional checks in its body.
+Parametrga ega bo'lgan yoki faqat 1 dan 100 gacha bo'lgan raqamlarni qaytaradigan funksiya o'z imzosida `i32` emas, `Taxmin` ni olishi yoki qaytarishi va uning tanasida qo'shimcha tekshiruvlar o'tkazishga hojat qolmasligini e'lon qilishi mumkin.
 
-## Summary
+## Xulosa
 
-Rust’s error handling features are designed to help you write more robust code.
-The `panic!` macro signals that your program is in a state it can’t handle and
-lets you tell the process to stop instead of trying to proceed with invalid or
-incorrect values. The `Result` enum uses Rust’s type system to indicate that
-operations might fail in a way that your code could recover from. You can use
-`Result` to tell code that calls your code that it needs to handle potential
-success or failure as well. Using `panic!` and `Result` in the appropriate
-situations will make your code more reliable in the face of inevitable problems.
+Rust-ning xatolarni boshqarish xususiyatlari sizga yanada mustahkam kod yozishga yordam berish uchun mo'ljallangan.
+`panic!` makrosi dasturingiz u bardosh bera olmaydigan holatda ekanligini bildiradi va noto‘g‘ri yoki noto‘g‘ri qiymatlar bilan davom etish o‘rniga jarayonni to‘xtatishni aytish imkonini beradi. `Result` enumi operatsiyalar muvaffaqiyatsiz bo'lishi va kodingiz tiklanishi mumkinligini bildirish uchun Rust turdagi tizimdan foydalanadi. Kodingizga chaqiruv qiladigan kod potentsial muvaffaqiyat yoki muvaffaqiyatsizlikni hal qilishi kerakligini aytish uchun `Result` dan foydalanishingiz mumkin. Tegishli vaziyatlarda `panic!` va `Result` dan foydalanish muqarrar muammolar oldida kodingizni yanada ishonchli qiladi.
 
-Now that you’ve seen useful ways that the standard library uses generics with
-the `Option` and `Result` enums, we’ll talk about how generics work and how you
-can use them in your code.
+Endi siz standart kutubxonada `Option` va `Result` enumlari bilan generiklardan foydalanishning foydali usullarini ko'rganingizdan so'ng, biz generiklar qanday ishlashi va ularni kodingizda qanday ishlatishingiz haqida gaplashamiz.
 
 [encoding]: ch17-03-oo-design-patterns.html#encoding-states-and-behavior-as-types
