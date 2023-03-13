@@ -10,43 +10,26 @@ Keyin xulq-atvorni umumiy tarzda aniqlash uchun *traitlar* dan qanday foydalanis
 
 Va nihoyat, biz *lifetimelar* haqida gaplashamiz: kompilyatorga referencelar bir-biriga qanday bog'liqligi haqida ma'lumot beradigan turli xil generiklar. Lifetimelar kompilyatorga olingan qiymatlar haqida yetarli ma'lumot berishga imkon beradi, shunda u murojaatlar bizning yordamimizsiz ko'proq holatlarda haqiqiy bo'lishini ta'minlaydi.
 
-## Removing Duplication by Extracting a Function
+## Funksiyani ajratib olish orqali takrorlanishni olib tashlash
 
-Generics allow us to replace specific types with a placeholder that represents
-multiple types to remove code duplication. Before diving into generics syntax,
-then, let’s first look at how to remove duplication in a way that doesn’t
-involve generic types by extracting a function that replaces specific values
-with a placeholder that represents multiple values. Then we’ll apply the same
-technique to extract a generic function! By looking at how to recognize
-duplicated code you can extract into a function, you’ll start to recognize
-duplicated code that can use generics.
+Generiklar bizga kodning takrorlanishini olib tashlash uchun bir nechta turlarni ifodalovchi maxsus turlarni to'ldiruvchi bilan almashtirishga imkon beradi. Generik sintaksisga kirishdan oldin, keling, birinchi navbatda, ma'lum qiymatlarni bir nechta qiymatlarni ifodalovchi to'ldiruvchi bilan almashtiradigan funksiyani chiqarib, generik turlarni o'z ichiga olmaydigan tarzda takrorlashni qanday olib tashlashni ko'rib chiqaylik. Keyin generik funksiyani chiqarish uchun xuddi shu texnikani qo'llaymiz! Funksiyaga chiqarishingiz mumkin bo'lgan takrorlangan kodni qanday tanib olishni ko'rib chiqsangiz, generiklardan foydalanishi mumkin bo'lgan takrorlangan kodni taniy boshlaysiz.
 
-We begin with the short program in Listing 10-1 that finds the largest number
-in a list.
+Biz ro'yxatdagi eng katta raqamni topadigan 10-1 ro'yxatidagi qisqa dasturdan boshlaymiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-01/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 10-1: Finding the largest number in a list of
-numbers</span>
+<span class="caption">Ro'yxat 10-1: Raqamlar ro'yxatidagi eng katta raqamni topish</span>
 
-We store a list of integers in the variable `number_list` and place a reference
-to the first number in the list in a variable named `largest`. We then iterate
-through all the numbers in the list, and if the current number is greater than
-the number stored in `largest`, replace the reference in that variable.
-However, if the current number is less than or equal to the largest number seen
-so far, the variable doesn’t change, and the code moves on to the next number
-in the list. After considering all the numbers in the list, `largest` should
-refer to the largest number, which in this case is 100.
+Biz butun sonlar roʻyxatini `raqamlar_listi` oʻzgaruvchisida saqlaymiz va roʻyxatdagi birinchi raqamga referenceni `eng_katta` nomli oʻzgaruvchiga joylashtiramiz. Keyin biz roʻyxatdagi barcha raqamlarni takrorlaymiz va agar joriy raqam `eng_katta`da saqlangan raqamdan katta boʻlsa, ushbu oʻzgaruvchidagi referenceni almashtiramiz.
+Biroq, agar joriy raqam hozirgacha ko'rilgan eng katta raqamdan kichik yoki unga teng bo'lsa, o'zgaruvchi o'zgarmaydi va kod ro'yxatdagi keyingi raqamga o'tadi. Ro'yxatdagi barcha raqamlarni ko'rib chiqqandan so'ng, `eng_katta` eng katta raqamga ishora qilishi kerak, bu holda bu 100 ga teng.
 
-We've now been tasked with finding the largest number in two different lists of
-numbers. To do so, we can choose to duplicate the code in Listing 10-1 and use
-the same logic at two different places in the program, as shown in Listing 10-2.
+Bizga endi ikki xil raqamlar ro‘yxatidagi eng katta raqamni topish vazifasi qo‘yildi. Buning uchun biz 10-1 roʻyxatdagi kodni takrorlashni tanlashimiz va 10-2 roʻyxatda koʻrsatilganidek, dasturning ikki xil joyida bir xil mantiqdan foydalanishimiz mumkin.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-02/src/main.rs}}
