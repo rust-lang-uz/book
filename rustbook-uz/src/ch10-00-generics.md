@@ -1,32 +1,14 @@
-# Generic Types, Traits, and Lifetimes
+# Generik turlar, Traitlar va Lifetimelar
 
-Every programming language has tools for effectively handling the duplication
-of concepts. In Rust, one such tool is *generics*: abstract stand-ins for
-concrete types or other properties. We can express the behavior of generics or
-how they relate to other generics without knowing what will be in their place
-when compiling and running the code.
+Har bir dasturlash tilida kontseptsiyalarning takrorlanishini samarali boshqarish vositalari mavjud. Rustda bunday vositalardan biri *generiklar*: concrete  turlari yoki boshqa xususiyatlar uchun mavhum stendlar. Kodni kompilyatsiya qilish va ishga tushirishda ularning o'rnida nima bo'lishini bilmasdan, biz generiklarning xatti-harakatlarini yoki ularning boshqa generiklar bilan qanday bog'liqligini ifodalashimiz mumkin.
 
-Functions can take parameters of some generic type, instead of a concrete type
-like `i32` or `String`, in the same way a function takes parameters with
-unknown values to run the same code on multiple concrete values. In fact, we’ve
-already used generics in Chapter 6 with `Option<T>`, Chapter 8 with `Vec<T>`
-and `HashMap<K, V>`, and Chapter 9 with `Result<T, E>`. In this chapter, you’ll
-explore how to define your own types, functions, and methods with generics!
+Funktsiyalar `i32` yoki `String` kabi aniq turdagi o'rniga ba'zi umumiy turdagi parametrlarni olishi mumkin, xuddi shu tarzda funksiya bir xil kodni bir nechta aniq qiymatlarda ishlatish uchun noma'lum qiymatlarga ega parametrlarni oladi. Aslida, biz 6-bobda `Option<T>`, 8-bobda `Vec<T>` va `HashMap<K, V>` va 9-bobda `Result<T, E>` bilan generiklardan allaqachon foydalanganmiz. Ushbu bobda siz o'zingizning turlaringizni, funksiyalaringizni va metodlaringizni generiklar bilan qanday aniqlashni o'rganasiz!
 
-First, we’ll review how to extract a function to reduce code duplication. We’ll
-then use the same technique to make a generic function from two functions that
-differ only in the types of their parameters. We’ll also explain how to use
-generic types in struct and enum definitions.
+Birinchidan, kodning takrorlanishini kamaytirish uchun funksiyani qanday chiqarishni ko'rib chiqamiz. Keyin biz bir xil texnikadan faqat parametrlari turida farq qiladigan ikkita funksiyadan umumiy funksiyani yaratamiz. Shuningdek, biz struct va enum ta'riflarida generik turlardan qanday foydalanishni tushuntiramiz.
 
-Then you’ll learn how to use *traits* to define behavior in a generic way. You
-can combine traits with generic types to constrain a generic type to accept
-only those types that have a particular behavior, as opposed to just any type.
+Keyin xulq-atvorni umumiy tarzda aniqlash uchun *traitlar* dan qanday foydalanishni o'rganasiz. Har qanday turdan farqli o'laroq, faqat ma'lum bir xatti-harakatga ega bo'lgan turlarni qabul qilish uchun umumiy turni cheklash uchun traitlarni umumiy turlar bilan birlashtira olasiz.
 
-Finally, we’ll discuss *lifetimes*: a variety of generics that give the
-compiler information about how references relate to each other. Lifetimes allow
-us to give the compiler enough information about borrowed values so that it can
-ensure references will be valid in more situations than it could without our
-help.
+Va nihoyat, biz *lifetimelar* haqida gaplashamiz: kompilyatorga referencelar bir-biriga qanday bog'liqligi haqida ma'lumot beradigan turli xil generiklar. Lifetimelar kompilyatorga olingan qiymatlar haqida yetarli ma'lumot berishga imkon beradi, shunda u murojaatlar bizning yordamimizsiz ko'proq holatlarda haqiqiy bo'lishini ta'minlaydi.
 
 ## Removing Duplication by Extracting a Function
 
