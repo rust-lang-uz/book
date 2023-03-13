@@ -1,31 +1,31 @@
 // ANCHOR: here
-fn largest(list: &[i32]) -> &i32 {
-    let mut largest = &list[0];
+fn eng_katta(list: &[i32]) -> &i32 {
+    let mut eng_katta = &list[0];
 
-    for item in list {
-        if item > largest {
-            largest = item;
+    for element in list {
+        if element > eng_katta {
+            eng_katta = element;
         }
     }
 
-    largest
+    eng_katta
 }
 
 fn main() {
-    let number_list = vec![34, 50, 25, 100, 65];
+    let raqamlar_listi = vec![34, 50, 25, 100, 65];
 
-    let result = largest(&number_list);
-    println!("The largest number is {}", result);
+    let natija = eng_katta(&raqamlar_listi);
+    println!("Eng katta raqam {}", natija);
     // ANCHOR_END: here
-    assert_eq!(*result, 100);
+    assert_eq!(*natija, 100);
     // ANCHOR: here
 
-    let number_list = vec![102, 34, 6000, 89, 54, 2, 43, 8];
+    let raqamlar_listi = vec![102, 34, 6000, 89, 54, 2, 43, 8];
 
-    let result = largest(&number_list);
-    println!("The largest number is {}", result);
+    let natija = eng_katta(&raqamlar_listi);
+    println!("Eng katta raqam {}", natija);
     // ANCHOR_END: here
-    assert_eq!(*result, 6000);
+    assert_eq!(*natija, 6000);
     // ANCHOR: here
 }
 // ANCHOR_END: here

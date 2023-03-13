@@ -35,49 +35,30 @@ Bizga endi ikki xil raqamlar ro‘yxatidagi eng katta raqamni topish vazifasi qo
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-02/src/main.rs}}
 ```
 
-<span class="caption">Listing 10-2: Code to find the largest number in *two*
-lists of numbers</span>
+<span class="caption">Ro'yxat 10-2: *ikkita* raqamlar roʻyxatidagi eng katta raqamni topish uchun kod</span>
 
-Although this code works, duplicating code is tedious and error prone. We also
-have to remember to update the code in multiple places when we want to change
-it.
+Ushbu kod ishlayotgan bo'lsa-da, kodni takrorlash zerikarli va xatolarga moyil. Shuningdek, biz kodni o'zgartirmoqchi bo'lganimizda uni bir nechta joyda yangilashni unutmasligimiz kerak.
 
-To eliminate this duplication, we’ll create an abstraction by defining a
-function that operates on any list of integers passed in a parameter. This
-solution makes our code clearer and lets us express the concept of finding the
-largest number in a list abstractly.
+Ushbu takrorlanishni bartaraf qilish uchun biz parametrda berilgan butun sonlar ro'yxatida ishlaydigan funktsiyani aniqlash orqali abstraksiya yaratamiz. Ushbu yechim bizning kodimizni aniqroq qiladi va bizga ro'yxatdagi eng katta raqamni topish tushunchasini mavhum tarzda ifodalash imkonini beradi.
 
-In Listing 10-3, we extract the code that finds the largest number into a
-function named `largest`. Then we call the function to find the largest number
-in the two lists from Listing 10-2. We could also use the function on any other
-list of `i32` values we might have in the future.
+10-3 ro'yxatda biz eng katta raqamni topadigan kodni `eng_katta` deb nomlangan funksiyaga chiqaramiz. Keyin biz 10-2 ro'yxatdagi ikkita ro'yxatdagi eng katta raqamni topish uchun funksiyani chaqiramiz. Bundan tashqari, biz kelajakda ega bo'lishi mumkin bo'lgan `i32` qiymatlarining boshqa ro'yxatida ham funksiyadan foydalanishimiz mumkin.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-03/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 10-3: Abstracted code to find the largest number
-in two lists</span>
+<span class="caption">Ro'yxat 10-3: Ikkita roʻyxatdagi eng katta raqamni topish uchun abstrakt kod</span>
 
-The `largest` function has a parameter called `list`, which represents any
-concrete slice of `i32` values we might pass into the function. As a result,
-when we call the function, the code runs on the specific values that we pass
-in.
+`eng_katta` funksiya `list` deb nomlangan parametrga ega bo'lib, biz funktsiyaga o'tkazishimiz mumkin bo'lgan `i32` qiymatlarining har qanday aniq qismini ifodalaydi. Natijada, biz funksiyani chaqirganimizda, kod biz kiritadigan maxsus qiymatlarda ishlaydi.
 
-In summary, here are the steps we took to change the code from Listing 10-2 to
-Listing 10-3:
+Xulosa qilib aytganda, biz kodni kodni 10-2-ro'yxadan 10-3-ro'yxaga oʻzgartirish uchun qilgan qadamlarimiz:
 
-1. Identify duplicate code.
-2. Extract the duplicate code into the body of the function and specify the
-   inputs and return values of that code in the function signature.
-3. Update the two instances of duplicated code to call the function instead.
+1. Ikki nusxadagi kodni aniqlang.
+2. Ikki nusxadagi kodni funktsiya tanasiga chiqarib oling va ushbu kodning kirish va qaytish qiymatlarini funktsiya imzosida belgilang.
+3. Buning o'rniga funktsiyani chaqirish uchun ikki nusxadagi kodning ikkita nusxasini yangilang.
 
-Next, we’ll use these same steps with generics to reduce code duplication. In
-the same way that the function body can operate on an abstract `list` instead
-of specific values, generics allow code to operate on abstract types.
+Keyinchalik, kodning takrorlanishini kamaytirish uchun generiklar bilan bir xil qadamlardan foydalanamiz. Xuddi shu tarzda, funksiya tanasi ma'lum qiymatlar o'rniga mavhum `list` bo'yicha ishlay oladi, generiklar kodni mavhum turlarda ishlashga imkon beradi.
 
-For example, say we had two functions: one that finds the largest item in a
-slice of `i32` values and one that finds the largest item in a slice of `char`
-values. How would we eliminate that duplication? Let’s find out!
+Misol uchun, bizda ikkita funksiya bor edi deylik: biri `i32` qiymatlari bo‘limidagi eng katta elementni topadigan va ikkinchisi `char` qiymatlari bo‘limidagi eng katta elementni topadigan. Bu takroriylikni qanday yo'q qilamiz? Keling, bilib olaylik!

@@ -1,25 +1,25 @@
 fn main() {
-    let number_list = vec![34, 50, 25, 100, 65];
+    let raqamlar_listi = vec![34, 50, 25, 100, 65];
 
-    let mut largest = &number_list[0];
+    let mut eng_katta = &raqamlar_listi[0];
 
-    for number in &number_list {
-        if number > largest {
-            largest = number;
+    for raqam in &raqamlar_listi {
+        if raqam > eng_katta {
+            eng_katta = raqam;
         }
     }
 
-    println!("The largest number is {}", largest);
+    println!("Eng katta raqam {}", eng_katta);
 
-    let number_list = vec![102, 34, 6000, 89, 54, 2, 43, 8];
+    let raqamlar_listi = vec![102, 34, 6000, 89, 54, 2, 43, 8];
 
-    let mut largest = &number_list[0];
+    let mut eng_katta = &raqamlar_listi[0];
 
-    for number in &number_list {
-        if number > largest {
-            largest = number;
+    for raqam in &raqamlar_listi {
+        if raqam > eng_katta {
+            eng_katta = raqam;
         }
     }
 
-    println!("The largest number is {}", largest);
+    println!("Eng katta raqam {}", eng_katta);
 }
