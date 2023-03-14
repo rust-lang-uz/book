@@ -1,32 +1,22 @@
-## Generic Data Types
+## Generik ma'lumotlar turlari
 
-We use generics to create definitions for items like function signatures or
-structs, which we can then use with many different concrete data types. Let’s
-first look at how to define functions, structs, enums, and methods using
-generics. Then we’ll discuss how generics affect code performance.
+Funksiya imzolari yoki structlar kabi elementlar uchun definitionlarni yaratish uchun biz generik(umumiy) ma'lumotlardan foydalanamiz, keyin ularni turli xil aniq ma'lumotlar turlari bilan ishlatishimiz mumkin. Keling, avval generiklar yordamida funksiyalar, structlar, enumlar va metodlarni qanday aniqlashni ko'rib chiqaylik. Keyin biz generiklar kod ishlashiga qanday ta'sir qilishini muhokama qilamiz.
 
-### In Function Definitions
+### Funksiya ta'riflarida
 
-When defining a function that uses generics, we place the generics in the
-signature of the function where we would usually specify the data types of the
-parameters and return value. Doing so makes our code more flexible and provides
-more functionality to callers of our function while preventing code duplication.
+Generiklardan foydalanadigan funksiyani belgilashda biz generiklarni funksiya imzosiga joylashtiramiz, u yerda biz odatda parametrlarning ma'lumotlar turlarini va qiymatni qaytaramiz. Bu bizning kodimizni yanada moslashuvchan qiladi va kodning takrorlanishining oldini olish bilan birga funksiyamizni chaqiruvchilarga ko'proq funksionallik beradi.
 
-Continuing with our `largest` function, Listing 10-4 shows two functions that
-both find the largest value in a slice. We'll then combine these into a single
-function that uses generics.
+`eng_katta` funksiyamizni davom ettirsak, 10-4 roʻyxatda ikkalasi ham boʻlakdagi eng katta qiymatni topadigan ikkita funksiya koʻrsatilgan. Keyin biz ularni generiklardan foydalanadigan yagona funksiyaga birlashtiramiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-04/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 10-4: Two functions that differ only in their
-names and the types in their signatures</span>
+<span class="caption">Roʻyxat 10-4: Ikki funksiya faqat nomlari va imzolaridagi turlari bilan farqlanadi</span>
 
-The `largest_i32` function is the one we extracted in Listing 10-3 that finds
-the largest `i32` in a slice. The `largest_char` function finds the largest
+`eng_katta_i32` funksiyasi biz 10-3 roʻyxatda ajratib olingan funksiya boʻlib, u boʻlakdagi eng katta `i32`ni topadi. The `largest_char` function finds the largest
 `char` in a slice. The function bodies have the same code, so let’s eliminate
 the duplication by introducing a generic type parameter in a single function.
 

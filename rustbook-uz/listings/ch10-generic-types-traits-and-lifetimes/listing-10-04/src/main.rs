@@ -1,43 +1,43 @@
 // ANCHOR: here
-fn largest_i32(list: &[i32]) -> &i32 {
-    let mut largest = &list[0];
+fn eng_katta_i32(list: &[i32]) -> &i32 {
+    let mut eng_katta = &list[0];
 
-    for item in list {
-        if item > largest {
-            largest = item;
+    for element in list {
+        if element > eng_katta {
+            eng_katta = element;
         }
     }
 
-    largest
+    eng_katta
 }
 
-fn largest_char(list: &[char]) -> &char {
-    let mut largest = &list[0];
+fn eng_katta_char(list: &[char]) -> &char {
+    let mut eng_katta = &list[0];
 
-    for item in list {
-        if item > largest {
-            largest = item;
+    for element in list {
+        if element > eng_katta {
+            eng_katta = element;
         }
     }
 
-    largest
+    eng_katta
 }
 
 fn main() {
-    let number_list = vec![34, 50, 25, 100, 65];
+    let raqamlar_listi = vec![34, 50, 25, 100, 65];
 
-    let result = largest_i32(&number_list);
-    println!("The largest number is {}", result);
+    let natija = eng_katta_i32(&raqamlar_listi);
+    println!("Eng katta raqam {}", natija);
     // ANCHOR_END: here
-    assert_eq!(*result, 100);
+    assert_eq!(*natija, 100);
     // ANCHOR: here
 
     let char_list = vec!['y', 'm', 'a', 'q'];
 
-    let result = largest_char(&char_list);
-    println!("The largest char is {}", result);
+    let natija = eng_katta_char(&char_list);
+    println!("Eng katta belgi {}", natija);
     // ANCHOR_END: here
-    assert_eq!(*result, 'y');
+    assert_eq!(*natija, 'y');
     // ANCHOR: here
 }
 // ANCHOR_END: here
