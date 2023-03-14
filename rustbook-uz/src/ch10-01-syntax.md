@@ -16,48 +16,30 @@ Generiklardan foydalanadigan funksiyani belgilashda biz generiklarni funksiya im
 
 <span class="caption">Roʻyxat 10-4: Ikki funksiya faqat nomlari va imzolaridagi turlari bilan farqlanadi</span>
 
-`eng_katta_i32` funksiyasi biz 10-3 roʻyxatda ajratib olingan funksiya boʻlib, u boʻlakdagi eng katta `i32`ni topadi. The `largest_char` function finds the largest
-`char` in a slice. The function bodies have the same code, so let’s eliminate
-the duplication by introducing a generic type parameter in a single function.
+`eng_katta_i32` funksiyasi biz 10-3 roʻyxatda ajratib olingan funksiya boʻlib, u boʻlakdagi eng katta `i32`ni topadi. `eng_katta_char` funksiyasi bo‘lakdagi eng katta `char`ni topadi. Funksiya organlari bir xil kodga ega, shuning uchun bitta funksiyaga umumiy turdagi parametrni kiritish orqali takrorlanishni bartaraf qilaylik.
 
-To parameterize the types in a new single function, we need to name the type
-parameter, just as we do for the value parameters to a function. You can use
-any identifier as a type parameter name. But we’ll use `T` because, by
-convention, type parameter names in Rust are short, often just a letter, and
-Rust’s type-naming convention is UpperCamelCase. Short for “type,” `T` is the
-default choice of most Rust programmers.
+Yangi bitta funksiyada turlarni parametrlash uchun, biz funksiyaning qiymat parametrlari uchun qilganimiz kabi, tur parametrini nomlashimiz kerak. Tur parametri nomi sifatida istalgan identifikatordan foydalanishingiz mumkin. Lekin biz `T` dan foydalanamiz, chunki Rust-dagi parametr nomlari odatda qisqa, koʻpincha harfdan iborat boʻladi va Rustning tur nomlash konventsiyasi UpperCamelCase hisoblanadi. “type(tur)” so'zining qisqartmasi `T`, Rust dasturchilarining ko'pchiligining standart tanlovidir.
 
-When we use a parameter in the body of the function, we have to declare the
-parameter name in the signature so the compiler knows what that name means.
-Similarly, when we use a type parameter name in a function signature, we have
-to declare the type parameter name before we use it. To define the generic
-`largest` function, place type name declarations inside angle brackets, `<>`,
-between the name of the function and the parameter list, like this:
+Funksiya tanasida parametrdan foydalanganda, biz imzoda parametr nomini e'lon qilishimiz kerak, shunda kompilyator bu nom nimani anglatishini biladi.
+Xuddi shunday, biz funktsiya imzosida tup parametri nomini ishlatganimizda, uni ishlatishdan oldin parametr nomini e'lon qilishimiz kerak. Generik `eng_katta` funksiyani aniqlash uchun burchakli qavslar ichida `<>` nomi deklaratsiyasini funksiya nomi va parametrlar ro'yxati orasiga qo'ying, masalan:
 
 ```rust,ignore
-fn largest<T>(list: &[T]) -> &T {
+fn eng_katta<T>(list: &[T]) -> &T {
 ```
 
-We read this definition as: the function `largest` is generic over some type
-`T`. This function has one parameter named `list`, which is a slice of values
-of type `T`. The `largest` function will return a reference to a value of the
-same type `T`.
+Biz bu taʼrifni shunday oʻqiymiz: `eng_katta` funksiyasi `T` turiga nisbatan umumiydir. Bu funksiya `list` nomli bitta parametrga ega, bu `T` turidagi qiymatlar bo'lagidir. `eng_katta` funksiya bir xil turdagi `T` qiymatiga referenceni qaytaradi.
 
-Listing 10-5 shows the combined `largest` function definition using the generic
-data type in its signature. The listing also shows how we can call the function
-with either a slice of `i32` values or `char` values. Note that this code won’t
-compile yet, but we’ll fix it later in this chapter.
+10-5 ro'yxatda imzodagi umumiy ma'lumotlar turidan foydalangan holda birlashtirilgan `eng_katta` funksiya ta'rifi ko'rsatilgan. list shuningdek, funktsiyani `i32` yoki `char` qiymatlari bilan qanday chaqirishimiz mumkinligini ko'rsatadi. E'tibor bering, bu kod hali kompilyatsiya qilinmaydi, ammo biz uni ushbu bobda keyinroq tuzatamiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/src/main.rs}}
 ```
 
-<span class="caption">Listing 10-5: The `largest` function using generic type
-parameters; this doesn’t yet compile</span>
+<span class="caption">Ro'yxat 10-5: Umumiy turdagi parametrlardan foydalangan holda `eng_katta` funksiya; bu hali kompilyatsiya qilinmagan</span>
 
-If we compile this code right now, we’ll get this error:
+Agar dasturni hozir kompilyatsiya qilsak, biz quyidagi xatolikni olamiz:
 
 ```console
 {{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/output.txt}}
