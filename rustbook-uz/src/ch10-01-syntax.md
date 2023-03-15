@@ -89,11 +89,9 @@ Ushbu misolda, biz `x` ga 5 butun qiymatini belgilaganimizda, kompilyatorga `T` 
 
 Endi ko'rsatilgan `Point` ning barcha misollariga ruxsat berilgan! Ta'rifda siz xohlagancha umumiy turdagi parametrlardan foydalanishingiz mumkin, lekin bir nechtadan ko'proq foydalanish kodingizni o'qishni qiyinlashtiradi. Agar siz kodingizda ko'plab umumiy turlar kerakligini aniqlasangiz, bu sizning kodingizni kichikroq qismlarga qayta qurish kerakligini ko'rsatishi mumkin.
 
-### In Enum Definitions
+### Enum Definitionlarida
 
-As we did with structs, we can define enums to hold generic data types in their
-variants. Let’s take another look at the `Option<T>` enum that the standard
-library provides, which we used in Chapter 6:
+Structlar bilan qilganimizdek, ularning variantlarida umumiy ma'lumotlar turlarini saqlash uchun enumlarni belgilashimiz mumkin. Biz 6-bobda foydalanilgan standart kutubxona taqdim etadigan `Option<T>` enumini yana bir ko'rib chiqamiz:
 
 ```rust
 enum Option<T> {
@@ -102,15 +100,10 @@ enum Option<T> {
 }
 ```
 
-This definition should now make more sense to you. As you can see, the
-`Option<T>` enum is generic over type `T` and has two variants: `Some`, which
-holds one value of type `T`, and a `None` variant that doesn’t hold any value.
-By using the `Option<T>` enum, we can express the abstract concept of an
-optional value, and because `Option<T>` is generic, we can use this abstraction
-no matter what the type of the optional value is.
+Bu ta'rif endi siz uchun yanada ma'noli bo'lishi kerak. Ko'rib turganingizdek, `Option<T>` enum `T` turiga nisbatan umumiy va ikkita variantga ega: `T` turidagi bitta qiymatga ega `Some` va hech qanday qiymatga ega bo'lmagan `None` varianti.
+`Option<T>` enum yordamida biz ixtiyoriy qiymatning mavhum kontseptsiyasini ifodalashimiz mumkin va `Option<T>` umumiy bo'lgani uchun biz ixtiyoriy qiymatning turi qanday bo'lishidan qat`i nazar, bu abstraktsiyadan foydalanishimiz mumkin.
 
-Enums can use multiple generic types as well. The definition of the `Result`
-enum that we used in Chapter 9 is one example:
+Enumlar bir nechta generik turlardan ham foydalanishi mumkin. Biz 9-bobda aytib o'tgan `Result` enumining ta'rifi ushbu foydalanishga misoldir:
 
 ```rust
 enum Result<T, E> {
@@ -119,26 +112,15 @@ enum Result<T, E> {
 }
 ```
 
-The `Result` enum is generic over two types, `T` and `E`, and has two variants:
-`Ok`, which holds a value of type `T`, and `Err`, which holds a value of type
-`E`. This definition makes it convenient to use the `Result` enum anywhere we
-have an operation that might succeed (return a value of some type `T`) or fail
-(return an error of some type `E`). In fact, this is what we used to open a
-file in Listing 9-3, where `T` was filled in with the type `std::fs::File` when
-the file was opened successfully and `E` was filled in with the type
-`std::io::Error` when there were problems opening the file.
+`Result` enumlari ikki xil, `T` va `E` uchun generikdir va ikkita variantga ega: `T` turidagi qiymatga ega `OK` va `E` turidagi qiymatga ega bo'lgan `Err`. Bu taʼrif `Result` enumidan bizda muvaffaqiyatli boʻlishi mumkin boʻlgan (`T` turidagi qiymatni qaytarish) yoki muvaffaqiyatsiz boʻlishi mumkin boʻlgan (`E` turidagi xatolikni qaytarish) istalgan joyda foydalanishni qulay qiladi. Aslida, biz 9-3 ro'yxatdagi faylni shunday ochar edik, bu yerda fayl muvaffaqiyatli ochilganda `T` `std::fs::File` turi bilan to'ldirilgan va faylni ochishda muammolar yuzaga kelganda `E` `std::io::Error` turi bilan to`ldirilgan.
 
-When you recognize situations in your code with multiple struct or enum
-definitions that differ only in the types of the values they hold, you can
-avoid duplication by using generic types instead.
+Kodingizdagi vaziyatlarni faqat ular ega bo'lgan qiymatlar turlarida farq qiluvchi bir nechta tuzilma yoki enum ta'riflari bilan tanib olganingizda, uning o'rniga generik turlardan foydalanish orqali takrorlanishdan qochishingiz mumkin.
 
-### In Method Definitions
+### Metod Definitionlarida
 
-We can implement methods on structs and enums (as we did in Chapter 5) and use
-generic types in their definitions, too. Listing 10-9 shows the `Point<T>`
-struct we defined in Listing 10-6 with a method named `x` implemented on it.
+Biz tuzilmalar va raqamlar bo'yicha usullarni qo'llashimiz mumkin (5-bobda qilganimiz kabi) va ularning ta'riflarida umumiy turlardan ham foydalanishimiz mumkin. 10-9 ro'yxatda biz 10-6 ro'yxatda belgilagan "Point<T>" tuzilmasi ko'rsatilgan va unda "x" nomli usul qo'llaniladi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-09/src/main.rs}}
