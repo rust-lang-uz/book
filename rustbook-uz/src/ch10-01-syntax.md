@@ -114,11 +114,11 @@ enum Result<T, E> {
 
 `Result` enumlari ikki xil, `T` va `E` uchun generikdir va ikkita variantga ega: `T` turidagi qiymatga ega `OK` va `E` turidagi qiymatga ega bo'lgan `Err`. Bu taʼrif `Result` enumidan bizda muvaffaqiyatli boʻlishi mumkin boʻlgan (`T` turidagi qiymatni qaytarish) yoki muvaffaqiyatsiz boʻlishi mumkin boʻlgan (`E` turidagi xatolikni qaytarish) istalgan joyda foydalanishni qulay qiladi. Aslida, biz 9-3 ro'yxatdagi faylni shunday ochar edik, bu yerda fayl muvaffaqiyatli ochilganda `T` `std::fs::File` turi bilan to'ldirilgan va faylni ochishda muammolar yuzaga kelganda `E` `std::io::Error` turi bilan to`ldirilgan.
 
-Kodingizdagi vaziyatlarni faqat ular ega bo'lgan qiymatlar turlarida farq qiluvchi bir nechta tuzilma yoki enum ta'riflari bilan tanib olganingizda, uning o'rniga generik turlardan foydalanish orqali takrorlanishdan qochishingiz mumkin.
+Kodingizdagi vaziyatlarni faqat ular ega bo'lgan qiymatlar turlarida farq qiluvchi bir nechta struct yoki enum ta'riflari bilan tanib olganingizda, uning o'rniga generik turlardan foydalanish orqali takrorlanishdan qochishingiz mumkin.
 
 ### Metod Definitionlarida
 
-Biz tuzilmalar va raqamlar bo'yicha usullarni qo'llashimiz mumkin (5-bobda qilganimiz kabi) va ularning ta'riflarida umumiy turlardan ham foydalanishimiz mumkin. 10-9 ro'yxatda biz 10-6 ro'yxatda belgilagan "Point<T>" tuzilmasi ko'rsatilgan va unda "x" nomli usul qo'llaniladi.
+Biz structlar va enumlar bo'yicha metodlarni qo'llashimiz mumkin (5-bobda qilganimiz kabi) va ularning ta'riflarida generik turlardan ham foydalanishimiz mumkin. 10-9 ro'yxatda biz 10-6 ro'yxatda belgilagan `Point<T>` structi ko'rsatilgan va unda `x` nomli metod qo'llaniladi.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -126,42 +126,23 @@ Biz tuzilmalar va raqamlar bo'yicha usullarni qo'llashimiz mumkin (5-bobda qilga
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-09/src/main.rs}}
 ```
 
-<span class="caption">Listing 10-9: Implementing a method named `x` on the
-`Point<T>` struct that will return a reference to the `x` field of type
-`T`</span>
+<span class="caption">Roʻyxat 10-9: `Point<T>` structida `x` nomli metodni qo'llash, bu `T` turidagi `x` maydoniga referenceni qaytaradi</span>
 
-Here, we’ve defined a method named `x` on `Point<T>` that returns a reference
-to the data in the field `x`.
+Bu yerda biz `Point<T>` da `x` nomli metodni belgilab oldik, u `x` maydonidagi ma`lumotlarga referenceni qaytaradi.
 
-Note that we have to declare `T` just after `impl` so we can use `T` to specify
-that we’re implementing methods on the type `Point<T>`. By declaring `T` as a
-generic type after `impl`, Rust can identify that the type in the angle
-brackets in `Point` is a generic type rather than a concrete type. We could
-have chosen a different name for this generic parameter than the generic
-parameter declared in the struct definition, but using the same name is
-conventional. Methods written within an `impl` that declares the generic type
-will be defined on any instance of the type, no matter what concrete type ends
-up substituting for the generic type.
+Esda tutingki, biz `impl` dan keyin `T` ni e'lon qilishimiz kerak, shuning uchun biz `Point<T>` turidagi metodlarni amalga oshirayotganimizni aniqlash uchun `T` dan foydalanishimiz mumkin. `T` ni `impl` dan keyin generik tur sifatida e'lon qilish orqali Rust `Point` dagi burchak qavslaridagi tur aniq tur emas, balki generik tur ekanligini aniqlay oladi. Biz ushbu umumiy parametr uchun struct taʼrifida eʼlon qilingan umumiy parametrdan boshqa nom tanlashimiz mumkin edi, lekin bir xil nomdan foydalanish odatiy hisoblanadi. Generik turni e'lon qiladigan `impl` ichida yozilgan metodlar, generik turdagi o'rnini bosadigan aniq turdagi qanday bo'lishidan qat'i nazar, har qanday turdagi namunada aniqlanadi.
 
-We can also specify constraints on generic types when defining methods on the
-type. We could, for example, implement methods only on `Point<f32>` instances
-rather than on `Point<T>` instances with any generic type. In Listing 10-10 we
-use the concrete type `f32`, meaning we don’t declare any types after `impl`.
+Tur bo'yicha metodlarni belgilashda generik turlarga cheklovlarni ham belgilashimiz mumkin. Biz, masalan, har qanday generik turdagi `Point<T>` misollarida emas, balki faqat `Point<f32>` misollarida metodlarni amalga oshirishimiz mumkin. 10-10 ro'yxatda biz `f32` aniq turidan foydalanamiz, ya'ni `impl` dan keyin hech qanday turni e'lon qilmaymiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-10/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 10-10: An `impl` block that only applies to a
-struct with a particular concrete type for the generic type parameter `T`</span>
+<span class="caption">Roʻyxat 10-10: `impl` bloki, faqat `T` generik tur parametri uchun ma`lum bir aniq turdagi strukturaga tegishli.</span>
 
-This code means the type `Point<f32>` will have a `distance_from_origin`
-method; other instances of `Point<T>` where `T` is not of type `f32` will not
-have this method defined. The method measures how far our point is from the
-point at coordinates (0.0, 0.0) and uses mathematical operations that are
-available only for floating point types.
+Bu kod `Point<f32>` turi `kelib_chiqishidan_masofa` metodiga ega bo'lishini bildiradi; `T` `f32` turiga tegishli bo'lmagan `Point<T>` ning boshqa misollarida bu metod aniqlanmaydi. Metod bizning pointimizning koordinatadagi nuqtadan qanchalik uzoqligini o'lchaydi (0,0, 0,0) va faqat floating point turlari uchun mavjud bo'lgan matematik operatsiyalardan foydalanadi.
 
 Generic type parameters in a struct definition aren’t always the same as those
 you use in that same struct’s method signatures. Listing 10-11 uses the generic
