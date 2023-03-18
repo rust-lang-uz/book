@@ -11,7 +11,7 @@ Turning xatti-harakati biz ushbu turga murojaat qilishimiz mumkin bo'lgan metodl
 
 Misol uchun, bizda turli xil va hajmdagi matnlarni o'z ichiga olgan bir nechta structlar mavjud deylik: ma'lum bir joyda joylashtirilgan yangiliklarni o'z ichiga olgan `YangiMaqola` structi va eng ko'pi 280 belgidan iborat bo'lishi mumkin bo'lgan `Maqola` yangi post, retpost yoki boshqa postga javob ekanligini ko'rsatadigan metama'lumotlar.
 
-Biz `YangiMaqola` yoki `Maqola` misolida saqlanishi mumkin bo‘lgan ma’lumotlarning qisqacha mazmunini ko‘rsata oladigan `aggregator` nomli media agregator kutubxonasini yaratmoqchimiz. Buni amalga oshirish uchun bizga har bir tur bo'yicha xulosa kerak bo'ladi va biz ushbu xulosani misolda `umumlashtirish` metodini chaqirish orqali so'raymiz. 10-12 ro'yxatda ushbu xatti-harakatni ifodalovchi umumiy `Xulosa` traitining ta'rifi ko'rsatilgan.
+Biz `YangiMaqola` yoki `Maqola` misolida saqlanishi mumkin bo‘lgan ma’lumotlarning qisqacha mazmunini ko‘rsata oladigan `aggregator` nomli media agregator kutubxonasini yaratmoqchimiz. Buni amalga oshirish uchun bizga har bir tur bo'yicha xulosa kerak bo'ladi va biz ushbu xulosani misolda `umumiy_xulosa` metodini chaqirish orqali so'raymiz. 10-12 ro'yxatda ushbu xatti-harakatni ifodalovchi umumiy `Xulosa` traitining ta'rifi ko'rsatilgan.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -19,43 +19,25 @@ Biz `YangiMaqola` yoki `Maqola` misolida saqlanishi mumkin bo‘lgan ma’lumotl
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-12/src/lib.rs}}
 ```
 
-<span class="caption">Listing 10-12: A `Summary` trait that consists of the
-behavior provided by a `summarize` method</span>
+<span class="caption">Roʻyxat 10-12: `umumiy_xulosa` metodi bilan taʼminlangan xatti-harakatlardan iborat `Xulosa` traiti</span>
 
-Here, we declare a trait using the `trait` keyword and then the trait’s name,
-which is `Summary` in this case. We’ve also declared the trait as `pub` so that
-crates depending on this crate can make use of this trait too, as we’ll see in
-a few examples. Inside the curly brackets, we declare the method signatures
-that describe the behaviors of the types that implement this trait, which in
-this case is `fn summarize(&self) -> String`.
+Bu yerda biz `trait` kalit so'zidan foydalanib traitni e'lon qilamiz, so'ngra belgi nomi, bu holda `Xulosa`. Shuningdek, biz ushbu traitni `pub` deb e’lon qildik, shunda bu cratega bog‘liq bo‘lgan cratelar ham bu traitdan foydalanishi mumkin, buni bir necha misollarda ko‘ramiz. Jingalak qavslar ichida biz ushbu traitni amalga oshiradigan turlarning xatti-harakatlarini tavsiflovchi metod imzolarini e'lon qilamiz, bu holda `fn umumiy_xulosa(&self) -> String`.
 
-After the method signature, instead of providing an implementation within curly
-brackets, we use a semicolon. Each type implementing this trait must provide
-its own custom behavior for the body of the method. The compiler will enforce
-that any type that has the `Summary` trait will have the method `summarize`
-defined with this signature exactly.
+Metod imzosidan so'ng, jingalak qavslar ichida amalga oshirish o'rniga, biz nuqta-verguldan foydalanamiz. Ushbu traitni amalga oshiradigan har bir tur metod tanasi uchun o'ziga xos xatti-harakatni ta'minlashi kerak. Kompilyator `Xulosa` traitiga ega boʻlgan har qanday turda aynan shu imzo bilan aniqlangan `umumiy_xulosa` metodi boʻlishini talab qiladi.
 
-A trait can have multiple methods in its body: the method signatures are listed
-one per line and each line ends in a semicolon.
+Traitining tanasida bir nechta metodlar bo'lishi mumkin: metod imzolari har bir satrda bittadan ko'rsatilgan va har bir satr nuqtali vergul bilan tugaydi.
 
-### Implementing a Trait on a Type
+### Turga xos traitni amalga oshirish
 
-Now that we’ve defined the desired signatures of the `Summary` trait’s methods,
-we can implement it on the types in our media aggregator. Listing 10-13 shows
-an implementation of the `Summary` trait on the `NewsArticle` struct that uses
-the headline, the author, and the location to create the return value of
-`summarize`. For the `Tweet` struct, we define `summarize` as the username
-followed by the entire text of the tweet, assuming that tweet content is
-already limited to 280 characters.
+Endi biz `Xulosa` traiti metodlarining kerakli imzolarini aniqlaganimizdan so‘ng, uni media agregatorimizdagi turlarga qo‘llashimiz mumkin. 10-13 roʻyxat sarlavhadan foydalanadigan `YangiMaqola` structidagi `Xulosa` traitining amalga oshirilishini koʻrsatadi, muallif va `umumiy_xulosa` qaytish qiymatini yaratish uchun joy. `Maqola` structi uchun biz `umumiy_xulosa`ni foydalanuvchi nomi va undan keyin maqolaning butun matni sifatida belgilaymiz, maqola mazmuni allaqachon 280 belgi bilan cheklangan deb hisoblaymiz.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-13/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 10-13: Implementing the `Summary` trait on the
-`NewsArticle` and `Tweet` types</span>
+<span class="caption">Roʻyxat 10-13: `Xulosa` traitini `YangiMaqola` va `Maqola` turlariga joriy qilish</span>
 
 Implementing a trait on a type is similar to implementing regular methods. The
 difference is that after `impl`, we put the trait name we want to implement,
