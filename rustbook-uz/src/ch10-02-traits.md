@@ -76,27 +76,17 @@ Biz `YangiMaqola`da to‘g‘ridan-to‘g‘ri `umumiy_xulosa` metodini endi ani
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-02-calling-default-impl/src/main.rs:here}}
 ```
 
-This code prints `New article available! (Read more...)`.
+Bu kod `Yangi maqola mavjud! (Batafsil...)`ni chop etadi.
 
-Creating a default implementation doesn’t require us to change anything about
-the implementation of `Summary` on `Tweet` in Listing 10-13. The reason is that
-the syntax for overriding a default implementation is the same as the syntax
-for implementing a trait method that doesn’t have a default implementation.
+Standart dasturni yaratish bizdan 10-13 roʻyxatdagi `Maqola`dagi `Xulosa`ni amalga oshirish haqida biror narsani oʻzgartirishimizni talab qilmaydi. Buning sababi, standart dasturni bekor qilish sintaksisi standart dasturga ega bo'lmagan trait metodini amalga oshirish sintaksisi bilan bir xil.
 
-Default implementations can call other methods in the same trait, even if those
-other methods don’t have a default implementation. In this way, a trait can
-provide a lot of useful functionality and only require implementors to specify
-a small part of it. For example, we could define the `Summary` trait to have a
-`summarize_author` method whose implementation is required, and then define a
-`summarize` method that has a default implementation that calls the
-`summarize_author` method:
+Standart ilovalar bir xil traitga ega bo'lgan boshqa metodlarni chaqirishi mumkin, hatto bu boshqa metodlarda standart dastur bo'lmasa ham. Shunday qilib, trait juda ko'p foydali funksiyalarni taqdim etishi mumkin va amalga oshiruvchilardan faqat uning kichik qismini ko'rsatishni talab qiladi. Misol uchun, biz `Xulosa` traitini amalga oshirish zarur bo'lgan `umumlashtirish_muallif` metodiga ega bo'lish uchun belgilashimiz va keyin `umumlashtirish_muallif` metodini chaqiradigan standart amalga oshirishga ega bo'lgan `umumiy_xulosa` metodini belgilashimiz mumkin:
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:here}}
 ```
 
-To use this version of `Summary`, we only need to define `summarize_author`
-when we implement the trait on a type:
+`Xulosa` ning ushbu versiyasidan foydalanish uchun biz faqat bir turdagi traitni amalga oshirganimizda `umumlashtirish_muallif` ni aniqlashimiz kerak:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:impl}}

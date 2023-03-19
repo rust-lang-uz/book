@@ -1,7 +1,7 @@
 // ANCHOR: here
 pub trait Xulosa {
     fn umumiy_xulosa(&self) -> String {
-        String::from("(Ko'proq o'qish...)")
+        String::from("(Batafsil...)")
     }
 }
 // ANCHOR_END: here
