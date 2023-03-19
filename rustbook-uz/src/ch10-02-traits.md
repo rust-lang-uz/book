@@ -51,43 +51,26 @@ Bu kod `1 ta yangi xabar: ismoilovdev: Rust kitobi juda foydali ekan, men juda k
 
 `aggregator` cratesiga bog'liq bo'lgan boshqa cratelar ham `Xulosa` traitini o'z turlari bo'yicha `Xulosa`ni amalga oshirish uchun qamrab olishi mumkin. E'tiborga olish kerak bo'lgan cheklashlardan biri shundaki, biz trait yoki turning hech bo'lmaganda bittasi bizning cratemiz uchun mahalliy(local) bo'lsa, biz traitni turga qo'llashimiz mumkin. Misol uchun, biz `Maqola` kabi maxsus turdagi `Display` kabi standart kutubxona traitlarini `aggregator` crate funksiyamizning bir qismi sifatida amalga oshirishimiz mumkin, chunki `Maqola` turi `aggregator` cratemiz uchun mahalliydir. Shuningdek, biz  `Vec<T>` da `Xulosa`ni `aggregator` cratemizda ham qo‘llashimiz mumkin, chunki `Xulosa` traiti `aggregator` cratemiz uchun mahalliydir.
 
-But we can’t implement external traits on external types. For example, we can’t
-implement the `Display` trait on `Vec<T>` within our `aggregator` crate,
-because `Display` and `Vec<T>` are both defined in the standard library and
-aren’t local to our `aggregator` crate. This restriction is part of a property
-called *coherence*, and more specifically the *orphan rule*, so named because
-the parent type is not present. This rule ensures that other people’s code
-can’t break your code and vice versa. Without the rule, two crates could
-implement the same trait for the same type, and Rust wouldn’t know which
-implementation to use.
+Ammo biz tashqi turlarga tashqi traitlarni amalga oshira olmaymiz. Masalan, biz `aggregator` cratemiz ichida `Vec<T>` da `Display` traitini amalga oshira olmaymiz, chunki `Display` va `Vec<T>` ikkalasi ham standart kutubxonada belgilangan va bizning `aggregator` cratemiz uchun mahalliy emas. Bu cheklash *kogerentlik(coherence)* deb nomlangan xususiyatning bir qismi va aniqrog'i *yetim qoidasi(orphan rule)*, chunki ota-ona turi mavjud emasligi sababli shunday nomlangan. Bu qoida boshqa odamlarning kodi sizning kodingizni buzmasligini ta'minlaydi va aksincha. Qoidalarsiz ikkita crate bir xil turdagi bir xil traitni amalga oshirishi mumkin edi va Rust qaysi dasturdan foydalanishni bilmaydi.
 
-### Default Implementations
+### Standart ilovalar
 
-Sometimes it’s useful to have default behavior for some or all of the methods
-in a trait instead of requiring implementations for all methods on every type.
-Then, as we implement the trait on a particular type, we can keep or override
-each method’s default behavior.
+Ba'zan har bir turdagi barcha metodlarni amalga oshirishni talab qilish o'rniga, traitdagi ba'zi yoki barcha metodlar uchun standart xatti-harakatlarga ega bo'lish foydali bo'ladi.
+Keyin, biz traitni ma'lum bir turga qo'llaganimizda, har bir metodning standart xatti-harakatlarini saqlab qolishimiz yoki bekor qilishimiz mumkin.
 
-In Listing 10-14 we specify a default string for the `summarize` method of the
-`Summary` trait instead of only defining the method signature, as we did in
-Listing 10-12.
+Roʻyxat 10-14da biz 10-12 ro'yxatda bo'lgani kabi faqat metod imzosini belgilash o'rniga `Xulosa` traitining `umumiy_xulosa` metodi uchun standart qatorni belgilaymiz.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-14/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 10-14: Defining a `Summary` trait with a default
-implementation of the `summarize` method</span>
+<span class="caption">Roʻyxat 10-14: `Xulosa` traitini `umumiy_xulosa` metodini standart boʻyicha amalga oshirish bilan aniqlash</span>
 
-To use a default implementation to summarize instances of `NewsArticle`, we
-specify an empty `impl` block with `impl Summary for NewsArticle {}`.
+`YangiMaqola` misollarini umumlashtirish uchun standart ilovadan foydalanish uchun biz bo'sh `impl` blokini `impl Xulosa for YangiMaqola {}` bilan belgilaymiz.
 
-Even though we’re no longer defining the `summarize` method on `NewsArticle`
-directly, we’ve provided a default implementation and specified that
-`NewsArticle` implements the `Summary` trait. As a result, we can still call
-the `summarize` method on an instance of `NewsArticle`, like this:
+Biz `YangiMaqola`da to‘g‘ridan-to‘g‘ri `umumiy_xulosa` metodini endi aniqlamasak ham, biz standart bo‘yicha dasturni taqdim etdik va `YangiMaqola` `Xulosa` traitini amalga oshirishini belgilab oldik. Natijada, biz hali ham `YangiMaqola` misolida `umumiy_xulosa` metodini quyidagicha chaqirishimiz mumkin:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-02-calling-default-impl/src/main.rs:here}}

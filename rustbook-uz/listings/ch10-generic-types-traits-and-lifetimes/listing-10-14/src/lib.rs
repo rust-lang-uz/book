@@ -1,29 +1,29 @@
 // ANCHOR: here
-pub trait Summary {
-    fn summarize(&self) -> String {
-        String::from("(Read more...)")
+pub trait Xulosa {
+    fn umumiy_xulosa(&self) -> String {
+        String::from("(Ko'proq o'qish...)")
     }
 }
 // ANCHOR_END: here
 
-pub struct NewsArticle {
-    pub headline: String,
-    pub location: String,
-    pub author: String,
-    pub content: String,
+pub struct YangiMaqola {
+    pub sarlavha: String,
+    pub manzil: String,
+    pub muallif: String,
+    pub mazmuni: String,
 }
 
-impl Summary for NewsArticle {}
+impl Xulosa for YangiMaqola {}
 
-pub struct Tweet {
-    pub username: String,
-    pub content: String,
-    pub reply: bool,
-    pub retweet: bool,
+pub struct Maqola {
+    pub foydalanuvchi: String,
+    pub mazmuni: String,
+    pub javob_berish: bool,
+    pub repost: bool,
 }
 
-impl Summary for Tweet {
-    fn summarize(&self) -> String {
-        format!("{}: {}", self.username, self.content)
+impl Xulosa for Maqola {
+    fn umumiy_xulosa(&self) -> String {
+        format!("{}: {}", self.foydalanuvchi, self.mazmuni)
     }
 }
