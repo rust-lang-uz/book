@@ -1,16 +1,16 @@
-use aggregator::{self, Summary, Tweet};
+use aggregator::{self, Xulosa, Maqola};
 
 fn main() {
     // ANCHOR: here
-    let tweet = Tweet {
-        username: String::from("horse_ebooks"),
-        content: String::from(
-            "of course, as you probably already know, people",
+    let maqola = Maqola {
+        foydalanuvchi: String::from("ismoilovdev"),
+        mazmuni: String::from(
+            "Rust kitobi juda foydali ekan, men juda ko'p bilimlarni o'zlashtirdim",
         ),
-        reply: false,
-        retweet: false,
+        javob_berish: false,
+        repost: false,
     };
 
-    println!("1 new tweet: {}", tweet.summarize());
+    println!("1 ta yangi xabar: {}", maqola.umumiy_xulosa());
     // ANCHOR_END: here
 }

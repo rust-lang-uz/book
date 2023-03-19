@@ -1,24 +1,24 @@
 // ANCHOR: here
-pub trait Summary {
-    fn summarize_author(&self) -> String;
+pub trait Xulosa {
+    fn muallif_haqida(&self) -> String;
 
-    fn summarize(&self) -> String {
-        format!("(Read more from {}...)", self.summarize_author())
+    fn umumiy_xulosa(&self) -> String {
+        format!("(Batafsil: {}...)", self.muallif_haqida())
     }
 }
 // ANCHOR_END: here
 
-pub struct Tweet {
-    pub username: String,
-    pub content: String,
-    pub reply: bool,
-    pub retweet: bool,
+pub struct Maqola {
+    pub foydalanuvchi: String,
+    pub mazmuni: String,
+    pub javob_berish: bool,
+    pub repost: bool,
 }
 
 // ANCHOR: impl
-impl Summary for Tweet {
-    fn summarize_author(&self) -> String {
-        format!("@{}", self.username)
+impl Xulosa for Maqola {
+    fn muallif_haqida(&self) -> String {
+        format!("@{}", self.foydalanuvchi)
     }
 }
 // ANCHOR_END: impl

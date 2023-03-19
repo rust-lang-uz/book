@@ -80,34 +80,29 @@ Bu kod `Yangi maqola mavjud! (Batafsil...)`ni chop etadi.
 
 Standart dasturni yaratish bizdan 10-13 roʻyxatdagi `Maqola`dagi `Xulosa`ni amalga oshirish haqida biror narsani oʻzgartirishimizni talab qilmaydi. Buning sababi, standart dasturni bekor qilish sintaksisi standart dasturga ega bo'lmagan trait metodini amalga oshirish sintaksisi bilan bir xil.
 
-Standart ilovalar bir xil traitga ega bo'lgan boshqa metodlarni chaqirishi mumkin, hatto bu boshqa metodlarda standart dastur bo'lmasa ham. Shunday qilib, trait juda ko'p foydali funksiyalarni taqdim etishi mumkin va amalga oshiruvchilardan faqat uning kichik qismini ko'rsatishni talab qiladi. Misol uchun, biz `Xulosa` traitini amalga oshirish zarur bo'lgan `umumlashtirish_muallif` metodiga ega bo'lish uchun belgilashimiz va keyin `umumlashtirish_muallif` metodini chaqiradigan standart amalga oshirishga ega bo'lgan `umumiy_xulosa` metodini belgilashimiz mumkin:
+Standart ilovalar bir xil traitga ega bo'lgan boshqa metodlarni chaqirishi mumkin, hatto bu boshqa metodlarda standart dastur bo'lmasa ham. Shunday qilib, trait juda ko'p foydali funksiyalarni taqdim etishi mumkin va amalga oshiruvchilardan faqat uning kichik qismini ko'rsatishni talab qiladi. Misol uchun, biz `Xulosa` traitini amalga oshirish zarur bo'lgan `muallif_haqida` metodiga ega bo'lish uchun belgilashimiz va keyin `muallif_haqida` metodini chaqiradigan standart amalga oshirishga ega bo'lgan `umumiy_xulosa` metodini belgilashimiz mumkin:
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:here}}
 ```
 
-`Xulosa` ning ushbu versiyasidan foydalanish uchun biz faqat bir turdagi traitni amalga oshirganimizda `umumlashtirish_muallif` ni aniqlashimiz kerak:
+`Xulosa` ning ushbu versiyasidan foydalanish uchun biz faqat bir turdagi traitni amalga oshirganimizda `muallif_haqida` ni aniqlashimiz kerak:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:impl}}
 ```
 
-After we define `summarize_author`, we can call `summarize` on instances of the
-`Tweet` struct, and the default implementation of `summarize` will call the
-definition of `summarize_author` that we’ve provided. Because we’ve implemented
-`summarize_author`, the `Summary` trait has given us the behavior of the
-`summarize` method without requiring us to write any more code.
+`muallif_haqida` ni aniqlaganimizdan so'ng, biz `Maqola` structi misollarida `umumiy_xulosa` deb atashimiz mumkin va `umumiy_xulosa` standart bajarilishi biz taqdim etgan `muallif_haqida` ta'rifini chaqiradi. Biz `muallif_haqida` ni qo'llaganimiz sababli, `Xulosa` traiti bizga boshqa kod yozishni talab qilmasdan `umumiy_xulosa` metodining harakatini berdi.
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/main.rs:here}}
 ```
 
-This code prints `1 new tweet: (Read more from @horse_ebooks...)`.
+Bu kod `1 ta yangi xabar: (Batafsil: @ismoilovdev...)` ni chop etadi.
 
-Note that it isn’t possible to call the default implementation from an
-overriding implementation of that same method.
+Shuni esda tutingki, xuddi shu metodni bekor qilish orqali standart dasturni chaqirish mumkin emas.
 
-### Traits as Parameters
+### Traitlar parametr sifatida
 
 Now that you know how to define and implement traits, we can explore how to use
 traits to define functions that accept many different types. We'll use the
