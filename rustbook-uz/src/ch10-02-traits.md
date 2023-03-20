@@ -127,47 +127,35 @@ pub fn xabar_berish<T: Xulosa>(element: &T) {
 
 Ushbu uzunroq shakl oldingi bo'limdagi misolga teng, ammo batafsilroq. Trait chegaralarini ikki nuqta va ichki burchakli qavslardan keyin umumiy tur parametri e'lon qilingan holda joylashtiramiz.
 
-The `impl Trait` syntax is convenient and makes for more concise code in simple
-cases, while the fuller trait bound syntax can express more complexity in other
-cases. For example, we can have two parameters that implement `Summary`. Doing
-so with the `impl Trait` syntax looks like this:
+`impl Trait` sintaksisi qulay va oddiy holatlarda ixchamroq kodni yaratadi, to'liqroq traitlar bilan bog'langan sintaksisi esa boshqa holatlarda ko'proq murakkablikni ifodalashi mumkin. Misol uchun, bizda `Xulosa` ni amalga oshiradigan ikkita parametr bo'lishi mumkin. Buni `impl Trait` sintaksisi bilan bajarish quyidagicha ko'rinadi:
 
 ```rust,ignore
-pub fn notify(item1: &impl Summary, item2: &impl Summary) {
+pub fn xabar_berish(element1: &impl Xulosa, element2: &impl Xulosa) {
 ```
 
-Using `impl Trait` is appropriate if we want this function to allow `item1` and
-`item2` to have different types (as long as both types implement `Summary`). If
-we want to force both parameters to have the same type, however, we must use a
-trait bound, like this:
+Agar biz ushbu funksiya `element1` va `element2` turli xil turlarga ega bo'lishini istasak, `impl Trait` dan foydalanish maqsadga muvofiqdir (agar ikkala tur ham `Xulosa`ni qo'llasa). Agar biz ikkala parametrni bir xil turga ega bo'lishga majburlamoqchi bo'lsak, quyidagi kabi trait bounddan foydalanishimiz kerak:
 
 ```rust,ignore
-pub fn notify<T: Summary>(item1: &T, item2: &T) {
+pub fn xabar_berish<T: Xulosa>(element1: &T, element2: &T) {
 ```
 
-The generic type `T` specified as the type of the `item1` and `item2`
-parameters constrains the function such that the concrete type of the value
-passed as an argument for `item1` and `item2` must be the same.
+`element1` va `element2` parametrlarining turi sifatida belgilangan umumiy `T` turi funksiyani shunday cheklaydiki, `element1` va `element2` uchun argument sifatida berilgan qiymatning aniq turi bir xil bo`lishi kerak.
 
-#### Specifying Multiple Trait Bounds with the `+` Syntax
+#### `+` sintaksisi bilan bir nechta trait chegaralarini belgilash
 
-We can also specify more than one trait bound. Say we wanted `notify` to use
-display formatting as well as `summarize` on `item`: we specify in the `notify`
-definition that `item` must implement both `Display` and `Summary`. We can do
-so using the `+` syntax:
+Bundan tashqari, biz bir nechta traitlarni belgilashimiz mumkin. Aytaylik, biz `xabar_berish` funksiyasidan display formatlash hamda `element` bo‘yicha `umumiy_xulosa`dan foydalanishni xohladik: biz `xabar_berish` ta'rifida `element` `Display` va `Xulosa` ni ham amalga oshirishi kerakligini belgilaymiz. Buni `+` sintaksisi yordamida amalga oshirishimiz mumkin:
 
 ```rust,ignore
-pub fn notify(item: &(impl Summary + Display)) {
+pub fn xabar_berish(element: &(impl Xulosa + Display)) {
 ```
 
-The `+` syntax is also valid with trait bounds on generic types:
+`+` sintaksisi generik turdagi belgilar chegaralari bilan ham amal qiladi:
 
 ```rust,ignore
-pub fn notify<T: Summary + Display>(item: &T) {
+pub fn xabar_berish<T: Xulosa+ Display>(element: &T) {
 ```
 
-With the two trait bounds specified, the body of `notify` can call `summarize`
-and use `{}` to format `item`.
+Belgilangan ikkita trait chegarasi bilan `xabar_berish` asosiy qismi `umumiy_xulosa` deb chaqirishi va `element`ni formatlash uchun `{}` dan foydalanishi mumkin.
 
 #### Clearer Trait Bounds with `where` Clauses
 
