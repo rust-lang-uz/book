@@ -1,42 +1,42 @@
-pub trait Summary {
-    fn summarize(&self) -> String;
+pub trait Xulosa {
+    fn umumiy_xulosa(&self) -> String;
 }
 
-pub struct NewsArticle {
-    pub headline: String,
-    pub location: String,
-    pub author: String,
-    pub content: String,
+pub struct YangiMaqola {
+    pub sarlavha: String,
+    pub manzil: String,
+    pub muallif: String,
+    pub mazmuni: String,
 }
 
-impl Summary for NewsArticle {
-    fn summarize(&self) -> String {
-        format!("{}, by {} ({})", self.headline, self.author, self.location)
+impl Xulosa for YangiMaqola {
+    fn umumiy_xulosa(&self) -> String {
+        format!("{}, by {} ({})", self.sarlavha, self.muallif, self.manzil)
     }
 }
 
-pub struct Tweet {
-    pub username: String,
-    pub content: String,
-    pub reply: bool,
-    pub retweet: bool,
+pub struct Maqola {
+    pub foydalanuvchi: String,
+    pub mazmuni: String,
+    pub javob_berish: bool,
+    pub repost: bool,
 }
 
-impl Summary for Tweet {
-    fn summarize(&self) -> String {
-        format!("{}: {}", self.username, self.content)
+impl Xulosa for Maqola {
+    fn umumiy_xulosa(&self) -> String {
+        format!("{}: {}", self.foydalanuvchi, self.mazmuni)
     }
 }
 
 // ANCHOR: here
-fn returns_summarizable() -> impl Summary {
-    Tweet {
-        username: String::from("horse_ebooks"),
-        content: String::from(
-            "of course, as you probably already know, people",
+fn return_xulosa() -> impl Xulosa {
+    Maqola {
+        foydalanuvchi: String::from("ismoilovdev"),
+        mazmuni: String::from(
+            "Rust kitobi juda foydali ekan, men juda ko'p bilimlarni o'zlashtirdim",
         ),
-        reply: false,
-        retweet: false,
+        javob_berish: false,
+        repost: false,
     }
 }
 // ANCHOR_END: here

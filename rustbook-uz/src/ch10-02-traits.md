@@ -157,33 +157,25 @@ pub fn xabar_berish<T: Xulosa+ Display>(element: &T) {
 
 Belgilangan ikkita trait chegarasi bilan `xabar_berish` asosiy qismi `umumiy_xulosa` deb chaqirishi va `element`ni formatlash uchun `{}` dan foydalanishi mumkin.
 
-#### Clearer Trait Bounds with `where` Clauses
+#### `where` bandlari bilan aniqroq trait bounds(chegaralari)
 
-Using too many trait bounds has its downsides. Each generic has its own trait
-bounds, so functions with multiple generic type parameters can contain lots of
-trait bound information between the function’s name and its parameter list,
-making the function signature hard to read. For this reason, Rust has alternate
-syntax for specifying trait bounds inside a `where` clause after the function
-signature. So instead of writing this:
+Haddan tashqari ko'p belgilar boundlaridan foydalanish o'zining salbiy tomonlariga ega. Har bir generikning o'ziga xos trait boundlari bor, shuning uchun bir nechta umumiy turdagi parametrlarga ega funksiyalar funksiya nomi va uning parametrlar ro'yxati o'rtasida ko'plab belgilar bilan bog'liq ma'lumotlarni o'z ichiga olishi mumkin, bu funksiya imzosini o'qishni qiyinlashtiradi. Shu sababli, Rust funksiya imzosidan keyin `where` bandida trait boundlarini belgilash uchun muqobil sintaksisga ega.
 
 ```rust,ignore
-fn some_function<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {
+fn boshqa_funksiya<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {
 ```
 
-we can use a `where` clause, like this:
+biz `where` bandidan foydalanishimiz mumkin, masalan:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-07-where-clause/src/lib.rs:here}}
 ```
 
-This function’s signature is less cluttered: the function name, parameter list,
-and return type are close together, similar to a function without lots of trait
-bounds.
+Bu funksiya imzosi kamroq chalkash: funksiya nomi, parametrlar ro'yxati va qaytish turi bir-biriga yaqin bo'lib, ko'p trait boundlari bo'lmagan funksiyaga o'xshaydi.
 
-### Returning Types that Implement Traits
+### Traitlarni amalga oshiradigan Return(qaytaruvchi) turlar
 
-We can also use the `impl Trait` syntax in the return position to return a
-value of some type that implements a trait, as shown here:
+Bu yerda ko'rsatilganidek, traitni amalga oshiradigan ba'zi turdagi qiymatni qaytarish(return) uchun `impl Trait` sintaksisini return holatida ham ishlatishimiz mumkin:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-05-returning-impl-trait/src/lib.rs:here}}
