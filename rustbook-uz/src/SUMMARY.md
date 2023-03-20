@@ -56,7 +56,7 @@
 
 - [Umumiy turlar, traitlar va lifetime](ch10-00-generics.md)
     - [Generik ma'lumotlar turlari](ch10-01-syntax.md)
-    - [Traitlar: umumiy xulq-atvorni aniqlash](ch10-02-traits.md)
+    - [Traitlar: umumiy xatti-harakatni aniqlash](ch10-02-traits.md)
     - [Referencelarni lifetime bilan tekshirish](ch10-03-lifetime-syntax.md)
 
 - [Avtomatlashtirilgan testlarni yozish](ch11-00-testing.md)

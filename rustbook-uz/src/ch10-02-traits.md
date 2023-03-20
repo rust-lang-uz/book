@@ -104,42 +104,28 @@ Shuni esda tutingki, xuddi shu metodni bekor qilish orqali standart dasturni cha
 
 ### Traitlar parametr sifatida
 
-Now that you know how to define and implement traits, we can explore how to use
-traits to define functions that accept many different types. We'll use the
-`Summary` trait we implemented on the `NewsArticle` and `Tweet` types in
-Listing 10-13 to define a `notify` function that calls the `summarize` method
-on its `item` parameter, which is of some type that implements the `Summary`
-trait. To do this, we use the `impl Trait` syntax, like this:
+Endi siz traitlarni qanday aniqlash va amalga oshirishni bilganingizdan so'ng, biz ko'plab turlarni qabul qiladigan funksiyalarni aniqlash uchun traitlardan qanday foydalanishni o'rganishimiz mumkin. Biz 10-13 roʻyxatdagi `YangiMaqola` va `Maqola` turlari uchun joriy qilingan `Xulosa` traitidan foydalanamiz, uning `element` parametri boʻyicha umumlashtirish metodlini chaqiradigan `xabar_berish` funksiyasini belgilaymiz, u `Xulosa` traitini amalga oshiradi. Buning uchun biz `impl Trait` sintaksisidan foydalanamiz, masalan:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-04-traits-as-parameters/src/lib.rs:here}}
 ```
 
-Instead of a concrete type for the `item` parameter, we specify the `impl`
-keyword and the trait name. This parameter accepts any type that implements the
-specified trait. In the body of `notify`, we can call any methods on `item`
-that come from the `Summary` trait, such as `summarize`. We can call `notify`
-and pass in any instance of `NewsArticle` or `Tweet`. Code that calls the
-function with any other type, such as a `String` or an `i32`, won’t compile
-because those types don’t implement `Summary`.
+`element` parametri uchun aniq tur o'rniga biz `impl` kalit so'zini va trait nomini belgilaymiz. Ushbu parametr belgilangan traitni amalga oshiradigan har qanday turni qabul qiladi. `xabar_berish` qismida biz `Xulosa` traitidan kelib chiqadigan `element` bo‘yicha har qanday metodlarni chaqirishimiz mumkin, masalan, `umumiy_xulosa`. Biz `xabar_berish` ga chaiqruv  qilishimiz va `YangiMaqola` yoki `Maqola` ning istalgan misolida o'tishimiz mumkin. Funksiyani `String` yoki `i32` kabi boshqa har qanday turdagi chaqiruvchi kod kompilyatsiya qilinmaydi, chunki bu turlar `Xulosa` ni amalga oshirmaydi.
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="fixing-the-largest-function-with-trait-bounds"></a>
 
-#### Trait Bound Syntax
+#### Traitlarni cheklash sintaksisi
 
-The `impl Trait` syntax works for straightforward cases but is actually syntax
-sugar for a longer form known as a *trait bound*; it looks like this:
+`impl Trait` sintaksisi oddiy holatlar uchun ishlaydi, lekin aslida *trait bound* deb nomlanuvchi uzunroq shakl uchun sintaksis shakaridir; bu shunday ko'rinadi:
 
 ```rust,ignore
-pub fn notify<T: Summary>(item: &T) {
-    println!("Breaking news! {}", item.summarize());
+pub fn xabar_berish<T: Xulosa>(element: &T) {
+    println!("Tezkor xabarlar! {}", element.umumiy_xulosa());
 }
 ```
 
-This longer form is equivalent to the example in the previous section but is
-more verbose. We place trait bounds with the declaration of the generic type
-parameter after a colon and inside angle brackets.
+Ushbu uzunroq shakl oldingi bo'limdagi misolga teng, ammo batafsilroq. Trait chegaralarini ikki nuqta va ichki burchakli qavslardan keyin umumiy tur parametri e'lon qilingan holda joylashtiramiz.
 
 The `impl Trait` syntax is convenient and makes for more concise code in simple
 cases, while the fuller trait bound syntax can express more complexity in other
