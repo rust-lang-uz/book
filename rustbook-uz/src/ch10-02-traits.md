@@ -181,32 +181,18 @@ Bu yerda ko'rsatilganidek, traitni amalga oshiradigan ba'zi turdagi qiymatni qay
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-05-returning-impl-trait/src/lib.rs:here}}
 ```
 
-By using `impl Summary` for the return type, we specify that the
-`returns_summarizable` function returns some type that implements the `Summary`
-trait without naming the concrete type. In this case, `returns_summarizable`
-returns a `Tweet`, but the code calling this function doesn’t need to know that.
+Qaytish(return) turi uchun `impl Xulosa` dan foydalanib, biz `return_xulosa` funksiyasi aniq turga nom bermasdan `Xulosa` traitini amalga oshiradigan ba'zi turlarni qaytarishini aniqlaymiz. Bunday holda, `return_xulosa` `Maqola` ni qaytaradi, lekin bu funksiyani chaqiruvchi kod buni bilishi shart emas.
 
-The ability to specify a return type only by the trait it implements is
-especially useful in the context of closures and iterators, which we cover in
-Chapter 13. Closures and iterators create types that only the compiler knows or
-types that are very long to specify. The `impl Trait` syntax lets you concisely
-specify that a function returns some type that implements the `Iterator` trait
-without needing to write out a very long type.
+Qaytish turini faqat u amalga oshiradigan traitga ko'ra belgilash qobiliyati, ayniqsa, biz 13-bobda ko'rib chiqiladigan closurelar va iteratorlar kontekstida foydalidir.  Closures va iteratorlar faqat kompilyator biladigan turlarni yoki belgilash uchun juda uzoq turlarni yaratadi. `impl Trait` sintaksisi sizga funksiya juda uzun turni yozishga hojat qoldirmasdan `Iterator` traitini amalga oshiradigan ba'zi turlarni qaytarishini qisqacha belgilash imkonini beradi.
 
-However, you can only use `impl Trait` if you’re returning a single type. For
-example, this code that returns either a `NewsArticle` or a `Tweet` with the
-return type specified as `impl Summary` wouldn’t work:
+Biroq, faqat bitta turni qaytarayotgan bo'lsangiz, `impl Trait` dan foydalanishingiz mumkin. Masalan, `YangiMaqola` yoki `Maqola`ni qaytaruvchi `impl Xulosa` sifatida ko‘rsatilgan qaytarish turiga ega bo‘lgan bu kod ishlamaydi:
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-06-impl-trait-returns-one-type/src/lib.rs:here}}
 ```
 
-Returning either a `NewsArticle` or a `Tweet` isn’t allowed due to restrictions
-around how the `impl Trait` syntax is implemented in the compiler. We’ll cover
-how to write a function with this behavior in the [“Using Trait Objects That
-Allow for Values of Different
-Types”][using-trait-objects-that-allow-for-values-of-different-types]<!--
-ignore --> section of Chapter 17.
+`YangiMaqola` yoki `Maqola`ni qaytarishga `impl Trait` sintaksisi kompilyatorda qanday amalga oshirilishi bilan bog‘liq cheklovlar tufayli ruxsat berilmaydi. Ushbu xatti-harakat bilan funksiyani qanday yozishni biz 17-bobning ["Turli turdagi qiymatlarga ruxsat beruvchi trait ob'ektlaridan foydalanish"][using-trait-objects-that-allow-for-values-of-different-types]<!--
+ignore --> bo'limida ko'rib chiqamiz.
 
 ### Using Trait Bounds to Conditionally Implement Methods
 
