@@ -194,33 +194,19 @@ Biroq, faqat bitta turni qaytarayotgan bo'lsangiz, `impl Trait` dan foydalanishi
 `YangiMaqola` yoki `Maqola`ni qaytarishga `impl Trait` sintaksisi kompilyatorda qanday amalga oshirilishi bilan bog‘liq cheklovlar tufayli ruxsat berilmaydi. Ushbu xatti-harakat bilan funksiyani qanday yozishni biz 17-bobning ["Turli turdagi qiymatlarga ruxsat beruvchi trait ob'ektlaridan foydalanish"][using-trait-objects-that-allow-for-values-of-different-types]<!--
 ignore --> bo'limida ko'rib chiqamiz.
 
-### Using Trait Bounds to Conditionally Implement Methods
+### Metodlarni shartli ravishda amalga oshirish uchun Trait Boundlardan foydalanish
 
-By using a trait bound with an `impl` block that uses generic type parameters,
-we can implement methods conditionally for types that implement the specified
-traits. For example, the type `Pair<T>` in Listing 10-15 always implements the
-`new` function to return a new instance of `Pair<T>` (recall from the
-[“Defining Methods”][methods]<!-- ignore --> section of Chapter 5 that `Self`
-is a type alias for the type of the `impl` block, which in this case is
-`Pair<T>`). But in the next `impl` block, `Pair<T>` only implements the
-`cmp_display` method if its inner type `T` implements the `PartialOrd` trait
-that enables comparison *and* the `Display` trait that enables printing.
+Umumiy turdagi parametrlardan foydalanadigan `impl` bloki bilan trait bounddan foydalanib, biz belgilangan traitlarni amalga oshiradigan turlar uchun metodlarni shartli ravishda amalga oshirishimiz mumkin. Masalan, 10-15-ro'yxatdagi `Pair<T>` turi har doim yangi `Pair<T>` nusxasini qaytarish uchun `new` funksiyasini amalga oshiradi (5-bobning [“Metodlarni aniqlash”][methods]<!-- ignore -->  boʻlimidan eslaylikki, `Self` bu `impl` bloki turiga tegishli turdagi taxallus(alias) boʻlib, bu holda `Pair<T>` boʻladi). Ammo keyingi `impl` blokida `Pair<T>` faqat `cmp_display` metodini qo'llaydi, uning ichki turi(inner type) `T` taqqoslash imkonini beruvchi `PartialOrd` traitini *va* chop etish imkonini beruvchi `Display` traittini amalga oshiradi.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-15/src/lib.rs}}
 ```
 
-<span class="caption">Listing 10-15: Conditionally implementing methods on a
-generic type depending on trait bounds</span>
+<span class="caption">Ro'yxat 10-15: Trait boundga qarab generik tur bo'yicha shartli ravishda qo'llash metodlari</span>
 
-We can also conditionally implement a trait for any type that implements
-another trait. Implementations of a trait on any type that satisfies the trait
-bounds are called *blanket implementations* and are extensively used in the
-Rust standard library. For example, the standard library implements the
-`ToString` trait on any type that implements the `Display` trait. The `impl`
-block in the standard library looks similar to this code:
+Biz shartli ravishda boshqa traitni amalga oshiradigan har qanday tur uchun traitni amalga oshirishimiz mumkin. Trait boundlarni qondiradigan har qanday turdagi tarittni amalga oshirish *blanket implementations* deb nomlanadi va Rust standart kutubxonasida keng qo'llaniladi. Masalan, standart kutubxona `Display` traitini amalga oshiradigan har qanday turdagi `ToString` traitini amalga oshiradi. Standart kutubxonadagi `impl` bloki ushbu kodga o'xshaydi:
 
 ```rust,ignore
 impl<T: Display> ToString for T {
@@ -228,29 +214,16 @@ impl<T: Display> ToString for T {
 }
 ```
 
-Because the standard library has this blanket implementation, we can call the
-`to_string` method defined by the `ToString` trait on any type that implements
-the `Display` trait. For example, we can turn integers into their corresponding
-`String` values like this because integers implement `Display`:
+Standart kutubxonada bu keng qamrovli dastur mavjud bo'lganligi sababli, biz `Display` traitini amalga oshiradigan har qanday turdagi `ToString` traiti bilan aniqlangan `to_string` metodini chaqirishimiz mumkin. Masalan, biz butun sonlarni mos keladigan `String` qiymatlariga shunday aylantirishimiz mumkin, chunki butun sonlar `Display`ni amalga oshiradi:
 
 ```rust
 let s = 3.to_string();
 ```
 
-Blanket implementations appear in the documentation for the trait in the
-“Implementors” section.
+Blanket implementationlari "Implementors" bo'limidagi trait uchun texnik hujjatlarda ko'rinadi.
 
-Traits and trait bounds let us write code that uses generic type parameters to
-reduce duplication but also specify to the compiler that we want the generic
-type to have particular behavior. The compiler can then use the trait bound
-information to check that all the concrete types used with our code provide the
-correct behavior. In dynamically typed languages, we would get an error at
-runtime if we called a method on a type which didn’t define the method. But Rust
-moves these errors to compile time so we’re forced to fix the problems before
-our code is even able to run. Additionally, we don’t have to write code that
-checks for behavior at runtime because we’ve already checked at compile time.
-Doing so improves performance without having to give up the flexibility of
-generics.
+Traitlar va trait boundlar takrorlanishni kamaytirish uchun generik turdagi parametrlardan foydalanadigan kod yozishga imkon beradi, shuningdek, generik turning o'ziga xos xatti-harakatlariga ega bo'lishini kompilyatorga ko'rsatishga imkon beradi. Keyin kompilyator trait bilan bog'langan ma'lumotlardan bizning kodimiz bilan qo'llaniladigan barcha aniq turlar to'g'ri xatti-harakatni ta'minlaydiganligini tekshirish uchun foydalanishi mumkin. Dinamik ravishda tuzilgan tillarda, agar biz metodni aniqlamagan turdagi metodni chaqirsak, runtimeda xatoga yo'l qo'yamiz. Ammo Rust bu xatolarni vaqtni kompilyatsiya qilish uchun ko'chiradi, shuning uchun biz kodimiz ishga tushgunga qadar muammolarni hal qilishga majbur bo'lamiz. Bundan tashqari, biz runtimeda xatti-harakatni tekshiradigan kod yozishimiz shart emas, chunki biz kompilyatsiya vaqtida allaqachon tekshirganmiz.
+Bu generiklarning moslashuvchanligidan voz kechmasdan ishlashni yaxshilaydi.
 
 [using-trait-objects-that-allow-for-values-of-different-types]: ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types
 [methods]: ch05-03-method-syntax.html#defining-methods
