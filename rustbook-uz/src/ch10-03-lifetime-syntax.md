@@ -1,23 +1,11 @@
-## Validating References with Lifetimes
+## Referencelarni lifetime bilan tekshirish
 
-Lifetimes are another kind of generic that we’ve already been using. Rather
-than ensuring that a type has the behavior we want, lifetimes ensure that
-references are valid as long as we need them to be.
+Lifetimelar - biz allaqachon uchratgan generiklarning yana bir turi. Turning biz xohlagan xatti-harakatga ega bo'lishini ta'minlash o'rniga, lifetime referencelar biz uchun kerak bo'lganda haqiqiyligini ta'minlaydi.
 
-One detail we didn’t discuss in the [“References and
-Borrowing”][references-and-borrowing]<!-- ignore --> section in Chapter 4 is
-that every reference in Rust has a *lifetime*, which is the scope for which
-that reference is valid. Most of the time, lifetimes are implicit and inferred,
-just like most of the time, types are inferred. We only must annotate types
-when multiple types are possible. In a similar way, we must annotate lifetimes
-when the lifetimes of references could be related in a few different ways. Rust
-requires us to annotate the relationships using generic lifetime parameters to
-ensure the actual references used at runtime will definitely be valid.
+4-bobdagi [“Referencelar va Borrowing”]([references-and-borrowing]<!-- ignore -->) bo‘limida biz muhokama qilmagan bir tafsilot shundan iboratki, Rust-dagi har bir referenceda o‘sha referencening amal qilish doirasi *lifetime* bo‘ladi. Ko'pincha, lifetimelar yashirin va inferred bo'ladi,
+ko'p hollarda bo'lgani kabi, turlar ham inferred qilinadi.Biz faqat bir nechta tur mumkin bo'lganda turlarga izoh berishimiz kerak. Shunga o'xshab, biz referencelarning lifetime bir necha xil yo'llar bilan bog'lanishi mumkin bo'lgan lifetimelarini izohlashimiz kerak. Rust bizdan runtimeda ishlatiladigan haqiqiy referencelar haqiqiy bo'lishini ta'minlash uchun generik lifetime parametrlaridan foydalangan holda munosabatlarga izoh berishimizni talab qiladi.
 
-Annotating lifetimes is not even a concept most other programming languages
-have, so this is going to feel unfamiliar. Although we won’t cover lifetimes in
-their entirety in this chapter, we’ll discuss common ways you might encounter
-lifetime syntax so you can get comfortable with the concept.
+Lifetimeni izohlash boshqa dasturlash tillarining ko'pchiligida mavjud bo'lgan tushuncha ham emas, shuning uchun bu notanish tuyuladi. Garchi biz ushbu bobda lifetimeni to'liq qamrab olmasak ham, kontseptsiyadan qulay bo'lishingiz uchun lifetime sintaksisga duch kelishingiz mumkin bo'lgan umumiy usullarni muhokama qilamiz.
 
 ### Preventing Dangling References with Lifetimes
 
