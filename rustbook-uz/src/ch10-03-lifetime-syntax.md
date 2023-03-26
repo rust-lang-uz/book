@@ -54,61 +54,41 @@ Ro'yxat 10-18 kodni tuzatadi, shuning uchun u dangling referencega ega emas va h
 
 <span class="caption">Ro'yxat 10-18: To'g'ri reference, chunki referencelar mos yozuvlardan ko'ra uzoqroq lifetimega ega</span>
 
-Here, `x` has the lifetime `'b`, which in this case is larger than `'a`. This
-means `r` can reference `x` because Rust knows that the reference in `r` will
-always be valid while `x` is valid.
+Bu erda `x` `'b` muddatiga ega, bu holda `'a` dan kattaroqdir. Bu `r` `x` ga murojaat qilishi mumkin degan ma'noni anglatadi, chunki Rust `r` dagi reference har doim `x` amalda bo`lishini biladi.
 
-Now that you know where the lifetimes of references are and how Rust analyzes
-lifetimes to ensure references will always be valid, let’s explore generic
-lifetimes of parameters and return values in the context of functions.
+Endi siz referencelarning amal qilish muddati qayerda ekanligini va referencelar har doim haqiqiy boʻlishini taʼminlash uchun Rust lifetimeni qanday tahlil qilishini bilganingizdan soʻng, keling, funksiyalar kontekstida parametrlarning generik lifetime va qiymatlarni qaytarishni koʻrib chiqaylik.
 
-### Generic Lifetimes in Functions
+### Funksiyalarning generik lifetime
 
-We’ll write a function that returns the longer of two string slices. This
-function will take two string slices and return a single string slice. After
-we’ve implemented the `longest` function, the code in Listing 10-19 should
-print `The longest string is abcd`.
+Biz ikkita satr bo'lagining uzunligini qaytaradigan funksiyani yozamiz. Bu funksiya ikkita satr bo'lagini oladi va bitta satr bo'lagini qaytaradi. `eng_uzun` funksiyasini amalga oshirganimizdan so'ng, 10-19 ro'yxatdagi kod `Eng uzun satr - abcd` ni chop etishi kerak.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-19/src/main.rs}}
 ```
 
-<span class="caption">Listing 10-19: A `main` function that calls the `longest`
-function to find the longer of two string slices</span>
+<span class="caption">Ro'yxat 10-19: Ikki qator boʻlagining uzunini topish uchun `eng_uzun` funksiyani chaqiruvchi `main` funksiya</span>
 
-Note that we want the function to take string slices, which are references,
-rather than strings, because we don’t want the `longest` function to take
-ownership of its parameters. Refer to the [“String Slices as
-Parameters”][string-slices-as-parameters]<!-- ignore --> section in Chapter 4
-for more discussion about why the parameters we use in Listing 10-19 are the
-ones we want.
+E'tibor bering, biz funksiya satrlarni emas, referencelar bo'lgan satr bo'laklarini olishni xohlaymiz, chunki biz `eng_uzun` funksiya uning parametrlariga egalik qilishni xohlamaymiz. 10 19 roʻyxatda biz foydalanadigan parametrlar nima uchun biz xohlagan parametrlar ekanligi haqida koʻproq muhokama qilish uchun 4-bobdagi [“String slicelari parametr sifatida”][string-slices-as-parameters]<!-- ignore --> boʻlimiga qarang.
 
-If we try to implement the `longest` function as shown in Listing 10-20, it
-won’t compile.
+Agar biz 10-20 ro'yxatda ko'rsatilganidek, `eng_uzun` funksiyasini amalga oshirishga harakat qilsak, u kompilyatsiya qilinmaydi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-20/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 10-20: An implementation of the `longest`
-function that returns the longer of two string slices but does not yet
-compile</span>
+<span class="caption">Ro'yxat 10-20: Ikki qatorli boʻlakning uzunroq qismini qaytaradigan, lekin hali kompilyatsiya qilinmagan `eng_uzun` funksiyaning amalga oshirilishi</span>
 
-Instead, we get the following error that talks about lifetimes:
+Buning o'rniga biz lifetime haqida gapiradigan quyidagi xatoni olamiz:
 
 ```console
 {{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-20/output.txt}}
 ```
 
-The help text reveals that the return type needs a generic lifetime parameter
-on it because Rust can’t tell whether the reference being returned refers to
-`x` or `y`. Actually, we don’t know either, because the `if` block in the body
-of this function returns a reference to `x` and the `else` block returns a
-reference to `y`!
+Yordam matni shuni ko'rsatadiki, return(qaytarish) turiga umumiy lifetime parametri kerak, chunki Rust qaytarilayotgan reference `x` yoki `y` ga tegishli ekanligini aniqlay olmaydi. Aslida, biz ham bilmaymiz, chunki bu funksiyaning asosiy qismidagi `if` bloki `x` ga referenceni, `else` bloki esa `y` ga referenceni qaytaradi!
 
 When we’re defining this function, we don’t know the concrete values that will
 be passed into this function, so we don’t know whether the `if` case or the
