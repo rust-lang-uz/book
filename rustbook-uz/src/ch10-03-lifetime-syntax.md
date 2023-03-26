@@ -7,75 +7,52 @@ ko'p hollarda bo'lgani kabi, turlar ham inferred qilinadi.Biz faqat bir nechta t
 
 Lifetimeni izohlash boshqa dasturlash tillarining ko'pchiligida mavjud bo'lgan tushuncha ham emas, shuning uchun bu notanish tuyuladi. Garchi biz ushbu bobda lifetimeni to'liq qamrab olmasak ham, kontseptsiyadan qulay bo'lishingiz uchun lifetime sintaksisga duch kelishingiz mumkin bo'lgan umumiy usullarni muhokama qilamiz.
 
-### Preventing Dangling References with Lifetimes
+### Lifetimeda dangling referencelarni oldini olish
 
-The main aim of lifetimes is to prevent *dangling references*, which cause a
-program to reference data other than the data it’s intended to reference.
-Consider the program in Listing 10-16, which has an outer scope and an inner
-scope.
+Lifetimening asosiy maqsadi dasturga reference qilish uchun mo'ljallangan ma'lumotlardan boshqa ma'lumotlarga reference qilishiga olib keladigan *dangling referencelar* ning oldini olishdir.
+10-16 ro'yxatdagi dasturni ko'rib chiqing, uning tashqi va ichki ko'lami(tashqi va ichki ishlash doirasi) bor.
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-16/src/main.rs}}
 ```
 
-<span class="caption">Listing 10-16: An attempt to use a reference whose value
-has gone out of scope</span>
+<span class="caption">Ro'yxat 10-16: Qiymati ishlash doiradan chiqib ketgan referencedan foydalanishga urinish</span>
 
-> Note: The examples in Listings 10-16, 10-17, and 10-23 declare variables
-> without giving them an initial value, so the variable name exists in the
-> outer scope. At first glance, this might appear to be in conflict with Rust’s
-> having no null values. However, if we try to use a variable before giving it
-> a value, we’ll get a compile-time error, which shows that Rust indeed does
-> not allow null values.
+> Eslatma: 10-16, 10-17 va 10-23 ro'yxatlardagi misollar o'zgaruvchilarni
+> ularga boshlang'ich qiymat bermasdan e'lon qiladi, shuning uchun o'zgaruvchi nomi
+> tashqi doirada mavjud. Bir qarashda, bu Rustning null qiymatlari yo'qligiga zid
+> bo'lib tuyulishi mumkin. Biroq, agar biz o'zgaruvchiga qiymat berishdan oldin
+> foydalanmoqchi bo'lsak, biz kompilyatsiya vaqtida xatoga duch kelamiz, bu Rust
+> haqiqatan ham null qiymatlarga ruxsat bermasligini ko'rsatadi.
 
-The outer scope declares a variable named `r` with no initial value, and the
-inner scope declares a variable named `x` with the initial value of 5. Inside
-the inner scope, we attempt to set the value of `r` as a reference to `x`. Then
-the inner scope ends, and we attempt to print the value in `r`. This code won’t
-compile because the value `r` is referring to has gone out of scope before we
-try to use it. Here is the error message:
+Tashqi qamrov boshlang‘ich qiymati bo‘lmagan `r` nomli o‘zgaruvchini, ichki qamrov esa boshlang‘ich qiymati 5 bo‘lgan `x` nomli o‘zgaruvchini e’lon qiladi. Ichki doirada(qamrov) biz `x` ga reference sifatida `r` qiymatini belgilashga harakat qilamiz. Keyin ichki qamrov tugaydi va biz qiymatni `r` da chop etishga harakat qilamiz. Ushbu kod kompilyatsiya qilinmaydi, chunki biz undan foydalanishga urinishdan oldin `r` qiymati ko'rib chiqilmaydi. Mana xato xabari:
 
 ```console
 {{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-16/output.txt}}
 ```
 
-The variable `x` doesn’t “live long enough.” The reason is that `x` will be out
-of scope when the inner scope ends on line 7. But `r` is still valid for the
-outer scope; because its scope is larger, we say that it “lives longer.” If
-Rust allowed this code to work, `r` would be referencing memory that was
-deallocated when `x` went out of scope, and anything we tried to do with `r`
-wouldn’t work correctly. So how does Rust determine that this code is invalid?
-It uses a borrow checker.
+`x` o'zgaruvchisi "yetarlicha uzoq umr ko'rmaydi". Sababi, 7-qatorda ichki qamrov tugashi bilan `x` amaldan tashqarida bo'ladi. Lekin `r` tashqi doira uchun hamon amal qiladi; uning qamrovi kengroq bo'lgani uchun biz uni "uzoq yashaydi" deymiz. Agar Rust ushbu kodning ishlashiga ruxsat bergan bo'lsa, `r` `x` doiradan chiqib ketganda ajratilgan xotiraga reference bo'ladi va biz `r` bilan qilishga uringan har qanday narsa to'g'ri ishlamaydi. Xo'sh, Rust bu kodning yaroqsizligini qanday aniqlaydi?
+Bu borrow(qarz) tekshiruvidan foydalanadi.
 
-### The Borrow Checker
+### Borrow tekshiruvchisi
 
-The Rust compiler has a *borrow checker* that compares scopes to determine
-whether all borrows are valid. Listing 10-17 shows the same code as Listing
-10-16 but with annotations showing the lifetimes of the variables.
+Rust kompilyatorida barcha borrowlar to'g'ri yoki yo'qligini aniqlash uchun ko'lamlarni taqqoslaydigan *borrow tekshiruvi(borrow checker)* mavjud. 10-17 ro'yxat 10-16 ro'yxati bilan bir xil kodni ko'rsatadi, ammo o'zgaruvchilarning lifetime(ishlash muddatini) ko'rsatadigan izohlar bilan.
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-17/src/main.rs}}
 ```
 
-<span class="caption">Listing 10-17: Annotations of the lifetimes of `r` and
-`x`, named `'a` and `'b`, respectively</span>
+<span class="caption">Roʻyxat 10-17: `r` va `x` ning mos ravishda `a` va `b` nomlari bilan ishlash lifetimening izohlari</span>
 
-Here, we’ve annotated the lifetime of `r` with `'a` and the lifetime of `x`
-with `'b`. As you can see, the inner `'b` block is much smaller than the outer
-`'a` lifetime block. At compile time, Rust compares the size of the two
-lifetimes and sees that `r` has a lifetime of `'a` but that it refers to memory
-with a lifetime of `'b`. The program is rejected because `'b` is shorter than
-`'a`: the subject of the reference doesn’t live as long as the reference.
+Bu yerda biz `r`ning lifetimeni `a` bilan va `x`ning lifetimeni `b` bilan izohladik. Ko'rib turganingizdek, ichki `b` bloki tashqi `'a` lifetime blokdan ancha kichik. Kompilyatsiya vaqtida Rust ikki lifetimening o'lchamini solishtiradi va `r` ning lifetime `'a` ekanligini, lekin u `'b` lifetime(umr bo'yi) xotiraga ishora qilishini ko'radi. Dastur rad etildi, chunki `'b` `'a` dan qisqaroq: reference mavzusi reference kabi uzoq vaqt yashamaydi.
 
-Listing 10-18 fixes the code so it doesn’t have a dangling reference and
-compiles without any errors.
+Ro'yxat 10-18 kodni tuzatadi, shuning uchun u dangling referencega ega emas va hech qanday xatosiz kompilyatsiya qilinadi.
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-18/src/main.rs}}
 ```
 
-<span class="caption">Listing 10-18: A valid reference because the data has a
-longer lifetime than the reference</span>
+<span class="caption">Ro'yxat 10-18: To'g'ri reference, chunki referencelar mos yozuvlardan ko'ra uzoqroq lifetimega ega</span>
 
 Here, `x` has the lifetime `'b`, which in this case is larger than `'a`. This
 means `r` can reference `x` because Rust knows that the reference in `r` will
