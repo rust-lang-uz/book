@@ -90,45 +90,23 @@ Buning o'rniga biz lifetime haqida gapiradigan quyidagi xatoni olamiz:
 
 Yordam matni shuni ko'rsatadiki, return(qaytarish) turiga umumiy lifetime parametri kerak, chunki Rust qaytarilayotgan reference `x` yoki `y` ga tegishli ekanligini aniqlay olmaydi. Aslida, biz ham bilmaymiz, chunki bu funksiyaning asosiy qismidagi `if` bloki `x` ga referenceni, `else` bloki esa `y` ga referenceni qaytaradi!
 
-When we’re defining this function, we don’t know the concrete values that will
-be passed into this function, so we don’t know whether the `if` case or the
-`else` case will execute. We also don’t know the concrete lifetimes of the
-references that will be passed in, so we can’t look at the scopes as we did in
-Listings 10-17 and 10-18 to determine whether the reference we return will
-always be valid. The borrow checker can’t determine this either, because it
-doesn’t know how the lifetimes of `x` and `y` relate to the lifetime of the
-return value. To fix this error, we’ll add generic lifetime parameters that
-define the relationship between the references so the borrow checker can
-perform its analysis.
+Ushbu funksiyani aniqlaganimizda, biz ushbu funksiyaga o'tadigan aniq qiymatlarni bilmaymiz, shuning uchun `if` yoki `else` ishi bajarilishini bilmaymiz. Shuningdek, biz uzatiladigan referencelarning aniq amal qilish muddatini bilmaymiz, shuning uchun biz qaytaradigan(return) lifetime har doim haqiqiy bo'lishini aniqlash uchun 10-17 va 10-18 ro'yxatlarda bo'lgani kabi qamrovni ko'rib chiqa olmaymiz. Borrow tekshiruvchisi buni ham aniqlay olmaydi, chunki u `x` va `y` ning ishlash lifetime qaytarilgan qiymatning lifetime(ishlash muddati) bilan qanday bog'liqligini bilmaydi. Ushbu xatoni tuzatish uchun biz referencelar o'rtasidagi munosabatni aniqlaydigan umumiy lifetime parametrlarini qo'shamiz, shunda borrow tekshiruvi tahlilini amalga oshirishi mumkin.
 
-### Lifetime Annotation Syntax
+### Lifetime annotation sintaksisi
 
-Lifetime annotations don’t change how long any of the references live. Rather,
-they describe the relationships of the lifetimes of multiple references to each
-other without affecting the lifetimes. Just as functions can accept any type
-when the signature specifies a generic type parameter, functions can accept
-references with any lifetime by specifying a generic lifetime parameter.
+Lifetime annotationlar referencelarning qancha yashashini ko'rishini o'zgartirmaydi. Aksincha, ular lifetimega ta'sir qilmasdan, bir-biriga ko'plab murojaatlarning umrbod lifetimelar munosabatlarini tasvirlaydi. Imzo generik turdagi parametrni ko'rsatsa, funksiyalar har qanday turni qabul qilishi mumkin bo'lgani kabi, funksiyalar ham umumiy lifetime parametrini belgilash orqali har qanday xizmat muddati bilan murojaatlarni qabul qilishi mumkin.
 
-Lifetime annotations have a slightly unusual syntax: the names of lifetime
-parameters must start with an apostrophe (`'`) and are usually all lowercase
-and very short, like generic types. Most people use the name `'a` for the first
-lifetime annotation. We place lifetime parameter annotations after the `&` of a
-reference, using a space to separate the annotation from the reference’s type.
+Lifetime annotationlar biroz noodatiy sintaksisga ega: lifetime parametrlarining nomlari apostrof (`'`) bilan boshlanishi kerak va odatda generik turlar kabi kichik va juda qisqa bo'ladi. Ko'pchilik lifetime annotation birinchi izoh uchun `'a` nomidan foydalanadi. Annotationi reference turidan ajratish uchun boʻsh joydan foydalanib, biz lifetime parametr annotationlarini referencening `&` belgisidan keyin joylashtiramiz.
 
-Here are some examples: a reference to an `i32` without a lifetime parameter, a
-reference to an `i32` that has a lifetime parameter named `'a`, and a mutable
-reference to an `i32` that also has the lifetime `'a`.
+Mana bir nechta misollar: lifetime parametri bo'lmagan `i32` ga reference, `'a` nomli lifetime parametriga ega `i32` ga reference va lifetime `'a` bo'lgan `i32` ga o'zgaruvchan reference.
 
 ```rust,ignore
-&i32        // a reference
-&'a i32     // a reference with an explicit lifetime
-&'a mut i32 // a mutable reference with an explicit lifetime
+&i32        // reference
+&'a i32     // aniq lifetimega ega bo'lgan reference
+&'a mut i32 // aniq lifetimega ega o'zgaruvchan reference
 ```
 
-One lifetime annotation by itself doesn’t have much meaning, because the
-annotations are meant to tell Rust how generic lifetime parameters of multiple
-references relate to each other. Let’s examine how the lifetime annotations
-relate to each other in the context of the `longest` function.
+One lifetime annotation by itself doesn’t have much meaning, because the annotations are meant to tell Rust how generic lifetime parameters of multiple references relate to each other. Let’s examine how the lifetime annotations relate to each other in the context of the `longest` function.
 
 ### Lifetime Annotations in Function Signatures
 
