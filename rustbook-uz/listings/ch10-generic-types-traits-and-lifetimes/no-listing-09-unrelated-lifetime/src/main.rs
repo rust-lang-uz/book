@@ -2,13 +2,13 @@ fn main() {
     let string1 = String::from("abcd");
     let string2 = "xyz";
 
-    let result = longest(string1.as_str(), string2);
-    println!("The longest string is {}", result);
+    let natija = eng_uzun(string1.as_str(), string2);
+    println!("Eng uzun satr {}", natija);
 }
 
 // ANCHOR: here
-fn longest<'a>(x: &str, y: &str) -> &'a str {
-    let result = String::from("really long string");
-    result.as_str()
+fn eng_uzun<'a>(x: &str, y: &str) -> &'a str {
+    let natija = String::from("haqiqatan ham uzun satr");
+    natija.as_str()
 }
 // ANCHOR_END: here
