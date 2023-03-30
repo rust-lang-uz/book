@@ -122,30 +122,14 @@ Biz imzo quyidagi cheklovni ifodalashini istaymiz: qaytarilgan(return) reference
 
 <span class="caption">Ro'yxat 10-21: Imzodagi barcha referencelar bir xil lifetimega(ishlash muddati) ega bo'lishi kerakligini ko'rsatuvchi `eng_uzun` funksiya ta'rifi `'a`</span>
 
-This code should compile and produce the result we want when we use it with the
-`main` function in Listing 10-19.
+Ushbu kod 10-19-sonli ro'yxatdagi `main` funksiyadan foydalanganda biz xohlagan natijani kompilyatsiya qilishi va ishlab chiqarishi kerak.
 
-The function signature now tells Rust that for some lifetime `'a`, the function
-takes two parameters, both of which are string slices that live at least as
-long as lifetime `'a`. The function signature also tells Rust that the string
-slice returned from the function will live at least as long as lifetime `'a`.
-In practice, it means that the lifetime of the reference returned by the
-`longest` function is the same as the smaller of the lifetimes of the values
-referred to by the function arguments. These relationships are what we want
-Rust to use when analyzing this code.
+Funktsiya imzosi endi Rustga ma'lum bir lifetimeda `'a` funksiyasi ikkita parametrni qabul qilishini aytadi, ularning har ikkalasi ham kamida lifetime `'a` bo'lgan string bo'laklaridir. Funktsiya imzosi, shuningdek, Rustga funksiyadan qaytarilgan string bo'lagi hech bo'lmaganda `'a` lifetimegacha yashashini aytadi.
+Amalda, bu `eng_uzun` funksiya tomonidan qaytarilgan referencening lifetime, funksiya argumentlari bilan bog'liq bo'lgan qiymatlarning eng kichik lifetimesi bilan bir xil ekanligini anglatadi. Bu munosabatlar Rust ushbu kodni tahlil qilishda foydalanishini xohlaydigan narsadir.
 
-Remember, when we specify the lifetime parameters in this function signature,
-we’re not changing the lifetimes of any values passed in or returned. Rather,
-we’re specifying that the borrow checker should reject any values that don’t
-adhere to these constraints. Note that the `longest` function doesn’t need to
-know exactly how long `x` and `y` will live, only that some scope can be
-substituted for `'a` that will satisfy this signature.
+Esda tutingki, biz ushbu funksiya imzosida lifetime parametrlarini belgilaganimizda, biz kiritilgan yoki qaytarilgan qiymatlarning lifetimeni o'zgartirmaymiz. Aksincha, biz borrowni tekshiruvchi(borrow checker) ushbu cheklovlarga rioya qilmaydigan har qanday qiymatlarni rad etishi kerakligini ta'kidlaymiz. Shuni esda tutingki, `eng_uzun` funksiya `x` va `y` qancha vaqt ishlashini aniq bilishi shart emas, faqat ushbu imzoni qondiradigan `'a` ga baʼzi bir qamrovni almashtirish mumkin.
 
-When annotating lifetimes in functions, the annotations go in the function
-signature, not in the function body. The lifetime annotations become part of
-the contract of the function, much like the types in the signature. Having
-function signatures contain the lifetime contract means the analysis the Rust
-compiler does can be simpler. If there’s a problem with the way a function is
+Funksiyalarda lifetimeni izohlashda annotationlar funksiya tanasida emas, balki funksiya imzosida bo'ladi. Imzodagi turlar singari, lifetime annotationlar funksiya shartnomasining bir qismiga aylanadi. Funktsiya imzolari lifetime shartnomani o'z ichiga oladi, degan ma'noni anglatadi Rust kompilyatori tahlil qilish osonroq bo'lishi mumkin. If there’s a problem with the way a function is
 annotated or the way it is called, the compiler errors can point to the part of
 our code and the constraints more precisely. If, instead, the Rust compiler
 made more inferences about what we intended the relationships of the lifetimes
