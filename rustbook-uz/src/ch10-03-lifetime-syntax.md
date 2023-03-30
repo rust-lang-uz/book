@@ -143,39 +143,25 @@ Keling, turli xil aniq lifetimelarga ega bo'lgan referencelarni o'tkazish orqali
 
 <span class="caption">Ro'yxat 10-22: `eng_uzun` funksiyasidan foydalanish, turli xil aniq lifetimega ega `String` qiymatlariga referencelar</span>
 
-In this example, `string1` is valid until the end of the outer scope, `string2`
-is valid until the end of the inner scope, and `result` references something
-that is valid until the end of the inner scope. Run this code, and you’ll see
-that the borrow checker approves; it will compile and print `The longest string
-is long string is long`.
+Bu misolda `string1` tashqi qamrov oxirigacha amal qiladi, `string2` ichki qamrov oxirigacha amal qiladi va `natija` ichki doiraning oxirigacha amal qiladigan narsaga ishora qiladi. Ushbu kodni ishga tushiring va siz borrowni tekshiruvchi tasdiqlaganini ko'rasiz; u kompilyatsiya qiladi va `Eng uzun satr - uzundan uzun string` ni yaratadi.
 
-Next, let’s try an example that shows that the lifetime of the reference in
-`result` must be the smaller lifetime of the two arguments. We’ll move the
-declaration of the `result` variable outside the inner scope but leave the
-assignment of the value to the `result` variable inside the scope with
-`string2`. Then we’ll move the `println!` that uses `result` to outside the
-inner scope, after the inner scope has ended. The code in Listing 10-23 will
-not compile.
+Keyinchalik, `natija`dagi referencening lifetime ikkita argumentning kichikroq lifetime bo'lishi kerakligini ko'rsatadigan misolni ko'rib chiqaylik. Biz `natija` o'zgaruvchisi deklaratsiyasini ichki doiradan tashqariga o'tkazamiz, lekin qiymatni belgilashni `string2` bilan doiradagi `natija` o'zgaruvchisiga qoldiramiz. Keyin, `natija`ni ishlatadigan `println!`ni ichki doira tugagandan so‘ng, ichki doiradan tashqariga o‘tkazamiz. 10-23 ro'yxatdagi kod kompilyatsiya qilinmaydi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-23/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 10-23: Attempting to use `result` after `string2`
-has gone out of scope</span>
+<span class="caption">Ro'yxat 10-23: `string2` dan keyin `natija` dan foydalanishga urinish</span>
 
-When we try to compile this code, we get this error:
+Ushbu kodni kompilyatsiya qilmoqchi bo'lganimizda, biz quyidagi xatoni olamiz:
 
 ```console
 {{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-23/output.txt}}
 ```
 
-The error shows that for `result` to be valid for the `println!` statement,
-`string2` would need to be valid until the end of the outer scope. Rust knows
-this because we annotated the lifetimes of the function parameters and return
-values using the same lifetime parameter `'a`.
+Xato shuni ko'rsatadiki, `natija` `println!` bayonoti uchun haqiqiy bo'lishi uchun `string2` tashqi doiraning oxirigacha amal qilishi kerak. Rust buni biladi, chunki biz funksiya parametrlarining lifetimeni(ishlash muddati) va qiymatlarni bir xil `'a` parametridan foydalangan holda izohladik.
 
 As humans, we can look at this code and see that `string1` is longer than
 `string2` and therefore `result` will contain a reference to `string1`.

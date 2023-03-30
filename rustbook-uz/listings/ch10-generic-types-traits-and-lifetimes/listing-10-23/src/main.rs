@@ -1,16 +1,16 @@
 // ANCHOR: here
 fn main() {
-    let string1 = String::from("long string is long");
-    let result;
+    let string1 = String::from("uzundan uzun string");
+    let natija;
     {
         let string2 = String::from("xyz");
-        result = longest(string1.as_str(), string2.as_str());
+        natija = eng_uzun(string1.as_str(), string2.as_str());
     }
-    println!("The longest string is {}", result);
+    println!("Eng uzun satr {}", natija);
 }
 // ANCHOR_END: here
 
-fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+fn eng_uzun<'a>(x: &'a str, y: &'a str) -> &'a str {
     if x.len() > y.len() {
         x
     } else {
