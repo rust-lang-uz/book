@@ -1,11 +1,11 @@
 struct ImportantExcerpt<'a> {
-    part: &'a str,
+    qism: &'a str,
 }
 
 fn main() {
-    let novel = String::from("Call me Ishmael. Some years ago...");
-    let first_sentence = novel.split('.').next().expect("Could not find a '.'");
+    let roman = String::from("Meni yaxshi dasturchi edim. Bir necha yil oldin...");
+    let birinchi_jumla = roman.split('.').next().expect("'.' belgisini topib bo'lmadi.");
     let i = ImportantExcerpt {
-        part: first_sentence,
+        qism: birinchi_jumla,
     };
 }

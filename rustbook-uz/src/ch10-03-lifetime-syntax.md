@@ -209,39 +209,23 @@ Hozirgacha biz belgilagan structlar barcha egalik turlariga ega. Biz referencela
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-24/src/main.rs}}
 ```
 
-<span class="caption">Listing 10-24: A struct that holds a reference, requiring
-a lifetime annotation</span>
+<span class="caption">Ro'yxat 10-24: Referencega ega bo'lgan struct, lifetime annotationni talab qiladi</span>
 
-This struct has the single field `part` that holds a string slice, which is a
-reference. As with generic data types, we declare the name of the generic
-lifetime parameter inside angle brackets after the name of the struct so we can
-use the lifetime parameter in the body of the struct definition. This
-annotation means an instance of `ImportantExcerpt` can’t outlive the reference
-it holds in its `part` field.
+Bu structda bir satr boʻlagini oʻz ichiga oluvchi `qism` maydoni mavjud boʻlib, bu referencelardir. Generik(umumiy) ma'lumotlar turlarida bo'lgani kabi, biz structning nomidan keyin burchakli qavslar ichida generik lifetime parametrining nomini e'lon qilamiz, shuning uchun biz structning ta'rifi tanasida lifetime parametridan foydalanishimiz mumkin. Bu izoh `ImportantExcerpt` namunasi oʻzining `qism` maydonidagi referencedan uzoqlasha olmasligini bildiradi.
 
-The `main` function here creates an instance of the `ImportantExcerpt` struct
-that holds a reference to the first sentence of the `String` owned by the
-variable `novel`. The data in `novel` exists before the `ImportantExcerpt`
-instance is created. In addition, `novel` doesn’t go out of scope until after
-the `ImportantExcerpt` goes out of scope, so the reference in the
-`ImportantExcerpt` instance is valid.
+Bu yerda `main` funksiyasi `roman` oʻzgaruvchisiga tegishli `String`ning birinchi jumlasiga referenceni oʻz ichiga olgan `ImportantExcerpt` strukturasining namunasini yaratadi. `roman`dagi ma'lumotlar `ImportantExcerpt` misoli yaratilishidan oldin mavjud. Bundan tashqari, `roman` `ImportantExcerpt` ishchi doirasi tashqariga chiqmagunicha, ishchi doiradan chiqib ketmaydi, shuning uchun `ImportantExcerpt` misolidagi reference haqiqiy hisoblanadi.
 
 ### Lifetime Elision
 
-You’ve learned that every reference has a lifetime and that you need to specify
-lifetime parameters for functions or structs that use references. However, in
-Chapter 4 we had a function in Listing 4-9, shown again in Listing 10-25, that
-compiled without lifetime annotations.
+Siz har bir referencening lifetime(ishlash muddati) borligini va referencelardan foydalanadigan funksiyalar yoki structlar uchun lifetime parametrlarini belgilashingiz kerakligini bilib oldingiz. Biroq, 4-bobda biz 4-9-ro'yxatdagda funksiyaga ega bo'ldik, u keyin yana 10-25 ro'yxatda ko'rsatiladi, unda kod lifetime annotationsiz tuzilgan.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-25/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 10-25: A function we defined in Listing 4-9 that
-compiled without lifetime annotations, even though the parameter and return
-type are references</span>
+<span class="caption">Ro'yxat 10-25: Biz 4-9 ro'yxatda aniqlagan funksiya, parametr va qaytish(return) turi referencelar bo'lsa ham, annotationsiz(umrbod lifetime) tuzilgan.</span>
 
 The reason this function compiles without lifetime annotations is historical:
 in early versions (pre-1.0) of Rust, this code wouldn’t have compiled because
