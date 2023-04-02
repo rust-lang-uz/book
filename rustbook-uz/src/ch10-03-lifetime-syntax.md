@@ -225,48 +225,26 @@ Siz har bir referencening lifetime(ishlash muddati) borligini va referencelardan
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-25/src/main.rs:here}}
 ```
 
-<span class="caption">Ro'yxat 10-25: Biz 4-9 ro'yxatda aniqlagan funksiya, parametr va qaytish(return) turi referencelar bo'lsa ham, annotationsiz(umrbod lifetime) tuzilgan.</span>
+<span class="caption">Ro'yxat 10-25: Biz 4-9 ro'yxatda aniqlagan funksiya, parametr va qaytish(return) turi referencelar bo'lsa ham, lifetime annotationsiz(umrbod lifetime) tuzilgan.</span>
 
-The reason this function compiles without lifetime annotations is historical:
-in early versions (pre-1.0) of Rust, this code wouldn’t have compiled because
-every reference needed an explicit lifetime. At that time, the function
-signature would have been written like this:
+Ushbu funktsiyaning lifetime annotationlarsiz kompilyatsiya qilinishining sababi tarixiydir: Rust-ning dastlabki versiyalarida (1.0-dan oldingi) bu kod kompilyatsiya bo'lmagan bo'lardi, chunki har bir reference aniq ishlash muddatini talab qiladi. O'sha paytda funktsiya imzosi quyidagicha yozilgan bo'lar edi:
 
 ```rust,ignore
-fn first_word<'a>(s: &'a str) -> &'a str {
+fn birinchi_belgi<'a>(s: &'a str) -> &'a str {
 ```
 
-After writing a lot of Rust code, the Rust team found that Rust programmers
-were entering the same lifetime annotations over and over in particular
-situations. These situations were predictable and followed a few deterministic
-patterns. The developers programmed these patterns into the compiler’s code so
-the borrow checker could infer the lifetimes in these situations and wouldn’t
-need explicit annotations.
+Rust-da juda ko'p kod yozgandan so'ng, Rust jamoasi Rust dasturchilari muayyan vaziyatlarda bir xil lifetime annotatiolarni qayta-qayta kiritayotganini aniqladilar. Bu vaziyatlarni oldindan aytish mumkin edi va bir nechta deterministik patternlarga amal qildi. Ishlab chiquvchilar ushbu patternlarni kompilyator kodiga dasturlashtirdilar, shuning uchun borrow tekshiruvi ushbu vaziyatlarda lifetimeni(ishlash muddatini) aniqlay oladi va aniq izohlarga muhtoj bo'lmaydi.
 
-This piece of Rust history is relevant because it’s possible that more
-deterministic patterns will emerge and be added to the compiler. In the future,
-even fewer lifetime annotations might be required.
+Rust tarixining ushbu qismi dolzarbdir, chunki ko'proq deterministik patternlar paydo bo'lishi va kompilyatorga qo'shilishi mumkin. Kelajakda undan ham kamroqlifetime annotationlar talab qilinishi mumkin.
 
-The patterns programmed into Rust’s analysis of references are called the
-*lifetime elision rules*. These aren’t rules for programmers to follow; they’re
-a set of particular cases that the compiler will consider, and if your code
-fits these cases, you don’t need to write the lifetimes explicitly.
+Rustning referencelarni tahlil qilishda dasturlashtirilgan patternlar *lifetime elision qoidalari(lifetime elision rules)* deb ataladi. Bu dasturchilar rioya qilishi kerak bo'lgan qoidalar emas; ular kompilyator ko'rib chiqadigan muayyan holatlar to'plamidir va agar sizning kodingiz ushbu holatlarga mos keladigan bo'lsa, lifetime vaqtlarini aniq yozishingiz shart emas.
 
-The elision rules don’t provide full inference. If Rust deterministically
-applies the rules but there is still ambiguity as to what lifetimes the
-references have, the compiler won’t guess what the lifetime of the remaining
-references should be. Instead of guessing, the compiler will give you an error
-that you can resolve by adding the lifetime annotations.
+Elision qoidalari to'liq xulosa chiqarmaydi. Agar Rust qoidalarni qat'iy qo'llasa, lekin referencelarning qancha vaqt ishlashi(lifetime) haqida hali ham noaniqlik mavjud bo'lsa, kompilyator qolgan referencelarning lifetime(ishlash muddati) qancha bo'lishi kerakligini taxmin qila olmaydi. Taxmin qilish o'rniga, kompilyator sizga lifetime annotationlarni qo'shish orqali hal qilishingiz mumkin bo'lgan xatoni beradi.
 
-Lifetimes on function or method parameters are called *input lifetimes*, and
-lifetimes on return values are called *output lifetimes*.
+Funksiya yoki metod parametrlari bo‘yicha lifetime *kirish lifetime (input lifetimes)*, qaytariladigan(return) qiymatlar bo‘yicha lifetime *chiqish lifetimei (output lifetimes)* deb ataladi.
 
-The compiler uses three rules to figure out the lifetimes of the references
-when there aren’t explicit annotations. The first rule applies to input
-lifetimes, and the second and third rules apply to output lifetimes. If the
-compiler gets to the end of the three rules and there are still references for
-which it can’t figure out lifetimes, the compiler will stop with an error.
-These rules apply to `fn` definitions as well as `impl` blocks.
+Aniq izohlar(annotation) bo'lmasa, kompilyator referencelarning lifetimeni aniqlash uchun uchta qoidadan foydalanadi. Birinchi qoida kirish lifetimega(input lifetimes), ikkinchi va uchinchi qoidalar esa chiqish lifetimega(output lifetimes) tegishli. Agar kompilyator uchta qoidaning oxiriga yetib borsa va hali ham lifetimeni(foydalanish muddati) aniqlay olmaydigan referencelar mavjud bo'lsa, kompilyator xato bilan to'xtaydi.
+Bu qoidalar `fn` ta'riflari hamda `impl` bloklari uchun amal qiladi.
 
 The first rule is that the compiler assigns a lifetime parameter to each
 parameter that’s a reference. In other words, a function with one parameter gets
