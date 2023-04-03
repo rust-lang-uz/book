@@ -314,43 +314,25 @@ Ikkita kirish(input) lifetime bor, shuning uchun Rust birinchi lifetime elision 
 
 ### Statik Lifetime
 
-One special lifetime we need to discuss is `'static`, which denotes that the
-affected reference *can* live for the entire duration of the program. All
-string literals have the `'static` lifetime, which we can annotate as follows:
+Muhokama qilishimiz kerak bo'lgan maxsus lifetime bu `'static` bo'lib, bu ta'sirlangan reference dasturning butun muddati davomida yashashi mumkinligini bildiradi. Barcha satr literallari `'static` lifetimega ega, biz ularga quyidagicha izoh berishimiz mumkin:
 
 ```rust
-let s: &'static str = "I have a static lifetime.";
+let s: &'static str = "Mening statik lifetimem bor.";
 ```
 
-The text of this string is stored directly in the program’s binary, which
-is always available. Therefore, the lifetime of all string literals is
-`'static`.
+Ushbu satrning matni to'g'ridan-to'g'ri dasturning binary faylida saqlanadi, u har doim mavjud. Shunday qilib, barcha satr literallarining lifetime `'static` dir.
 
-You might see suggestions to use the `'static` lifetime in error messages. But
-before specifying `'static` as the lifetime for a reference, think about
-whether the reference you have actually lives the entire lifetime of your
-program or not, and whether you want it to. Most of the time, an error message
-suggesting the `'static` lifetime results from attempting to create a dangling
-reference or a mismatch of the available lifetimes. In such cases, the solution
-is fixing those problems, not specifying the `'static` lifetime.
+Xato xabarlarida `'static` lifetimedan foydalanish bo'yicha takliflarni ko'rishingiz mumkin. Biroq, `'static` ni referencening lifetime sifatida belgilashdan oldin, sizda mavjud bo'lgan reference haqiqatan ham dasturingizning butun ish vaqti davomida yashaydimi yoki yo'qmi va buni xohlaysizmi, deb o'ylab ko'ring. Ko'pincha, `'static` lifetimeni ko'rsatadigan xato xabari dangling reference yaratishga urinish yoki mavjud bo'lgan lifetimelarning mos kelmasligi natijasida paydo bo'ladi. Bunday hollarda, yechim `'static` lifetimeni ko'rsatmasdan, bu muammolarni tuzatishdir.
 
-## Generic Type Parameters, Trait Bounds, and Lifetimes Together
+## Generik tur parametrlari, Trait boundlar va birgalikdagi lifetime
 
-Let’s briefly look at the syntax of specifying generic type parameters, trait
-bounds, and lifetimes all in one function!
+Keling, generik turdagi parametrlarni, trait boundlarini va lifetimeni bitta funksiyada belgilash sintaksisini qisqacha ko'rib chiqaylik!
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-11-generics-traits-and-lifetimes/src/main.rs:here}}
 ```
 
-This is the `longest` function from Listing 10-21 that returns the longer of
-two string slices. But now it has an extra parameter named `ann` of the generic
-type `T`, which can be filled in by any type that implements the `Display`
-trait as specified by the `where` clause. This extra parameter will be printed
-using `{}`, which is why the `Display` trait bound is necessary. Because
-lifetimes are a type of generic, the declarations of the lifetime parameter
-`'a` and the generic type parameter `T` go in the same list inside the angle
-brackets after the function name.
+Bu 10-21 roʻyxatdagi `eng_uzun` funksiya boʻlib, u ikki qatorning uzunroq qismini qaytaradi. Ammo endi u `where` bandida ko'rsatilgandek `Display` traitini amalga oshiradigan har qanday tur tomonidan to'ldirilishi mumkin bo'lgan `T` generik turidagi `ann` nomli qo'shimcha parametrga ega. Ushbu qo'shimcha parametr `{}` yordamida chop etiladi, shuning uchun `Display` trait boundi(trait chegarasi) zarur. Lifetimelar generik tur bo'lganligi sababli, lifetime parametri `'a` va generik turdagi parametr `T` funksiya nomidan keyin burchakli qavslar ichida bir xil ro'yxatda joylashgan.
 
 ## Summary
 

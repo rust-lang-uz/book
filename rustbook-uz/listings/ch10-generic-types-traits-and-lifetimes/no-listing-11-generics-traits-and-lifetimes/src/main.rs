@@ -2,18 +2,18 @@ fn main() {
     let string1 = String::from("abcd");
     let string2 = "xyz";
 
-    let result = longest_with_an_announcement(
+    let natija = elon_bilan_eng_uzun(
         string1.as_str(),
         string2,
-        "Today is someone's birthday!",
+        "Bugun kimningdir tug'ilgan kuni!",
     );
-    println!("The longest string is {}", result);
+    println!("Eng uzun satr {}", natija);
 }
 
 // ANCHOR: here
 use std::fmt::Display;
 
-fn longest_with_an_announcement<'a, T>(
+fn elon_bilan_eng_uzun<'a, T>(
     x: &'a str,
     y: &'a str,
     ann: T,
@@ -21,7 +21,7 @@ fn longest_with_an_announcement<'a, T>(
 where
     T: Display,
 {
-    println!("Announcement! {}", ann);
+    println!("E'lon! {}", ann);
     if x.len() > y.len() {
         x
     } else {
