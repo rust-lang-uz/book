@@ -270,42 +270,27 @@ Ikkinchi qoida amal qiladi, chunki aynan bitta kirish lifetime mavjud. Ikkinchi 
 fn birinchi_belgi<'a>(s: &'a str) -> &'a str {
 ```
 
-Now all the references in this function signature have lifetimes, and the
-compiler can continue its analysis without needing the programmer to annotate
-the lifetimes in this function signature.
+Endi ushbu funksiya signaturesidagi barcha referencelar lifetimesiga ega va kompilyator dasturchiga ushbu funksiya signaturesidagi lifetimeni izohlashiga hojat qoldirmasdan tahlilini davom ettirishi mumkin.
 
-Let’s look at another example, this time using the `longest` function that had
-no lifetime parameters when we started working with it in Listing 10-20:
+Keling, yana bir misolni ko'rib chiqaylik, bu safar biz 10 20 ro'yxatda ishlashni boshlaganimizda lifetime parametrlarga ega bo'lmagan `eng_uzun` funksiyadan foydalangan holda:
 
 ```rust,ignore
-fn longest(x: &str, y: &str) -> &str {
+fn eng_uzun(x: &str, y: &str) -> &str {
 ```
 
-Let’s apply the first rule: each parameter gets its own lifetime. This time we
-have two parameters instead of one, so we have two lifetimes:
+Keling, birinchi qoidani qo'llaymiz: har bir parametr o'z lifetimeni oladi. Bu safar bizda bitta emas, ikkita parametr bor, shuning uchun bizda ikkita lifetime bor:
 
 ```rust,ignore
-fn longest<'a, 'b>(x: &'a str, y: &'b str) -> &str {
+fn eng_uzun<'a, 'b>(x: &'a str, y: &'b str) -> &str {
 ```
 
-You can see that the second rule doesn’t apply because there is more than one
-input lifetime. The third rule doesn’t apply either, because `longest` is a
-function rather than a method, so none of the parameters are `self`. After
-working through all three rules, we still haven’t figured out what the return
-type’s lifetime is. This is why we got an error trying to compile the code in
-Listing 10-20: the compiler worked through the lifetime elision rules but still
-couldn’t figure out all the lifetimes of the references in the signature.
+Siz ikkinchi qoida qo'llanilmasligini ko'rishingiz mumkin, chunki bir nechta kirish lifetime mavjud. Uchinchi qoida ham qo'llanilmaydi, chunki `eng_uzun` - bu metod emas, balki funksiya, shuning uchun parametrlarning hech biri `self` emas. Barcha uchta qoidani ko'rib chiqqandan so'ng, biz qaytish(return) turining lifetime nima ekanligini hali aniqlay olmadik. Shuning uchun biz 10-20 ro'yxatdagi kodni kompilyatsiya qilishda xatoga yo'l qo'ydik: kompilyator lifetime elision qoidalari bo'yicha ishladi, lekin signaturedagi referencelarning butun lifetimeni aniqlay olmadi.
 
-Because the third rule really only applies in method signatures, we’ll look at
-lifetimes in that context next to see why the third rule means we don’t have to
-annotate lifetimes in method signatures very often.
+Uchinchi qoida haqiqatan ham faqat metod signaturelarida amal qilganligi sababli, biz ushbu kontekstda lifetimeni ko'rib chiqamiz, nima uchun uchinchi qoida biz metod signaturelariga tez-tez izoh qo'yishimiz shart emasligini tushunish uchun.
 
-### Lifetime Annotations in Method Definitions
+### Metod ta'riflarida(defination) Lifetime Annotationlar
 
-When we implement methods on a struct with lifetimes, we use the same syntax as
-that of generic type parameters shown in Listing 10-11. Where we declare and
-use the lifetime parameters depends on whether they’re related to the struct
-fields or the method parameters and return values.
+Biz lifetime bo'lgan strukturada metodlarni qo'llaganimizda, biz 10-11 ro'yxatda ko'rsatilgan generik turdagi parametrlar bilan bir xil sintaksisdan foydalanamiz. Lifetime parametrlarini qayerda e'lon qilishimiz va ishlatishimiz ularning struktura maydonlari yoki metod parametrlari va qaytish(return) qiymatlari bilan bog'liqligiga bog'liq.
 
 Lifetime names for struct fields always need to be declared after the `impl`
 keyword and then used after the struct’s name, because those lifetimes are part
