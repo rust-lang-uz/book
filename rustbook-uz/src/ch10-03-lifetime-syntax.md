@@ -94,7 +94,7 @@ Ushbu funksiyani aniqlaganimizda, biz ushbu funksiyaga o'tadigan aniq qiymatlarn
 
 ### Lifetime annotation sintaksisi
 
-Lifetime annotationlar referencelarning qancha yashashini ko'rishini o'zgartirmaydi. Aksincha, ular lifetimega ta'sir qilmasdan, bir-biriga ko'plab murojaatlarning umrbod lifetimelar munosabatlarini tasvirlaydi. Imzo generik turdagi parametrni ko'rsatsa, funksiyalar har qanday turni qabul qilishi mumkin bo'lgani kabi, funksiyalar ham umumiy lifetime parametrini belgilash orqali har qanday xizmat muddati bilan murojaatlarni qabul qilishi mumkin.
+Lifetime annotationlar referencelarning qancha yashashini ko'rishini o'zgartirmaydi. Aksincha, ular lifetimega ta'sir qilmasdan, bir-biriga ko'plab murojaatlarning umrbod lifetimelar munosabatlarini tasvirlaydi. Signature generik turdagi parametrni ko'rsatsa, funksiyalar har qanday turni qabul qilishi mumkin bo'lgani kabi, funksiyalar ham umumiy lifetime parametrini belgilash orqali har qanday xizmat muddati bilan murojaatlarni qabul qilishi mumkin.
 
 Lifetime annotationlar biroz noodatiy sintaksisga ega: lifetime parametrlarining nomlari apostrof (`'`) bilan boshlanishi kerak va odatda generik turlar kabi kichik va juda qisqa bo'ladi. Ko'pchilik lifetime annotation birinchi izoh uchun `'a` nomidan foydalanadi. Annotationi reference turidan ajratish uchun boʻsh joydan foydalanib, biz lifetime parametr annotationlarini referencening `&` belgisidan keyin joylashtiramiz.
 
@@ -108,11 +108,11 @@ Mana bir nechta misollar: lifetime parametri bo'lmagan `i32` ga reference, `'a` 
 
 Bir umrlik lifetime annotatsiyaning o'zi katta ma'noga ega emas, chunki annotatsiyalar Rustga bir nechta referencelalarning lifetime generik parametrlari bir-biriga qanday bog'liqligini aytib berish uchun mo'ljallangan. Keling, `eng_uzun` funksiya kontekstida lifetime annotatsiyalarning bir-biriga qanday bog'liqligini ko'rib chiqaylik.
 
-### Funktsiya imzolaridagi lifetime annotatsiyalar
+### Funksiya signaturelaridagi lifetime annotatsiyalar
 
-Funksiya imzolarida lifetime annotatsiyalardan foydalanish uchun biz generik *tur* parametrlari bilan qilganimiz kabi, funksiya nomi va parametrlar ro'yxati o'rtasida burchak qavslar ichida generik *lifetime* parametrlarini e'lon qilishimiz kerak.
+Funksiya signaturelarida lifetime annotatsiyalardan foydalanish uchun biz generik *tur* parametrlari bilan qilganimiz kabi, funksiya nomi va parametrlar ro'yxati o'rtasida burchak qavslar ichida generik *lifetime* parametrlarini e'lon qilishimiz kerak.
 
-Biz imzo quyidagi cheklovni ifodalashini istaymiz: qaytarilgan(return) reference ikkala parametr ham to'g'ri bo'lsa, haqiqiy bo'ladi. Bu parametrlarning lifetime(ishlash muddati) va qaytariladigan(return) qiymat o'rtasidagi bog'liqlikdir. 10-21 ro'yxatda ko'rsatilganidek, biz lifetimega `'a` deb nom beramiz va keyin uni har bir referencega qo'shamiz.
+Biz signature quyidagi cheklovni ifodalashini istaymiz: qaytarilgan(return) reference ikkala parametr ham to'g'ri bo'lsa, haqiqiy bo'ladi. Bu parametrlarning lifetime(ishlash muddati) va qaytariladigan(return) qiymat o'rtasidagi bog'liqlikdir. 10-21 ro'yxatda ko'rsatilganidek, biz lifetimega `'a` deb nom beramiz va keyin uni har bir referencega qo'shamiz.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -120,16 +120,16 @@ Biz imzo quyidagi cheklovni ifodalashini istaymiz: qaytarilgan(return) reference
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-21/src/main.rs:here}}
 ```
 
-<span class="caption">Ro'yxat 10-21: Imzodagi barcha referencelar bir xil lifetimega(ishlash muddati) ega bo'lishi kerakligini ko'rsatuvchi `eng_uzun` funksiya ta'rifi `'a`</span>
+<span class="caption">Ro'yxat 10-21: Signaturedagi barcha referencelar bir xil lifetimega(ishlash muddati) ega bo'lishi kerakligini ko'rsatuvchi `eng_uzun` funksiya ta'rifi `'a`</span>
 
 Ushbu kod 10-19-sonli ro'yxatdagi `main` funksiyadan foydalanganda biz xohlagan natijani kompilyatsiya qilishi va ishlab chiqarishi kerak.
 
-Funktsiya imzosi endi Rustga ma'lum bir lifetimeda `'a` funksiyasi ikkita parametrni qabul qilishini aytadi, ularning har ikkalasi ham kamida lifetime `'a` bo'lgan string bo'laklaridir. Funktsiya imzosi, shuningdek, Rustga funksiyadan qaytarilgan string bo'lagi hech bo'lmaganda `'a` lifetimegacha yashashini aytadi.
+Funktsiya signaturesi endi Rustga ma'lum bir lifetimeda `'a` funksiyasi ikkita parametrni qabul qilishini aytadi, ularning har ikkalasi ham kamida lifetime `'a` bo'lgan string bo'laklaridir. Funktsiya signaturesi, shuningdek, Rustga funksiyadan qaytarilgan string bo'lagi hech bo'lmaganda `'a` lifetimegacha yashashini aytadi.
 Amalda, bu `eng_uzun` funksiya tomonidan qaytarilgan referencening lifetime, funksiya argumentlari bilan bog'liq bo'lgan qiymatlarning eng kichik lifetimesi bilan bir xil ekanligini anglatadi. Bu munosabatlar Rust ushbu kodni tahlil qilishda foydalanishini xohlaydigan narsadir.
 
-Esda tutingki, biz ushbu funksiya imzosida lifetime parametrlarini belgilaganimizda, biz kiritilgan yoki qaytarilgan qiymatlarning lifetimeni o'zgartirmaymiz. Aksincha, biz borrowni tekshiruvchi(borrow checker) ushbu cheklovlarga rioya qilmaydigan har qanday qiymatlarni rad etishi kerakligini ta'kidlaymiz. Shuni esda tutingki, `eng_uzun` funksiya `x` va `y` qancha vaqt ishlashini aniq bilishi shart emas, faqat ushbu imzoni qondiradigan `'a` ga baʼzi bir qamrovni almashtirish mumkin.
+Esda tutingki, biz ushbu funksiya signaturesida lifetime parametrlarini belgilaganimizda, biz kiritilgan yoki qaytarilgan qiymatlarning lifetimeni o'zgartirmaymiz. Aksincha, biz borrowni tekshiruvchi(borrow checker) ushbu cheklovlarga rioya qilmaydigan har qanday qiymatlarni rad etishi kerakligini ta'kidlaymiz. Shuni esda tutingki, `eng_uzun` funksiya `x` va `y` qancha vaqt ishlashini aniq bilishi shart emas, faqat ushbu signatureni qondiradigan `'a` ga baʼzi bir qamrovni almashtirish mumkin.
 
-Funksiyalarda lifetimeni izohlashda annotationlar funksiya tanasida emas, balki funksiya imzosida bo'ladi. Imzodagi turlar singari, lifetime annotationlar funksiya shartnomasining bir qismiga aylanadi. Funktsiya imzolari lifetime shartnomani o'z ichiga oladi, degan ma'noni anglatadi Rust kompilyatori tahlil qilish osonroq bo'lishi mumkin. Agar funksiyaga izoh berish yoki uni chaqirish bilan bog'liq muammo bo'lsa, kompilyator xatolari kodimizning bir qismiga va cheklovlarga aniqroq ishora qilishi mumkin. Buning o'rniga, Rust kompilyatori biz lifetime munosabatlari haqida ko'proq taxminlar qilgan bo'lsa, kompilyator faqat muammoning sababidan bir necha qadam uzoqda bizning kodimizdan foydalanishni ko'rsatishi mumkin.
+Funksiyalarda lifetimeni izohlashda annotationlar funksiya tanasida emas, balki funksiya signaturesida bo'ladi. Signaturedagi turlar singari, lifetime annotationlar funksiya shartnomasining bir qismiga aylanadi. Funktsiya signaturelari lifetime shartnomani o'z ichiga oladi, degan ma'noni anglatadi Rust kompilyatori tahlil qilish osonroq bo'lishi mumkin. Agar funksiyaga izoh berish yoki uni chaqirish bilan bog'liq muammo bo'lsa, kompilyator xatolari kodimizning bir qismiga va cheklovlarga aniqroq ishora qilishi mumkin. Buning o'rniga, Rust kompilyatori biz lifetime munosabatlari haqida ko'proq taxminlar qilgan bo'lsa, kompilyator faqat muammoning sababidan bir necha qadam uzoqda bizning kodimizdan foydalanishni ko'rsatishi mumkin.
 
 Biz `eng_uzun` ga aniq referencelar berganimizda, `'a` o‘rniga qo‘yilgan aniq lifetime `x` doirasining `y` doirasiga to‘g‘ri keladigan qismidir. Boshqacha qilib aytadigan bo'lsak, `'a` generik lifetimesi `x` va `y` ning eng kichik lifetimaga teng bo'lgan aniq lifetimeni oladi. Biz qaytarilgan(return) referencega bir xil lifetime parametri `'a` bilan izoh berganimiz sababli, qaytarilgan reference `x` va `y` lifetimening kichikroq uzunligi uchun ham amal qiladi.
 
@@ -227,7 +227,7 @@ Siz har bir referencening lifetime(ishlash muddati) borligini va referencelardan
 
 <span class="caption">Ro'yxat 10-25: Biz 4-9 ro'yxatda aniqlagan funksiya, parametr va qaytish(return) turi referencelar bo'lsa ham, lifetime annotationsiz(umrbod lifetime) tuzilgan.</span>
 
-Ushbu funktsiyaning lifetime annotationlarsiz kompilyatsiya qilinishining sababi tarixiydir: Rust-ning dastlabki versiyalarida (1.0-dan oldingi) bu kod kompilyatsiya bo'lmagan bo'lardi, chunki har bir reference aniq ishlash muddatini talab qiladi. O'sha paytda funktsiya imzosi quyidagicha yozilgan bo'lar edi:
+Ushbu funktsiyaning lifetime annotationlarsiz kompilyatsiya qilinishining sababi tarixiydir: Rust-ning dastlabki versiyalarida (1.0-dan oldingi) bu kod kompilyatsiya bo'lmagan bo'lardi, chunki har bir reference aniq ishlash muddatini talab qiladi. O'sha paytda funktsiya signaturesi quyidagicha yozilgan bo'lar edi:
 
 ```rust,ignore
 fn birinchi_belgi<'a>(s: &'a str) -> &'a str {
@@ -246,44 +246,28 @@ Funksiya yoki metod parametrlari bo‘yicha lifetime *kirish lifetime (input lif
 Aniq izohlar(annotation) bo'lmasa, kompilyator referencelarning lifetimeni aniqlash uchun uchta qoidadan foydalanadi. Birinchi qoida kirish lifetimega(input lifetimes), ikkinchi va uchinchi qoidalar esa chiqish lifetimega(output lifetimes) tegishli. Agar kompilyator uchta qoidaning oxiriga yetib borsa va hali ham lifetimeni(foydalanish muddati) aniqlay olmaydigan referencelar mavjud bo'lsa, kompilyator xato bilan to'xtaydi.
 Bu qoidalar `fn` ta'riflari hamda `impl` bloklari uchun amal qiladi.
 
-The first rule is that the compiler assigns a lifetime parameter to each
-parameter that’s a reference. In other words, a function with one parameter gets
-one lifetime parameter: `fn foo<'a>(x: &'a i32)`; a function with two
-parameters gets two separate lifetime parameters: `fn foo<'a, 'b>(x: &'a i32,
-y: &'b i32)`; and so on.
+Birinchi qoida shundaki, kompilyator mos yozuvlar bo'lgan har bir parametrga lifetime parametrni belgilaydi.
 
-The second rule is that, if there is exactly one input lifetime parameter, that
-lifetime is assigned to all output lifetime parameters: `fn foo<'a>(x: &'a i32)
--> &'a i32`.
+Ikkinchi qoida shuki, agar aynan bitta kirish lifetime(input) parametri mavjud boʻlsa, u lifetime barcha chiqish(output) lifetime parametrlariga tayinlanadi: `fn foo<'a>(x: &'a i32) -> &'a i32`.
 
-The third rule is that, if there are multiple input lifetime parameters, but
-one of them is `&self` or `&mut self` because this is a method, the lifetime of
-`self` is assigned to all output lifetime parameters. This third rule makes
-methods much nicer to read and write because fewer symbols are necessary.
+Uchinchi qoida shundaki, agar kirish lifetime bir nechta parametrlar mavjud bo'lsa, lekin ulardan biri `&self` yoki `&mut self` bo'lsa, chunki bu metod bo'lsa, `self` lifetime barcha chiqish lifetime parametrlariga tayinlanadi. Ushbu uchinchi qoida metodlarni o'qish va yozishni ancha yaxshi qiladi, chunki kamroq belgilar kerak.
 
-Let’s pretend we’re the compiler. We’ll apply these rules to figure out the
-lifetimes of the references in the signature of the `first_word` function in
-Listing 10-25. The signature starts without any lifetimes associated with the
-references:
+Tasavvur qilaylik, biz kompilyatormiz. 10-25 roʻyxatdagi `birinchi_belgi` funksiyasi signaturesidagi referencelarning lifetimeni(amal qilish muddati) aniqlash uchun biz ushbu qoidalarni qoʻllaymiz. Signature referencelalar bilan bog'liq bo'lmagan lifetimesiz(muddatsiz) boshlanadi:
 
 ```rust,ignore
-fn first_word(s: &str) -> &str {
+fn birinchi_belgi(s: &str) -> &str {
 ```
 
-Then the compiler applies the first rule, which specifies that each parameter
-gets its own lifetime. We’ll call it `'a` as usual, so now the signature is
-this:
+Keyin kompilyator birinchi qoidani qo'llaydi, bu har bir parametr o'z lifetimesini oladi. Biz uni odatdagidek `'a` deb ataymiz, shuning uchun endi signature quyidagicha:
 
 ```rust,ignore
-fn first_word<'a>(s: &'a str) -> &str {
+fn birinchi_belgi<'a>(s: &'a str) -> &str {
 ```
 
-The second rule applies because there is exactly one input lifetime. The second
-rule specifies that the lifetime of the one input parameter gets assigned to
-the output lifetime, so the signature is now this:
+Ikkinchi qoida amal qiladi, chunki aynan bitta kirish lifetime mavjud. Ikkinchi qoida bitta kirish(input) parametrining lifetime chiqish lifetimesiga tayinlanishini bildiradi, shuning uchun signature endi quyidagicha:
 
 ```rust,ignore
-fn first_word<'a>(s: &'a str) -> &'a str {
+fn birinchi_belgi<'a>(s: &'a str) -> &'a str {
 ```
 
 Now all the references in this function signature have lifetimes, and the
