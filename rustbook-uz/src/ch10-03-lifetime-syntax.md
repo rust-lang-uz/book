@@ -334,23 +334,12 @@ Keling, generik turdagi parametrlarni, trait boundlarini va lifetimeni bitta fun
 
 Bu 10-21 roʻyxatdagi `eng_uzun` funksiya boʻlib, u ikki qatorning uzunroq qismini qaytaradi. Ammo endi u `where` bandida ko'rsatilgandek `Display` traitini amalga oshiradigan har qanday tur tomonidan to'ldirilishi mumkin bo'lgan `T` generik turidagi `ann` nomli qo'shimcha parametrga ega. Ushbu qo'shimcha parametr `{}` yordamida chop etiladi, shuning uchun `Display` trait boundi(trait chegarasi) zarur. Lifetimelar generik tur bo'lganligi sababli, lifetime parametri `'a` va generik turdagi parametr `T` funksiya nomidan keyin burchakli qavslar ichida bir xil ro'yxatda joylashgan.
 
-## Summary
+## Xulosa
 
-We covered a lot in this chapter! Now that you know about generic type
-parameters, traits and trait bounds, and generic lifetime parameters, you’re
-ready to write code without repetition that works in many different situations.
-Generic type parameters let you apply the code to different types. Traits and
-trait bounds ensure that even though the types are generic, they’ll have the
-behavior the code needs. You learned how to use lifetime annotations to ensure
-that this flexible code won’t have any dangling references. And all of this
-analysis happens at compile time, which doesn’t affect runtime performance!
+Biz ushbu bobda juda ko'p narsalarni ko'rib chiqdik! Endi siz generik(umumiy) turdagi parametrlar, traitlar va trait boundlari(trait chegaralari) va generik lifetime parametrlari haqida bilganingizdan so'ng, siz ko'p turli vaziyatlarda ishlaydigan kodni takrorlashsiz yozishga tayyorsiz.
+Generik turdagi parametrlar kodni turli turlarga qo'llash imkonini beradi. Traitlar va traitlar boundlari(chegara) turlar generik(umumiy) bo'lsa ham, ular kodga kerak bo'lgan xatti-harakatlarga ega bo'lishini ta'minlaydi. Ushbu moslashuvchan kodda hech qanday dangling referencelar bo'lmasligini ta'minlash uchun lifetime annotationlardan qanday foydalanishni o'rgandingiz. Va bu tahlillarning barchasi kompilyatsiya vaqtida sodir bo'ladi, bu runtimening ishlashiga ta'sir qilmaydi!
 
-Believe it or not, there is much more to learn on the topics we discussed in
-this chapter: Chapter 17 discusses trait objects, which are another way to use
-traits. There are also more complex scenarios involving lifetime annotations
-that you will only need in very advanced scenarios; for those, you should read
-the [Rust Reference][reference]. But next, you’ll learn how to write tests in
-Rust so you can make sure your code is working the way it should.
+Ishoning yoki ishonmang, biz ushbu bobda muhokama qilgan mavzular bo'yicha ko'p narsalarni o'rganishimiz mumkin: 17-bobda traitlardan foydalanishning yana bir usuli bo'lgan trait ob'ektlari muhokama qilinadi. Bundan tashqari,lifetime annotationlarni o'z ichiga olgan murakkab stsenariylar ham mavjud, ular sizga faqat juda ilg'or stsenariylarda kerak bo'ladi; ular uchun siz [Rust Reference][reference] ni o'qishingiz kerak. Ammo keyin siz Rust-da testlarni qanday yozishni o'rganasiz, shunda kodingiz kerakli tarzda ishlayotganiga ishonch hosil qilishingiz mumkin.
 
 [references-and-borrowing]:
 ch04-02-references-and-borrowing.html#references-and-borrowing
