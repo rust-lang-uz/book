@@ -1,32 +1,18 @@
-## How to Write Tests
+## Testlarni qanday yozish kerak
 
-Tests are Rust functions that verify that the non-test code is functioning in
-the expected manner. The bodies of test functions typically perform these three
-actions:
+Testlar - bu sinovdan tashqari kod kutilgan tarzda ishlayotganligini tasdiqlovchi Rust funksiyalari. Test funksiyalari organlari odatda ushbu uchta harakatni bajaradi:
 
-1. Set up any needed data or state.
-2. Run the code you want to test.
-3. Assert the results are what you expect.
+1. Har qanday kerakli ma'lumotlarni yoki holatni o'rnating.
+2. Test qilmoqchi bo'lgan kodni ishga tushiring.
+3. Natijalar siz kutgan narsa ekanligini tasdiqlang.
 
-Let’s look at the features Rust provides specifically for writing tests that
-take these actions, which include the `test` attribute, a few macros, and the
-`should_panic` attribute.
+Keling, Rust ushbu amallarni bajaradigan testlarni yozish uchun taqdim etgan xususiyatlarni ko'rib chiqaylik, ular orasida `test` atributi, bir nechta makroslar va `should_panic` atributi mavjud.
 
-### The Anatomy of a Test Function
+### Test funksiyasining anatomiyasi
 
-At its simplest, a test in Rust is a function that’s annotated with the `test`
-attribute. Attributes are metadata about pieces of Rust code; one example is
-the `derive` attribute we used with structs in Chapter 5. To change a function
-into a test function, add `#[test]` on the line before `fn`. When you run your
-tests with the `cargo test` command, Rust builds a test runner binary that runs
-the annotated functions and reports on whether each
-test function passes or fails.
+Eng sodda qilib aytganda, Rust-dagi test `test` atributi bilan izohlangan funksiyadir. Atributlar Rust kodining bo'laklari haqidagi metama'lumotlardir; bir misol, biz 5-bobda structlar bilan ishlatgan `derive` atributidir. Funksiyani test funksiyasiga oʻzgartirish uchun `fn` oldidan qatorga `#[test]` qoʻshing. `cargo test` buyrug'i bilan testlarni o'tkazganingizda, Rust izohli funksiyalarni ishga tushiradigan test dasturining binaryrini yaratadi va har bir test funksiyasidan o'tgan yoki muvaffaqiyatsizligi haqida hisobot beradi.
 
-Whenever we make a new library project with Cargo, a test module with a test
-function in it is automatically generated for us. This module gives you a
-template for writing your tests so you don’t have to look up the exact
-structure and syntax every time you start a new project. You can add as many
-additional test functions and as many test modules as you want!
+Har safar biz Cargo bilan yangi kutubxona loyihasini yaratganimizda, biz uchun test funksiyasi bo'lgan test moduli avtomatik ravishda yaratiladi. Ushbu modul sizga testlarni yozish uchun shablonni taqdim etadi, shuning uchun har safar yangi loyihani boshlaganingizda aniq struktura va sintaksisni izlashga hojat qolmaydi. Siz xohlagancha qo'shimcha test funksiyalari va test modullarini qo'shishingiz mumkin!
 
 We’ll explore some aspects of how tests work by experimenting with the template
 test before we actually test any code. Then we’ll write some real-world tests
