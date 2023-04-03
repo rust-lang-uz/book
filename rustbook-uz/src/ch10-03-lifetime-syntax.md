@@ -292,39 +292,27 @@ Uchinchi qoida haqiqatan ham faqat metod signaturelarida amal qilganligi sababli
 
 Biz lifetime bo'lgan strukturada metodlarni qo'llaganimizda, biz 10-11 ro'yxatda ko'rsatilgan generik turdagi parametrlar bilan bir xil sintaksisdan foydalanamiz. Lifetime parametrlarini qayerda e'lon qilishimiz va ishlatishimiz ularning struktura maydonlari yoki metod parametrlari va qaytish(return) qiymatlari bilan bog'liqligiga bog'liq.
 
-Lifetime names for struct fields always need to be declared after the `impl`
-keyword and then used after the struct’s name, because those lifetimes are part
-of the struct’s type.
+Struct maydonlarining lifetime nomlari har doim `impl` kalit so'zidan keyin e'lon qilinishi va keyin structning nomidan keyin ishlatilishi kerak, chunki bu lifetimelar strukturaning bir qismidir.
 
-In method signatures inside the `impl` block, references might be tied to the
-lifetime of references in the struct’s fields, or they might be independent. In
-addition, the lifetime elision rules often make it so that lifetime annotations
-aren’t necessary in method signatures. Let’s look at some examples using the
-struct named `ImportantExcerpt` that we defined in Listing 10-24.
+`impl` blokidagi metod signaturelarida referencelar struct maydonlaridagi referencelar lifetimega bog'langan bo'lishi mumkin yoki ular mustaqil bo'lishi mumkin. Bundan tashqari, lifetime elision qoidalari ko'pincha metod signaturelarida lifetime annotationlar kerak bo'lmasligi uchun shunday qiladi. 10-24 ro'yxatda biz aniqlagan `ImportantExcerpt` nomli strukturadan foydalanib, ba'zi misollarni ko'rib chiqaylik.
 
-First, we’ll use a method named `level` whose only parameter is a reference to
-`self` and whose return value is an `i32`, which is not a reference to anything:
+Birinchidan, biz `daraja` deb nomlangan metoddan foydalanamiz, uning yagona parametri `self` ga reference va qaytariladigan qiymati `i32` bo‘lib, hech narsaga reference emas:
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-10-lifetimes-on-methods/src/main.rs:1st}}
 ```
 
-The lifetime parameter declaration after `impl` and its use after the type name
-are required, but we’re not required to annotate the lifetime of the reference
-to `self` because of the first elision rule.
+`impl` dan keyin lifetime parametr deklaratsiyasi va tur nomidan keyin foydalanish talab qilinadi, lekin biz birinchi elision qoida tufayli `self` ga referencening lifetimeni izohlashimiz shart emas.
 
-Here is an example where the third lifetime elision rule applies:
+Mana uchinchi umr bo'yi elision qoida qo'llaniladigan misol:
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-10-lifetimes-on-methods/src/main.rs:3rd}}
 ```
 
-There are two input lifetimes, so Rust applies the first lifetime elision rule
-and gives both `&self` and `announcement` their own lifetimes. Then, because
-one of the parameters is `&self`, the return type gets the lifetime of `&self`,
-and all lifetimes have been accounted for.
+Ikkita kirish(input) lifetime bor, shuning uchun Rust birinchi lifetime elision qoidasini qo'llaydi va `&self` va `elon_qilish` ga ham o'z lifetimeni beradi. Keyin, parametrlardan biri `&self` bo'lgani uchun qaytarish(return) turi `&self` lifetimeni oladi va barcha lifetimelar hisobga olingan.
 
-### The Static Lifetime
+### Statik Lifetime
 
 One special lifetime we need to discuss is `'static`, which denotes that the
 affected reference *can* live for the entire duration of the program. All

@@ -1,10 +1,10 @@
 struct ImportantExcerpt<'a> {
-    part: &'a str,
+    qism: &'a str,
 }
 
 // ANCHOR: 1st
 impl<'a> ImportantExcerpt<'a> {
-    fn level(&self) -> i32 {
+    fn daraja(&self) -> i32 {
         3
     }
 }
@@ -12,17 +12,17 @@ impl<'a> ImportantExcerpt<'a> {
 
 // ANCHOR: 3rd
 impl<'a> ImportantExcerpt<'a> {
-    fn announce_and_return_part(&self, announcement: &str) -> &str {
-        println!("Attention please: {}", announcement);
-        self.part
+    fn qismni_elon_qilish_qaytarih(&self, elon_qilish: &str) -> &str {
+        println!("Diqqat iltimos: {}", elon_qilish);
+        self.qism
     }
 }
 // ANCHOR_END: 3rd
 
 fn main() {
-    let novel = String::from("Call me Ishmael. Some years ago...");
-    let first_sentence = novel.split('.').next().expect("Could not find a '.'");
+    let roman = String::from("Meni yaxshi dasturchi edim. Bir necha yil oldin...");
+    let birinchi_jumla = roman.split('.').next().expect("'.' belgisini topib bo'lmadi.");
     let i = ImportantExcerpt {
-        part: first_sentence,
+        qism: birinchi_jumla,
     };
 }
