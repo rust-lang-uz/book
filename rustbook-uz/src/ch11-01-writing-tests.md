@@ -14,22 +14,19 @@ Eng sodda qilib aytganda, Rust-dagi test `test` atributi bilan izohlangan funksi
 
 Har safar biz Cargo bilan yangi kutubxona loyihasini yaratganimizda, biz uchun test funksiyasi bo'lgan test moduli avtomatik ravishda yaratiladi. Ushbu modul sizga testlarni yozish uchun shablonni taqdim etadi, shuning uchun har safar yangi loyihani boshlaganingizda aniq struktura va sintaksisni izlashga hojat qolmaydi. Siz xohlagancha qo'shimcha test funksiyalari va test modullarini qo'shishingiz mumkin!
 
-We’ll explore some aspects of how tests work by experimenting with the template
-test before we actually test any code. Then we’ll write some real-world tests
-that call some code that we’ve written and assert that its behavior is correct.
+Har qanday kodni sinab ko'rishdan oldin shablon testi bilan tajriba o'tkazish orqali testlar qanday ishlashining ba'zi jihatlarini o'rganamiz. Keyin biz yozgan ba'zi kodlarni chaqiradigan va uning xatti-harakati to'g'riligini tasdiqlaydigan haqiqiy dunyo testlarini yozamiz.
 
-Let’s create a new library project called `adder` that will add two numbers:
+Keling, ikkita raqamni qo'shadigan `qoshuvchi` nomli yangi kutubxona loyihasini yarataylik:
 
 ```console
-$ cargo new adder --lib
-     Created library `adder` project
-$ cd adder
+$ cargo new qoshuvchi --lib
+     Created library `qoshuvchi` project
+$ cd qoshuvchi
 ```
 
-The contents of the *src/lib.rs* file in your `adder` library should look like
-Listing 11-1.
+`qoshuvchi` kutubxonangizdagi *src/lib.rs* faylining mazmuni 11-1 roʻyxatdagi kabi koʻrinishi kerak.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 <!-- manual-regeneration
 cd listings/ch11-writing-automated-tests
@@ -45,31 +42,21 @@ cd ../../..
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-01/src/lib.rs}}
 ```
 
-<span class="caption">Listing 11-1: The test module and function generated
-automatically by `cargo new`</span>
+<span class="caption">Ro'yxat 11-1: Test moduli va funksiyasi avtomatik ravishda `cargo new` tomonidan yaratilgan</span>
 
-For now, let’s ignore the top two lines and focus on the function. Note the
-`#[test]` annotation: this attribute indicates this is a test function, so the
-test runner knows to treat this function as a test. We might also have non-test
-functions in the `tests` module to help set up common scenarios or perform
-common operations, so we always need to indicate which functions are tests.
+Hozircha, keling, yuqoridagi ikkita qatorga e'tibor bermaylik va funksiyaga e'tibor qarataylik. `#[test]` izohiga e'tibor bering: bu atribut bu test funksiyasi ekanligini bildiradi, shuning uchun test ishtirokchisi bu funksiyani test sifatida ko'rishni biladi. Umumiy stsenariylarni oʻrnatish yoki umumiy operatsiyalarni bajarishda yordam beradigan `tests` modulida testdan tashqari funksiyalar ham boʻlishi mumkin, shuning uchun biz har doim qaysi funksiyalar test ekanligini koʻrsatishimiz kerak.
 
-The example function body uses the `assert_eq!` macro to assert that `result`,
-which contains the result of adding 2 and 2, equals 4. This assertion serves as
-an example of the format for a typical test. Let’s run it to see that this test
-passes.
+Misol funksiya tanasi 2 va 2 qo‘shilishi natijasini o‘z ichiga olgan `natija` 4 ga teng ekanligini tasdiqlash uchun `assert_eq!` makrosidan foydalanadi. Ushbu tasdiq odatiy test formatiga misol bo'lib xizmat qiladi. Ushbu sinovdan o'tishini ko'rish uchun uni ishga tushiramiz.
 
-The `cargo test` command runs all tests in our project, as shown in Listing
-11-2.
+`cargo test` buyrug'i 11-2 ro'yxatda ko'rsatilganidek, loyihamizdagi barcha testlarni amalga oshiradi.
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/listing-11-01/output.txt}}
 ```
 
-<span class="caption">Listing 11-2: The output from running the automatically
-generated test</span>
+<span class="caption">Ro'yxat 11-2: Avtomatik ishlab chiqarilgan testni bajarishdan olingan natija</span>
 
-Cargo compiled and ran the test. We see the line `running 1 test`. The next
+Cargo kompilyatsiya qilindi va sinovdan o'tdi. Biz `running 1 test` qatorini ko'ramiz. The next
 line shows the name of the generated test function, called `it_works`, and that
 the result of running that test is `ok`. The overall summary `test result: ok.`
 means that all the tests passed, and the portion that reads `1 passed; 0
