@@ -1,11 +1,5 @@
 $ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
-error[E0433]: failed to resolve: use of undeclared crate or module `xizmat`
-  --> src/lib.rs:11:9
-   |
-11 |         xizmat::navbat_listiga_qoshish();
-   |         ^^^^^^ use of undeclared crate or module `xizmat`
-
 warning: unused import: `crate::uyning_oldi::xizmat`
  --> src/lib.rs:7:5
   |
@@ -13,6 +7,12 @@ warning: unused import: `crate::uyning_oldi::xizmat`
   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
   |
   = note: `#[warn(unused_imports)]` on by default
+
+error[E0433]: failed to resolve: use of undeclared crate or module `xizmat`
+  --> src/lib.rs:11:9
+   |
+11 |         xizmat::navbat_listiga_qoshish();
+   |         ^^^^^^ use of undeclared crate or module `xizmat`
 
 For more information about this error, try `rustc --explain E0433`.
 warning: `restaurant` (lib) generated 1 warning
