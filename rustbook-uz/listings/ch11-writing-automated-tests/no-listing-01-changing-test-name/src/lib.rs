@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     #[test]
-    fn exploration() {
+    fn tadqiqot() {
         assert_eq!(2 + 2, 4);
     }
 }

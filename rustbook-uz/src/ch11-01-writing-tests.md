@@ -56,44 +56,25 @@ Misol funksiya tanasi 2 va 2 qo‘shilishi natijasini o‘z ichiga olgan `natija
 
 <span class="caption">Ro'yxat 11-2: Avtomatik ishlab chiqarilgan testni bajarishdan olingan natija</span>
 
-Cargo kompilyatsiya qilindi va sinovdan o'tdi. Biz `running 1 test` qatorini ko'ramiz. The next
-line shows the name of the generated test function, called `it_works`, and that
-the result of running that test is `ok`. The overall summary `test result: ok.`
-means that all the tests passed, and the portion that reads `1 passed; 0
-failed` totals the number of tests that passed or failed.
+Cargo kompilyatsiya qilindi va sinovdan o'tdi. Biz `running 1 test` qatorini ko'ramiz. Keyingi qatorda `ishlaydi` deb nomlangan yaratilgan test funksiyasining nomi va bu testni bajarish natijasi `ok` ekanligini ko'rsatadi. Umumiy xulosa test natijasi `test result: ok.` barcha testlardan muvaffaqiyatli oʻtganligini va `1 passed;` deb yozilgan qismi muvaffaqiyatli oʻtganligini bildiradi; `0 failed` muvaffaqiyatsiz boʻlgan testlar sonini ifodalaydi.
 
-It’s possible to mark a test as ignored so it doesn’t run in a particular
-instance; we’ll cover that in the [“Ignoring Some Tests Unless Specifically
-Requested”][ignoring]<!-- ignore --> section later in this chapter. Because we
-haven’t done that here, the summary shows `0 ignored`. We can also pass an
-argument to the `cargo test` command to run only tests whose name matches a
-string; this is called *filtering* and we’ll cover that in the [“Running a
-Subset of Tests by Name”][subset]<!-- ignore --> section. We also haven’t
-filtered the tests being run, so the end of the summary shows `0 filtered out`.
+Muayyan misolda ishlamasligi uchun testni e'tiborsiz(ignor) deb belgilash mumkin; Biz buni ushbu bobning keyingi qismida ["Agar aniq talab qilinmasa, ba'zi testlarni e'tiborsiz qoldirish"][ignoring]<!-- ignore --> bo'limida ko'rib chiqamiz. Bu yerda biz buni qilmaganimiz sababli, xulosada  `0 ignored` 0-ta eʼtibor berilmagan koʻrsatiladi. Shuningdek, biz argumentni faqat nomi satrga mos keladigan testlarni o'tkazish uchun `cargo test` buyrug'iga o'tkazishimiz mumkin; bu *filtrlash* deb ataladi va biz buni ["Testlar to'plamini nomi bo'yicha ishga tushirish"][subset]<!-- ignore --> bo'limida ko'rib chiqamiz. Shuningdek, biz bajarilayotgan testlarni filtrlamadik, shuning uchun xulosa oxirida `0 filtered out` 0-ta filtrlangan deb ko‘rsatiladi.
 
-The `0 measured` statistic is for benchmark tests that measure performance.
-Benchmark tests are, as of this writing, only available in nightly Rust. See
-[the documentation about benchmark tests][bench] to learn more.
+`0 measured` statistikasi samaradorlikni o'lchaydigan benchmark testlari uchundir.
+Benchmark testlari, ushbu yozuvdan boshlab, faqat nightly Rust-da mavjud. Batafsil ma'lumot olish uchun [benchmark testlari haqidagi hujjatlarga][bench] qarang.
 
-The next part of the test output starting at `Doc-tests adder` is for the
-results of any documentation tests. We don’t have any documentation tests yet,
-but Rust can compile any code examples that appear in our API documentation.
-This feature helps keep your docs and your code in sync! We’ll discuss how to
-write documentation tests in the [“Documentation Comments as
-Tests”][doc-comments]<!-- ignore --> section of Chapter 14. For now, we’ll
-ignore the `Doc-tests` output.
+`Doc-tests adder`(Hujjat testlari qoʻshuvchisi) dan boshlanadigan test natijasining keyingi qismi har qanday hujjat sinovlari natijalariga moʻljallangan. Bizda hali hech qanday hujjat sinovlari yo'q, lekin Rust API hujjatlarida ko'rinadigan har qanday kod misollarini to'plashi mumkin.
+Bu xususiyat hujjatlaringiz va kodingizni sinxronlashtirishga yordam beradi! Hujjat testlarini qanday yozishni 14-bobning [“Hujjatlarga sharhlar test sifatida”][doc-comments]<!-- ignore --> bo‘limida muhokama qilamiz. Hozircha biz `Doc-tests` chiqishini e'tiborsiz qoldiramiz.
 
-Let’s start to customize the test to our own needs. First change the name of
-the `it_works` function to a different name, such as `exploration`, like so:
+Keling, testni o'z ehtiyojlarimizga moslashtirishni boshlaylik. Avval `ishlaydi` funksiyasining nomini `tadqiqot` kabi boshqa nomga o'zgartiring, masalan:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-01-changing-test-name/src/lib.rs}}
 ```
 
-Then run `cargo test` again. The output now shows `exploration` instead of
-`it_works`:
+Keyin yana `cargo test` bajaring. Chiqish(output) endi `ishlaydi` o‘rniga `tadqiqot`ni ko‘rsatadi:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-01-changing-test-name/output.txt}}
