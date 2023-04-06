@@ -2,13 +2,13 @@
 #[cfg(test)]
 mod tests {
     #[test]
-    fn exploration() {
+    fn tadqiqot() {
         assert_eq!(2 + 2, 4);
     }
 
     #[test]
-    fn another() {
-        panic!("Make this test fail");
+    fn boshqa() {
+        panic!("Ushbu test muvaffaqiyatsizlikka uchradil");
     }
 }
 // ANCHOR_END: here

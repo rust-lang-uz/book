@@ -4,18 +4,18 @@ $ cargo test
      Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 2 tests
-test tests::another ... FAILED
-test tests::exploration ... ok
+test tests::boshqa ... FAILED
+test tests::tadqiqot ... ok
 
 failures:
 
----- tests::another stdout ----
-thread 'tests::another' panicked at 'Make this test fail', src/lib.rs:10:9
+---- tests::boshqa stdout ----
+thread 'tests::boshqa' panicked at 'Make this test fail', src/lib.rs:10:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
 failures:
-    tests::another
+    tests::boshqa
 
 test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 

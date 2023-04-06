@@ -80,37 +80,25 @@ Keyin yana `cargo test` bajaring. Chiqish(output) endi `ishlaydi` o‘rniga `tad
 {{#include ../listings/ch11-writing-automated-tests/no-listing-01-changing-test-name/output.txt}}
 ```
 
-Now we’ll add another test, but this time we’ll make a test that fails! Tests
-fail when something in the test function panics. Each test is run in a new
-thread, and when the main thread sees that a test thread has died, the test is
-marked as failed. In Chapter 9, we talked about how the simplest way to panic
-is to call the `panic!` macro. Enter the new test as a function named
-`another`, so your *src/lib.rs* file looks like Listing 11-3.
+Endi biz yana bir test qo'shamiz, lekin bu safar muvaffaqiyatsiz bo'lgan testni qilamiz! Test funktsiyasidagi biror narsa panic qo'zg'atganda, testlar muvaffaqiyatsiz tugaydi. Har bir test yangi threadda o'tkaziladi va asosiy(main) thread sinov chizig'i o'lganini ko'rsa, test muvaffaqiyatsiz deb belgilanadi. 9-bobda biz panic qo'zg'ashning eng oddiy yo'li `panic!` makrosini chaqirish haqida gapirdik. Yangi testni `boshqa` funksiya sifatida kiriting, shunda *src/lib.rs* faylingiz 11-3 roʻyxatiga oʻxshaydi.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,panics,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-03/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 11-3: Adding a second test that will fail because
-we call the `panic!` macro</span>
+<span class="caption">Ro'yxat 11-3: Muvaffaqiyatsiz bo'ladigan ikkinchi testni qo'shish, chunki biz `panic!` makrosini chaqiramiz.</span>
 
-Run the tests again using `cargo test`. The output should look like Listing
-11-4, which shows that our `exploration` test passed and `another` failed.
+`cargo test` yordamida testlarni qaytadan test qiling. Chiqish 11-4 ro'yxatga o'xshash bo'lishi kerak, bu bizning `tadqiqot` sinovimizdan o'tganligini va `boshqa` muvaffaqiyatsiz ekanligini ko'rsatadi.
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/listing-11-03/output.txt}}
 ```
 
-<span class="caption">Listing 11-4: Test results when one test passes and one
-test fails</span>
+<span class="caption">Ro'yxat 11-4: Bitta test sinovdan o'tgan va bitta test muvaffaqiyatsizlikka uchragan sinov natijalari</span>
 
-Instead of `ok`, the line `test tests::another` shows `FAILED`. Two new
-sections appear between the individual results and the summary: the first
-displays the detailed reason for each test failure. In this case, we get the
-details that `another` failed because it `panicked at 'Make this test fail'` on
-line 10 in the *src/lib.rs* file. The next section lists just the names of all
+`OK` o'rniga `test tests::boshqa` qatori `FAILED`ni koʻrsatadi. Shaxsiy natijalar va xulosa o'rtasida ikkita yangi bo'lim paydo bo'ladi: birinchisida har bir sinov muvaffaqiyatsizligining batafsil sababi ko'rsatiladi. Bunday holda, biz *src/lib.rs* faylidagi 10-qatordagi `panicked at 'Make this test fail'` da panic qo'ygani uchun `boshqa` muvaffaqiyatsizlikka uchraganligi haqidagi tafsilotlarni olamiz. The next section lists just the names of all
 the failing tests, which is useful when there are lots of tests and lots of
 detailed failing test output. We can use the name of a failing test to run just
 that test to more easily debug it; we’ll talk more about ways to run tests in
