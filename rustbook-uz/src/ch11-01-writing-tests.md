@@ -98,18 +98,12 @@ Endi biz yana bir test qo'shamiz, lekin bu safar muvaffaqiyatsiz bo'lgan testni 
 
 <span class="caption">Ro'yxat 11-4: Bitta test sinovdan o'tgan va bitta test muvaffaqiyatsizlikka uchragan sinov natijalari</span>
 
-`OK` o'rniga `test tests::boshqa` qatori `FAILED`ni koʻrsatadi. Shaxsiy natijalar va xulosa o'rtasida ikkita yangi bo'lim paydo bo'ladi: birinchisida har bir sinov muvaffaqiyatsizligining batafsil sababi ko'rsatiladi. Bunday holda, biz *src/lib.rs* faylidagi 10-qatordagi `panicked at 'Make this test fail'` da panic qo'ygani uchun `boshqa` muvaffaqiyatsizlikka uchraganligi haqidagi tafsilotlarni olamiz. The next section lists just the names of all
-the failing tests, which is useful when there are lots of tests and lots of
-detailed failing test output. We can use the name of a failing test to run just
-that test to more easily debug it; we’ll talk more about ways to run tests in
-the [“Controlling How Tests Are Run”][controlling-how-tests-are-run]<!-- ignore
---> section.
+`OK` o'rniga `test tests::boshqa` qatori `FAILED`ni koʻrsatadi. Shaxsiy natijalar va xulosa o'rtasida ikkita yangi bo'lim paydo bo'ladi: birinchisida har bir sinov muvaffaqiyatsizligining batafsil sababi ko'rsatiladi. Bunday holda, biz *src/lib.rs* faylidagi 10-qatordagi `panicked at 'Make this test fail'` da panic qo'ygani uchun `boshqa` muvaffaqiyatsizlikka uchraganligi haqidagi tafsilotlarni olamiz. Keyingi bo'limda barcha muvaffaqiyatsiz testlarning nomlari keltirilgan, bu juda ko'p sinovlar va ko'plab batafsil muvaffaqiyatsiz sinov natijalari mavjud bo'lganda foydalidir. Muvaffaqiyatsiz test nomidan uni osonroq debug qilish uchun ishlatishimiz mumkin; testlarni o'tkazish usullari haqida ko'proq ["Testlar qanday o'tkazilishini nazorat qilish"][controlling-how-tests-are-run]<!-- ignore
+--> section bo'limida gaplashamiz.
 
-The summary line displays at the end: overall, our test result is `FAILED`. We
-had one test pass and one test fail.
+Xulosa qatori oxirida ko'rsatiladi: umuman olganda, bizning test natijasimiz `FAILED` muvaffaqiyatsiz. Bizda bitta test sinovi bor edi va bitta sinov muvaffaqiyatsiz tugadi.
 
-Now that you’ve seen what the test results look like in different scenarios,
-let’s look at some macros other than `panic!` that are useful in tests.
+Sinov natijalari turli stsenariylarda qanday ko‘rinishini ko‘rganingizdan so‘ng, keling, testlarda foydali bo‘lgan  `panic!`dan tashqari ba’zi makrolarni ko‘rib chiqaylik.
 
 ### Checking Results with the `assert!` Macro
 
