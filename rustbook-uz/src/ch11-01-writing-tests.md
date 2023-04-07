@@ -105,35 +105,23 @@ Xulosa qatori oxirida ko'rsatiladi: umuman olganda, bizning test natijasimiz `FA
 
 Sinov natijalari turli stsenariylarda qanday ko‘rinishini ko‘rganingizdan so‘ng, keling, testlarda foydali bo‘lgan  `panic!`dan tashqari ba’zi makrolarni ko‘rib chiqaylik.
 
-### Checking Results with the `assert!` Macro
+### Natijalarni `assert!` makrosi bilan tekshirish!
 
-The `assert!` macro, provided by the standard library, is useful when you want
-to ensure that some condition in a test evaluates to `true`. We give the
-`assert!` macro an argument that evaluates to a Boolean. If the value is
-`true`, nothing happens and the test passes. If the value is `false`, the
-`assert!` macro calls `panic!` to cause the test to fail. Using the `assert!`
-macro helps us check that our code is functioning in the way we intend.
+Standart kutubxona tomonidan taqdim etilgan `assert!` makrosi testdagi baʼzi shartlar `true`(toʻgʻri) boʻlishini taʼminlashni istasangiz foydali boʻladi. Biz `assert!` makrosiga mantiqiy(boolean) qiymatga baholovchi argument beramiz. Qiymat `true` bo'lsa, hech narsa sodir bo'lmaydi va sinovdan o'tadi. Agar qiymat `false` bo‘lsa, `assert!` makros testning muvaffaqiyatsiz bo‘lishiga olib kelishi uchun `panic!` chaqiradi. `assert!` makrosidan foydalanish bizning kodimiz biz rejalashtirgan tarzda ishlayotganligini tekshirishga yordam beradi.
 
-In Chapter 5, Listing 5-15, we used a `Rectangle` struct and a `can_hold`
-method, which are repeated here in Listing 11-5. Let’s put this code in the
-*src/lib.rs* file, then write some tests for it using the `assert!` macro.
+5-bob, 5-15-ro'yxarda biz 11-5-ro'yxardada takrorlangan `Kvadrat` strukturasi va `ushlab_tur` metodidan foydalandik. Keling, ushbu kodni *src/lib.rs* fayliga joylashtiramiz, so'ngra `assert!` makrosidan foydalanib, u uchun testlarni yozamiz.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-05/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 11-5: Using the `Rectangle` struct and its
-`can_hold` method from Chapter 5</span>
+<span class="caption">Ro'yxat 11-5: 5-bobdagi `Kvadrat` strukturasi va uning `ushlab_tur` metodidan foydalanish</span>
 
-The `can_hold` method returns a Boolean, which means it’s a perfect use case
-for the `assert!` macro. In Listing 11-6, we write a test that exercises the
-`can_hold` method by creating a `Rectangle` instance that has a width of 8 and
-a height of 7 and asserting that it can hold another `Rectangle` instance that
-has a width of 5 and a height of 1.
+`ushlab_tur` metodi mantiqiy(boolean) qiymatini qaytaradi, ya'ni bu `assert!` makrosi uchun mukammal foydalanish holati. 11-6 ro'yxatda biz kengligi 8 va balandligi 7 bo'lgan `Kvadrat` misolini yaratish va uning kengligi 5 va balandligi 1 bo'lgan boshqa `Kvadrat` misolini ushlab turishi mumkinligini tekshirish orqali `ushlab_tur` metodini bajaradigan testni yozamiz.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-06/src/lib.rs:here}}

@@ -1,13 +1,13 @@
 // ANCHOR: here
 #[derive(Debug)]
-struct Rectangle {
-    width: u32,
-    height: u32,
+struct Kvadrat {
+    kenglik: u32,
+    balandlik: u32,
 }
 
-impl Rectangle {
-    fn can_hold(&self, other: &Rectangle) -> bool {
-        self.width > other.width && self.height > other.height
+impl Kvadrat {
+    fn ushlab_tur(&self, boshqa: &Kvadrat) -> bool {
+        self.kenglik > other.kenglik && self.balandlik > boshqa.balandlik
     }
 }
 // ANCHOR_END: here
