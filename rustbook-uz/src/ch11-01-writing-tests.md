@@ -140,24 +140,19 @@ Keyin biz `assert!` makrosini chaqirdik va uni `kattaroq.ushlab_tur(&kichikroq)`
 
 Test muvaffaqiyatli o'tadi! Keling, yana bir sinovni qo'shamiz, bu safar kichikroq kvadrat kattaroq kvadratni ushlab turolmaydi:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-02-adding-another-rectangle-test/src/lib.rs:here}}
 ```
 
-Because the correct result of the `can_hold` function in this case is `false`,
-we need to negate that result before we pass it to the `assert!` macro. As a
-result, our test will pass if `can_hold` returns `false`:
+Chunki bu holda `ushlab_tur` funksiyasining to'g'ri natijasi `false` bo'lsa, biz uni `assert!` makrosiga o'tkazishdan oldin bu natijani inkor etishimiz kerak. Natijada, agar `ushlab_tur` `false` qiymatini qaytarsa, testimiz o'tadi:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-02-adding-another-rectangle-test/output.txt}}
 ```
 
-Two tests that pass! Now let’s see what happens to our test results when we
-introduce a bug in our code. We’ll change the implementation of the `can_hold`
-method by replacing the greater-than sign with a less-than sign when it
-compares the widths:
+Ikkita sinovdan o'tadi! Keling, kodimizga xatolik kiritganimizda test natijalarimiz bilan nima sodir bo'lishini ko'rib chiqaylik. Kengliklarni solishtirganda katta belgisini kichikroq belgisi bilan almashtirish orqali `ushlab_tur` metodini amalga oshirishni o‘zgartiramiz:
 
 ```rust,not_desired_behavior,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-03-introducing-a-bug/src/lib.rs:here}}
