@@ -158,7 +158,7 @@ Ikkita sinovdan o'tadi! Keling, kodimizga xatolik kiritganimizda test natijalari
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-03-introducing-a-bug/src/lib.rs:here}}
 ```
 
-Running the tests now produces the following:
+Sinovlarni o'tkazish endi quyidagilarga olib keladi:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-03-introducing-a-bug/output.txt}}

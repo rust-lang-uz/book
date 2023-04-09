@@ -1,14 +1,14 @@
 #[derive(Debug)]
-struct Rectangle {
-    width: u32,
-    height: u32,
+struct Kvadrat {
+    kenglik: u32,
+    balandlik: u32,
 }
 
 // ANCHOR: here
 // --snip--
-impl Rectangle {
-    fn can_hold(&self, other: &Rectangle) -> bool {
-        self.width < other.width && self.height > other.height
+impl Kvadrat {
+    fn ushlab_tur(&self, boshqa: &Kvadrat) -> bool {
+        self.kenglik < boshqa.kenglik && self.balandlik > boshqa.balandlik
     }
 }
 // ANCHOR_END: here
@@ -18,30 +18,30 @@ mod tests {
     use super::*;
 
     #[test]
-    fn larger_can_hold_smaller() {
-        let larger = Rectangle {
-            width: 8,
-            height: 7,
+    fn katta_kichikni_ushlab_turadi() {
+        let kattaroq = Kvadrat {
+            kenglik: 8,
+            balandlik: 7,
         };
-        let smaller = Rectangle {
-            width: 5,
-            height: 1,
+        let kichikroq = Kvadrat {
+            kenglik: 5,
+            balandlik: 1,
         };
 
-        assert!(larger.can_hold(&smaller));
+        assert!(kattaroq.ushlab_tur(&kichikroq));
     }
 
     #[test]
-    fn smaller_cannot_hold_larger() {
-        let larger = Rectangle {
-            width: 8,
-            height: 7,
+    fn kichik_kattani_ushlolmaydi() {
+        let kattaroq = Kvadrat {
+            kenglik: 8,
+            balandlik: 7,
         };
-        let smaller = Rectangle {
-            width: 5,
-            height: 1,
+        let kichikroq = Kvadrat {
+            kenglik: 5,
+            balandlik: 1,
         };
 
-        assert!(!smaller.can_hold(&larger));
+        assert!(!kichikroq.ushlab_tur(&kattaroq));
     }
 }
