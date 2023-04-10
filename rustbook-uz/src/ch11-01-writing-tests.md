@@ -240,73 +240,52 @@ Bu natija faqat tasdiqlash(assertion) muvaffaqiyatsizligini va tasdiqlash qaysi 
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-07-custom-failure-message/src/lib.rs:here}}
 ```
 
-Now when we run the test, we’ll get a more informative error message:
+Endi sinovni o'tkazganimizda, biz ko'proq ma'lumot beruvchi xato xabarini olamiz:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-07-custom-failure-message/output.txt}}
 ```
 
-We can see the value we actually got in the test output, which would help us
-debug what happened instead of what we were expecting to happen.
+Sinov natijasida biz haqiqatda olgan qiymatni ko'rishimiz mumkin, bu biz kutgan narsaning o'rniga nima sodir bo'lganligini aniqlashga yordam beradi.
 
-### Checking for Panics with `should_panic`
+### `should_panic` yordamida panic tekshirish
 
-In addition to checking return values, it’s important to check that our code
-handles error conditions as we expect. For example, consider the `Guess` type
-that we created in Chapter 9, Listing 9-13. Other code that uses `Guess`
-depends on the guarantee that `Guess` instances will contain only values
-between 1 and 100. We can write a test that ensures that attempting to create a
-`Guess` instance with a value outside that range panics.
+Qaytish(return) qiymatlarini tekshirishdan tashqari, bizning kodimiz xato holatlarini biz kutganidek hal qilishini tekshirish muhimdir. Misol uchun, biz 9-bob, 9-13 ro'yxatda yaratgan `Taxmin` turini ko'rib chiqaylik. `Taxmin` dan foydalanadigan boshqa kod `Taxmin` misollarida faqat 1 dan 100 gacha bo'lgan qiymatlarni o'z ichiga olishi kafolatiga bog'liq. Ushbu diapazondan(chegaradan) tashqaridagi qiymatga ega `Taxmin` misolini yaratishga urinish panic qo'yishini ta'minlaydigan test yozishimiz mumkin.
 
-We do this by adding the attribute `should_panic` to our test function. The
-test passes if the code inside the function panics; the test fails if the code
-inside the function doesn’t panic.
+Buni test funksiyamizga `should_panic` atributini qo‘shish orqali qilamiz. Funktsiya ichidagi kod panic qo'zg'atsa, test o'tadi;funksiya ichidagi kod panic qo'ymasa, test muvaffaqiyatsiz tugaydi.
 
-Listing 11-8 shows a test that checks that the error conditions of `Guess::new`
-happen when we expect them to.
+11-8 ro'yxatda `Taxmin::new` xatolik holatlari biz kutgan vaqtda sodir bo'lishini tekshiradigan test ko'rsatilgan.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-08/src/lib.rs}}
 ```
 
-<span class="caption">Listing 11-8: Testing that a condition will cause a
-`panic!`</span>
+<span class="caption">Ro'yxat 11-8: Test `panic!` keltirib chiqarishini tekshirish</span>
 
-We place the `#[should_panic]` attribute after the `#[test]` attribute and
-before the test function it applies to. Let’s look at the result when this test
-passes:
+Biz `#[should_panic]` atributini `#[test]` atributidan keyin va u amal qiladigan test funksiyasidan oldin joylashtiramiz. Keling, ushbu testdan o'tgan natijani ko'rib chiqaylik:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/listing-11-08/output.txt}}
 ```
 
-Looks good! Now let’s introduce a bug in our code by removing the condition
-that the `new` function will panic if the value is greater than 100:
+Yaxshi ko'rinadi! Endi shartni olib tashlash orqali kodimizga xatolik kiritamiz,
+agar qiymat 100 dan katta bo'lsa, `new` funksiya panic qo'zg'atadi:
 
 ```rust,not_desired_behavior,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-08-guess-with-bug/src/lib.rs:here}}
 ```
 
-When we run the test in Listing 11-8, it will fail:
+Sinovni 11-8 ro'yxatda o'tkazganimizda, u muvaffaqiyatsiz bo'ladi:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-08-guess-with-bug/output.txt}}
 ```
 
-We don’t get a very helpful message in this case, but when we look at the test
-function, we see that it’s annotated with `#[should_panic]`. The failure we got
-means that the code in the test function did not cause a panic.
+Biz bu holatda unchalik foydali xabar olmaymiz, lekin test funksiyasini ko‘rib chiqsak, u `#[should_panic]` bilan izohlanganini ko‘ramiz. Biz erishgan muvaffaqiyatsizlik test funksiyasidagi kod panic qo'zg'atmaganligini anglatadi.
 
-Tests that use `should_panic` can be imprecise. A `should_panic` test would
-pass even if the test panics for a different reason from the one we were
-expecting. To make `should_panic` tests more precise, we can add an optional
-`expected` parameter to the `should_panic` attribute. The test harness will
-make sure that the failure message contains the provided text. For example,
-consider the modified code for `Guess` in Listing 11-9 where the `new` function
-panics with different messages depending on whether the value is too small or
-too large.
+`should_panic` ishlatadigan testlar noaniq bo'lishi mumkin. Agar test biz kutgandan boshqa sababga ko'ra panic qo'zg'atsa ham, `should_panic` testi o'tadi. `should_panic` testlarini aniqroq qilish uchun biz `should_panic` atributiga ixtiyoriy `expected`  parametrini qo'shishimiz mumkin. Test dasturi xato xabarida taqdim etilgan matn mavjudligiga ishonch hosil qiladi. Masalan, 11-9 ro'yxatdagi `Taxmin` uchun o'zgartirilgan kodni ko'rib chiqing, bu erda `new` funksiya qiymat juda kichik yoki juda kattaligiga qarab turli xabarlar bilan panicga tushadi.
 
 <span class="filename">Filename: src/lib.rs</span>
 

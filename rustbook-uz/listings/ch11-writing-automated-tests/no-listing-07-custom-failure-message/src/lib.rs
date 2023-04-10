@@ -1,5 +1,5 @@
-pub fn greeting(name: &str) -> String {
-    String::from("Hello!")
+pub fn salomlashish(name: &str) -> String {
+    String::from("Salom!")
 }
 
 #[cfg(test)]
@@ -8,12 +8,12 @@ mod tests {
 
     // ANCHOR: here
     #[test]
-    fn greeting_contains_name() {
-        let result = greeting("Carol");
+    fn salomlash() {
+        let natija = salomlashish("Azizbek");
         assert!(
-            result.contains("Carol"),
-            "Greeting did not contain name, value was `{}`",
-            result
+            natija.contains("Azizbek"),
+            "Salomlashishda ism yo'q, qiymat `{}` edi",
+            natija
         );
     }
     // ANCHOR_END: here
