@@ -287,33 +287,23 @@ Biz bu holatda unchalik foydali xabar olmaymiz, lekin test funksiyasini ko‘rib
 
 `should_panic` ishlatadigan testlar noaniq bo'lishi mumkin. Agar test biz kutgandan boshqa sababga ko'ra panic qo'zg'atsa ham, `should_panic` testi o'tadi. `should_panic` testlarini aniqroq qilish uchun biz `should_panic` atributiga ixtiyoriy `expected`  parametrini qo'shishimiz mumkin. Test dasturi xato xabarida taqdim etilgan matn mavjudligiga ishonch hosil qiladi. Masalan, 11-9 ro'yxatdagi `Taxmin` uchun o'zgartirilgan kodni ko'rib chiqing, bu erda `new` funksiya qiymat juda kichik yoki juda kattaligiga qarab turli xabarlar bilan panicga tushadi.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-09/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 11-9: Testing for a `panic!` with a panic message
-containing a specified substring</span>
+<span class="caption">Ro'yxat 11-9: Belgilangan substringni oʻz ichiga olgan panic xabari bilan `panic!` sinovi</span>
 
-This test will pass because the value we put in the `should_panic` attribute’s
-`expected` parameter is a substring of the message that the `Guess::new`
-function panics with. We could have specified the entire panic message that we
-expect, which in this case would be `Guess value must be less than or equal to
-100, got 200.` What you choose to specify depends on how much of the panic
-message is unique or dynamic and how precise you want your test to be. In this
-case, a substring of the panic message is enough to ensure that the code in the
-test function executes the `else if value > 100` case.
+Bu testdan o‘tadi, chunki biz `should_panic` atributining `expected` parametriga qo‘ygan qiymat `Taxmin::new` funksiyasi panicga tushadigan xabarning substringi hisoblanadi. Biz kutgan vahima haqidagi xabarni toʻliq koʻrsatishimiz mumkin edi, bu holda `Taxmin qilingan qiymat 1 dan 100 gacha bo'lishi kerak, 200 qabul qilinmaydi.`. Siz belgilashni tanlagan narsa panic xabarining qanchalik noyob yoki dinamik ekanligiga va testingiz qanchalik aniq bo'lishini xohlayotganingizga bog'liq. Bunday holda, test funksiyasidagi kod `else if qiymat > 100` holatini bajarishini ta`minlash uchun panic xabarining substringi kifoya qiladi.
 
-To see what happens when a `should_panic` test with an `expected` message
-fails, let’s again introduce a bug into our code by swapping the bodies of the
-`if value < 1` and the `else if value > 100` blocks:
+`expected`  xabari bilan `should_panic` testi muvaffaqiyatsiz tugashi bilan nima sodir bo'lishini ko'rish uchun `if qiymat < 1` va `else if qiymat > 100` bloklarini almashtirish orqali kodimizga yana xato kiritamiz:
 
 ```rust,ignore,not_desired_behavior
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-09-guess-with-panic-msg-bug/src/lib.rs:here}}
 ```
 
-This time when we run the `should_panic` test, it will fail:
+Bu safar biz `should_panic` testini o'tkazsak, u muvaffaqiyatsiz bo'ladi:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-09-guess-with-panic-msg-bug/output.txt}}

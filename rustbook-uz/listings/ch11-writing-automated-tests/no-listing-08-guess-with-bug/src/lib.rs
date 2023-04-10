@@ -1,16 +1,16 @@
-pub struct Guess {
-    value: i32,
+pub struct Taxmin {
+    qiymat: i32,
 }
 
 // ANCHOR: here
 // --snip--
-impl Guess {
-    pub fn new(value: i32) -> Guess {
-        if value < 1 {
-            panic!("Guess value must be between 1 and 100, got {}.", value);
+impl Taxmin {
+    pub fn new(qiymat: i32) -> Taxmin {
+        if qiymat < 1 {
+            panic!("Taxmin qilingan qiymat 1 dan 100 gacha bo'lishi kerak, {} qabul qilinmaydi.", qiymat);
         }
 
-        Guess { value }
+        Taxmin { qiymat }
     }
 }
 // ANCHOR_END: here
@@ -21,7 +21,7 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn greater_than_100() {
-        Guess::new(200);
+    fn _100_dan_ortiq() {
+        Taxmin::new(200);
     }
 }

@@ -1,24 +1,24 @@
-pub struct Guess {
-    value: i32,
+pub struct Taxmin {
+    qiymat: i32,
 }
 
-impl Guess {
-    pub fn new(value: i32) -> Guess {
+impl Taxmin  {
+    pub fn new(qiymat: i32) -> Taxmin  {
         // ANCHOR: here
-        if value < 1 {
+        if qiymat < 1 {
             panic!(
-                "Guess value must be less than or equal to 100, got {}.",
-                value
+                "Taxmin qilingan qiymat 1 dan 100 gacha bo'lishi kerak, {} qabul qilinmaydi.",
+                qiymat
             );
-        } else if value > 100 {
+        } else if qiymat > 100 {
             panic!(
-                "Guess value must be greater than or equal to 1, got {}.",
-                value
+                "Taxmin qilingan qiymat 1 dan katta yoki teng bo'lishi kerak, {} qabul qilinmaydi.",
+                qiymat
             );
         }
         // ANCHOR_END: here
 
-        Guess { value }
+        Taxmin  { qiymat }
     }
 }
 
@@ -27,8 +27,8 @@ mod tests {
     use super::*;
 
     #[test]
-    #[should_panic(expected = "less than or equal to 100")]
-    fn greater_than_100() {
-        Guess::new(200);
+    #[should_panic(expected = "100 dan kichik yoki teng")]
+    fn _100_dan_ortiq() {
+        Taxmin ::new(200);
     }
 }

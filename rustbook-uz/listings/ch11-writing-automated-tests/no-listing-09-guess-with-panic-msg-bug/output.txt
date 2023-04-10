@@ -4,19 +4,19 @@ $ cargo test
      Running unittests src/lib.rs (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
-test tests::greater_than_100 - should panic ... FAILED
+test tests::_100_dan_ortiq - should panic ... FAILED
 
 failures:
 
----- tests::greater_than_100 stdout ----
-thread 'tests::greater_than_100' panicked at 'Guess value must be greater than or equal to 1, got 200.', src/lib.rs:13:13
+---- tests::_100_dan_ortiq stdout ----
+thread 'tests::_100_dan_ortiq' panicked at 'Taxmin qilingan qiymat 1 dan katta yoki teng bo'lishi kerak, 200 qabul qilinmaydi.', src/lib.rs:13:13
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 note: panic did not contain expected string
-      panic message: `"Guess value must be greater than or equal to 1, got 200."`,
- expected substring: `"less than or equal to 100"`
+      panic message: `"Taxmin qilingan qiymat 1 dan katta yoki teng bo'lishi kerak, 200 qabul qilinmaydi."`,
+ expected substring: `"100 dan kichik yoki teng"`
 
 failures:
-    tests::greater_than_100
+    tests::_100_dan_ortiq
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
