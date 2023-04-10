@@ -309,39 +309,23 @@ Bu safar biz `should_panic` testini o'tkazsak, u muvaffaqiyatsiz bo'ladi:
 {{#include ../listings/ch11-writing-automated-tests/no-listing-09-guess-with-panic-msg-bug/output.txt}}
 ```
 
-The failure message indicates that this test did indeed panic as we expected,
-but the panic message did not include the expected string `'Guess value must be
-less than or equal to 100'`. The panic message that we did get in this case was
-`Guess value must be greater than or equal to 1, got 200.` Now we can start
-figuring out where our bug is!
+Muvaffaqiyatsizlik xabari shuni ko'rsatadiki, bu test biz kutgandek panic qo'zg'atdi, lekin panic xabarida kutilgan `Taxmin qilingan qiymat 100 dan kichik yoki unga teng bo'lishi kerak` qatori yo'q edi. Bu holatda biz olgan vahima xabari: `Taxmin qilingan qiymat 1 dan katta yoki teng bo'lishi kerak, 200 qabul qilinmaydi.`. Endi biz xatomiz qayerda ekanligini aniqlashni boshlashimiz mumkin!
 
-### Using `Result<T, E>` in Tests
+### Testlarda `Result<T, E>` dan foydalanish
 
-Our tests so far all panic when they fail. We can also write tests that use
-`Result<T, E>`! Here’s the test from Listing 11-1, rewritten to use `Result<T,
-E>` and return an `Err` instead of panicking:
+Bizning testlarimiz muvaffaqiyatsiz bo'lganda panic qo'zg'atadi. Biz `Result<T, E>` dan foydalanadigan testlarni ham yozishimiz mumkin! 11-1 roʻyxatidagi test `Result<T, E>` dan foydalanish va panic oʻrniga `Err`ni qaytarish uchun qayta yozilgan:
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-10-result-in-tests/src/lib.rs}}
 ```
 
-The `it_works` function now has the `Result<(), String>` return type. In the
-body of the function, rather than calling the `assert_eq!` macro, we return
-`Ok(())` when the test passes and an `Err` with a `String` inside when the test
-fails.
+`ishlaydi` funksiyasi endi `Result<(), String>` qaytish(return) turiga ega. Funksiya tanasida `assert_eq!` makrosini chaqirishdan ko'ra, testdan o'tganda `Ok(())` va test muvaffaqiyatsiz bo'lganda ichida `String` bilan `Err`ni qaytaramiz.
 
-Writing tests so they return a `Result<T, E>` enables you to use the question
-mark operator in the body of tests, which can be a convenient way to write
-tests that should fail if any operation within them returns an `Err` variant.
+Testlarni `Result<T, E>` qaytaradigan qilib yozish testlar matnida savol belgisi operatoridan foydalanish imkonini beradi, bu testlarni yozishning qulay usuli bo'lishi mumkin, agar ulardagi har qanday operatsiya `Err` variantini qaytarsa, muvaffaqiyatsiz bo'lishi mumkin.
 
-You can’t use the `#[should_panic]` annotation on tests that use `Result<T,
-E>`. To assert that an operation returns an `Err` variant, *don’t* use the
-question mark operator on the `Result<T, E>` value. Instead, use
-`assert!(value.is_err())`.
+`Result<T, E>` ishlatadigan testlarda `#[should_panic]` izohidan(annotation) foydalana olmaysiz. Amaliyot `Err` variantini qaytarishini tasdiqlash uchun `Result<T, E>` qiymatida savol belgisi operatoridan foydalanmang. Buning oʻrniga `assert!(value.is_err())` dan foydalaning.
 
-Now that you know several ways to write tests, let’s look at what is happening
-when we run our tests and explore the different options we can use with `cargo
-test`.
+Endi siz testlarni yozishning bir necha usullarini bilganingizdan so'ng, keling, testlarimizni o'tkazganimizda nima sodir bo'layotganini ko'rib chiqamiz va `cargo test` bilan foydalanishimiz mumkin bo'lgan turli xil variantlarni ko'rib chiqamiz.
 
 [concatenation-with-the--operator-or-the-format-macro]:
 ch08-02-strings.html#concatenation-with-the--operator-or-the-format-macro
