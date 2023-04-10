@@ -193,52 +193,24 @@ Argument sifatida `4` ni `assert_eq!`ga o'tkazamiz, bu esa `ikkita_qoshish(2)` n
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-04-bug-in-add-two/src/lib.rs:here}}
 ```
 
-Run the tests again:
+Testlarni qayta ishga tushiring:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-04-bug-in-add-two/output.txt}}
 ```
 
-Our test caught the bug! The `it_adds_two` test failed, and the message tells
-us that the assertion that fails was `` assertion failed: `(left == right)` ``
-and what the `left` and `right` values are. This message helps us start
-debugging: the `left` argument was `4` but the `right` argument, where we had
-`add_two(2)`, was `5`. You can imagine that this would be especially helpful
-when we have a lot of tests going on.
+Bizning sinovimiz xatoni aniqladi! `ikkita_qosh` testi muvaffaqiyatsiz tugadi va xabarda muvaffaqiyatsizlikka uchragan tasdiqlash `` assertion failed: `(left == right)` `` va `left` va `right` qiymatlari nima. Bu xabar nosozliklarni(debugging) tuzatishni boshlashimizga yordam beradi: ``left``(chap) argumenti `4` edi, lekin `ikkita_qoshish(2)` bo'lgan `right`(o'ng) argumenti `5` edi. Tasavvur qilishingiz mumkinki, bu bizda juda ko'p sinovlar o'tkazilayotganda ayniqsa foydali bo'ladi.
 
-Note that in some languages and test frameworks, the parameters to equality
-assertion functions are called `expected` and `actual`, and the order in which
-we specify the arguments matters. However, in Rust, they’re called `left` and
-`right`, and the order in which we specify the value we expect and the value
-the code produces doesn’t matter. We could write the assertion in this test as
-`assert_eq!(add_two(2), 4)`, which would result in the same failure message
-that displays `` assertion failed: `(left == right)` ``.
+E'tibor bering, ba'zi dasturlash tillarda va test tizimlarida(framework) tenglikni tasdiqlash funksiyalari parametrlari `expected` va `actual` deb nomlanadi va biz argumentlarni ko'rsatish tartibi muhim ahamiyatga ega. Biroq, Rustda ular `left` va `right` deb nomlanadi va biz kutgan qiymat va kod ishlab chiqaradigan qiymatni belgilash tartibi muhim emas. Biz ushbu testdagi tasdiqni `assert_eq!(ikkita_qoshish(2), 4)` deb yozishimiz mumkin, natijada `` assertion failed: `(left == right)` `` ko'rsatiladigan bir xil xato xabari paydo bo'ladi.
 
-The `assert_ne!` macro will pass if the two values we give it are not equal and
-fail if they’re equal. This macro is most useful for cases when we’re not sure
-what a value *will* be, but we know what the value definitely *shouldn’t* be.
-For example, if we’re testing a function that is guaranteed to change its input
-in some way, but the way in which the input is changed depends on the day of
-the week that we run our tests, the best thing to assert might be that the
-output of the function is not equal to the input.
+`assert_ne!` makros biz bergan ikkita qiymat teng bo'lmasa o'tadi va teng bo'lsa muvaffaqiyatsiz bo'ladi. Ushbu makro biz qiymat nima bo'lishini amin bo'lmagan holatlar uchun juda foydali bo'ladi, lekin biz qiymat nima bo'lmasligi kerakligini bilamiz.
+Misol uchun, agar biz biron-bir tarzda uning kiritilishini o'zgartirishi kafolatlangan funksiyani sinab ko'rayotgan bo'lsak, lekin kirishni o'zgartirish metodi testlarimizni o'tkazadigan hafta kuniga bog'liq bo'lsa, tasdiqlash uchun eng yaxshi narsa, funksiyaning chiqishi kirishga teng emasligi bo'lishi mumkin.
 
-Under the surface, the `assert_eq!` and `assert_ne!` macros use the operators
-`==` and `!=`, respectively. When the assertions fail, these macros print their
-arguments using debug formatting, which means the values being compared must
-implement the `PartialEq` and `Debug` traits. All primitive types and most of
-the standard library types implement these traits. For structs and enums that
-you define yourself, you’ll need to implement `PartialEq` to assert equality of
-those types. You’ll also need to implement `Debug` to print the values when the
-assertion fails. Because both traits are derivable traits, as mentioned in
-Listing 5-12 in Chapter 5, this is usually as straightforward as adding the
-`#[derive(PartialEq, Debug)]` annotation to your struct or enum definition. See
-Appendix C, [“Derivable Traits,”][derivable-traits]<!-- ignore --> for more
-details about these and other derivable traits.
+Sirt ostida `assert_eq!` va `assert_ne!` makroslari mos ravishda `==` va `!=` operatorlaridan foydalanadi. Tasdiqlar bajarilmasa, bu makroslar debug formati yordamida o‘z argumentlarini chop etadi, ya’ni solishtirilayotgan qiymatlar `PartialEq` va `Debug` traitlarini bajarishi kerak. Barcha primitiv turlar va standart kutubxona turlarining aksariyati bu traittlarni amalga oshiradi. O'zingiz belgilagan structlar va enumlar uchun ushbu turlarning tengligini tasdiqlash uchun `PartialEq` ni qo'llashingiz kerak bo'ladi. Tasdiqlash muvaffaqiyatsizlikka uchraganida qiymatlarni chop etish uchun `Debug` ni ham qo'llashingiz kerak bo'ladi. 5-bobdagi 5-12 roʻyxatda aytib oʻtilganidek, ikkala trait ham derivable traitli boʻlganligi sababli, bu odatda struct yoki enum taʼrifiga `#[derive(PartialEq, Debug)]` izohini qoʻshishdek oddiy. Ushbu va boshqa ["Derivable Trait"][derivable-traits]<!-- ignore -->lari haqida batafsil ma'lumot olish uchun C ilovasiga qarang.
 
-### Adding Custom Failure Messages
+### Maxsus nosozlik xabarlarini qo'shish
 
-You can also add a custom message to be printed with the failure message as
-optional arguments to the `assert!`, `assert_eq!`, and `assert_ne!` macros. Any
+Shuningdek, `assert!`, `assert_eq!` va `assert_ne!` makroslariga ixtiyoriy argumentlar sifatida xato xabari bilan chop etiladigan maxsus xabarni qo'shishingiz mumkin. Any
 arguments specified after the required arguments are passed along to the
 `format!` macro (discussed in Chapter 8 in the [“Concatenation with the `+`
 Operator or the `format!`
