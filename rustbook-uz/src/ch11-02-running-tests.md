@@ -38,43 +38,33 @@ Ushbu testlarni `cargo test` bilan bajarganimizda, biz quyidagi natijani ko'rami
 {{#include ../listings/ch11-writing-automated-tests/listing-11-10/output.txt}}
 ```
 
-Note that nowhere in this output do we see `I got the value 4`, which is what
-is printed when the test that passes runs. That output has been captured. The
-output from the test that failed, `I got the value 8`, appears in the section
-of the test summary output, which also shows the cause of the test failure.
+E'tibor bering, bu chiqishning hech bir joyida `Men 4 qiymatini oldim` ni ko'rmaymiz, ya'ni testdan o'tganda chop etiladi. Bu chiqish qo'lga olindi. Muvaffaqiyatsiz bo'lgan test natijasi, `Men 8-qiymatni oldim`, test xulosasi chiqishi bo'limida paydo bo'ladi, bu test muvaffaqiyatsizligi sababini ham ko'rsatadi.
 
-If we want to see printed values for passing tests as well, we can tell Rust
-to also show the output of successful tests with `--show-output`.
+Agar biz testlardan o'tish uchun yozilgan qiymatlarni ham ko'rishni istasak, Rust-ga `--show-output` bilan muvaffaqiyatli testlar natijasini ham ko'rsatishni aytishimiz mumkin.
 
 ```console
 $ cargo test -- --show-output
 ```
 
-When we run the tests in Listing 11-10 again with the `--show-output` flag, we
-see the following output:
+11-10 ro'yxatdagi testlarni yana `--show-output` buyrug'i bilan o'tkazganimizda, biz quyidagi natijani ko'ramiz:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/output-only-01-show-output/output.txt}}
 ```
 
-### Running a Subset of Tests by Name
+### Testlar to'plamini nomi bo'yicha bajarish(ishga tushirish)
 
-Sometimes, running a full test suite can take a long time. If you’re working on
-code in a particular area, you might want to run only the tests pertaining to
-that code. You can choose which tests to run by passing `cargo test` the name
-or names of the test(s) you want to run as an argument.
+Ba'zan to'liq test to'plamini ishga tushirish uzoq vaqt talab qilishi mumkin. Agar siz ma'lum bir sohada kod ustida ishlayotgan bo'lsangiz, faqat ushbu kodga tegishli testlarni o'tkazishni xohlashingiz mumkin. Argument sifatida oʻtkazmoqchi boʻlgan test(lar)ning nomi yoki nomlarini `cargo test` oʻtish orqali qaysi testlarni oʻtkazishni tanlashingiz mumkin.
 
-To demonstrate how to run a subset of tests, we’ll first create three tests for
-our `add_two` function, as shown in Listing 11-11, and choose which ones to run.
+Testlar kichik to‘plamini qanday bajarishni ko‘rsatish uchun avval 11-11 ro‘yxatda ko‘rsatilganidek, `ikkita_qoshish` funksiyamiz uchun uchta test yaratamiz va qaysi birini bajarishni tanlaymiz.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-11/src/lib.rs}}
 ```
 
-<span class="caption">Listing 11-11: Three tests with three different
-names</span>
+<span class="caption">Ro'yxat 11-11: Uch xil nomga ega uchta test</span>
 
 If we run the tests without passing any arguments, as we saw earlier, all the
 tests will run in parallel:
