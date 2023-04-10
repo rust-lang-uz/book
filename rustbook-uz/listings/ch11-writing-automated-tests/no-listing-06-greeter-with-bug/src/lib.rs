@@ -1,6 +1,6 @@
 // ANCHOR: here
-pub fn greeting(name: &str) -> String {
-    String::from("Hello!")
+pub fn salomlashish(name: &str) -> String {
+    String::from("Salom!")
 }
 // ANCHOR_END: here
 
@@ -9,8 +9,8 @@ mod tests {
     use super::*;
 
     #[test]
-    fn greeting_contains_name() {
-        let result = greeting("Carol");
-        assert!(result.contains("Carol"));
+    fn salomlash() {
+        let natija = salomlashish("Azizbek");
+        assert!(natija.contains("Azizbek"));
     }
 }

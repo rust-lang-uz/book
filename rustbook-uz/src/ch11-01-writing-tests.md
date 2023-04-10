@@ -210,50 +210,31 @@ Sirt ostida `assert_eq!` va `assert_ne!` makroslari mos ravishda `==` va `!=` op
 
 ### Maxsus nosozlik xabarlarini qo'shish
 
-Shuningdek, `assert!`, `assert_eq!` va `assert_ne!` makroslariga ixtiyoriy argumentlar sifatida xato xabari bilan chop etiladigan maxsus xabarni qo'shishingiz mumkin. Any
-arguments specified after the required arguments are passed along to the
-`format!` macro (discussed in Chapter 8 in the [“Concatenation with the `+`
-Operator or the `format!`
-Macro”][concatenation-with-the--operator-or-the-format-macro]<!-- ignore -->
-section), so you can pass a format string that contains `{}` placeholders and
-values to go in those placeholders. Custom messages are useful for documenting
-what an assertion means; when a test fails, you’ll have a better idea of what
-the problem is with the code.
+Shuningdek, `assert!`, `assert_eq!` va `assert_ne!` makroslariga ixtiyoriy argumentlar sifatida xato xabari bilan chop etiladigan maxsus xabarni qo'shishingiz mumkin. Kerakli argumentlardan so‘ng ko‘rsatilgan har qanday argumentlar `format!` makrosiga uzatiladi (8-bobda ["`+` operatori yoki `format!` makrosi bilan birlashtirish"][concatenation-with-the--operator-or-the-format-macro]<!-- ignore --> bo‘limida muhokama qilingan), shuning uchun siz `{}` to'ldirgichlar va qiymatlarni o'z ichiga olgan format qatorini o'tkazishingiz mumkin. Maxsus xabarlar tasdiqlash nimani anglatishini hujjatlashtirish uchun foydalidir; test muvaffaqiyatsiz tugagach, kod bilan bog'liq muammo nimada ekanligini yaxshiroq tushunasiz.
 
-For example, let’s say we have a function that greets people by name and we
-want to test that the name we pass into the function appears in the output:
+Masalan, bizda odamlarni ism bilan kutib oladigan funksiya bor va biz funksiyaga kiritgan ism chiqishda(output) paydo bo‘lishini sinab ko‘rmoqchimiz:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-05-greeter/src/lib.rs}}
 ```
 
-The requirements for this program haven’t been agreed upon yet, and we’re
-pretty sure the `Hello` text at the beginning of the greeting will change. We
-decided we don’t want to have to update the test when the requirements change,
-so instead of checking for exact equality to the value returned from the
-`greeting` function, we’ll just assert that the output contains the text of the
-input parameter.
+Ushbu dasturga qoʻyiladigan talablar hali kelishib olinmagan va salomlashish boshidagi `Salom` matni oʻzgarishiga ishonchimiz komil. Talablar o'zgarganda testni yangilashni xohlamasligimizga qaror qildik, shuning uchun `salomlashish` funksiyasidan qaytarilgan qiymatga aniq tenglikni tekshirish o‘rniga, biz faqat chiqishda kirish parametrining matni borligini tasdiqlaymiz.
 
-Now let’s introduce a bug into this code by changing `greeting` to exclude
-`name` to see what the default test failure looks like:
+Endi standart sinov xatosi qanday koʻrinishini koʻrish uchun `name`ni chiqarib tashlash uchun `salomlashish` ni oʻzgartirish orqali ushbu kodga xatolik kiritamiz:
 
 ```rust,not_desired_behavior,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-06-greeter-with-bug/src/lib.rs:here}}
 ```
 
-Running this test produces the following:
+Ushbu testni bajarish quyidagi natijalarni beradi:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-06-greeter-with-bug/output.txt}}
 ```
 
-This result just indicates that the assertion failed and which line the
-assertion is on. A more useful failure message would print the value from the
-`greeting` function. Let’s add a custom failure message composed of a format
-string with a placeholder filled in with the actual value we got from the
-`greeting` function:
+Bu natija faqat tasdiqlash(assertion) muvaffaqiyatsizligini va tasdiqlash qaysi qatorda ekanligini ko'rsatadi. Foydaliroq xato xabari `salomlashish` funksiyasidan qiymatni chop etadi. Keling, `salomlashish` funksiyasidan olingan haqiqiy qiymat bilan toʻldirilgan maxsus xabar to'ldiruvchisi(plaseholder) bilan format qatoridan iborat maxsus xato xabarini qoʻshamiz:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-07-custom-failure-message/src/lib.rs:here}}

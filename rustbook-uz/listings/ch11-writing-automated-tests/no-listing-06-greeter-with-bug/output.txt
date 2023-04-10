@@ -4,17 +4,17 @@ $ cargo test
      Running unittests src/lib.rs (target/debug/deps/greeter-170b942eb5bf5e3a)
 
 running 1 test
-test tests::greeting_contains_name ... FAILED
+test tests::salomlash ... FAILED
 
 failures:
 
----- tests::greeting_contains_name stdout ----
-thread 'tests::greeting_contains_name' panicked at 'assertion failed: result.contains(\"Carol\")', src/lib.rs:12:9
+---- tests::salomlash stdout ----
+thread 'tests::salomlash' panicked at 'assertion failed: result.contains(\"Azizbek\")', src/lib.rs:12:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
 failures:
-    tests::greeting_contains_name
+    tests::salomlash
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
