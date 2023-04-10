@@ -1,32 +1,14 @@
-## Controlling How Tests Are Run
+## Testlar qanday o'tkazilishini nazorat qilish
 
-Just as `cargo run` compiles your code and then runs the resulting binary,
-`cargo test` compiles your code in test mode and runs the resulting test
-binary. The default behavior of the binary produced by `cargo test` is to run
-all the tests in parallel and capture output generated during test runs,
-preventing the output from being displayed and making it easier to read the
-output related to the test results. You can, however, specify command line
-options to change this default behavior.
+Xuddi `cargo run` kodingizni kompilyatsiya qilib, natijada olingan binaryni ishga tushirganidek, `cargo test` kodingizni test rejimida kompilyatsiya qiladi va natijada olingan binary testni ishga tushiradi. `cargo test` tomonidan ishlab chiqarilgan binary faylning standart xatti-harakati barcha testlarni parallel ravishda bajarish va sinov testlari paytida hosil bo'lgan chiqishni(output) olish, natijaning ko'rsatilishiga yo'l qo'ymaslik va sinov natijalari bilan bog'liq chiqishni o'qishni osonlashtirishdir. Biroq, siz ushbu standart xatti-harakatni o'zgartirish uchun buyruq qatori parametrlarini belgilashingiz mumkin.
 
-Some command line options go to `cargo test`, and some go to the resulting test
-binary. To separate these two types of arguments, you list the arguments that
-go to `cargo test` followed by the separator `--` and then the ones that go to
-the test binary. Running `cargo test --help` displays the options you can use
-with `cargo test`, and running `cargo test -- --help` displays the options you
-can use after the separator.
+Ba'zi buyruq qatori opsiyalari `cargo test` ga, ba'zilari esa natijada olingan binary testga o'tadi. Ushbu ikki turdagi argumentlarni ajratish uchun siz `cargo test` ga, so'ngra ajratuvchi `--` ga o'tadigan argumentlarni, so'ngra test binarysiga o'tadigan argumentlarni sanab o'tasiz. `cargo test --help`ni ishga tushirish `cargo test` bilan foydalanishingiz mumkin bo'lgan variantlarni ko'rsatadi va `cargo test -- --help`ni ishga tushirish ajratuvchidan(separator) keyin foydalanishingiz mumkin bo'lgan variantlarni ko'rsatadi.
 
-### Running Tests in Parallel or Consecutively
+### Testlarni parallel yoki ketma-ket bajarish
 
-When you run multiple tests, by default they run in parallel using threads,
-meaning they finish running faster and you get feedback quicker. Because the
-tests are running at the same time, you must make sure your tests don’t depend
-on each other or on any shared state, including a shared environment, such as
-the current working directory or environment variables.
+Bir nechta testlarni bajarganingizda, standart bo'yicha ular threadlar yordamida parallel ravishda ishlaydi, ya'ni ular tezroq ishlashni tugatadi va siz tezroq fikr-mulohaza olasiz. Testlar bir vaqtning o'zida ishlayotganligi sababli, sizning testlaringiz bir-biriga yoki umumiy holatga, jumladan, joriy ishchi jildi yoki muhit o'zgaruvchilari kabi umumiy muhitga bog'liq emasligiga ishonch hosil qilishingiz kerak.
 
-For example, say each of your tests runs some code that creates a file on disk
-named *test-output.txt* and writes some data to that file. Then each test reads
-the data in that file and asserts that the file contains a particular value,
-which is different in each test. Because the tests run at the same time, one
+Misol uchun, sizning har bir testingiz diskda *test-output.txt* nomli fayl yaratadigan va ushbu faylga ba'zi ma'lumotlarni yozadigan ba'zi kodlarni ishga tushiradi. Keyin har bir test ushbu fayldagi ma'lumotlarni o'qiydi va faylda har bir testda har xil bo'lgan ma'lum bir qiymat borligini tasdiqlaydi. Because the tests run at the same time, one
 test might overwrite the file in the time between another test writing and
 reading the file. The second test will then fail, not because the code is
 incorrect but because the tests have interfered with each other while running
