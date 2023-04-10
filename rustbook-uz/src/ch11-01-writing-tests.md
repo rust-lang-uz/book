@@ -164,47 +164,30 @@ Sinovlarni o'tkazish endi quyidagilarga olib keladi:
 {{#include ../listings/ch11-writing-automated-tests/no-listing-03-introducing-a-bug/output.txt}}
 ```
 
-Our tests caught the bug! Because `larger.width` is 8 and `smaller.width` is
-5, the comparison of the widths in `can_hold` now returns `false`: 8 is not
-less than 5.
+Sinovlarimiz xatoni aniqladi! `kattaroq.kenglik` 8 va `kichikroq.kenglik` 5 bo'lganligi sababli, `ushlab_tur`da kengliklarni taqqoslash endi `false`ni qaytaradi: 8 5-dan kichik emas.
 
-### Testing Equality with the `assert_eq!` and `assert_ne!` Macros
+### Tenglikni `assert_eq!` va `assert_ne!` makroslari bilan tekshirish
 
-A common way to verify functionality is to test for equality between the result
-of the code under test and the value you expect the code to return. You could
-do this using the `assert!` macro and passing it an expression using the `==`
-operator. However, this is such a common test that the standard library
-provides a pair of macros—`assert_eq!` and `assert_ne!`—to perform this test
-more conveniently. These macros compare two arguments for equality or
-inequality, respectively. They’ll also print the two values if the assertion
-fails, which makes it easier to see *why* the test failed; conversely, the
-`assert!` macro only indicates that it got a `false` value for the `==`
-expression, without printing the values that led to the `false` value.
+Funksionallikni tekshirishning keng tarqalgan usuli - bu testdan o'tayotgan kod natijasi va kod qaytarilishini kutayotgan qiymat o'rtasidagi tenglikni tekshirish. Buni `assert!` makrosidan foydalanib, unga `==` operatori yordamida ifoda o'tkazishingiz mumkin. Biroq, bu shunday keng tarqalgan testki, standart kutubxona ushbu testni yanada qulayroq bajarish uchun bir juft makros-`assert_eq!` va `assert_ne!`-ni taqdim etadi. Ushbu makrolar mos ravishda tenglik yoki tengsizlik uchun ikkita argumentni solishtiradi. Agar tasdiqlash muvaffaqiyatsiz bo'lsa, ular ikkita qiymatni chop etadilar, bu esa *nima uchun* sinov muvaffaqiyatsiz tugaganini ko'rishni osonlashtiradi; aksincha, `assert!` makros `false` qiymatiga olib kelgan qiymatlarni chop etmasdan, `==` ifodasi uchun `false` qiymatini olganligini bildiradi.
+11-7 ro'yxatda biz o'z parametriga `2` qo'shadigan `ikkita_qoshish` nomli funksiyani yozamiz, so'ngra bu funksiyani `assert_eq!` makrosidan foydalanib tekshiramiz.
 
-In Listing 11-7, we write a function named `add_two` that adds `2` to its
-parameter, then we test this function using the `assert_eq!` macro.
-
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-07/src/lib.rs}}
 ```
 
-<span class="caption">Listing 11-7: Testing the function `add_two` using the
-`assert_eq!` macro</span>
+<span class="caption">Roʻyxat 11-7: `assert_eq!` makrosidan foydalanib `ikkita_qoshish` funksiyasini sinab koʻrish</span>
 
-Let’s check that it passes!
+Keling test o'tganligini tekshirib ko'raylik!
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/listing-11-07/output.txt}}
 ```
 
-We pass `4` as the argument to `assert_eq!`, which is equal to the result of
-calling `add_two(2)`. The line for this test is `test tests::it_adds_two ...
-ok`, and the `ok` text indicates that our test passed!
+Argument sifatida `4` ni `assert_eq!`ga o'tkazamiz, bu esa `ikkita_qoshish(2)` ni chaqirish natijasiga teng. Ushbu test qatori  `test tests::it_adds_two ... ok` va `ok` matni testimiz muvaffaqiyatli o'tganligini bildiradi!
 
-Let’s introduce a bug into our code to see what `assert_eq!` looks like when it
-fails. Change the implementation of the `add_two` function to instead add `3`:
+`assert_eq!` muvaffaqiyatsiz bo'lganda qanday ko'rinishini ko'rish uchun kodimizga xato kiritamiz. `ikkita_qoshish` funksiyasining bajarilishini o'rniga `3` qo'shish uchun o`zgartiramiz:
 
 ```rust,not_desired_behavior,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-04-bug-in-add-two/src/lib.rs:here}}
