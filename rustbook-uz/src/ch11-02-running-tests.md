@@ -66,24 +66,21 @@ Testlar kichik to‘plamini qanday bajarishni ko‘rsatish uchun avval 11-11 ro�
 
 <span class="caption">Ro'yxat 11-11: Uch xil nomga ega uchta test</span>
 
-If we run the tests without passing any arguments, as we saw earlier, all the
-tests will run in parallel:
+Agar biz testlarni hech qanday argumentlarsiz o'tkazsak, avval ko'rganimizdek, barcha testlar parallel ravishda ishlaydi:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/listing-11-11/output.txt}}
 ```
 
-#### Running Single Tests
+#### Yagona testlarni o'tkazish
 
-We can pass the name of any test function to `cargo test` to run only that test:
+Biz har qanday test funksiyasining nomini faqat shu testni oʻtkazish uchun `cargo test`ga oʻtkazishimiz mumkin:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/output-only-02-single-test/output.txt}}
 ```
 
-Only the test with the name `one_hundred` ran; the other two tests didn’t match
-that name. The test output lets us know we had more tests that didn’t run by
-displaying `2 filtered out` at the end.
+Faqat `yuz` nomli test o'tkazildi; qolgan ikkita test bu nomga mos kelmadi. Sinov natijasi, oxirida “2 filtrlangan” belgisini ko‘rsatish orqali bizda boshqa testlar o‘tkazilmaganligini bildiradi.
 
 We can’t specify the names of multiple tests in this way; only the first value
 given to `cargo test` will be used. But there is a way to run multiple tests.
