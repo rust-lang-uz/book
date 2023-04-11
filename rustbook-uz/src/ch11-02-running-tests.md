@@ -104,22 +104,16 @@ Ba'zida bir nechta maxsus testlarni bajarish juda ko'p vaqt talab qilishi mumkin
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-11-ignore-a-test/src/lib.rs}}
 ```
 
-After `#[test]` we add the `#[ignore]` line to the test we want to exclude. Now
-when we run our tests, `it_works` runs, but `expensive_test` doesn’t:
+`#[test]`dan keyin biz chiqarib tashlamoqchi bo'lgan testga `#[ignore]` qatorini qo'shamiz. Endi testlarimizni o'tkazganimizda, `ishlamoqda` ishlaydi, lekin `qiyin_test` ishlamaydi:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-11-ignore-a-test/output.txt}}
 ```
 
-The `expensive_test` function is listed as `ignored`. If we want to run only
-the ignored tests, we can use `cargo test -- --ignored`:
+`qiyin_test` funksiyasi `ignore` ro'yxatiga kiritilgan. Agar biz faqat e'tiborga olinmagan(ignor qilingan) testlarni o'tkazmoqchi bo'lsak, biz `cargo test -- --ignored` dan foydalanishimiz mumkin:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/output-only-04-running-ignored/output.txt}}
 ```
 
-By controlling which tests run, you can make sure your `cargo test` results
-will be fast. When you’re at a point where it makes sense to check the results
-of the `ignored` tests and you have time to wait for the results, you can run
-`cargo test -- --ignored` instead. If you want to run all tests whether they’re
-ignored or not, you can run `cargo test -- --include-ignored`.
+Qaysi sinovlar o'tkazilishini nazorat qilish orqali siz `cargo test` natijalari tez bo'lishiga ishonch hosil qilishingiz mumkin. `ignored` testlar natijalarini tekshirish mantiqiy bo'lgan nuqtada bo'lganingizda va natijalarni kutishga vaqtingiz bo'lsa, uning o'rniga `cargo test -- --ignored` ni ishga tushirishingiz mumkin. Agar siz barcha testlarni ular e'tiborsiz(ignor) qoldiriladimi yoki yo'qmi, o'tkazmoqchi bo'lsangiz, `cargo test -- --include-ignored` ni ishga tushirishingiz mumkin.
