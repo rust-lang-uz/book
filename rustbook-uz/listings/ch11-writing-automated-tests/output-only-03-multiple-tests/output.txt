@@ -4,8 +4,8 @@ $ cargo test add
      Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 2 tests
-test tests::add_three_and_two ... ok
-test tests::add_two_and_two ... ok
+test tests::uchta_qoshish_va_ikki ... ok
+test tests::ikkita_qoshish_va_ikki ... ok
 
 test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
 

@@ -80,35 +80,25 @@ Biz har qanday test funksiyasining nomini faqat shu testni oʻtkazish uchun `car
 {{#include ../listings/ch11-writing-automated-tests/output-only-02-single-test/output.txt}}
 ```
 
-Faqat `yuz` nomli test o'tkazildi; qolgan ikkita test bu nomga mos kelmadi. Sinov natijasi, oxirida “2 filtrlangan” belgisini ko‘rsatish orqali bizda boshqa testlar o‘tkazilmaganligini bildiradi.
+Faqat `yuz` nomli test o'tkazildi; qolgan ikkita test bu nomga mos kelmadi. Sinov natijasi, oxirida `2 filtered out` belgisini ko‘rsatish orqali bizda boshqa testlar o‘tkazilmaganligini bildiradi.
 
-We can’t specify the names of multiple tests in this way; only the first value
-given to `cargo test` will be used. But there is a way to run multiple tests.
+Biz bir nechta testlarning nomlarini shu tarzda aniqlay olmaymiz; faqat `cargo test`ga berilgan birinchi qiymatdan foydalaniladi. Ammo bir nechta testlarni o'tkazishning bir usuli bor.
 
-#### Filtering to Run Multiple Tests
+#### Bir nechta testlarni o'tkazish uchun filtrlash
 
-We can specify part of a test name, and any test whose name matches that value
-will be run. For example, because two of our tests’ names contain `add`, we can
-run those two by running `cargo test add`:
+Biz test nomining bir qismini belgilashimiz mumkin va nomi shu qiymatga mos keladigan har qanday test bajariladi. Masalan, ikkita testimiz nomi `qoshish` ni o‘z ichiga olganligi sababli, biz `cargo test qoshish` ni ishga tushirish orqali ikkalasini ham ishga tushirishimiz mumkin:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/output-only-03-multiple-tests/output.txt}}
 ```
 
-This command ran all tests with `add` in the name and filtered out the test
-named `one_hundred`. Also note that the module in which a test appears becomes
-part of the test’s name, so we can run all the tests in a module by filtering
-on the module’s name.
+Bu buyruq nomidagi `qoshish` bilan barcha testlarni o'tkazdi va `yuz` nomli testni filtrladi. Shuni ham yodda tutingki, test paydo bo'ladigan modul test nomining bir qismiga aylanadi, shuning uchun biz modul nomini filtrlash orqali moduldagi barcha testlarni bajarishimiz mumkin.
 
-### Ignoring Some Tests Unless Specifically Requested
+### Maxsus talab qilinmasa, ba'zi testlarni e'tiborsiz qoldirish
 
-Sometimes a few specific tests can be very time-consuming to execute, so you
-might want to exclude them during most runs of `cargo test`. Rather than
-listing as arguments all tests you do want to run, you can instead annotate the
-time-consuming tests using the `ignore` attribute to exclude them, as shown
-here:
+Ba'zida bir nechta maxsus testlarni bajarish juda ko'p vaqt talab qilishi mumkin, shuning uchun siz `cargo test` ning ko'p bosqichlarida ularni istisno qilishingiz mumkin. Siz oʻtkazmoqchi boʻlgan barcha testlarni argument sifatida roʻyxatga olish oʻrniga, bu yerda koʻrsatilganidek, ularni istisno qilish uchun `ignore`(eʼtibor bermaslik) atributidan foydalanib, vaqt talab qiluvchi testlarga izoh qoʻyishingiz mumkin:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-11-ignore-a-test/src/lib.rs}}

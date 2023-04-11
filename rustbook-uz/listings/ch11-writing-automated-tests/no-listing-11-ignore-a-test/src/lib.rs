@@ -1,10 +1,10 @@
 #[test]
-fn it_works() {
+fn ishlaydi() {
     assert_eq!(2 + 2, 4);
 }
 
 #[test]
 #[ignore]
-fn expensive_test() {
+fn qiyin_test() {
     // code that takes an hour to run
 }
