@@ -36,17 +36,11 @@ Sinov hamjamiyatida private(xususiy) funksiyalarni to'g'ridan-to'g'ri testdan o'
 
 <span class="caption">Ro'yxat 11-12: Private funksiyani test qilib ko'rish</span>
 
-Esda tutingki, `ichki_qoshuvchi` funksiyasi `pub` sifatida belgilanmagan. Testlar shunchaki Rust kodi va `tests` moduli shunchaki boshqa moduldir. As we discussed in
-the [“Paths for Referring to an Item in the Module Tree”][paths]<!-- ignore -->
-section, items in child modules can use the items in their ancestor modules. In
-this test, we bring all of the `test` module’s parent’s items into scope with
-`use super::*`, and then the test can call `internal_adder`. If you don’t think
-private functions should be tested, there’s nothing in Rust that will compel
-you to do so.
+Esda tutingki, `ichki_qoshuvchi` funksiyasi `pub` sifatida belgilanmagan. Testlar shunchaki Rust kodi va `tests` moduli shunchaki boshqa moduldir. ["Modul daraxtidagi elementga murojaat qilish yo'llari"][paths]<!-- ignore --> bo'limida muhokama qilganimizdek, bolalar modullaridagi elementlar o'zlarining asosiy modullaridagi elementlardan foydalanishlari mumkin. Ushbu testda biz `test` modulining ota-onasining barcha elementlarini  `use super::*` yordamida qamrab olamiz va keyin test `ichki_qoshuvchi` ni chaqirishi mumkin. Agar private(shaxsiy) funksiyalarni sinab ko'rish kerak deb o'ylamasangiz, Rustda sizni bunga majbur qiladigan hech narsa yo'q.
 
-### Integration Tests
+### Integratsiya testlari
 
-In Rust, integration tests are entirely external to your library. They use your
+Rust-da integratsiya testlari kutubxonangizdan butunlay tashqarida. They use your
 library in the same way any other code would, which means they can only call
 functions that are part of your library’s public API. Their purpose is to test
 whether many parts of your library work together correctly. Units of code that

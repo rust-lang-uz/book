@@ -1,0 +1,5 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./rustbook-uz/listings/ch11-writing-automated-tests/listing-11-12/Cargo.toml"
+    ]
+}
