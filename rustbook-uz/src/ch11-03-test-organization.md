@@ -40,36 +40,25 @@ Esda tutingki, `ichki_qoshuvchi` funksiyasi `pub` sifatida belgilanmagan. Testla
 
 ### Integratsiya testlari
 
-Rust-da integratsiya testlari kutubxonangizdan butunlay tashqarida. They use your
-library in the same way any other code would, which means they can only call
-functions that are part of your library’s public API. Their purpose is to test
-whether many parts of your library work together correctly. Units of code that
-work correctly on their own could have problems when integrated, so test
-coverage of the integrated code is important as well. To create integration
-tests, you first need a *tests* directory.
+Rust-da integratsiya testlari kutubxonangizdan butunlay tashqarida. Ular kutubxonangizdan boshqa kodlar kabi foydalanadilar, ya'ni ular faqat kutubxonangizning umumiy API qismi bo'lgan funksiyalarni chaqira oladi. Ularning maqsadi kutubxonangizning ko'p qismlari to'g'ri ishlashini tekshirishdir. O'z-o'zidan to'g'ri ishlaydigan kod birliklari integratsiyalashganda muammolarga duch kelishi mumkin, shuning uchun integratsiyalangan kodni sinovdan o'tkazish ham muhimdir. Integratsiya testlarini yaratish uchun sizga birinchi navbatda *tests* jildi kerak bo'ladi.
 
-#### The *tests* Directory
+#### *tests* jildi
 
-We create a *tests* directory at the top level of our project directory, next
-to *src*. Cargo knows to look for integration test files in this directory. We
-can then make as many test files as we want, and Cargo will compile each of the
-files as an individual crate.
+Biz loyiha jildimizning yuqori darajasida, *src* yonida *tests* jildini yaratamiz. Cargo ushbu jildda integratsiya test fayllarini qidirishni biladi. Keyin biz xohlagancha test fayllarini yaratishimiz mumkin va Cargo har bir faylni alohida crate sifatida tuzadi.
 
-Let’s create an integration test. With the code in Listing 11-12 still in the
-*src/lib.rs* file, make a *tests* directory, and create a new file named
-*tests/integration_test.rs*. Your directory structure should look like this:
+Keling, integratsiya testini yarataylik. 11-12 ro'yxatdagi kod hali ham *src/lib.rs* faylida bo'lsa, *tests* jildini yarating va *tests/integratsiya_test.rs* nomli yangi fayl yarating. Sizning fayl tuzilishingiz tuzilishi quyidagicha ko'rinishi kerak:
 
 ```text
-adder
+qoshuvchi
 ├── Cargo.lock
 ├── Cargo.toml
 ├── src
 │   └── lib.rs
 └── tests
-    └── integration_test.rs
+    └── integratsiya_test.rs
 ```
 
-Enter the code in Listing 11-13 into the *tests/integration_test.rs* file:
+11-13 ro'yxatdagi kodni *tests/integratsiya_test.rs* fayliga kiriting:
 
 <span class="filename">Filename: tests/integration_test.rs</span>
 
