@@ -70,31 +70,19 @@ qoshuvchi
 
 `tests` jildidagi har bir fayl alohida cratedir, shuning uchun biz kutubxonamizni har bir test cratesi doirasiga kiritishimiz kerak. Shuning uchun biz kodning yuqori qismiga unit testlarida kerak bo'lmagan  `use qoshuvchi` ni qo'shamiz.
 
-We don’t need to annotate any code in *tests/integration_test.rs* with
-`#[cfg(test)]`. Cargo treats the `tests` directory specially and compiles files
-in this directory only when we run `cargo test`. Run `cargo test` now:
+Bizga *tests/integration_test.rs* da `#[cfg(test)]` bilan hech qanday kodga izoh berish shart emas. Cargo `tests` jildini maxsus ko'rib chiqadi va bu jilddagi fayllarni faqat biz `cargo test` buyrug'ini ishga tushirganimizda kompilyatsiya qiladi. Keling `cargo test` qilib ishlatamiz:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/listing-11-13/output.txt}}
 ```
 
-The three sections of output include the unit tests, the integration test, and
-the doc tests. Note that if any test in a section fails, the following sections
-will not be run. For example, if a unit test fails, there won’t be any output
-for integration and doc tests because those tests will only be run if all unit
-tests are passing.
+Chiqishning(output) uchta bo'limiga unit testlari, integratsiya testlari va doc testlari kiradi. E'tibor bering, agar bo'limdagi biron bir test muvaffaqiyatsiz bo'lsa, keyingi bo'limlar bajarilmaydi. Misol uchun, agar unit testi muvaffaqiyatsiz bo'lsa, integratsiya va doc testlari uchun hech qanday natija bo'lmaydi, chunki bu testlar faqat barcha unit testlari o'tgan taqdirdagina amalga oshiriladi.
 
-The first section for the unit tests is the same as we’ve been seeing: one line
-for each unit test (one named `internal` that we added in Listing 11-12) and
-then a summary line for the unit tests.
+Unit testlari uchun birinchi bo'lim biz ko'rganimiz bilan bir xil: har bir unit testi uchun bitta satr (biz 11 12 roʻyxatga qoʻshgan `ichki` deb nomlangan) va keyin unit testlari uchun xulosa qator.
 
-The integration tests section starts with the line `Running
-tests/integration_test.rs`. Next, there is a line for each test function in
-that integration test and a summary line for the results of the integration
-test just before the `Doc-tests adder` section starts.
+Integratsiya testlari bo'limi `Running tests/integration_test.rs` qatoridan boshlanadi. Keyin, ushbu integratsiya testidagi har bir test funksiyasi uchun qator va `Doc-tests adder` boʻlimi boshlanishidan oldin integratsiya testi natijalari uchun xulosa qatori mavjud.
 
-Each integration test file has its own section, so if we add more files in the
-*tests* directory, there will be more integration test sections.
+Har bir integratsiya test faylining o'z bo'limi bor, shuning uchun *tests* jildiga ko'proq fayllar qo'shsak, ko'proq integratsiya test bo'limlari bo'ladi.
 
 We can still run a particular integration test function by specifying the test
 function’s name as an argument to `cargo test`. To run all the tests in a
