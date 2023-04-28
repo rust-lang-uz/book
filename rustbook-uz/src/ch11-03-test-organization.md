@@ -84,16 +84,13 @@ Integratsiya testlari bo'limi `Running tests/integration_test.rs` qatoridan bosh
 
 Har bir integratsiya test faylining o'z bo'limi bor, shuning uchun *tests* jildiga ko'proq fayllar qo'shsak, ko'proq integratsiya test bo'limlari bo'ladi.
 
-We can still run a particular integration test function by specifying the test
-function’s name as an argument to `cargo test`. To run all the tests in a
-particular integration test file, use the `--test` argument of `cargo test`
-followed by the name of the file:
+`cargo test` ga argument sifatida test funksiyasining nomini ko‘rsatib, biz hali ham muayyan integratsiya test funksiyasini ishga tushirishimiz mumkin. Muayyan integratsiya test faylida barcha testlarni bajarish uchun `cargo test`ning `--test` argumentidan keyin fayl nomidan foydalaning:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/output-only-05-single-integration/output.txt}}
 ```
 
-This command runs only the tests in the *tests/integration_test.rs* file.
+Bu buyruq faqat *tests/integration_test.rs* faylidagi testlarni bajaradi.
 
 #### Submodules in Integration Tests
 
