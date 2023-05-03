@@ -92,16 +92,9 @@ Har bir integratsiya test faylining o'z bo'limi bor, shuning uchun *tests* jildi
 
 Bu buyruq faqat *tests/integration_test.rs* faylidagi testlarni bajaradi.
 
-#### Submodules in Integration Tests
+#### Integratsiya testlarida submodullar
 
-As you add more integration tests, you might want to make more files in the
-*tests* directory to help organize them; for example, you can group the test
-functions by the functionality they’re testing. As mentioned earlier, each file
-in the *tests* directory is compiled as its own separate crate, which is useful
-for creating separate scopes to more closely imitate the way end users will be
-using your crate. However, this means files in the *tests* directory don’t
-share the same behavior as files in *src* do, as you learned in Chapter 7
-regarding how to separate code into modules and files.
+Ko'proq integratsiya testlarini qo'shsangiz, ularni tartibga solishga yordam berish uchun *tests* jildida ko'proq fayllar yaratishni xohlashingiz mumkin; masalan, siz test funktsiyalarini ular test qilib ko'rayotgan funksiyalari bo'yicha guruhlashingiz mumkin. Yuqorida aytib o'tilganidek, *tests* jildidagi har bir fayl o'zining alohida cratesi sifatida tuzilgan bo'lib, bu oxirgi foydalanuvchilar sizning cratengizdan qanday foydalanishini yanada yaqinroq taqlid qilish uchun alohida qamrovlarni yaratish uchun foydalidir. Biroq, bu shuni anglatadiki, *tests* jildidagi fayllar *src* dagi fayllarga o'xshamaydi, chunki kodni modul va fayllarga qanday ajratish haqida 7-bobda o'rgangansiz.
 
 The different behavior of *tests* directory files is most noticeable when you
 have a set of helper functions to use in multiple integration test files and
