@@ -60,7 +60,7 @@ qoshuvchi
 
 11-13 ro'yxatdagi kodni *tests/integratsiya_test.rs* fayliga kiriting:
 
-<span class="filename">Filename: tests/integration_test.rs</span>
+<span class="filename">Fayl nomi: tests/integration_test.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-13/tests/integration_test.rs}}
@@ -104,23 +104,19 @@ extract them into a common module. For example, if we create *tests/common.rs*
 and place a function named `setup` in it, we can add some code to `setup` that
 we want to call from multiple test functions in multiple test files:
 
-<span class="filename">Filename: tests/common.rs</span>
+<span class="filename">Fayl nomi: tests/common.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-12-shared-test-code-problem/tests/common.rs}}
 ```
 
-When we run the tests again, we’ll see a new section in the test output for the
-*common.rs* file, even though this file doesn’t contain any test functions nor
-did we call the `setup` function from anywhere:
+Testlarni qayta ishga tushirganimizda, biz *common.rs* fayli uchun test chiqishida yangi bo'limni ko'ramiz, garchi bu faylda hech qanday test funksiyalari mavjud bo'lmasa ham, biz hech qanday joydan `setup` funksiyasini chaqirmagan bo'lsak ham:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-12-shared-test-code-problem/output.txt}}
 ```
 
-Having `common` appear in the test results with `running 0 tests` displayed for
-it is not what we wanted. We just wanted to share some code with the other
-integration test files.
+Test natijalarida `setup` ko'rinishida `running 0 tests` ko'rsatilishi biz xohlagan narsa emas. Biz shunchaki kodni boshqa integratsiya test fayllari bilan baham ko'rmoqchi edik.
 
 To avoid having `common` appear in the test output, instead of creating
 *tests/common.rs*, we’ll create *tests/common/mod.rs*. The project directory
