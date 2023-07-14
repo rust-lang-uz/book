@@ -4,32 +4,22 @@ Ushbu bob siz hozirgacha o'rgangan ko'plab ko'nikmalarning qisqacha mazmuni va y
 
 Rust-ning tezligi, xavfsizligi, bitta ikkilik chiqishi(single binary output) va platformalararo9cross-platform qo'llab-quvvatlashi uni buyruqlar qatori vositalarini(command line tools) yaratish uchun ideal tilga aylantiradi, shuning uchun loyihamiz uchun biz klassik buyruq qatori qidiruv vositasi `grep` ning o'z versiyasini yaratamiz (**g**lobally search a **r**egular **e**xpression and **p**rint) qidirish. Foydalanishning eng oddiy holatida `grep` belgilangan faylni belgilangan qator uchun qidiradi. Buning uchun `grep` o'z argumenti sifatida fayl yo'li(file path) va satrni oladi. Keyin u faylni o'qiydi, o'sha faylda string argumentini o'z ichiga olgan qatorlarni topadi va bu satrlarni chop(print qiladi) etadi.
 
-Along the way, we’ll show how to make our command line tool use the terminal
-features that many other command line tools use. We’ll read the value of an
-environment variable to allow the user to configure the behavior of our tool.
-We’ll also print error messages to the standard error console stream (`stderr`)
-instead of standard output (`stdout`), so, for example, the user can redirect
-successful output to a file while still seeing error messages onscreen.
+Yo'l davomida biz buyruq qatori vositasini boshqa ko'plab buyruq qatori vositalari ishlatadigan terminal xususiyatlaridan qanday foydalanishni ko'rsatamiz. Biz foydalanuvchiga vositamizning harakatini sozlash imkonini berish uchun atrof-muhit o'zgaruvchisining qiymatini(environment variable) o'qiymiz.
+Shuningdek, biz xato xabarlarini standart chiqish (`stdout`) o'rniga standart xato konsoli oqimiga (`stderr`) chop qilamiz, shuning uchun, masalan, foydalanuvchi ekranda xato xabarlarini ko'rayotganda muvaffaqiyatli chiqishni faylga yo'naltirishi mumkin.
 
-One Rust community member, Andrew Gallant, has already created a fully
-featured, very fast version of `grep`, called `ripgrep`. By comparison, our
-version will be fairly simple, but this chapter will give you some of the
-background knowledge you need to understand a real-world project such as
-`ripgrep`.
+Rust hamjamiyatining bir a'zosi Andrew Gallant allaqachon `grep` ning `ripgrep` deb nomlangan to'liq xususiyatli, juda tez versiyasini yaratgan. Taqqoslash uchun, bizning versiyamiz ancha sodda bo'ladi, ammo bu bob sizga `ripgrep` kabi real loyihani tushunish uchun zarur bo'lgan asosiy bilimlarni beradi.
 
-Our `grep` project will combine a number of concepts you’ve learned so far:
+Bizning `grep` loyihamiz siz hozirgacha o'rgangan bir qator tushunchalarni birlashtiradi:
 
-* Organizing code (using what you learned about modules in [Chapter 7][ch7]<!--
-  ignore -->)
-* Using vectors and strings (collections, [Chapter 8][ch8]<!-- ignore -->)
-* Handling errors ([Chapter 9][ch9]<!-- ignore -->)
-* Using traits and lifetimes where appropriate ([Chapter 10][ch10]<!-- ignore
+* Kodni tashkil qilish ([7-bobda][ch7]<!--
+  ignore --> modullar haqida bilib olganlaringizdan foydalangan holda)
+* Vectorlar va stringlardan foydalanish (to'plamlar(collection), [8-bob][ch8]<!-- ignore -->)
+* Xatolarni qayta ishlash(handling error) ([9-bob][ch9]<!-- ignore -->)
+* Kerakli hollarda traitlar va lifetimelardan foydalanish ([10-bob][ch10]<!-- ignore
   -->)
-* Writing tests ([Chapter 11][ch11]<!-- ignore -->)
+* Testlar yozish ([11-bob][ch11]<!-- ignore -->)
 
-We’ll also briefly introduce closures, iterators, and trait objects, which
-Chapters [13][ch13]<!-- ignore --> and [17][ch17]<!-- ignore --> will cover in
-detail.
+Shuningdek, biz [13][ch13]<!-- ignore --> va [17][ch17]<!-- ignore -->-boblarda batafsil yoritilgan closurelar, iteratorlar va trait obyektlarini qisqacha tanishtiramiz.
 
 [ch7]: ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
 [ch8]: ch08-00-common-collections.html
