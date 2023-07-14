@@ -1,6 +1,6 @@
-use adder;
+use qoshuvchi;
 
 #[test]
-fn it_adds_two() {
-    assert_eq!(4, adder::add_two(2));
+fn ikkita_qoshish() {
+    assert_eq!(4, adder::ikkita_qosh(2));
 }

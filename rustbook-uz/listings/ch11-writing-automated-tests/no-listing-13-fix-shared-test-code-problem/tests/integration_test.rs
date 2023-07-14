@@ -1,9 +1,9 @@
-use adder;
+use qoshuvchi;
 
 mod common;
 
 #[test]
-fn it_adds_two() {
+fn ikkita_qoshish() {
     common::setup();
-    assert_eq!(4, adder::add_two(2));
+    assert_eq!(4, qoshuvchi::ikkita_qosh(2));
 }

@@ -96,13 +96,7 @@ Bu buyruq faqat *tests/integration_test.rs* faylidagi testlarni bajaradi.
 
 Ko'proq integratsiya testlarini qo'shsangiz, ularni tartibga solishga yordam berish uchun *tests* jildida ko'proq fayllar yaratishni xohlashingiz mumkin; masalan, siz test funktsiyalarini ular test qilib ko'rayotgan funksiyalari bo'yicha guruhlashingiz mumkin. Yuqorida aytib o'tilganidek, *tests* jildidagi har bir fayl o'zining alohida cratesi sifatida tuzilgan bo'lib, bu oxirgi foydalanuvchilar sizning cratengizdan qanday foydalanishini yanada yaqinroq taqlid qilish uchun alohida qamrovlarni yaratish uchun foydalidir. Biroq, bu shuni anglatadiki, *tests* jildidagi fayllar *src* dagi fayllarga o'xshamaydi, chunki kodni modul va fayllarga qanday ajratish haqida 7-bobda o'rgangansiz.
 
-The different behavior of *tests* directory files is most noticeable when you
-have a set of helper functions to use in multiple integration test files and
-you try to follow the steps in the [“Separating Modules into Different
-Files”][separating-modules-into-files]<!-- ignore --> section of Chapter 7 to
-extract them into a common module. For example, if we create *tests/common.rs*
-and place a function named `setup` in it, we can add some code to `setup` that
-we want to call from multiple test functions in multiple test files:
+*tests* jildidagi fayllarning har xil xatti-harakatlari bir nechta integratsiya test fayllarida foydali bo'ladigan yordamchi funktsiyalar to'plamiga ega bo'lganingizda sezilarli bo'ladi. Aytaylik, siz ularni umumiy modulga chiqarish uchun 7-bob, ["Modullarni turli fayllarga ajratish"][separating-modules-into-files]<!-- ignore --> bosqichlarini bajarishga harakat qilyapsiz. Misol uchun, agar biz *tests/common.rs* ni yaratsak va unga `setup` nomli funksiyani joylashtirsak, biz bir nechta test fayllaridagi bir nechta test funksiyalaridan chaqirmoqchi bo'lgan `setup` ga ba'zi kodlarni qo'shishimiz mumkin:
 
 <span class="filename">Fayl nomi: tests/common.rs</span>
 
@@ -118,9 +112,7 @@ Testlarni qayta ishga tushirganimizda, biz *common.rs* fayli uchun test chiqishi
 
 Test natijalarida `setup` ko'rinishida `running 0 tests` ko'rsatilishi biz xohlagan narsa emas. Biz shunchaki kodni boshqa integratsiya test fayllari bilan baham ko'rmoqchi edik.
 
-To avoid having `common` appear in the test output, instead of creating
-*tests/common.rs*, we’ll create *tests/common/mod.rs*. The project directory
-now looks like this:
+Test natijasida `common` ko'rinishini oldini olish uchun *tests/common.rs* yaratish o'rniga biz *tests/common/mod.rs* ni yaratamiz. Loyiha jildi(fayl structurasi) endi shunday ko'rinadi:
 
 ```text
 ├── Cargo.lock
@@ -133,28 +125,18 @@ now looks like this:
     └── integration_test.rs
 ```
 
-This is the older naming convention that Rust also understands that we
-mentioned in the [“Alternate File Paths”][alt-paths]<!-- ignore --> section of
-Chapter 7. Naming the file this way tells Rust not to treat the `common` module
-as an integration test file. When we move the `setup` function code into
-*tests/common/mod.rs* and delete the *tests/common.rs* file, the section in the
-test output will no longer appear. Files in subdirectories of the *tests*
-directory don’t get compiled as separate crates or have sections in the test
-output.
+Bu eski nomlash konventsiyasi bo'lib, Rust biz 7-bobning ["Muqobil fayl yo'llari(path)"][alt-paths]<!-- ignore --> bo'limida aytib o'tganimizni ham tushunadi.
+Biz `setup` funksiya kodini *tests/common/mod.rs* ga ko'chirsak va *tests/common.rs* faylini o'chirsak, test chiqishidagi bo'lim endi ko'rinmaydi. *tests* jildining pastki jildlaridagi fayllar alohida cratelar sifatida kompilyatsiya qilinmaydi yoki test chiqishida(output) bo'limlarga(section) ega emas.
 
-After we’ve created *tests/common/mod.rs*, we can use it from any of the
-integration test files as a module. Here’s an example of calling the `setup`
-function from the `it_adds_two` test in *tests/integration_test.rs*:
+*tests/common/mod.rs* ni yaratganimizdan so'ng, biz uni modul sifatida har qanday integratsiya test faylidan foydalanishimiz mumkin. Bu yerda *tests/integration_test.rs* da `ikkita_qoshish` testidan `setup` funksiyasini chaqirish misoli keltirilgan:
 
-<span class="filename">Filename: tests/integration_test.rs</span>
+<span class="filename">Fayl nomi: tests/integration_test.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-13-fix-shared-test-code-problem/tests/integration_test.rs}}
 ```
 
-Note that the `mod common;` declaration is the same as the module declaration
-we demonstrated in Listing 7-21. Then in the test function, we can call the
-`common::setup()` function.
+Esda tutingki, `mod common;` deklaratsiyasi biz 7-21 roʻyxatda koʻrsatgan modul deklaratsiyasi bilan bir xil. Keyin test funksiyasida biz `common::setup()` funksiyasini chaqirishimiz mumkin.
 
 #### Integration Tests for Binary Crates
 
