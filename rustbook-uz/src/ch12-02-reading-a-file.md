@@ -20,30 +20,16 @@ Matn joyida bo'lgan holda *src/main.rs* ni tahrirlang va 12-4 ro'yxatda ko'rsati
 
 <span class="caption">Ro'yxat 12-4: Ikkinchi argument tomonidan ko'rsatilgan fayl mazmunini o'qish</span>
 
-First, we bring in a relevant part of the standard library with a `use`
-statement: we need `std::fs` to handle files.
+Birinchidan, biz standart kutubxonaning tegishli qismini `use` statementi bilan keltiramiz: fayllar bilan ishlash uchun bizga `std::fs` kerak.
 
-In `main`, the new statement `fs::read_to_string` takes the `file_path`, opens
-that file, and returns a `std::io::Result<String>` of the file’s contents.
+`main` da yangi `fs::read_to_string` statementi `fayl_yoli`ni oladi, bu faylni ochadi va fayl mazmunining `std::io::Result<String>` ni qaytaradi.
 
-After that, we again add a temporary `println!` statement that prints the value
-of `contents` after the file is read, so we can check that the program is
-working so far.
+Shundan so'ng, fayl o'qilgandan keyin `tarkib` qiymatini chop etadigan vaqtinchalik `println!` statementini yana qo'shamiz, shuning uchun dasturning hozirgacha ishlayotganligini tekshirishimiz mumkin.
 
-Let’s run this code with any string as the first command line argument (because
-we haven’t implemented the searching part yet) and the *poem.txt* file as the
-second argument:
+Keling, ushbu kodni birinchi buyruq qatori argumenti sifatida istalgan qator bilan ishga tushiramiz (chunki biz hali qidiruv qismini amalga oshirmaganmiz) va ikkinchi argument sifatida *olma.txt* fayli:
 
 ```console
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-04/output.txt}}
 ```
 
-Great! The code read and then printed the contents of the file. But the code
-has a few flaws. At the moment, the `main` function has multiple
-responsibilities: generally, functions are clearer and easier to maintain if
-each function is responsible for only one idea. The other problem is that we’re
-not handling errors as well as we could. The program is still small, so these
-flaws aren’t a big problem, but as the program grows, it will be harder to fix
-them cleanly. It’s good practice to begin refactoring early on when developing
-a program, because it’s much easier to refactor smaller amounts of code. We’ll
-do that next.
+Ajoyib! Ushbu kod fayl mazmunini o'qiydi va fayl mazmunini chop etdi. Ammo kodda bir nechta kamchiliklar mavjud. Ayni paytda `main` funksiya bir nechta mas'uliyatga ega: umuman olganda, har bir funksiya faqat bitta g'oya uchun javobgar bo'lsa, funksiyalar aniqroq va ularni saqlash osonroq bo'ladi. Boshqa muammo shundaki, biz xatolarni imkon qadar yaxshi hal qilmayapmiz. Dastur hali ham kichik, shuning uchun bu kamchiliklar katta muammo emas, lekin dastur o'sib ulg'aygan sayin ularni toza tuzatish qiyinroq bo'ladi. Dasturni ishlab chiqishda refaktorlashni erta boshlash yaxshi amaliyotdir, chunki kichikroq hajmdagi kodlarni qayta ishlash ancha oson. Biz buni keyin qilamiz.
