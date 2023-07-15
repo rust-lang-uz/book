@@ -23,44 +23,28 @@ Hozirda `cargo new` tomonidan yaratilgan dastur biz bergan argumentlarni qayta i
 
 12-1 ro'yxatidagi kod `minigrep` dasturingizga unga berilgan har qanday buyruq qatori argumentlarini o'qish va keyin qiymatlarni vectorga yig'ish imkonini beradi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-01/src/main.rs}}
 ```
 
-<span class="caption">Listing 12-1: Collecting the command line arguments into
-a vector and printing them</span>
+<span class="caption">Ro'yxat 12-1: buyruq qatori argumentlarini vectorga yig'ish va ularni chop etish</span>
 
-First, we bring the `std::env` module into scope with a `use` statement so we
-can use its `args` function. Notice that the `std::env::args` function is
-nested in two levels of modules. As we discussed in [Chapter
-7][ch7-idiomatic-use]<!-- ignore -->, in cases where the desired function is
-nested in more than one module, we’ve chosen to bring the parent module into
-scope rather than the function. By doing so, we can easily use other functions
-from `std::env`. It’s also less ambiguous than adding `use std::env::args` and
-then calling the function with just `args`, because `args` might easily be
-mistaken for a function that’s defined in the current module.
+Birinchidan, biz `std::env` modulini `use` statementi bilan qamrab olamiz, shunda uning `args` funksiyasidan foydalanamiz. `std::env::args` funksiyasi modullarning ikki darajasida joylashganligiga e'tibor bering. Biz [7-bobda][ch7-idiomatic-use]<!-- ignore --> muhokama qilganimizdek, istalgan funksiya bir nechta modulda joylashgan bo‘lsa, biz funksiyani emas, balki ota-modulni qamrab olishni tanladik. Shunday qilib, biz `std::env` dan boshqa funksiyalardan bemalol foydalanishimiz mumkin. Bu, shuningdek, `use std::env::args` ni qo‘shib, so‘ngra funksiyani faqat `args` bilan chaqirishdan ko‘ra kamroq noaniqdir, chunki `args` joriy modulda aniqlangan funksiya bilan osongina xato qilishi mumkin.
 
-> ### The `args` Function and Invalid Unicode
+> ### `args` funksiyasi va notog'ri Unicode
 >
-> Note that `std::env::args` will panic if any argument contains invalid
-> Unicode. If your program needs to accept arguments containing invalid
-> Unicode, use `std::env::args_os` instead. That function returns an iterator
-> that produces `OsString` values instead of `String` values. We’ve chosen to
-> use `std::env::args` here for simplicity, because `OsString` values differ
-> per platform and are more complex to work with than `String` values.
+> E'tibor bering, agar biron bir argumentda noto'g'ri Unicode bo'lsa, `std::env::args`
+> panic qo'zg'atadi. Agar dasturingiz noto'g'ri Unicode o'z ichiga olgan argumentlarni qabul qilishi kerak bo'lsa,
+> o'rniga `std::env::args_os` dan foydalaning. Bu funksiya `String` qiymatlari o‘rniga `OsString`
+> qiymatlarini ishlab chiqaruvchi iteratorni qaytaradi. Biz bu yerda soddalik uchun
+> `std::env::args` dan foydalanishni tanladik, chunki `OsString` qiymatlari platformalar
+> uchun farq qiladi va ular bilan ishlash `String` qiymatlariga qaraganda murakkabroq.
 
-On the first line of `main`, we call `env::args`, and we immediately use
-`collect` to turn the iterator into a vector containing all the values produced
-by the iterator. We can use the `collect` function to create many kinds of
-collections, so we explicitly annotate the type of `args` to specify that we
-want a vector of strings. Although we very rarely need to annotate types in
-Rust, `collect` is one function you do often need to annotate because Rust
-isn’t able to infer the kind of collection you want.
+`main` ning birinchi qatorida biz `env::args` deb nomlaymiz va iteratorni iterator tomonidan ishlab chiqarilgan barcha qiymatlarni o'z ichiga olgan vectorga aylantirish uchun darhol `collect` dan foydalanamiz. Biz ko'p turdagi to'plamlarni(collection) yaratish uchun `collect` funksiyasidan foydalanishimiz mumkin, shuning uchun biz stringlar vectorini xohlashimizni ko'rsatish uchun `args` turiga aniq izoh beramiz. Rust-da turlarga juda kamdan-kam izoh qo'yishimiz kerak bo'lsa-da, `collect` funksiyasi siz tez-tez izohlashingiz kerak bo'lgan funksiyadir, chunki Rust siz xohlagan to'plam turini aniqlay olmaydi.
 
-Finally, we print the vector using the debug macro. Let’s try running the code
-first with no arguments and then with two arguments:
+Nihoyat, debug makrosi yordamida vectorni chop etamiz. Keling, kodni avval argumentsiz, keyin esa ikkita argument bilan ishga tushirishga harakat qilaylik:
 
 ```console
 {{#include ../listings/ch12-an-io-project/listing-12-01/output.txt}}
