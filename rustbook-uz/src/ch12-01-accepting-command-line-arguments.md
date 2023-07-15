@@ -54,50 +54,29 @@ Nihoyat, debug makrosi yordamida vectorni chop etamiz. Keling, kodni avval argum
 {{#include ../listings/ch12-an-io-project/output-only-01-with-args/output.txt}}
 ```
 
-Notice that the first value in the vector is `"target/debug/minigrep"`, which
-is the name of our binary. This matches the behavior of the arguments list in
-C, letting programs use the name by which they were invoked in their execution.
-It’s often convenient to have access to the program name in case you want to
-print it in messages or change behavior of the program based on what command
-line alias was used to invoke the program. But for the purposes of this
-chapter, we’ll ignore it and save only the two arguments we need.
+E'tibor bering, vectordagi birinchi qiymat `"target/debug/minigrep"` bo'lib, bu bizning ikkilik(binary) faylimiz nomidir. Bu C dagi argumentlar ro'yxatining xatti-harakatiga mos keladi, bu dasturlarga ularni bajarishda chaqirilgan nomdan foydalanishga imkon beradi. Agar siz uni xabarlarda chop qilmoqchi bo'lsangiz yoki dasturni chaqirish uchun qanday buyruq qatori taxalluslari(alias) ishlatilganiga qarab dasturning harakatini o'zgartirmoqchi bo'lsangiz, dastur nomiga kirish ko'pincha qulaydir. Ammo ushbu bobning maqsadlari uchun biz buni e'tiborsiz qoldiramiz va faqat bizga kerak bo'lgan ikkita argumentni saqlaymiz.
 
-### Saving the Argument Values in Variables
+### Argument qiymatlarini o'zgaruvchilarda saqlash
 
-The program is currently able to access the values specified as command line
-arguments. Now we need to save the values of the two arguments in variables so
-we can use the values throughout the rest of the program. We do that in Listing
-12-2.
+Dastur hozirda buyruq qatori argumentlari sifatida ko'rsatilgan qiymatlarga kirish imkoniyatiga ega. Endi biz ikkita argumentning qiymatlarini o'zgaruvchilarda saqlashimiz kerak, shuning uchun biz dasturning qolgan qismida qiymatlardan foydalanishimiz mumkin. Biz buni 12-2 ro'yxatda qilamiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,should_panic,noplayground
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-02/src/main.rs}}
 ```
 
-<span class="caption">Listing 12-2: Creating variables to hold the query
-argument and file path argument</span>
+<span class="caption">Ro'yxat 12-2: So'rov argumenti va fayl yo'li argumentini saqlash uchun o'zgaruvchilar yaratish</span>
 
-As we saw when we printed the vector, the program’s name takes up the first
-value in the vector at `args[0]`, so we’re starting arguments at index `1`. The
-first argument `minigrep` takes is the string we’re searching for, so we put a
-reference to the first argument in the variable `query`. The second argument
-will be the file path, so we put a reference to the second argument in the
-variable `file_path`.
+Biz vectorni chop etganimizda ko'rganimizdek, dastur nomi vectordagi birinchi qiymatni `args[0]` oladi, shuning uchun biz `1` indeksidan argumentlarni boshlaymiz. `minigrep`ning birinchi argumenti biz qidirayotgan satrdir, shuning uchun biz birinchi argumentga referenceni `sorov` o‘zgaruvchisiga qo‘yamiz. Ikkinchi argument fayl yo'li bo'ladi, shuning uchun biz `fayl_yoli` o'zgaruvchisiga ikkinchi argumentga reference qilamiz.
 
-We temporarily print the values of these variables to prove that the code is
-working as we intend. Let’s run this program again with the arguments `test`
-and `sample.txt`:
+Kod biz xohlagandek ishlayotganini isbotlash uchun biz ushbu o'zgaruvchilarning qiymatlarini vaqtincha chop qilamiz. `test` va `namuna.txt` argumentlari bilan ushbu dasturni qayta ishga tushiramiz:
 
 ```console
 {{#include ../listings/ch12-an-io-project/listing-12-02/output.txt}}
 ```
 
-Great, the program is working! The values of the arguments we need are being
-saved into the right variables. Later we’ll add some error handling to deal
-with certain potential erroneous situations, such as when the user provides no
-arguments; for now, we’ll ignore that situation and work on adding file-reading
-capabilities instead.
+Ajoyib, dastur ishlayapti! Bizga kerak bo'lgan argumentlarning qiymatlari to'g'ri o'zgaruvchilarga saqlanmoqda. Keyinchalik ba'zi potentsial noto'g'ri vaziyatlarni hal qilish uchun xatolarni qayta ishlash usullarini qo'shamiz, masalan, foydalanuvchi hech qanday argument keltirmasa; Hozircha biz bu holatni e'tiborsiz qoldiramiz va uning o'rniga fayllarni o'qish imkoniyatlarini qo'shish ustida ishlaymiz.
 
 [ch13]: ch13-00-functional-features.html
 [ch7-idiomatic-use]: ch07-04-bringing-paths-into-scope-with-the-use-keyword.html#creating-idiomatic-use-paths
