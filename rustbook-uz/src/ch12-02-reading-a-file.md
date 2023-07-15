@@ -1,32 +1,24 @@
-## Reading a File
+## Faylni o'qish
 
-Now we’ll add functionality to read the file specified in the `file_path`
-argument. First, we need a sample file to test it with: we’ll use a file with a
-small amount of text over multiple lines with some repeated words. Listing 12-3
-has an Emily Dickinson poem that will work well! Create a file called
-*poem.txt* at the root level of your project, and enter the poem “I’m Nobody!
-Who are you?”
+Endi biz  `fayl_yoli` argumentida koʻrsatilgan faylni oʻqish funksiyasini qoʻshamiz. Birinchidan, uni sinab ko'rish uchun bizga namuna fayli kerak: biz bir nechta takroriy so'zlar bilan bir nechta satrlarda kichik hajmdagi matnli fayldan foydalanamiz. 12-3 ro'yxatda Olma haqida she'r bor, u yaxshi ishlaydi! Loyihangizning root darajasida *olma.txt* nomli fayl yarating va “Olma” she’rini kiriting.
 
-<span class="filename">Filename: poem.txt</span>
+<span class="filename">Fayl nomi: olma.txt</span>
 
 ```text
-{{#include ../listings/ch12-an-io-project/listing-12-03/poem.txt}}
+{{#include ../listings/ch12-an-io-project/listing-12-03/olma.txt}}
 ```
 
-<span class="caption">Listing 12-3: A poem by Emily Dickinson makes a good test
-case</span>
+<span class="caption">Ro'yxat 12-3: Olma haqidagi she'r yaxshi sinov ishini yaratadi</span>
 
-With the text in place, edit *src/main.rs* and add code to read the file, as
-shown in Listing 12-4.
+Matn joyida bo'lgan holda *src/main.rs* ni tahrirlang va 12-4 ro'yxatda ko'rsatilganidek, faylni o'qish uchun kod qo'shing.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,should_panic,noplayground
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-04/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 12-4: Reading the contents of the file specified
-by the second argument</span>
+<span class="caption">Ro'yxat 12-4: Ikkinchi argument tomonidan ko'rsatilgan fayl mazmunini o'qish</span>
 
 First, we bring in a relevant part of the standard library with a `use`
 statement: we need `std::fs` to handle files.
