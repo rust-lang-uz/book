@@ -1,37 +1,15 @@
-## Refactoring to Improve Modularity and Error Handling
+## Modullilikni va xatolarni boshqarishni yaxshilash uchun refaktoring
 
-To improve our program, we’ll fix four problems that have to do with the
-program’s structure and how it’s handling potential errors. First, our `main`
-function now performs two tasks: it parses arguments and reads files. As our
-program grows, the number of separate tasks the `main` function handles will
-increase. As a function gains responsibilities, it becomes more difficult to
-reason about, harder to test, and harder to change without breaking one of its
-parts. It’s best to separate functionality so each function is responsible for
-one task.
+Dasturimizni yaxshilash uchun dastur tuzilishi va uning yuzaga kelishi mumkin bo'lgan xatolarni qanday hal qilishi bilan bog'liq bo'lgan to'rtta muammoni tuzatamiz. Birinchidan, bizning `main` funksiyamiz endi ikkita vazifani bajaradi: u argumentlarni tahlil qiladi va fayllarni o'qiydi. Dasturimiz o'sib borishi bilan `main` funksiya boshqaradigan alohida vazifalar soni ortadi. Funksiyaga mas'uliyat yuklagan sari, uning qismlaridan birini buzmasdan fikr yuritish, sinab ko'rish va o'zgartirish qiyinroq bo'ladi. Har bir funksiya bitta vazifa uchun javobgar bo'lishi uchun funksionallikni ajratish yaxshiroqdir.
 
-This issue also ties into the second problem: although `query` and `file_path`
-are configuration variables to our program, variables like `contents` are used
-to perform the program’s logic. The longer `main` becomes, the more variables
-we’ll need to bring into scope; the more variables we have in scope, the harder
-it will be to keep track of the purpose of each. It’s best to group the
-configuration variables into one structure to make their purpose clear.
+Bu muammo ikkinchi muammo bilan ham bog'liq: `sorov` va `fayl_yoli` bizning dasturimiz uchun konfiguratsiya o'zgaruvchilari bo'lsa-da, dastur mantig'ini bajarish uchun `tarkib` kabi o'zgaruvchilardan foydalaniladi. `main` qancha uzun bo'lsa, biz ko'proq o'zgaruvchilarni qamrab olishimiz kerak bo'ladi; bizda qancha ko'p o'zgaruvchilar mavjud bo'lsa, ularning har birining maqsadini kuzatib borish shunchalik qiyin bo'ladi. Maqsadlari aniq bo'lishi uchun konfiguratsiya o'zgaruvchilarini bitta tuzilishga guruhlash yaxshidir.
 
-The third problem is that we’ve used `expect` to print an error message when
-reading the file fails, but the error message just prints `Should have been
-able to read the file`. Reading a file can fail in a number of ways: for
-example, the file could be missing, or we might not have permission to open it.
-Right now, regardless of the situation, we’d print the same error message for
-everything, which wouldn’t give the user any information!
+Uchinchi muammo shundaki, biz faylni o‘qib chiqmaganda xato xabarini chop etish uchun `expect` tugmasidan foydalanganmiz, biroq xato xabari “Faylni o‘qishi kerak edi” degan yozuvni chiqaradi. Faylni o'qish bir necha usul bilan muvaffaqiyatsiz bo'lishi mumkin: masalan, fayl yetishmayotgan bo'lishi mumkin yoki bizda uni ochishga ruxsat yo'q.
+Hozirda, vaziyatdan qat'i nazar, biz hamma narsa uchun bir xil xato xabarini chop qilamiz, bu esa foydalanuvchiga hech qanday ma'lumot bermaydi!
 
-Fourth, we use `expect` repeatedly to handle different errors, and if the user
-runs our program without specifying enough arguments, they’ll get an `index out
-of bounds` error from Rust that doesn’t clearly explain the problem. It would
-be best if all the error-handling code were in one place so future maintainers
-had only one place to consult the code if the error-handling logic needed to
-change. Having all the error-handling code in one place will also ensure that
-we’re printing messages that will be meaningful to our end users.
+To‘rtinchidan, biz turli xil xatolarni qayta ishlash uchun `expect` dan qayta-qayta foydalanamiz va agar foydalanuvchi dasturimizni yetarlicha argumentlarni ko'rsatmasdan ishga tushirsa, Rustdan `index out of bounds`("chegaradan tashqari indeks") xatosini oladi va bu muammoni aniq tushuntirmaydi. Xatolarni qayta ishlash mantig'ini o'zgartirish kerak bo'lsa, kelajakdagi saqlovchilar(maintainerlar) kod bilan maslahatlashish uchun faqat bitta joyga ega bo'lishlari uchun barcha xatolarni qayta ishlash kodi bir joyda bo'lsa yaxshi bo'lar edi. Xatolarni qayta ishlash uchun barcha kodlar bir joyda bo'lsa, biz oxirgi foydalanuvchilarimiz uchun mazmunli bo'lgan xabarlarni chop etishimizni ta'minlaydi.
 
-Let’s address these four problems by refactoring our project.
+Keling, loyihamizni qayta tiklash orqali ushbu to'rtta muammoni hal qilaylik.
 
 ### Separation of Concerns for Binary Projects
 
