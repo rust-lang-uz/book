@@ -5,25 +5,25 @@ use std::fs;
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let (query, file_path) = parse_config(&args);
+    let (sorov, fayl_yoli) = parse_config(&args);
 
     // --snip--
     // ANCHOR_END: here
 
-    println!("Searching for {}", query);
-    println!("In file {}", file_path);
+    println!("{} qidirilmoqda", sorov);
+    println!("{} faylida", fayl_yoli);
 
-    let contents = fs::read_to_string(file_path)
-        .expect("Should have been able to read the file");
+    let tarkib = fs::read_to_string(fayl_yoli)
+        .expect("Faylni o'qiy olishi kerak edi");
 
-    println!("With text:\n{contents}");
+    println!("Fayl tarkibi:\n{tarkib}");
     // ANCHOR: here
 }
 
 fn parse_config(args: &[String]) -> (&str, &str) {
-    let query = &args[1];
-    let file_path = &args[2];
+    let sorov = &args[1];
+    let fayl_yoli = &args[2];
 
-    (query, file_path)
+    (sorov, fayl_yoli)
 }
 // ANCHOR_END: here

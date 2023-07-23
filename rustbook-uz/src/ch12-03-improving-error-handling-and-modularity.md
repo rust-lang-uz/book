@@ -11,51 +11,36 @@ To‘rtinchidan, biz turli xil xatolarni qayta ishlash uchun `expect` dan qayta-
 
 Keling, loyihamizni qayta tiklash orqali ushbu to'rtta muammoni hal qilaylik.
 
-### Separation of Concerns for Binary Projects
+### Binary loyihalar uchun vazifalarni ajratish
 
-The organizational problem of allocating responsibility for multiple tasks to
-the `main` function is common to many binary projects. As a result, the Rust
-community has developed guidelines for splitting the separate concerns of a
-binary program when `main` starts getting large. This process has the following
-steps:
+Bir nechta vazifalar uchun javobgarlikni `main` funksiyaga taqsimlashning tashkiliy muammosi ko'plab ikkilik(binary) loyihalar uchun umumiydir. Natijada, Rust hamjamiyati `main` kattalasha boshlaganda ikkilik dasturning alohida muammolarini ajratish bo'yicha ko'rsatmalar ishlab chiqdi. Bu jarayon quyidagi bosqichlardan iborat:
 
-* Split your program into a *main.rs* and a *lib.rs* and move your program’s
-  logic to *lib.rs*.
-* As long as your command line parsing logic is small, it can remain in
-  *main.rs*.
-* When the command line parsing logic starts getting complicated, extract it
-  from *main.rs* and move it to *lib.rs*.
+* Dasturingizni *main.rs* va *lib.rs* ga bo'ling va dasturingiz mantig'ini *lib.rs* ga o'tkazing.
 
-The responsibilities that remain in the `main` function after this process
-should be limited to the following:
+* Agar buyruq satrini tahlil qilish mantig'i kichik bo'lsa, u *main.rs* da qolishi mumkin.
 
-* Calling the command line parsing logic with the argument values
-* Setting up any other configuration
-* Calling a `run` function in *lib.rs*
-* Handling the error if `run` returns an error
+* Buyruqlar qatorini tahlil qilish mantig'i murakkablasha boshlagach, uni *main.rs* dan chiqarib, *lib.rs* ga o'tkazing.
 
-This pattern is about separating concerns: *main.rs* handles running the
-program, and *lib.rs* handles all the logic of the task at hand. Because you
-can’t test the `main` function directly, this structure lets you test all of
-your program’s logic by moving it into functions in *lib.rs*. The code that
-remains in *main.rs* will be small enough to verify its correctness by reading
-it. Let’s rework our program by following this process.
+Ushbu jarayondan keyin `main` funksiyada qoladigan mas'uliyatlar quyidagilar bilan cheklanishi kerak:
 
-#### Extracting the Argument Parser
+* Argument qiymatlari bilan buyruq satrini tahlil qilish mantig'ini chaqirish
+* Boshqa har qanday konfiguratsiyani sozlash
+* *lib.rs* da `run` funksiyasini chaqirish
+* `run` xatoni qaytarsa, xatoni hal qilish
 
-We’ll extract the functionality for parsing arguments into a function that
-`main` will call to prepare for moving the command line parsing logic to
-*src/lib.rs*. Listing 12-5 shows the new start of `main` that calls a new
-function `parse_config`, which we’ll define in *src/main.rs* for the moment.
+Ushbu pattern vazifalarni ajratish bilan bog'liq: *main.rs* dasturni ishga tushirishni boshqaradi va *lib.rs* topshirilgan vazifaning barcha mantig'ini boshqaradi. `main` funksiyani toʻgʻridan-toʻgʻri test qilib koʻra olmasligingiz sababli, ushbu structura dasturingizning barcha mantig'ini *lib.rs* funksiyalariga koʻchirish orqali test qilib koʻrish imkonini beradi. *main.rs* da qolgan kod uni o'qish orqali uning to'g'riligini tekshirish uchun yetarlicha kichik bo'ladi. Keling, ushbu jarayonni kuzatib, dasturimizni qayta ishlaymiz.
 
-<span class="filename">Filename: src/main.rs</span>
+#### Argument tahlilchisini(parser) chiqarish
+
+Argumentlarni tahlil qilish(parsing qilish) funksiyasini `main` buyruq satrini tahlil qilish mantig'ini *src/lib.rs* ga ko'chirishga tayyorlash uchun chaqiradigan funksiyaga ajratamiz. Ro'yxat 12-5 `main` ning yangi boshlanishini ko'rsatadi, u `parse_config` yangi funksiyasini chaqiradi, biz buni hozircha *src/main.rs* da aniqlaymiz.
+
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-05/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 12-5: Extracting a `parse_config` function from
-`main`</span>
+<span class="caption">Ro'yxat 12-5: `main` dan `parse_config` funksiyasini chiqarish</span>
 
 We’re still collecting the command line arguments into a vector, but instead of
 assigning the argument value at index 1 to the variable `query` and the
