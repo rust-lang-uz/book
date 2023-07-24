@@ -63,29 +63,19 @@ Yaxshilash uchun joy borligini ko'rsatadigan yana bir ko'rsatkich `parse_config`
 
 <span class="caption">Ro'yxat 12-6: `Config` strukturasining namunasini qaytarish uchun `parse_config` ni qayta tahrirlash</span>
 
-Biz `sorov` va `fayl_yoli` nomli maydonlarga ega bo'lishi uchun aniqlangan `Config` nomli structi qo'shdik. Endi `parse_config` signaturesi `Config` qiymatini qaytarishini bildiradi. In the body of `parse_config`, where we used to return
-string slices that reference `String` values in `args`, we now define `Config`
-to contain owned `String` values. The `args` variable in `main` is the owner of
-the argument values and is only letting the `parse_config` function borrow
-them, which means we’d violate Rust’s borrowing rules if `Config` tried to take
-ownership of the values in `args`.
+Biz `sorov` va `fayl_yoli` nomli maydonlarga ega bo'lishi uchun aniqlangan `Config` nomli structi qo'shdik. Endi `parse_config` signaturesi `Config` qiymatini qaytarishini bildiradi. Biz `args`dagi `String` qiymatlariga reference qilingan satr bo‘laklarini qaytargan `parse_config` korpusida endi `Config` ga tegishli `String` qiymatlarini o‘z ichiga olgan holda belgilaymiz. `main`dagi `args` oʻzgaruvchisi argument qiymatlarining owneri(ega) boʻlib, faqat `parse_config` funksiyasiga ularni borrowga(qarz olish) ruxsat beradi, yaʼni `Config` `args` qiymatlariga ownership(egalik) qilmoqchi boʻlsa, Rustning borrowing(qarz olish) qoidalarini buzgan boʻlamiz.
 
-There are a number of ways we could manage the `String` data; the easiest,
-though somewhat inefficient, route is to call the `clone` method on the values.
-This will make a full copy of the data for the `Config` instance to own, which
-takes more time and memory than storing a reference to the string data.
-However, cloning the data also makes our code very straightforward because we
-don’t have to manage the lifetimes of the references; in this circumstance,
-giving up a little performance to gain simplicity is a worthwhile trade-off.
+`String` ma'lumotlarini boshqarishning bir qancha usullari mavjud; Eng oson, garchi unchalik samarasiz bo'lsa ham, route qiymatlar bo'yicha `clone` metodini chaqirishdir.
+Bu `Config` nusxasi uchun ma'lumotlarning to'liq nusxasini oladi, bu esa satr(string) ma'lumotlariga referenceni saqlashdan ko'ra ko'proq vaqt va xotirani oladi. Biroq, ma'lumotlarni klonlash bizning kodimizni juda sodda qiladi, chunki biz referencelarning lifetimeni(ishlash muddati) boshqarishimiz shart emas; bu holatda, soddalikka erishish uchun ozgina ishlashdan voz kechish foydali savdodir.
 
-> ### The Trade-Offs of Using `clone`
+> ### `clone` dan foydalanishning o'zaro kelishuvlari
 >
-> There’s a tendency among many Rustaceans to avoid using `clone` to fix
-> ownership problems because of its runtime cost. In
-> [Chapter 13][ch13]<!-- ignore -->, you’ll learn how to use more efficient
-> methods in this type of situation. But for now, it’s okay to copy a few
-> strings to continue making progress because you’ll make these copies only
-> once and your file path and query string are very small. It’s better to have
+> Ko'pgina Rustaceanlar orasida `clone` dan foydalanish vaqti xarajati tufayli ownership
+> muammolarini hal qilish uchun foydalanmaslik tendentsiyasi mavjud.
+> [13-bobda][ch13]<!-- ignore --> siz ushbu turdagi vaziyatda samaraliroq
+> usullardan qanday foydalanishni o'rganasiz. Ammo hozircha rivojlanishni
+> davom ettirish uchun bir nechta satrlarni nusxalash ma'qul, chunki siz bu nusxalarni
+> faqat bir marta qilasiz va fayl yo'li va so'rovlar qatori juda kichik. It’s better to have
 > a working program that’s a bit inefficient than to try to hyperoptimize code
 > on your first pass. As you become more experienced with Rust, it’ll be
 > easier to start with the most efficient solution, but for now, it’s
