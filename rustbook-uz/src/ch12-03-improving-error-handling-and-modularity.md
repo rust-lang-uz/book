@@ -42,51 +42,28 @@ Argumentlarni tahlil qilish(parsing qilish) funksiyasini `main` buyruq satrini t
 
 <span class="caption">Ro'yxat 12-5: `main` dan `parse_config` funksiyasini chiqarish</span>
 
-We’re still collecting the command line arguments into a vector, but instead of
-assigning the argument value at index 1 to the variable `query` and the
-argument value at index 2 to the variable `file_path` within the `main`
-function, we pass the whole vector to the `parse_config` function. The
-`parse_config` function then holds the logic that determines which argument
-goes in which variable and passes the values back to `main`. We still create
-the `query` and `file_path` variables in `main`, but `main` no longer has the
-responsibility of determining how the command line arguments and variables
-correspond.
+Biz hali ham buyruq qatori argumentlarini vectorga yig‘moqdamiz, lekin 1-indeksdagi argument qiymatini `sorov` o‘zgaruvchisiga va 2 indeksidagi argument qiymatini `main` funksiyasi ichidagi `fayl_yoli` o‘zgaruvchisiga belgilash o‘rniga, butun vectorni `parse_config` funksiyasiga o‘tkazamiz. Keyin `parse_config` funksiyasi qaysi argument qaysi o'zgaruvchiga kirishini aniqlaydigan mantiqni ushlab turadi va qiymatlarni `main`ga qaytaradi. Biz hali ham `sorov` va `fayl_yoli` o'zgaruvchilarini `main`da yaratamiz, lekin `main` endi buyruq qatori argumentlari va o'zgaruvchilari qanday mos kelishini aniqlash vazifasiga ega emas.
 
-This rework may seem like overkill for our small program, but we’re refactoring
-in small, incremental steps. After making this change, run the program again to
-verify that the argument parsing still works. It’s good to check your progress
-often, to help identify the cause of problems when they occur.
+Ushbu qayta ishlash bizning kichik dasturimiz uchun ortiqcha bo'lib tuyulishi mumkin, ammo biz kichik, bosqichma-bosqich refactoring qilmoqdamiz. Ushbu o'zgartirishni amalga oshirgandan so'ng, argumentni tahlil qilish hali ham ishlayotganligini tekshirish uchun dasturni qayta ishga tushiring. Muammolar yuzaga kelganda sabablarini aniqlashga yordam berish uchun taraqqiyotingizni tez-tez tekshirib turish yaxshidir.
 
-#### Grouping Configuration Values
+#### Konfiguratsiya qiymatlarini guruhlash
 
-We can take another small step to improve the `parse_config` function further.
-At the moment, we’re returning a tuple, but then we immediately break that
-tuple into individual parts again. This is a sign that perhaps we don’t have
-the right abstraction yet.
+`parse_config` funksiyasini yanada yaxshilash uchun yana bir kichik qadam tashlashimiz mumkin.
+Ayni paytda biz tupleni qaytarmoqdamiz, lekin keyin darhol bu tupleni yana alohida qismlarga ajratamiz. Bu, ehtimol, bizda hali to'g'ri mavhumlik yo'qligining belgisidir.
 
-Another indicator that shows there’s room for improvement is the `config` part
-of `parse_config`, which implies that the two values we return are related and
-are both part of one configuration value. We’re not currently conveying this
-meaning in the structure of the data other than by grouping the two values into
-a tuple; we’ll instead put the two values into one struct and give each of the
-struct fields a meaningful name. Doing so will make it easier for future
-maintainers of this code to understand how the different values relate to each
-other and what their purpose is.
+Yaxshilash uchun joy borligini ko'rsatadigan yana bir ko'rsatkich `parse_config` ning `config` qismidir, bu biz qaytaradigan ikkita qiymat bir-biriga bog'liqligini va ikkalasi ham bitta konfiguratsiya qiymatining bir qismi ekanligini anglatadi. Biz hozirda bu mantiqni ma'lumotlar strukturasida yetkazmayapmiz, bundan tashqari ikkita qiymatni tuplega guruhlash; Buning o'rniga biz ikkita qiymatni bitta strukturaga joylashtiramiz va har bir struktura maydoniga mazmunli nom beramiz. Buni qilish ushbu kodning kelajakdagi saqlovchilariga(maintainerlarga) turli qadriyatlar bir-biriga qanday bog'liqligini va ularning maqsadi nima ekanligini tushunishni osonlashtiradi.
 
-Listing 12-6 shows the improvements to the `parse_config` function.
+12-6 ro'yxatda `parse_config` funksiyasining yaxshilanishi ko'rsatilgan.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,should_panic,noplayground
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-06/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 12-6: Refactoring `parse_config` to return an
-instance of a `Config` struct</span>
+<span class="caption">Ro'yxat 12-6: `Config` strukturasining namunasini qaytarish uchun `parse_config` ni qayta tahrirlash</span>
 
-We’ve added a struct named `Config` defined to have fields named `query` and
-`file_path`. The signature of `parse_config` now indicates that it returns a
-`Config` value. In the body of `parse_config`, where we used to return
+Biz `sorov` va `fayl_yoli` nomli maydonlarga ega bo'lishi uchun aniqlangan `Config` nomli structi qo'shdik. Endi `parse_config` signaturesi `Config` qiymatini qaytarishini bildiradi. In the body of `parse_config`, where we used to return
 string slices that reference `String` values in `args`, we now define `Config`
 to contain owned `String` values. The `args` variable in `main` is the owner of
 the argument values and is only letting the `parse_config` function borrow
