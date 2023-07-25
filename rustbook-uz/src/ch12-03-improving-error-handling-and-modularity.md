@@ -75,41 +75,23 @@ Bu `Config` nusxasi uchun ma'lumotlarning to'liq nusxasini oladi, bu esa satr(st
 > [13-bobda][ch13]<!-- ignore --> siz ushbu turdagi vaziyatda samaraliroq
 > usullardan qanday foydalanishni o'rganasiz. Ammo hozircha rivojlanishni
 > davom ettirish uchun bir nechta satrlarni nusxalash ma'qul, chunki siz bu nusxalarni
-> faqat bir marta qilasiz va fayl yo'li va so'rovlar qatori juda kichik. It’s better to have
-> a working program that’s a bit inefficient than to try to hyperoptimize code
-> on your first pass. As you become more experienced with Rust, it’ll be
-> easier to start with the most efficient solution, but for now, it’s
-> perfectly acceptable to call `clone`.
+> faqat bir marta qilasiz va fayl yo'li va so'rovlar qatori juda kichik. Birinchi o'tishda
+> kodni giperoptimallashtirishga urinishdan ko'ra, biroz samarasiz ishlaydigan dasturga
+> ega bo'lish yaxshiroqdir. Rust bilan tajribangiz ortgan sayin, eng samarali
+> yechimdan boshlash osonroq bo'ladi, ammo hozircha `clone` deb
+> nomlash juda maqbuldir.
 
-We’ve updated `main` so it places the instance of `Config` returned by
-`parse_config` into a variable named `config`, and we updated the code that
-previously used the separate `query` and `file_path` variables so it now uses
-the fields on the `Config` struct instead.
+Biz `main`ni yangiladik, shuning uchun u `parse_config` tomonidan qaytarilgan `Config` namunasini `config` nomli o‘zgaruvchiga joylashtiradi va biz avval alohida `sorov` va `fayl_yoli` o‘zgaruvchilaridan foydalangan kodni yangiladik, shuning uchun u endi `Config` strukturasidagi maydonlardan foydalanadi.
 
-Now our code more clearly conveys that `query` and `file_path` are related and
-that their purpose is to configure how the program will work. Any code that
-uses these values knows to find them in the `config` instance in the fields
-named for their purpose.
+Endi bizning kodimiz `sorov` va `fayl_yoli` bir-biriga bog'liqligini va ularning maqsadi dastur qanday ishlashini sozlash ekanligini aniqroq bildiradi. Ushbu qiymatlardan foydalanadigan har qanday kod ularni maqsadlari uchun nomlangan maydonlardagi `config` misolida topishni biladi.
 
-#### Creating a Constructor for `Config`
+#### `Config` uchun konstruktor yaratish
 
-So far, we’ve extracted the logic responsible for parsing the command line
-arguments from `main` and placed it in the `parse_config` function. Doing so
-helped us to see that the `query` and `file_path` values were related and that
-relationship should be conveyed in our code. We then added a `Config` struct to
-name the related purpose of `query` and `file_path` and to be able to return the
-values’ names as struct field names from the `parse_config` function.
+Hozircha biz `main` dan buyruq qatori argumentlarini tahlil qilish uchun javob beradigan mantiqni chiqarib oldik va uni `parse_config` funksiyasiga joylashtirdik. Bu bizga `sorov` va `fayl_yoli` qiymatlari o'zaro bog'liqligini va bu munosabatlar bizning kodimizda ko'rsatilishi kerakligini ko'rishga yordam berdi. Keyin biz `sorov` va `fayl_yoli` ning tegishli maqsadini nomlash va `parse_config` funksiyasidan qiymatlar nomlarini stuct maydoni nomi sifatida qaytarish uchun `Config` structini qo'shdik.
 
-So now that the purpose of the `parse_config` function is to create a `Config`
-instance, we can change `parse_config` from a plain function to a function
-named `new` that is associated with the `Config` struct. Making this change
-will make the code more idiomatic. We can create instances of types in the
-standard library, such as `String`, by calling `String::new`. Similarly, by
-changing `parse_config` into a `new` function associated with `Config`, we’ll
-be able to create instances of `Config` by calling `Config::new`. Listing 12-7
-shows the changes we need to make.
+Endi `parse_config` funksiyasining maqsadi `Config` misolini yaratish bo‘lganligi sababli, biz `parse_config` ni oddiy funksiyadan `Config` structi bilan bog'langan `new` funksiyaga o‘zgartirishimiz mumkin. Ushbu o'zgarish kodni yanada idiomatik qiladi. Biz standart kutubxonada `String` kabi turlarning namunalarini `String::new` ni chaqirish orqali yaratishimiz mumkin. Xuddi shunday, `parse_config`ni `Config` bilan bog‘langan `new` funksiyaga o‘zgartirib, `Config::new` ni chaqirish orqali `Config` misollarini yaratishimiz mumkin bo‘ladi. 12-7 ro'yxat biz qilishimiz kerak bo'lgan o'zgarishlarni ko'rsatadi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,should_panic,noplayground
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-07/src/main.rs:here}}
