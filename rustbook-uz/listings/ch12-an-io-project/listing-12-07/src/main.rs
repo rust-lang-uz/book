@@ -8,13 +8,13 @@ fn main() {
     let config = Config::new(&args);
     // ANCHOR_END: here
 
-    println!("Searching for {}", config.query);
-    println!("In file {}", config.file_path);
+    println!("{} qidirilmoqda", config.sorov);
+    println!("{} faylida", config.fayl_yoli);
 
-    let contents = fs::read_to_string(config.file_path)
-        .expect("Should have been able to read the file");
+    let tarkib = fs::read_to_string(config.fayl_yoli)
+        .expect("Faylni o'qiy olishi kerak edi");
 
-    println!("With text:\n{contents}");
+    println!("Fayl tarkibi:\n{tarkib}");
     // ANCHOR: here
 
     // --snip--
@@ -24,17 +24,17 @@ fn main() {
 
 // ANCHOR_END: here
 struct Config {
-    query: String,
-    file_path: String,
+    sorov: String,
+    fayl_yoli: String,
 }
 
 // ANCHOR: here
 impl Config {
     fn new(args: &[String]) -> Config {
-        let query = args[1].clone();
-        let file_path = args[2].clone();
+        let sorov = args[1].clone();
+        let fayl_yoli = args[2].clone();
 
-        Config { query, file_path }
+        Config { sorov, fayl_yoli }
     }
 }
 // ANCHOR_END: here

@@ -97,20 +97,13 @@ Endi `parse_config` funksiyasining maqsadi `Config` misolini yaratish bo‘lganl
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-07/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 12-7: Changing `parse_config` into
-`Config::new`</span>
+<span class="caption">Ro'yxat 12-7: `parse_config` ni `Config::new` ga o'zgartirish</span>
 
-We’ve updated `main` where we were calling `parse_config` to instead call
-`Config::new`. We’ve changed the name of `parse_config` to `new` and moved it
-within an `impl` block, which associates the `new` function with `Config`. Try
-compiling this code again to make sure it works.
+Biz `parse_config` deb chaqirgan `main`ni yangilab, `Config::new` deb chaqirdik. Biz `parse_config` nomini `new` ga o‘zgartirdik va uni `new` funksiyani `Config` bilan bog‘laydigan `impl` blokiga o‘tkazdik. Ishlayotganiga ishonch hosil qilish uchun ushbu kodni qayta kompilyatsiya qilib ko'ring.
 
-### Fixing the Error Handling
+### Qayta ishlash xatolarini tuzatish
 
-Now we’ll work on fixing our error handling. Recall that attempting to access
-the values in the `args` vector at index 1 or index 2 will cause the program to
-panic if the vector contains fewer than three items. Try running the program
-without any arguments; it will look like this:
+Endi biz xatolarimizni tuzatish ustida ishlaymiz. Eslatib o'tamiz, `args` vectoridagi qiymatlarga 1 yoki indeks 2 da kirishga urinish vector uchtadan kam elementni o'z ichiga olgan bo'lsa, dastur panic paydo bo'ladi. Dasturni hech qanday argumentlarsiz ishga tushirishga harakat qiling; u shunday ko'rinadi:
 
 ```console
 {{#include ../listings/ch12-an-io-project/listing-12-07/output.txt}}
