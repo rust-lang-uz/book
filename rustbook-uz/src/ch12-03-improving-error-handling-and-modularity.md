@@ -167,63 +167,34 @@ Xato holatini hal qilish va foydalanuvchi uchun qulay xabarni chop etish uchun b
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-10/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 12-10: Exiting with an error code if building a
-`Config` fails</span>
+<span class="caption">Ro'yxat 12-10: Agar `Config` build bo'lmasa, xato kodi bilan chiqish</span>
 
-In this listing, we’ve used a method we haven’t covered in detail yet:
-`unwrap_or_else`, which is defined on `Result<T, E>` by the standard library.
-Using `unwrap_or_else` allows us to define some custom, non-`panic!` error
-handling. If the `Result` is an `Ok` value, this method’s behavior is similar
-to `unwrap`: it returns the inner value `Ok` is wrapping. However, if the value
-is an `Err` value, this method calls the code in the *closure*, which is an
-anonymous function we define and pass as an argument to `unwrap_or_else`. We’ll
-cover closures in more detail in [Chapter 13][ch13]<!-- ignore -->. For now,
-you just need to know that `unwrap_or_else` will pass the inner value of the
-`Err`, which in this case is the static string `"not enough arguments"` that we
-added in Listing 12-9, to our closure in the argument `err` that appears
-between the vertical pipes. The code in the closure can then use the `err`
-value when it runs.
+Ushbu ro'yxatda biz hali batafsil ko'rib chiqmagan metoddan foydalandik: standart kutubxona tomonidan `Result<T, E>` da aniqlangan `unwrap_or_else`.
+`unwrap_or_else` dan foydalanish bizga `panic!` qo'ymaydigan xatoliklarni aniqlash imkonini beradi. Agar `Result` `Ok` qiymati bo'lsa, bu metodning harakati `unwrap` ga o'xshaydi: u `Ok` o'ralayotgan(wrap) ichki qiymatni qaytaradi. Biroq, agar qiymat `Err` qiymati bo'lsa, bu metod kodni *closure*(yopish) ga chaqiradi, bu biz belgilab beradigan anonim funksiya bo'lib, `unwrap_or_else` ga argument sifatida o'tkazamiz. Biz [13-bobda][ch13]<!-- ignore --> closure(yopilish)larni batafsil ko'rib chiqamiz.  Hozircha siz shuni bilishingiz kerakki, `unwrap_or_else` `Err` ning ichki qiymatidan o‘tadi, bu holda biz 12-9-listga qo‘shgan `"argumentlar yetarli emas"` statik qatori bo‘lib, bizning yopishimiz uchun Vertikal quvurlar(pipe) o'rtasida paydo bo'ladigan `Err` argumenti. Yopishdagi(closure) kod ishlayotganida `err` qiymatidan foydalanishi mumkin.
 
-We’ve added a new `use` line to bring `process` from the standard library into
-scope. The code in the closure that will be run in the error case is only two
-lines: we print the `err` value and then call `process::exit`. The
-`process::exit` function will stop the program immediately and return the
-number that was passed as the exit status code. This is similar to the
-`panic!`-based handling we used in Listing 12-8, but we no longer get all the
-extra output. Let’s try it:
+Biz standart kutubxonadan `process`ni qamrab olish uchun yangi `use` qatorini qo‘shdik. Xato holatida ishga tushiriladigan yopishdagi kod faqat ikkita qatordan iborat: biz `err` qiymatini chop qilamiz va keyin `process::exit`ni chaqiramiz. `process::exit` funksiyasi dasturni darhol to'xtatadi va chiqish holati kodi sifatida berilgan raqamni qaytaradi. Bu biz 12-8 roʻyxatda qoʻllagan `panic!` asosidagi ishlovga oʻxshaydi, ammo biz endi barcha qoʻshimcha natijalarni olmaymiz. Keling, sinab ko'raylik:
 
 ```console
 {{#include ../listings/ch12-an-io-project/listing-12-10/output.txt}}
 ```
 
-Great! This output is much friendlier for our users.
+Ajoyib! Ushbu chiqish bizning foydalanuvchilarimiz uchun juda qulay.
 
-### Extracting Logic from `main`
+### `main` dan mantiqni ajratib olish
 
-Now that we’ve finished refactoring the configuration parsing, let’s turn to
-the program’s logic. As we stated in [“Separation of Concerns for Binary
-Projects”](#separation-of-concerns-for-binary-projects)<!-- ignore -->, we’ll
-extract a function named `run` that will hold all the logic currently in the
-`main` function that isn’t involved with setting up configuration or handling
-errors. When we’re done, `main` will be concise and easy to verify by
-inspection, and we’ll be able to write tests for all the other logic.
+Endi biz konfiguratsiyani tahlil qilishni qayta tiklashni tugatdik, keling, dastur mantig'iga murojaat qilaylik. ["Binary loyihalar uchun vazifalarni ajratish"](#separation-of-concerns-for-binary-projects)<!-- ignore --> da aytib o'tganimizdek, biz konfiguratsiyani o'rnatish yoki xatolarni qayta ishlash bilan bog'liq bo'lmagan `main` funksiyadagi barcha mantiqni ushlab turadigan `run` nomli funksiyani chiqaramiz. Ishimiz tugagach, `main` qisqa va tekshirish orqali tekshirish oson bo'ladi va biz boshqa barcha mantiqlar uchun testlarni yozishimiz mumkin bo'ladi.
 
-Listing 12-11 shows the extracted `run` function. For now, we’re just making
-the small, incremental improvement of extracting the function. We’re still
-defining the function in *src/main.rs*.
+12-11 ro'yxatda ajratilgan `run` funksiyasi ko'rsatilgan. Hozircha biz funksiyani chiqarishni kichik, bosqichma-bosqich yaxshilashni amalga oshirmoqdamiz. Biz hali ham *src/main.rs* da funksiyani aniqlayapmiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-11/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 12-11: Extracting a `run` function containing the
-rest of the program logic</span>
+<span class="caption">Ro'yxat 12-11: Dastur mantig'ining qolgan qismini o'z ichiga olgan `run` funksiyasini chiqarish</span>
 
-The `run` function now contains all the remaining logic from `main`, starting
-from reading the file. The `run` function takes the `Config` instance as an
-argument.
+`run` funksiyasi endi faylni o‘qishdan boshlab `main` dan qolgan barcha mantiqni o‘z ichiga oladi. `run` funksiyasi argument sifatida “Config” misolini oladi.
 
 #### Returning Errors from the `run` Function
 
