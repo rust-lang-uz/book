@@ -138,54 +138,30 @@ Bu chiqish yaxshiroq: endi bizda oqilona xato xabari bor. Biroq, bizda foydalanu
 
 #### `panic!` o‘rniga `Result`ni qaytarish
 
-Buning o'rniga, muvaffaqiyatli holatda `Config` misolini o'z ichiga olgan va xatolik holatida muammoni tasvirlaydigan `Result` qiymatini qaytarishimiz mumkin. We’re also
-going to change the function name from `new` to `build` because many
-programmers expect `new` functions to never fail. When `Config::build` is
-communicating to `main`, we can use the `Result` type to signal there was a
-problem. Then we can change `main` to convert an `Err` variant into a more
-practical error for our users without the surrounding text about `thread
-'main'` and `RUST_BACKTRACE` that a call to `panic!` causes.
+Buning o'rniga, muvaffaqiyatli holatda `Config` misolini o'z ichiga olgan va xatolik holatida muammoni tasvirlaydigan `Result` qiymatini qaytarishimiz mumkin. Shuningdek, biz funksiya nomini `new`dan `build`ga o'zgartiramiz, chunki ko'plab dasturchilar `new` funksiyalar hech qachon ishlamay qolmasligini kutishadi. `Config::build` `main` bilan bog'langanda, muammo borligini bildirish uchun `Result` turidan foydalanishimiz mumkin.Keyin biz `main` ni `Err` variantini `panic!` chaqiruvi keltirib chiqaradigan `thread 'main'` va `RUST_BACKTRACE` haqidagi matnsiz foydalanuvchilarimiz uchun amaliyroq xatoga aylantirishimiz mumkin.
 
-Listing 12-9 shows the changes we need to make to the return value of the
-function we’re now calling `Config::build` and the body of the function needed
-to return a `Result`. Note that this won’t compile until we update `main` as
-well, which we’ll do in the next listing.
+12-9 ro'yxatda biz hozir `Config::build` deb nomlanayotgan funksiyaning qaytish(result) qiymatiga va `Result`ni qaytarish uchun zarur bo'lgan funksiyaning tanasiga qilishimiz kerak bo'lgan o'zgarishlar ko'rsatilgan. E'tibor bering, biz `main`ni ham yangilamagunimizcha, bu kompilyatsiya qilinmaydi, biz buni keyingi ro'yxatda qilamiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-09/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 12-9: Returning a `Result` from
-`Config::build`</span>
+<span class="caption">Ro'yxat 12-9: `Config::build` dan `Result`ni qaytarish</span>
 
-Our `build` function returns a `Result` with a `Config` instance in the success
-case and a `&'static str` in the error case. Our error values will always be
-string literals that have the `'static` lifetime.
+Bizning `build` funksiyamiz muvaffaqiyatli holatda `Config` misoli va xato holatida `&'static str` bilan `Result`ni qaytaradi. Bizning xato qiymatlarimiz har doim `'static` lifetimega ega bo'lgan satr harflari(string literal) bo'ladi. Biz funksiyaning asosiy qismiga ikkita o'zgartirish kiritdik: agar foydalanuvchi yetarli argumentlarni o'tkazmasa, `panic!` deb chaqirish o'rniga, biz endi `Err` qiymatini qaytaramiz va `Config` qaytish(return) qiymatini `OK` bilan o'rab oldik. Ushbu o'zgarishlar funksiyani yangi turdagi signaturega moslashtiradi.
 
-We’ve made two changes in the body of the function: instead of calling `panic!`
-when the user doesn’t pass enough arguments, we now return an `Err` value, and
-we’ve wrapped the `Config` return value in an `Ok`. These changes make the
-function conform to its new type signature.
-
-Returning an `Err` value from `Config::build` allows the `main` function to
-handle the `Result` value returned from the `build` function and exit the
-process more cleanly in the error case.
+`Config::build` dan `Err` qiymatini qaytarish `main` funksiyaga `build` funksiyasidan qaytarilgan `Result` qiymatini boshqarish imkonini beradi va xato holatida jarayondan tozaroq chiqish imkonini beradi.
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="calling-confignew-and-handling-errors"></a>
 
-#### Calling `Config::build` and Handling Errors
+#### `Config::build` ga murojaat qilish va xatolarni qayta ishlash
 
-To handle the error case and print a user-friendly message, we need to update
-`main` to handle the `Result` being returned by `Config::build`, as shown in
-Listing 12-10. We’ll also take the responsibility of exiting the command line
-tool with a nonzero error code away from `panic!` and instead implement it by
-hand. A nonzero exit status is a convention to signal to the process that
-called our program that the program exited with an error state.
+Xato holatini hal qilish va foydalanuvchi uchun qulay xabarni chop etish uchun biz 12-10 roʻyxatda koʻrsatilganidek, `Config::build` tomonidan qaytariladigan `Result`ni qayta ishlash uchun `main`ni yangilashimiz kerak. Shuningdek, biz `panic!` dan nolga teng bo‘lmagan xato kodi bilan buyruq qatori dasturidan chiqish va uning o‘rniga uni qo‘lda amalga oshirish mas’uliyatini o‘z zimmamizga olamiz. Nolga teng bo'lmagan chiqish holati - bu bizning dasturimizni chaqirgan jarayonga dastur xato holati bilan chiqqanligi haqida signal berish uchun konventsiya.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-10/src/main.rs:here}}
