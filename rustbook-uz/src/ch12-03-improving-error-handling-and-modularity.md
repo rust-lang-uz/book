@@ -109,55 +109,36 @@ Endi biz xatolarimizni tuzatish ustida ishlaymiz. Eslatib o'tamiz, `args` vector
 {{#include ../listings/ch12-an-io-project/listing-12-07/output.txt}}
 ```
 
-The line `index out of bounds: the len is 1 but the index is 1` is an error
-message intended for programmers. It won’t help our end users understand what
-they should do instead. Let’s fix that now.
+`index out of bounds: the len is 1 but the index is 1`(indeks chegaradan tashqarida: len 1, lekin indeks 1) qatori dasturchilar uchun moʻljallangan xato xabaridir. Bu bizning oxirgi foydalanuvchilarga nima qilish kerakligini tushunishga yordam bermaydi. Keling, buni hozir tuzatamiz.
 
-#### Improving the Error Message
+#### Xato xabarini yaxshilash
 
-In Listing 12-8, we add a check in the `new` function that will verify that the
-slice is long enough before accessing index 1 and 2. If the slice isn’t long
-enough, the program panics and displays a better error message.
+Ro'yxat 12-8da biz `new` funksiyasiga chek qo'shamiz, bu 1 va 2 indekslarga kirishdan oldin bo'lakning yetarlicha uzunligini tasdiqlaydi. Agar bo'lak yetarlicha uzun bo'lmasa, dastur panic chiqaradi va yaxshiroq xato xabarini ko'rsatadi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-08/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 12-8: Adding a check for the number of
-arguments</span>
+<span class="caption">Ro'yxat 12-8: Argumentlar soni uchun chek qo'shish</span>
 
-This code is similar to [the `Guess::new` function we wrote in Listing
-9-13][ch9-custom-types]<!-- ignore -->, where we called `panic!` when the
-`value` argument was out of the range of valid values. Instead of checking for
-a range of values here, we’re checking that the length of `args` is at least 3
-and the rest of the function can operate under the assumption that this
-condition has been met. If `args` has fewer than three items, this condition
-will be true, and we call the `panic!` macro to end the program immediately.
+Bu kod biz 9-13 roʻyxatda yozgan [`Taxmin::new` funksiyasiga oʻxshaydi,][ch9-custom-types]<!-- ignore --> bu yerda `qiymat` argumenti amaldagi qiymatlar oraligʻidan tashqarida boʻlganida `panic!` deb chaqirdik. Bu yerda bir qator qiymatlar mavjudligini tekshirish o‘rniga, biz `args` uzunligi kamida 3 ekanligini va funksiyaning qolgan qismi ushbu shart bajarilgan deb taxmin qilingan holda ishlashini tekshiramiz. Agar `args` uchta elementdan kam boʻlsa, bu shart toʻgʻri boʻladi va dasturni darhol tugatish uchun `panic!` makrosini chaqiramiz.
 
-With these extra few lines of code in `new`, let’s run the program without any
-arguments again to see what the error looks like now:
+`new` da qoʻshimcha bir necha qator kodlar mavjud boʻlsa, keling, xatolik qanday koʻrinishini koʻrish uchun dasturni argumentlarsiz yana ishga tushiramiz:
 
 ```console
 {{#include ../listings/ch12-an-io-project/listing-12-08/output.txt}}
 ```
 
-This output is better: we now have a reasonable error message. However, we also
-have extraneous information we don’t want to give to our users. Perhaps using
-the technique we used in Listing 9-13 isn’t the best to use here: a call to
-`panic!` is more appropriate for a programming problem than a usage problem,
-[as discussed in Chapter 9][ch9-error-guidelines]<!-- ignore -->. Instead,
-we’ll use the other technique you learned about in Chapter 9—[returning a
-`Result`][ch9-result]<!-- ignore --> that indicates either success or an error.
+Bu chiqish yaxshiroq: endi bizda oqilona xato xabari bor. Biroq, bizda foydalanuvchilarga berishni istamaydigan begona ma'lumotlar ham bor. Ehtimol, biz 9-13 roʻyxatda qoʻllagan texnikamizdan foydalanish bu yerda eng yaxshisi emas: `panic!` chaqiruvi [9-bobda muhokama qilinganidek][ch9-error-guidelines]<!-- ignore -->, foydalanish muammosidan koʻra dasturlash muammosiga koʻproq mos keladi. Buning o'rniga biz 9-bobda o'rgangan boshqa texnikadan foydalanamiz - muvaffaqiyat yoki xatoni ko'rsatadigan [`Result`ni][ch9-result]<!-- ignore -->  qaytarish.
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="returning-a-result-from-new-instead-of-calling-panic"></a>
 
-#### Returning a `Result` Instead of Calling `panic!`
+#### `panic!` o‘rniga `Result`ni qaytarish
 
-We can instead return a `Result` value that will contain a `Config` instance in
-the successful case and will describe the problem in the error case. We’re also
+Buning o'rniga, muvaffaqiyatli holatda `Config` misolini o'z ichiga olgan va xatolik holatida muammoni tasvirlaydigan `Result` qiymatini qaytarishimiz mumkin. We’re also
 going to change the function name from `new` to `build` because many
 programmers expect `new` functions to never fail. When `Config::build` is
 communicating to `main`, we can use the `Result` type to signal there was a
