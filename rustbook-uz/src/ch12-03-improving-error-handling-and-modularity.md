@@ -194,31 +194,21 @@ Endi biz konfiguratsiyani tahlil qilishni qayta tiklashni tugatdik, keling, dast
 
 <span class="caption">Ro'yxat 12-11: Dastur mantig'ining qolgan qismini o'z ichiga olgan `run` funksiyasini chiqarish</span>
 
-`run` funksiyasi endi faylni o‘qishdan boshlab `main` dan qolgan barcha mantiqni o‘z ichiga oladi. `run` funksiyasi argument sifatida “Config” misolini oladi.
+`run` funksiyasi endi faylni o‘qishdan boshlab `main` dan qolgan barcha mantiqni o‘z ichiga oladi. `run` funksiyasi argument sifatida `Config` misolini oladi.
 
-#### Returning Errors from the `run` Function
+#### `run` funksiyasidan xatolarni qaytarish(return)
 
-With the remaining program logic separated into the `run` function, we can
-improve the error handling, as we did with `Config::build` in Listing 12-9.
-Instead of allowing the program to panic by calling `expect`, the `run`
-function will return a `Result<T, E>` when something goes wrong. This will let
-us further consolidate the logic around handling errors into `main` in a
-user-friendly way. Listing 12-12 shows the changes we need to make to the
-signature and body of `run`.
+Qolgan dastur mantigʻi `run` funksiyasiga ajratilgan boʻlsa, biz 12 9-ro'yxatdagi `Config::build` bilan qilganimiz kabi, xatolarni boshqarishni yaxshilashimiz mumkin. Dasturni `expect` deb chaqirish orqali panic qo‘yish o‘rniga, `run` funksiyasi biror narsa noto‘g‘ri ketganda `Result<T, E>`ni qaytaradi. Bu bizga foydalanuvchilarga qulay tarzda xatolarni `main`ga qayta ishlash mantig'ini yanada mustahkamlash imkonini beradi. 12-12 roʻyxatda `run` signaturesi va asosiy qismiga qilishimiz kerak boʻlgan oʻzgarishlar koʻrsatilgan.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-12/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 12-12: Changing the `run` function to return
-`Result`</span>
+<span class="caption">Ro'yxat 12-12: `run` funksiyasini `Result`ni qaytarish uchun o'zgartirish</span>
 
-We’ve made three significant changes here. First, we changed the return type of
-the `run` function to `Result<(), Box<dyn Error>>`. This function previously
-returned the unit type, `()`, and we keep that as the value returned in the
-`Ok` case.
+Biz bu yerda uchta muhim o'zgarishlarni amalga oshirdik. Birinchidan, biz `run` funksiyasining qaytish turini `Result<(), Box<dyn Error>>`ga o'zgartirdik. Bu funksiya avval birlik(binary) turini qaytardi, `()` va biz buni `Ok` holatida qaytarilgan qiymat sifatida saqlaymiz.
 
 For the error type, we used the *trait object* `Box<dyn Error>` (and we’ve
 brought `std::error::Error` into scope with a `use` statement at the top).
