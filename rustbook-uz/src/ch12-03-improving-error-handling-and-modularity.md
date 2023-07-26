@@ -250,48 +250,33 @@ Keling, `main` funksiya bo'lmagan barcha kodlarni *src/main.rs* dan *src/lib.rs*
 * `Config` ning definitioni
 * `Config::build` definitioni
 
-The contents of *src/lib.rs* should have the signatures shown in Listing 12-13
-(we’ve omitted the bodies of the functions for brevity). Note that this won’t
-compile until we modify *src/main.rs* in Listing 12-14.
+*src/lib.rs* ning mazmuni 12-13 roʻyxatda koʻrsatilgan signaturelarga ega boʻlishi kerak (qisqalik uchun funksiyalarning qismlarini olib tashladik). E'tibor bering, biz 12-14 ro'yxatdagi *src/main.rs* ni o'zgartirmagunimizcha, bu kompilyatsiya qilinmaydi.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 12-13: Moving `Config` and `run` into
-*src/lib.rs*</span>
+<span class="caption">Ro'yxat 12-13: `Config` va `run` ni *src/lib.rs* ichiga ko'chirish</span>
 
-We’ve made liberal use of the `pub` keyword: on `Config`, on its fields and its
-`build` method, and on the `run` function. We now have a library crate that has
-a public API we can test!
+Biz `pub` kalit so‘zidan erkin foydalandik: `Config` da, uning maydonlari va `build` metodida va `run` funksiyasida. Endi bizda testdan o'tkazishimiz mumkin bo'lgan ommaviy(public) API mavjud kutubxona cratesi bor!
 
-Now we need to bring the code we moved to *src/lib.rs* into the scope of the
-binary crate in *src/main.rs*, as shown in Listing 12-14.
+Endi biz *src/lib.rs* ga ko'chirilgan kodni 12-14 ro'yxatda ko'rsatilganidek *src/main.rs* dagi binary crate doirasiga olib kirishimiz kerak.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 12-14: Using the `minigrep` library crate in
-*src/main.rs*</span>
+<span class="caption">Ro'yxat 12-14: *src/main.rs* da `minigrep` kutubxona cratesidan foydalanish</span>
 
-We add a `use minigrep::Config` line to bring the `Config` type from the
-library crate into the binary crate’s scope, and we prefix the `run` function
-with our crate name. Now all the functionality should be connected and should
-work. Run the program with `cargo run` and make sure everything works
-correctly.
+Kutubxona cratesidan `Config` turini binary crate ko'lamiga olib kirish uchun `use minigrep::Config` qatorini qo'shamiz va `run` funksiyasiga crate nomimiz bilan prefix qo'shamiz. Endi barcha funksiyalar ulanishi va ishlashi kerak. Dasturni `cargo run` bilan ishga tushiring va hamma narsa to'g'ri ishlashiga ishonch hosil qiling.
 
-Whew! That was a lot of work, but we’ve set ourselves up for success in the
-future. Now it’s much easier to handle errors, and we’ve made the code more
-modular. Almost all of our work will be done in *src/lib.rs* from here on out.
+Vouv! Bu juda ko'p ish edi, lekin biz kelajakda muvaffaqiyatga erishdik. Endi xatolarni hal qilish ancha oson va biz kodni modulliroq qildik. Deyarli barcha ishlarimiz bundan buyon *src/lib.rs* da amalga oshiriladi.
 
-Let’s take advantage of this newfound modularity by doing something that would
-have been difficult with the old code but is easy with the new code: we’ll
-write some tests!
+Keling, eski kod bilan qiyin bo'lgan, ammo yangi kod bilan oson bo'lgan narsani qilish orqali ushbu yangi modullikdan foydalanaylik: biz bir nechta testlarni yozamiz!
 
 [ch13]: ch13-00-functional-features.html
 [ch9-custom-types]: ch09-03-to-panic-or-not-to-panic.html#creating-custom-types-for-validation

@@ -3,8 +3,8 @@ use std::error::Error;
 use std::fs;
 
 pub struct Config {
-    pub query: String,
-    pub file_path: String,
+    pub sorov: String,
+    pub fayl_yoli: String,
 }
 
 impl Config {
@@ -12,13 +12,13 @@ impl Config {
         // --snip--
         // ANCHOR_END: here
         if args.len() < 3 {
-            return Err("not enough arguments");
+            return Err("argumentlar yetarli emas");
         }
 
-        let query = args[1].clone();
-        let file_path = args[2].clone();
+        let sorov = args[1].clone();
+        let fayl_yoli = args[2].clone();
 
-        Ok(Config { query, file_path })
+        Ok(Config { sorov, fayl_yoli })
         // ANCHOR: here
     }
 }
@@ -26,9 +26,9 @@ impl Config {
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     // --snip--
     // ANCHOR_END: here
-    let contents = fs::read_to_string(config.file_path)?;
+    let tarkib = fs::read_to_string(config.fayl_yoli)?;
 
-    println!("With text:\n{contents}");
+    println!("Fayl tarkibi:\n{tarkib}");
 
     Ok(())
     // ANCHOR: here
