@@ -210,42 +210,24 @@ Qolgan dastur mantigʻi `run` funksiyasiga ajratilgan boʻlsa, biz 12 9-ro'yxatd
 
 Biz bu yerda uchta muhim o'zgarishlarni amalga oshirdik. Birinchidan, biz `run` funksiyasining qaytish turini `Result<(), Box<dyn Error>>`ga o'zgartirdik. Bu funksiya avval birlik(binary) turini qaytardi, `()` va biz buni `Ok` holatida qaytarilgan qiymat sifatida saqlaymiz.
 
-For the error type, we used the *trait object* `Box<dyn Error>` (and we’ve
-brought `std::error::Error` into scope with a `use` statement at the top).
-We’ll cover trait objects in [Chapter 17][ch17]<!-- ignore -->. For now, just
-know that `Box<dyn Error>` means the function will return a type that
-implements the `Error` trait, but we don’t have to specify what particular type
-the return value will be. This gives us flexibility to return error values that
-may be of different types in different error cases. The `dyn` keyword is short
-for “dynamic.”
+Xato turi uchun biz *trait obyekti* `Box<dyn Error>`dan foydalandik (va biz `std::error::Error` ni yuqori qismida `use` statementi bilan qamrab oldik). Biz [17-bobda][ch17]<!-- ignore --> trait objectlarni ko'rib chiqamiz. Hozircha shuni bilingki, `Box<dyn Error>` funksiya `Error` traitini amalga oshiradigan turni qaytarishini bildiradi, lekin qaytariladigan qiymatning qaysi turini belgilashimiz shart emas. Bu bizga turli xil xato holatlarida har xil turdagi xato qiymatlarini qaytarish uchun moslashuvchanlikni beradi. `dyn` kalit so'zi(keywordi) "dynamic(dinamik)" so'zining qisqartmasi.
 
-Second, we’ve removed the call to `expect` in favor of the `?` operator, as we
-talked about in [Chapter 9][ch9-question-mark]<!-- ignore -->. Rather than
-`panic!` on an error, `?` will return the error value from the current function
-for the caller to handle.
+Ikkinchidan, biz [9-bobda][ch9-question-mark]<!-- ignore --> aytib o'tganimizdek, `?` operatori foydasiga `expect` chaqiruvini olib tashladik. Xatoda `panic!` o‘rniga, `?` murojat qiluvchiga ishlov berish uchun joriy funksiyadan xato qiymatini qaytaradi.
 
-Third, the `run` function now returns an `Ok` value in the success case.
-We’ve declared the `run` function’s success type as `()` in the signature,
-which means we need to wrap the unit type value in the `Ok` value. This
-`Ok(())` syntax might look a bit strange at first, but using `()` like this is
-the idiomatic way to indicate that we’re calling `run` for its side effects
-only; it doesn’t return a value we need.
+Uchinchidan, `run` funksiyasi endi muvaffaqiyatli holatda `Ok` qiymatini qaytaradi.
+Biz signatureda `run` funksiyasining muvaffaqiyat turini `()` deb e’lon qildik, ya’ni birlik turi qiymatini `Ok` qiymatiga o‘rashimiz(wrap) kerak. Bu `Ok(())` sintaksisi dastlab biroz g‘alati ko‘rinishi mumkin, ammo `()` dan foydalanish biz `run`ni faqat uning yon ta’siri uchun chaqirayotganimizni bildirishning idiomatik usulidir; u bizga kerakli qiymatni qaytarmaydi.
 
-When you run this code, it will compile but will display a warning:
+Ushbu kodni ishga tushirganingizda, u kompilyatsiya qilinadi, lekin ogohlantirishni ko'rsatadi:
 
 ```console
 {{#include ../listings/ch12-an-io-project/listing-12-12/output.txt}}
 ```
 
-Rust tells us that our code ignored the `Result` value and the `Result` value
-might indicate that an error occurred. But we’re not checking to see whether or
-not there was an error, and the compiler reminds us that we probably meant to
-have some error-handling code here! Let’s rectify that problem now.
+Rust bizga kodimiz `Result` qiymatini e'tiborsiz qoldirganligini va `Result` qiymati xatolik yuz berganligini ko'rsatishi mumkinligini aytadi. Ammo biz xatolik bor yoki yo'qligini tekshirmayapmiz va kompilyator bu yerda xatoliklarni hal qilish uchun kodga ega bo'lishimiz kerakligini eslatadi! Keling, bu muammoni hozir tuzatamiz.
 
-#### Handling Errors Returned from `run` in `main`
+#### `main`dagi `run` dan qaytarilgan xatolarni qayta ishlash
 
-We’ll check for errors and handle them using a technique similar to one we used
-with `Config::build` in Listing 12-10, but with a slight difference:
+Biz xatolarni tekshirib ko'ramiz va ularni 12-10-sonli ro'yxatdagi `Config::build` bilan ishlatganimizga o'xshash metod yordamida hal qilamiz, lekin bir oz farq bilan:
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -253,29 +235,20 @@ with `Config::build` in Listing 12-10, but with a slight difference:
 {{#rustdoc_include ../listings/ch12-an-io-project/no-listing-01-handling-errors-in-main/src/main.rs:here}}
 ```
 
-We use `if let` rather than `unwrap_or_else` to check whether `run` returns an
-`Err` value and call `process::exit(1)` if it does. The `run` function doesn’t
-return a value that we want to `unwrap` in the same way that `Config::build`
-returns the `Config` instance. Because `run` returns `()` in the success case,
-we only care about detecting an error, so we don’t need `unwrap_or_else` to
-return the unwrapped value, which would only be `()`.
+`run` `Err` qiymatini qaytaradimi yoki yo‘qligini tekshirish uchun `unwrap_or_else` o‘rniga `if let` dan foydalanamiz va agar qaytarsa `process::exit(1)`ni chaqiramiz. `run` funksiyasi `Config::build` `Config` misolini qaytarganidek, biz `unwrap`ni xohlagan qiymatni qaytarmaydi. Muvaffaqiyatli holatda `run`  `()` ni qaytargani uchun biz faqat xatoni aniqlash haqida qayg'uramiz, shuning uchun o'ralgan(wrap) qiymatni qaytarish uchun `unwrap_or_else` shart emas, bu faqat `()` bo`ladi.
 
-The bodies of the `if let` and the `unwrap_or_else` functions are the same in
-both cases: we print the error and exit.
+`if let` va `unwrap_or_else` funksiyalarining tanasi ikkala holatda ham bir xil: biz xatoni chop qilamiz va chiqamiz.
 
-### Splitting Code into a Library Crate
+### Kodni kutubxona(library) cratesiga bo'lish
 
-Our `minigrep` project is looking good so far! Now we’ll split the
-*src/main.rs* file and put some code into the *src/lib.rs* file. That way we
-can test the code and have a *src/main.rs* file with fewer responsibilities.
+Bizning `minigrep` loyihamiz hozircha yaxshi ko'rinmoqda! Endi biz *src/main.rs* faylini ajratamiz va *src/lib.rs* fayliga bir nechta kodni joylashtiramiz. Shunday qilib, biz kodni sinab ko'rishimiz va kamroq mas'uliyatli *src/main.rs* fayliga ega bo'lishimiz mumkin.
 
-Let’s move all the code that isn’t the `main` function from *src/main.rs* to
-*src/lib.rs*:
+Keling, `main` funksiya bo'lmagan barcha kodlarni *src/main.rs* dan *src/lib.rs* ga o'tkazamiz:
 
-* The `run` function definition
-* The relevant `use` statements
-* The definition of `Config`
-* The `Config::build` function definition
+* `run` funksiyasi definitioni
+* Tegishli `use` statementlari
+* `Config` ning definitioni
+* `Config::build` definitioni
 
 The contents of *src/lib.rs* should have the signatures shown in Listing 12-13
 (we’ve omitted the bodies of the functions for brevity). Note that this won’t
