@@ -1,48 +1,29 @@
-## Developing the Library’s Functionality with Test-Driven Development
+## Testga asoslangan ishlab chiqish bilan kutubxonaning funksionalligini rivojlantirish
 
-Now that we’ve extracted the logic into *src/lib.rs* and left the argument
-collecting and error handling in *src/main.rs*, it’s much easier to write tests
-for the core functionality of our code. We can call functions directly with
-various arguments and check return values without having to call our binary
-from the command line.
+Endi biz mantiqni *src/lib.rs* ga chiqardik va argumentlarni yig‘ish va xatolarni qayta ishlashni *src/main.rs* da qoldirdik, kodimizning asosiy funksionalligi uchun testlarni yozish ancha osonlashdi. Biz turli xil argumentlar bilan funksiyalarni to'g'ridan-to'g'ri chaqirishimiz va buyruq satridan binaryga murojaat qilmasdan qaytish(return) qiymatlarini tekshirishimiz mumkin.
 
-In this section, we’ll add the searching logic to the `minigrep` program
-using the test-driven development (TDD) process with the following steps:
+Ushbu bo'limda biz quyidagi bosqichlar bilan test-driven development (TDD) jarayonidan foydalangan holda `minigrep` dasturiga qidiruv mantig'ini qo'shamiz:
 
-1. Write a test that fails and run it to make sure it fails for the reason you
-   expect.
-2. Write or modify just enough code to make the new test pass.
-3. Refactor the code you just added or changed and make sure the tests
-   continue to pass.
+1. Muvaffaqiyatsiz bo'lgan testni yozing va siz kutgan sabab tufayli muvaffaqiyatsiz bo'lishiga ishonch hosil qilish uchun uni ishga tushiring.
+2. Yangi testdan o'tish uchun yetarli kodni yozing yoki o'zgartiring.
+3. Siz qo'shgan yoki o'zgartirgan kodni qayta tiklang(refaktoring) va testlar o'tishda davom etayotganiga ishonch hosil qiling.
 4. Repeat from step 1!
 
-Though it’s just one of many ways to write software, TDD can help drive code
-design. Writing the test before you write the code that makes the test pass
-helps to maintain high test coverage throughout the process.
+Garchi bu dasturiy ta'minotni yozishning ko'p usullaridan biri bo'lsa-da, TDD kod dizaynini boshqarishga yordam beradi. Testdan o'tishni ta'minlaydigan kodni yozishdan oldin testni yozish jarayon davomida yuqori sinov qamrovini saqlashga yordam beradi.
 
-We’ll test drive the implementation of the functionality that will actually do
-the searching for the query string in the file contents and produce a list of
-lines that match the query. We’ll add this functionality in a function called
-`search`.
+Biz fayl tarkibidagi so'rovlar qatorini qidirishni amalga oshiradigan va so'rovga mos keladigan qatorlar ro'yxatini tuzadigan funksiyani amalga oshirishni sinovdan o'tkazamiz. Biz bu funksiyani `qidiruv` funksiyasiga qo‘shamiz.
 
-### Writing a Failing Test
+### Muvaffaqiyatsiz test yozish
 
-Because we don’t need them anymore, let’s remove the `println!` statements from
-*src/lib.rs* and *src/main.rs* that we used to check the program’s behavior.
-Then, in *src/lib.rs*, add a `tests` module with a test function, as we did in
-[Chapter 11][ch11-anatomy]<!-- ignore -->. The test function specifies the
-behavior we want the `search` function to have: it will take a query and the
-text to search, and it will return only the lines from the text that contain
-the query. Listing 12-15 shows this test, which won’t compile yet.
+Bizga endi ular kerak emasligi sababli, dasturning harakatini tekshirish uchun foydalanilgan *src/lib.rs* va *src/main.rs* dan `println!` statementlarini olib tashlaymiz. Keyin, *src/lib.rs* da, [11-bobda][ch11-anatomy]<!-- ignore --> qilganimizdek, test funksiyasiga ega `tests` modulini qo'shing. Test funksiyasi biz `qidirish` funksiyasiga ega bo'lishini xohlagan xatti-harakatni belgilaydi: u so'rov va izlash uchun matnni oladi va u so'rovni o'z ichiga olgan matndan faqat satrlarni qaytaradi. 12-15 ro'yxatda ushbu test ko'rsatilgan, u hali kompilyatsiya bo'lmaydi.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-15/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 12-15: Creating a failing test for the `search`
-function we wish we had</span>
+<span class="caption">12-15 roʻyxat: `qidiruv` funksiyasi uchun muvaffaqiyatsiz test yaratish</span>
 
 This test searches for the string `"duct"`. The text we’re searching is three
 lines, only one of which contains `"duct"` (Note that the backslash after the
