@@ -1,17 +1,16 @@
 ## Test tashkil etish
 
-Bobning boshida aytib o'tilganidek, test murakkab intizom bo'lib, turli odamlar turli terminologiya va tashkilotdan foydalanadilar. Rust hamjamiyati testlarni ikkita asosiy toifaga ko'ra o'ylaydi: birlik testlari(unit test) va integratsiya testlari(integration test). *Unit testlari* kichikroq va ko'proq yo'naltirilgan bo'lib, bir vaqtning o'zida bitta modulni alohida sinovdan o'tkazadi va private interfeyslarni sinab ko'rishi mumkin. Integratsiya testlari kutubxonangizdan(library) butunlay tashqarida bo'lib, kodingizdan faqat public interfeysdan foydalangan holda va har bir test uchun bir nechta modullardan foydalangan holda boshqa har qanday tashqi kod kabi foydalaning.
+As mentioned at the start of the chapter, testing is a complex discipline, and different people use different terminology and organization. The Rust community thinks about tests in terms of two main categories: unit tests and integration tests. *Unit tests* are small and more focused, testing one module in isolation at a time, and can test private interfaces. *Integration tests* are entirely external to your library and use your code in the same way any other external code would, using only the public interface and potentially exercising multiple modules per test.
 
 Kutubxonangizning qismlari siz kutgan narsani alohida va birgalikda bajarishini ta'minlash uchun ikkala turdagi testlarni yozish muhimdir.
 
 ### Unit Testlar
 
-Unit testlarining maqsadi kodning qayerda ekanligi va kutilganidek ishlamayotganligini tezda aniqlash uchun kodning har bir birligini(unit) qolgan kodlardan alohida tekshirishdan iborat. Unit testlarini har bir fayldagi *src* jildiga ular tekshirayotgan kod bilan joylashtirasiz. Konventsiya har bir faylda test funktsiyalarini o'z ichiga olgan `tests` nomli modul yaratish va modulga `cfg(test)` bilan izoh berishdan iborat.
+The purpose of unit tests is to test each unit of code in isolation from the rest of the code to quickly pinpoint where code is and isn’t working as expected. You’ll put unit tests in the *src* directory in each file with the code that they’re testing. The convention is to create a module named `tests` in each file to contain the test functions and to annotate the module with `cfg(test)`.
 
 #### Testlar moduli va `#[cfg(test)]`
 
-Testlar modulidagi `#[cfg(test)]` izohi Rustga test kodini faqat `cargo test`ni bajarganingizda kompilyatsiya qilishni va ishga tushirishni aytadi, `cargo build`ni ishga tushirganingizda emas.
-Bu siz faqat kutubxona qurmoqchi bo'lganingizda kompilyatsiya vaqtini tejaydi va natijada tuzilgan artefaktda joyni tejaydi, chunki testlar kiritilmagan. Integratsiya testlari boshqa jildga o‘tgani uchun ularga `#[cfg(test)]` izohi kerak emasligini ko‘rasiz. Biroq, unit testlari kod bilan bir xil fayllarda joylashganligi sababli, ular kompilyatsiya qilingan natijaga kiritilmasligini belgilash uchun `#[cfg(test)]` dan foydalanasiz.
+The `#[cfg(test)]` annotation on the tests module tells Rust to compile and run the test code only when you run `cargo test`, not when you run `cargo build`. This saves compile time when you only want to build the library and saves space in the resulting compiled artifact because the tests are not included. You’ll see that because integration tests go in a different directory, they don’t need the `#[cfg(test)]` annotation. However, because unit tests go in the same files as the code, you’ll use `#[cfg(test)]` to specify that they shouldn’t be included in the compiled result.
 
 Eslatib o'tamiz, biz ushbu bobning birinchi qismida yangi `qoshuvchi` loyihasini yaratganimizda, Cargo biz uchun ushbu kodni yaratdi:
 
@@ -21,12 +20,11 @@ Eslatib o'tamiz, biz ushbu bobning birinchi qismida yangi `qoshuvchi` loyihasini
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-01/src/lib.rs}}
 ```
 
-Bu kod avtomatik ravishda yaratilgan test modulidir. `cfg` atributi *konfiguratsiya(configuration)* degan ma'noni anglatadi va Rustga quyidagi element faqat ma'lum bir konfiguratsiya opsiyasi berilganda kiritilishi kerakligini aytadi. Bunday holda, konfiguratsiya opsiyasi `test` bo'lib, u Rust tomonidan testlarni kompilyatsiya qilish va ishga tushirish uchun taqdim etiladi. `cfg` atributidan foydalanib, Cargo bizning test kodimizni faqat `cargo test` bilan faol ravishda o'tkazganimizdagina kompilyatsiya qiladi. Bunga `#[test]` bilan izohlangan funksiyalarga qoʻshimcha ravishda ushbu modulda boʻlishi mumkin boʻlgan har qanday yordamchi funksiyalar kiradi.
+This code is the automatically generated test module. The attribute `cfg` stands for *configuration* and tells Rust that the following item should only be included given a certain configuration option. In this case, the configuration option is `test`, which is provided by Rust for compiling and running tests. By using the `cfg` attribute, Cargo compiles our test code only if we actively run the tests with `cargo test`. This includes any helper functions that might be within this module, in addition to the functions annotated with `#[test]`.
 
 #### Private funksiyalarni testdan o'tkazish
 
-Sinov hamjamiyatida private(xususiy) funksiyalarni to'g'ridan-to'g'ri testdan o'tkazish kerakmi yoki yo'qmi degan bahs-munozaralar mavjud va boshqa tillar private funktsiyalarni test qilib ko'rishni qiyinlashtiradi yoki imkonsiz qiladi. Qaysi sinov mafkurasiga rioya qilishingizdan qat'i nazar, Rust maxfiylik qoidalari sizga private funksiyalarni test qilish imkonini beradi.
-11-12 roʻyxatdagi kodni `ichki_qoshuvchi` private funksiyasi bilan koʻrib chiqing.
+There’s debate within the testing community about whether or not private functions should be tested directly, and other languages make it difficult or impossible to test private functions. Regardless of which testing ideology you adhere to, Rust’s privacy rules do allow you to test private functions. Consider the code in Listing 11-12 with the private function `internal_adder`.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -36,17 +34,18 @@ Sinov hamjamiyatida private(xususiy) funksiyalarni to'g'ridan-to'g'ri testdan o'
 
 <span class="caption">Ro'yxat 11-12: Private funksiyani test qilib ko'rish</span>
 
-Esda tutingki, `ichki_qoshuvchi` funksiyasi `pub` sifatida belgilanmagan. Testlar shunchaki Rust kodi va `tests` moduli shunchaki boshqa moduldir. ["Modul daraxtidagi elementga murojaat qilish yo'llari"][paths]<!-- ignore --> bo'limida muhokama qilganimizdek, bolalar modullaridagi elementlar o'zlarining asosiy modullaridagi elementlardan foydalanishlari mumkin. Ushbu testda biz `test` modulining ota-onasining barcha elementlarini  `use super::*` yordamida qamrab olamiz va keyin test `ichki_qoshuvchi` ni chaqirishi mumkin. Agar private(shaxsiy) funksiyalarni sinab ko'rish kerak deb o'ylamasangiz, Rustda sizni bunga majbur qiladigan hech narsa yo'q.
+Note that the `internal_adder` function is not marked as `pub`. Tests are just Rust code, and the `tests` module is just another module. As we discussed in the [“Paths for Referring to an Item in the Module Tree”][paths]<!-- ignore -->
+section, items in child modules can use the items in their ancestor modules. In this test, we bring all of the `test` module’s parent’s items into scope with `use super::*`, and then the test can call `internal_adder`. If you don’t think private functions should be tested, there’s nothing in Rust that will compel you to do so.
 
 ### Integratsiya testlari
 
-Rust-da integratsiya testlari kutubxonangizdan butunlay tashqarida. Ular kutubxonangizdan boshqa kodlar kabi foydalanadilar, ya'ni ular faqat kutubxonangizning umumiy API qismi bo'lgan funksiyalarni chaqira oladi. Ularning maqsadi kutubxonangizning ko'p qismlari to'g'ri ishlashini tekshirishdir. O'z-o'zidan to'g'ri ishlaydigan kod birliklari integratsiyalashganda muammolarga duch kelishi mumkin, shuning uchun integratsiyalangan kodni sinovdan o'tkazish ham muhimdir. Integratsiya testlarini yaratish uchun sizga birinchi navbatda *tests* jildi kerak bo'ladi.
+In Rust, integration tests are entirely external to your library. They use your library in the same way any other code would, which means they can only call functions that are part of your library’s public API. Their purpose is to test whether many parts of your library work together correctly. Units of code that work correctly on their own could have problems when integrated, so test coverage of the integrated code is important as well. To create integration tests, you first need a *tests* directory.
 
 #### *tests* jildi
 
-Biz loyiha jildimizning yuqori darajasida, *src* yonida *tests* jildini yaratamiz. Cargo ushbu jildda integratsiya test fayllarini qidirishni biladi. Keyin biz xohlagancha test fayllarini yaratishimiz mumkin va Cargo har bir faylni alohida crate sifatida tuzadi.
+We create a *tests* directory at the top level of our project directory, next to *src*. Cargo knows to look for integration test files in this directory. We can then make as many test files as we want, and Cargo will compile each of the files as an individual crate.
 
-Keling, integratsiya testini yarataylik. 11-12 ro'yxatdagi kod hali ham *src/lib.rs* faylida bo'lsa, *tests* jildini yarating va *tests/integratsiya_test.rs* nomli yangi fayl yarating. Sizning fayl tuzilishingiz tuzilishi quyidagicha ko'rinishi kerak:
+Let’s create an integration test. With the code in Listing 11-12 still in the *src/lib.rs* file, make a *tests* directory, and create a new file named *tests/integration_test.rs*. Your directory structure should look like this:
 
 ```text
 qoshuvchi
@@ -66,25 +65,27 @@ qoshuvchi
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-13/tests/integration_test.rs}}
 ```
 
+
 <span class="caption">Ro'yxat 11-13: `qoshuvchi` cratesidagi funksiyaning integratsiya testi</span>
 
-`tests` jildidagi har bir fayl alohida cratedir, shuning uchun biz kutubxonamizni har bir test cratesi doirasiga kiritishimiz kerak. Shuning uchun biz kodning yuqori qismiga unit testlarida kerak bo'lmagan  `use qoshuvchi` ni qo'shamiz.
+Each file in the `tests` directory is a separate crate, so we need to bring our library into each test crate’s scope. For that reason we add `use adder` at the top of the code, which we didn’t need in the unit tests.
 
-Bizga *tests/integration_test.rs* da `#[cfg(test)]` bilan hech qanday kodga izoh berish shart emas. Cargo `tests` jildini maxsus ko'rib chiqadi va bu jilddagi fayllarni faqat biz `cargo test` buyrug'ini ishga tushirganimizda kompilyatsiya qiladi. Keling `cargo test` qilib ishlatamiz:
+We don’t need to annotate any code in *tests/integration_test.rs* with `#[cfg(test)]`. Cargo treats the `tests` directory specially and compiles files in this directory only when we run `cargo test`. Run `cargo test` now:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/listing-11-13/output.txt}}
 ```
 
-Chiqishning(output) uchta bo'limiga unit testlari, integratsiya testlari va doc testlari kiradi. E'tibor bering, agar bo'limdagi biron bir test muvaffaqiyatsiz bo'lsa, keyingi bo'limlar bajarilmaydi. Misol uchun, agar unit testi muvaffaqiyatsiz bo'lsa, integratsiya va doc testlari uchun hech qanday natija bo'lmaydi, chunki bu testlar faqat barcha unit testlari o'tgan taqdirdagina amalga oshiriladi.
+The three sections of output include the unit tests, the integration test, and the doc tests. Note that if any test in a section fails, the following sections will not be run. For example, if a unit test fails, there won’t be any output for integration and doc tests because those tests will only be run if all unit tests are passing.
 
 Unit testlari uchun birinchi bo'lim biz ko'rganimiz bilan bir xil: har bir unit testi uchun bitta satr (biz 11 12 roʻyxatga qoʻshgan `ichki` deb nomlangan) va keyin unit testlari uchun xulosa qator.
 
-Integratsiya testlari bo'limi `Running tests/integration_test.rs` qatoridan boshlanadi. Keyin, ushbu integratsiya testidagi har bir test funksiyasi uchun qator va `Doc-tests adder` boʻlimi boshlanishidan oldin integratsiya testi natijalari uchun xulosa qatori mavjud.
+The integration tests section starts with the line `Running
+tests/integration_test.rs`. Next, there is a line for each test function in that integration test and a summary line for the results of the integration test just before the `Doc-tests adder` section starts.
 
 Har bir integratsiya test faylining o'z bo'limi bor, shuning uchun *tests* jildiga ko'proq fayllar qo'shsak, ko'proq integratsiya test bo'limlari bo'ladi.
 
-`cargo test` ga argument sifatida test funksiyasining nomini ko‘rsatib, biz hali ham muayyan integratsiya test funksiyasini ishga tushirishimiz mumkin. Muayyan integratsiya test faylida barcha testlarni bajarish uchun `cargo test`ning `--test` argumentidan keyin fayl nomidan foydalaning:
+We can still run a particular integration test function by specifying the test function’s name as an argument to `cargo test`. To run all the tests in a particular integration test file, use the `--test` argument of `cargo test` followed by the name of the file:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/output-only-05-single-integration/output.txt}}
@@ -94,9 +95,9 @@ Bu buyruq faqat *tests/integration_test.rs* faylidagi testlarni bajaradi.
 
 #### Integratsiya testlarida submodullar
 
-Ko'proq integratsiya testlarini qo'shsangiz, ularni tartibga solishga yordam berish uchun *tests* jildida ko'proq fayllar yaratishni xohlashingiz mumkin; masalan, siz test funktsiyalarini ular test qilib ko'rayotgan funksiyalari bo'yicha guruhlashingiz mumkin. Yuqorida aytib o'tilganidek, *tests* jildidagi har bir fayl o'zining alohida cratesi sifatida tuzilgan bo'lib, bu oxirgi foydalanuvchilar sizning cratengizdan qanday foydalanishini yanada yaqinroq taqlid qilish uchun alohida qamrovlarni yaratish uchun foydalidir. Biroq, bu shuni anglatadiki, *tests* jildidagi fayllar *src* dagi fayllarga o'xshamaydi, chunki kodni modul va fayllarga qanday ajratish haqida 7-bobda o'rgangansiz.
+As you add more integration tests, you might want to make more files in the *tests* directory to help organize them; for example, you can group the test functions by the functionality they’re testing. As mentioned earlier, each file in the *tests* directory is compiled as its own separate crate, which is useful for creating separate scopes to more closely imitate the way end users will be using your crate. However, this means files in the *tests* directory don’t share the same behavior as files in *src* do, as you learned in Chapter 7 regarding how to separate code into modules and files.
 
-*tests* jildidagi fayllarning har xil xatti-harakatlari bir nechta integratsiya test fayllarida foydali bo'ladigan yordamchi funktsiyalar to'plamiga ega bo'lganingizda sezilarli bo'ladi. Aytaylik, siz ularni umumiy modulga chiqarish uchun 7-bob, ["Modullarni turli fayllarga ajratish"][separating-modules-into-files]<!-- ignore --> bosqichlarini bajarishga harakat qilyapsiz. Misol uchun, agar biz *tests/common.rs* ni yaratsak va unga `setup` nomli funksiyani joylashtirsak, biz bir nechta test fayllaridagi bir nechta test funksiyalaridan chaqirmoqchi bo'lgan `setup` ga ba'zi kodlarni qo'shishimiz mumkin:
+The different behavior of *tests* directory files is most noticeable when you have a set of helper functions to use in multiple integration test files and you try to follow the steps in the [“Separating Modules into Different Files”]()<!-- ignore --> section of Chapter 7 to extract them into a common module. For example, if we create *tests/common.rs* and place a function named `setup` in it, we can add some code to `setup` that we want to call from multiple test functions in multiple test files:
 
 <span class="filename">Fayl nomi: tests/common.rs</span>
 
@@ -110,9 +111,9 @@ Testlarni qayta ishga tushirganimizda, biz *common.rs* fayli uchun test chiqishi
 {{#include ../listings/ch11-writing-automated-tests/no-listing-12-shared-test-code-problem/output.txt}}
 ```
 
-Test natijalarida `setup` ko'rinishida `running 0 tests` ko'rsatilishi biz xohlagan narsa emas. Biz shunchaki kodni boshqa integratsiya test fayllari bilan baham ko'rmoqchi edik.
+Having `common` appear in the test results with `running 0 tests` displayed for it is not what we wanted. We just wanted to share some code with the other integration test files.
 
-Test natijasida `common` ko'rinishini oldini olish uchun *tests/common.rs* yaratish o'rniga biz *tests/common/mod.rs* ni yaratamiz. Loyiha jildi(fayl structurasi) endi shunday ko'rinadi:
+To avoid having `common` appear in the test output, instead of creating *tests/common.rs*, we’ll create *tests/common/mod.rs*. The project directory now looks like this:
 
 ```text
 ├── Cargo.lock
@@ -125,10 +126,9 @@ Test natijasida `common` ko'rinishini oldini olish uchun *tests/common.rs* yarat
     └── integration_test.rs
 ```
 
-Bu eski nomlash konventsiyasi bo'lib, Rust biz 7-bobning ["Muqobil fayl yo'llari(path)"][alt-paths]<!-- ignore --> bo'limida aytib o'tganimizni ham tushunadi.
-Biz `setup` funksiya kodini *tests/common/mod.rs* ga ko'chirsak va *tests/common.rs* faylini o'chirsak, test chiqishidagi bo'lim endi ko'rinmaydi. *tests* jildining pastki jildlaridagi fayllar alohida cratelar sifatida kompilyatsiya qilinmaydi yoki test chiqishida(output) bo'limlarga(section) ega emas.
+This is the older naming convention that Rust also understands that we mentioned in the [“Alternate File Paths”][alt-paths]<!-- ignore --> section of Chapter 7. Naming the file this way tells Rust not to treat the `common` module as an integration test file. When we move the `setup` function code into *tests/common/mod.rs* and delete the *tests/common.rs* file, the section in the test output will no longer appear. Files in subdirectories of the *tests* directory don’t get compiled as separate crates or have sections in the test output.
 
-*tests/common/mod.rs* ni yaratganimizdan so'ng, biz uni modul sifatida har qanday integratsiya test faylidan foydalanishimiz mumkin. Bu yerda *tests/integration_test.rs* da `ikkita_qoshish` testidan `setup` funksiyasini chaqirish misoli keltirilgan:
+After we’ve created *tests/common/mod.rs*, we can use it from any of the integration test files as a module. Here’s an example of calling the `setup` function from the `it_adds_two` test in *tests/integration_test.rs*:
 
 <span class="filename">Fayl nomi: tests/integration_test.rs</span>
 
@@ -136,22 +136,20 @@ Biz `setup` funksiya kodini *tests/common/mod.rs* ga ko'chirsak va *tests/common
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-13-fix-shared-test-code-problem/tests/integration_test.rs}}
 ```
 
-Esda tutingki, `mod common;` deklaratsiyasi biz 7-21 roʻyxatda koʻrsatgan modul deklaratsiyasi bilan bir xil. Keyin test funksiyasida biz `common::setup()` funksiyasini chaqirishimiz mumkin.
+Note that the `mod common;` declaration is the same as the module declaration we demonstrated in Listing 7-21. Then in the test function, we can call the `common::setup()` function.
 
 #### Binary Cratelar uchun integratsiya testlari
 
-Agar bizning loyihamiz faqat *src/main.rs* faylini o'z ichiga olgan va *src/lib.rs* fayliga ega bo'lmagan ikkilik crate(binary crate) bo'lsa, biz *tests* jildida integratsiya testlarini yarata olmaymiz va *src/main.rs* faylida belgilangan funksiyalarni `use` statementi bilan qamrab ololmaymiz. Faqat kutubxona cratelari(library crate) boshqa cratelar foydalanishi mumkin bo'lgan funksiyalarni ko'rsatadi; binary cratelar o'z-o'zidan ishlashi uchun mo'ljallangan.
+If our project is a binary crate that only contains a *src/main.rs* file and doesn’t have a *src/lib.rs* file, we can’t create integration tests in the *tests* directory and bring functions defined in the *src/main.rs* file into scope with a `use` statement. Only library crates expose functions that other crates can use; binary crates are meant to be run on their own.
 
-Bu binary faylni ta'minlovchi Rust loyihalarida *src/lib.rs* faylida yashovchi logicni chaqiruvchi(call logic) oddiy *src/main.rs* fayliga ega bo'lishining sabablaridan biri. Ushbu structedan foydalanib, integratsiya testlari kutubxona cratesini muhim funksiyalarni mavjud qilish uchun `use` bilan sinab ko'rishi mumkin.
-Agar muhim funksiya ishlayotgan bo'lsa, *src/main.rs* faylidagi kichik kod miqdori ham ishlaydi va bu kichik kod miqdorini sinab ko'rish kerak emas.
+This is one of the reasons Rust projects that provide a binary have a straightforward *src/main.rs* file that calls logic that lives in the *src/lib.rs* file. Using that structure, integration tests *can* test the library crate with `use` to make the important functionality available. If the important functionality works, the small amount of code in the *src/main.rs* file will work as well, and that small amount of code doesn’t need to be tested.
 
 ## Xulosa
 
-Rust-ning test xususiyatlari(feature) kod qanday ishlashini belgilash usulini taqdim etadi va u siz kutganingizdek ishlashini ta'minlaydi, hatto siz o'zgartirishlar kiritsangiz ham. Unit testlari kutubxonaning turli qismlarini alohida bajaradi va private impelement qilish tafsilotlarini sinab ko'rishi mumkin. Integratsiya testlari kutubxonaning ko'p qismlari to'g'ri ishlashini tekshiradi va ular tashqi kod uni ishlatadigan tarzda kodni sinab ko'rish uchun kutubxonaning umumiy API'sidan foydalanadilar. Rustning type systemi va ownership qoidalari ba'zi xatolarning oldini olishga yordam bergan bo'lsa ham, testlar sizning kodingiz qanday ishlashi bilan bog'liq bo'lgan mantiqiy xatolarni kamaytirish uchun hali ham muhimdir.
+Rust’s testing features provide a way to specify how code should function to ensure it continues to work as you expect, even as you make changes. Unit tests exercise different parts of a library separately and can test private implementation details. Integration tests check that many parts of the library work together correctly, and they use the library’s public API to test the code in the same way external code will use it. Even though Rust’s type system and ownership rules help prevent some kinds of bugs, tests are still important to reduce logic bugs having to do with how your code is expected to behave.
 
 Keling, ushbu bobda va oldingi boblarda olgan bilimlaringizni loyiha ustida ishlash uchun birlashtiraylik!
+ch07-05-separating-modules-into-different-files.html
 
 [paths]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
-[separating-modules-into-files]:
-ch07-05-separating-modules-into-different-files.html
 [alt-paths]: ch07-05-separating-modules-into-different-files.html#alternate-file-paths
