@@ -18,5 +18,4 @@ fn main() {
 
 ---
 
-You can find the latest version of this information
-[here](ch03-05-control-flow.html#if-expressions).
+You can find the latest version of this information [here](ch03-05-control-flow.html#if-expressions).
