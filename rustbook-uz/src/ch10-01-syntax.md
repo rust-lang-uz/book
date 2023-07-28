@@ -1,12 +1,12 @@
 ## Generik ma'lumotlar turlari
 
-Funksiya imzolari yoki structlar kabi elementlar uchun definitionlarni yaratish uchun biz generik(umumiy) ma'lumotlardan foydalanamiz, keyin ularni turli xil aniq ma'lumotlar turlari bilan ishlatishimiz mumkin. Keling, avval generiklar yordamida funksiyalar, structlar, enumlar va metodlarni qanday aniqlashni ko'rib chiqaylik. Keyin biz generiklar kod ishlashiga qanday ta'sir qilishini muhokama qilamiz.
+We use generics to create definitions for items like function signatures or structs, which we can then use with many different concrete data types. Let’s first look at how to define functions, structs, enums, and methods using generics. Then we’ll discuss how generics affect code performance.
 
 ### Funksiya ta'riflarida
 
-Generiklardan foydalanadigan funksiyani belgilashda biz generiklarni funksiya imzosiga joylashtiramiz, u yerda biz odatda parametrlarning ma'lumotlar turlarini va qiymatni qaytaramiz. Bu bizning kodimizni yanada moslashuvchan qiladi va kodning takrorlanishining oldini olish bilan birga funksiyamizni chaqiruvchilarga ko'proq funksionallik beradi.
+When defining a function that uses generics, we place the generics in the signature of the function where we would usually specify the data types of the parameters and return value. Doing so makes our code more flexible and provides more functionality to callers of our function while preventing code duplication.
 
-`eng_katta` funksiyamizni davom ettirsak, 10-4 roʻyxatda ikkalasi ham boʻlakdagi eng katta qiymatni topadigan ikkita funksiya koʻrsatilgan. Keyin biz ularni generiklardan foydalanadigan yagona funksiyaga birlashtiramiz.
+Continuing with our `largest` function, Listing 10-4 shows two functions that both find the largest value in a slice. We'll then combine these into a single function that uses generics.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -14,28 +14,29 @@ Generiklardan foydalanadigan funksiyani belgilashda biz generiklarni funksiya im
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-04/src/main.rs:here}}
 ```
 
+
 <span class="caption">Roʻyxat 10-4: Ikki funksiya faqat nomlari va imzolaridagi turlari bilan farqlanadi</span>
 
-`eng_katta_i32` funksiyasi biz 10-3 roʻyxatda ajratib olingan funksiya boʻlib, u boʻlakdagi eng katta `i32`ni topadi. `eng_katta_char` funksiyasi bo‘lakdagi eng katta `char`ni topadi. Funksiya organlari bir xil kodga ega, shuning uchun bitta funksiyaga generik turdagi parametrni kiritish orqali takrorlanishni bartaraf qilaylik.
+The `largest_i32` function is the one we extracted in Listing 10-3 that finds the largest `i32` in a slice. The `largest_char` function finds the largest `char` in a slice. The function bodies have the same code, so let’s eliminate the duplication by introducing a generic type parameter in a single function.
 
-Yangi bitta funksiyada turlarni parametrlash uchun, biz funksiyaning qiymat parametrlari uchun qilganimiz kabi, tur parametrini nomlashimiz kerak. Tur parametri nomi sifatida istalgan identifikatordan foydalanishingiz mumkin. Lekin biz `T` dan foydalanamiz, chunki Rust-dagi parametr nomlari odatda qisqa, koʻpincha harfdan iborat boʻladi va Rustning tur nomlash konventsiyasi UpperCamelCase hisoblanadi. “type(tur)” so'zining qisqartmasi `T`, Rust dasturchilarining ko'pchiligining standart tanlovidir.
+To parameterize the types in a new single function, we need to name the type parameter, just as we do for the value parameters to a function. You can use any identifier as a type parameter name. But we’ll use `T` because, by convention, type parameter names in Rust are short, often just a letter, and Rust’s type-naming convention is UpperCamelCase. Short for “type,” `T` is the default choice of most Rust programmers.
 
-Funksiya tanasida parametrdan foydalanganda, biz imzoda parametr nomini e'lon qilishimiz kerak, shunda kompilyator bu nom nimani anglatishini biladi.
-Xuddi shunday, biz funktsiya imzosida tup parametri nomini ishlatganimizda, uni ishlatishdan oldin parametr nomini e'lon qilishimiz kerak. Generik `eng_katta` funksiyani aniqlash uchun burchakli qavslar ichida `<>` nomi deklaratsiyasini funksiya nomi va parametrlar ro'yxati orasiga qo'ying, masalan:
+When we use a parameter in the body of the function, we have to declare the parameter name in the signature so the compiler knows what that name means. Similarly, when we use a type parameter name in a function signature, we have to declare the type parameter name before we use it. To define the generic `largest` function, place type name declarations inside angle brackets, `<>`, between the name of the function and the parameter list, like this:
 
 ```rust,ignore
 fn eng_katta<T>(list: &[T]) -> &T {
 ```
 
-Biz bu taʼrifni shunday oʻqiymiz: `eng_katta` funksiyasi `T` turiga nisbatan umumiydir. Bu funksiya `list` nomli bitta parametrga ega, bu `T` turidagi qiymatlar bo'lagidir. `eng_katta` funksiya bir xil turdagi `T` qiymatiga referenceni qaytaradi.
+We read this definition as: the function `largest` is generic over some type `T`. This function has one parameter named `list`, which is a slice of values of type `T`. The `largest` function will return a reference to a value of the same type `T`.
 
-10-5 ro'yxatda imzodagi umumiy ma'lumotlar turidan foydalangan holda birlashtirilgan `eng_katta` funksiya ta'rifi ko'rsatilgan. list shuningdek, funktsiyani `i32` yoki `char` qiymatlari bilan qanday chaqirishimiz mumkinligini ko'rsatadi. E'tibor bering, bu kod hali kompilyatsiya qilinmaydi, ammo biz uni ushbu bobda keyinroq tuzatamiz.
+Listing 10-5 shows the combined `largest` function definition using the generic data type in its signature. The listing also shows how we can call the function with either a slice of `i32` values or `char` values. Note that this code won’t compile yet, but we’ll fix it later in this chapter.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/src/main.rs}}
 ```
+
 
 <span class="caption">Ro'yxat 10-5: Generik turdagi parametrlardan foydalangan holda `eng_katta` funksiya; bu hali kompilyatsiya qilinmagan</span>
 
@@ -45,11 +46,11 @@ Agar dasturni hozir kompilyatsiya qilsak, biz quyidagi xatolikni olamiz:
 {{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/output.txt}}
 ```
 
-Yordam matnida `std::cmp::PartialOrd` qayd etilgan, bu *trait* va biz keyingi bo'limda traitlar haqida gaplashamiz. Hozircha shuni bilingki, bu xato `eng_katta` tanasi `T` bo'lishi mumkin bo'lgan barcha mumkin bo'lgan turlar uchun ishlamasligini bildiradi. Kod tanasidagi `T` turidagi qiymatlarni solishtirmoqchi bo'lganimiz uchun biz faqat qiymatlari ordere qilinadigan turlardan foydalanishimiz mumkin. Taqqoslashni yoqish uchun standart kutubxona `std::cmp::PartialOrd` traitiga ega bo'lib, uni turlarga tatbiq etishingiz mumkin (bu trait haqida batafsil ma'lumot uchun C ilovasiga qarang). Yordam matnining taklifiga amal qilib, biz `T` uchun amal qiladigan turlarni faqat `PartialOrd`-ni qo'llaydiganlar bilan cheklaymiz va bu misol kompilyatsiya qilinadi, chunki standart kutubxona `PartialOrd`ni ham `i32` va `char` da qo'llaydi.
+The help text mentions `std::cmp::PartialOrd`, which is a *trait*, and we’re going to talk about traits in the next section. For now, know that this error states that the body of `largest` won’t work for all possible types that `T` could be. Because we want to compare values of type `T` in the body, we can only use types whose values can be ordered. To enable comparisons, the standard library has the `std::cmp::PartialOrd` trait that you can implement on types (see Appendix C for more on this trait). By following the help text's suggestion, we restrict the types valid for `T` to only those that implement `PartialOrd` and this example will compile, because the standard library implements `PartialOrd` on both `i32` and `char`.
 
 ### Struktura Definitionlarida
 
-Shuningdek, biz `<>` sintaksisi yordamida bir yoki bir nechta maydonlarda generik turdagi parametrlardan foydalanish uchun structlarni belgilashimiz mumkin. Ro'yxat 10-6 har qanday turdagi `x` va `y` koordinata qiymatlarini saqlash uchun `Point<T>` structni belgilaydi.
+We can also define structs to use a generic type parameter in one or more fields using the `<>` syntax. Listing 10-6 defines a `Point<T>` struct to hold `x` and `y` coordinate values of any type.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -57,11 +58,12 @@ Shuningdek, biz `<>` sintaksisi yordamida bir yoki bir nechta maydonlarda generi
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-06/src/main.rs}}
 ```
 
+
 <span class="caption">10-6 roʻyxat: `T` turidagi `x` va `y` qiymatlarini oʻz ichiga olgan `Point<T>` structi</span>
 
-Struktura ta'riflarida generiklardan foydalanish sintaksisi funksiya ta'riflarida qo'llaniladigan sintaksisiga juda oʻxshaydi. Birinchidan, burchakli qavslar ichida strukturaning nomidan keyin tur parametrining nomini e'lon qilamiz. Keyin biz aniq ma'lumotlar turlarini ko'rsatadigan struct ta'rifida generik turdan foydalanamiz.
+The syntax for using generics in struct definitions is similar to that used in function definitions. First, we declare the name of the type parameter inside angle brackets just after the name of the struct. Then we use the generic type in the struct definition where we would otherwise specify concrete data types.
 
-Esda tutingki, biz `Point<T>`ni aniqlash uchun faqat bitta generik turdan foydalanganmiz, bu taʼrifda aytilishicha, `Point<T>` structi ba'zi bir `T` turiga nisbatan umumiy boʻlib, `x` va `y` maydonlari qaysi turdagi boʻlishidan qatʼi nazar bir xil turdagi dir. Agar biz 10-7 ro'yxatdagi kabi har xil turdagi qiymatlarga ega bo'lgan `Point<T>` nusxasini yaratsak, bizning kodimiz kompilyatsiya qilinmaydi.
+Note that because we’ve used only one generic type to define `Point<T>`, this definition says that the `Point<T>` struct is generic over some type `T`, and the fields `x` and `y` are *both* that same type, whatever that type may be. If we create an instance of a `Point<T>` that has values of different types, as in Listing 10-7, our code won’t compile.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -69,15 +71,16 @@ Esda tutingki, biz `Point<T>`ni aniqlash uchun faqat bitta generik turdan foydal
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-07/src/main.rs}}
 ```
 
+
 <span class="caption">Roʻyxat 10-7: `x` va `y` maydonlari bir xil turdagi boʻlishi kerak, chunki ikkalasi ham bir xil umumiy maʼlumotlar turi `T`ga ega.</span>
 
-Ushbu misolda, biz `x` ga 5 butun qiymatini belgilaganimizda, kompilyatorga `T` generik turi `Point<T>` misoli uchun butun son bo'lishini bildiramiz. Keyin biz `x` bilan bir xil turga ega ekanligini aniqlagan `y` uchun 4.0 ni belgilaganimizda, biz quyidagi turdagi nomuvofiqlik xatosini olamiz:
+In this example, when we assign the integer value 5 to `x`, we let the compiler know that the generic type `T` will be an integer for this instance of `Point<T>`. Then when we specify 4.0 for `y`, which we’ve defined to have the same type as `x`, we’ll get a type mismatch error like this:
 
 ```console
 {{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-07/output.txt}}
 ```
 
-`x` va `y` ikkalasi ham generik bo'lgan, lekin har xil turlarga ega bo'lishi mumkin bo'lgan `Point` strukturasini aniqlash uchun biz bir nechta generik turdagi parametrlardan foydalanishimiz mumkin. Masalan, 10-8 roʻyxatda biz `Point` taʼrifini `T` va `U` turlari boʻyicha umumiy qilib oʻzgartiramiz, bunda `x` `T` turiga, `y` esa `U` turiga tegishli.
+To define a `Point` struct where `x` and `y` are both generics but could have different types, we can use multiple generic type parameters. For example, in Listing 10-8, we change the definition of `Point` to be generic over types `T` and `U` where `x` is of type `T` and `y` is of type `U`.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -85,13 +88,14 @@ Ushbu misolda, biz `x` ga 5 butun qiymatini belgilaganimizda, kompilyatorga `T` 
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-08/src/main.rs}}
 ```
 
+
 <span class="caption">Roʻyxat 10-8: `x` va `y` har xil turdagi qiymatlar boʻlishi uchun ikki turdagi umumiy `Point<T, U>`.</span>
 
-Endi ko'rsatilgan `Point` ning barcha misollariga ruxsat berilgan! Ta'rifda siz xohlagancha turdagi parametrlardan generik foydalanishingiz mumkin, lekin bir nechtadan ko'proq foydalanish kodingizni o'qishni qiyinlashtiradi. Agar siz kodingizda ko'plab generik turlar kerakligini aniqlasangiz, bu sizning kodingizni kichikroq qismlarga qayta qurish kerakligini ko'rsatishi mumkin.
+Now all the instances of `Point` shown are allowed! You can use as many generic type parameters in a definition as you want, but using more than a few makes your code hard to read. If you're finding you need lots of generic types in your code, it could indicate that your code needs restructuring into smaller pieces.
 
 ### Enum Definitionlarida
 
-Structlar bilan qilganimizdek, ularning variantlarida generik ma'lumotlar turlarini saqlash uchun enumlarni belgilashimiz mumkin. Biz 6-bobda foydalanilgan standart kutubxona taqdim etadigan `Option<T>` enumini yana bir ko'rib chiqamiz:
+As we did with structs, we can define enums to hold generic data types in their variants. Let’s take another look at the `Option<T>` enum that the standard library provides, which we used in Chapter 6:
 
 ```rust
 enum Option<T> {
@@ -100,10 +104,9 @@ enum Option<T> {
 }
 ```
 
-Bu ta'rif endi siz uchun yanada ma'noli bo'lishi kerak. Ko'rib turganingizdek, `Option<T>` enum `T` turiga nisbatan generik va ikkita variantga ega: `T` turidagi bitta qiymatga ega `Some` va hech qanday qiymatga ega bo'lmagan `None` varianti.
-`Option<T>` enum yordamida biz ixtiyoriy qiymatning mavhum kontseptsiyasini ifodalashimiz mumkin va `Option<T>` umumiy bo'lgani uchun biz ixtiyoriy qiymatning turi qanday bo'lishidan qat`i nazar, bu abstraktsiyadan foydalanishimiz mumkin.
+This definition should now make more sense to you. As you can see, the `Option<T>` enum is generic over type `T` and has two variants: `Some`, which holds one value of type `T`, and a `None` variant that doesn’t hold any value. By using the `Option<T>` enum, we can express the abstract concept of an optional value, and because `Option<T>` is generic, we can use this abstraction no matter what the type of the optional value is.
 
-Enumlar bir nechta generik turlardan ham foydalanishi mumkin. Biz 9-bobda aytib o'tgan `Result` enumining ta'rifi ushbu foydalanishga misoldir:
+Enums can use multiple generic types as well. The definition of the `Result` enum that we used in Chapter 9 is one example:
 
 ```rust
 enum Result<T, E> {
@@ -112,13 +115,13 @@ enum Result<T, E> {
 }
 ```
 
-`Result` enumlari ikki xil, `T` va `E` uchun generikdir va ikkita variantga ega: `T` turidagi qiymatga ega `OK` va `E` turidagi qiymatga ega bo'lgan `Err`. Bu taʼrif `Result` enumidan bizda muvaffaqiyatli boʻlishi mumkin boʻlgan (`T` turidagi qiymatni qaytarish) yoki muvaffaqiyatsiz boʻlishi mumkin boʻlgan (`E` turidagi xatolikni qaytarish) istalgan joyda foydalanishni qulay qiladi. Aslida, biz 9-3 ro'yxatdagi faylni shunday ochar edik, bu yerda fayl muvaffaqiyatli ochilganda `T` `std::fs::File` turi bilan to'ldirilgan va faylni ochishda muammolar yuzaga kelganda `E` `std::io::Error` turi bilan to`ldirilgan.
+The `Result` enum is generic over two types, `T` and `E`, and has two variants: `Ok`, which holds a value of type `T`, and `Err`, which holds a value of type `E`. This definition makes it convenient to use the `Result` enum anywhere we have an operation that might succeed (return a value of some type `T`) or fail (return an error of some type `E`). In fact, this is what we used to open a file in Listing 9-3, where `T` was filled in with the type `std::fs::File` when the file was opened successfully and `E` was filled in with the type `std::io::Error` when there were problems opening the file.
 
 Kodingizdagi vaziyatlarni faqat ular ega bo'lgan qiymatlar turlarida farq qiluvchi bir nechta struct yoki enum ta'riflari bilan tanib olganingizda, uning o'rniga generik turlardan foydalanish orqali takrorlanishdan qochishingiz mumkin.
 
 ### Metod Definitionlarida
 
-Biz structlar va enumlar bo'yicha metodlarni qo'llashimiz mumkin (5-bobda qilganimiz kabi) va ularning ta'riflarida generik turlardan ham foydalanishimiz mumkin. 10-9 ro'yxatda biz 10-6 ro'yxatda belgilagan `Point<T>` structi ko'rsatilgan va unda `x` nomli metod qo'llaniladi.
+We can implement methods on structs and enums (as we did in Chapter 5) and use generic types in their definitions, too. Listing 10-9 shows the `Point<T>` struct we defined in Listing 10-6 with a method named `x` implemented on it.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -126,13 +129,14 @@ Biz structlar va enumlar bo'yicha metodlarni qo'llashimiz mumkin (5-bobda qilgan
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-09/src/main.rs}}
 ```
 
+
 <span class="caption">Roʻyxat 10-9: `Point<T>` structida `x` nomli metodni qo'llash, bu `T` turidagi `x` maydoniga referenceni qaytaradi</span>
 
 Bu yerda biz `Point<T>` da `x` nomli metodni belgilab oldik, u `x` maydonidagi ma`lumotlarga referenceni qaytaradi.
 
-Esda tutingki, biz `impl` dan keyin `T` ni e'lon qilishimiz kerak, shuning uchun biz `Point<T>` turidagi metodlarni amalga oshirayotganimizni aniqlash uchun `T` dan foydalanishimiz mumkin. `T` ni `impl` dan keyin generik tur sifatida e'lon qilish orqali Rust `Point` dagi burchak qavslaridagi tur aniq tur emas, balki generik tur ekanligini aniqlay oladi. Biz ushbu umumiy parametr uchun struct taʼrifida eʼlon qilingan generik parametrdan boshqa nom tanlashimiz mumkin edi, lekin bir xil nomdan foydalanish odatiy hisoblanadi. Generik turni e'lon qiladigan `impl` ichida yozilgan metodlar, generik turdagi o'rnini bosadigan aniq turdagi qanday bo'lishidan qat'i nazar, har qanday turdagi namunada aniqlanadi.
+Note that we have to declare `T` just after `impl` so we can use `T` to specify that we’re implementing methods on the type `Point<T>`. By declaring `T` as a generic type after `impl`, Rust can identify that the type in the angle brackets in `Point` is a generic type rather than a concrete type. We could have chosen a different name for this generic parameter than the generic parameter declared in the struct definition, but using the same name is conventional. Methods written within an `impl` that declares the generic type will be defined on any instance of the type, no matter what concrete type ends up substituting for the generic type.
 
-Tur bo'yicha metodlarni belgilashda generik turlarga cheklovlarni ham belgilashimiz mumkin. Biz, masalan, har qanday generik turdagi `Point<T>` misollarida emas, balki faqat `Point<f32>` misollarida metodlarni amalga oshirishimiz mumkin. 10-10 ro'yxatda biz `f32` aniq turidan foydalanamiz, ya'ni `impl` dan keyin hech qanday turni e'lon qilmaymiz.
+We can also specify constraints on generic types when defining methods on the type. We could, for example, implement methods only on `Point<f32>` instances rather than on `Point<T>` instances with any generic type. In Listing 10-10 we use the concrete type `f32`, meaning we don’t declare any types after `impl`.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -140,12 +144,12 @@ Tur bo'yicha metodlarni belgilashda generik turlarga cheklovlarni ham belgilashi
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-10/src/main.rs:here}}
 ```
 
+
 <span class="caption">Roʻyxat 10-10: `impl` bloki, faqat `T` generik tur parametri uchun ma`lum bir aniq turdagi strukturaga tegishli.</span>
 
-Bu kod `Point<f32>` turi `kelib_chiqishidan_masofa` metodiga ega bo'lishini bildiradi; `T` `f32` turiga tegishli bo'lmagan `Point<T>` ning boshqa misollarida bu metod aniqlanmaydi. Metod bizning pointimizning koordinatadagi nuqtadan qanchalik uzoqligini o'lchaydi (0,0, 0,0) va faqat floating point turlari uchun mavjud bo'lgan matematik operatsiyalardan foydalanadi.
+This code means the type `Point<f32>` will have a `distance_from_origin` method; other instances of `Point<T>` where `T` is not of type `f32` will not have this method defined. The method measures how far our point is from the point at coordinates (0.0, 0.0) and uses mathematical operations that are available only for floating point types.
 
-Struct taʼrifidagi generik turdagi parametrlar har doim ham oʻsha structning metod imzolarida foydalanadigan parametrlar bilan bir xil boʻlavermaydi. 10-11 roʻyxatda misolni aniqroq qilish uchun `Point`  structsi uchun `X1` va `Y1` va `aralashtirish` metodi imzosi uchun `X2` `Y2` generik turlari qoʻllaniladi. Metod yangi `Point` misolini yaratadi
-`self` `Point` (`X1` turidagi) `x` qiymati va o'tkazilgan `Point` (`Y2` turidagi) `y` qiymati.
+Generic type parameters in a struct definition aren’t always the same as those you use in that same struct’s method signatures. Listing 10-11 uses the generic types `X1` and `Y1` for the `Point` struct and `X2` `Y2` for the `mixup` method signature to make the example clearer. The method creates a new `Point` instance with the `x` value from the `self` `Point` (of type `X1`) and the `y` value from the passed-in `Point` (of type `Y2`).
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -153,17 +157,18 @@ Struct taʼrifidagi generik turdagi parametrlar har doim ham oʻsha structning m
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-11/src/main.rs}}
 ```
 
+
 <span class="caption">Ro'yxat 10-11: O'zining strukturasi ta'rifidan farqli generik turlardan foydalanadigan metod</span>
 
-`main`da biz `x` uchun `i32` (`5` qiymati bilan) va `y` uchun `f64` (`10,4` qiymati bilan) bo'lgan `Point` ni aniqladik. `p2` o'zgaruvchisi bu `Point` structi bo'lib, `x` (`Salom` qiymati bilan) va `y` (`c` qiymati bilan) uchun `char` bo'lagiga ega. `p1` da `aralashtirish`ni `p2` argumenti bilan chaqirish bizga `p3`ni beradi, bunda `x` uchun `i32` bo‘ladi, chunki `x` `p1` dan kelgan. `p3` o‘zgaruvchisi `y` uchun `char`ga ega bo‘ladi, chunki `y` `p2` dan kelgan. `println!` makro chaqiruvi `p3.x = 5, p3.y = c` ni chop etadi.
+In `main`, we’ve defined a `Point` that has an `i32` for `x` (with value `5`) and an `f64` for `y` (with value `10.4`). The `p2` variable is a `Point` struct that has a string slice for `x` (with value `"Hello"`) and a `char` for `y` (with value `c`). Calling `mixup` on `p1` with the argument `p2` gives us `p3`, which will have an `i32` for `x`, because `x` came from `p1`. The `p3` variable will have a `char` for `y`, because `y` came from `p2`. The `println!` macro call will print `p3.x = 5, p3.y = c`.
 
-Ushbu misolning maqsadi ba'zi generik parametrlar `impl` bilan e'lon qilingan va ba'zilari metod ta'rifi bilan e'lon qilingan vaziyatni ko'rsatishdir. Bu erda `X1` va `Y1` generik parametrlari `impl` dan keyin e'lon qilinadi, chunki ular struct ta'rifiga mos keladi. `X2` va `Y2` generik parametrlari `fn aralashtirish` dan keyin e'lon qilinadi, chunki ular faqat metodga tegishli.
+The purpose of this example is to demonstrate a situation in which some generic parameters are declared with `impl` and some are declared with the method definition. Here, the generic parameters `X1` and `Y1` are declared after `impl` because they go with the struct definition. The generic parameters `X2` and `Y2` are declared after `fn mixup`, because they’re only relevant to the method.
 
 ### Generiklar yordamida kodning ishlashi
 
-Generik turdagi parametrlardan foydalanganda ish vaqti narxi bor yoki yo'qligini sizni qiziqtirgan bo'lishi mumkin. Yaxshi xabar shundaki, generik turlardan foydalanish dasturingizning aniq turlariga qaraganda sekinroq ishlashiga olib kelmaydi.
+You might be wondering whether there is a runtime cost when using generic type parameters. The good news is that using generic types won't make your program run any slower than it would with concrete types.
 
-Rust buni kompilyatsiya vaqtida generiklar yordamida kodni monomorfizatsiya qilish orqali amalga oshiradi. *Monomorfizatsiya* - bu kompilyatsiya paytida ishlatiladigan aniq turlarni to'ldirish orqali generik kodni maxsus kodga aylantirish jarayoni. Ushbu jarayonda kompilyator biz 10-5 ro'yxatdagi generik funksiyani yaratishda qo'llagan qadamlarning teskarisini bajaradi: kompilyator generik kod chaqiriladigan barcha joylarni ko'rib chiqadi va generik kod chaqirilgan aniq turlar uchun kod ishlab chiqaradi.
+Rust accomplishes this by performing monomorphization of the code using generics at compile time. *Monomorphization* is the process of turning generic code into specific code by filling in the concrete types that are used when compiled. In this process, the compiler does the opposite of the steps we used to create the generic function in Listing 10-5: the compiler looks at all the places where generic code is called and generates code for the concrete types the generic code is called with.
 
 Keling, bu standart kutubxonaning umumiy `Option<T>` enum yordamida qanday ishlashini ko'rib chiqaylik:
 
@@ -172,7 +177,7 @@ let integer = Some(5);
 let float = Some(5.0);
 ```
 
-Rust ushbu kodni kompilyatsiya qilganda, u monomorfizatsiyani amalga oshiradi. Ushbu jarayon davomida kompilyator `Option<T>` misollarida ishlatilgan qiymatlarni o'qiydi va ikki xil `Option<T>`ni aniqlaydi: biri `i32`, ikkinchisi esa `f64`. Shunday qilib, u `Option<T>` ning umumiy ta'rifini `i32` va `f64` uchun ixtisoslashgan ikkita ta'rifga kengaytiradi va shu bilan umumiy ta'rifni o'ziga xos ta'riflar bilan almashtiradi.
+When Rust compiles this code, it performs monomorphization. During that process, the compiler reads the values that have been used in `Option<T>` instances and identifies two kinds of `Option<T>`: one is `i32` and the other is `f64`. As such, it expands the generic definition of `Option<T>` into two definitions specialized to `i32` and `f64`, thereby replacing the generic definition with the specific ones.
 
 Kodning monomorflashtirilgan versiyasi quyidagiga o'xshaydi (kompilyator biz tasvirlash uchun ishlatayotganimizdan boshqa nomlardan foydalanadi):
 
@@ -195,4 +200,4 @@ fn main() {
 }
 ```
 
-Generik `Option<T>` kompilyator tomonidan yaratilgan maxsus ta`riflar bilan almashtiriladi. Rust generik kodni har bir misolda turni belgilaydigan kodga kompilyatsiya qilganligi sababli, biz generiklardan foydalanish uchun hech qanday ish vaqti to'lamaymiz. Kod ishga tushganda, agar biz har bir ta'rifni qo'lda takrorlagan bo'lsak, xuddi shunday ishlaydi. Monomorfizatsiya jarayoni Rust generiklarini runtimeda juda samarali qiladi.
+The generic `Option<T>` is replaced with the specific definitions created by the compiler. Because Rust compiles generic code into code that specifies the type in each instance, we pay no runtime cost for using generics. When the code runs, it performs just as it would if we had duplicated each definition by hand. The process of monomorphization makes Rust’s generics extremely efficient at runtime.
