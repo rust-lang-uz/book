@@ -1,8 +1,0 @@
-git:
-  filters:
-  - filter_type: dir
-    file_format: STRINGS
-    source_file_extension: md
-    source_language: en
-    source_file_dir: rustbook-en
-    translation_files_expression: 'rustbook-<lang>'
