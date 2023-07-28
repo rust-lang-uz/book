@@ -1,12 +1,13 @@
 ## Faylni o'qish
 
-Endi biz  `fayl_yoli` argumentida koʻrsatilgan faylni oʻqish funksiyasini qoʻshamiz. Birinchidan, uni sinab ko'rish uchun bizga namuna fayli kerak: biz bir nechta takroriy so'zlar bilan bir nechta satrlarda kichik hajmdagi matnli fayldan foydalanamiz. 12-3 ro'yxatda Olma haqida she'r bor, u yaxshi ishlaydi! Loyihangizning root darajasida *olma.txt* nomli fayl yarating va “Olma” she’rini kiriting.
+Now we’ll add functionality to read the file specified in the `file_path` argument. First, we need a sample file to test it with: we’ll use a file with a small amount of text over multiple lines with some repeated words. Listing 12-3 has an Emily Dickinson poem that will work well! Create a file called *poem.txt* at the root level of your project, and enter the poem “I’m Nobody! Who are you?”
 
 <span class="filename">Fayl nomi: olma.txt</span>
 
 ```text
 {{#include ../listings/ch12-an-io-project/listing-12-03/olma.txt}}
 ```
+
 
 <span class="caption">Ro'yxat 12-3: Olma haqidagi she'r yaxshi sinov ishini yaratadi</span>
 
@@ -17,6 +18,7 @@ Matn joyida bo'lgan holda *src/main.rs* ni tahrirlang va 12-4 ro'yxatda ko'rsati
 ```rust,should_panic,noplayground
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-04/src/main.rs:here}}
 ```
+
 
 <span class="caption">Ro'yxat 12-4: Ikkinchi argument tomonidan ko'rsatilgan fayl mazmunini o'qish</span>
 
@@ -32,4 +34,4 @@ Keling, ushbu kodni birinchi buyruq qatori argumenti sifatida istalgan qator bil
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-04/output.txt}}
 ```
 
-Ajoyib! Ushbu kod fayl mazmunini o'qiydi va fayl mazmunini chop etdi. Ammo kodda bir nechta kamchiliklar mavjud. Ayni paytda `main` funksiya bir nechta mas'uliyatga ega: umuman olganda, har bir funksiya faqat bitta vazifa uchun javobgar bo'lsa, funksiyalar aniqroq va ularni saqlash osonroq bo'ladi. Boshqa muammo shundaki, biz xatolarni imkon qadar yaxshi hal qilmayapmiz. Dastur hali ham kichik, shuning uchun bu kamchiliklar katta muammo emas, lekin dastur o'sib ulg'aygan sayin ularni toza tuzatish qiyinroq bo'ladi. Dasturni ishlab chiqishda refaktorlashni erta boshlash yaxshi amaliyotdir, chunki kichikroq hajmdagi kodlarni qayta ishlash ancha oson. Biz buni keyin qilamiz.
+Great! The code read and then printed the contents of the file. But the code has a few flaws. At the moment, the `main` function has multiple responsibilities: generally, functions are clearer and easier to maintain if each function is responsible for only one idea. The other problem is that we’re not handling errors as well as we could. The program is still small, so these flaws aren’t a big problem, but as the program grows, it will be harder to fix them cleanly. It’s good practice to begin refactoring early on when developing a program, because it’s much easier to refactor smaller amounts of code. We’ll do that next.
