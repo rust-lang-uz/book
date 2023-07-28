@@ -24,6 +24,4 @@ Here are the relevant sections in the new and old books:
 * **[in the current edition: Ch 5.03 — Method Syntax][2]**
 * <small>[In the first edition: Ch 3.16 — Method Syntax][1]</small>
 
-
-[1]: https://doc.rust-lang.org/1.30.0/book/first-edition/method-syntax.html
 [2]: ch05-03-method-syntax.html
