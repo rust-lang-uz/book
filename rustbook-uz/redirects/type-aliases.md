@@ -10,5 +10,4 @@ type Kilometers = i32;
 
 ---
 
-You can find the latest version of this information
-[here](ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases).
+You can find the latest version of this information [here](ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases).
