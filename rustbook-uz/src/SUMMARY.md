@@ -1,8 +1,6 @@
 # Rust Dasturlash Tili
 
-[Rust dasturlash tili](title-page.md)
-[Muqaddima](foreword.md)
-[Kirish](ch00-00-introduction.md)
+[Rust dasturlash tili](title-page.md) [Muqaddima](foreword.md) [Kirish](ch00-00-introduction.md)
 
 ## Ishni boshlash
 
