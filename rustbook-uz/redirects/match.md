@@ -2,8 +2,7 @@
 
 <small>There is a new edition of the book and this is an old link.</small>
 
-> `match` allows us to compare a value against a series of patterns and then execute code based on which pattern matches.
-> Patterns can be made up of literal values, variable names, wildcards, and many other things.
+> `match` allows us to compare a value against a series of patterns and then execute code based on which pattern matches. Patterns can be made up of literal values, variable names, wildcards, and many other things.
 
 ```rust
 enum Coin {
@@ -31,8 +30,6 @@ Here are the relevant sections in the new and old books:
 * [in the current edition: Ch 18.00 — Patterns][3]
 * <small>[In the first edition: Ch 3.14 — Match][1]</small>
 
-
-[1]: https://doc.rust-lang.org/1.30.0/book/first-edition/match.html
 [2]: ch06-02-match.html
 [3]: ch18-00-patterns.html
 
