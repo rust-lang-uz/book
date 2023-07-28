@@ -20,6 +20,4 @@ Here are the relevant sections in the new and old books:
 * **[In second edition: Ch 5.00 — Structs][2]**
 * <small>[In the first edition: Ch 3.12 — Structs][1]</small>
 
-
-[1]: https://doc.rust-lang.org/1.30.0/book/first-edition/structs.html
 [2]: ch05-00-structs.html
