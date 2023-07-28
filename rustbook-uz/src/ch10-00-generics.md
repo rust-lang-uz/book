@@ -1,18 +1,18 @@
 # Generik turlar, Traitlar va Lifetimelar
 
-Har bir dasturlash tilida kontseptsiyalarning takrorlanishini samarali boshqarish vositalari mavjud. Rustda bunday vositalardan biri *generiklar*: concrete  turlari yoki boshqa xususiyatlar uchun mavhum stendlar. Kodni kompilyatsiya qilish va ishga tushirishda ularning o'rnida nima bo'lishini bilmasdan, biz generiklarning xatti-harakatlarini yoki ularning boshqa generiklar bilan qanday bog'liqligini ifodalashimiz mumkin.
+Every programming language has tools for effectively handling the duplication of concepts. In Rust, one such tool is *generics*: abstract stand-ins for concrete types or other properties. We can express the behavior of generics or how they relate to other generics without knowing what will be in their place when compiling and running the code.
 
-Funktsiyalar `i32` yoki `String` kabi aniq turdagi o'rniga ba'zi umumiy turdagi parametrlarni olishi mumkin, xuddi shu tarzda funksiya bir xil kodni bir nechta aniq qiymatlarda ishlatish uchun noma'lum qiymatlarga ega parametrlarni oladi. Aslida, biz 6-bobda `Option<T>`, 8-bobda `Vec<T>` va `HashMap<K, V>` va 9-bobda `Result<T, E>` bilan generiklardan allaqachon foydalanganmiz. Ushbu bobda siz o'zingizning turlaringizni, funksiyalaringizni va metodlaringizni generiklar bilan qanday aniqlashni o'rganasiz!
+Functions can take parameters of some generic type, instead of a concrete type like `i32` or `String`, in the same way a function takes parameters with unknown values to run the same code on multiple concrete values. In fact, we’ve already used generics in Chapter 6 with `Option<T>`, Chapter 8 with `Vec<T>` and `HashMap<K, V>`, and Chapter 9 with `Result<T, E>`. In this chapter, you’ll explore how to define your own types, functions, and methods with generics!
 
-Birinchidan, kodning takrorlanishini kamaytirish uchun funksiyani qanday chiqarishni ko'rib chiqamiz. Keyin biz bir xil texnikadan faqat parametrlari turida farq qiladigan ikkita funksiyadan umumiy funksiyani yaratamiz. Shuningdek, biz struct va enum ta'riflarida generik turlardan qanday foydalanishni tushuntiramiz.
+First, we’ll review how to extract a function to reduce code duplication. We’ll then use the same technique to make a generic function from two functions that differ only in the types of their parameters. We’ll also explain how to use generic types in struct and enum definitions.
 
-Keyin xulq-atvorni umumiy tarzda aniqlash uchun *traitlar* dan qanday foydalanishni o'rganasiz. Har qanday turdan farqli o'laroq, faqat ma'lum bir xatti-harakatga ega bo'lgan turlarni qabul qilish uchun umumiy turni cheklash uchun traitlarni umumiy turlar bilan birlashtira olasiz.
+Then you’ll learn how to use *traits* to define behavior in a generic way. You can combine traits with generic types to constrain a generic type to accept only those types that have a particular behavior, as opposed to just any type.
 
-Va nihoyat, biz *lifetimelar* haqida gaplashamiz: kompilyatorga referencelar bir-biriga qanday bog'liqligi haqida ma'lumot beradigan turli xil generiklar. Lifetimelar kompilyatorga olingan qiymatlar haqida yetarli ma'lumot berishga imkon beradi, shunda u murojaatlar bizning yordamimizsiz ko'proq holatlarda haqiqiy bo'lishini ta'minlaydi.
+Finally, we’ll discuss *lifetimes*: a variety of generics that give the compiler information about how references relate to each other. Lifetimes allow us to give the compiler enough information about borrowed values so that it can ensure references will be valid in more situations than it could without our help.
 
 ## Funksiyani ajratib olish orqali takrorlanishni olib tashlash
 
-Generiklar bizga kodning takrorlanishini olib tashlash uchun bir nechta turlarni ifodalovchi maxsus turlarni to'ldiruvchi bilan almashtirishga imkon beradi. Generik sintaksisga kirishdan oldin, keling, birinchi navbatda, ma'lum qiymatlarni bir nechta qiymatlarni ifodalovchi to'ldiruvchi bilan almashtiradigan funksiyani chiqarib, generik turlarni o'z ichiga olmaydigan tarzda takrorlashni qanday olib tashlashni ko'rib chiqaylik. Keyin generik funksiyani chiqarish uchun xuddi shu texnikani qo'llaymiz! Funksiyaga chiqarishingiz mumkin bo'lgan takrorlangan kodni qanday tanib olishni ko'rib chiqsangiz, generiklardan foydalanishi mumkin bo'lgan takrorlangan kodni taniy boshlaysiz.
+Generics allow us to replace specific types with a placeholder that represents multiple types to remove code duplication. Before diving into generics syntax, then, let’s first look at how to remove duplication in a way that doesn’t involve generic types by extracting a function that replaces specific values with a placeholder that represents multiple values. Then we’ll apply the same technique to extract a generic function! By looking at how to recognize duplicated code you can extract into a function, you’ll start to recognize duplicated code that can use generics.
 
 Biz ro'yxatdagi eng katta raqamni topadigan 10-1 ro'yxatidagi qisqa dasturdan boshlaymiz.
 
@@ -22,12 +22,12 @@ Biz ro'yxatdagi eng katta raqamni topadigan 10-1 ro'yxatidagi qisqa dasturdan bo
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-01/src/main.rs:here}}
 ```
 
+
 <span class="caption">Ro'yxat 10-1: Raqamlar ro'yxatidagi eng katta raqamni topish</span>
 
-Biz butun sonlar roʻyxatini `raqamlar_listi` oʻzgaruvchisida saqlaymiz va roʻyxatdagi birinchi raqamga referenceni `eng_katta` nomli oʻzgaruvchiga joylashtiramiz. Keyin biz roʻyxatdagi barcha raqamlarni takrorlaymiz va agar joriy raqam `eng_katta`da saqlangan raqamdan katta boʻlsa, ushbu oʻzgaruvchidagi referenceni almashtiramiz.
-Biroq, agar joriy raqam hozirgacha ko'rilgan eng katta raqamdan kichik yoki unga teng bo'lsa, o'zgaruvchi o'zgarmaydi va kod ro'yxatdagi keyingi raqamga o'tadi. Ro'yxatdagi barcha raqamlarni ko'rib chiqqandan so'ng, `eng_katta` eng katta raqamga ishora qilishi kerak, bu holda bu 100 ga teng.
+We store a list of integers in the variable `number_list` and place a reference to the first number in the list in a variable named `largest`. We then iterate through all the numbers in the list, and if the current number is greater than the number stored in `largest`, replace the reference in that variable. However, if the current number is less than or equal to the largest number seen so far, the variable doesn’t change, and the code moves on to the next number in the list. After considering all the numbers in the list, `largest` should refer to the largest number, which in this case is 100.
 
-Bizga endi ikki xil raqamlar ro‘yxatidagi eng katta raqamni topish vazifasi qo‘yildi. Buning uchun biz 10-1 roʻyxatdagi kodni takrorlashni tanlashimiz va 10-2 roʻyxatda koʻrsatilganidek, dasturning ikki xil joyida bir xil mantiqdan foydalanishimiz mumkin.
+We've now been tasked with finding the largest number in two different lists of numbers. To do so, we can choose to duplicate the code in Listing 10-1 and use the same logic at two different places in the program, as shown in Listing 10-2.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -35,13 +35,14 @@ Bizga endi ikki xil raqamlar ro‘yxatidagi eng katta raqamni topish vazifasi qo
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-02/src/main.rs}}
 ```
 
+
 <span class="caption">Ro'yxat 10-2: *ikkita* raqamlar roʻyxatidagi eng katta raqamni topish uchun kod</span>
 
-Ushbu kod ishlayotgan bo'lsa-da, kodni takrorlash zerikarli va xatolarga moyil. Shuningdek, biz kodni o'zgartirmoqchi bo'lganimizda uni bir nechta joyda yangilashni unutmasligimiz kerak.
+Although this code works, duplicating code is tedious and error prone. We also have to remember to update the code in multiple places when we want to change it.
 
-Ushbu takrorlanishni bartaraf qilish uchun biz parametrda berilgan butun sonlar ro'yxatida ishlaydigan funktsiyani aniqlash orqali abstraksiya yaratamiz. Ushbu yechim bizning kodimizni aniqroq qiladi va bizga ro'yxatdagi eng katta raqamni topish tushunchasini mavhum tarzda ifodalash imkonini beradi.
+To eliminate this duplication, we’ll create an abstraction by defining a function that operates on any list of integers passed in a parameter. This solution makes our code clearer and lets us express the concept of finding the largest number in a list abstractly.
 
-10-3 ro'yxatda biz eng katta raqamni topadigan kodni `eng_katta` deb nomlangan funksiyaga chiqaramiz. Keyin biz 10-2 ro'yxatdagi ikkita ro'yxatdagi eng katta raqamni topish uchun funksiyani chaqiramiz. Bundan tashqari, biz kelajakda ega bo'lishi mumkin bo'lgan `i32` qiymatlarining boshqa ro'yxatida ham funksiyadan foydalanishimiz mumkin.
+In Listing 10-3, we extract the code that finds the largest number into a function named `largest`. Then we call the function to find the largest number in the two lists from Listing 10-2. We could also use the function on any other list of `i32` values we might have in the future.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -49,16 +50,17 @@ Ushbu takrorlanishni bartaraf qilish uchun biz parametrda berilgan butun sonlar 
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-03/src/main.rs:here}}
 ```
 
+
 <span class="caption">Ro'yxat 10-3: Ikkita roʻyxatdagi eng katta raqamni topish uchun abstrakt kod</span>
 
-`eng_katta` funksiya `list` deb nomlangan parametrga ega bo'lib, biz funktsiyaga o'tkazishimiz mumkin bo'lgan `i32` qiymatlarining har qanday aniq qismini ifodalaydi. Natijada, biz funksiyani chaqirganimizda, kod biz kiritadigan maxsus qiymatlarda ishlaydi.
+The `largest` function has a parameter called `list`, which represents any concrete slice of `i32` values we might pass into the function. As a result, when we call the function, the code runs on the specific values that we pass in.
 
 Xulosa qilib aytganda, biz kodni kodni 10-2-ro'yxadan 10-3-ro'yxaga oʻzgartirish uchun qilgan qadamlarimiz:
 
 1. Ikki nusxadagi kodni aniqlang.
-2. Ikki nusxadagi kodni funktsiya tanasiga chiqarib oling va ushbu kodning kirish va qaytish qiymatlarini funktsiya imzosida belgilang.
-3. Buning o'rniga funktsiyani chaqirish uchun ikki nusxadagi kodning ikkita nusxasini yangilang.
+2. Extract the duplicate code into the body of the function and specify the inputs and return values of that code in the function signature.
+3. Update the two instances of duplicated code to call the function instead.
 
-Keyinchalik, kodning takrorlanishini kamaytirish uchun generiklar bilan bir xil qadamlardan foydalanamiz. Xuddi shu tarzda, funksiya tanasi ma'lum qiymatlar o'rniga mavhum `list` bo'yicha ishlay oladi, generiklar kodni mavhum turlarda ishlashga imkon beradi.
+Next, we’ll use these same steps with generics to reduce code duplication. In the same way that the function body can operate on an abstract `list` instead of specific values, generics allow code to operate on abstract types.
 
-Misol uchun, bizda ikkita funksiya bor edi deylik: biri `i32` qiymatlari bo‘limidagi eng katta elementni topadigan va ikkinchisi `char` qiymatlari bo‘limidagi eng katta elementni topadigan. Bu takroriylikni qanday yo'q qilamiz? Keling, bilib olaylik!
+For example, say we had two functions: one that finds the largest item in a slice of `i32` values and one that finds the largest item in a slice of `char` values. How would we eliminate that duplication? Let’s find out!
