@@ -2,9 +2,7 @@
 
 <small>There is a new edition of the book and this is an old link.</small>
 
-> Trait objects combine the data made up of the pointer to a concrete object with the behavior of the methods defined in the trait.
-> A trait defines behavior that we need in a given situation.
-> We can then use a trait as a trait object in places where we would use a concrete type or a generic type.
+> Trait objects combine the data made up of the pointer to a concrete object with the behavior of the methods defined in the trait. A trait defines behavior that we need in a given situation. We can then use a trait as a trait object in places where we would use a concrete type or a generic type.
 
 ```rust,ignore
 pub struct InputBox {
@@ -63,6 +61,4 @@ Here are the relevant sections in the new and old books:
 * **[in the current edition: Ch 17.02 — Trait Objects][2]**
 * <small>[In the first edition: Ch 3.22 — Trait Objects][1]</small>
 
-
-[1]: https://doc.rust-lang.org/1.30.0/book/first-edition/trait-objects.html
 [2]: ch17-02-trait-objects.html
