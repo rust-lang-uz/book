@@ -1,6 +1,6 @@
 ## Testlarni qanday yozish kerak
 
-Testlar - bu sinovdan tashqari kod kutilgan tarzda ishlayotganligini tasdiqlovchi Rust funksiyalari. Test funksiyalari organlari odatda ushbu uchta harakatni bajaradi:
+Tests are Rust functions that verify that the non-test code is functioning in the expected manner. The bodies of test functions typically perform these three actions:
 
 1. Har qanday kerakli ma'lumotlarni yoki holatni o'rnating.
 2. Test qilmoqchi bo'lgan kodni ishga tushiring.
@@ -10,11 +10,11 @@ Keling, Rust ushbu amallarni bajaradigan testlarni yozish uchun taqdim etgan xus
 
 ### Test funksiyasining anatomiyasi
 
-Eng sodda qilib aytganda, Rust-dagi test `test` atributi bilan izohlangan funksiyadir. Atributlar Rust kodining bo'laklari haqidagi metama'lumotlardir; bir misol, biz 5-bobda structlar bilan ishlatgan `derive` atributidir. Funksiyani test funksiyasiga oʻzgartirish uchun `fn` oldidan qatorga `#[test]` qoʻshing. `cargo test` buyrug'i bilan testlarni o'tkazganingizda, Rust izohli funksiyalarni ishga tushiradigan test dasturining binaryrini yaratadi va har bir test funksiyasidan o'tgan yoki muvaffaqiyatsizligi haqida hisobot beradi.
+At its simplest, a test in Rust is a function that’s annotated with the `test` attribute. Attributes are metadata about pieces of Rust code; one example is the `derive` attribute we used with structs in Chapter 5. To change a function into a test function, add `#[test]` on the line before `fn`. When you run your tests with the `cargo test` command, Rust builds a test runner binary that runs the annotated functions and reports on whether each test function passes or fails.
 
-Har safar biz Cargo bilan yangi kutubxona loyihasini yaratganimizda, biz uchun test funksiyasi bo'lgan test moduli avtomatik ravishda yaratiladi. Ushbu modul sizga testlarni yozish uchun shablonni taqdim etadi, shuning uchun har safar yangi loyihani boshlaganingizda aniq struktura va sintaksisni izlashga hojat qolmaydi. Siz xohlagancha qo'shimcha test funksiyalari va test modullarini qo'shishingiz mumkin!
+Whenever we make a new library project with Cargo, a test module with a test function in it is automatically generated for us. This module gives you a template for writing your tests so you don’t have to look up the exact structure and syntax every time you start a new project. You can add as many additional test functions and as many test modules as you want!
 
-Har qanday kodni sinab ko'rishdan oldin shablon testi bilan tajriba o'tkazish orqali testlar qanday ishlashining ba'zi jihatlarini o'rganamiz. Keyin biz yozgan ba'zi kodlarni chaqiradigan va uning xatti-harakati to'g'riligini tasdiqlaydigan haqiqiy dunyo testlarini yozamiz.
+We’ll explore some aspects of how tests work by experimenting with the template test before we actually test any code. Then we’ll write some real-world tests that call some code that we’ve written and assert that its behavior is correct.
 
 Keling, ikkita raqamni qo'shadigan `qoshuvchi` nomli yangi kutubxona loyihasini yarataylik:
 
@@ -42,11 +42,12 @@ cd ../../..
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-01/src/lib.rs}}
 ```
 
+
 <span class="caption">Ro'yxat 11-1: Test moduli va funksiyasi avtomatik ravishda `cargo new` tomonidan yaratilgan</span>
 
-Hozircha, keling, yuqoridagi ikkita qatorga e'tibor bermaylik va funksiyaga e'tibor qarataylik. `#[test]` izohiga e'tibor bering: bu atribut bu test funksiyasi ekanligini bildiradi, shuning uchun test ishtirokchisi bu funksiyani test sifatida ko'rishni biladi. Umumiy stsenariylarni oʻrnatish yoki umumiy operatsiyalarni bajarishda yordam beradigan `tests` modulida testdan tashqari funksiyalar ham boʻlishi mumkin, shuning uchun biz har doim qaysi funksiyalar test ekanligini koʻrsatishimiz kerak.
+For now, let’s ignore the top two lines and focus on the function. Note the `#[test]` annotation: this attribute indicates this is a test function, so the test runner knows to treat this function as a test. We might also have non-test functions in the `tests` module to help set up common scenarios or perform common operations, so we always need to indicate which functions are tests.
 
-Misol funksiya tanasi 2 va 2 qo‘shilishi natijasini o‘z ichiga olgan `natija` 4 ga teng ekanligini tasdiqlash uchun `assert_eq!` makrosidan foydalanadi. Ushbu tasdiq odatiy test formatiga misol bo'lib xizmat qiladi. Ushbu sinovdan o'tishini ko'rish uchun uni ishga tushiramiz.
+The example function body uses the `assert_eq!` macro to assert that `result`, which contains the result of adding 2 and 2, equals 4. This assertion serves as an example of the format for a typical test. Let’s run it to see that this test passes.
 
 `cargo test` buyrug'i 11-2 ro'yxatda ko'rsatilganidek, loyihamizdagi barcha testlarni amalga oshiradi.
 
@@ -54,19 +55,19 @@ Misol funksiya tanasi 2 va 2 qo‘shilishi natijasini o‘z ichiga olgan `natija
 {{#include ../listings/ch11-writing-automated-tests/listing-11-01/output.txt}}
 ```
 
+
 <span class="caption">Ro'yxat 11-2: Avtomatik ishlab chiqarilgan testni bajarishdan olingan natija</span>
 
-Cargo kompilyatsiya qilindi va sinovdan o'tdi. Biz `running 1 test` qatorini ko'ramiz. Keyingi qatorda `ishlaydi` deb nomlangan yaratilgan test funksiyasining nomi va bu testni bajarish natijasi `ok` ekanligini ko'rsatadi. Umumiy xulosa test natijasi `test result: ok.` barcha testlardan muvaffaqiyatli oʻtganligini va `1 passed;` deb yozilgan qismi muvaffaqiyatli oʻtganligini bildiradi; `0 failed` muvaffaqiyatsiz boʻlgan testlar sonini ifodalaydi.
+Cargo compiled and ran the test. We see the line `running 1 test`. The next line shows the name of the generated test function, called `it_works`, and that the result of running that test is `ok`. The overall summary `test result: ok.` means that all the tests passed, and the portion that reads `1 passed; 0
+failed` totals the number of tests that passed or failed.
 
-Muayyan misolda ishlamasligi uchun testni e'tiborsiz(ignor) deb belgilash mumkin; Biz buni ushbu bobning keyingi qismida ["Agar aniq talab qilinmasa, ba'zi testlarni e'tiborsiz qoldirish"][ignoring]<!-- ignore --> bo'limida ko'rib chiqamiz. Bu yerda biz buni qilmaganimiz sababli, xulosada  `0 ignored` 0-ta eʼtibor berilmagan koʻrsatiladi. Shuningdek, biz argumentni faqat nomi satrga mos keladigan testlarni o'tkazish uchun `cargo test` buyrug'iga o'tkazishimiz mumkin; bu *filtrlash* deb ataladi va biz buni ["Testlar to'plamini nomi bo'yicha ishga tushirish"][subset]<!-- ignore --> bo'limida ko'rib chiqamiz. Shuningdek, biz bajarilayotgan testlarni filtrlamadik, shuning uchun xulosa oxirida `0 filtered out` 0-ta filtrlangan deb ko‘rsatiladi.
+It’s possible to mark a test as ignored so it doesn’t run in a particular instance; we’ll cover that in the [“Ignoring Some Tests Unless Specifically Requested”][ignoring]<!-- ignore --> section later in this chapter. Because we haven’t done that here, the summary shows `0 ignored`. We can also pass an argument to the `cargo test` command to run only tests whose name matches a string; this is called *filtering* and we’ll cover that in the [“Running a Subset of Tests by Name”][subset]<!-- ignore --> section. We also haven’t filtered the tests being run, so the end of the summary shows `0 filtered out`.
 
-`0 measured` statistikasi samaradorlikni o'lchaydigan benchmark testlari uchundir.
-Benchmark testlari, ushbu yozuvdan boshlab, faqat nightly Rust-da mavjud. Batafsil ma'lumot olish uchun [benchmark testlari haqidagi hujjatlarga][bench] qarang.
+The `0 measured` statistic is for benchmark tests that measure performance. Benchmark tests are, as of this writing, only available in nightly Rust. See [the documentation about benchmark tests][bench] to learn more.
 
-`Doc-tests adder`(Hujjat testlari qoʻshuvchisi) dan boshlanadigan test natijasining keyingi qismi har qanday hujjat sinovlari natijalariga moʻljallangan. Bizda hali hech qanday hujjat sinovlari yo'q, lekin Rust API hujjatlarida ko'rinadigan har qanday kod misollarini to'plashi mumkin.
-Bu xususiyat hujjatlaringiz va kodingizni sinxronlashtirishga yordam beradi! Hujjat testlarini qanday yozishni 14-bobning [“Hujjatlarga sharhlar test sifatida”][doc-comments]<!-- ignore --> bo‘limida muhokama qilamiz. Hozircha biz `Doc-tests` chiqishini e'tiborsiz qoldiramiz.
+The next part of the test output starting at `Doc-tests adder` is for the results of any documentation tests. We don’t have any documentation tests yet, but Rust can compile any code examples that appear in our API documentation. This feature helps keep your docs and your code in sync! We’ll discuss how to write documentation tests in the [“Documentation Comments as Tests”][doc-comments]<!-- ignore --> section of Chapter 14. For now, we’ll ignore the `Doc-tests` output.
 
-Keling, testni o'z ehtiyojlarimizga moslashtirishni boshlaylik. Avval `ishlaydi` funksiyasining nomini `tadqiqot` kabi boshqa nomga o'zgartiring, masalan:
+Let’s start to customize the test to our own needs. First change the name of the `it_works` function to a different name, such as `exploration`, like so:
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -74,13 +75,13 @@ Keling, testni o'z ehtiyojlarimizga moslashtirishni boshlaylik. Avval `ishlaydi`
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-01-changing-test-name/src/lib.rs}}
 ```
 
-Keyin yana `cargo test` bajaring. Chiqish(output) endi `ishlaydi` o‘rniga `tadqiqot`ni ko‘rsatadi:
+Then run `cargo test` again. The output now shows `exploration` instead of `it_works`:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-01-changing-test-name/output.txt}}
 ```
 
-Endi biz yana bir test qo'shamiz, lekin bu safar muvaffaqiyatsiz bo'lgan testni qilamiz! Test funktsiyasidagi biror narsa panic qo'zg'atganda, testlar muvaffaqiyatsiz tugaydi. Har bir test yangi threadda o'tkaziladi va asosiy(main) thread sinov chizig'i o'lganini ko'rsa, test muvaffaqiyatsiz deb belgilanadi. 9-bobda biz panic qo'zg'ashning eng oddiy yo'li `panic!` makrosini chaqirish haqida gapirdik. Yangi testni `boshqa` funksiya sifatida kiriting, shunda *src/lib.rs* faylingiz 11-3 roʻyxatiga oʻxshaydi.
+Now we’ll add another test, but this time we’ll make a test that fails! Tests fail when something in the test function panics. Each test is run in a new thread, and when the main thread sees that a test thread has died, the test is marked as failed. In Chapter 9, we talked about how the simplest way to panic is to call the `panic!` macro. Enter the new test as a function named `another`, so your *src/lib.rs* file looks like Listing 11-3.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -88,28 +89,30 @@ Endi biz yana bir test qo'shamiz, lekin bu safar muvaffaqiyatsiz bo'lgan testni 
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-03/src/lib.rs:here}}
 ```
 
+
 <span class="caption">Ro'yxat 11-3: Muvaffaqiyatsiz bo'ladigan ikkinchi testni qo'shish, chunki biz `panic!` makrosini chaqiramiz.</span>
 
-`cargo test` yordamida testlarni qaytadan test qiling. Chiqish 11-4 ro'yxatga o'xshash bo'lishi kerak, bu bizning `tadqiqot` sinovimizdan o'tganligini va `boshqa` muvaffaqiyatsiz ekanligini ko'rsatadi.
+Run the tests again using `cargo test`. The output should look like Listing 11-4, which shows that our `exploration` test passed and `another` failed.
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/listing-11-03/output.txt}}
 ```
 
+
 <span class="caption">Ro'yxat 11-4: Bitta test sinovdan o'tgan va bitta test muvaffaqiyatsizlikka uchragan sinov natijalari</span>
 
-`OK` o'rniga `test tests::boshqa` qatori `FAILED`ni koʻrsatadi. Shaxsiy natijalar va xulosa o'rtasida ikkita yangi bo'lim paydo bo'ladi: birinchisida har bir sinov muvaffaqiyatsizligining batafsil sababi ko'rsatiladi. Bunday holda, biz *src/lib.rs* faylidagi 10-qatordagi `panicked at 'Make this test fail'` da panic qo'ygani uchun `boshqa` muvaffaqiyatsizlikka uchraganligi haqidagi tafsilotlarni olamiz. Keyingi bo'limda barcha muvaffaqiyatsiz testlarning nomlari keltirilgan, bu juda ko'p sinovlar va ko'plab batafsil muvaffaqiyatsiz sinov natijalari mavjud bo'lganda foydalidir. Muvaffaqiyatsiz test nomidan uni osonroq debug qilish uchun ishlatishimiz mumkin; testlarni o'tkazish usullari haqida ko'proq ["Testlar qanday o'tkazilishini nazorat qilish"][controlling-how-tests-are-run]<!-- ignore
---> section bo'limida gaplashamiz.
+Instead of `ok`, the line `test tests::another` shows `FAILED`. Two new sections appear between the individual results and the summary: the first displays the detailed reason for each test failure. In this case, we get the details that `another` failed because it `panicked at 'Make this test fail'` on line 10 in the *src/lib.rs* file. The next section lists just the names of all the failing tests, which is useful when there are lots of tests and lots of detailed failing test output. We can use the name of a failing test to run just that test to more easily debug it; we’ll talk more about ways to run tests in the [“Controlling How Tests Are Run”]()<!-- ignore
+--> section.
 
-Xulosa qatori oxirida ko'rsatiladi: umuman olganda, bizning test natijasimiz `FAILED` muvaffaqiyatsiz. Bizda bitta test sinovi bor edi va bitta sinov muvaffaqiyatsiz tugadi.
+The summary line displays at the end: overall, our test result is `FAILED`. We had one test pass and one test fail.
 
 Sinov natijalari turli stsenariylarda qanday ko‘rinishini ko‘rganingizdan so‘ng, keling, testlarda foydali bo‘lgan  `panic!`dan tashqari ba’zi makrolarni ko‘rib chiqaylik.
 
 ### Natijalarni `assert!` makrosi bilan tekshirish!
 
-Standart kutubxona tomonidan taqdim etilgan `assert!` makrosi testdagi baʼzi shartlar `true`(toʻgʻri) boʻlishini taʼminlashni istasangiz foydali boʻladi. Biz `assert!` makrosiga mantiqiy(boolean) qiymatga baholovchi argument beramiz. Qiymat `true` bo'lsa, hech narsa sodir bo'lmaydi va sinovdan o'tadi. Agar qiymat `false` bo‘lsa, `assert!` makros testning muvaffaqiyatsiz bo‘lishiga olib kelishi uchun `panic!` chaqiradi. `assert!` makrosidan foydalanish bizning kodimiz biz rejalashtirgan tarzda ishlayotganligini tekshirishga yordam beradi.
+The `assert!` macro, provided by the standard library, is useful when you want to ensure that some condition in a test evaluates to `true`. We give the `assert!` macro an argument that evaluates to a Boolean. If the value is `true`, nothing happens and the test passes. If the value is `false`, the `assert!` macro calls `panic!` to cause the test to fail. Using the `assert!` macro helps us check that our code is functioning in the way we intend.
 
-5-bob, 5-15-ro'yxarda biz 11-5-ro'yxardada takrorlangan `Kvadrat` strukturasi va `ushlab_tur` metodidan foydalandik. Keling, ushbu kodni *src/lib.rs* fayliga joylashtiramiz, so'ngra `assert!` makrosidan foydalanib, u uchun testlarni yozamiz.
+In Chapter 5, Listing 5-15, we used a `Rectangle` struct and a `can_hold` method, which are repeated here in Listing 11-5. Let’s put this code in the *src/lib.rs* file, then write some tests for it using the `assert!` macro.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -117,9 +120,10 @@ Standart kutubxona tomonidan taqdim etilgan `assert!` makrosi testdagi baʼzi sh
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-05/src/lib.rs:here}}
 ```
 
+
 <span class="caption">Ro'yxat 11-5: 5-bobdagi `Kvadrat` strukturasi va uning `ushlab_tur` metodidan foydalanish</span>
 
-`ushlab_tur` metodi mantiqiy(boolean) qiymatini qaytaradi, ya'ni bu `assert!` makrosi uchun mukammal foydalanish holati. 11-6 ro'yxatda biz kengligi 8 va balandligi 7 bo'lgan `Kvadrat` misolini yaratish va uning kengligi 5 va balandligi 1 bo'lgan boshqa `Kvadrat` misolini ushlab turishi mumkinligini tekshirish orqali `ushlab_tur` metodini bajaradigan testni yozamiz.
+The `can_hold` method returns a Boolean, which means it’s a perfect use case for the `assert!` macro. In Listing 11-6, we write a test that exercises the `can_hold` method by creating a `Rectangle` instance that has a width of 8 and a height of 7 and asserting that it can hold another `Rectangle` instance that has a width of 5 and a height of 1.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -127,18 +131,19 @@ Standart kutubxona tomonidan taqdim etilgan `assert!` makrosi testdagi baʼzi sh
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-06/src/lib.rs:here}}
 ```
 
+
 <span class="caption">Ro'yxat 11-6: Kattaroq kvadrat haqiqatan ham kichikroq kvadratni sig'dira oladimi yoki yo'qligini tekshiradigan `ushlab_tur` testi</span>
 
-E'tibor bering, biz `tests` moduliga yangi qator qo'shdik: `use super::*;`. `tests` moduli odatiy modul bo'lib, biz 7-bobda ["Modul daraxtidagi elementga murojaat qilish yo'llari"][paths-for-referring-to-an-item-in-the-module-tree]<!-- ignore --> bo'limida ko'rib chiqqan odatiy ko'rinish qoidalariga amal qiladi. `tests` moduli ichki modul bo'lgani uchun biz tashqi moduldagi sinovdan o'tayotgan kodni ichki modul doirasiga kiritishimiz kerak. Biz bu yerda globdan foydalanamiz, shuning uchun tashqi modulda biz aniqlagan har qanday narsa ushbu `tests` modulida mavjud bo'ladi.
+Note that we’ve added a new line inside the `tests` module: `use super::*;`. The `tests` module is a regular module that follows the usual visibility rules we covered in Chapter 7 in the [“Paths for Referring to an Item in the Module Tree”][paths-for-referring-to-an-item-in-the-module-tree]<!-- ignore -->
+section. Because the `tests` module is an inner module, we need to bring the code under test in the outer module into the scope of the inner module. We use a glob here so anything we define in the outer module is available to this `tests` module.
 
-Biz sinovimizga `katta_kichikni_ushlab_turadi` deb nom berdik va o‘zimizga kerak bo‘lgan ikkita `Kvadrat` misolini yaratdik.
-Keyin biz `assert!` makrosini chaqirdik va uni `kattaroq.ushlab_tur(&kichikroq)` deb chaqirish natijasini berdik. Bu ifoda `true` ni qaytarishi kerak, shuning uchun testimiz muvaffaqiyatli o'tishi kerak. Keling, bilib olaylik!
+We’ve named our test `larger_can_hold_smaller`, and we’ve created the two `Rectangle` instances that we need. Then we called the `assert!` macro and passed it the result of calling `larger.can_hold(&smaller)`. This expression is supposed to return `true`, so our test should pass. Let’s find out!
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/listing-11-06/output.txt}}
 ```
 
-Test muvaffaqiyatli o'tadi! Keling, yana bir sinovni qo'shamiz, bu safar kichikroq kvadrat kattaroq kvadratni ushlab turolmaydi:
+It does pass! Let’s add another test, this time asserting that a smaller rectangle cannot hold a larger rectangle:
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -146,13 +151,13 @@ Test muvaffaqiyatli o'tadi! Keling, yana bir sinovni qo'shamiz, bu safar kichikr
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-02-adding-another-rectangle-test/src/lib.rs:here}}
 ```
 
-Chunki bu holda `ushlab_tur` funksiyasining to'g'ri natijasi `false` bo'lsa, biz uni `assert!` makrosiga o'tkazishdan oldin bu natijani inkor etishimiz kerak. Natijada, agar `ushlab_tur` `false` qiymatini qaytarsa, testimiz o'tadi:
+Because the correct result of the `can_hold` function in this case is `false`, we need to negate that result before we pass it to the `assert!` macro. As a result, our test will pass if `can_hold` returns `false`:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-02-adding-another-rectangle-test/output.txt}}
 ```
 
-Ikkita sinovdan o'tadi! Keling, kodimizga xatolik kiritganimizda test natijalarimiz bilan nima sodir bo'lishini ko'rib chiqaylik. Kengliklarni solishtirganda katta belgisini kichikroq belgisi bilan almashtirish orqali `ushlab_tur` metodini amalga oshirishni o‘zgartiramiz:
+Two tests that pass! Now let’s see what happens to our test results when we introduce a bug in our code. We’ll change the implementation of the `can_hold` method by replacing the greater-than sign with a less-than sign when it compares the widths:
 
 ```rust,not_desired_behavior,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-03-introducing-a-bug/src/lib.rs:here}}
@@ -164,12 +169,13 @@ Sinovlarni o'tkazish endi quyidagilarga olib keladi:
 {{#include ../listings/ch11-writing-automated-tests/no-listing-03-introducing-a-bug/output.txt}}
 ```
 
-Sinovlarimiz xatoni aniqladi! `kattaroq.kenglik` 8 va `kichikroq.kenglik` 5 bo'lganligi sababli, `ushlab_tur`da kengliklarni taqqoslash endi `false`ni qaytaradi: 8 5-dan kichik emas.
+Our tests caught the bug! Because `larger.width` is 8 and `smaller.width` is 5, the comparison of the widths in `can_hold` now returns `false`: 8 is not less than 5.
 
 ### Tenglikni `assert_eq!` va `assert_ne!` makroslari bilan tekshirish
 
-Funksionallikni tekshirishning keng tarqalgan usuli - bu testdan o'tayotgan kod natijasi va kod qaytarilishini kutayotgan qiymat o'rtasidagi tenglikni tekshirish. Buni `assert!` makrosidan foydalanib, unga `==` operatori yordamida ifoda o'tkazishingiz mumkin. Biroq, bu shunday keng tarqalgan testki, standart kutubxona ushbu testni yanada qulayroq bajarish uchun bir juft makros-`assert_eq!` va `assert_ne!`-ni taqdim etadi. Ushbu makrolar mos ravishda tenglik yoki tengsizlik uchun ikkita argumentni solishtiradi. Agar tasdiqlash muvaffaqiyatsiz bo'lsa, ular ikkita qiymatni chop etadilar, bu esa *nima uchun* sinov muvaffaqiyatsiz tugaganini ko'rishni osonlashtiradi; aksincha, `assert!` makros `false` qiymatiga olib kelgan qiymatlarni chop etmasdan, `==` ifodasi uchun `false` qiymatini olganligini bildiradi.
-11-7 ro'yxatda biz o'z parametriga `2` qo'shadigan `ikkita_qoshish` nomli funksiyani yozamiz, so'ngra bu funksiyani `assert_eq!` makrosidan foydalanib tekshiramiz.
+A common way to verify functionality is to test for equality between the result of the code under test and the value you expect the code to return. You could do this using the `assert!` macro and passing it an expression using the `==` operator. However, this is such a common test that the standard library provides a pair of macros—`assert_eq!` and `assert_ne!`—to perform this test more conveniently. These macros compare two arguments for equality or inequality, respectively. They’ll also print the two values if the assertion fails, which makes it easier to see *why* the test failed; conversely, the `assert!` macro only indicates that it got a `false` value for the `==` expression, without printing the values that led to the `false` value.
+
+Keling test o'tganligini tekshirib ko'raylik!
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -177,42 +183,44 @@ Funksionallikni tekshirishning keng tarqalgan usuli - bu testdan o'tayotgan kod 
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-07/src/lib.rs}}
 ```
 
+
 <span class="caption">Roʻyxat 11-7: `assert_eq!` makrosidan foydalanib `ikkita_qoshish` funksiyasini sinab koʻrish</span>
 
-Keling test o'tganligini tekshirib ko'raylik!
+Let’s check that it passes!
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/listing-11-07/output.txt}}
 ```
 
-Argument sifatida `4` ni `assert_eq!`ga o'tkazamiz, bu esa `ikkita_qoshish(2)` ni chaqirish natijasiga teng. Ushbu test qatori  `test tests::it_adds_two ... ok` va `ok` matni testimiz muvaffaqiyatli o'tganligini bildiradi!
+We pass `4` as the argument to `assert_eq!`, which is equal to the result of calling `add_two(2)`. The line for this test is `test tests::it_adds_two ...
+ok`, and the `ok` text indicates that our test passed!
 
-`assert_eq!` muvaffaqiyatsiz bo'lganda qanday ko'rinishini ko'rish uchun kodimizga xato kiritamiz. `ikkita_qoshish` funksiyasining bajarilishini o'rniga `3` qo'shish uchun o`zgartiramiz:
+Let’s introduce a bug into our code to see what `assert_eq!` looks like when it fails. Change the implementation of the `add_two` function to instead add `3`:
 
 ```rust,not_desired_behavior,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-04-bug-in-add-two/src/lib.rs:here}}
 ```
 
-Testlarni qayta ishga tushiring:
+Run the tests again:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-04-bug-in-add-two/output.txt}}
 ```
 
-Bizning sinovimiz xatoni aniqladi! `ikkita_qosh` testi muvaffaqiyatsiz tugadi va xabarda muvaffaqiyatsizlikka uchragan tasdiqlash `` assertion failed: `(left == right)` `` va `left` va `right` qiymatlari nima. Bu xabar nosozliklarni(debugging) tuzatishni boshlashimizga yordam beradi: ``left``(chap) argumenti `4` edi, lekin `ikkita_qoshish(2)` bo'lgan `right`(o'ng) argumenti `5` edi. Tasavvur qilishingiz mumkinki, bu bizda juda ko'p sinovlar o'tkazilayotganda ayniqsa foydali bo'ladi.
+Our test caught the bug! The `it_adds_two` test failed, and the message tells us that the assertion that fails was `` assertion failed: `(left == right)` `` and what the `left` and `right` values are. This message helps us start debugging: the `left` argument was `4` but the `right` argument, where we had `add_two(2)`, was `5`. You can imagine that this would be especially helpful when we have a lot of tests going on.
 
-E'tibor bering, ba'zi dasturlash tillarda va test tizimlarida(framework) tenglikni tasdiqlash funksiyalari parametrlari `expected` va `actual` deb nomlanadi va biz argumentlarni ko'rsatish tartibi muhim ahamiyatga ega. Biroq, Rustda ular `left` va `right` deb nomlanadi va biz kutgan qiymat va kod ishlab chiqaradigan qiymatni belgilash tartibi muhim emas. Biz ushbu testdagi tasdiqni `assert_eq!(ikkita_qoshish(2), 4)` deb yozishimiz mumkin, natijada `` assertion failed: `(left == right)` `` ko'rsatiladigan bir xil xato xabari paydo bo'ladi.
+Note that in some languages and test frameworks, the parameters to equality assertion functions are called `expected` and `actual`, and the order in which we specify the arguments matters. However, in Rust, they’re called `left` and `right`, and the order in which we specify the value we expect and the value the code produces doesn’t matter. We could write the assertion in this test as `assert_eq!(add_two(2), 4)`, which would result in the same failure message that displays `` assertion failed: `(left == right)` ``.
 
-`assert_ne!` makros biz bergan ikkita qiymat teng bo'lmasa o'tadi va teng bo'lsa muvaffaqiyatsiz bo'ladi. Ushbu makro biz qiymat nima bo'lishini amin bo'lmagan holatlar uchun juda foydali bo'ladi, lekin biz qiymat nima bo'lmasligi kerakligini bilamiz.
-Misol uchun, agar biz biron-bir tarzda uning kiritilishini o'zgartirishi kafolatlangan funksiyani sinab ko'rayotgan bo'lsak, lekin kirishni o'zgartirish metodi testlarimizni o'tkazadigan hafta kuniga bog'liq bo'lsa, tasdiqlash uchun eng yaxshi narsa, funksiyaning chiqishi kirishga teng emasligi bo'lishi mumkin.
+The `assert_ne!` macro will pass if the two values we give it are not equal and fail if they’re equal. This macro is most useful for cases when we’re not sure what a value *will* be, but we know what the value definitely *shouldn’t* be. For example, if we’re testing a function that is guaranteed to change its input in some way, but the way in which the input is changed depends on the day of the week that we run our tests, the best thing to assert might be that the output of the function is not equal to the input.
 
-Sirt ostida `assert_eq!` va `assert_ne!` makroslari mos ravishda `==` va `!=` operatorlaridan foydalanadi. Tasdiqlar bajarilmasa, bu makroslar debug formati yordamida o‘z argumentlarini chop etadi, ya’ni solishtirilayotgan qiymatlar `PartialEq` va `Debug` traitlarini bajarishi kerak. Barcha primitiv turlar va standart kutubxona turlarining aksariyati bu traittlarni amalga oshiradi. O'zingiz belgilagan structlar va enumlar uchun ushbu turlarning tengligini tasdiqlash uchun `PartialEq` ni qo'llashingiz kerak bo'ladi. Tasdiqlash muvaffaqiyatsizlikka uchraganida qiymatlarni chop etish uchun `Debug` ni ham qo'llashingiz kerak bo'ladi. 5-bobdagi 5-12 roʻyxatda aytib oʻtilganidek, ikkala trait ham derivable traitli boʻlganligi sababli, bu odatda struct yoki enum taʼrifiga `#[derive(PartialEq, Debug)]` izohini qoʻshishdek oddiy. Ushbu va boshqa ["Derivable Trait"][derivable-traits]<!-- ignore -->lari haqida batafsil ma'lumot olish uchun C ilovasiga qarang.
+Under the surface, the `assert_eq!` and `assert_ne!` macros use the operators `==` and `!=`, respectively. When the assertions fail, these macros print their arguments using debug formatting, which means the values being compared must implement the `PartialEq` and `Debug` traits. All primitive types and most of the standard library types implement these traits. For structs and enums that you define yourself, you’ll need to implement `PartialEq` to assert equality of those types. You’ll also need to implement `Debug` to print the values when the assertion fails. Because both traits are derivable traits, as mentioned in Listing 5-12 in Chapter 5, this is usually as straightforward as adding the `#[derive(PartialEq, Debug)]` annotation to your struct or enum definition. See Appendix C, [“Derivable Traits,”][derivable-traits]<!-- ignore --> for more details about these and other derivable traits.
 
 ### Maxsus nosozlik xabarlarini qo'shish
 
-Shuningdek, `assert!`, `assert_eq!` va `assert_ne!` makroslariga ixtiyoriy argumentlar sifatida xato xabari bilan chop etiladigan maxsus xabarni qo'shishingiz mumkin. Kerakli argumentlardan so‘ng ko‘rsatilgan har qanday argumentlar `format!` makrosiga uzatiladi (8-bobda ["`+` operatori yoki `format!` makrosi bilan birlashtirish"][concatenation-with-the--operator-or-the-format-macro]<!-- ignore --> bo‘limida muhokama qilingan), shuning uchun siz `{}` to'ldirgichlar va qiymatlarni o'z ichiga olgan format qatorini o'tkazishingiz mumkin. Maxsus xabarlar tasdiqlash nimani anglatishini hujjatlashtirish uchun foydalidir; test muvaffaqiyatsiz tugagach, kod bilan bog'liq muammo nimada ekanligini yaxshiroq tushunasiz.
+You can also add a custom message to be printed with the failure message as optional arguments to the `assert!`, `assert_eq!`, and `assert_ne!` macros. Any arguments specified after the required arguments are passed along to the `format!` macro (discussed in Chapter 8 in the [“Concatenation with the `+` Operator or the `format!` Macro”]()<!-- ignore -->
+section), so you can pass a format string that contains `{}` placeholders and values to go in those placeholders. Custom messages are useful for documenting what an assertion means; when a test fails, you’ll have a better idea of what the problem is with the code.
 
-Masalan, bizda odamlarni ism bilan kutib oladigan funksiya bor va biz funksiyaga kiritgan ism chiqishda(output) paydo bo‘lishini sinab ko‘rmoqchimiz:
+For example, let’s say we have a function that greets people by name and we want to test that the name we pass into the function appears in the output:
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -220,41 +228,41 @@ Masalan, bizda odamlarni ism bilan kutib oladigan funksiya bor va biz funksiyaga
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-05-greeter/src/lib.rs}}
 ```
 
-Ushbu dasturga qoʻyiladigan talablar hali kelishib olinmagan va salomlashish boshidagi `Salom` matni oʻzgarishiga ishonchimiz komil. Talablar o'zgarganda testni yangilashni xohlamasligimizga qaror qildik, shuning uchun `salomlashish` funksiyasidan qaytarilgan qiymatga aniq tenglikni tekshirish o‘rniga, biz faqat chiqishda kirish parametrining matni borligini tasdiqlaymiz.
+The requirements for this program haven’t been agreed upon yet, and we’re pretty sure the `Hello` text at the beginning of the greeting will change. We decided we don’t want to have to update the test when the requirements change, so instead of checking for exact equality to the value returned from the `greeting` function, we’ll just assert that the output contains the text of the input parameter.
 
-Endi standart sinov xatosi qanday koʻrinishini koʻrish uchun `name`ni chiqarib tashlash uchun `salomlashish` ni oʻzgartirish orqali ushbu kodga xatolik kiritamiz:
+Ushbu testni bajarish quyidagi natijalarni beradi:
 
 ```rust,not_desired_behavior,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-06-greeter-with-bug/src/lib.rs:here}}
 ```
 
-Ushbu testni bajarish quyidagi natijalarni beradi:
+Running this test produces the following:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-06-greeter-with-bug/output.txt}}
 ```
 
-Bu natija faqat tasdiqlash(assertion) muvaffaqiyatsizligini va tasdiqlash qaysi qatorda ekanligini ko'rsatadi. Foydaliroq xato xabari `salomlashish` funksiyasidan qiymatni chop etadi. Keling, `salomlashish` funksiyasidan olingan haqiqiy qiymat bilan toʻldirilgan maxsus xabar to'ldiruvchisi(plaseholder) bilan format qatoridan iborat maxsus xato xabarini qoʻshamiz:
+This result just indicates that the assertion failed and which line the assertion is on. A more useful failure message would print the value from the `greeting` function. Let’s add a custom failure message composed of a format string with a placeholder filled in with the actual value we got from the `greeting` function:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-07-custom-failure-message/src/lib.rs:here}}
 ```
 
-Endi sinovni o'tkazganimizda, biz ko'proq ma'lumot beruvchi xato xabarini olamiz:
+Sinov natijasida biz haqiqatda olgan qiymatni ko'rishimiz mumkin, bu biz kutgan narsaning o'rniga nima sodir bo'lganligini aniqlashga yordam beradi.
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-07-custom-failure-message/output.txt}}
 ```
 
-Sinov natijasida biz haqiqatda olgan qiymatni ko'rishimiz mumkin, bu biz kutgan narsaning o'rniga nima sodir bo'lganligini aniqlashga yordam beradi.
+We can see the value we actually got in the test output, which would help us debug what happened instead of what we were expecting to happen.
 
 ### `should_panic` yordamida panic tekshirish
 
-Qaytish(return) qiymatlarini tekshirishdan tashqari, bizning kodimiz xato holatlarini biz kutganidek hal qilishini tekshirish muhimdir. Misol uchun, biz 9-bob, 9-13 ro'yxatda yaratgan `Taxmin` turini ko'rib chiqaylik. `Taxmin` dan foydalanadigan boshqa kod `Taxmin` misollarida faqat 1 dan 100 gacha bo'lgan qiymatlarni o'z ichiga olishi kafolatiga bog'liq. Ushbu diapazondan(chegaradan) tashqaridagi qiymatga ega `Taxmin` misolini yaratishga urinish panic qo'yishini ta'minlaydigan test yozishimiz mumkin.
+In addition to checking return values, it’s important to check that our code handles error conditions as we expect. For example, consider the `Guess` type that we created in Chapter 9, Listing 9-13. Other code that uses `Guess` depends on the guarantee that `Guess` instances will contain only values between 1 and 100. We can write a test that ensures that attempting to create a `Guess` instance with a value outside that range panics.
 
-Buni test funksiyamizga `should_panic` atributini qo‘shish orqali qilamiz. Funktsiya ichidagi kod panic qo'zg'atsa, test o'tadi;funksiya ichidagi kod panic qo'ymasa, test muvaffaqiyatsiz tugaydi.
+We do this by adding the attribute `should_panic` to our test function. The test passes if the code inside the function panics; the test fails if the code inside the function doesn’t panic.
 
-11-8 ro'yxatda `Taxmin::new` xatolik holatlari biz kutgan vaqtda sodir bo'lishini tekshiradigan test ko'rsatilgan.
+Listing 11-8 shows a test that checks that the error conditions of `Guess::new` happen when we expect them to.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -262,30 +270,30 @@ Buni test funksiyamizga `should_panic` atributini qo‘shish orqali qilamiz. Fun
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-08/src/lib.rs}}
 ```
 
+
 <span class="caption">Ro'yxat 11-8: Test `panic!` keltirib chiqarishini tekshirish</span>
 
-Biz `#[should_panic]` atributini `#[test]` atributidan keyin va u amal qiladigan test funksiyasidan oldin joylashtiramiz. Keling, ushbu testdan o'tgan natijani ko'rib chiqaylik:
+We place the `#[should_panic]` attribute after the `#[test]` attribute and before the test function it applies to. Let’s look at the result when this test passes:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/listing-11-08/output.txt}}
 ```
 
-Yaxshi ko'rinadi! Endi shartni olib tashlash orqali kodimizga xatolik kiritamiz,
-agar qiymat 100 dan katta bo'lsa, `new` funksiya panic qo'zg'atadi:
+Looks good! Now let’s introduce a bug in our code by removing the condition that the `new` function will panic if the value is greater than 100:
 
 ```rust,not_desired_behavior,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-08-guess-with-bug/src/lib.rs:here}}
 ```
 
-Sinovni 11-8 ro'yxatda o'tkazganimizda, u muvaffaqiyatsiz bo'ladi:
+When we run the test in Listing 11-8, it will fail:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-08-guess-with-bug/output.txt}}
 ```
 
-Biz bu holatda unchalik foydali xabar olmaymiz, lekin test funksiyasini ko‘rib chiqsak, u `#[should_panic]` bilan izohlanganini ko‘ramiz. Biz erishgan muvaffaqiyatsizlik test funksiyasidagi kod panic qo'zg'atmaganligini anglatadi.
+We don’t get a very helpful message in this case, but when we look at the test function, we see that it’s annotated with `#[should_panic]`. The failure we got means that the code in the test function did not cause a panic.
 
-`should_panic` ishlatadigan testlar noaniq bo'lishi mumkin. Agar test biz kutgandan boshqa sababga ko'ra panic qo'zg'atsa ham, `should_panic` testi o'tadi. `should_panic` testlarini aniqroq qilish uchun biz `should_panic` atributiga ixtiyoriy `expected`  parametrini qo'shishimiz mumkin. Test dasturi xato xabarida taqdim etilgan matn mavjudligiga ishonch hosil qiladi. Masalan, 11-9 ro'yxatdagi `Taxmin` uchun o'zgartirilgan kodni ko'rib chiqing, bu erda `new` funksiya qiymat juda kichik yoki juda kattaligiga qarab turli xabarlar bilan panicga tushadi.
+Tests that use `should_panic` can be imprecise. A `should_panic` test would pass even if the test panics for a different reason from the one we were expecting. To make `should_panic` tests more precise, we can add an optional `expected` parameter to the `should_panic` attribute. The test harness will make sure that the failure message contains the provided text. For example, consider the modified code for `Guess` in Listing 11-9 where the `new` function panics with different messages depending on whether the value is too small or too large.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -293,47 +301,50 @@ Biz bu holatda unchalik foydali xabar olmaymiz, lekin test funksiyasini ko‘rib
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-09/src/lib.rs:here}}
 ```
 
+
 <span class="caption">Ro'yxat 11-9: Belgilangan substringni oʻz ichiga olgan panic xabari bilan `panic!` sinovi</span>
 
-Bu testdan o‘tadi, chunki biz `should_panic` atributining `expected` parametriga qo‘ygan qiymat `Taxmin::new` funksiyasi panicga tushadigan xabarning substringi hisoblanadi. Biz kutgan vahima haqidagi xabarni toʻliq koʻrsatishimiz mumkin edi, bu holda `Taxmin qilingan qiymat 1 dan 100 gacha bo'lishi kerak, 200 qabul qilinmaydi.`. Siz belgilashni tanlagan narsa panic xabarining qanchalik noyob yoki dinamik ekanligiga va testingiz qanchalik aniq bo'lishini xohlayotganingizga bog'liq. Bunday holda, test funksiyasidagi kod `else if qiymat > 100` holatini bajarishini ta`minlash uchun panic xabarining substringi kifoya qiladi.
+This test will pass because the value we put in the `should_panic` attribute’s `expected` parameter is a substring of the message that the `Guess::new` function panics with. We could have specified the entire panic message that we expect, which in this case would be `Guess value must be less than or equal to
+100, got 200.` What you choose to specify depends on how much of the panic message is unique or dynamic and how precise you want your test to be. In this case, a substring of the panic message is enough to ensure that the code in the test function executes the `else if value > 100` case.
 
-`expected`  xabari bilan `should_panic` testi muvaffaqiyatsiz tugashi bilan nima sodir bo'lishini ko'rish uchun `if qiymat < 1` va `else if qiymat > 100` bloklarini almashtirish orqali kodimizga yana xato kiritamiz:
+Bu safar biz `should_panic` testini o'tkazsak, u muvaffaqiyatsiz bo'ladi:
 
 ```rust,ignore,not_desired_behavior
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-09-guess-with-panic-msg-bug/src/lib.rs:here}}
 ```
 
-Bu safar biz `should_panic` testini o'tkazsak, u muvaffaqiyatsiz bo'ladi:
+This time when we run the `should_panic` test, it will fail:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-09-guess-with-panic-msg-bug/output.txt}}
 ```
 
-Muvaffaqiyatsizlik xabari shuni ko'rsatadiki, bu test biz kutgandek panic qo'zg'atdi, lekin panic xabarida kutilgan `Taxmin qilingan qiymat 100 dan kichik yoki unga teng bo'lishi kerak` qatori yo'q edi. Bu holatda biz olgan vahima xabari: `Taxmin qilingan qiymat 1 dan katta yoki teng bo'lishi kerak, 200 qabul qilinmaydi.`. Endi biz xatomiz qayerda ekanligini aniqlashni boshlashimiz mumkin!
+The failure message indicates that this test did indeed panic as we expected, but the panic message did not include the expected string `'Guess value must be
+less than or equal to 100'`. The panic message that we did get in this case was `Guess value must be greater than or equal to 1, got 200.` Now we can start figuring out where our bug is!
 
 ### Testlarda `Result<T, E>` dan foydalanish
 
-Bizning testlarimiz muvaffaqiyatsiz bo'lganda panic qo'zg'atadi. Biz `Result<T, E>` dan foydalanadigan testlarni ham yozishimiz mumkin! 11-1 roʻyxatidagi test `Result<T, E>` dan foydalanish va panic oʻrniga `Err`ni qaytarish uchun qayta yozilgan:
+Our tests so far all panic when they fail. We can also write tests that use `Result<T, E>`! Here’s the test from Listing 11-1, rewritten to use `Result<T,
+E>` and return an `Err` instead of panicking:
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-10-result-in-tests/src/lib.rs}}
 ```
 
-`ishlaydi` funksiyasi endi `Result<(), String>` qaytish(return) turiga ega. Funksiya tanasida `assert_eq!` makrosini chaqirishdan ko'ra, testdan o'tganda `Ok(())` va test muvaffaqiyatsiz bo'lganda ichida `String` bilan `Err`ni qaytaramiz.
+The `it_works` function now has the `Result<(), String>` return type. In the body of the function, rather than calling the `assert_eq!` macro, we return `Ok(())` when the test passes and an `Err` with a `String` inside when the test fails.
 
-Testlarni `Result<T, E>` qaytaradigan qilib yozish testlar matnida savol belgisi operatoridan foydalanish imkonini beradi, bu testlarni yozishning qulay usuli bo'lishi mumkin, agar ulardagi har qanday operatsiya `Err` variantini qaytarsa, muvaffaqiyatsiz bo'lishi mumkin.
+Writing tests so they return a `Result<T, E>` enables you to use the question mark operator in the body of tests, which can be a convenient way to write tests that should fail if any operation within them returns an `Err` variant.
 
-`Result<T, E>` ishlatadigan testlarda `#[should_panic]` izohidan(annotation) foydalana olmaysiz. Amaliyot `Err` variantini qaytarishini tasdiqlash uchun `Result<T, E>` qiymatida savol belgisi operatoridan foydalanmang. Buning oʻrniga `assert!(value.is_err())` dan foydalaning.
+You can’t use the `#[should_panic]` annotation on tests that use `Result<T,
+E>`. To assert that an operation returns an `Err` variant, *don’t* use the question mark operator on the `Result<T, E>` value. Instead, use `assert!(value.is_err())`.
 
-Endi siz testlarni yozishning bir necha usullarini bilganingizdan so'ng, keling, testlarimizni o'tkazganimizda nima sodir bo'layotganini ko'rib chiqamiz va `cargo test` bilan foydalanishimiz mumkin bo'lgan turli xil variantlarni ko'rib chiqamiz.
+Now that you know several ways to write tests, let’s look at what is happening when we run our tests and explore the different options we can use with `cargo
+test`.
+ch08-02-strings.html#concatenation-with-the--operator-or-the-format-macro ch11-02-running-tests.html#controlling-how-tests-are-run
 
-[concatenation-with-the--operator-or-the-format-macro]:
-ch08-02-strings.html#concatenation-with-the--operator-or-the-format-macro
 [bench]: ../unstable-book/library-features/test.html
 [ignoring]: ch11-02-running-tests.html#ignoring-some-tests-unless-specifically-requested
 [subset]: ch11-02-running-tests.html#running-a-subset-of-tests-by-name
-[controlling-how-tests-are-run]:
-ch11-02-running-tests.html#controlling-how-tests-are-run
 [derivable-traits]: appendix-03-derivable-traits.html
 [doc-comments]: ch14-02-publishing-to-crates-io.html#documentation-comments-as-tests
 [paths-for-referring-to-an-item-in-the-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
