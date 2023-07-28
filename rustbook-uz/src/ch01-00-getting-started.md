@@ -1,6 +1,6 @@
 # Ishni boshlash
 
-Rust sayohatingizni boshlaymiz! O'rganish uchun ko'p narsa bor, lekin har bir sayohat bir joydan boshlanadi. Ushbu bobda biz muhokama qilamiz:
+Let’s start your Rust journey! There’s a lot to learn, but every journey starts somewhere. In this chapter, we’ll discuss:
 
 * Rustni Linux, macOS va Windows-ga o'rnatish
 * `Hello, world!` ni chop etuvchi dasturni yozish
