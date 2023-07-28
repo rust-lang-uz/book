@@ -1,0 +1,5 @@
+files:
+  - source: /rustbook-en/**/*.md
+    ignore:
+      - /rustbook-en/.github/
+    translation: /rustbook-%two_letters_code%/**/*.md
