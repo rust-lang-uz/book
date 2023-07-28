@@ -1,12 +1,12 @@
 ## Control Flow
 
-Shartning `true` yoki yo'qligiga qarab ba'zi kodlarni ishga tushirish va shart `true` bo'lganda ba'zi kodlarni qayta-qayta ishga tushirish qobiliyati ko'pchilik dasturlash tillarida asosiy building bloklari hisoblanadi. Rust kodining bajarilishini nazorat qilish imkonini beruvchi eng keng tarqalgan konstruksiyalar `if` expressionlari va looplaridir.
+The ability to run some code depending on whether a condition is `true` and to run some code repeatedly while a condition is `true` are basic building blocks in most programming languages. The most common constructs that let you control the flow of execution of Rust code are `if` expressions and loops.
 
 ### `if` ifodalari
 
-`if` ifodasi shartlarga qarab kodingizni branchga ajratish imkonini beradi. Siz shartni taqdim etasiz va keyin shunday deb aytasiz: “Agar bu shart bajarilsa, ushbu kod blokini ishga tushiring. Agar shart bajarilmasa, ushbu kod blokini ishga tushirmang."
+An `if` expression allows you to branch your code depending on conditions. You provide a condition and then state, “If this condition is met, run this block of code. If the condition is not met, do not run this block of code.”
 
-`If` ifodasini oʻrganish uchun *loyihalar* jildingizda *branchlar* nomli yangi loyiha yarating. *src/main.rs* faylida quyidagilarni kiriting:
+Create a new project called *branches* in your *projects* directory to explore the `if` expression. In the *src/main.rs* file, input the following:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -14,10 +14,10 @@ Shartning `true` yoki yo'qligiga qarab ba'zi kodlarni ishga tushirish va shart `
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-26-if-true/src/main.rs}}
 ```
 
-Barcha `if` expressionlari `if` kalit so‘zidan boshlanadi, undan keyin shart keladi. Bunday holda, shart `raqam` o'zgaruvchisi 5 dan kichik qiymatga ega yoki yo'qligini tekshiradi. Agar shart `true` bo'lsa, biz kod blokini shartdan keyin darhol jingalak qavslar ichiga joylashtiramiz.
-`if` expressionlaridagi shartlar bilan bog‘langan kod bloklari ba’zan *arms* deb ataladi, xuddi biz 2-bobning [“Tahminni maxfiy raqam bilan solishtirish”][comparing-the-guess-to-the-secret-number]<!--ignore --> bo‘limida muhokama qilgan `match` expressionlaridagi qurollar kabi.
+All `if` expressions start with the keyword `if`, followed by a condition. In this case, the condition checks whether or not the variable `number` has a value less than 5. We place the block of code to execute if the condition is `true` immediately after the condition inside curly brackets. Blocks of code associated with the conditions in `if` expressions are sometimes called *arms*, just like the arms in `match` expressions that we discussed in the [“Comparing the Guess to the Secret Number”]()<!--
+ignore --> section of Chapter 2.
 
-Ixtiyoriy ravishda, agar shart `false` deb baholansa, dasturga bajarilishi uchun muqobil kod blokini berish uchun biz tanlagan `else` expressionini ham kiritishimiz mumkin. Agar `else` ifodasini bermasangiz va shart `false` bo‘lsa, dastur shunchaki `if` blokini o‘tkazib yuboradi va kodning keyingi bitiga o‘tadi.
+Optionally, we can also include an `else` expression, which we chose to do here, to give the program an alternative block of code to execute should the condition evaluate to `false`. If you don’t provide an `else` expression and the condition is `false`, the program will just skip the `if` block and move on to the next bit of code.
 
 Ushbu kodni ishga tushirishga harakat qiling; quyidagi chiqishni ko'rishingiz kerak:
 
@@ -37,7 +37,7 @@ Dasturni qayta ishga tushiring va natijaga qarang:
 {{#include ../listings/ch03-common-programming-concepts/no-listing-27-if-false/output.txt}}
 ```
 
-Shuni ham ta'kidlash kerakki, ushbu koddagi shart `bool` bo'lishi kerak. Agar shart `bool` bo'lmasa, biz xatoga yo'l qo'yamiz. Masalan, quyidagi kodni ishga tushirishga harakat qiling:
+It’s also worth noting that the condition in this code *must* be a `bool`. If the condition isn’t a `bool`, we’ll get an error. For example, try running the following code:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -51,7 +51,7 @@ Shuni ham ta'kidlash kerakki, ushbu koddagi shart `bool` bo'lishi kerak. Agar sh
 {{#include ../listings/ch03-common-programming-concepts/no-listing-28-if-condition-must-be-bool/output.txt}}
 ```
 
-Xato shuni ko'rsatadiki, Rust `bool` kutgan, lekin integer(butun) son olgan. Ruby va JavaScript kabi tillardan farqli o'laroq, Rust boolean bo'lmagan turlarni boolean tilga o'zgartirishga avtomatik ravishda urinmaydi. Siz aniq bo'lishingiz va har doim `if` ni mantiqiy shart sifatida ko'rsatishingiz kerak. Agar biz `if` kod bloki faqat raqam `0` ga teng bo‘lmaganda ishlashini istasak, masalan, `if` ifodasini quyidagiga o‘zgartirishimiz mumkin:
+The error indicates that Rust expected a `bool` but got an integer. Unlike languages such as Ruby and JavaScript, Rust will not automatically try to convert non-Boolean types to a Boolean. You must be explicit and always provide `if` with a Boolean as its condition. If we want the `if` code block to run only when a number is not equal to `0`, for example, we can change the `if` expression to the following:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -63,7 +63,7 @@ Ushbu kodni ishga tushirish `raqam noldan boshqa narsa edi` chop etiladi.
 
 #### `else if` bilan bir nechta shartlarni boshqarish
 
-`if` va `else` ni `else if` ifodasida birlashtirib, bir nechta shartlardan foydalanishingiz mumkin.Misol uchun:
+You can use multiple conditions by combining `if` and `else` in an `else if` expression. For example:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -71,18 +71,19 @@ Ushbu kodni ishga tushirish `raqam noldan boshqa narsa edi` chop etiladi.
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-30-else-if/src/main.rs}}
 ```
 
-Ushbu dasturda to'rtta yo'l bor. Uni ishga tushirgandan so'ng siz quyidagi chiqishni ko'rishingiz kerak:
+This program has four possible paths it can take. After running it, you should see the following output:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-30-else-if/output.txt}}
 ```
 
-Ushbu dastur bajarilganda, u har bir `if` expressionni navbatma-navbat tekshiradi va shart `true` deb baholanadigan birinchi tanani bajaradi. E'tibor bering 6, 2 ga bo'linsa ham, biz `son 2 ga bo'linmaydi` chiqishini ko'rmayapmiz va `else` blokidagi `raqam 4, 3 yoki 2 ga bo'linmaydi` matnini ko'rmaymiz.Buning sababi, Rust faqat birinchi `true` shart uchun blokni bajaradi va bir marta topilsa, qolganlarini ham tekshirmaydi.
-Juda ko'p `else if` expressionlaridan foydalanish kodingizni buzishi mumkin, shuning uchun sizda bir nechta bo'lsa, kodingizni qayta tahrirlashni xohlashingiz mumkin. 6-bobda bu holatlar uchun `match` deb nomlangan kuchli Rust tarmoqli konstruksiyasi tasvirlangan.
+When this program executes, it checks each `if` expression in turn and executes the first body for which the condition evaluates to `true`. Note that even though 6 is divisible by 2, we don’t see the output `number is divisible by 2`, nor do we see the `number is not divisible by 4, 3, or 2` text from the `else` block. That’s because Rust only executes the block for the first `true` condition, and once it finds one, it doesn’t even check the rest.
+
+Using too many `else if` expressions can clutter your code, so if you have more than one, you might want to refactor your code. Chapter 6 describes a powerful Rust branching construct called `match` for these cases.
 
 #### `let` statementida `if` dan foydalanish
 
-`if` expression bo‘lganligi sababli, biz 3-2-listdagi kabi natijani o‘zgaruvchiga belgilash uchun `let` statementining o‘ng tomonida foydalanishimiz mumkin.
+Because `if` is an expression, we can use it on the right side of a `let` statement to assign the outcome to a variable, as in Listing 3-2.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -90,15 +91,16 @@ Juda ko'p `else if` expressionlaridan foydalanish kodingizni buzishi mumkin, shu
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-02/src/main.rs}}
 ```
 
+
 <span class="caption">Ro'yxat 3-2: `if` expressioni natijasini o‘zgaruvchiga tayinlash</span>
 
-`raqam` o'zgaruvchisi `if` expressioni natijasiga asoslangan qiymatga bog'lanadi. Nima sodir bo'lishini ko'rish uchun ushbu kodni ishga tushiring:
+The `number` variable will be bound to a value based on the outcome of the `if` expression. Run this code to see what happens:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/listing-03-02/output.txt}}
 ```
 
-Esda tutingki, kod bloklari ulardagi oxirgi expressiongacha evaluate qilianadi va raqamlar o'zlari ham expressionlardir. Bu holda butun `if` expressionning qiymati qaysi kod bloki bajarilishiga bog'liq. Bu `if` ning har bir armidan result bo'lish potentsialiga ega bo'lgan qiymatlar bir xil turdagi bo'lishi kerakligini anglatadi; 3-2 ro'yxatda `if` va `else` armllarining natijalari `i32` butun sonlari edi. Agar turlar mos kelmasa(mismatched), quyidagi misolda bo'lgani kabi, biz xatoga duch kelamiz:
+Remember that blocks of code evaluate to the last expression in them, and numbers by themselves are also expressions. In this case, the value of the whole `if` expression depends on which block of code executes. This means the values that have the potential to be results from each arm of the `if` must be the same type; in Listing 3-2, the results of both the `if` arm and the `else` arm were `i32` integers. If the types are mismatched, as in the following example, we’ll get an error:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -106,25 +108,25 @@ Esda tutingki, kod bloklari ulardagi oxirgi expressiongacha evaluate qilianadi v
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-31-arms-must-return-same-type/src/main.rs}}
 ```
 
-Ushbu kodni kompilyatsiya qilmoqchi bo'lganimizda, biz xatoga duch kelamiz. `if` va `else` armllari mos kelmaydigan qiymat turlariga ega va Rust muammoni dasturda qayerdan topish mumkinligini aniq ko'rsatadi:
+When we try to compile this code, we’ll get an error. The `if` and `else` arms have value types that are incompatible, and Rust indicates exactly where to find the problem in the program:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-31-arms-must-return-same-type/output.txt}}
 ```
 
-`if` blokidagi expression butun songa, `else` blokidagi expression esa satrga baholanadi. Bu ishlamaydi, chunki oʻzgaruvchilar bitta turga ega boʻlishi kerak va Rust kompilyatsiya vaqtida `raqam` oʻzgaruvchisi qaysi turini aniq bilishi kerak. `raqam` turini bilish kompilyatorga ushbu tur biz `raqam` ishlatadigan hamma joyda yaroqliligini tekshirish imkonini beradi. Agar `raqam` turi faqat runtimeda aniqlangan bo'lsa, Rust buni qila olmaydi; kompilyator murakkabroq bo'lar edi va agar u har qanday o'zgaruvchi uchun bir nechta gipotetik turlarni kuzatib borishi kerak bo'lsa, kod haqida kamroq kafolatlar beradi.
+The expression in the `if` block evaluates to an integer, and the expression in the `else` block evaluates to a string. This won’t work because variables must have a single type, and Rust needs to know at compile time what type the `number` variable is, definitively. Knowing the type of `number` lets the compiler verify the type is valid everywhere we use `number`. Rust wouldn’t be able to do that if the type of `number` was only determined at runtime; the compiler would be more complex and would make fewer guarantees about the code if it had to keep track of multiple hypothetical types for any variable.
 
 ### Looplar bilan takrorlash
 
-Ko'pincha kod blokini bir necha marta bajarish foydali bo'ladi. Ushbu vazifani bajarish uchun Rust bir nechta *looplarni* taqdim etadi, ular sikl tanasi ichidagi kod orqali oxirigacha ishlaydi va keyin darhol boshida boshlanadi. Looplar bilan tajriba o'tkazish uchun keling, *looplar* deb nomlangan yangi loyiha yarataylik.
+It’s often useful to execute a block of code more than once. For this task, Rust provides several *loops*, which will run through the code inside the loop body to the end and then start immediately back at the beginning. To experiment with loops, let’s make a new project called *loops*.
 
-Rustda uch xil looplar mavjud: `loop`, `while` va `for`. Keling, har birini sinab ko'raylik.
+Rust has three kinds of loops: `loop`, `while`, and `for`. Let’s try each one.
 
 #### Kodni `loop` bilan takrorlash
 
-`loop` kalit so'zi Rustga kod blokini abadiy qayta-qayta bajarishni yoki uni to'xtatishni aniq aytmaguningizcha bajarishni aytadi.
-
 Misol tariqasida, *looplar* jildingizdagi *src/main.rs* faylini quyidagicha o'zgartiring:
+
+As an example, change the *src/main.rs* file in your *loops* directory to look like this:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -132,8 +134,8 @@ Misol tariqasida, *looplar* jildingizdagi *src/main.rs* faylini quyidagicha o'zg
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-loop/src/main.rs}}
 ```
 
-Ushbu dasturni ishga tushirganimizda, dasturni qo'lda to'xtatmagunimizcha, `yana!` so'zi doimiy ravishda chop etilishini ko'ramiz.Aksariyat terminallar uzluksiz siklda ishlab qolgan dasturni to'xtatish uchun <span class="keystroke">ctrl-c</span>  klaviatura yorliqlarini qo'llab-quvvatlaydi.
-Sinab ko'ring:
+When we run this program, we’ll see `again!` printed over and over continuously until we stop the program manually. Most terminals support the keyboard shortcut <span class="keystroke">ctrl-c</span> to interrupt a program that is stuck in a continual loop. Give it a try:
+
 
 <!-- manual-regeneration
 cd listings/ch03-common-programming-concepts/no-listing-32-loop
@@ -143,43 +145,44 @@ CTRL-C
 
 ```console
 $ cargo run
-   Compiling loops v0.1.0 (file:///projects/looplar)
+   Compiling loops v0.1.0 (file:///projects/loops)
     Finished dev [unoptimized + debuginfo] target(s) in 0.29s
-     Running `target/debug/looplar`
-yana!
-yana!
-yana!
-yana!
-^Cyana!
+     Running `target/debug/loops`
+again!
+again!
+again!
+again!
+^Cagain!
 ```
 
-`^C` belgisi <span class="keystroke">ctrl-c</span> tugmalarini bosgan joyni bildiradi. Kod uzilish signalini qabul qilganda siklning qayerda bo'lganiga qarab, `^C` dan keyin chop etilgan `yana!` so'zini ko'rishingiz yoki ko'rmasligingiz mumkin.
+The symbol `^C` represents where you pressed <span
+class="keystroke">ctrl-c</span>. You may or may not see the word `again!` printed after the `^C`, depending on where the code was in the loop when it received the interrupt signal.
 
-Yaxshiyamki, Rust kod yordamida loopdan chiqish yo'lini ham taqdim etadi. Siz dasturga siklni bajarishni qachon to'xtatish kerakligini aytish uchun `break` kalit so'zini siklga qo'yishingiz mumkin. 
-Eslatib o'tamiz, biz buni 2-bobning [”To'g'ri taxmindan keyin chiqish”][quitting-after-a-correct-guess]<!-- ignore --> bo'limidagi taxminiy o'yinda, foydalanuvchi to'g'ri raqamni taxmin qilish orqali o'yinda g'alaba qozonganida dasturdan chiqish uchun qilganmiz.
+Fortunately, Rust also provides a way to break out of a loop using code. You can place the `break` keyword within the loop to tell the program when to stop executing the loop. Recall that we did this in the guessing game in the [“Quitting After a Correct Guess”]()<!-- ignore
+--> section of Chapter 2 to exit the program when the user won the game by guessing the correct number.
 
-Shuningdek, biz taxmin qilish o'yinida `continue` dan foydalandik, bu siklda dasturga siklning ushbu iteratsiyasida qolgan har qanday kodni o'tkazib yuborish va keyingi iteratsiyaga o'tishni aytadi.
+We also used `continue` in the guessing game, which in a loop tells the program to skip over any remaining code in this iteration of the loop and go to the next iteration.
 
 #### Looplardan qiymatlarni qaytarish(return)
 
-`loop` dan foydalanishdan biri bu ish bajarilmasligi mumkin bo'lgan operatsiyani qaytadan urinish, masalan, thread o'z ishini tugatganligini tekshirish. Bundan tashqari, ushbu operatsiya natijasini kodingizning qolgan qismiga sikldan o'tkazishingiz kerak bo'lishi mumkin. Buning uchun siklni toʻxtatish uchun foydalanadigan `break` ifodasidan keyin return qilinishi kerak boʻlgan qiymatni qoʻshishingiz mumkin; bu qiymat loopdan qaytariladi, shuning uchun uni bu yerda ko'rsatilganidek ishlatishingiz mumkin:
+One of the uses of a `loop` is to retry an operation you know might fail, such as checking whether a thread has completed its job. You might also need to pass the result of that operation out of the loop to the rest of your code. To do this, you can add the value you want returned after the `break` expression you use to stop the loop; that value will be returned out of the loop so you can use it, as shown here:
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-33-return-value-from-loop/src/main.rs}}
 ```
 
-Loopdan oldin biz `hisoblagich` nomli o‘zgaruvchini e’lon qilamiz va uni `0` ga ishga tushiramiz. Keyin sikldan qaytarilgan qiymatni ushlab turish uchun `natija` nomli o'zgaruvchini e'lon qilamiz. Loopning har bir iteratsiyasida biz `hisoblagich` o‘zgaruvchisiga `1` qo‘shamiz va keyin `hisoblagich` 10 ga teng yoki yo‘qligini tekshiramiz. Bu bo'lganda, biz `hisoblagich * 2` qiymati bilan `break` kalit so'zidan foydalanamiz. Loopdan so'ng biz `natija` qiymatini belgilaydigan statementni tugatish uchun nuqta-verguldan foydalanamiz. Nihoyat, biz qiymatni `natija`da chop qilamiz, bu holda `20`.
+Before the loop, we declare a variable named `counter` and initialize it to `0`. Then we declare a variable named `result` to hold the value returned from the loop. On every iteration of the loop, we add `1` to the `counter` variable, and then check whether the `counter` is equal to `10`. When it is, we use the `break` keyword with the value `counter * 2`. After the loop, we use a semicolon to end the statement that assigns the value to `result`. Finally, we print the value in `result`, which in this case is `20`.
 
 #### Bir nechta looplar orasidagi farqni ajratish uchun loop labellari
 
-Agar sizda looplar ichida looplaringiz bo'lsa, o'sha nuqtada eng ichki loopga `break` va `continue` amallari qo'llaniladi. Siz ixtiyoriy ravishda siklda *loop label* belgilashingiz mumkin, undan so‘ng `break` yoki  `continue` bilan o‘sha kalit so‘zlar eng ichki loop o‘rniga belgilangan loopga qo‘llanilishini belgilashingiz mumkin. Loop labellari bitta tirnoqcha bilan boshlanishi kerak. Mana ikkita ichki loop bilan bir misol:
+If you have loops within loops, `break` and `continue` apply to the innermost loop at that point. You can optionally specify a *loop label* on a loop that you can then use with `break` or `continue` to specify that those keywords apply to the labeled loop instead of the innermost loop. Loop labels must begin with a single quote. Here’s an example with two nested loops:
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/src/main.rs}}
 ```
 
-Tashqi loopda `'hisoblash` labeli bor va u 0 dan 2 gacha hisoblanadi.
-Labelsiz ichki loop 10 dan 9 gacha hisoblanadi. Label ko'rsatilmagan birinchi `break` faqat ichki sikldan chiqadi. `break 'hisoblash;` statementi tashqi sikldan chiqadi. Keling kodni run qilib ko'ramiz:  
+The outer loop has the label `'counting_up`, and it will count up from 0 to 2. The inner loop without a label counts down from 10 to 9. The first `break` that doesn’t specify a label will exit the inner loop only. The `break
+'counting_up;` statement will exit the outer loop. This code prints:
 
 ```console
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/output.txt}}
@@ -187,7 +190,7 @@ Labelsiz ichki loop 10 dan 9 gacha hisoblanadi. Label ko'rsatilmagan birinchi `b
 
 #### `while` bilan shartli looplar
 
-Dastur ko'pincha loop ichidagi shartni evaluate qilishi kerak bo'ladi. Shart `true` bo'lsa-da, loop ishlaydi. Shart `true` bo'lishni to'xtatganda, dastur loopni to'xtatib, `break` ni chaqiradi. Bu kabi xatti-harakatlarni `loop`, `if`, `else` va `break` kombinatsiyasidan foydalanib amalga oshirish mumkin; Agar xohlasangiz, buni hozir dasturda sinab ko'rishingiz mumkin. Biroq, bu pattern shunchalik keng tarqalganki, Rustda buning uchun `while` sikli deb ataladigan o'rnatilgan til konstruktsiyasi mavjud. 3-3 ro'yxatda biz dasturni uch marta aylanish uchun `while` dan foydalanamiz, har safar sanab chiqamiz, so'ngra sikldan so'ng xabarni chop etamiz va chiqamiz.
+A program will often need to evaluate a condition within a loop. While the condition is `true`, the loop runs. When the condition ceases to be `true`, the program calls `break`, stopping the loop. It’s possible to implement behavior like this using a combination of `loop`, `if`, `else`, and `break`; you could try that now in a program, if you’d like. However, this pattern is so common that Rust has a built-in language construct for it, called a `while` loop. In Listing 3-3, we use `while` to loop the program three times, counting down each time, and then, after the loop, print a message and exit.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -195,13 +198,14 @@ Dastur ko'pincha loop ichidagi shartni evaluate qilishi kerak bo'ladi. Shart `tr
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-03/src/main.rs}}
 ```
 
+
 <span class="caption">Ro'yxat 3-3: Shart to'g'ri bo'lganda kodni ishga tushirish uchun `while` siklidan foydalanish</span>
 
-Bu konstruksiya `loop`, `if`, `else` va `break` dan foydalansangiz, zarur bo'ladigan ko'plab joylashtirishlarni yo'q qiladi va bu aniqroq bo'ladi. Shart `true` deb baholansa, kod ishlaydi; aks holda, u loopdan chiqadi.
+This construct eliminates a lot of nesting that would be necessary if you used `loop`, `if`, `else`, and `break`, and it’s clearer. While a condition evaluates to `true`, the code runs; otherwise, it exits the loop.
 
 #### `for` bilan to'plam bo'ylab aylanish
 
-Siz `while` konstruksiyasidan array kabi to‘plam elementlari ustidan aylanishni tanlashingiz mumkin. Masalan, 3-4 ro'yxatdagi sikl `a` arrayidagi har bir elementni chop etadi.
+You can choose to use the `while` construct to loop over the elements of a collection, such as an array. For example, the loop in Listing 3-4 prints each element in the array `a`.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -209,19 +213,20 @@ Siz `while` konstruksiyasidan array kabi to‘plam elementlari ustidan aylanishn
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-04/src/main.rs}}
 ```
 
+
 <span class="caption">Ro'yxat 3-4: `while` sikli yordamida to‘plamning har bir elementi bo‘ylab aylanish</span>
 
-Bu erda kod arraydagi elementlar orqali hisoblanadi. U `0` indeksidan boshlanadi va keyin arraydagi yakuniy indeksga yetguncha (ya'ni, `index < 5` endi `true` bo`lmaganda) sikl davom etadi. Ushbu kodni ishga tushirish arraydagi har bir elementni chop etadi:
+Here, the code counts up through the elements in the array. It starts at index `0`, and then loops until it reaches the final index in the array (that is, when `index < 5` is no longer `true`). Running this code will print every element in the array:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/listing-03-04/output.txt}}
 ```
 
-Barcha besh array qiymatlari kutilganidek terminalda paydo bo'ladi. Garchi `index` bir nuqtada `5` qiymatiga yetsa ham, arraydan oltinchi qiymatni olishga urinishdan oldin sikl ishlashni to‘xtatadi.
+All five array values appear in the terminal, as expected. Even though `index` will reach a value of `5` at some point, the loop stops executing before trying to fetch a sixth value from the array.
 
-Biroq, bu yondashuv xatoga moyil; Agar indeks qiymati yoki test holati noto'g'ri bo'lsa, biz dasturni panic qo'yishimiz mumkin. Misol uchun, agar siz `a` arrayining ta'rifini to'rtta elementga o'zgartirsangiz, lekin shartni `while index < 4` bo'lganda yangilashni unutgan bo'lsangiz, kod panic qo'zg'atadi. Bu ham sekin, chunki kompilyator sikl orqali har bir iteratsiyada indeks array chegaralarida ekanligini shartli tekshirish uchun runtime kodini qo‘shadi.
+However, this approach is error prone; we could cause the program to panic if the index value or test condition is incorrect. For example, if you changed the definition of the `a` array to have four elements but forgot to update the condition to `while index < 4`, the code would panic. It’s also slow, because the compiler adds runtime code to perform the conditional check of whether the index is within the bounds of the array on every iteration through the loop.
 
-Aniqroq variant sifatida, siz `for` siklidan foydalanishingiz va to'plamdagi har bir element uchun ba'zi kodlarni bajarishingiz mumkin. `for` sikli 3-5-ro'yxatdagi kodga o'xshaydi.
+As a more concise alternative, you can use a `for` loop and execute some code for each item in a collection. A `for` loop looks like the code in Listing 3-5.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -229,15 +234,16 @@ Aniqroq variant sifatida, siz `for` siklidan foydalanishingiz va to'plamdagi har
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-05/src/main.rs}}
 ```
 
+
 <span class="caption">Ro'yxat 3-5: `for` `sikli yordamida to'plamning har bir elementi bo'ylab aylanish</span>
 
-Ushbu kodni ishga tushirganimizda, biz 3-4 ro'yxatdagi kabi natijani ko'ramiz. Eng muhimi, biz kodning xavfsizligini oshirdik va arrayning oxiridan tashqariga chiqish yoki yetarlicha uzoqqa bormaslik va ba'zi elementlarni yetishmayotganligi sababli paydo bo'lishi mumkin bo'lgan xatolar ehtimolini yo'q qildik.
+When we run this code, we’ll see the same output as in Listing 3-4. More importantly, we’ve now increased the safety of the code and eliminated the chance of bugs that might result from going beyond the end of the array or not going far enough and missing some items.
 
-`for` siklidan foydalanib, agar siz 3-4 roʻyxatda qoʻllanilgan metodda boʻlgani kabi arraydagi qiymatlar sonini oʻzgartirsangiz, boshqa kodni oʻzgartirishni eslab qolishingiz shart emas.
+Using the `for` loop, you wouldn’t need to remember to change any other code if you changed the number of values in the array, as you would with the method used in Listing 3-4.
 
-`for` looplarining xavfsizligi va ixchamligi ularni Rustda eng ko‘p ishlatiladigan loop konstruksiyasiga aylantiradi. 3-3 ro'yxatdagi `while` siklidan foydalanilgan ortga hisoblash misolida bo'lgani kabi, ma'lum bir necha marta kodni ishlatmoqchi bo'lgan vaziyatlarda ham ko'pchilik Rustaceanlar `for` siklidan foydalanadilar. Buning yo'li standart kutubxona tomonidan taqdim etilgan `Range` dan foydalanish bo'lib, bir raqamdan boshlanib, boshqa raqamdan oldin tugaydigan barcha raqamlarni ketma-ketlikda hosil qiladi.
+The safety and conciseness of `for` loops make them the most commonly used loop construct in Rust. Even in situations in which you want to run some code a certain number of times, as in the countdown example that used a `while` loop in Listing 3-3, most Rustaceans would use a `for` loop. The way to do that would be to use a `Range`, provided by the standard library, which generates all numbers in sequence starting from one number and ending before another number.
 
-Ortga hisoblash `for` sikli va biz hali u to‘g‘risida gapirmagan boshqa metod – `rev` yordamida diapazonni teskari tomonga o‘zgartirishga o‘xshaydi:
+Bu kod biroz chiroyliroq, shunday emasmi?
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -245,19 +251,15 @@ Ortga hisoblash `for` sikli va biz hali u to‘g‘risida gapirmagan boshqa meto
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-34-for-range/src/main.rs}}
 ```
 
-Bu kod biroz chiroyliroq, shunday emasmi?
+This code is a bit nicer, isn’t it?
 
 ## Xulosa
 
-Siz erishdingiz! Bu juda katta bob bo'ldi: siz o'zgaruvchilar, skalyar va compound ma'lumotlar turlari, funksiyalar, izohlar, `if` expressionlari va sikllar haqida bilib oldingiz! Ushbu bobda muhokama qilingan tushunchalar bilan mashq qilish uchun quyidagilarni amalga oshirish uchun dasturlar yaratishga harakat qiling:
+You made it! This was a sizable chapter: you learned about variables, scalar and compound data types, functions, comments, `if` expressions, and loops! To practice with the concepts discussed in this chapter, try building programs to do the following:
 
 * Haroratni Farengeyt va Selsiy o'rtasida o'zgartiring.
 * *n*ta Fibonachchi raqamini yarating.
 * Qo'shiqning takrorlanishidan foydalanib, “Rojdestvoning o'n ikki kuni“ Rojdestvo qo'shig'ining so'zlarini chop eting.
 
-Davom etishga tayyor bo'lganingizda, Rustda boshqa dasturlash tillarida odatda mavjud bo'lmagan ownership(egalik) tushunchasi haqida gaplashamiz.
-
-[comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
-[quitting-after-a-correct-guess]:
-ch02-00-guessing-game-tutorial.html#quitting-after-a-correct-guess
+When you’re ready to move on, we’ll talk about a concept in Rust that *doesn’t* commonly exist in other programming languages: ownership.
+ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number ch02-00-guessing-game-tutorial.html#quitting-after-a-correct-guess
