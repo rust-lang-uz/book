@@ -1,29 +1,30 @@
-##  `if let` bilan  Control Flow
+## `if let` bilan  Control Flow
 
-`if let` sintaksisi sizga `if` va `let` ni birlashtirib, qolganlarini e'tiborsiz qoldirib, bitta patternga mos keladigan qiymatlarni boshqarishning kamroq batafsil metodiga imkon beradi. 6-6 ro'yxatdagi dasturni ko'rib chiqaylik, u `max_sozlama` o'zgaruvchisidagi `Variant<u8>` qiymatiga mos keladigan, lekin `Some` varianti boʻlsagina kodni bajarishni xohlaydigan dasturni koʻrib chiqamiz.
+The `if let` syntax lets you combine `if` and `let` into a less verbose way to handle values that match one pattern while ignoring the rest. Consider the program in Listing 6-6 that matches on an `Option<u8>` value in the `config_max` variable but only wants to execute code if the value is the `Some` variant.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-06/src/main.rs:here}}
 ```
 
-<span class="caption">Ro'yxat 6-6. Qiymat `Some` bo'lsagina kodni bajaradigan `match` ifoda</span>
 
-Agar qiymat `Some` bo'lsa, biz qiymatni patterndagi `max` o'zgaruvchisiga bog'lash orqali `Some` variantidagi qiymatni chop qilamiz. Biz `None` qiymati bilan hech narsa qilishni xohlamaymiz. `match` ifodasini qondirish uchun faqat bitta variantni qayta ishlagandan so‘ng `_ => ()` qo‘shishimiz kerak, bu esa qo‘shish uchun zerikarli boilerplate koddir.
+<span class="caption">Listing 6-6: A `match` that only cares about executing code when the value is `Some`</span>
 
-Buning o'rniga, biz buni qisqaroq qilib `if let` yordamida yozishimiz mumkin. Quyidagi kod 6-6 ro'yxatdagi `match` bilan bir xil ishlaydi:
+If the value is `Some`, we print out the value in the `Some` variant by binding the value to the variable `max` in the pattern. We don’t want to do anything with the `None` value. To satisfy the `match` expression, we have to add `_ =>
+()` after processing just one variant, which is annoying boilerplate code to add.
+
+Instead, we could write this in a shorter way using `if let`. The following code behaves the same as the `match` in Listing 6-6:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-12-if-let/src/main.rs:here}}
 ```
 
-`if let` sintaksisi teng belgisi bilan ajratilgan pattern va ifodani oladi. U xuddi `match` bilan ishlaydi, bunda ifoda `match`ga beriladi va pattern uning birinchi armi hisoblanadi. Bunday holda, pattern `Some(max)` bo'lib, `max`  `Some` ichidagi qiymatga bog'lanadi. Shundan so'ng biz `if let` blokining tanasida `max` dan xuddi mos keladigan `match` armida `max` dan foydalanganimiz kabi foydalanishimiz mumkin. Qiymat patternga mos kelmasa, `if let` blokidagi kod ishga tushmaydi.
+The syntax `if let` takes a pattern and an expression separated by an equal sign. It works the same way as a `match`, where the expression is given to the `match` and the pattern is its first arm. In this case, the pattern is `Some(max)`, and the `max` binds to the value inside the `Some`. We can then use `max` in the body of the `if let` block in the same way we used `max` in the corresponding `match` arm. The code in the `if let` block isn’t run if the value doesn’t match the pattern.
 
-`if let` dan foydalanish kamroq yozish, kamroq chekinish va kamroq kodli kodni bildiradi.
-Biroq, siz `match` amal qiladigan to'liq tekshirishni yo'qotasiz. `match` va `if let` o‘rtasida tanlov qilish sizning muayyan vaziyatingizda nima qilayotganingizga va ixchamlikka ega bo‘lish to‘liq tekshirishni yo‘qotish uchun to‘g‘ri kelishilganligiga bog‘liq.
+Using `if let` means less typing, less indentation, and less boilerplate code. However, you lose the exhaustive checking that `match` enforces. Choosing between `match` and `if let` depends on what you’re doing in your particular situation and whether gaining conciseness is an appropriate trade-off for losing exhaustive checking.
 
 Boshqacha qilib aytganda, siz `if let` konstruktsiyasini `match` uchun sintaktik shakar sifatida o'ylab ko'rishingiz mumkin, agar kiritilgan qiymat bitta patterga mos kelsa va boshqa barcha qiymatlarga e'tibor bermasa, kodni bajaradi.
 
-Biz `else`ni `if let` bilan kiritishimiz mumkin. `else` bilan birlashtirilgan kod bloki `if let` va `else`ga ekvivalent bo‘lgan `match` ifodasidagi `_` registriga mos keladigan kod bloki bilan bir xil. 6-4 roʻyxatdagi `Tanga` definitionni eslang, bunda `Quarter` varianti ham `UsState` qiymatiga ega edi. Agar biz quarterlarning holatini e'lon qilishda ko'rgan barcha quarter bo'lmagan tangalarni sanashni istasak, buni quyidagi kabi `match` ifodasi bilan qilishimiz mumkin:
+We can include an `else` with an `if let`. The block of code that goes with the `else` is the same as the block of code that would go with the `_` case in the `match` expression that is equivalent to the `if let` and `else`. Recall the `Coin` enum definition in Listing 6-4, where the `Quarter` variant also held a `UsState` value. If we wanted to count all non-quarter coins we see while also announcing the state of the quarters, we could do that with a `match` expression, like this:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-13-count-and-announce-match/src/main.rs:here}}
@@ -39,9 +40,9 @@ Agar dasturingizda `match` yordamida ifodalash uchun juda batafsil mantiq mavjud
 
 ## Xulosa
 
-Endi biz sanab o'tilgan qiymatlar to'plamidan biri bo'lishi mumkin bo'lgan maxsus turlarni yaratish uchun enumlardan qanday foydalanishni ko'rib chiqdik. Biz standart kutubxonaning `Option<T>` turi xatolarni oldini olish uchun type tizimidan qanday foydalanishni ko'rsatdik. Enum qiymatlari ichida ma'lumotlar mavjud bo'lsa, siz qancha holatlarni ko'rib chiqishingiz kerakligiga qarab, ushbu qiymatlarni ajratib olish va ishlatish uchun `match` yoki `if let` dan foydalanishingiz mumkin.
+We’ve now covered how to use enums to create custom types that can be one of a set of enumerated values. We’ve shown how the standard library’s `Option<T>` type helps you use the type system to prevent errors. When enum values have data inside them, you can use `match` or `if let` to extract and use those values, depending on how many cases you need to handle.
 
-Rust dasturlaringiz endi structlar va enumlar yordamida domeningizdagi tushunchalarni ifodalashi mumkin. API-da foydalanish uchun maxsus turlarni yaratish turdagi xavfsizligini ta'minlaydi: kompilyator sizning funksiyalaringiz faqat har bir funktsiya kutgan turdagi qiymatlarni olishiga ishonch hosil qiladi.
+Your Rust programs can now express concepts in your domain using structs and enums. Creating custom types to use in your API ensures type safety: the compiler will make certain your functions only get values of the type each function expects.
 
 Foydalanuvchilaringizga foydalanish uchun qulay va faqat sizning foydalanuvchilarga nima kerakligini aniq ko'rsatadigan yaxshi tashkil etilgan API taqdim etish uchun endi Rust modullariga murojaat qilaylik.
 
