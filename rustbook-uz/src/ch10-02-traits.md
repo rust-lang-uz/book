@@ -1,17 +1,16 @@
 ## Traitlar: umumiy xatti-harakatni aniqlash
 
-*trait* ma'lum bir turga ega bo'lgan va boshqa turlar bilan bo'lishishi mumkin bo'lgan funksionallikni belgilaydi. Biz umumiy xatti-harakatni mavhum tarzda aniqlash uchun traitlardan foydalanishimiz mumkin. Generik tur ma'lum xatti-harakatlarga ega bo'lgan har qanday tur bo'lishi mumkinligini aniqlash uchun *trait (bound)chegaralari* dan foydalanishimiz mumkin.
+A *trait* defines functionality a particular type has and can share with other types. We can use traits to define shared behavior in an abstract way. We can use *trait bounds* to specify that a generic type can be any type that has certain behavior.
 
-> Eslatma: Traitlar ba'zi farqlarga ega bo'lsa-da, ko'pincha boshqa tillarda
-> *interfeyslar* deb ataladigan xususiyatga o'xshaydi.
+> Eslatma: Traitlar ba'zi farqlarga ega bo'lsa-da, ko'pincha boshqa tillarda *interfeyslar* deb ataladigan xususiyatga o'xshaydi.
 
 ### Traitni aniqlash
 
-Turning xatti-harakati biz ushbu turga murojaat qilishimiz mumkin bo'lgan metodlardan iborat. Agar biz ushbu turlarning barchasida bir xil metodlarni chaqira olsak, har xil turlar bir xil xatti-harakatlarga ega. Trait ta'riflari - bu qandaydir maqsadga erishish uchun zarur bo'lgan xatti-harakatlar to'plamini aniqlash uchun metod imzolarini birgalikda guruhlash usuli.
+A type’s behavior consists of the methods we can call on that type. Different types share the same behavior if we can call the same methods on all of those types. Trait definitions are a way to group method signatures together to define a set of behaviors necessary to accomplish some purpose.
 
 Misol uchun, bizda turli xil va hajmdagi matnlarni o'z ichiga olgan bir nechta structlar mavjud deylik: ma'lum bir joyda joylashtirilgan yangiliklarni o'z ichiga olgan `YangiMaqola` structi va eng ko'pi 280 belgidan iborat bo'lishi mumkin bo'lgan `Maqola` yangi post, retpost yoki boshqa postga javob ekanligini ko'rsatadigan metama'lumotlar.
 
-Biz `YangiMaqola` yoki `Maqola` misolida saqlanishi mumkin bo‘lgan ma’lumotlarning qisqacha mazmunini ko‘rsata oladigan `aggregator` nomli media agregator kutubxonasini yaratmoqchimiz. Buni amalga oshirish uchun bizga har bir tur bo'yicha xulosa kerak bo'ladi va biz ushbu xulosani misolda `umumiy_xulosa` metodini chaqirish orqali so'raymiz. 10-12 ro'yxatda ushbu xatti-harakatni ifodalovchi umumiy `Xulosa` traitining ta'rifi ko'rsatilgan.
+We want to make a media aggregator library crate named `aggregator` that can display summaries of data that might be stored in a `NewsArticle` or `Tweet` instance. To do this, we need a summary from each type, and we’ll request that summary by calling a `summarize` method on an instance. Listing 10-12 shows the definition of a public `Summary` trait that expresses this behavior.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -19,17 +18,18 @@ Biz `YangiMaqola` yoki `Maqola` misolida saqlanishi mumkin bo‘lgan ma’lumotl
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-12/src/lib.rs}}
 ```
 
+
 <span class="caption">Roʻyxat 10-12: `umumiy_xulosa` metodi bilan taʼminlangan xatti-harakatlardan iborat `Xulosa` traiti</span>
 
-Bu yerda biz `trait` kalit so'zidan foydalanib traitni e'lon qilamiz, so'ngra belgi nomi, bu holda `Xulosa`. Shuningdek, biz ushbu traitni `pub` deb e’lon qildik, shunda bu cratega bog‘liq bo‘lgan cratelar ham bu traitdan foydalanishi mumkin, buni bir necha misollarda ko‘ramiz. Jingalak qavslar ichida biz ushbu traitni amalga oshiradigan turlarning xatti-harakatlarini tavsiflovchi metod imzolarini e'lon qilamiz, bu holda `fn umumiy_xulosa(&self) -> String`.
+Here, we declare a trait using the `trait` keyword and then the trait’s name, which is `Summary` in this case. We’ve also declared the trait as `pub` so that crates depending on this crate can make use of this trait too, as we’ll see in a few examples. Inside the curly brackets, we declare the method signatures that describe the behaviors of the types that implement this trait, which in this case is `fn summarize(&self) -> String`.
 
-Metod imzosidan so'ng, jingalak qavslar ichida amalga oshirish o'rniga, biz nuqta-verguldan foydalanamiz. Ushbu traitni amalga oshiradigan har bir tur metod tanasi uchun o'ziga xos xatti-harakatni ta'minlashi kerak. Kompilyator `Xulosa` traitiga ega boʻlgan har qanday turda aynan shu imzo bilan aniqlangan `umumiy_xulosa` metodi boʻlishini talab qiladi.
+After the method signature, instead of providing an implementation within curly brackets, we use a semicolon. Each type implementing this trait must provide its own custom behavior for the body of the method. The compiler will enforce that any type that has the `Summary` trait will have the method `summarize` defined with this signature exactly.
 
 Traitining tanasida bir nechta metodlar bo'lishi mumkin: metod imzolari har bir satrda bittadan ko'rsatilgan va har bir satr nuqtali vergul bilan tugaydi.
 
 ### Turga xos traitni amalga oshirish
 
-Endi biz `Xulosa` traiti metodlarining kerakli imzolarini aniqlaganimizdan so‘ng, uni media agregatorimizdagi turlarga qo‘llashimiz mumkin. 10-13 roʻyxat sarlavhadan foydalanadigan `YangiMaqola` structidagi `Xulosa` traitining amalga oshirilishini koʻrsatadi, muallif va `umumiy_xulosa` qaytish qiymatini yaratish uchun joy. `Maqola` structi uchun biz `umumiy_xulosa`ni foydalanuvchi nomi va undan keyin maqolaning butun matni sifatida belgilaymiz, maqola mazmuni allaqachon 280 belgi bilan cheklangan deb hisoblaymiz.
+Now that we’ve defined the desired signatures of the `Summary` trait’s methods, we can implement it on the types in our media aggregator. Listing 10-13 shows an implementation of the `Summary` trait on the `NewsArticle` struct that uses the headline, the author, and the location to create the return value of `summarize`. For the `Tweet` struct, we define `summarize` as the username followed by the entire text of the tweet, assuming that tweet content is already limited to 280 characters.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -37,11 +37,12 @@ Endi biz `Xulosa` traiti metodlarining kerakli imzolarini aniqlaganimizdan so‘
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-13/src/lib.rs:here}}
 ```
 
+
 <span class="caption">Roʻyxat 10-13: `Xulosa` traitini `YangiMaqola` va `Maqola` turlariga joriy qilish</span>
 
-Traitni turga tatbiq etish odatiy usullarni amalga oshirishga o'xshaydi. Farqi shundaki, `impl` dan so'ng biz amalga oshirmoqchi bo'lgan trait nomini qo'yamiz, so'ng `for` kalit so'zidan foydalanamiz va keyin traitni amalga oshirmoqchi bo'lgan tur nomini belgilaymiz. `impl` blokida biz trait ta'rifi belgilagan metod imzolarini qo'yamiz. Har bir imzodan keyin nuqta-vergul qo'yish o'rniga, biz jingalak qavslardan foydalanamiz va metod tanasini o'ziga xos xatti-harakat bilan to'ldiramiz, biz traitning metodlari ma'lum bir turga ega bo'lishini xohlaymiz.
+Implementing a trait on a type is similar to implementing regular methods. The difference is that after `impl`, we put the trait name we want to implement, then use the `for` keyword, and then specify the name of the type we want to implement the trait for. Within the `impl` block, we put the method signatures that the trait definition has defined. Instead of adding a semicolon after each signature, we use curly brackets and fill in the method body with the specific behavior that we want the methods of the trait to have for the particular type.
 
-Kutubxona `YangiMaqola` va `Maqola`da `Xulosa` traitini joriy qilganligi sababli, crate foydalanuvchilari `YangiMaqola` va `Maqola` misollaridagi xususiyat metodlarini biz odatdagi metodlar deb ataganimizdek chaqirishlari mumkin. Yagona farq shundaki, foydalanuvchi o'ziga xos traitni turlari bilan bir qatorda qamrab olishi kerak. Binary crate bizning `aggregator` kutubxonamiz cratesidan qanday foydalanishi mumkinligiga misol:
+Now that the library has implemented the `Summary` trait on `NewsArticle` and `Tweet`, users of the crate can call the trait methods on instances of `NewsArticle` and `Tweet` in the same way we call regular methods. The only difference is that the user must bring the trait into scope as well as the types. Here’s an example of how a binary crate could use our `aggregator` library crate:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-01-calling-trait-method/src/main.rs}}
@@ -49,14 +50,13 @@ Kutubxona `YangiMaqola` va `Maqola`da `Xulosa` traitini joriy qilganligi sababli
 
 Bu kod `1 ta yangi xabar: ismoilovdev: Rust kitobi juda foydali ekan, men juda ko'p bilimlarni o'zlashtirdim` chop etadi.
 
-`aggregator` cratesiga bog'liq bo'lgan boshqa cratelar ham `Xulosa` traitini o'z turlari bo'yicha `Xulosa`ni amalga oshirish uchun qamrab olishi mumkin. E'tiborga olish kerak bo'lgan cheklashlardan biri shundaki, biz trait yoki turning hech bo'lmaganda bittasi bizning cratemiz uchun mahalliy(local) bo'lsa, biz traitni turga qo'llashimiz mumkin. Misol uchun, biz `Maqola` kabi maxsus turdagi `Display` kabi standart kutubxona traitlarini `aggregator` crate funksiyamizning bir qismi sifatida amalga oshirishimiz mumkin, chunki `Maqola` turi `aggregator` cratemiz uchun mahalliydir. Shuningdek, biz  `Vec<T>` da `Xulosa`ni `aggregator` cratemizda ham qo‘llashimiz mumkin, chunki `Xulosa` traiti `aggregator` cratemiz uchun mahalliydir.
+Other crates that depend on the `aggregator` crate can also bring the `Summary` trait into scope to implement `Summary` on their own types. One restriction to note is that we can implement a trait on a type only if at least one of the trait or the type is local to our crate. For example, we can implement standard library traits like `Display` on a custom type like `Tweet` as part of our `aggregator` crate functionality, because the type `Tweet` is local to our `aggregator` crate. We can also implement `Summary` on `Vec<T>` in our `aggregator` crate, because the trait `Summary` is local to our `aggregator` crate.
 
-Ammo biz tashqi turlarga tashqi traitlarni amalga oshira olmaymiz. Masalan, biz `aggregator` cratemiz ichida `Vec<T>` da `Display` traitini amalga oshira olmaymiz, chunki `Display` va `Vec<T>` ikkalasi ham standart kutubxonada belgilangan va bizning `aggregator` cratemiz uchun mahalliy emas. Bu cheklash *kogerentlik(coherence)* deb nomlangan xususiyatning bir qismi va aniqrog'i *yetim qoidasi(orphan rule)*, chunki ota-ona turi mavjud emasligi sababli shunday nomlangan. Bu qoida boshqa odamlarning kodi sizning kodingizni buzmasligini ta'minlaydi va aksincha. Qoidalarsiz ikkita crate bir xil turdagi bir xil traitni amalga oshirishi mumkin edi va Rust qaysi dasturdan foydalanishni bilmaydi.
+But we can’t implement external traits on external types. For example, we can’t implement the `Display` trait on `Vec<T>` within our `aggregator` crate, because `Display` and `Vec<T>` are both defined in the standard library and aren’t local to our `aggregator` crate. This restriction is part of a property called *coherence*, and more specifically the *orphan rule*, so named because the parent type is not present. This rule ensures that other people’s code can’t break your code and vice versa. Without the rule, two crates could implement the same trait for the same type, and Rust wouldn’t know which implementation to use.
 
 ### Standart ilovalar
 
-Ba'zan har bir turdagi barcha metodlarni amalga oshirishni talab qilish o'rniga, traitdagi ba'zi yoki barcha metodlar uchun standart xatti-harakatlarga ega bo'lish foydali bo'ladi.
-Keyin, biz traitni ma'lum bir turga qo'llaganimizda, har bir metodning standart xatti-harakatlarini saqlab qolishimiz yoki bekor qilishimiz mumkin.
+Sometimes it’s useful to have default behavior for some or all of the methods in a trait instead of requiring implementations for all methods on every type. Then, as we implement the trait on a particular type, we can keep or override each method’s default behavior.
 
 Roʻyxat 10-14da biz 10-12 ro'yxatda bo'lgani kabi faqat metod imzosini belgilash o'rniga `Xulosa` traitining `umumiy_xulosa` metodi uchun standart qatorni belgilaymiz.
 
@@ -66,21 +66,22 @@ Roʻyxat 10-14da biz 10-12 ro'yxatda bo'lgani kabi faqat metod imzosini belgilas
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-14/src/lib.rs:here}}
 ```
 
+
 <span class="caption">Roʻyxat 10-14: `Xulosa` traitini `umumiy_xulosa` metodini standart boʻyicha amalga oshirish bilan aniqlash</span>
 
 `YangiMaqola` misollarini umumlashtirish uchun standart ilovadan foydalanish uchun biz bo'sh `impl` blokini `impl Xulosa for YangiMaqola {}` bilan belgilaymiz.
 
-Biz `YangiMaqola`da to‘g‘ridan-to‘g‘ri `umumiy_xulosa` metodini endi aniqlamasak ham, biz standart bo‘yicha dasturni taqdim etdik va `YangiMaqola` `Xulosa` traitini amalga oshirishini belgilab oldik. Natijada, biz hali ham `YangiMaqola` misolida `umumiy_xulosa` metodini quyidagicha chaqirishimiz mumkin:
+Even though we’re no longer defining the `summarize` method on `NewsArticle` directly, we’ve provided a default implementation and specified that `NewsArticle` implements the `Summary` trait. As a result, we can still call the `summarize` method on an instance of `NewsArticle`, like this:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-02-calling-default-impl/src/main.rs:here}}
 ```
 
-Bu kod `Yangi maqola mavjud! (Batafsil...)`ni chop etadi.
+This code prints `New article available! (Read more...)`.
 
-Standart dasturni yaratish bizdan 10-13 roʻyxatdagi `Maqola`dagi `Xulosa`ni amalga oshirish haqida biror narsani oʻzgartirishimizni talab qilmaydi. Buning sababi, standart dasturni bekor qilish sintaksisi standart dasturga ega bo'lmagan trait metodini amalga oshirish sintaksisi bilan bir xil.
+Creating a default implementation doesn’t require us to change anything about the implementation of `Summary` on `Tweet` in Listing 10-13. The reason is that the syntax for overriding a default implementation is the same as the syntax for implementing a trait method that doesn’t have a default implementation.
 
-Standart ilovalar bir xil traitga ega bo'lgan boshqa metodlarni chaqirishi mumkin, hatto bu boshqa metodlarda standart dastur bo'lmasa ham. Shunday qilib, trait juda ko'p foydali funksiyalarni taqdim etishi mumkin va amalga oshiruvchilardan faqat uning kichik qismini ko'rsatishni talab qiladi. Misol uchun, biz `Xulosa` traitini amalga oshirish zarur bo'lgan `muallif_haqida` metodiga ega bo'lish uchun belgilashimiz va keyin `muallif_haqida` metodini chaqiradigan standart amalga oshirishga ega bo'lgan `umumiy_xulosa` metodini belgilashimiz mumkin:
+Default implementations can call other methods in the same trait, even if those other methods don’t have a default implementation. In this way, a trait can provide a lot of useful functionality and only require implementors to specify a small part of it. For example, we could define the `Summary` trait to have a `summarize_author` method whose implementation is required, and then define a `summarize` method that has a default implementation that calls the `summarize_author` method:
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:here}}
@@ -92,7 +93,7 @@ Standart ilovalar bir xil traitga ega bo'lgan boshqa metodlarni chaqirishi mumki
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:impl}}
 ```
 
-`muallif_haqida` ni aniqlaganimizdan so'ng, biz `Maqola` structi misollarida `umumiy_xulosa` deb atashimiz mumkin va `umumiy_xulosa` standart bajarilishi biz taqdim etgan `muallif_haqida` ta'rifini chaqiradi. Biz `muallif_haqida` ni qo'llaganimiz sababli, `Xulosa` traiti bizga boshqa kod yozishni talab qilmasdan `umumiy_xulosa` metodining harakatini berdi.
+After we define `summarize_author`, we can call `summarize` on instances of the `Tweet` struct, and the default implementation of `summarize` will call the definition of `summarize_author` that we’ve provided. Because we’ve implemented `summarize_author`, the `Summary` trait has given us the behavior of the `summarize` method without requiring us to write any more code.
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/main.rs:here}}
@@ -104,13 +105,13 @@ Shuni esda tutingki, xuddi shu metodni bekor qilish orqali standart dasturni cha
 
 ### Traitlar parametr sifatida
 
-Endi siz traitlarni qanday aniqlash va amalga oshirishni bilganingizdan so'ng, biz ko'plab turlarni qabul qiladigan funksiyalarni aniqlash uchun traitlardan qanday foydalanishni o'rganishimiz mumkin. Biz 10-13 roʻyxatdagi `YangiMaqola` va `Maqola` turlari uchun joriy qilingan `Xulosa` traitidan foydalanamiz, uning `element` parametri boʻyicha umumlashtirish metodlini chaqiradigan `xabar_berish` funksiyasini belgilaymiz, u `Xulosa` traitini amalga oshiradi. Buning uchun biz `impl Trait` sintaksisidan foydalanamiz, masalan:
+Now that you know how to define and implement traits, we can explore how to use traits to define functions that accept many different types. We'll use the `Summary` trait we implemented on the `NewsArticle` and `Tweet` types in Listing 10-13 to define a `notify` function that calls the `summarize` method on its `item` parameter, which is of some type that implements the `Summary` trait. To do this, we use the `impl Trait` syntax, like this:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-04-traits-as-parameters/src/lib.rs:here}}
 ```
 
-`element` parametri uchun aniq tur o'rniga biz `impl` kalit so'zini va trait nomini belgilaymiz. Ushbu parametr belgilangan traitni amalga oshiradigan har qanday turni qabul qiladi. `xabar_berish` qismida biz `Xulosa` traitidan kelib chiqadigan `element` bo‘yicha har qanday metodlarni chaqirishimiz mumkin, masalan, `umumiy_xulosa`. Biz `xabar_berish` ga chaiqruv  qilishimiz va `YangiMaqola` yoki `Maqola` ning istalgan misolida o'tishimiz mumkin. Funksiyani `String` yoki `i32` kabi boshqa har qanday turdagi chaqiruvchi kod kompilyatsiya qilinmaydi, chunki bu turlar `Xulosa` ni amalga oshirmaydi.
+Instead of a concrete type for the `item` parameter, we specify the `impl` keyword and the trait name. This parameter accepts any type that implements the specified trait. In the body of `notify`, we can call any methods on `item` that come from the `Summary` trait, such as `summarize`. We can call `notify` and pass in any instance of `NewsArticle` or `Tweet`. Code that calls the function with any other type, such as a `String` or an `i32`, won’t compile because those types don’t implement `Summary`.
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="fixing-the-largest-function-with-trait-bounds"></a>
@@ -120,20 +121,20 @@ Endi siz traitlarni qanday aniqlash va amalga oshirishni bilganingizdan so'ng, b
 `impl Trait` sintaksisi oddiy holatlar uchun ishlaydi, lekin aslida *trait bound* deb nomlanuvchi uzunroq shakl uchun sintaksis shakaridir; bu shunday ko'rinadi:
 
 ```rust,ignore
-pub fn xabar_berish<T: Xulosa>(element: &T) {
-    println!("Tezkor xabarlar! {}", element.umumiy_xulosa());
+pub fn notify<T: Summary>(item: &T) {
+    println!("Breaking news! {}", item.summarize());
 }
 ```
 
-Ushbu uzunroq shakl oldingi bo'limdagi misolga teng, ammo batafsilroq. Trait chegaralarini ikki nuqta va ichki burchakli qavslardan keyin umumiy tur parametri e'lon qilingan holda joylashtiramiz.
+This longer form is equivalent to the example in the previous section but is more verbose. We place trait bounds with the declaration of the generic type parameter after a colon and inside angle brackets.
 
-`impl Trait` sintaksisi qulay va oddiy holatlarda ixchamroq kodni yaratadi, to'liqroq traitlar bilan bog'langan sintaksisi esa boshqa holatlarda ko'proq murakkablikni ifodalashi mumkin. Misol uchun, bizda `Xulosa` ni amalga oshiradigan ikkita parametr bo'lishi mumkin. Buni `impl Trait` sintaksisi bilan bajarish quyidagicha ko'rinadi:
+The `impl Trait` syntax is convenient and makes for more concise code in simple cases, while the fuller trait bound syntax can express more complexity in other cases. For example, we can have two parameters that implement `Summary`. Doing so with the `impl Trait` syntax looks like this:
 
 ```rust,ignore
 pub fn xabar_berish(element1: &impl Xulosa, element2: &impl Xulosa) {
 ```
 
-Agar biz ushbu funksiya `element1` va `element2` turli xil turlarga ega bo'lishini istasak, `impl Trait` dan foydalanish maqsadga muvofiqdir (agar ikkala tur ham `Xulosa`ni qo'llasa). Agar biz ikkala parametrni bir xil turga ega bo'lishga majburlamoqchi bo'lsak, quyidagi kabi trait bounddan foydalanishimiz kerak:
+Using `impl Trait` is appropriate if we want this function to allow `item1` and `item2` to have different types (as long as both types implement `Summary`). If we want to force both parameters to have the same type, however, we must use a trait bound, like this:
 
 ```rust,ignore
 pub fn xabar_berish<T: Xulosa>(element1: &T, element2: &T) {
@@ -141,15 +142,15 @@ pub fn xabar_berish<T: Xulosa>(element1: &T, element2: &T) {
 
 `element1` va `element2` parametrlarining turi sifatida belgilangan umumiy `T` turi funksiyani shunday cheklaydiki, `element1` va `element2` uchun argument sifatida berilgan qiymatning aniq turi bir xil bo`lishi kerak.
 
-#### `+` sintaksisi bilan bir nechta trait chegaralarini belgilash
+#### sintaksisi bilan bir nechta trait chegaralarini belgilash
 
-Bundan tashqari, biz bir nechta traitlarni belgilashimiz mumkin. Aytaylik, biz `xabar_berish` funksiyasidan display formatlash hamda `element` bo‘yicha `umumiy_xulosa`dan foydalanishni xohladik: biz `xabar_berish` ta'rifida `element` `Display` va `Xulosa` ni ham amalga oshirishi kerakligini belgilaymiz. Buni `+` sintaksisi yordamida amalga oshirishimiz mumkin:
+We can also specify more than one trait bound. Say we wanted `notify` to use display formatting as well as `summarize` on `item`: we specify in the `notify` definition that `item` must implement both `Display` and `Summary`. We can do so using the `+` syntax:
 
 ```rust,ignore
 pub fn xabar_berish(element: &(impl Xulosa + Display)) {
 ```
 
-`+` sintaksisi generik turdagi belgilar chegaralari bilan ham amal qiladi:
+sintaksisi generik turdagi belgilar chegaralari bilan ham amal qiladi:
 
 ```rust,ignore
 pub fn xabar_berish<T: Xulosa+ Display>(element: &T) {
@@ -159,7 +160,7 @@ Belgilangan ikkita trait chegarasi bilan `xabar_berish` asosiy qismi `umumiy_xul
 
 #### `where` bandlari bilan aniqroq trait bounds(chegaralari)
 
-Haddan tashqari ko'p belgilar boundlaridan foydalanish o'zining salbiy tomonlariga ega. Har bir generikning o'ziga xos trait boundlari bor, shuning uchun bir nechta umumiy turdagi parametrlarga ega funksiyalar funksiya nomi va uning parametrlar ro'yxati o'rtasida ko'plab belgilar bilan bog'liq ma'lumotlarni o'z ichiga olishi mumkin, bu funksiya imzosini o'qishni qiyinlashtiradi. Shu sababli, Rust funksiya imzosidan keyin `where` bandida trait boundlarini belgilash uchun muqobil sintaksisga ega.
+Using too many trait bounds has its downsides. Each generic has its own trait bounds, so functions with multiple generic type parameters can contain lots of trait bound information between the function’s name and its parameter list, making the function signature hard to read. For this reason, Rust has alternate syntax for specifying trait bounds inside a `where` clause after the function signature. So instead of writing this:
 
 ```rust,ignore
 fn boshqa_funksiya<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {
@@ -181,22 +182,22 @@ Bu yerda ko'rsatilganidek, traitni amalga oshiradigan ba'zi turdagi qiymatni qay
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-05-returning-impl-trait/src/lib.rs:here}}
 ```
 
-Qaytish(return) turi uchun `impl Xulosa` dan foydalanib, biz `return_xulosa` funksiyasi aniq turga nom bermasdan `Xulosa` traitini amalga oshiradigan ba'zi turlarni qaytarishini aniqlaymiz. Bunday holda, `return_xulosa` `Maqola` ni qaytaradi, lekin bu funksiyani chaqiruvchi kod buni bilishi shart emas.
+By using `impl Summary` for the return type, we specify that the `returns_summarizable` function returns some type that implements the `Summary` trait without naming the concrete type. In this case, `returns_summarizable` returns a `Tweet`, but the code calling this function doesn’t need to know that.
 
-Qaytish turini faqat u amalga oshiradigan traitga ko'ra belgilash qobiliyati, ayniqsa, biz 13-bobda ko'rib chiqiladigan closurelar va iteratorlar kontekstida foydalidir.  Closures va iteratorlar faqat kompilyator biladigan turlarni yoki belgilash uchun juda uzoq turlarni yaratadi. `impl Trait` sintaksisi sizga funksiya juda uzun turni yozishga hojat qoldirmasdan `Iterator` traitini amalga oshiradigan ba'zi turlarni qaytarishini qisqacha belgilash imkonini beradi.
+The ability to specify a return type only by the trait it implements is especially useful in the context of closures and iterators, which we cover in Chapter 13. Closures and iterators create types that only the compiler knows or types that are very long to specify. The `impl Trait` syntax lets you concisely specify that a function returns some type that implements the `Iterator` trait without needing to write out a very long type.
 
-Biroq, faqat bitta turni qaytarayotgan bo'lsangiz, `impl Trait` dan foydalanishingiz mumkin. Masalan, `YangiMaqola` yoki `Maqola`ni qaytaruvchi `impl Xulosa` sifatida ko‘rsatilgan qaytarish turiga ega bo‘lgan bu kod ishlamaydi:
+However, you can only use `impl Trait` if you’re returning a single type. For example, this code that returns either a `NewsArticle` or a `Tweet` with the return type specified as `impl Summary` wouldn’t work:
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-06-impl-trait-returns-one-type/src/lib.rs:here}}
 ```
 
-`YangiMaqola` yoki `Maqola`ni qaytarishga `impl Trait` sintaksisi kompilyatorda qanday amalga oshirilishi bilan bog‘liq cheklovlar tufayli ruxsat berilmaydi. Ushbu xatti-harakat bilan funksiyani qanday yozishni biz 17-bobning ["Turli turdagi qiymatlarga ruxsat beruvchi trait ob'ektlaridan foydalanish"][using-trait-objects-that-allow-for-values-of-different-types]<!--
-ignore --> bo'limida ko'rib chiqamiz.
+Returning either a `NewsArticle` or a `Tweet` isn’t allowed due to restrictions around how the `impl Trait` syntax is implemented in the compiler. We’ll cover how to write a function with this behavior in the [“Using Trait Objects That Allow for Values of Different Types”][using-trait-objects-that-allow-for-values-of-different-types]<!--
+ignore --> section of Chapter 17.
 
 ### Metodlarni shartli ravishda amalga oshirish uchun Trait Boundlardan foydalanish
 
-Umumiy turdagi parametrlardan foydalanadigan `impl` bloki bilan trait bounddan foydalanib, biz belgilangan traitlarni amalga oshiradigan turlar uchun metodlarni shartli ravishda amalga oshirishimiz mumkin. Masalan, 10-15-ro'yxatdagi `Pair<T>` turi har doim yangi `Pair<T>` nusxasini qaytarish uchun `new` funksiyasini amalga oshiradi (5-bobning [“Metodlarni aniqlash”][methods]<!-- ignore -->  boʻlimidan eslaylikki, `Self` bu `impl` bloki turiga tegishli turdagi taxallus(alias) boʻlib, bu holda `Pair<T>` boʻladi). Ammo keyingi `impl` blokida `Pair<T>` faqat `cmp_display` metodini qo'llaydi, uning ichki turi(inner type) `T` taqqoslash imkonini beruvchi `PartialOrd` traitini *va* chop etish imkonini beruvchi `Display` traittini amalga oshiradi.
+By using a trait bound with an `impl` block that uses generic type parameters, we can implement methods conditionally for types that implement the specified traits. For example, the type `Pair<T>` in Listing 10-15 always implements the `new` function to return a new instance of `Pair<T>` (recall from the [“Defining Methods”][methods]<!-- ignore --> section of Chapter 5 that `Self` is a type alias for the type of the `impl` block, which in this case is `Pair<T>`). But in the next `impl` block, `Pair<T>` only implements the `cmp_display` method if its inner type `T` implements the `PartialOrd` trait that enables comparison *and* the `Display` trait that enables printing.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -204,9 +205,10 @@ Umumiy turdagi parametrlardan foydalanadigan `impl` bloki bilan trait bounddan f
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-15/src/lib.rs}}
 ```
 
+
 <span class="caption">Ro'yxat 10-15: Trait boundga qarab generik tur bo'yicha shartli ravishda qo'llash metodlari</span>
 
-Biz shartli ravishda boshqa traitni amalga oshiradigan har qanday tur uchun traitni amalga oshirishimiz mumkin. Trait boundlarni qondiradigan har qanday turdagi tarittni amalga oshirish *blanket implementations* deb nomlanadi va Rust standart kutubxonasida keng qo'llaniladi. Masalan, standart kutubxona `Display` traitini amalga oshiradigan har qanday turdagi `ToString` traitini amalga oshiradi. Standart kutubxonadagi `impl` bloki ushbu kodga o'xshaydi:
+We can also conditionally implement a trait for any type that implements another trait. Implementations of a trait on any type that satisfies the trait bounds are called *blanket implementations* and are extensively used in the Rust standard library. For example, the standard library implements the `ToString` trait on any type that implements the `Display` trait. The `impl` block in the standard library looks similar to this code:
 
 ```rust,ignore
 impl<T: Display> ToString for T {
@@ -214,7 +216,7 @@ impl<T: Display> ToString for T {
 }
 ```
 
-Standart kutubxonada bu keng qamrovli dastur mavjud bo'lganligi sababli, biz `Display` traitini amalga oshiradigan har qanday turdagi `ToString` traiti bilan aniqlangan `to_string` metodini chaqirishimiz mumkin. Masalan, biz butun sonlarni mos keladigan `String` qiymatlariga shunday aylantirishimiz mumkin, chunki butun sonlar `Display`ni amalga oshiradi:
+Because the standard library has this blanket implementation, we can call the `to_string` method defined by the `ToString` trait on any type that implements the `Display` trait. For example, we can turn integers into their corresponding `String` values like this because integers implement `Display`:
 
 ```rust
 let s = 3.to_string();
@@ -222,8 +224,7 @@ let s = 3.to_string();
 
 Blanket implementationlari "Implementors" bo'limidagi trait uchun texnik hujjatlarda ko'rinadi.
 
-Traitlar va trait boundlar takrorlanishni kamaytirish uchun generik turdagi parametrlardan foydalanadigan kod yozishga imkon beradi, shuningdek, generik turning o'ziga xos xatti-harakatlariga ega bo'lishini kompilyatorga ko'rsatishga imkon beradi. Keyin kompilyator trait bilan bog'langan ma'lumotlardan bizning kodimiz bilan qo'llaniladigan barcha aniq turlar to'g'ri xatti-harakatni ta'minlaydiganligini tekshirish uchun foydalanishi mumkin. Dinamik ravishda tuzilgan tillarda, agar biz metodni aniqlamagan turdagi metodni chaqirsak, runtimeda xatoga yo'l qo'yamiz. Ammo Rust bu xatolarni vaqtni kompilyatsiya qilish uchun ko'chiradi, shuning uchun biz kodimiz ishga tushgunga qadar muammolarni hal qilishga majbur bo'lamiz. Bundan tashqari, biz runtimeda xatti-harakatni tekshiradigan kod yozishimiz shart emas, chunki biz kompilyatsiya vaqtida allaqachon tekshirganmiz.
-Bu generiklarning moslashuvchanligidan voz kechmasdan ishlashni yaxshilaydi.
+Traits and trait bounds let us write code that uses generic type parameters to reduce duplication but also specify to the compiler that we want the generic type to have particular behavior. The compiler can then use the trait bound information to check that all the concrete types used with our code provide the correct behavior. In dynamically typed languages, we would get an error at runtime if we called a method on a type which didn’t define the method. But Rust moves these errors to compile time so we’re forced to fix the problems before our code is even able to run. Additionally, we don’t have to write code that checks for behavior at runtime because we’ve already checked at compile time. Doing so improves performance without having to give up the flexibility of generics.
 
 [using-trait-objects-that-allow-for-values-of-different-types]: ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types
 [methods]: ch05-03-method-syntax.html#defining-methods
