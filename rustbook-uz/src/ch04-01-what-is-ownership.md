@@ -1,80 +1,30 @@
 ## Ownership Nima?
 
-*Ownership*(Egalik) bu Rust dasturi xotirani qanday boshqarishini boshqaradigan qoidalar to'plami.
-Barcha dasturlar ishlayotgan vaqtda kompyuter xotirasidan qanday foydalanishini boshqarishi kerak.
-Ba'zi tillarda axlat yig'ish mavjud bo'lib, ular dastur ishlayotgan paytda ishlatilmaydigan xotirani muntazam ravishda qidiradi; boshqa tillarda dasturchi xotirani aniq ajratishi va bo'shatishi kerak. Rust uchinchi yondashuvdan foydalanadi: xotira kompilyator tekshiradigan qoidalar to'plamiga ownership tizimi orqali boshqariladi. Agar biron bir qoidalar buzilgan bo'lsa, dastur kompilatsiya qilinmaydi. Ownership xususiyatlarining hech biri dasturingiz ishlayotgan vaqtda sekinlashtirmaydi.
+*Ownership* is a set of rules that govern how a Rust program manages memory. All programs have to manage the way they use a computer’s memory while running. Some languages have garbage collection that regularly looks for no-longer-used memory as the program runs; in other languages, the programmer must explicitly allocate and free the memory. Rust uses a third approach: memory is managed through a system of ownership with a set of rules that the compiler checks. If any of the rules are violated, the program won’t compile. None of the features of ownership will slow down your program while it’s running.
 
-Ownership ko'plab dasturchilar uchun yangi tushuncha bo'lganligi sababli, unga ko'nikish uchun biroz vaqt kerak bo'ladi. Yaxshi xabar shundaki, siz Rust va ownership tizimi qoidalari bilan qanchalik tajribali bo'lsangiz, xavfsiz va samarali kodni tabiiy ravishda ishlab chiqish osonroq bo'ladi. Unda davom etamiz!
+Because ownership is a new concept for many programmers, it does take some time to get used to. The good news is that the more experienced you become with Rust and the rules of the ownership system, the easier you’ll find it to naturally develop code that is safe and efficient. Keep at it!
 
-Ownershipni tushunganingizda, Rustni noyob qiladigan xususiyatlarni tushunish uchun mustahkam asosga ega bo'lasiz. Ushbu bobda, siz juda keng tarqalgan ma'lumotlar tuzilishiga qaratilgan ba'zi misollarni orqali  ownershipni ishlashini o'rganasiz: string.
+When you understand ownership, you’ll have a solid foundation for understanding the features that make Rust unique. In this chapter, you’ll learn ownership by working through some examples that focus on a very common data structure: strings.
 
 > ### Stack va Heap
->
-> Ko'pgina dasturlash tillari stek va heap haqida tez-tez o'ylashingizni talab qilmaydi.
-> Ammo Rust kabi tizim dasturlash tilida qiymat stekda yoki heapda bo'ladimi,
-> til o'zini qanday tutishiga ta'sir qiladi va nima uchun siz ma'lum qarorlar
-> qabul qilishingiz kerak. Ownershipning qismlari stek va heapga nisbatan keyinchalik
-> ushbu bobda tasvirlanadi, shuning uchun bu yerda tayyorgarlik jarayonida qisqacha 
-> tushuntirish berilgan.
->
-> Stack ham, heap ham runtimeda foydalanish uchun kodingiz uchun mavjud bo'lgan 
-> xotira qismlaridir, lekin ular turli yo'llar bilan tuzilgan. Stack qiymatlarni
-> ularni olgan tartibda saqlaydi va qiymatlarni teskari tartibda o'chiradi
-> Bu *oxirgi kelgan, birinchi chiqqan* deb ataladi. Plitalar stackini o'ylab
-> ko'ring: ko'proq plastinka qo'shsangiz, ularni qoziqning ustiga qo'yasiz va plastinka
-> kerak bo'lganda, siz yuqoridan birini olib qo'yasiz. Plitalarni o'rtadan yoki pastdan
-> qo'shish yoki olib tashlash ham ishlamaydi! Ma'lumotlarni qo'shish *stekga qo'shish*,
-> ma'lumotlarni olib tashlash esa *stekdan o'chirish* deb ataladi. Stackda saqlangan
-> barcha ma'lumotlar ma'lum, qat'iy belgilangan hajmga ega bo'lishi kerak. Kompilyatsiya vaqtida
-> noma'lum o'lchamli yoki o'zgarishi mumkin bo'lgan o'lchamdagi ma'lumotlar esa heapda
-> saqlanishi kerak.
->
-> heap kamroq tartibga solingan: ma'lumotlarni heapga qo'yganingizda, ma'lum miqdorda
-> bo'sh joy talab qilasiz. Xotira ajratuvchisi heapda etarlicha katta bo'lgan bo'sh joyni
-> topadi, uni ishlatilayotgan deb belgilaydi va o'sha joyning manzili bo'lgan
-> *pointerni* ni qaytaradi. Bu jarayon *heap allocating* deb ataladi va ba'zan
-> faqat *allocating* deb qisqartiriladi (qiymatlarni stekga qo'shish ajratish
-> hisoblanmaydi). Heapga pointer ma'lum, qat'iy o'lcham bo'lgani uchun siz
-> pointerni stekda saqlashingiz mumkin, lekin yaroqli ma'lumotlarni
-> olishni istasangiz, pointergaga amal qilishingiz kerak. Restoranda o'tirganingizni
-> o'ylab ko'ring. Kirish paytida siz guruhingizdagi odamlar sonini bildirasiz
-> va uy egasi hammaga mos keladigan bo'sh stol topadi va sizni u yerga olib boradi.
-> Agar guruhingizdagi kimdir kechikib kelsa, sizni topish uchun qayerda o'tirganingizni
-> so'rashi mumkin.
->
-> Stekga qo'shish heapda allocating qilishdan tezroq bo'ladi, chunki allacator hech
-> qachon yangi ma'lumotlarni saqlash uchun joy izlamasligi kerak; bu joy har doim
-> stackning yuqori qismida joylashgan. Nisbatan, heapda bo'sh joy ajratish ko'proq
-> mehnat talab qiladi, chunki allacator avval ma'lumotlarni saqlash uchun yetarlicha
-> katta joy topishi va keyingi allocatinga tayyorgarlik ko'rish uchun buxgalteriya
-> hisobini amalga oshirishi kerak.
->
-> Heapdagi ma'lumotlarga kirish stekdagi ma'lumotlarga kirishdan ko'ra sekinroq, chunki u yerga 
-> borish uchun pointerga amal qilishingiz kerak. Zamonaviy protsessorlar xotirada
-> kamroq o'tishsa, tezroq ishlaydi. O'xshashlikni davom ettirib, ko'plab jadvallardan
-> buyurtmalarni qabul qiladigan restoran serverini ko'rib chiqing. Keyingi stolga o'tishdan oldin
-> barcha buyurtmalarni bitta stolda olish eng samarali hisoblanadi. A jadvalidan
-> buyurtma olish, keyin B jadvalidan buyurtma olish, keyin yana A dan va yana B dan bitta
-> buyurtma olish ancha sekinroq jarayon bo'ladi. Xuddi shu qoidaga ko'ra,
-> protsessor uzoqroqda emas (u heapda bo'lishi mumkin) emas, balki boshqa
-> ma'lumotlarga yaqin (stekdagi kabi) ma'lumotlarda ishlasa, o'z ishini yaxshiroq
-> bajarishi mumkin.
->
-> Sizning kodingiz funksiyani chaqirganda, funksiyaga o'tgan qiymatlar (shu jumladan, potentsial,
-> heapdagi ma'lumotlarga pointerlar) va funksiyaning mahalliy o'zgaruvchilari
-> stekga qo'shiladi. Funktsiya tugagach, bu qiymatlar stekdan chiqariladi.
->
-> Kodning qaysi qismlari heapda qaysi ma'lumotlardan foydalanayotganini kuzatib borish,
-> heapdagi takroriy ma'lumotlar miqdorini minimallashtirish va bo'sh joy qolmasligi uchun
-> heapdagi foydalanilmagan ma'lumotlarni tozalash - bularning barchasi ownership hal qiladigan 
-> muammolardir. Ownershipni tushunganingizdan so'ng, stek va heap haqida tez-tez
-> o'ylashingiz shart emas, lekin ownership qilishning asosiy maqsadi heap
-> ma'lumotlarni boshqarish ekanligini bilish uning nima uchun shunday ishlashini
-> tushuntirishga yordam beradi.
+> 
+> Many programming languages don’t require you to think about the stack and the heap very often. But in a systems programming language like Rust, whether a value is on the stack or the heap affects how the language behaves and why you have to make certain decisions. Parts of ownership will be described in relation to the stack and the heap later in this chapter, so here is a brief explanation in preparation.
+> 
+> Both the stack and the heap are parts of memory available to your code to use at runtime, but they are structured in different ways. The stack stores values in the order it gets them and removes the values in the opposite order. This is referred to as *last in, first out*. Think of a stack of plates: when you add more plates, you put them on top of the pile, and when you need a plate, you take one off the top. Adding or removing plates from the middle or bottom wouldn’t work as well! Adding data is called *pushing onto the stack*, and removing data is called *popping off the stack*. All data stored on the stack must have a known, fixed size. Data with an unknown size at compile time or a size that might change must be stored on the heap instead.
+> 
+> The heap is less organized: when you put data on the heap, you request a certain amount of space. The memory allocator finds an empty spot in the heap that is big enough, marks it as being in use, and returns a *pointer*, which is the address of that location. This process is called *allocating on the heap* and is sometimes abbreviated as just *allocating* (pushing values onto the stack is not considered allocating). Because the pointer to the heap is a known, fixed size, you can store the pointer on the stack, but when you want the actual data, you must follow the pointer. Think of being seated at a restaurant. When you enter, you state the number of people in your group, and the host finds an empty table that fits everyone and leads you there. If someone in your group comes late, they can ask where you’ve been seated to find you.
+> 
+> Pushing to the stack is faster than allocating on the heap because the allocator never has to search for a place to store new data; that location is always at the top of the stack. Comparatively, allocating space on the heap requires more work because the allocator must first find a big enough space to hold the data and then perform bookkeeping to prepare for the next allocation.
+> 
+> Accessing data in the heap is slower than accessing data on the stack because you have to follow a pointer to get there. Contemporary processors are faster if they jump around less in memory. Continuing the analogy, consider a server at a restaurant taking orders from many tables. It’s most efficient to get all the orders at one table before moving on to the next table. Taking an order from table A, then an order from table B, then one from A again, and then one from B again would be a much slower process. By the same token, a processor can do its job better if it works on data that’s close to other data (as it is on the stack) rather than farther away (as it can be on the heap).
+> 
+> When your code calls a function, the values passed into the function (including, potentially, pointers to data on the heap) and the function’s local variables get pushed onto the stack. When the function is over, those values get popped off the stack.
+> 
+> Keeping track of what parts of code are using what data on the heap, minimizing the amount of duplicate data on the heap, and cleaning up unused data on the heap so you don’t run out of space are all problems that ownership addresses. Once you understand ownership, you won’t need to think about the stack and the heap very often, but knowing that the main purpose of ownership is to manage heap data can help explain why it works the way it does.
 
 ### Ownership qoidalari
 
-Birinchidan, ownership qoidalarini ko'rib chiqaylik.Biz ularni ko'rsatadigan misollar bilan ishlashda ushbu qoidalarni yodda tuting:
+First, let’s take a look at the ownership rules. Keep these rules in mind as we work through the examples that illustrate them:
 
 * Rust-dagi har bir qiymat *owner*ga ega.
 * Bir vaqtning o'zida faqat bitta owneri bo'lishi mumkin.
@@ -82,19 +32,20 @@ Birinchidan, ownership qoidalarini ko'rib chiqaylik.Biz ularni ko'rsatadigan mis
 
 ### O'zgaruvchan Scope
 
-Endi biz Rustning asosiy sintaksisidan o‘tganimiz uchun, biz barcha `fn main() {` kodini misollarga kiritmaymiz, shuning uchun agar kuzatib boradigan bo‘lsangiz, quyidagi misollarni `main` funksiyasiga qo‘lda kiritganingizga ishonch hosil qiling. Natijada, bizning misollarimiz biroz ixchamroq bo'ladi, bu bizga qozon kodiga emas, balki haqiqiy tafsilotlarga e'tibor berishga imkon beradi.
+Now that we’re past basic Rust syntax, we won’t include all the `fn main() {` code in examples, so if you’re following along, make sure to put the following examples inside a `main` function manually. As a result, our examples will be a bit more concise, letting us focus on the actual details rather than boilerplate code.
 
-Ownershipning birinchi misoli sifatida biz ba'zi o'zgaruvchilarning *scope*ni ko'rib chiqamiz. Scope - dastur doirasidagi element amal qiladigan diapazon. Quyidagi o'zgaruvchini oling:
+As a first example of ownership, we’ll look at the *scope* of some variables. A scope is the range within a program for which an item is valid. Take the following variable:
 
 ```rust
 let s = "salom";
 ```
 
-`s` o'zgaruvchisi satr literaliga ishora qiladi, bu yerda satr qiymati dasturimiz matniga qattiq kodlangan. O'zgaruvchi e'lon qilingan paytdan boshlab joriy *scopning* oxirigacha amal qiladi. 4-1 ro'yxatida `s` o'zgaruvchisi qayerda to'g'ri bo'lishini izohlovchi izohlar bilan dastur ko'rsatilgan.
+The variable `s` refers to a string literal, where the value of the string is hardcoded into the text of our program. The variable is valid from the point at which it’s declared until the end of the current *scope*. Listing 4-1 shows a program with comments annotating where the variable `s` would be valid.
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-01/src/main.rs:here}}
 ```
+
 
 <span class="caption">Ro'yxat 4-1: O'zgaruvchi va uning amal qiladigan doirasi</span>
 
@@ -103,24 +54,21 @@ Boshqacha qilib aytganda, bu yerda ikkita muhim nuqta bor:
 * Qachonki `s` *scopega* kirsa, u amal qiladi.
 * U scopedan tashqariga *chiqmaguncha* amal qiladi.
 
-Ushbu nuqtada, scopelar va o'zgaruvchilarning yaroqliligi o'rtasidagi munosabatlar boshqa dasturlash tillaridagiga o'xshaydi. Endi biz `String` turini joriy qilish orqali ushbu tushunchaga asoslanamiz.
+At this point, the relationship between scopes and when variables are valid is similar to that in other programming languages. Now we’ll build on top of this understanding by introducing the `String` type.
 
 ### `String` turi
 
-Ownership qoidalarini tasvirlash uchun bizga 3-bobning [”Ma'lumotlar turlari”][data-types]<!-- ignore -->
-bo'limida ko'rib chiqilganlarga qaraganda murakkabroq ma'lumotlar turi kerak. Oldin ko'rib chiqilgan turlar ma'lum o'lchamga ega bo'lib, ular stekda saqlanishi va qo'llanilish doirasi tugagach, stekdan o'chirilishi mumkin va agar kodning boshqa qismi foydalanishi kerak bo'lsa yangi, mustaqil misol yaratish uchun tez va ahamiyatsiz nusxa ko'chirilishi mumkin kodning boshqa qismi bir xil qiymatni boshqa doirada ishlatishi kerak. Ammo biz heapda saqlangan ma'lumotlarni ko'rib chiqmoqchimiz va Rust bu ma'lumotlarni qachon tozalashni bilishini o'rganmoqchimiz va `String` turi ajoyib misoldir.
+To illustrate the rules of ownership, we need a data type that is more complex than those we covered in the [“Data Types”][data-types]<!-- ignore --> section of Chapter 3. The types covered previously are of a known size, can be stored on the stack and popped off the stack when their scope is over, and can be quickly and trivially copied to make a new, independent instance if another part of code needs to use the same value in a different scope. But we want to look at data that is stored on the heap and explore how Rust knows when to clean up that data, and the `String` type is a great example.
 
-Biz `String` ning ownership bilan bog'liq qismlariga e'tibor qaratamiz. Ushbu jihatlar standart kutubxona tomonidan taqdim etilganmi yoki siz yaratganmi, boshqa murakkab ma'lumotlar turlariga ham tegishli.
-Biz [8-bobda][ch8]<!-- ignore --> `String`ni chuqurroq muhokama qilamiz.
+We’ll concentrate on the parts of `String` that relate to ownership. These aspects also apply to other complex data types, whether they are provided by the standard library or created by you. We’ll discuss `String` in more depth in [Chapter 8][ch8]<!-- ignore -->.
 
-Biz allaqachon string literallarini ko'rdik, bu erda string qiymati bizning dasturimizga qattiq kodlangan. String literallari qulay, ammo ular biz matndan foydalanmoqchi bo'lgan har qanday vaziyatga mos kelmaydi. Buning sabablaridan biri shundaki, ular o'zgarmasdir. Yana bir narsa shundaki, biz kodni yozganimizda har bir satr qiymatini bilish mumkin emas: masalan, agar biz foydalanuvchi ma'lumotlarini olib, uni saqlamoqchi bo'lsak-chi? Bunday holatlar uchun Rust ikkinchi string turiga ega, `String`. Bu tur heapda ajratilgan ma'lumotlarni boshqaradi va shuning uchun kompilyatsiya vaqtida bizga noma'lum bo'lgan matn miqdorini saqlashi mumkin. Siz `from` funksiyasidan foydalanib satr literalidan `String` yaratishingiz mumkin, masalan:
+We’ve already seen string literals, where a string value is hardcoded into our program. String literals are convenient, but they aren’t suitable for every situation in which we may want to use text. One reason is that they’re immutable. Another is that not every string value can be known when we write our code: for example, what if we want to take user input and store it? For these situations, Rust has a second string type, `String`. This type manages data allocated on the heap and as such is able to store an amount of text that is unknown to us at compile time. You can create a `String` from a string literal using the `from` function, like so:
 
 ```rust
 let s = String::from("salom");
 ```
 
-Ikki nuqtali `::` operatori bizga `string_from` kabi qandaydir nomdan foydalanish o'rniga `String` turi ostida ushbu `from` funksiyasini nom maydoniga qo`yish imkonini beradi.
-Biz ushbu sintaksisni 5-bobning [”Mehod sintaksisi”][method-syntax]<!-- ignore --> bo'limida ko'proq muhokama qilamiz va 7-bobdagi [”Modul treedagi elementga murojaat qilish yo'llari”][paths-module-tree]<!-- ignore --> da modullar bilan nomlar oralig'i haqida gapiramiz.
+The double colon `::` operator allows us to namespace this particular `from` function under the `String` type rather than using some sort of name like `string_from`. We’ll discuss this syntax more in the [“Method Syntax”][method-syntax]<!-- ignore --> section of Chapter 5, and when we talk about namespacing with modules in [“Paths for Referring to an Item in the Module Tree”][paths-module-tree]<!-- ignore --> in Chapter 7.
 
 Ushbu turdagi *string* mutatsiyaga uchragan bo'lishi mumkin:
 
@@ -128,51 +76,48 @@ Ushbu turdagi *string* mutatsiyaga uchragan bo'lishi mumkin:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-01-can-mutate-string/src/main.rs:here}}
 ```
 
-Xo'sh, bu erda qanday farq bor? Nima uchun `String` ni mutatsiyaga solish mumkin, lekin harflarni o'zgartirish mumkin emas? Farqi bu ikki turning xotira bilan qanday munosabatda bo'lishida.
+So, what’s the difference here? Why can `String` be mutated but literals cannot? The difference is in how these two types deal with memory.
 
 ### Xotira va Taqsimlash
 
-String literalida biz kompilyatsiya vaqtida tarkibni bilamiz, shuning uchun matn to'g'ridan-to'g'ri yakuniy bajariladigan faylga qattiq kodlangan.Shuning uchun string literallari tez va samarali. Ammo bu xususiyatlar faqat satr literalining o'zgarmasligidan kelib chiqadi. Afsuski, kompilyatsiya vaqtida hajmi noma'lum bo'lgan va dasturni ishga tushirishda hajmi o'zgarishi mumkin bo'lgan har bir matn bo'lagi uchun biz binary faylga bir bo'lak xotira qo'ya olmaymiz.
+In the case of a string literal, we know the contents at compile time, so the text is hardcoded directly into the final executable. This is why string literals are fast and efficient. But these properties only come from the string literal’s immutability. Unfortunately, we can’t put a blob of memory into the binary for each piece of text whose size is unknown at compile time and whose size might change while running the program.
 
-`String` turida o'zgaruvchan, o'sib boradigan matn qismini qo'llab-quvvatlash uchun tarkibni saqlash uchun kompilyatsiya vaqtida noma'lum bo'lgan xotira hajmini yig'ishda ajratishimiz kerak. Buning ma'nosi:
+With the `String` type, in order to support a mutable, growable piece of text, we need to allocate an amount of memory on the heap, unknown at compile time, to hold the contents. This means:
 
 * Xotira runtimeda xotira allactoridan so'ralishi kerak.
 * `String` bilan ishlashni tugatgandan so'ng, bizga ushbu xotirani allacatoriga qaytarish usuli kerak.
 
-Bu birinchi qism biz tomonimizdan amalga oshiriladi: biz `String::from` deb chaqirganimizda, uni implementi kerakli xotirani talab qiladi. Bu dasturlash tillarida deyarli universaldir.
+That first part is done by us: when we call `String::from`, its implementation requests the memory it needs. This is pretty much universal in programming languages.
 
-Biroq, ikkinchi qism boshqacha. *Garbage Collector (GC)* bo'lgan tillarda GC endi ishlatilmayotgan xotirani kuzatib boradi va tozalaydi va bu haqda o'ylashimiz shart emas. Ko'pgina tillarda GC bo'lmaganda, xotiradan qachon foydalanilmayotganini aniqlash va uni aniq bo'shatish uchun kodni chaqirish, xuddi biz so'raganimizdek, bizning burchimizdir. Buni to'g'ri bajarish tarixan qiyin dasturlash muammosi bo'lgan. Agar unutsak, xotirani behuda sarflaymiz. Agar biz buni juda erta qilsak, bizda noto'g'ri o'zgaruvchi bo'ladi. Agar buni ikki marta qilsak, bu ham xato. Aynan bitta `allocate`ni bitta `bo'sh` bilan birlashtirishimiz kerak.
+However, the second part is different. In languages with a *garbage collector (GC)*, the GC keeps track of and cleans up memory that isn’t being used anymore, and we don’t need to think about it. In most languages without a GC, it’s our responsibility to identify when memory is no longer being used and to call code to explicitly free it, just as we did to request it. Doing this correctly has historically been a difficult programming problem. If we forget, we’ll waste memory. If we do it too early, we’ll have an invalid variable. If we do it twice, that’s a bug too. We need to pair exactly one `allocate` with exactly one `free`.
 
-Rust boshqa yo'lni egallaydi: unga ega bo'lgan o'zgaruvchi amaldan tashqariga chiqqandan so'ng xotira avtomatik ravishda qaytariladi. Bu yerda 4-1 roʻyxatdagi misolimiz satr harfi oʻrniga `String` yordamida berilgan:
+Rust takes a different path: the memory is automatically returned once the variable that owns it goes out of scope. Here’s a version of our scope example from Listing 4-1 using a `String` instead of a string literal:
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-02-string-scope/src/main.rs:here}}
 ```
 
-Biz `String` kerak bo'lgan xotirani ajratuvchiga qaytarishimiz mumkin bo'lgan tabiiy nuqta bor: `s` scopedan chiqib ketganda. O'zgaruvchi scopedan chiqib ketganda, Rust biz uchun maxsus funksiyani chaqiradi.Ushbu funktsiya [`drop`][drop]<!-- ignore --> deb ataladi va u erda `String` muallifi xotirani qaytarish uchun kodni qo'yishi mumkin. Rust yopilgan jingalak qavsda avtomatik ravishda `drop` ni chaqiradi.
+There is a natural point at which we can return the memory our `String` needs to the allocator: when `s` goes out of scope. When a variable goes out of scope, Rust calls a special function for us. This function is called [`drop`][drop]<!-- ignore -->, and it’s where the author of `String` can put the code to return the memory. Rust calls `drop` automatically at the closing curly bracket.
 
-> Eslatma: C++ da, elementning ishlash muddati oxirida resurslarni taqsimlashning bunday sxemasi ba'zan
-> *Resource Acquisition Is Initialization (RAII)*(Resurslarni yig'ish - ishga tushirish (RAII) deb ataladi.
-> Agar siz RAII patternlaridan foydalangan bo'lsangiz, Rust-dagi `drop`
-> funksiyasi sizga tanish bo'ladi.
+> Note: In C++, this pattern of deallocating resources at the end of an item’s lifetime is sometimes called *Resource Acquisition Is Initialization (RAII)*. The `drop` function in Rust will be familiar to you if you’ve used RAII patterns.
 
-Ushbu pattern Rust kodini yozish usuliga chuqur ta'sir qiladi. Bu hozir oddiy bo'lib tuyulishi mumkin, ammo biz bir nechta o'zgaruvchilar biz yig'ilgan ma'lumotlardan foydalanishni xohlayotganimizda, murakkabroq holatlarda kodning harakati kutilmagan bo'lishi mumkin. Keling, ushbu vaziyatlarning ba'zilarini ko'rib chiqaylik.
+This pattern has a profound impact on the way Rust code is written. It may seem simple right now, but the behavior of code can be unexpected in more complicated situations when we want to have multiple variables use the data we’ve allocated on the heap. Let’s explore some of those situations now.
 
 <!-- Old heading. Do not remove or links may break. -->
 <a id="ways-variables-and-data-interact-move"></a>
 
 #### Move bilan o'zaro ta'sir qiluvchi o'zgaruvchilar va ma'lumotlar
 
-Rustda bir nechta o'zgaruvchilar bir xil ma'lumotlar bilan turli yo'llar bilan o'zaro ta'sir qilishi mumkin.
-4-2 ro'yxatda integer sondan foydalanish misolini ko'rib chiqaylik.
+Multiple variables can interact with the same data in different ways in Rust. Let’s look at an example using an integer in Listing 4-2.
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-02/src/main.rs:here}}
 ```
 
+
 <span class="caption">4-2 roʻyxat: `x` oʻzgaruvchisining butun qiymatini `y` ga belgilash</span>
 
-Bu nima qilayotganini taxmin qilishimiz mumkin: `5` qiymatini `x` ga bog‘lang; keyin `x` dagi qiymatdan nusxa oling va uni `y` ga bog'lang. Endi bizda ikkita o'zgaruvchi bor, `x` va `y` va ikkalasi ham `5` ga teng. Bu haqiqatan ham sodir bo'lmoqda, chunki butun sonlar ma'lum, qat'iy o'lchamga ega oddiy qiymatlardir va bu ikkita `5` qiymat stekga qo'shiladi.
+We can probably guess what this is doing: “bind the value `5` to `x`; then make a copy of the value in `x` and bind it to `y`.” We now have two variables, `x` and `y`, and both equal `5`. This is indeed what is happening, because integers are simple values with a known, fixed size, and these two `5` values are pushed onto the stack.
 
 Endi `String` versiyasini ko'rib chiqamiz:
 
@@ -180,10 +125,9 @@ Endi `String` versiyasini ko'rib chiqamiz:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-03-string-move/src/main.rs:here}}
 ```
 
-Bu juda o'xshash ko'rinadi, shuning uchun biz uning ishlash metodi bir xil bo'ladi deb taxmin qilishimiz mumkin: ya'ni ikkinchi qator `s1` qiymatining nusxasini yaratadi va uni `s2` bilan bog'laydi. Ammo bu sodir bo'ladigan narsa emas.
+This looks very similar, so we might assume that the way it works would be the same: that is, the second line would make a copy of the value in `s1` and bind it to `s2`. But this isn’t quite what happens.
 
-Qopqoq ostidagi `String` bilan nima sodir bo'layotganini ko'rish uchun 4-1-rasmga qarang. `String` chap tomonda ko'rsatilgan uchta qismdan iborat: satr tarkibini saqlaydigan xotiraga ko'rsatgich, uzunlik(len) va sig'im(capacity).
-Ushbu ma'lumotlar guruhi stekda saqlanadi. O'ng tomonda tarkibni saqlaydigan heap xotira joylashgan.
+Take a look at Figure 4-1 to see what is happening to `String` under the covers. A `String` is made up of three parts, shown on the left: a pointer to the memory that holds the contents of the string, a length, and a capacity. This group of data is stored on the stack. On the right is the memory on the heap that holds the contents.
 
 <img alt="Two tables: the first table contains the representation of s1 on the
 stack, consisting of its length (5), capacity (5), and a pointer to the first
@@ -193,9 +137,9 @@ style="width: 50%;" />
 
 <span class="caption">4-1-rasm: `s1` ga bog‘langan `salom` qiymatiga ega `String` xotirasidagi tasvir</span>
 
-Uzunlik - `String` mazmuni hozirda qancha xotira, baytlarda foydalanayotganligi. Sig'im(capacity) - bu `String` allacatordan olgan xotiraning umumiy hajmi, baytlarda. Uzunlik va si'gimlar o'rtasidagi farq muhim, ammo bu kontekstda emas, shuning uchun hozircha si'gimlarni e'tiborsiz qoldirish yaxshi.
+The length is how much memory, in bytes, the contents of the `String` are currently using. The capacity is the total amount of memory, in bytes, that the `String` has received from the allocator. The difference between length and capacity matters, but not in this context, so for now, it’s fine to ignore the capacity.
 
-`s1` ni `s2` ga belgilaganimizda, `String` ma'lumotlari nusxalanadi, ya'ni biz stekdagi pointer, uzunlik va sig`imdan nusxa olamiz. Biz pointer(ko'rsatkich) ko'rsatgan to'plamdagi ma'lumotlarni ko'chirmaymiz. Boshqacha qilib aytganda, ma'lumotlarning xotirada ko'rinishi 4-2-rasmga o'xshaydi.
+When we assign `s1` to `s2`, the `String` data is copied, meaning we copy the pointer, the length, and the capacity that are on the stack. We do not copy the data on the heap that the pointer refers to. In other words, the data representation in memory looks like Figure 4-2.
 
 <img alt="Three tables: tables s1 and s2 representing those strings on the
 stack, respectively, and both pointing to the same string data on the heap."
@@ -203,7 +147,7 @@ src="img/trpl04-02.svg" class="center" style="width: 50%;" />
 
 <span class="caption">4-2-rasm: `s1` pointeri, uzunligi va sigʻimi nusxasiga ega `s2` oʻzgaruvchisi xotirasida koʻrsatilishi</span>
 
-Tasvir 4-3-rasmga *o'xshamaydi*, agar Rust o'rniga heap ma'lumotlarni ko'chirsa, xotira qanday ko'rinishga ega bo'lardi. Agar Rust buni amalga oshirgan bo'lsa, `s2 = s1` operatsiyasi, agar heapdagi ma'lumotlar katta bo'lsa, runtimening ishlashi nuqtai nazaridan juda qimmat bo'lishi mumkin.
+The representation does *not* look like Figure 4-3, which is what memory would look like if Rust instead copied the heap data as well. If Rust did this, the operation `s2 = s1` could be very expensive in terms of runtime performance if the data on the heap were large.
 
 <img alt="Four tables: two tables representing the stack data for s1 and s2,
 and each points to its own copy of string data on the heap."
@@ -211,9 +155,9 @@ src="img/trpl04-03.svg" class="center" style="width: 50%;" />
 
 <span class="caption">4-3-rasm: Rust heap ma'lumotlarni ham nusxalagan bo'lsa, `s2 = s1` nima qilishi mumkin bo'lgan yana bir imkoniyat</span>
 
-Avvalroq biz aytgan edikki, o‘zgaruvchi qo‘llanish doirasidan chiqib ketganda, Rust avtomatik ravishda `drop` funksiyasini chaqiradi va bu o‘zgaruvchi uchun heap xotirani tozalaydi. Ammo 4-2-rasmda ikkala ma'lumot pointeri bir xil joyga ishora qiladi. Bu muammo: `s2` va `s1` scopedan chiqib ketganda, ikkalasi ham bir xil xotirani bo'shatishga harakat qiladi. Bu *double free*(ikki marta bo'sh)xato sifatida tanilgan va biz avval aytib o'tgan xotira xavfsizligi xatolaridan biridir. Xotirani ikki marta bo'shatish xotira buzilishiga olib kelishi mumkin, bu esa xavfsizlik zaifliklariga olib kelishi mumkin.
+Earlier, we said that when a variable goes out of scope, Rust automatically calls the `drop` function and cleans up the heap memory for that variable. But Figure 4-2 shows both data pointers pointing to the same location. This is a problem: when `s2` and `s1` go out of scope, they will both try to free the same memory. This is known as a *double free* error and is one of the memory safety bugs we mentioned previously. Freeing memory twice can lead to memory corruption, which can potentially lead to security vulnerabilities.
 
-Xotira xavfsizligini ta'minlash uchun `let s2 = s1;` qatoridan keyin Rust `s1` ni endi yaroqsiz deb hisoblaydi. Shuning uchun, `s1` qo'llanilgandan tashqariga chiqqanda Rust hech narsani bo'shatishi shart emas. `s2` yaratilgandan keyin `s1` dan foydalanmoqchi bo'lganingizda nima sodir bo`lishini tekshiring; u ishlamaydi:
+To ensure memory safety, after the line `let s2 = s1;`, Rust considers `s1` as no longer valid. Therefore, Rust doesn’t need to free anything when `s1` goes out of scope. Check out what happens when you try to use `s1` after `s2` is created; it won’t work:
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-04-cant-use-after-move/src/main.rs:here}}
@@ -225,7 +169,7 @@ Siz shunday xatoga yo'l qo'yasiz, chunki Rust bekor qilingan havoladan foydalani
 {{#include ../listings/ch04-understanding-ownership/no-listing-04-cant-use-after-move/output.txt}}
 ```
 
-Agar siz boshqa tillar bilan ishlashda *shallow copy* va *deep copy* so‘zlarini eshitgan bo‘lsangiz, pointerni nusxalash tushunchasi, ma'lumotlardan nusxa ko'chirmasdan uzunligi va sig'imi olish, ehtimol shallow copy kabi eshitiladi. Ammo Rust birinchi o'zgaruvchini ham bekor qilganligi sababli, shallow copy deb nomlanish o'rniga u *move*(ko'chirish) deb nomlanadi. Bu misolda `s1` `s2` ga *ko'chirilgan* deb aytamiz. Shunday qilib, aslida nima sodir bo'lishi 4-4-rasmda ko'rsatilgan.
+If you’ve heard the terms *shallow copy* and *deep copy* while working with other languages, the concept of copying the pointer, length, and capacity without copying the data probably sounds like making a shallow copy. But because Rust also invalidates the first variable, instead of being called a shallow copy, it’s known as a *move*. In this example, we would say that `s1` was *moved* into `s2`. So, what actually happens is shown in Figure 4-4.
 
 <img alt="Three tables: tables s1 and s2 representing those strings on the
 stack, respectively, and both pointing to the same string data on the heap.
@@ -235,16 +179,16 @@ access the heap data." src="img/trpl04-04.svg" class="center" style="width:
 
 <span class="caption">4-4-rasm: `s1` dan keyin xotiradagi ko`rinish bekor qilingan</span>
 
-Bu bizning muammomizni hal qiladi! Faqatgina `s2` amal qilganda, u scopedan tashqariga chiqsa, u faqat xotirani bo'shatadi va biz tugatdik.
+That solves our problem! With only `s2` valid, when it goes out of scope it alone will free the memory, and we’re done.
 
-Bundan tashqari, dizayn tanlovi ham mavjud: Rust hech qachon avtomatik ravishda ma'lumotlaringizning "deep copyni" yaratmaydi. Shuning uchun, har qanday *avtomatik* nusxa ko'chirish runtimening ishlashi nuqtai nazaridan arzon deb taxmin qilish mumkin.
+In addition, there’s a design choice that’s implied by this: Rust will never automatically create “deep” copies of your data. Therefore, any *automatic* copying can be assumed to be inexpensive in terms of runtime performance.
 
 <!-- Old heading. Do not remove or links may break. -->
 <a id="ways-variables-and-data-interact-clone"></a>
 
 #### Clone bilan o'zaro ta'sir qiluvchi o'zgaruvchilar va ma'lumotlar
 
-Agar biz faqat stack ma'lumotlarini emas, balki `String` ning heap ma'lumotlarini deeply copyni istasak, `clone` deb nomlangan umumiy metoddan foydalanishimiz mumkin. Metod sintaksisini 5-bobda muhokama qilamiz, lekin metodlar ko‘p dasturlash tillarida umumiy xususiyat bo‘lgani uchun siz ularni avval ko‘rgan bo‘lsangiz kerak.
+If we *do* want to deeply copy the heap data of the `String`, not just the stack data, we can use a common method called `clone`. We’ll discuss method syntax in Chapter 5, but because methods are a common feature in many programming languages, you’ve probably seen them before.
 
 Mana amaldagi `clone` metodiga misol:
 
@@ -254,11 +198,11 @@ Mana amaldagi `clone` metodiga misol:
 
 Bu juda yaxshi ishlaydi va 4-3-rasmda ko'rsatilgan xatti-harakatni aniq ishlab chiqaradi, bu erda heap ma'lumotlar nusxalanadi.
 
-`clone` ga murojatni ko'rsangiz, ba'zi bir ixtiyoriy kod bajarilayotganini va bu kod qimmat bo'lishi mumkinligini bilasiz. Bu boshqa narsa sodir bo'layotganining vizual ko'rsatkichidir.
+When you see a call to `clone`, you know that some arbitrary code is being executed and that code may be expensive. It’s a visual indicator that something different is going on.
 
 #### Faqat stack ma'lumotlari: nusxalash
 
-Biz hali gapirmagan yana bir narsa bor. Integer sonlardan foydalanadigan ushbu kod - bir qismi 4-2 ro'yxatda ko'rsatilgan - ishlaydi va amal qiladi:
+There’s another wrinkle we haven’t talked about yet. This code using integers—part of which was shown in Listing 4-2—works and is valid:
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-06-copy/src/main.rs:here}}
@@ -266,23 +210,23 @@ Biz hali gapirmagan yana bir narsa bor. Integer sonlardan foydalanadigan ushbu k
 
 Ammo bu kod biz bilib olgan narsaga zid ko'rinadi: bizda `clone` uchun murojat yo'q, lekin `x` hali ham amal qiladi va `y` ga o'tkazilmagan.
 
-Sababi, kompilyatsiya vaqtida ma'lum o'lchamga ega bo'lgan integer sonlar kabi turlar to'liq stekda saqlanadi, shuning uchun haqiqiy qiymatlarning nusxalari tezda tayyorlanadi. Bu shuni anglatadiki, biz `y` o'zgaruvchisini yaratganimizdan keyin `x` ning haqiqiy bo'lishiga to'sqinlik qilish uchun hech qanday sabab yo'q. Boshqacha qilib aytadigan bo'lsak, bu erda deep va shallow nusxa ko'chirish o'rtasida farq yo'q, shuning uchun `clone` ni chaqirish odatdagi shallow copydan farq qilmaydi va biz uni tark etishimiz mumkin.
+The reason is that types such as integers that have a known size at compile time are stored entirely on the stack, so copies of the actual values are quick to make. That means there’s no reason we would want to prevent `x` from being valid after we create the variable `y`. In other words, there’s no difference between deep and shallow copying here, so calling `clone` wouldn’t do anything different from the usual shallow copying, and we can leave it out.
 
-Rust `Copy` traiti deb nomlangan maxsus izohga ega bo'lib, uni butun sonlar kabi stekda saqlanadigan turlarga joylashtirishimiz mumkin (biz [10-bobda][traits]<!-- ignore --> traitlar haqida ko'proq gaplashamiz). Agar tur  `Copy` traitini amalga oshirsa, undan foydalanadigan o‘zgaruvchilar harakatlanmaydi, aksincha, ahamiyatsiz tarzda ko‘chiriladi, bu esa boshqa o‘zgaruvchiga tayinlangandan keyin ham amal qiladi.
+Rust has a special annotation called the `Copy` trait that we can place on types that are stored on the stack, as integers are (we’ll talk more about traits in [Chapter 10][traits]<!-- ignore -->). If a type implements the `Copy` trait, variables that use it do not move, but rather are trivially copied, making them still valid after assignment to another variable.
 
-Rust turi yoki uning biron bir qismi `Drop` traitini qo‘llagan bo‘lsa, `Copy` bilan turga annotation qo‘yishimizga ruxsat bermaydi. Qiymat doirasidan chiqib ketganda turga maxsus biror narsa kerak bo'lsa va biz ushbu turga `Copy` annotationni qo'shsak, biz kompilyatsiya vaqtida xatolikni olamiz. Traitni amalga oshirish uchun turingizga `Copy` annotationni qanday qo‘shish haqida bilish uchun C ilovasidagi [“Derivable Traitlar”][derivable-traits]<!-- ignore -->ga qarang.
+Rust won’t let us annotate a type with `Copy` if the type, or any of its parts, has implemented the `Drop` trait. If the type needs something special to happen when the value goes out of scope and we add the `Copy` annotation to that type, we’ll get a compile-time error. To learn about how to add the `Copy` annotation to your type to implement the trait, see [“Derivable Traits”][derivable-traits]<!-- ignore --> in Appendix C.
 
-Xo'sh, `Copy` traitini qaysi turlar amalga oshiradi? Ishonch hosil qilish uchun berilgan tur uchun texnik hujjatlarni tekshirishingiz mumkin, lekin umumiy qoida sifatida har qanday oddiy skalyar qiymatlar guruhi `Copy` ni amalga oshirishi mumkin va ajratishni talab qiladigan yoki biron bir manba shakli bo‘lgan hech narsa `Copy` ni amalga oshira olmaydi. `Copy` ni amalga oshiradigan ba'zi turlar:
+So, what types implement the `Copy` trait? You can check the documentation for the given type to be sure, but as a general rule, any group of simple scalar values can implement `Copy`, and nothing that requires allocation or is some form of resource can implement `Copy`. Here are some of the types that implement `Copy`:
 
 * `u32` kabi barcha integer turlari.
 * Boolean turi, `bool`, `true` va `false` qiymatlari bilan.
 * Barcha floating-point turlari, masalan, `f64`.
 * Belgi turi, `char`.
-* Tuplelar, agar ular faqat `Copy` ni ham implement qiladigan turlarni o'z ichiga olsa. Masalan, `(i32, i32)` `Copy` ni implement qiladi, lekin `(i32, String)` bajarmaydi.
+* Tuples, if they only contain types that also implement `Copy`. For example, `(i32, i32)` implements `Copy`, but `(i32, String)` does not.
 
 ### Ownership va Funksiyalar
 
-Funksiyaga qiymat berish mexanikasi o'zgaruvchiga qiymat berish mexanikasiga o'xshaydi. O'zgaruvchini funksiyaga o'tkazish, xuddi assignment kabi ko'chiriladi yoki nusxalanadi. 4-3 ro'yxatda o'zgaruvchilarning qayerga kirishi va tashqariga chiqishini ko'rsatadigan ba'zi izohlar bilan misol mavjud.
+The mechanics of passing a value to a function are similar to those when assigning a value to a variable. Passing a variable to a function will move or copy, just as assignment does. Listing 4-3 has an example with some annotations showing where variables go into and out of scope.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -290,13 +234,14 @@ Funksiyaga qiymat berish mexanikasi o'zgaruvchiga qiymat berish mexanikasiga o'x
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-03/src/main.rs}}
 ```
 
+
 <span class="caption">Ro'yxat 4-3: ownership va scope izohlangan funksiyalar</span>
 
-Agar biz `ownershiplik_qiladi` chaqiruvidan keyin `s` dan foydalanmoqchi bo'lsak, Rust kompilyatsiya vaqtida xatolikka yo'l qo'yadi. Ushbu statik tekshiruvlar bizni xatolardan himoya qiladi. `s` va `x` dan foydalanadigan `main` ga kod qo‘shib ko‘ring va ulardan qayerda foydalanishingiz mumkinligini va ownership qoidalari bunga xalaqit beradigan joyni ko‘ring.
+If we tried to use `s` after the call to `takes_ownership`, Rust would throw a compile-time error. These static checks protect us from mistakes. Try adding code to `main` that uses `s` and `x` to see where you can use them and where the ownership rules prevent you from doing so.
 
 ### Return qiymatlari va Scope
 
-Return qilingan qiymatlar ownershipni ham o'tkazishi mumkin. 4-4 ro'yxatda 4-3 ro'yxatdagi kabi izohlar bilan ba'zi qiymatlarni qaytaradigan funksiya misoli ko'rsatilgan.
+Returning values can also transfer ownership. Listing 4-4 shows an example of a function that returns some value, with similar annotations as those in Listing 4-3.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -304,12 +249,12 @@ Return qilingan qiymatlar ownershipni ham o'tkazishi mumkin. 4-4 ro'yxatda 4-3 r
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
 ```
 
-<span class="caption">Ro'yxat 4-4: Return ownershipni o'tkazish
-qiymatlar</span>
 
-O'zgaruvchiga ownership har safar bir xil aotternga amal qiladi: boshqa o'zgaruvchiga qiymat berish uni ko'chiradi. Heapdagi maʼlumotlarni oʻz ichiga olgan oʻzgaruvchi scopedan tashqariga chiqsa, agar maʼlumotlarga ownership boshqa oʻzgaruvchiga oʻtkazilmagan boʻlsa, qiymat `drop` orqali tozalanadi.
+<span class="caption">Ro'yxat 4-4: Return ownershipni o'tkazish qiymatlar</span>
 
-Bu ishlayotganda, ownership va keyin har bir funksiyaga ownershipini qaytarish biroz zerikarli. Agar funksiyaga qiymatdan foydalanishiga ruxsat bermoqchi bo'lsak, lekin ownershiplik qilmasak nima bo'ladi? Bu juda zerikarli, agar biz uni qayta ishlatmoqchi bo'lsak, biz kiritgan har qanday narsa, shuningdek, biz qaytarishni xohlashimiz mumkin bo'lgan funktsiya tanasidan kelib chiqadigan har qanday ma'lumotlarga qo'shimcha ravishda qaytarib berilishi kerak.
+The ownership of a variable follows the same pattern every time: assigning a value to another variable moves it. When a variable that includes data on the heap goes out of scope, the value will be cleaned up by `drop` unless ownership of the data has been moved to another variable.
+
+While this works, taking ownership and then returning ownership with every function is a bit tedious. What if we want to let a function use a value but not take ownership? It’s quite annoying that anything we pass in also needs to be passed back if we want to use it again, in addition to any data resulting from the body of the function that we might want to return as well.
 
 Rust 4-5 ro'yxatda ko'rsatilganidek, tuple yordamida bir nechta qiymatlarni return qilish imkon beradi.
 
@@ -321,7 +266,7 @@ Rust 4-5 ro'yxatda ko'rsatilganidek, tuple yordamida bir nechta qiymatlarni retu
 
 <span class="caption">Ro'yxat 4-5: Parametrlarga ownershipni qaytarish</span>
 
-Ammo bu umumiy bo'lishi kerak bo'lgan kontseptsiya uchun juda ko'p funksiya va juda ko'p ish. Yaxshiyamki, Rustda qiymatni ownershipni o'tkazmasdan ishlatish xususiyati mavjud, uni *reference* deb atashadi.
+But this is too much ceremony and a lot of work for a concept that should be common. Luckily for us, Rust has a feature for using a value without transferring ownership, called *references*.
 
 [data-types]: ch03-02-data-types.html#data-types
 [ch8]: ch08-02-strings.html
