@@ -90,43 +90,35 @@ Rust 12-17 ro'yxatda ko'rsatilganidek, qulay tarzda `lines` deb nomlangan satrla
 
 Keyinchalik, joriy qatorda so'rovlar qatori mavjudligini tekshiramiz. Yaxshiyamki, satrlarda biz uchun buni amalga oshiradigan `contains` deb nomlangan foydali metod mavjud! 12-18 roʻyxatda koʻrsatilganidek, `qidiruv` funksiyasidagi `contains` metodiga murojatni qoʻshing. E'tibor bering, bu hali kompilyatsiya qilinmaydi.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-18/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 12-18: Adding functionality to see whether the
-line contains the string in `query`</span>
+<span class="caption">Ro'yxat 12-18: satrda `sorov` dagi satr mavjudligini ko'rish uchun funksiya qo'shiladi</span>
 
-At the moment, we’re building up functionality. To get it to compile, we need
-to return a value from the body as we indicated we would in the function
-signature.
+Ayni paytda biz funksionallikni yaratmoqdamiz. Uni kompilyatsiya qilish uchun biz funksiya signaturesida ko'rsatganimizdek, tanadan qiymatni qaytarishimiz kerak.
 
-#### Storing Matching Lines
+#### Mos keladigan qatorlarni saqlash
 
-To finish this function, we need a way to store the matching lines that we want
-to return. For that, we can make a mutable vector before the `for` loop and
-call the `push` method to store a `line` in the vector. After the `for` loop,
-we return the vector, as shown in Listing 12-19.
+Ushbu funksiyani tugatish uchun bizga qaytarmoqchi bo'lgan mos keladigan satrlarni saqlash metodi kerak. Buning uchun biz `for` siklidan oldin o'zgaruvchan vector yasashimiz va vectorda `line`ni saqlash uchun `push` metodini chaqirishimiz mumkin. `for` siklidan so'ng, 12-19 ro'yxatda ko'rsatilganidek, vectorni qaytaramiz.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-19/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 12-19: Storing the lines that match so we can
-return them</span>
+<span class="caption">Ro'yxat 12-19: Biz ularni qaytarishimiz uchun mos keladigan satrlarni saqlash</span>
 
-Now the `search` function should return only the lines that contain `query`,
-and our test should pass. Let’s run the test:
+Endi `qidiruv` funksiyasi faqat `sorov` ni o'z ichiga olgan qatorlarni qaytarishi kerak va bizning testimiz o'tishi kerak. Keling, testni bajaramiz:
 
 ```console
 {{#include ../listings/ch12-an-io-project/listing-12-19/output.txt}}
 ```
 
-Our test passed, so we know it works!
+Testimiz muvaffaqiyatli o'tdi, shuning uchun u ishlayotganini bilamiz!
 
 At this point, we could consider opportunities for refactoring the
 implementation of the search function while keeping the tests passing to
