@@ -47,25 +47,17 @@ Agar biz lifetime izohlarni(annotation) unutib, ushbu funksiyani kompilyatsiya q
 {{#include ../listings/ch12-an-io-project/output-only-02-missing-lifetimes/output.txt}}
 ```
 
-Rust can’t possibly know which of the two arguments we need, so we need to tell
-it explicitly. Because `contents` is the argument that contains all of our text
-and we want to return the parts of that text that match, we know `contents` is
-the argument that should be connected to the return value using the lifetime
-syntax.
+Rust bizga ikkita argumenning qaysi biri kerakligini bila olmaydi, shuning uchun biz buni aniq aytishimiz kerak. `tarkib` barcha matnimizni o'z ichiga olgan argument bo'lgani uchun va biz ushbu matnning mos keladigan qismlarini qaytarmoqchi bo'lganimiz sababli, biz `tarkib` lifetime sintaksisi yordamida qaytarish qiymatiga ulanishi kerak bo'lgan argument ekanligini bilamiz.
 
-Other programming languages don’t require you to connect arguments to return
-values in the signature, but this practice will get easier over time. You might
-want to compare this example with the [“Validating References with
-Lifetimes”][validating-references-with-lifetimes]<!-- ignore --> section in
-Chapter 10.
+Boshqa dasturlash tillari signaturedagi qiymatlarni qaytarish uchun argumentlarni ulashni talab qilmaydi, ammo bu amaliyot vaqt o'tishi bilan osonlashadi. Siz ushbu misolni 10-bobdagi [“Ma’lumotnomalarni lifetime bilan tekshirish”][validating-references-with-lifetimes]<!-- ignore --> bo‘limi bilan solishtirishingiz mumkin.
 
-Now let’s run the test:
+Endi testni bajaramiz:
 
 ```console
 {{#include ../listings/ch12-an-io-project/listing-12-16/output.txt}}
 ```
 
-Great, the test fails, exactly as we expected. Let’s get the test to pass!
+Ajoyib, test biz kutganimizdek muvaffaqiyatsiz tugadi. Keling, testdan o'tamiz!
 
 ### Writing Code to Pass the Test
 
