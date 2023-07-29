@@ -59,45 +59,36 @@ Endi testni bajaramiz:
 
 Ajoyib, test biz kutganimizdek muvaffaqiyatsiz tugadi. Keling, testdan o'tamiz!
 
-### Writing Code to Pass the Test
+### Testdan o'tish uchun kod yozish
 
-Currently, our test is failing because we always return an empty vector. To fix
-that and implement `search`, our program needs to follow these steps:
+Hozirda testimiz muvaffaqiyatsiz tugadi, chunki biz har doim bo'sh vektorni qaytaramiz. Buni tuzatish va `qidiruv` ni amalga oshirish uchun dasturimiz quyidagi bosqichlarni bajarishi kerak:
 
-* Iterate through each line of the contents.
-* Check whether the line contains our query string.
-* If it does, add it to the list of values we’re returning.
-* If it doesn’t, do nothing.
-* Return the list of results that match.
+* `tarkib` ning har bir satrini takrorlang.
+* Berilgan satrda siz izlayotgan qator mavjudligini tekshiring.
+* Agar shunday bo'lsa, uni biz qaytaradigan qiymatlar ro'yxatiga qo'shing.
+* Agar bunday bo'lmasa, hech narsa qilmang.
+* Mos keladigan natijalar ro'yxatini qaytaring.
 
-Let’s work through each step, starting with iterating through lines.
+Keling, satrlarni takrorlashdan boshlab, har bir bosqichda ishlaylik.
 
-#### Iterating Through Lines with the `lines` Method
+#### `lines` metodi bilan qatorlar bo'ylab takrorlash
 
-Rust has a helpful method to handle line-by-line iteration of strings,
-conveniently named `lines`, that works as shown in Listing 12-17. Note this
-won’t compile yet.
+Rust 12-17 ro'yxatda ko'rsatilganidek, qulay tarzda `lines` deb nomlangan satrlarni qatorma-qator takrorlash uchun foydali metodga ega. E'tibor bering, bu hali kompilyatsiya qilinmaydi.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-17/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 12-17: Iterating through each line in `contents`
+<span class="caption">Ro'yxat 12-17: `tarkib`dagi har bir qatorni takrorlash
 </span>
 
-The `lines` method returns an iterator. We’ll talk about iterators in depth in
-[Chapter 13][ch13-iterators]<!-- ignore -->, but recall that you saw this way
-of using an iterator in [Listing 3-5][ch3-iter]<!-- ignore -->, where we used a
-`for` loop with an iterator to run some code on each item in a collection.
+`lines` metodi iteratorni qaytaradi.Biz iteratorlar haqida [13-bobda][ch13-iterators]<!-- ignore --> chuqurroq gaplashamiz, lekin esda tutingki, siz iteratordan foydalanishning bunday usulini [3-5-ro'yxatda][ch3-iter]<!-- ignore --> ko'rgansiz, bu yerda biz to'plamdagi har bir elementda ba'zi kodlarni ishlatish uchun iterator bilan `for` siklidan foydalanganmiz.
 
-#### Searching Each Line for the Query
+#### So'rov uchun har bir qatorni qidirish
 
-Next, we’ll check whether the current line contains our query string.
-Fortunately, strings have a helpful method named `contains` that does this for
-us! Add a call to the `contains` method in the `search` function, as shown in
-Listing 12-18. Note this still won’t compile yet.
+Keyinchalik, joriy qatorda so'rovlar qatori mavjudligini tekshiramiz. Yaxshiyamki, satrlarda biz uchun buni amalga oshiradigan `contains` deb nomlangan foydali metod mavjud! 12-18 roʻyxatda koʻrsatilganidek, `qidiruv` funksiyasidagi `contains` metodiga murojatni qoʻshing. E'tibor bering, bu hali kompilyatsiya qilinmaydi.
 
 <span class="filename">Filename: src/lib.rs</span>
 
