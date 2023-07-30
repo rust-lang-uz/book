@@ -1,7 +1,9 @@
-$ cargo run -- body poem.txt
+$ cargo run -- olma olma.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
-     Running `target/debug/minigrep body poem.txt`
-I'm nobody! Who are you?
-Are you nobody, too?
-How dreary to be somebody!
+    Finished dev [unoptimized + debuginfo] target(s) in 0.38s
+     Running `target/debug/minigrep olma olma.txt`
+Tanishaylik, men - olma,
+Nomimga quloq solma.
+Men sizlarni olmangiz,
+Xomligimda olmangiz!
+Voy qornim deb qolmangiz!

@@ -146,23 +146,17 @@ Ajoyib! Keling, bir nechta qatorga mos keladigan so'zni sinab ko'raylik, masalan
 {{#include ../listings/ch12-an-io-project/output-only-03-multiple-matches/output.txt}}
 ```
 
-And finally, let’s make sure that we don’t get any lines when we search for a
-word that isn’t anywhere in the poem, such as “monomorphization”:
+Va nihoyat, she’rning hech bir joyida bo‘lmagan so‘zni izlaganimizda, masalan, “monomorfizatsiya” kabi satrlar chiqmasligiga ishonch hosil qilaylik:
 
 ```console
 {{#include ../listings/ch12-an-io-project/output-only-04-no-matches/output.txt}}
 ```
 
-Excellent! We’ve built our own mini version of a classic tool and learned a lot
-about how to structure applications. We’ve also learned a bit about file input
-and output, lifetimes, testing, and command line parsing.
+Ajoyib! Biz klassik dasturning o'z mini versiyasini yaratdik va ilovalarni qanday tuzish haqida ko'p narsalarni o'rgandik. Shuningdek, biz faylni kiritish(input) va chiqarish(output), lifetime, test va buyruq satrini tahlil qilish haqida bir oz o'rgandik.
 
-To round out this project, we’ll briefly demonstrate how to work with
-environment variables and how to print to standard error, both of which are
-useful when you’re writing command line programs.
+Ushbu loyihani yakunlash uchun biz atrof-muhit(environment) o'zgaruvchilari bilan qanday ishlashni va standart xatoga qanday chop etishni qisqacha ko'rsatamiz, bu ikkalasi ham buyruq qatori dasturlarini yozishda foydalidir..
 
-[validating-references-with-lifetimes]:
-ch10-03-lifetime-syntax.html#validating-references-with-lifetimes
+[validating-references-with-lifetimes]:ch10-03-lifetime-syntax.html#validating-references-with-lifetimes
 [ch11-anatomy]: ch11-01-writing-tests.html#the-anatomy-of-a-test-function
 [ch10-lifetimes]: ch10-03-lifetime-syntax.html
 [ch3-iter]: ch03-05-control-flow.html#looping-through-a-collection-with-for
