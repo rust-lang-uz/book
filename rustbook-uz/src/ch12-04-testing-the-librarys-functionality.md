@@ -120,36 +120,27 @@ Endi `qidiruv` funksiyasi faqat `sorov` ni o'z ichiga olgan qatorlarni qaytarish
 
 Testimiz muvaffaqiyatli o'tdi, shuning uchun u ishlayotganini bilamiz!
 
-At this point, we could consider opportunities for refactoring the
-implementation of the search function while keeping the tests passing to
-maintain the same functionality. The code in the search function isn’t too bad,
-but it doesn’t take advantage of some useful features of iterators. We’ll
-return to this example in [Chapter 13][ch13-iterators]<!-- ignore -->, where
-we’ll explore iterators in detail, and look at how to improve it.
+Shu nuqtada, biz bir xil funksionallikni saqlab qolish uchun testlarni o'tkazgan holda qidiruv funksiyasini amalga oshirishni qayta tiklash imkoniyatlarini ko'rib chiqishimiz mumkin. Qidiruv funksiyasidagi kod juda yomon emas, lekin u iteratorlarning ba'zi foydali xususiyatlaridan foydalanmaydi. Biz [13-bobda][ch13-iterators]<!-- ignore --> ushbu misolga qaytamiz, u yerda iteratorlarni batafsil o'rganamiz va uni qanday yaxshilashni ko'rib chiqamiz.
 
-#### Using the `search` Function in the `run` Function
+#### `run` funksiyasidagi `qidiruv` funksiyasidan foydalanish
 
-Now that the `search` function is working and tested, we need to call `search`
-from our `run` function. We need to pass the `config.query` value and the
-`contents` that `run` reads from the file to the `search` function. Then `run`
-will print each line returned from `search`:
+Endi `qidiruv` funksiyasi ishlayotgan va testdan o‘tgan bo‘lsa, `run` funksiyamizdan `qidiruv` ni chaqirishimiz kerak. Biz `config.sorov` qiymatini va fayldan o'qiydigan `tarkib`-ni  `qidiruv` funksiyasiga o'tkazishimiz kerak. Keyin `run` `qidiruv`dan qaytarilgan har bir qatorni chop etadi:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/no-listing-02-using-search-in-run/src/lib.rs:here}}
 ```
 
-We’re still using a `for` loop to return each line from `search` and print it.
+Biz `qidiruv` dan har bir qatorni qaytarish va uni chop etish uchun `for` siklidan foydalanmoqdamiz.
 
-Now the entire program should work! Let’s try it out, first with a word that
-should return exactly one line from the Emily Dickinson poem, “frog”:
+Endi butun dastur ishlashi kerak! Keling, buni sinab ko'raylik, avval Olma she'ridagi "karnay" ning aynan bir satrini qaytarishi kerak bo'lgan so'z bilan:
 
 ```console
 {{#include ../listings/ch12-an-io-project/no-listing-02-using-search-in-run/output.txt}}
 ```
 
-Cool! Now let’s try a word that will match multiple lines, like “body”:
+Ajoyib! Keling, bir nechta qatorga mos keladigan so'zni sinab ko'raylik, masalan, "olma":
 
 ```console
 {{#include ../listings/ch12-an-io-project/output-only-03-multiple-matches/output.txt}}
