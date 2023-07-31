@@ -146,7 +146,7 @@ Ajoyib! Keling, bir nechta qatorga mos keladigan so'zni sinab ko'raylik, masalan
 {{#include ../listings/ch12-an-io-project/output-only-03-multiple-matches/output.txt}}
 ```
 
-Va nihoyat, she’rning hech bir joyida bo‘lmagan so‘zni izlaganimizda, masalan, “monomorfizatsiya” kabi satrlar chiqmasligiga ishonch hosil qilaylik:
+Va nihoyat, she’rning hech bir joyida bo‘lmagan so‘zni izlaganimizda, masalan, “mashina” kabi satrlar chiqmasligiga ishonch hosil qilaylik:
 
 ```console
 {{#include ../listings/ch12-an-io-project/output-only-04-no-matches/output.txt}}

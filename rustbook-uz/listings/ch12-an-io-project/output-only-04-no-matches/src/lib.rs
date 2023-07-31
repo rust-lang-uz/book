@@ -2,28 +2,28 @@ use std::error::Error;
 use std::fs;
 
 pub struct Config {
-    pub query: String,
-    pub file_path: String,
+    pub sorov: String,
+    pub fayl_yoli: String,
 }
 
 impl Config {
     pub fn build(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 3 {
-            return Err("not enough arguments");
+            return Err("argumentlar yetarli emas");
         }
 
-        let query = args[1].clone();
-        let file_path = args[2].clone();
+        let sorov = args[1].clone();
+        let fayl_yoli = args[2].clone();
 
-        Ok(Config { query, file_path })
+        Ok(Config { sorov, fayl_yoli })
     }
 }
 
 // ANCHOR: here
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(config.file_path)?;
+    let tarkib = fs::read_to_string(config.fayl_yoli)?;
 
-    for line in search(&config.query, &contents) {
+    for line in qidiruv(&config.sorov, &tarkib) {
         println!("{line}");
     }
 
@@ -31,16 +31,16 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 }
 // ANCHOR_END: here
 
-pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    let mut results = Vec::new();
+pub fn qidiruv<'a>(sorov: &str, tarkib: &'a str) -> Vec<&'a str> {
+    let mut natijalar = Vec::new();
 
-    for line in contents.lines() {
-        if line.contains(query) {
-            results.push(line);
+    for line in tarkib.lines() {
+        if line.contains(sorov) {
+            natijalar.push(line);
         }
     }
 
-    results
+    natijalar
 }
 
 #[cfg(test)]
@@ -48,13 +48,13 @@ mod tests {
     use super::*;
 
     #[test]
-    fn one_result() {
-        let query = "duct";
-        let contents = "\
+    fn birinchi_natija() {
+        let sorov = "marali";
+        let tarkib = "\
 Rust:
-safe, fast, productive.
-Pick three.";
+xavfsiz, tez, samarali.
+Uchtasini tanlang.";
 
-        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
+        assert_eq!(vec!["xavfsiz, tez, samarali."], qidiruv(sorov, tarkib));
     }
 }

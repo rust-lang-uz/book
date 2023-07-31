@@ -1,4 +1,5 @@
-$ cargo run -- monomorphization poem.txt
+$ cargo run -- mashina olma.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
-     Running `target/debug/minigrep monomorphization poem.txt`
+    Finished dev [unoptimized + debuginfo] target(s) in 0.01s
+     Running `target/debug/minigrep mashina olma.txt`
+
