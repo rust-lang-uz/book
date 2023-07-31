@@ -1,13 +1,8 @@
-## Working with Environment Variables
+## Environment(atrof-muhit) o'zgaruvchilari bilan ishlash
 
-We’ll improve `minigrep` by adding an extra feature: an option for
-case-insensitive searching that the user can turn on via an environment
-variable. We could make this feature a command line option and require that
-users enter it each time they want it to apply, but by instead making it an
-environment variable, we allow our users to set the environment variable once
-and have all their searches be case insensitive in that terminal session.
+Biz `minigrep`ni qo‘shimcha xususiyatni qo‘shish orqali yaxshilaymiz: foydalanuvchi environment orqali yoqishi mumkin bo‘lgan katta-kichik harflarni hisobga olmay qidirish imkoniyati.Biz bu xususiyatni buyruq qatori opsiyasiga aylantirishimiz va foydalanuvchilar uni har safar qo‘llashni xohlaganlarida kiritishlarini talab qilishimiz mumkin, lekin buning oʻrniga uni environment qilib, biz foydalanuvchilarga environmentni bir marta oʻrnatish va barcha qidiruvlarini terminal sessiyasida katta-kichik harflarga sezgir boʻlmasligiga ruxsat beramiz.
 
-### Writing a Failing Test for the Case-Insensitive `search` Function
+### Katta-kichik harflarni sezmaydigan `qidiruv` funksiyasi uchun muvaffaqiyatsiz test yozish
 
 We first add a new `search_case_insensitive` function that will be called when
 the environment variable has a value. We’ll continue to follow the TDD process,

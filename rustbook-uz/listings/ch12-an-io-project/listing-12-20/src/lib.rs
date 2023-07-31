@@ -2,8 +2,8 @@ use std::error::Error;
 use std::fs;
 
 pub struct Config {
-    pub query: String,
-    pub file_path: String,
+    pub sorov : String,
+    pub fayl_yoli: String,
 }
 
 impl Config {
@@ -12,64 +12,65 @@ impl Config {
             return Err("not enough arguments");
         }
 
-        let query = args[1].clone();
-        let file_path = args[2].clone();
+        let sorov  = args[1].clone();
+        let fayl_yoli = args[2].clone();
 
-        Ok(Config { query, file_path })
+        Ok(Config { sorov , fayl_yoli })
     }
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(config.file_path)?;
+    let tarkib = fs::read_to_string(config.fayl_yoli)?;
 
-    for line in search(&config.query, &contents) {
+    for line in qidiruv(&config.sorov , &tarkib) {
         println!("{line}");
     }
 
     Ok(())
 }
 
-pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    let mut results = Vec::new();
+pub fn qidiruv<'a>(sorov : &str, tarkib: &'a str) -> Vec<&'a str> {
+    let mut natijalar = Vec::new();
 
-    for line in contents.lines() {
-        if line.contains(query) {
-            results.push(line);
+    for line in tarkib.lines() {
+        if line.contains(sorov ) {
+            natijalar.push(line);
         }
     }
 
-    results
+    natijalar
 }
 
 // ANCHOR: here
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn case_sensitive() {
-        let query = "duct";
-        let contents = "\
+    fn harflarga_etiborli() {
+        let sorov  = "marali";
+        let tarkib = "\
 Rust:
-safe, fast, productive.
-Pick three.
+xavfsiz, tez, samarali.
+Uchtasini tanlang.
 Duct tape.";
 
-        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
+        assert_eq!(vec!["xavfsiz, tez, samarali."], qidiruv(sorov , tarkib));
     }
 
     #[test]
-    fn case_insensitive() {
-        let query = "rUsT";
-        let contents = "\
+    fn harflarga_etiborsiz() {
+        let sorov  = "rUsT";
+        let tarkib = "\
 Rust:
-safe, fast, productive.
-Pick three.
-Trust me.";
+xavfsiz, tez, samarali.
+Uchtasini tanlang.
+Menga ishoning.";
 
         assert_eq!(
-            vec!["Rust:", "Trust me."],
-            search_case_insensitive(query, contents)
+            vec!["Rust:", "Menga ishoning."],
+            harflarga_etiborsiz_qidirish(sorov , tarkib)
         );
     }
 }
