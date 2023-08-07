@@ -4,21 +4,15 @@ Biz `minigrep`ni qo‘shimcha xususiyatni qo‘shish orqali yaxshilaymiz: foydal
 
 ### Katta-kichik harflarni sezmaydigan `qidiruv` funksiyasi uchun muvaffaqiyatsiz test yozish
 
-We first add a new `search_case_insensitive` function that will be called when
-the environment variable has a value. We’ll continue to follow the TDD process,
-so the first step is again to write a failing test. We’ll add a new test for
-the new `search_case_insensitive` function and rename our old test from
-`one_result` to `case_sensitive` to clarify the differences between the two
-tests, as shown in Listing 12-20.
+Biz birinchi navbatda yangi `harflarga_etiborsiz_qidirish` funksiyasini qo'shamiz, u muhit o'zgaruvchisi qiymatga ega bo'lganda chaqiriladi. Biz TDD jarayonini kuzatishda davom etamiz, shuning uchun birinchi qadam yana muvaffaqiyatsiz testni yozishdir.  Biz yangi `harflarga_etiborsiz_qidirish` funksiyasi uchun yangi test qo‘shamiz va 12-20 ro‘yxatda ko‘rsatilganidek, ikkita test o‘rtasidagi farqlarni aniqlashtirish uchun eski testimiz nomini `birinchi_natija` `harflarga_etiborli`ga o‘zgartiramiz.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-20/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 12-20: Adding a new failing test for the
-case-insensitive function we’re about to add</span>
+<span class="caption">Ro'yxat 12-20: Biz qo'shmoqchi bo'lgan katta-kichik harflarni sezgir bo'lmagan funksiya uchun yangi muvaffaqiyatsiz test qo'shish</span>
 
 Note that we’ve edited the old test’s `contents` too. We’ve added a new line
 with the text `"Duct tape."` using a capital D that shouldn’t match the query
