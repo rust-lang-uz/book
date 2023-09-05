@@ -9,8 +9,8 @@ struct Inventarizatsiya {
 }
 
 impl Inventarizatsiya {
-    fn yutuq(&self, user_preference: Option<FutbolkaRangi>) -> FutbolkaRangi {
-        user_preference.unwrap_or_else(|| self.most_stocked())
+    fn yutuq(&self, foydalanuvchi_afzalligi: Option<FutbolkaRangi>) -> FutbolkaRangi {
+        foydalanuvchi_afzalligi.unwrap_or_else(|| self.most_stocked())
     }
 
     fn most_stocked(&self) -> FutbolkaRangi {
@@ -39,14 +39,14 @@ fn main() {
     let user_pref1 = Some(FutbolkaRangi::Qizil);
     let yutuq1 = store.yutuq(user_pref1);
     println!(
-        "The user with preference {:?} gets {:?}",
+        "{:?} afzalligi bilan foydalanuvchi {:?} oladi",
         user_pref1, yutuq1
     );
 
     let user_pref2 = None;
     let yutuq2 = store.yutuq(user_pref2);
     println!(
-        "The user with preference {:?} gets {:?}",
+        "{:?} afzalligi bilan foydalanuvchi {:?} oladi",
         user_pref2, yutuq2
     );
 }
