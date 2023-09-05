@@ -1,47 +1,30 @@
 <!-- Old heading. Do not remove or links may break. -->
 <a id="closures-anonymous-functions-that-can-capture-their-environment"></a>
 
-## Closures: Anonymous Functions that Capture Their Environment
+## Closurelar: Environmentni qamrab oladigan anonim funksiyalar
 
-Rust’s closures are anonymous functions you can save in a variable or pass as
-arguments to other functions. You can create the closure in one place and then
-call the closure elsewhere to evaluate it in a different context. Unlike
-functions, closures can capture values from the scope in which they’re defined.
-We’ll demonstrate how these closure features allow for code reuse and behavior
-customization.
+Rustning closureri - bu o'zgaruvchida saqlashingiz yoki boshqa funksiyalarga argument sifatida o'tishingiz mumkin bo'lgan anonim funktsiyalar. Closureni bir joyda yaratishingiz va keyin uni boshqa kontekstda baholash uchun boshqa joyga murojaat qilishingiz mumkin. Funksiyalardan farqli o'laroq, closurelar ular belgilangan doiradagi qiymatlarni olishlari mumkin.
+Ushbu closure xususiyatlari kodni qayta ishlatish va xatti-harakatlarni moslashtirishga(behavior customization) qanday imkon berishini ko'rsatamiz.
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="creating-an-abstraction-of-behavior-with-closures"></a>
 <a id="refactoring-using-functions"></a>
 <a id="refactoring-with-closures-to-store-code"></a>
 
-### Capturing the Environment with Closures
+### Environmentni closurelar bilan qo'lga olish
 
-We’ll first examine how we can use closures to capture values from the
-environment they’re defined in for later use. Here’s the scenario: Every so
-often, our t-shirt company gives away an exclusive, limited-edition shirt to
-someone on our mailing list as a promotion. People on the mailing list can
-optionally add their favorite color to their profile. If the person chosen for
-a free shirt has their favorite color set, they get that color shirt. If the
-person hasn’t specified a favorite color, they get whatever color the company
-currently has the most of.
+Avvalo, keyinchalik foydalanish uchun ular belgilangan muhitdan(environment) qiymatlarni olish uchun closurelardan qanday foydalanishimiz mumkinligini ko'rib chiqamiz.Bu senariy: Ko'pincha bizning futbolka kompaniyamiz reklama ro'yxatidagi kimgadir eksklyuziv, cheklangan nashrdagi futbolkani sovg'a sifatida taqdim etadi. Pochta ro'yxatidagi odamlar ixtiyoriy ravishda o'z profillariga sevimli ranglarini qo'shishlari mumkin. Agar bepul futbolka uchun tanlangan kishi o'zining sevimli ranglar to'plamiga ega bo'lsa, u rangdagi futbolkani oladi. Agar biror kishi sevimli rangni ko'rsatmagan bo'lsa, u kompaniyada eng ko'p bo'lgan rangni oladi.
 
-There are many ways to implement this. For this example, we’re going to use an
-enum called `ShirtColor` that has the variants `Red` and `Blue` (limiting the
-number of colors available for simplicity). We represent the company’s
-inventory with an `Inventory` struct that has a field named `shirts` that
-contains a `Vec<ShirtColor>` representing the shirt colors currently in stock.
-The method `giveaway` defined on `Inventory` gets the optional shirt
-color preference of the free shirt winner, and returns the shirt color the
-person will get. This setup is shown in Listing 13-1:
+Buni amalga oshirishning ko'plab usullari mavjud. Ushbu misol uchun biz `Qizil` va `Moviy` variantlariga ega `FutbolkaRangi` nomli enumdan foydalanamiz (oddiylik uchun mavjud ranglar sonini cheklaydi). Biz kompaniya inventarini `Inventarizatsiya` strukturasi bilan ifodalaymiz, unda `futbolkalar` deb nomlangan maydon mavjud bo‘lib, unda hozirda mavjud bo‘lgan futbolka ranglarini ifodalovchi `Vec<FutbolkaRangi>` mavjud.
+`Inventarizatsiya` da belgilangan `yutuq` metodi bepul futbolka g‘olibining ixtiyoriy futbolka rangini afzal ko‘radi va odam oladigan futbolka rangini qaytaradi. Ushbu sozlash 13-1 ro'yxatda ko'rsatilgan:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-01/src/main.rs}}
 ```
 
-<span class="caption">Listing 13-1: Shirt company giveaway situation</span>
+<span class="caption">Ro'yxat 13-1: Futbolka kompaniyasining sovg'a holati</span>
 
 The `store` defined in `main` has two blue shirts and one red shirt remaining
 to distribute for this limited-edition promotion. We call the `giveaway` method
