@@ -2,7 +2,7 @@
 
 *Ownership*(Egalik) bu Rust dasturi xotirani qanday boshqarishini boshqaradigan qoidalar to'plami.
 Barcha dasturlar ishlayotgan vaqtda kompyuter xotirasidan qanday foydalanishini boshqarishi kerak.
-Ba'zi tillarda axlat yig'ish mavjud bo'lib, ular dastur ishlayotgan paytda ishlatilmaydigan xotirani muntazam ravishda qidiradi; boshqa tillarda dasturchi xotirani aniq ajratishi va bo'shatishi kerak. Rust uchinchi yondashuvdan foydalanadi: xotira kompilyator tekshiradigan qoidalar to'plamiga ownership tizimi orqali boshqariladi. Agar biron bir qoidalar buzilgan bo'lsa, dastur kompilatsiya qilinmaydi. Ownership xususiyatlarining hech biri dasturingiz ishlayotgan vaqtda sekinlashtirmaydi.
+Ba'zi tillarda axlat yig'ish(garbage collection) mavjud bo'lib, ular dastur ishlayotgan paytda ishlatilmaydigan xotirani muntazam ravishda qidiradi; boshqa tillarda dasturchi xotirani aniq ajratishi va bo'shatishi kerak. Rust uchinchi yondashuvdan foydalanadi: xotira kompilyator tekshiradigan qoidalar to'plamiga ownership tizimi orqali boshqariladi. Agar biron bir qoidalar buzilgan bo'lsa, dastur kompilatsiya qilinmaydi. Ownership xususiyatlarining hech biri dasturingiz ishlayotgan vaqtda sekinlashtirmaydi.
 
 Ownership ko'plab dasturchilar uchun yangi tushuncha bo'lganligi sababli, unga ko'nikish uchun biroz vaqt kerak bo'ladi. Yaxshi xabar shundaki, siz Rust va ownership tizimi qoidalari bilan qanchalik tajribali bo'lsangiz, xavfsiz va samarali kodni tabiiy ravishda ishlab chiqish osonroq bo'ladi. Unda davom etamiz!
 
@@ -10,10 +10,10 @@ Ownershipni tushunganingizda, Rustni noyob qiladigan xususiyatlarni tushunish uc
 
 > ### Stack va Heap
 >
-> Ko'pgina dasturlash tillari stek va heap haqida tez-tez o'ylashingizni talab qilmaydi.
-> Ammo Rust kabi tizim dasturlash tilida qiymat stekda yoki heapda bo'ladimi,
+> Ko'pgina dasturlash tillari stack va heap haqida tez-tez o'ylashingizni talab qilmaydi.
+> Ammo Rust kabi tizim dasturlash tilida qiymat stackda yoki heapda bo'ladimi,
 > til o'zini qanday tutishiga ta'sir qiladi va nima uchun siz ma'lum qarorlar
-> qabul qilishingiz kerak. Ownershipning qismlari stek va heapga nisbatan keyinchalik
+> qabul qilishingiz kerak. Ownershipning qismlari stack va heapga nisbatan keyinchalik
 > ushbu bobda tasvirlanadi, shuning uchun bu yerda tayyorgarlik jarayonida qisqacha 
 > tushuntirish berilgan.
 >
@@ -23,8 +23,8 @@ Ownershipni tushunganingizda, Rustni noyob qiladigan xususiyatlarni tushunish uc
 > Bu *oxirgi kelgan, birinchi chiqqan* deb ataladi. Plitalar stackini o'ylab
 > ko'ring: ko'proq plastinka qo'shsangiz, ularni qoziqning ustiga qo'yasiz va plastinka
 > kerak bo'lganda, siz yuqoridan birini olib qo'yasiz. Plitalarni o'rtadan yoki pastdan
-> qo'shish yoki olib tashlash ham ishlamaydi! Ma'lumotlarni qo'shish *stekga qo'shish*,
-> ma'lumotlarni olib tashlash esa *stekdan o'chirish* deb ataladi. Stackda saqlangan
+> qo'shish yoki olib tashlash ham ishlamaydi! Ma'lumotlarni qo'shish *stackga qo'shish*,
+> ma'lumotlarni olib tashlash esa *stackdan o'chirish* deb ataladi. Stackda saqlangan
 > barcha ma'lumotlar ma'lum, qat'iy belgilangan hajmga ega bo'lishi kerak. Kompilyatsiya vaqtida
 > noma'lum o'lchamli yoki o'zgarishi mumkin bo'lgan o'lchamdagi ma'lumotlar esa heapda
 > saqlanishi kerak.
@@ -33,23 +33,23 @@ Ownershipni tushunganingizda, Rustni noyob qiladigan xususiyatlarni tushunish uc
 > bo'sh joy talab qilasiz. Xotira ajratuvchisi heapda etarlicha katta bo'lgan bo'sh joyni
 > topadi, uni ishlatilayotgan deb belgilaydi va o'sha joyning manzili bo'lgan
 > *pointerni* ni qaytaradi. Bu jarayon *heap allocating* deb ataladi va ba'zan
-> faqat *allocating* deb qisqartiriladi (qiymatlarni stekga qo'shish ajratish
+> faqat *allocating* deb qisqartiriladi (qiymatlarni stackga qo'shish ajratish
 > hisoblanmaydi). Heapga pointer ma'lum, qat'iy o'lcham bo'lgani uchun siz
-> pointerni stekda saqlashingiz mumkin, lekin yaroqli ma'lumotlarni
+> pointerni stackda saqlashingiz mumkin, lekin yaroqli ma'lumotlarni
 > olishni istasangiz, pointergaga amal qilishingiz kerak. Restoranda o'tirganingizni
 > o'ylab ko'ring. Kirish paytida siz guruhingizdagi odamlar sonini bildirasiz
 > va uy egasi hammaga mos keladigan bo'sh stol topadi va sizni u yerga olib boradi.
 > Agar guruhingizdagi kimdir kechikib kelsa, sizni topish uchun qayerda o'tirganingizni
 > so'rashi mumkin.
 >
-> Stekga qo'shish heapda allocating qilishdan tezroq bo'ladi, chunki allacator hech
+> stackga qo'shish heapda allocating qilishdan tezroq bo'ladi, chunki allacator hech
 > qachon yangi ma'lumotlarni saqlash uchun joy izlamasligi kerak; bu joy har doim
 > stackning yuqori qismida joylashgan. Nisbatan, heapda bo'sh joy ajratish ko'proq
 > mehnat talab qiladi, chunki allacator avval ma'lumotlarni saqlash uchun yetarlicha
 > katta joy topishi va keyingi allocatinga tayyorgarlik ko'rish uchun buxgalteriya
 > hisobini amalga oshirishi kerak.
 >
-> Heapdagi ma'lumotlarga kirish stekdagi ma'lumotlarga kirishdan ko'ra sekinroq, chunki u yerga 
+> Heapdagi ma'lumotlarga kirish stackdagi ma'lumotlarga kirishdan ko'ra sekinroq, chunki u yerga 
 > borish uchun pointerga amal qilishingiz kerak. Zamonaviy protsessorlar xotirada
 > kamroq o'tishsa, tezroq ishlaydi. O'xshashlikni davom ettirib, ko'plab jadvallardan
 > buyurtmalarni qabul qiladigan restoran serverini ko'rib chiqing. Keyingi stolga o'tishdan oldin
@@ -57,17 +57,17 @@ Ownershipni tushunganingizda, Rustni noyob qiladigan xususiyatlarni tushunish uc
 > buyurtma olish, keyin B jadvalidan buyurtma olish, keyin yana A dan va yana B dan bitta
 > buyurtma olish ancha sekinroq jarayon bo'ladi. Xuddi shu qoidaga ko'ra,
 > protsessor uzoqroqda emas (u heapda bo'lishi mumkin) emas, balki boshqa
-> ma'lumotlarga yaqin (stekdagi kabi) ma'lumotlarda ishlasa, o'z ishini yaxshiroq
+> ma'lumotlarga yaqin (stackdagi kabi) ma'lumotlarda ishlasa, o'z ishini yaxshiroq
 > bajarishi mumkin.
 >
 > Sizning kodingiz funksiyani chaqirganda, funksiyaga o'tgan qiymatlar (shu jumladan, potentsial,
 > heapdagi ma'lumotlarga pointerlar) va funksiyaning mahalliy o'zgaruvchilari
-> stekga qo'shiladi. Funktsiya tugagach, bu qiymatlar stekdan chiqariladi.
+> stackga qo'shiladi. Funktsiya tugagach, bu qiymatlar stackdan chiqariladi.
 >
 > Kodning qaysi qismlari heapda qaysi ma'lumotlardan foydalanayotganini kuzatib borish,
 > heapdagi takroriy ma'lumotlar miqdorini minimallashtirish va bo'sh joy qolmasligi uchun
 > heapdagi foydalanilmagan ma'lumotlarni tozalash - bularning barchasi ownership hal qiladigan 
-> muammolardir. Ownershipni tushunganingizdan so'ng, stek va heap haqida tez-tez
+> muammolardir. Ownershipni tushunganingizdan so'ng, stack va heap haqida tez-tez
 > o'ylashingiz shart emas, lekin ownership qilishning asosiy maqsadi heap
 > ma'lumotlarni boshqarish ekanligini bilish uning nima uchun shunday ishlashini
 > tushuntirishga yordam beradi.
@@ -108,7 +108,7 @@ Ushbu nuqtada, scopelar va o'zgaruvchilarning yaroqliligi o'rtasidagi munosabatl
 ### `String` turi
 
 Ownership qoidalarini tasvirlash uchun bizga 3-bobning [”Ma'lumotlar turlari”][data-types]<!-- ignore -->
-bo'limida ko'rib chiqilganlarga qaraganda murakkabroq ma'lumotlar turi kerak. Oldin ko'rib chiqilgan turlar ma'lum o'lchamga ega bo'lib, ular stekda saqlanishi va qo'llanilish doirasi tugagach, stekdan o'chirilishi mumkin va agar kodning boshqa qismi foydalanishi kerak bo'lsa yangi, mustaqil misol yaratish uchun tez va ahamiyatsiz nusxa ko'chirilishi mumkin kodning boshqa qismi bir xil qiymatni boshqa doirada ishlatishi kerak. Ammo biz heapda saqlangan ma'lumotlarni ko'rib chiqmoqchimiz va Rust bu ma'lumotlarni qachon tozalashni bilishini o'rganmoqchimiz va `String` turi ajoyib misoldir.
+bo'limida ko'rib chiqilganlarga qaraganda murakkabroq ma'lumotlar turi kerak. Oldin ko'rib chiqilgan turlar ma'lum o'lchamga ega bo'lib, ular stackda saqlanishi va qo'llanilish doirasi tugagach, stackdan o'chirilishi mumkin va agar kodning boshqa qismi foydalanishi kerak bo'lsa yangi, mustaqil misol yaratish uchun tez va ahamiyatsiz nusxa ko'chirilishi mumkin kodning boshqa qismi bir xil qiymatni boshqa doirada ishlatishi kerak. Ammo biz heapda saqlangan ma'lumotlarni ko'rib chiqmoqchimiz va Rust bu ma'lumotlarni qachon tozalashni bilishini o'rganmoqchimiz va `String` turi ajoyib misoldir.
 
 Biz `String` ning ownership bilan bog'liq qismlariga e'tibor qaratamiz. Ushbu jihatlar standart kutubxona tomonidan taqdim etilganmi yoki siz yaratganmi, boshqa murakkab ma'lumotlar turlariga ham tegishli.
 Biz [8-bobda][ch8]<!-- ignore --> `String`ni chuqurroq muhokama qilamiz.
@@ -172,7 +172,7 @@ Rustda bir nechta o'zgaruvchilar bir xil ma'lumotlar bilan turli yo'llar bilan o
 
 <span class="caption">4-2 roʻyxat: `x` oʻzgaruvchisining butun qiymatini `y` ga belgilash</span>
 
-Bu nima qilayotganini taxmin qilishimiz mumkin: `5` qiymatini `x` ga bog‘lang; keyin `x` dagi qiymatdan nusxa oling va uni `y` ga bog'lang. Endi bizda ikkita o'zgaruvchi bor, `x` va `y` va ikkalasi ham `5` ga teng. Bu haqiqatan ham sodir bo'lmoqda, chunki butun sonlar ma'lum, qat'iy o'lchamga ega oddiy qiymatlardir va bu ikkita `5` qiymat stekga qo'shiladi.
+Bu nima qilayotganini taxmin qilishimiz mumkin: `5` qiymatini `x` ga bog‘lang; keyin `x` dagi qiymatdan nusxa oling va uni `y` ga bog'lang. Endi bizda ikkita o'zgaruvchi bor, `x` va `y` va ikkalasi ham `5` ga teng. Bu haqiqatan ham sodir bo'lmoqda, chunki butun sonlar ma'lum, qat'iy o'lchamga ega oddiy qiymatlardir va bu ikkita `5` qiymat stackga qo'shiladi.
 
 Endi `String` versiyasini ko'rib chiqamiz:
 
@@ -183,7 +183,7 @@ Endi `String` versiyasini ko'rib chiqamiz:
 Bu juda o'xshash ko'rinadi, shuning uchun biz uning ishlash metodi bir xil bo'ladi deb taxmin qilishimiz mumkin: ya'ni ikkinchi qator `s1` qiymatining nusxasini yaratadi va uni `s2` bilan bog'laydi. Ammo bu sodir bo'ladigan narsa emas.
 
 Qopqoq ostidagi `String` bilan nima sodir bo'layotganini ko'rish uchun 4-1-rasmga qarang. `String` chap tomonda ko'rsatilgan uchta qismdan iborat: satr tarkibini saqlaydigan xotiraga ko'rsatgich, uzunlik(len) va sig'im(capacity).
-Ushbu ma'lumotlar guruhi stekda saqlanadi. O'ng tomonda tarkibni saqlaydigan heap xotira joylashgan.
+Ushbu ma'lumotlar guruhi stackda saqlanadi. O'ng tomonda tarkibni saqlaydigan heap xotira joylashgan.
 
 <img alt="Two tables: the first table contains the representation of s1 on the
 stack, consisting of its length (5), capacity (5), and a pointer to the first
@@ -195,7 +195,7 @@ style="width: 50%;" />
 
 Uzunlik - `String` mazmuni hozirda qancha xotira, baytlarda foydalanayotganligi. Sig'im(capacity) - bu `String` allacatordan olgan xotiraning umumiy hajmi, baytlarda. Uzunlik va si'gimlar o'rtasidagi farq muhim, ammo bu kontekstda emas, shuning uchun hozircha si'gimlarni e'tiborsiz qoldirish yaxshi.
 
-`s1` ni `s2` ga belgilaganimizda, `String` ma'lumotlari nusxalanadi, ya'ni biz stekdagi pointer, uzunlik va sig`imdan nusxa olamiz. Biz pointer(ko'rsatkich) ko'rsatgan to'plamdagi ma'lumotlarni ko'chirmaymiz. Boshqacha qilib aytganda, ma'lumotlarning xotirada ko'rinishi 4-2-rasmga o'xshaydi.
+`s1` ni `s2` ga belgilaganimizda, `String` ma'lumotlari nusxalanadi, ya'ni biz stackdagi pointer, uzunlik va sig`imdan nusxa olamiz. Biz pointer(ko'rsatkich) ko'rsatgan to'plamdagi ma'lumotlarni ko'chirmaymiz. Boshqacha qilib aytganda, ma'lumotlarning xotirada ko'rinishi 4-2-rasmga o'xshaydi.
 
 <img alt="Three tables: tables s1 and s2 representing those strings on the
 stack, respectively, and both pointing to the same string data on the heap."
@@ -266,9 +266,9 @@ Biz hali gapirmagan yana bir narsa bor. Integer sonlardan foydalanadigan ushbu k
 
 Ammo bu kod biz bilib olgan narsaga zid ko'rinadi: bizda `clone` uchun murojat yo'q, lekin `x` hali ham amal qiladi va `y` ga o'tkazilmagan.
 
-Sababi, kompilyatsiya vaqtida ma'lum o'lchamga ega bo'lgan integer sonlar kabi turlar to'liq stekda saqlanadi, shuning uchun haqiqiy qiymatlarning nusxalari tezda tayyorlanadi. Bu shuni anglatadiki, biz `y` o'zgaruvchisini yaratganimizdan keyin `x` ning haqiqiy bo'lishiga to'sqinlik qilish uchun hech qanday sabab yo'q. Boshqacha qilib aytadigan bo'lsak, bu erda deep va shallow nusxa ko'chirish o'rtasida farq yo'q, shuning uchun `clone` ni chaqirish odatdagi shallow copydan farq qilmaydi va biz uni tark etishimiz mumkin.
+Sababi, kompilyatsiya vaqtida ma'lum o'lchamga ega bo'lgan integer sonlar kabi turlar to'liq stackda saqlanadi, shuning uchun haqiqiy qiymatlarning nusxalari tezda tayyorlanadi. Bu shuni anglatadiki, biz `y` o'zgaruvchisini yaratganimizdan keyin `x` ning haqiqiy bo'lishiga to'sqinlik qilish uchun hech qanday sabab yo'q. Boshqacha qilib aytadigan bo'lsak, bu erda deep va shallow nusxa ko'chirish o'rtasida farq yo'q, shuning uchun `clone` ni chaqirish odatdagi shallow copydan farq qilmaydi va biz uni tark etishimiz mumkin.
 
-Rust `Copy` traiti deb nomlangan maxsus izohga ega bo'lib, uni butun sonlar kabi stekda saqlanadigan turlarga joylashtirishimiz mumkin (biz [10-bobda][traits]<!-- ignore --> traitlar haqida ko'proq gaplashamiz). Agar tur  `Copy` traitini amalga oshirsa, undan foydalanadigan o‘zgaruvchilar harakatlanmaydi, aksincha, ahamiyatsiz tarzda ko‘chiriladi, bu esa boshqa o‘zgaruvchiga tayinlangandan keyin ham amal qiladi.
+Rust `Copy` traiti deb nomlangan maxsus izohga ega bo'lib, uni butun sonlar kabi stackda saqlanadigan turlarga joylashtirishimiz mumkin (biz [10-bobda][traits]<!-- ignore --> traitlar haqida ko'proq gaplashamiz). Agar tur  `Copy` traitini amalga oshirsa, undan foydalanadigan o‘zgaruvchilar harakatlanmaydi, aksincha, ahamiyatsiz tarzda ko‘chiriladi, bu esa boshqa o‘zgaruvchiga tayinlangandan keyin ham amal qiladi.
 
 Rust turi yoki uning biron bir qismi `Drop` traitini qo‘llagan bo‘lsa, `Copy` bilan turga annotation qo‘yishimizga ruxsat bermaydi. Qiymat doirasidan chiqib ketganda turga maxsus biror narsa kerak bo'lsa va biz ushbu turga `Copy` annotationni qo'shsak, biz kompilyatsiya vaqtida xatolikni olamiz. Traitni amalga oshirish uchun turingizga `Copy` annotationni qanday qo‘shish haqida bilish uchun C ilovasidagi [“Derivable Traitlar”][derivable-traits]<!-- ignore -->ga qarang.
 
