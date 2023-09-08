@@ -30,7 +30,7 @@ Ownershipni tushunganingizda, Rustni noyob qiladigan xususiyatlarni tushunish uc
 > saqlanishi kerak.
 >
 > heap kamroq tartibga solingan: ma'lumotlarni heapga qo'yganingizda, ma'lum miqdorda
-> bo'sh joy talab qilasiz. Xotira ajratuvchisi heapda etarlicha katta bo'lgan bo'sh joyni
+> bo'sh joy talab qilasiz. Xotira ajratuvchisi(memory allocator) heapda yetarlicha katta bo'lgan bo'sh joyni
 > topadi, uni ishlatilayotgan deb belgilaydi va o'sha joyning manzili bo'lgan
 > *pointerni* ni qaytaradi. Bu jarayon *heap allocating* deb ataladi va ba'zan
 > faqat *allocating* deb qisqartiriladi (qiymatlarni stackga qo'shish ajratish
