@@ -113,7 +113,7 @@ bo'limida ko'rib chiqilganlarga qaraganda murakkabroq ma'lumotlar turi kerak. Ol
 Biz `String` ning ownership bilan bog'liq qismlariga e'tibor qaratamiz. Ushbu jihatlar standart kutubxona tomonidan taqdim etilganmi yoki siz yaratganmi, boshqa murakkab ma'lumotlar turlariga ham tegishli.
 Biz [8-bobda][ch8]<!-- ignore --> `String`ni chuqurroq muhokama qilamiz.
 
-Biz allaqachon string literallarini ko'rdik, bu erda string qiymati bizning dasturimizga qattiq kodlangan. String literallari qulay, ammo ular biz matndan foydalanmoqchi bo'lgan har qanday vaziyatga mos kelmaydi. Buning sabablaridan biri shundaki, ular o'zgarmasdir. Yana bir narsa shundaki, biz kodni yozganimizda har bir satr qiymatini bilish mumkin emas: masalan, agar biz foydalanuvchi ma'lumotlarini olib, uni saqlamoqchi bo'lsak-chi? Bunday holatlar uchun Rust ikkinchi string turiga ega, `String`. Bu tur heapda ajratilgan ma'lumotlarni boshqaradi va shuning uchun kompilyatsiya vaqtida bizga noma'lum bo'lgan matn miqdorini saqlashi mumkin. Siz `from` funksiyasidan foydalanib satr literalidan `String` yaratishingiz mumkin, masalan:
+Biz allaqachon string literallarini ko'rdik, bu yerda string qiymati bizning dasturimizga qattiq kodlangan. String literallari qulay, ammo ular biz matndan foydalanmoqchi bo'lgan har qanday vaziyatga mos kelmaydi. Buning sabablaridan biri shundaki, ular o'zgarmasdir. Yana bir narsa shundaki, biz kodni yozganimizda har bir satr qiymatini bilish mumkin emas: masalan, agar biz foydalanuvchi ma'lumotlarini olib, uni saqlamoqchi bo'lsak-chi? Bunday holatlar uchun Rust ikkinchi string turiga ega, `String`. Bu tur heapda ajratilgan ma'lumotlarni boshqaradi va shuning uchun kompilyatsiya vaqtida bizga noma'lum bo'lgan matn miqdorini saqlashi mumkin. Siz `from` funksiyasidan foydalanib satr literalidan `String` yaratishingiz mumkin, masalan:
 
 ```rust
 let s = String::from("salom");
@@ -128,7 +128,7 @@ Ushbu turdagi *string* mutatsiyaga uchragan bo'lishi mumkin:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-01-can-mutate-string/src/main.rs:here}}
 ```
 
-Xo'sh, bu erda qanday farq bor? Nima uchun `String` ni mutatsiyaga solish mumkin, lekin harflarni o'zgartirish mumkin emas? Farqi bu ikki turning xotira bilan qanday munosabatda bo'lishida.
+Xo'sh, bu yerda qanday farq bor? Nima uchun `String` ni mutatsiyaga solish mumkin, lekin harflarni o'zgartirish mumkin emas? Farqi bu ikki turning xotira bilan qanday munosabatda bo'lishida.
 
 ### Xotira va Taqsimlash
 
@@ -149,7 +149,7 @@ Rust boshqa yo'lni egallaydi: unga ega bo'lgan o'zgaruvchi amaldan tashqariga ch
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-02-string-scope/src/main.rs:here}}
 ```
 
-Biz `String` kerak bo'lgan xotirani ajratuvchiga qaytarishimiz mumkin bo'lgan tabiiy nuqta bor: `s` scopedan chiqib ketganda. O'zgaruvchi scopedan chiqib ketganda, Rust biz uchun maxsus funksiyani chaqiradi.Ushbu funktsiya [`drop`][drop]<!-- ignore --> deb ataladi va u erda `String` muallifi xotirani qaytarish uchun kodni qo'yishi mumkin. Rust yopilgan jingalak qavsda avtomatik ravishda `drop` ni chaqiradi.
+Biz `String` kerak bo'lgan xotirani ajratuvchiga qaytarishimiz mumkin bo'lgan tabiiy nuqta bor: `s` scopedan chiqib ketganda. O'zgaruvchi scopedan chiqib ketganda, Rust biz uchun maxsus funksiyani chaqiradi.Ushbu funktsiya [`drop`][drop]<!-- ignore --> deb ataladi va u yerda `String` muallifi xotirani qaytarish uchun kodni qo'yishi mumkin. Rust yopilgan jingalak qavsda avtomatik ravishda `drop` ni chaqiradi.
 
 > Eslatma: C++ da, elementning ishlash muddati oxirida resurslarni taqsimlashning bunday sxemasi ba'zan
 > *Resource Acquisition Is Initialization (RAII)*(Resurslarni yig'ish - ishga tushirish (RAII) deb ataladi.
@@ -252,7 +252,7 @@ Mana amaldagi `clone` metodiga misol:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-05-clone/src/main.rs:here}}
 ```
 
-Bu juda yaxshi ishlaydi va 4-3-rasmda ko'rsatilgan xatti-harakatni aniq ishlab chiqaradi, bu erda heap ma'lumotlar nusxalanadi.
+Bu juda yaxshi ishlaydi va 4-3-rasmda ko'rsatilgan xatti-harakatni aniq ishlab chiqaradi, bu yerda heap ma'lumotlar nusxalanadi.
 
 `clone` ga murojatni ko'rsangiz, ba'zi bir ixtiyoriy kod bajarilayotganini va bu kod qimmat bo'lishi mumkinligini bilasiz. Bu boshqa narsa sodir bo'layotganining vizual ko'rsatkichidir.
 
@@ -266,7 +266,7 @@ Biz hali gapirmagan yana bir narsa bor. Integer sonlardan foydalanadigan ushbu k
 
 Ammo bu kod biz bilib olgan narsaga zid ko'rinadi: bizda `clone` uchun murojat yo'q, lekin `x` hali ham amal qiladi va `y` ga o'tkazilmagan.
 
-Sababi, kompilyatsiya vaqtida ma'lum o'lchamga ega bo'lgan integer sonlar kabi turlar to'liq stackda saqlanadi, shuning uchun haqiqiy qiymatlarning nusxalari tezda tayyorlanadi. Bu shuni anglatadiki, biz `y` o'zgaruvchisini yaratganimizdan keyin `x` ning haqiqiy bo'lishiga to'sqinlik qilish uchun hech qanday sabab yo'q. Boshqacha qilib aytadigan bo'lsak, bu erda deep va shallow nusxa ko'chirish o'rtasida farq yo'q, shuning uchun `clone` ni chaqirish odatdagi shallow copydan farq qilmaydi va biz uni tark etishimiz mumkin.
+Sababi, kompilyatsiya vaqtida ma'lum o'lchamga ega bo'lgan integer sonlar kabi turlar to'liq stackda saqlanadi, shuning uchun haqiqiy qiymatlarning nusxalari tezda tayyorlanadi. Bu shuni anglatadiki, biz `y` o'zgaruvchisini yaratganimizdan keyin `x` ning haqiqiy bo'lishiga to'sqinlik qilish uchun hech qanday sabab yo'q. Boshqacha qilib aytadigan bo'lsak, bu yerda deep va shallow nusxa ko'chirish o'rtasida farq yo'q, shuning uchun `clone` ni chaqirish odatdagi shallow copydan farq qilmaydi va biz uni tark etishimiz mumkin.
 
 Rust `Copy` traiti deb nomlangan maxsus izohga ega bo'lib, uni butun sonlar kabi stackda saqlanadigan turlarga joylashtirishimiz mumkin (biz [10-bobda][traits]<!-- ignore --> traitlar haqida ko'proq gaplashamiz). Agar tur  `Copy` traitini amalga oshirsa, undan foydalanadigan o‘zgaruvchilar harakatlanmaydi, aksincha, ahamiyatsiz tarzda ko‘chiriladi, bu esa boshqa o‘zgaruvchiga tayinlangandan keyin ham amal qiladi.
 
