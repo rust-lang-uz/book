@@ -17,7 +17,7 @@ Birinchidan, o'zgaruvchilar deklaratsiyasidagi barcha tuple kodi va funksiyani q
 
 <img alt="Three tables: the table for s contains only a pointer to the table
 for s1. The table for s1 contains the stack data for s1 and points to the
-string data on the heap." src="img/trpl04-05.svg" class="center" />
+string data on the heap." src="img/trpl04-05.jpg" class="center" />
 
 <span class="caption">4-5-rasm: `&String s` chizmasi `String s1`ga ishora qiladi</span>
 
