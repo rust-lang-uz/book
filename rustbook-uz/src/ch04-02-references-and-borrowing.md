@@ -21,7 +21,7 @@ string data on the heap." src="img/trpl04-05.jpg" class="center" />
 
 <span class="caption">4-5-rasm: `&String s` chizmasi `String s1`ga ishora qiladi</span>
 
-> Eslatma: `&` yordamida reference qilishning teskarisi *dereferencing* bo`lib,
+> Eslatma: `&` yordamida reference qilishning teskarisi *dereferencing* bo'lib,
 > u `*` dereference operatori yordamida amalga oshiriladi. Biz 8-bobda dereference
 > operatoridan baʼzi foydalanishni koʻrib chiqamiz va 15-bobda dereference tafsilotlarini 
 > muhokama qilamiz.
