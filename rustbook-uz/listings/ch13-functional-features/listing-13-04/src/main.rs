@@ -1,10 +1,10 @@
 fn main() {
     let list = vec![1, 2, 3];
-    println!("Before defining closure: {:?}", list);
+    println!("Closureni belgilashdan oldin: {:?}", list);
 
-    let only_borrows = || println!("From closure: {:?}", list);
+    let faqat_borrow = || println!("Closuredan: {:?}", list);
 
-    println!("Before calling closure: {:?}", list);
-    only_borrows();
-    println!("After calling closure: {:?}", list);
+    println!("Closureni chaqirishdan oldin: {:?}", list);
+    faqat_borrow();
+    println!("Chaqirilgandan keyin closure: {:?}", list);
 }

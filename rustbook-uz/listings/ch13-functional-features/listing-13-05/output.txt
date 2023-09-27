@@ -1,6 +1,6 @@
 $ cargo run
-   Compiling closure-example v0.1.0 (file:///projects/closure-example)
+   Compiling namuna_closure v0.1.0 (file:///projects/namuna_closure)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s
-     Running `target/debug/closure-example`
-Before defining closure: [1, 2, 3]
-After calling closure: [1, 2, 3, 7]
+     Running `target/debug/namuna_closure`
+Closureni aniqlashdan oldin: [1, 2, 3]
+Chaqirilgandan keyin closure: [1, 2, 3, 7]

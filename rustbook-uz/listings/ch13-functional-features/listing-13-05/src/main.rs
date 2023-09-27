@@ -1,9 +1,9 @@
 fn main() {
     let mut list = vec![1, 2, 3];
-    println!("Before defining closure: {:?}", list);
+    println!("Closureni aniqlashdan oldin: {:?}", list);
 
-    let mut borrows_mutably = || list.push(7);
+    let mut ozgaruvchan_borrow = || list.push(7);
 
-    borrows_mutably();
-    println!("After calling closure: {:?}", list);
+    ozgaruvchan_borrow();
+    println!("Chaqirilgandan keyin closure: {:?}", list);
 }
