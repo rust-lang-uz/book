@@ -1,8 +1,8 @@
 fn main() {
     // ANCHOR: here
-    let example_closure = |x| x;
+    let namuna_closure = |x| x;
 
-    let s = example_closure(String::from("hello"));
-    let n = example_closure(5);
+    let s = namuna_closure(String::from("salom"));
+    let n = namuna_closure(5);
     // ANCHOR_END: here
 }
