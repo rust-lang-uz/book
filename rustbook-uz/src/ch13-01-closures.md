@@ -126,26 +126,13 @@ Ushbu kod kompilyatsiya bo'ladi, ishlaydi va chop etadi:
 {{#include ../listings/ch13-functional-features/listing-13-05/output.txt}}
 ```
 
-Note that there’s no longer a `println!` between the definition and the call of
-the `borrows_mutably` closure: when `borrows_mutably` is defined, it captures a
-mutable reference to `list`. We don’t use the closure again after the closure
-is called, so the mutable borrow ends. Between the closure definition and the
-closure call, an immutable borrow to print isn’t allowed because no other
-borrows are allowed when there’s a mutable borrow. Try adding a `println!`
-there to see what error message you get!
+E'tibor bering, `ozgaruvchan_borrow` closurening ta'rifi(definition) va chaqiruvi o'rtasida endi `println!` belgisi yo'q: `ozgaruvchan_borrow` aniqlanganda, u `list`ga o'zgaruvchan(mutable) referenceni oladi. Closure chaqirilgandan keyin biz closureni qayta ishlatmaymiz, shuning uchun mutable borrow(o'zgaruvchan qarz) tugaydi. Closure definationi va closure chaqiruvi o'rtasida chop etish uchun immutable(o'zgarmas) borrowga ruxsat berilmaydi, chunki mutable borrow mavjud bo'lganda boshqa borrowlarga ruxsat berilmaydi. Qaysi xato xabari borligini bilish uchun u yerga `println!` qo'shib ko'ring!
 
-If you want to force the closure to take ownership of the values it uses in the
-environment even though the body of the closure doesn’t strictly need
-ownership, you can use the `move` keyword before the parameter list.
+Agar closurening asosiy qismi ownershipga(egalik) muhtoj bo'lmasa ham, uni environmentda foydalanadigan qiymatlarga ownershiplik qilishga harakat qilmoqchi bo'lsangiz, parametrlar ro'yxatidan oldin `move` kalit so'zidan foydalanishingiz mumkin.
 
-This technique is mostly useful when passing a closure to a new thread to move
-the data so that it’s owned by the new thread. We’ll discuss threads and why
-you would want to use them in detail in Chapter 16 when we talk about
-concurrency, but for now, let’s briefly explore spawning a new thread using a
-closure that needs the `move` keyword. Listing 13-6 shows Listing 13-4 modified
-to print the vector in a new thread rather than in the main thread:
+Ushbu uslub asosan ma'lumotlarni yangi threadga tegishli bo'lishi uchun ko'chirish uchun yangi threadga closureni o'tkazishda foydalidir. Biz 16-bobda parallellik(concurrency) haqida gapirganda, thereadlarni va nima uchun ulardan foydalanishni xohlashingizni batafsil muhokama qilamiz, ammo hozircha `move` kalit so'ziga muhtoj bo'lgan closure yordamida yangi threadni yaratishni qisqacha ko'rib chiqamiz. 13-6 ro'yxat vektorni asosiy thredda emas, balki yangi threadda chop etish uchun o'zgartirilgan 13-4 ro'yxatini ko'rsatadi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-06/src/main.rs}}

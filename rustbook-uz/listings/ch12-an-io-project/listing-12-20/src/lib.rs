@@ -9,7 +9,7 @@ pub struct Config {
 impl Config {
     pub fn build(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 3 {
-            return Err("not enough arguments");
+            return Err("argumentlar yetarli emas");
         }
 
         let sorov  = args[1].clone();
