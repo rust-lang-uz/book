@@ -138,30 +138,16 @@ Ushbu uslub asosan ma'lumotlarni yangi threadga tegishli bo'lishi uchun ko'chiri
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-06/src/main.rs}}
 ```
 
-<span class="caption">Listing 13-6: Using `move` to force the closure for the
-thread to take ownership of `list`</span>
+<span class="caption">Roʻyxat 13-6: `list`ga ownershiplik  qilish uchun threadni yopishni majburlash uchun `move` dan foydalanish</span>
 
-We spawn a new thread, giving the thread a closure to run as an argument. The
-closure body prints out the list. In Listing 13-4, the closure only captured
-`list` using an immutable reference because that's the least amount of access
-to `list` needed to print it. In this example, even though the closure body
-still only needs an immutable reference, we need to specify that `list` should
-be moved into the closure by putting the `move` keyword at the beginning of the
-closure definition. The new thread might finish before the rest of the main
-thread finishes, or the main thread might finish first. If the main thread
-maintained ownership of `list` but ended before the new thread did and dropped
-`list`, the immutable reference in the thread would be invalid. Therefore, the
-compiler requires that `list` be moved into the closure given to the new thread
-so the reference will be valid. Try removing the `move` keyword or using `list`
-in the main thread after the closure is defined to see what compiler errors you
-get!
+Biz argument sifatida ishlash uchun threadni yopish(closure) imkonini berib, yangi threadni yaratamiz. Closure tanasi(body) listni chop etadi. Roʻyxat 13-4, closure faqat oʻzgarmas(immutable) reference yordamida `list`ni yozib oldi, chunki bu uni chop etish uchun zarur boʻlgan `list`ga kirishning eng kam miqdori. Ushbu misolda, closure tanasi(body) hali ham faqat o'zgarmas(immutable) referencega muhtoj bo'lsa ham, biz closure definationing boshiga `move` kalit so'zini qo'yish orqali `list` closurega ko'chirilishi kerakligini ko'rsatishimiz kerak. Yangi thread asosiy threadning qolgan qismi tugashidan oldin tugashi yoki asosiy thread birinchi bo'lib tugashi mumkin. Agar asosiy thread `list`ga ownershiplikni saqlab qolgan boʻlsa-da, lekin yangi thread paydo boʻlishidan oldin tugasa va `list`ni tashlab qoʻysa, threaddagi immutable(oʻzgarmas) reference yaroqsiz boʻladi. Shuning uchun, kompilyator `list`ni yangi threadga berilgan closurega ko'chirishni talab qiladi, shuning uchun reference haqiqiy bo'ladi. Kompilyatorda qanday xatolarga yo'l qo'yganingizni ko'rish uchun closure aniqlangandan so'ng, `move` kalit so'zini olib tashlang yoki asosiy threaddagi `list` dan foydalaning!
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="storing-closures-using-generic-parameters-and-the-fn-traits"></a>
 <a id="limitations-of-the-cacher-implementation"></a>
 <a id="moving-captured-values-out-of-the-closure-and-the-fn-traits"></a>
 
-### Moving Captured Values Out of Closures and the `Fn` Traits
+### Qabul qilingan qiymatlarni closuredan va `Fn` traitlaridan ko'chirish
 
 Once a closure has captured a reference or captured ownership of a value from
 the environment where the closure is defined (thus affecting what, if anything,
