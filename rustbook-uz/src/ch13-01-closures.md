@@ -149,11 +149,9 @@ Biz argument sifatida ishlash uchun threadni yopish(closure) imkonini berib, yan
 
 ### Qabul qilingan qiymatlarni closuredan va `Fn` traitlaridan ko'chirish
 
-Once a closure has captured a reference or captured ownership of a value from
-the environment where the closure is defined (thus affecting what, if anything,
-is moved *into* the closure), the code in the body of the closure defines what
-happens to the references or values when the closure is evaluated later (thus
-affecting what, if anything, is moved *out of* the closure). A closure body can
+Closure ma'lumotnomani qo'lga kiritgandan so'ng(shunday qilib, agar biror narsa bo'lsa, closurega ko'chirilgan narsaga ta'sir qiladi) yoki closure aniqlangan environmentdan qiymatga ownershiplikni qo'lga kiritgandan so'ng,(agar biror narsa bo'lsa, closuredan ko'chirilgan narsaga ta'sir qiladi) closurening asosiy qismidagi kod closure keyinroq baholanganda referencelar yoki qiymatlar bilan nima sodir bo'lishini belgilaydi. 
+
+A closure body can
 do any of the following: move a captured value out of the closure, mutate the
 captured value, neither move nor mutate the value, or capture nothing from the
 environment to begin with.
