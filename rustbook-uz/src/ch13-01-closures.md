@@ -196,7 +196,7 @@ Endi keling, slicelarda aniqlangan standart kutubxona metodini ko‘rib chiqamiz
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-07/src/main.rs}}
 ```
 
-<span class="caption">Ro'yxat 13-7: Kvadratlarlarni kengligi bo'yicha tartiblash uchun "sort_by_key" dan foydalaning</span>
+<span class="caption">Ro'yxat 13-7: Kvadratlarlarni kengligi bo'yicha tartiblash uchun `sort_by_key` dan foydalaning</span>
 
 Ushbu kod quyidagi natijani chop etadi:
 
@@ -222,27 +222,16 @@ Bu `list`ni saralashda `sort_by_key` necha marta chaqirilishini hisoblashning o�
 {{#include ../listings/ch13-functional-features/listing-13-08/output.txt}}
 ```
 
-The error points to the line in the closure body that moves `value` out of the
-environment. To fix this, we need to change the closure body so that it doesn’t
-move values out of the environment. To count the number of times `sort_by_key`
-is called, keeping a counter in the environment and incrementing its value in
-the closure body is a more straightforward way to calculate that. The closure
-in Listing 13-9 works with `sort_by_key` because it is only capturing a mutable
-reference to the `num_sort_operations` counter and can therefore be called more
-than once:
+Xato `qiymat`ni environmentdan tashqariga olib chiqadigan closure tanasidagi(body) chiziqqa(line) ishora qiladi. Buni tuzatish uchun biz closure tanasini qiymatlarni environmentdan ko'chirmasligi uchun o'zgartirishimiz kerak. `sort_by_key` necha marta chaqirilishini hisoblash uchun hisoblagichni(counter) environment saqlash va uning qiymatini closure tanasida oshirish buni hisoblashning yanada sodda usuli hisoblanadi. 13-9 ro'yxatdagi closure `sort_by_key` bilan ishlaydi, chunki u faqat `raqam_saralash_operatsiyalari` counteriga mutable(o'zgaruvchan) referenceni oladi va shuning uchun uni bir necha marta chaqirish mumkin:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-09/src/main.rs}}
 ```
 
-<span class="caption">Listing 13-9: Using an `FnMut` closure with `sort_by_key`
-is allowed</span>
+<span class="caption">Roʻyxat 13-9: `sort_by_key` bilan `FnMut` closuredan foydalanishga ruxsat berilgan</span>
 
-The `Fn` traits are important when defining or using functions or types that
-make use of closures. In the next section, we’ll discuss iterators. Many
-iterator methods take closure arguments, so keep these closure details in mind
-as we continue!
+`Fn` traitlari closurelardan foydalanadigan funksiyalar yoki turlarni belgilash yoki ishlatishda muhim ahamiyatga ega. Keyingi bo'limda biz iteratorlarni muhokama qilamiz. Ko'pgina iterator metodlari closure argumentlarini oladi, shuning uchun biz davom etayotganda ushbu closure tafsilotlarini(details) yodda tuting!
 
 [unwrap-or-else]: ../std/option/enum.Option.html#method.unwrap_or_else
