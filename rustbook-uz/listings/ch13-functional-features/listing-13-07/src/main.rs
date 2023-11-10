@@ -1,16 +1,16 @@
 #[derive(Debug)]
-struct Rectangle {
-    width: u32,
-    height: u32,
+struct Kvatrat {
+    kengligi: u32,
+    balandligi: u32,
 }
 
 fn main() {
     let mut list = [
-        Rectangle { width: 10, height: 1 },
-        Rectangle { width: 3, height: 5 },
-        Rectangle { width: 7, height: 12 },
+        Kvatrat { kengligi: 10, balandligi: 1 },
+        Kvatrat { kengligi: 3, balandligi: 5 },
+        Kvatrat { kengligi: 7, balandligi: 12 },
     ];
 
-    list.sort_by_key(|r| r.width);
+    list.sort_by_key(|r| r.kengligi);
     println!("{:#?}", list);
 }

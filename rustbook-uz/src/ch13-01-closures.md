@@ -190,50 +190,33 @@ Generic `F` turida belgilangan belgi `FnOnce() -> T` bo'lib, bu `F` bir marta ch
 
 Endi keling, slicelarda aniqlangan standart kutubxona metodini ko‘rib chiqamiz, bu `unwrap_or_else`dan qanday farq qilishini va nima uchun  `sort_by_key` trait bound uchun `FnOnce` o‘rniga `FnMut` dan foydalanishini ko‘raylik. Closure ko'rib chiqilayotgan qismdagi joriy elementga reference ko'rinishida bitta argument oladi va order qilinishi mumkin bo'lgan `K` turidagi qiymatni qaytaradi. Ushbu funksiya har bir elementning ma'lum bir atributi bo'yicha sliceni saralashni xohlaganingizda foydalidir. 13-7 ro'yxatda bizda `Kvadrat` misollar listi mavjud va biz ularni `kenglik` atributi bo'yicha pastdan yuqoriga tartiblash uchun `sort_by_key` dan foydalanamiz:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-07/src/main.rs}}
 ```
 
-<span class="caption">Listing 13-7: Using `sort_by_key` to order rectangles by
-width</span>
+<span class="caption">Ro'yxat 13-7: Kvadratlarlarni kengligi bo'yicha tartiblash uchun "sort_by_key" dan foydalaning</span>
 
-This code prints:
+Ushbu kod quyidagi natijani chop etadi:
 
 ```console
 {{#include ../listings/ch13-functional-features/listing-13-07/output.txt}}
 ```
 
-The reason `sort_by_key` is defined to take an `FnMut` closure is that it calls
-the closure multiple times: once for each item in the slice. The closure `|r|
-r.width` doesn’t capture, mutate, or move out anything from its environment, so
-it meets the trait bound requirements.
+`sort_by_key` `FnMut` closureni olish uchun aniqlanganining sababi shundaki, u closureni bir necha marta chaqiradi: slicedagi har bir element uchun bir marta. `|r| r.kengligi` o'z environmentidan hech narsani ushlamaydi(capture), mutatsiyaga uchramaydi yoki boshqa joyga ko'chirmaydi, shuning uchun u trait bound bo'lgan talablarga javob beradi.
 
-In contrast, Listing 13-8 shows an example of a closure that implements just
-the `FnOnce` trait, because it moves a value out of the environment. The
-compiler won’t let us use this closure with `sort_by_key`:
+Bundan farqli o'laroq, 13-8 ro'yxat faqat `FnOnce` traitini amalga oshiradigan closure misolini ko'rsatadi, chunki u qiymatni environmentdan tashqariga ko'chiradi. Kompilyator bu closureni `sort_by_key` bilan ishlatishimizga ruxsat bermaydi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-08/src/main.rs}}
 ```
 
-<span class="caption">Listing 13-8: Attempting to use an `FnOnce` closure with
-`sort_by_key`</span>
+<span class="caption">Ro'yxat 13-8: `sort_by_key` yordamida `FnOnce` closuredan foydalanishga urinish</span>
 
-This is a contrived, convoluted way (that doesn’t work) to try and count the
-number of times `sort_by_key` gets called when sorting `list`. This code
-attempts to do this counting by pushing `value`—a `String` from the closure’s
-environment—into the `sort_operations` vector. The closure captures `value`
-then moves `value` out of the closure by transferring ownership of `value` to
-the `sort_operations` vector. This closure can be called once; trying to call
-it a second time wouldn’t work because `value` would no longer be in the
-environment to be pushed into `sort_operations` again! Therefore, this closure
-only implements `FnOnce`. When we try to compile this code, we get this error
-that `value` can’t be moved out of the closure because the closure must
-implement `FnMut`:
+Bu `list`ni saralashda `sort_by_key` necha marta chaqirilishini hisoblashning oʻylab topilgan (bu ishlamaydi) usulidir. Ushbu kod closure environmentidan  `qiymat`—a `String` ni `saralash_operatsiyalari` vektoriga surish(push) orqali hisoblashni amalga oshirishga harakat qiladi. Closure `qiymat`ni ushlaydi, so‘ngra `qiymat` ownershipligini `saralash_operatsiyalari` vektoriga o‘tkazish orqali `qiymat`ni closuredan chiqaradi. Ushbu closureni bir marta chaqirish mumkin; uni ikkinchi marta chaqirishga urinish ishlamaydi, chunki `qiymat` endi `saralash_operatsiyalari` ga push qilinadigan environmentda(muhitda) bo'lmaydi! Shuning uchun, bu closure faqat `FnOnce` ni amalga oshiradi(implement qiladi). Ushbu kodni kompilyatsiya qilmoqchi bo'lganimizda, biz `qiymat` ni closuredan chiqarib bo'lmaydigan xatoni olamiz, chunki closure `FnMut` ni implement qilishi kerak:
 
 ```console
 {{#include ../listings/ch13-functional-features/listing-13-08/output.txt}}

@@ -1,22 +1,22 @@
 #[derive(Debug)]
 struct Rectangle {
-    width: u32,
-    height: u32,
+    kengligi: u32,
+    balandligi: u32,
 }
 
 fn main() {
     let mut list = [
-        Rectangle { width: 10, height: 1 },
-        Rectangle { width: 3, height: 5 },
-        Rectangle { width: 7, height: 12 },
+        Rectangle { kengligi: 10, balandligi: 1 },
+        Rectangle { kengligi: 3, balandligi: 5 },
+        Rectangle { kengligi: 7, balandligi: 12 },
     ];
 
-    let mut sort_operations = vec![];
-    let value = String::from("by key called");
+    let mut saralash_operatsiyalari = vec![];
+    let qiymat = String::from("chaqirilgan kalit orqali");
 
     list.sort_by_key(|r| {
-        sort_operations.push(value);
-        r.width
+        saralash_operatsiyalari.push(qiymat);
+        r.kengligi
     });
     println!("{:#?}", list);
 }

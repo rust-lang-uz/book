@@ -1,18 +1,18 @@
 $ cargo run
-   Compiling rectangles v0.1.0 (file:///projects/rectangles)
+   Compiling Kvadrats v0.1.0 (file:///projects/Kvadrats)
     Finished dev [unoptimized + debuginfo] target(s) in 0.41s
-     Running `target/debug/rectangles`
+     Running `target/debug/Kvadratlar`
 [
-    Rectangle {
-        width: 3,
-        height: 5,
+    Kvadrat {
+        kengligi: 3,
+        balandligi: 5,
     },
-    Rectangle {
-        width: 7,
-        height: 12,
+    Kvadrat {
+        kengligi: 7,
+        balandligi: 12,
     },
-    Rectangle {
-        width: 10,
-        height: 1,
+    Kvadrat {
+        kengligi: 10,
+        balandligi: 1,
     },
 ]
