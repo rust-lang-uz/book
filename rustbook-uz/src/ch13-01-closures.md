@@ -151,32 +151,15 @@ Biz argument sifatida ishlash uchun threadni yopish(closure) imkonini berib, yan
 
 Closure ma'lumotnomani qo'lga kiritgandan so'ng(shunday qilib, agar biror narsa bo'lsa, closurega ko'chirilgan narsaga ta'sir qiladi) yoki closure aniqlangan environmentdan qiymatga ownershiplikni qo'lga kiritgandan so'ng,(agar biror narsa bo'lsa, closuredan ko'chirilgan narsaga ta'sir qiladi) closurening asosiy qismidagi kod closure keyinroq baholanganda referencelar yoki qiymatlar bilan nima sodir bo'lishini belgilaydi. 
 
-A closure body can
-do any of the following: move a captured value out of the closure, mutate the
-captured value, neither move nor mutate the value, or capture nothing from the
-environment to begin with.
+Closure tanasi(body) quyidagilardan birini amalga oshirishi mumkin: olingan qiymatni closuredan tashqariga ko'chirish(move), olingan qiymatni mutatsiyalash, qiymatni ko'chirish yoki mutatsiyalash yoki boshlash uchun environmentdan hech narsa olmaslik.
 
-The way a closure captures and handles values from the environment affects
-which traits the closure implements, and traits are how functions and structs
-can specify what kinds of closures they can use. Closures will automatically
-implement one, two, or all three of these `Fn` traits, in an additive fashion,
-depending on how the closure’s body handles the values:
+Yopishning environmentdan handlelarni ushlash(capture) va boshqarish usuli closure implementlarining qaysi traitlariga ta'sir qiladi va traitlar funksiyalar va structlar qanday closure turlaridan foydalanishi mumkinligini ko'rsatishi mumkin. Closurelar ushbu `Fn` belgilarining bittasi, ikkitasi yoki uchtasini avtomatik ravishda qo'shimcha usulda, closure tanasi qiymatlarni(value) qanday boshqarishiga qarab implement qilinadi:
 
-1. `FnOnce` applies to closures that can be called once. All closures implement
-   at least this trait, because all closures can be called. A closure that
-   moves captured values out of its body will only implement `FnOnce` and none
-   of the other `Fn` traits, because it can only be called once.
-2. `FnMut` applies to closures that don’t move captured values out of their
-   body, but that might mutate the captured values. These closures can be
-   called more than once.
-3. `Fn` applies to closures that don’t move captured values out of their body
-   and that don’t mutate captured values, as well as closures that capture
-   nothing from their environment. These closures can be called more than once
-   without mutating their environment, which is important in cases such as
-   calling a closure multiple times concurrently.
+1. `FnOnce` bir marta chaqirilishi mumkin bo'lgan closurelar uchun amal qiladi. Barcha closurelar hech bo'lmaganda ushbu traitni amalga oshiradi(implement qiladi), chunki barcha closurelar chaqirilishi mumkin. Qabul qilingan qiymatlarni(value) tanasidan tashqariga ko'chiradigan closure faqat `FnOnce` ni implement qiladi va boshqa `Fn` traitlarining hech birini implement qilmaydi, chunki uni faqat bir marta chaqirish mumkin.
+2. `FnMut` qo'lga kiritilgan qiymatlarni(value) tanasidan tashqariga olib chiqmaydigan, lekin olingan qiymatlarni o'zgartirishi mumkin bo'lgan closurelarga nisbatan qo'llaniladi.Ushbu closurelarni bir necha marta chaqirish mumkin. 
+3. `Fn` qo'lga kiritilgan qiymatlarni tanasidan tashqariga chiqarmaydigan va olingan qiymatlarni o'zgartirmaydigan closurelar, shuningdek, environmentdan hech narsani ushlab(capture) turmaydigan closurelar uchun amal qiladi. Ushbu closurelar environmentni o'zgartirmasdan bir necha marta chaqirilishi mumkin, bu bir vaqtning o'zida bir necha marta closureni chaqirish kabi holatlarda muhimdir.
 
-Let’s look at the definition of the `unwrap_or_else` method on `Option<T>` that
-we used in Listing 13-1:
+Keling, 13-1 ro'yxatda biz qo'llagan `Option<T>` bo'yicha `unwrap_or_else` metodining definitionini ko'rib chiqaylik:
 
 ```rust,ignore
 impl<T> Option<T> {
