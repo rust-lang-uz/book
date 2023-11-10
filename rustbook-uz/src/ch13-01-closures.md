@@ -175,39 +175,20 @@ impl<T> Option<T> {
 }
 ```
 
-Recall that `T` is the generic type representing the type of the value in the
-`Some` variant of an `Option`. That type `T` is also the return type of the
-`unwrap_or_else` function: code that calls `unwrap_or_else` on an
-`Option<String>`, for example, will get a `String`.
+Eslatib oʻtamiz, `T` `Option`ning `Some` variantidagi qiymat turini ifodalovchi umumiy turdir(generic type). Bu `T` turi, shuningdek, `unwrap_or_else` funksiyasining qaytish(return) turidir: masalan, `Option<String>`da `unwrap_or_else` ni chaqiruvchi kod, `String` oladi.
 
-Next, notice that the `unwrap_or_else` function has the additional generic type
-parameter `F`. The `F` type is the type of the parameter named `f`, which is
-the closure we provide when calling `unwrap_or_else`.
+Keyin, `unwrap_or_else` funksiyasi qo'shimcha `F` umumiy turdagi parametrga ega ekanligiga e'tibor bering. `F` turi `f` nomli parametrning turi(type) bo'lib, biz `unwrap_or_else` ga chaqiruv(call) qilganimizda ta`minlovchi closuredir.
 
-The trait bound specified on the generic type `F` is `FnOnce() -> T`, which
-means `F` must be able to be called once, take no arguments, and return a `T`.
-Using `FnOnce` in the trait bound expresses the constraint that
-`unwrap_or_else` is only going to call `f` at most one time. In the body of
-`unwrap_or_else`, we can see that if the `Option` is `Some`, `f` won’t be
-called. If the `Option` is `None`, `f` will be called once. Because all
-closures implement `FnOnce`, `unwrap_or_else` accepts the most different kinds
-of closures and is as flexible as it can be.
+Generic `F` turida belgilangan belgi `FnOnce() -> T` bo'lib, bu `F` bir marta chaqirilishi, hech qanday argumentga ega bo'lmasligi va `T` qaytarilishini bildiradi. Trait bound-da `FnOnce` dan foydalanish `unwrap_or_else` faqat bir marta `f` ni chaqirishi mumkin bo'lgan cheklovni ifodalaydi. `unwrap_or_else` matnida biz `Option` `Some` bo‘lsa, `f` chaqirilmasligini ko‘rishimiz mumkin. Agar `Option` `None` bo'lsa, `f` bir marta chaqiriladi. Barcha closurelar `FnOnce` ni implement qilganligi sababli, `unwrap_or_else` eng har xil turdagi closurelarni qabul qiladi va imkon qadar moslashuvchan.
 
-> Note: Functions can implement all three of the `Fn` traits too. If what we
-> want to do doesn’t require capturing a value from the environment, we can use
-> the name of a function rather than a closure where we need something that
-> implements one of the `Fn` traits. For example, on an `Option<Vec<T>>` value,
-> we could call `unwrap_or_else(Vec::new)` to get a new, empty vector if the
-> value is `None`.
+> Eslatma: Funksiyalar uchta `Fn` traitlarini ham implement qilishi mumkin. Agar biz
+> qilmoqchi bo'lgan narsa environmentdan qiymat olishni(*capture value) talab qilmasa,
+> biz `Fn` traitlaridan birini implement qiladigan narsa kerak bo'lganda closure o'rniga
+> funksiya nomidan foydalanishimiz mumkin. Masalan, `Option<Vec<T>>` qiymatida,
+> agar qiymat `None` bo'lsa, yangi, bo'sh vektorni olish uchun `unwrap_or_else(Vec::new)` ni
+> chaqirishimiz mumkin.
 
-Now let’s look at the standard library method `sort_by_key` defined on slices,
-to see how that differs from `unwrap_or_else` and why `sort_by_key` uses
-`FnMut` instead of `FnOnce` for the trait bound. The closure gets one argument
-in the form of a reference to the current item in the slice being considered,
-and returns a value of type `K` that can be ordered. This function is useful
-when you want to sort a slice by a particular attribute of each item. In
-Listing 13-7, we have a list of `Rectangle` instances and we use `sort_by_key`
-to order them by their `width` attribute from low to high:
+Endi keling, slicelarda aniqlangan standart kutubxona metodini ko‘rib chiqamiz, bu `unwrap_or_else`dan qanday farq qilishini va nima uchun  `sort_by_key` trait bound uchun `FnOnce` o‘rniga `FnMut` dan foydalanishini ko‘raylik. Closure ko'rib chiqilayotgan qismdagi joriy elementga reference ko'rinishida bitta argument oladi va order qilinishi mumkin bo'lgan `K` turidagi qiymatni qaytaradi. Ushbu funksiya har bir elementning ma'lum bir atributi bo'yicha sliceni saralashni xohlaganingizda foydalidir. 13-7 ro'yxatda bizda `Kvadrat` misollar listi mavjud va biz ularni `kenglik` atributi bo'yicha pastdan yuqoriga tartiblash uchun `sort_by_key` dan foydalanamiz:
 
 <span class="filename">Filename: src/main.rs</span>
 
