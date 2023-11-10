@@ -18,23 +18,15 @@ Iterator `v1_iter` o'zgaruvchisida saqlanadi. Biz iteratorni yaratganimizdan so'
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-11/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 13-11: Using an iterator in a `for` loop</span>
+<span class="caption">Ro'yxat 13-11: `for` loop siklida iteratordan foydalanish</span>
 
-In languages that don’t have iterators provided by their standard libraries,
-you would likely write this same functionality by starting a variable at index
-0, using that variable to index into the vector to get a value, and
-incrementing the variable value in a loop until it reached the total number of
-items in the vector.
+Standart kutubxonalari tomonidan taqdim etilgan iteratorlarga ega bo'lmagan tillarda siz xuddi shu funksiyani o'zgaruvchini 0 indeksidan boshlab yozishingiz mumkin, qiymat olish uchun vektorga indekslash uchun ushbu o'zgaruvchidan foydalanish va vektordagi elementlarning umumiy soniga yetgunga qadar sikldagi o'zgaruvchi qiymatini oshirish.
 
-Iterators handle all that logic for you, cutting down on repetitive code you
-could potentially mess up. Iterators give you more flexibility to use the same
-logic with many different kinds of sequences, not just data structures you can
-index into, like vectors. Let’s examine how iterators do that.
+Iteratorlar siz uchun barcha mantiqni(logic) boshqaradi, siz chalkashtirib yuborishingiz mumkin bo'lgan takroriy kodni qisqartiradi. Iteratorlar vektorlar kabi indekslash mumkin bo'lgan ma'lumotlar tuzilmalari(data structure) emas, balki turli xil ketma-ketliklar(sequence) bilan bir xil mantiqdan foydalanish uchun ko'proq moslashuvchanlikni beradi. Keling, iteratorlar buni qanday qilishini ko'rib chiqaylik.
 
-### The `Iterator` Trait and the `next` Method
+### `Iterator` traiti va `next` metodi
 
-All iterators implement a trait named `Iterator` that is defined in the
-standard library. The definition of the trait looks like this:
+Barcha iteratorlar standart kutubxonada(standard library) aniqlangan `Iterator` nomli traitni implement qiladilar. Traitning definitioni quyidagicha ko'rinadi:
 
 ```rust
 pub trait Iterator {
@@ -42,34 +34,23 @@ pub trait Iterator {
 
     fn next(&mut self) -> Option<Self::Item>;
 
-    // methods with default implementations elided
+    // default implement qilingan  metodlar bekor qilindi
 }
 ```
 
-Notice this definition uses some new syntax: `type Item` and `Self::Item`,
-which are defining an *associated type* with this trait. We’ll talk about
-associated types in depth in Chapter 19. For now, all you need to know is that
-this code says implementing the `Iterator` trait requires that you also define
-an `Item` type, and this `Item` type is used in the return type of the `next`
-method. In other words, the `Item` type will be the type returned from the
-iterator.
+Eʼtibor bering, bu definitionda baʼzi yangi sintaksislar qoʻllangan: `type Item` va `Self::Item` bu trait bilan *bogʻlangan turni(associated type)* belgilaydi. Bog'langan turlar haqida 19-bobda batafsil gaplashamiz. Hozircha siz bilishingiz kerak bo'lgan narsa shuki, ushbu kodda aytilishicha, `Iterator` traitini implement qilish uchun siz `Item` turini ham belgilashingiz kerak bo'ladi va bu `Item` turi `next` metodining qaytarish(return) turida qo'llaniladi. Boshqacha qilib aytganda, `Item` turi iteratordan qaytarilgan tur bo'ladi.
 
-The `Iterator` trait only requires implementors to define one method: the
-`next` method, which returns one item of the iterator at a time wrapped in
-`Some` and, when iteration is over, returns `None`.
+`Iterator` traiti amalga oshiruvchilardan(implementorlar) faqat bitta metodni belgilashni talab qiladi: `next` metod, u bir vaqtning o'zida `Some` ga o'ralgan(wrapped) iteratorning bir elementini qaytaradi va takrorlash(iteratsiya) tugagach, `None`ni qaytaradi.
 
-We can call the `next` method on iterators directly; Listing 13-12 demonstrates
-what values are returned from repeated calls to `next` on the iterator created
-from the vector.
+Biz iteratorlarda `next` metodini to'g'ridan-to'g'ri chaqirishimiz mumkin; Ro'yxat 13-12 vektordan yaratilgan iteratorda `next` ga takroriy chaqiruvlardan qanday qiymatlar qaytarilishini ko'rsatadi.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-12/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 13-12: Calling the `next` method on an
-iterator</span>
+<span class="caption">Ro'yxat 13-12: iteratorda `next` metodini chaqirish</span>
 
 Note that we needed to make `v1_iter` mutable: calling the `next` method on an
 iterator changes internal state that the iterator uses to keep track of where
