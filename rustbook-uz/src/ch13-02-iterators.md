@@ -56,33 +56,21 @@ Esda tutingki, biz `v1_iter` ni o'zgaruvchan(mutable) qilishimiz kerak edi: iter
 
 Shuni ham yodda tutingki, biz `next` ga chaiqruvlardan oladigan qiymatlar vektordagi qiymatlarga o'zgarmas(immutable) referencelardir. `iter` metodi immutable(o'zgarmas) referencelar ustida iterator hosil qiladi. Agar biz `v1` ga ownershiplik(egalik) qiluvchi va tegishli qiymatlarni qaytaruvchi iterator yaratmoqchi bo'lsak, `iter` o‘rniga `into_iter` ni chaqirishimiz mumkin. Xuddi shunday, agar biz mutable(o'zgaruvchan) referencelarni takrorlashni xohlasak, `iter` o'rniga `iter_mut` ni chaqirishimiz mumkin.
 
-### Methods that Consume the Iterator
+### Iteratorni consume qiladigan metodlar
 
-The `Iterator` trait has a number of different methods with default
-implementations provided by the standard library; you can find out about these
-methods by looking in the standard library API documentation for the `Iterator`
-trait. Some of these methods call the `next` method in their definition, which
-is why you’re required to implement the `next` method when implementing the
-`Iterator` trait.
+`Iterator` traiti standart kutubxona(standard library) tomonidan taqdim etilgan default implementationlar bilan bir qator turli metodlarga ega; ushbu metodlar haqida `Iterator` traiti uchun standart kutubxona API texnik hujjatlarini ko'rib chiqish orqali bilib olishingiz mumkin. Ushbu metodlarning ba'zilari o'z definitionlarida `next` metodni chaqiradi, shuning uchun `Iterator` tratini implement qilishda `next` metodni qo'llash talab qilinadi.
 
-Methods that call `next` are called *consuming adaptors*, because calling them
-uses up the iterator. One example is the `sum` method, which takes ownership of
-the iterator and iterates through the items by repeatedly calling `next`, thus
-consuming the iterator. As it iterates through, it adds each item to a running
-total and returns the total when iteration is complete. Listing 13-13 has a
-test illustrating a use of the `sum` method:
+`next` ni chaqiruvchi metoflar *consuming adaptorlar* deb ataladi, chunki ularni chaqirish iteratordan foydalanadi. Bitta misol, iteratorga ownership(egalik) qiladigan va `next` deb qayta-qayta chaqirish orqali elementlarni takrorlaydigan, shu bilan iteratorni consume qiladigan `sum` metodidir. U takrorlanayotganda, u har bir elementni ishlayotgan jamiga qo'shadi va takrorlash tugagach, jamini qaytaradi. 13-13 ro'yxatda `sum` metodidan foydalanishni ko'rsatadigan test mavjud:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-13/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 13-13: Calling the `sum` method to get the total
-of all items in the iterator</span>
+<span class="caption">Ro'yxat 13-13: iteratordagi barcha elementlarning umumiy miqdorini olish uchun `sum` metodini chaqirish</span>
 
-We aren’t allowed to use `v1_iter` after the call to `sum` because `sum` takes
-ownership of the iterator we call it on.
+Bizga `sum` chaqiruvidan keyin `v1_iter` dan foydalanishga ruxsat berilmagan, chunki `sum` biz chaqiruvchi iteratorga ownershiplik(egalik) qiladi.
 
 ### Methods that Produce Other Iterators
 
