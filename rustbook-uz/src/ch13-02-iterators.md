@@ -52,19 +52,9 @@ Biz iteratorlarda `next` metodini to'g'ridan-to'g'ri chaqirishimiz mumkin; Ro'yx
 
 <span class="caption">Ro'yxat 13-12: iteratorda `next` metodini chaqirish</span>
 
-Note that we needed to make `v1_iter` mutable: calling the `next` method on an
-iterator changes internal state that the iterator uses to keep track of where
-it is in the sequence. In other words, this code *consumes*, or uses up, the
-iterator. Each call to `next` eats up an item from the iterator. We didn’t need
-to make `v1_iter` mutable when we used a `for` loop because the loop took
-ownership of `v1_iter` and made it mutable behind the scenes.
+Esda tutingki, biz `v1_iter` ni o'zgaruvchan(mutable) qilishimiz kerak edi: iteratorda `next` metodini chaqirish iterator ketma-ketlikda(sequence) qayerdaligini kuzatish uchun foydalanadigan ichki holatni(internal state) o'zgartiradi. Boshqacha qilib aytganda, bu kod iteratorni *iste'mol qiladi(consumes)* yoki ishlatadi. `next` ga har bir chaqiruv(call) iteratordan biror elementni olib tashlaydi. Biz `for` loop siklidan foydalanganda `v1_iter`ni o‘zgaruvchan(mutable) qilishimiz shart emas edi, chunki sikl `v1_iter` ga ownership(egalik) qildi va uni sahna ortida o‘zgaruvchan qildi.
 
-Also note that the values we get from the calls to `next` are immutable
-references to the values in the vector. The `iter` method produces an iterator
-over immutable references. If we want to create an iterator that takes
-ownership of `v1` and returns owned values, we can call `into_iter` instead of
-`iter`. Similarly, if we want to iterate over mutable references, we can call
-`iter_mut` instead of `iter`.
+Shuni ham yodda tutingki, biz `next` ga chaiqruvlardan oladigan qiymatlar vektordagi qiymatlarga o'zgarmas(immutable) referencelardir. `iter` metodi immutable(o'zgarmas) referencelar ustida iterator hosil qiladi. Agar biz `v1` ga ownershiplik(egalik) qiluvchi va tegishli qiymatlarni qaytaruvchi iterator yaratmoqchi bo'lsak, `iter` o‘rniga `into_iter` ni chaqirishimiz mumkin. Xuddi shunday, agar biz mutable(o'zgaruvchan) referencelarni takrorlashni xohlasak, `iter` o'rniga `iter_mut` ni chaqirishimiz mumkin.
 
 ### Methods that Consume the Iterator
 

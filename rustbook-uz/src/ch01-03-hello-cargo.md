@@ -149,8 +149,8 @@ Dasturlar bir nechta fayllarga ko'payib rivojlanganda yoki ularga dependency ker
 `hello_cargo` loyihasi oddiy bo'lsa ham, u endi Rust karyerangizning qolgan qismida foydalanadigan haqiqiy asboblarning ko'p qismini ishlatadi. Haqiqatan ham, mavjud loyihalar ustida ishlash uchun siz Git yordamida kodni tekshirish, ushbu loyiha jildiga oʻzgartirish va build qilish uchun quyidagi buyruqlardan foydalanishingiz mumkin:
 
 ```console
-$ git clone example.org/someproject
-$ cd someproject
+$ git clone github.com/birorta-loyiha
+$ cd birorta-loyiha
 $ cargo build
 ```
 
