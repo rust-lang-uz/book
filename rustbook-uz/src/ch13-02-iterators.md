@@ -72,64 +72,44 @@ Shuni ham yodda tutingki, biz `next` ga chaiqruvlardan oladigan qiymatlar vektor
 
 Bizga `sum` chaqiruvidan keyin `v1_iter` dan foydalanishga ruxsat berilmagan, chunki `sum` biz chaqiruvchi iteratorga ownershiplik(egalik) qiladi.
 
-### Methods that Produce Other Iterators
+### Boshqa iteratorlarni yaratuvchi metodlar
 
-*Iterator adaptors* are methods defined on the `Iterator` trait that don’t
-consume the iterator. Instead, they produce different iterators by changing
-some aspect of the original iterator.
+*Iterator adaptorlari* iteratorni consume(iste'mol) qilmaydigan `Iterator` traiti bo'yicha aniqlangan metoddir. Buning o'rniga, ular asl iteratorning ba'zi jihatlarini o'zgartirib, turli iteratorlarni ishlab chiqaradilar.
 
-Listing 13-14 shows an example of calling the iterator adaptor method `map`,
-which takes a closure to call on each item as the items are iterated through.
-The `map` method returns a new iterator that produces the modified items. The
-closure here creates a new iterator in which each item from the vector will be
-incremented by 1:
+13-14 ro'yxatda iterator adapter metodini `map` deb chaqirish misoli ko'rsatilgan, bunda elementlar takrorlanganda(iteratsiya) har bir elementga chaqiruv(call) qilish yopiladi.
+`map` metodi o'zgartirilgan elementlarni ishlab chiqaradigan yangi iteratorni qaytaradi. Bu yerda closure vektorning har bir elementi 1 ga oshiriladigan yangi iteratorni yaratadi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,not_desired_behavior
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-14/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 13-14: Calling the iterator adaptor `map` to
-create a new iterator</span>
+<span class="caption">Ro'yxat 13-14: Yangi iterator yaratish uchun iterator adapteriga `map` chaqiruv qilish  qilish</span>
 
-However, this code produces a warning:
+Biroq, bu kod ogohlantirish(warning) ishlab chiqaradi:
 
 ```console
 {{#include ../listings/ch13-functional-features/listing-13-14/output.txt}}
 ```
 
-The code in Listing 13-14 doesn’t do anything; the closure we’ve specified
-never gets called. The warning reminds us why: iterator adaptors are lazy, and
-we need to consume the iterator here.
+13-14 ro'yxatdagi kod hech narsa qilmaydi; biz belgilagan closure hech qachon chaqirilmaydi. Ogohlantirish(warning) bizga nima uchun eslatib turadi: iterator adapterlari dangasa va biz bu yerda iteratorni consume(ishlatish) qilishimiz kerak.
 
-To fix this warning and consume the iterator, we’ll use the `collect` method,
-which we used in Chapter 12 with `env::args` in Listing 12-1. This method
-consumes the iterator and collects the resulting values into a collection data
-type.
+Ushbu ogohlantirishni tuzatish va iteratorni consume qilish uchun biz 12-bobda `env::args` bilan 12-1 ro'yxatda qo'llagan `collect` metodian foydalanamiz. Ushbu metod iteratorni consume qiladi va natijada olingan qiymatlarni ma'lumotlar to'plamiga(data type) to'playdi.
 
-In Listing 13-15, we collect the results of iterating over the iterator that’s
-returned from the call to `map` into a vector. This vector will end up
-containing each item from the original vector incremented by 1.
+13-15 ro'yxatda biz vektorga `map`-ga chaqiruvdan qaytgan iterator bo'yicha takrorlash natijalarini yig'amiz. Ushbu vektor 1 ga oshirilgan asl vektorning har bir elementini o'z ichiga oladi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-15/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 13-15: Calling the `map` method to create a new
-iterator and then calling the `collect` method to consume the new iterator and
-create a vector</span>
+<span class="caption">Ro'yxat 13-15: Yangi iterator yaratish uchun `map` metodini chaqirish va keyin yangi iteratorni consume qilish va vektor yaratish uchun `collect` metodini chaqirish</span>
 
-Because `map` takes a closure, we can specify any operation we want to perform
-on each item. This is a great example of how closures let you customize some
-behavior while reusing the iteration behavior that the `Iterator` trait
-provides.
+`map` yopilganligi sababli, biz har bir elementda bajarmoqchi bo'lgan har qanday operatsiyani belgilashimiz mumkin. Bu `Iterator` traiti taʼminlaydigan iteratsiya xatti-harakatlarini(behavior) qayta ishlatishda closurelar sizga qandaydir behaviorlarni sozlash imkonini berishining ajoyib namunasidir.
 
-You can chain multiple calls to iterator adaptors to perform complex actions in
-a readable way. But because all iterators are lazy, you have to call one of the
-consuming adaptor methods to get results from calls to iterator adaptors.
+Murakkab harakatlarni(complex action) o'qilishi mumkin bo'lgan tarzda bajarish uchun iterator adapterlariga bir nechta chaiquvlarni zanjirlashingiz(chain) mumkin. Ammo barcha iteratorlar dangasa bo'lgani uchun, iterator adapterlariga chaqiruvlardan natijalarni olish uchun consuming adapter metodlaridan birini chaqirishingiz kerak.
 
 ### Using Closures that Capture Their Environment
 
