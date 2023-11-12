@@ -1,11 +1,11 @@
 #[derive(PartialEq, Debug)]
-struct Shoe {
-    size: u32,
-    style: String,
+struct Poyabzal {
+    olchami: u32,
+    uslub: String,
 }
 
-fn shoes_in_size(shoes: Vec<Shoe>, shoe_size: u32) -> Vec<Shoe> {
-    shoes.into_iter().filter(|s| s.size == shoe_size).collect()
+fn olcham_boyicha_poyabzal(poyabzal: Vec<Poyabzal>, poyabzal_olchami: u32) -> Vec<Poyabzal> {
+    poyabzal.into_iter().filter(|s| s.size == poyabzal_olchami).collect()
 }
 
 #[cfg(test)]
@@ -13,34 +13,34 @@ mod tests {
     use super::*;
 
     #[test]
-    fn filters_by_size() {
-        let shoes = vec![
-            Shoe {
-                size: 10,
-                style: String::from("sneaker"),
+    fn olcham_boyicha_filterlash() {
+        let poyabzal = vec![
+            Poyabzal {
+                olchami: 10,
+                uslub: String::from("krossovka"),
             },
-            Shoe {
-                size: 13,
-                style: String::from("sandal"),
+            Poyabzal {
+                olchami: 13,
+                uslub: String::from("sandal"),
             },
-            Shoe {
-                size: 10,
-                style: String::from("boot"),
+            Poyabzal {
+                olchami: 10,
+                uslub: String::from("etik"),
             },
         ];
 
-        let in_my_size = shoes_in_size(shoes, 10);
+        let in_my_size = olcham_boyicha_poyabzal(poyabzal, 10);
 
         assert_eq!(
             in_my_size,
             vec![
-                Shoe {
-                    size: 10,
-                    style: String::from("sneaker")
+                Poyabzal {
+                    olchami: 10,
+                    uslub: String::from("krossovka")
                 },
-                Shoe {
-                    size: 10,
-                    style: String::from("boot")
+                Poyabzal {
+                    olchami: 10,
+                    uslub: String::from("etik")
                 },
             ]
         );

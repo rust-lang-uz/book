@@ -111,43 +111,26 @@ Ushbu ogohlantirishni tuzatish va iteratorni consume qilish uchun biz 12-bobda `
 
 Murakkab harakatlarni(complex action) o'qilishi mumkin bo'lgan tarzda bajarish uchun iterator adapterlariga bir nechta chaiquvlarni zanjirlashingiz(chain) mumkin. Ammo barcha iteratorlar dangasa bo'lgani uchun, iterator adapterlariga chaqiruvlardan natijalarni olish uchun consuming adapter metodlaridan birini chaqirishingiz kerak.
 
-### Using Closures that Capture Their Environment
+### Environmentni qamrab oladigan(capture) closurelardan foydalanish
 
-Many iterator adapters take closures as arguments, and commonly the closures
-we’ll specify as arguments to iterator adapters will be closures that capture
-their environment.
+Ko'pgina iterator adapterlari closurelarni argument sifatida qabul qiladilar va odatda biz iterator adapterlariga argument sifatida ko'rsatadigan closurelar ularning environmentini oladigan closurelar bo'ladi.
 
-For this example, we’ll use the `filter` method that takes a closure. The
-closure gets an item from the iterator and returns a `bool`. If the closure
-returns `true`, the value will be included in the iteration produced by
-`filter`. If the closure returns `false`, the value won’t be included.
+Ushbu misol uchun biz closureni oladigan `filter` metodidan foydalanamiz. Closure iteratordan element oladi va `bool` ni qaytaradi. Agar closure `true` qiymatini qaytarsa, qiymat `filtr` tomonidan ishlab chiqarilgan iteratsiyaga kiritiladi. Agar closure `false` bo'lsa, qiymat kiritilmaydi.
 
-In Listing 13-16, we use `filter` with a closure that captures the `shoe_size`
-variable from its environment to iterate over a collection of `Shoe` struct
-instances. It will return only shoes that are the specified size.
+13-16 roʻyxatda biz `Poyabzal` structi misollari toʻplamini iteratsiya qilish  uchun uning environmentidan `poyabzal_olchami` oʻzgaruvchisini ushlaydigan(capture) closure bilan `filtr`dan foydalanamiz. U faqat belgilangan o'lchamdagi poyabzallarni qaytaradi.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-16/src/lib.rs}}
 ```
 
-<span class="caption">Listing 13-16: Using the `filter` method with a closure
-that captures `shoe_size`</span>
+<span class="caption">Roʻyxat 13-16: `poyabzal_olchami`ni ushlaydigan closure bilan`filter` metodidan foydalanish</span>
 
-The `shoes_in_size` function takes ownership of a vector of shoes and a shoe
-size as parameters. It returns a vector containing only shoes of the specified
-size.
+`olcham_boyicha_poyabzal` funksiyasi parametr sifatida poyabzal vektori va poyabzal o'lchamiga egalik qiladi. U faqat belgilangan o'lchamdagi poyabzallarni o'z ichiga olgan vektorni qaytaradi.
 
-In the body of `shoes_in_size`, we call `into_iter` to create an iterator
-that takes ownership of the vector. Then we call `filter` to adapt that
-iterator into a new iterator that only contains elements for which the closure
-returns `true`.
+`olcham_boyicha_poyabzal` bodysida(tanasida) vektorga ownershiplik(egalik) qiluvchi iterator yaratish uchun `into_iter` ni chaqiramiz. Keyin biz ushbu iteratorni faqat closure `true`ni qaytaradigan elementlarni o'z ichiga olgan yangi iteratorga moslashtirish uchun `filter` ni chaqiramiz.
 
-The closure captures the `shoe_size` parameter from the environment and
-compares the value with each shoe’s size, keeping only shoes of the size
-specified. Finally, calling `collect` gathers the values returned by the
-adapted iterator into a vector that’s returned by the function.
+Closure muhitdan `poyabzal_olchami` parametrini oladi va qiymatni har bir poyabzal o'lchami bilan solishtiradi, faqat belgilangan o'lchamdagi poyabzallarni saqlaydi. Nihoyat, `collect` ni chaqirish moslashtirilgan iterator tomonidan qaytarilgan qiymatlarni funksiya tomonidan qaytariladigan vektorga to'playdi.
 
-The test shows that when we call `shoes_in_size`, we get back only shoes
-that have the same size as the value we specified.
+Test shuni ko'rsatadiki, biz `olcham_boyicha_poyabzal` deb ataganimizda, biz faqat biz ko'rsatgan qiymat bilan bir xil o'lchamdagi poyabzallarni qaytarib olamiz.
