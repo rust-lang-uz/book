@@ -1,29 +1,20 @@
-## Improving Our I/O Project
+## I/O loyihamizni takomillashtirish
 
-With this new knowledge about iterators, we can improve the I/O project in
-Chapter 12 by using iterators to make places in the code clearer and more
-concise. Let’s look at how iterators can improve our implementation of the
-`Config::build` function and the `search` function.
+Iteratorlar haqidagi yangi bilimlar bilan biz koddagi joylarni aniqroq va ixchamroq qilish uchun iteratorlardan foydalangan holda 12-bobdagi I/O(input/output)  loyihasini yaxshilashimiz mumkin. Keling, iteratorlar `Config::build` va `qidiruv` funksiyalarini amalga implement qilishni qanday yaxshilashi mumkinligini ko'rib chiqaylik.
 
-### Removing a `clone` Using an Iterator
+### Iterator yordamida `clone`ni olib tashlash
 
-In Listing 12-6, we added code that took a slice of `String` values and created
-an instance of the `Config` struct by indexing into the slice and cloning the
-values, allowing the `Config` struct to own those values. In Listing 13-17,
-we’ve reproduced the implementation of the `Config::build` function as it was
-in Listing 12-23:
+12-6 roʻyxatda biz `String` qiymatlari boʻlagini olgan kodni qoʻshdik va boʻlimga indekslash va qiymatlarni klonlash orqali `Config` strukturasining namunasini yaratdik,  `Config` strukturasiga ushbu qiymatlarga ownershiplik(egalik) qilish imkonini berdi. 13-17 ro'yxatda biz 12-23 ro'yxatdagi kabi `Config::build` funksiyasining bajarilishini takrorladik:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch13-functional-features/listing-12-23-reproduced/src/lib.rs:ch13}}
 ```
 
-<span class="caption">Listing 13-17: Reproduction of the `Config::build`
-function from Listing 12-23</span>
+<span class="caption">Ro'yxat 13-17: `Config::build` funksiyasining 12-23-Ro'yxatdan takrorlanishi</span>
 
-At the time, we said not to worry about the inefficient `clone` calls because
-we would remove them in the future. Well, that time is now!
+O'shanda biz samarasiz `clone` chaqiruvlari(call) haqida qayg'urmaslikni aytdik, chunki kelajakda ularni olib tashlaymiz. Xo'sh, bu vaqt hozir!
 
 We needed `clone` here because we have a slice with `String` elements in the
 parameter `args`, but the `build` function doesn’t own `args`. To return

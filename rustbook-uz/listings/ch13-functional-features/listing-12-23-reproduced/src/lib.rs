@@ -3,8 +3,8 @@ use std::error::Error;
 use std::fs;
 
 pub struct Config {
-    pub query: String,
-    pub file_path: String,
+    pub sorov: String,
+    pub fayl_yoli: String,
     pub ignore_case: bool,
 }
 
@@ -12,17 +12,17 @@ pub struct Config {
 impl Config {
     pub fn build(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 3 {
-            return Err("not enough arguments");
+            return Err("argumentlar yetarli emas");
         }
 
-        let query = args[1].clone();
-        let file_path = args[2].clone();
+        let sorov = args[1].clone();
+        let fayl_yoli = args[2].clone();
 
         let ignore_case = env::var("IGNORE_CASE").is_ok();
 
         Ok(Config {
-            query,
-            file_path,
+            sorov,
+            fayl_yoli,
             ignore_case,
         })
     }
@@ -30,47 +30,47 @@ impl Config {
 // ANCHOR_END: ch13
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(config.file_path)?;
+    let tarkib = fs::read_to_string(config.fayl_yoli)?;
 
-    let results = if config.ignore_case {
-        search_case_insensitive(&config.query, &contents)
+    let natijalar = if config.ignore_case {
+        search_case_insensitive(&config.sorov, &tarkib)
     } else {
-        search(&config.query, &contents)
+        search(&config.sorov, &tarkib)
     };
 
-    for line in results {
+    for line in natijalar {
         println!("{line}");
     }
 
     Ok(())
 }
 
-pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    let mut results = Vec::new();
+pub fn search<'a>(sorov: &str, tarkib: &'a str) -> Vec<&'a str> {
+    let mut natijalar = Vec::new();
 
-    for line in contents.lines() {
-        if line.contains(query) {
-            results.push(line);
+    for line in tarkib.lines() {
+        if line.contains(sorov) {
+            natijalar.push(line);
         }
     }
 
-    results
+    natijalar
 }
 
 pub fn search_case_insensitive<'a>(
-    query: &str,
-    contents: &'a str,
+    sorov: &str,
+    tarkib: &'a str,
 ) -> Vec<&'a str> {
-    let query = query.to_lowercase();
-    let mut results = Vec::new();
+    let sorov = sorov.to_lowercase();
+    let mut natijalar = Vec::new();
 
-    for line in contents.lines() {
-        if line.to_lowercase().contains(&query) {
-            results.push(line);
+    for line in tarkib.lines() {
+        if line.to_lowercase().contains(&sorov) {
+            natijalar.push(line);
         }
     }
 
-    results
+    natijalar
 }
 
 #[cfg(test)]
@@ -78,29 +78,29 @@ mod tests {
     use super::*;
 
     #[test]
-    fn case_sensitive() {
-        let query = "duct";
-        let contents = "\
+    fn harflarga_etiborli() {
+        let sorov = "duct";
+        let tarkib = "\
 Rust:
-safe, fast, productive.
-Pick three.
+xavfsiz, tez, samarali.
+Uchtasini tanlang.
 Duct tape.";
 
-        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
+        assert_eq!(vec!["xavfsiz, tez, samarali."], search(sorov, tarkib));
     }
 
     #[test]
-    fn case_insensitive() {
-        let query = "rUsT";
-        let contents = "\
+    fn harflarga_etiborsiz() {
+        let sorov = "rUsT";
+        let tarkib = "\
 Rust:
-safe, fast, productive.
-Pick three.
-Trust me.";
+xavfsiz, tez, samarali.
+Uchtasini tanlang.
+Menga ishoning.";
 
         assert_eq!(
-            vec!["Rust:", "Trust me."],
-            search_case_insensitive(query, contents)
+            vec!["Rust:", "Menga ishoning."],
+            harflarga_etiborsiz_qidirish(sorov, tarkib)
         );
     }
 }
