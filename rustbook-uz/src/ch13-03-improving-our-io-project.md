@@ -16,43 +16,32 @@ Iteratorlar haqidagi yangi bilimlar bilan biz koddagi joylarni aniqroq va ixcham
 
 O'shanda biz samarasiz `clone` chaqiruvlari(call) haqida qayg'urmaslikni aytdik, chunki kelajakda ularni olib tashlaymiz. Xo'sh, bu vaqt hozir!
 
-We needed `clone` here because we have a slice with `String` elements in the
-parameter `args`, but the `build` function doesn’t own `args`. To return
-ownership of a `Config` instance, we had to clone the values from the `query`
-and `file_path` fields of `Config` so the `Config` instance can own its values.
+Bizga bu yerda `clone` kerak edi, chunki bizda `args` parametrida  `String` elementlari bo‘lgan slice bor, lekin `build` funksiyasi `args`ga ega emas. `Config` namunasiga ownershiplikni(egalik) qaytarish uchun `Config`ning `sorov` va `fayl_yoli` maydonlaridagi qiymatlarni klonlashimiz kerak edi, shunda `Config` namunasi o‘z qiymatlariga ega bo‘lishi mumkin.
 
-With our new knowledge about iterators, we can change the `build` function to
-take ownership of an iterator as its argument instead of borrowing a slice.
-We’ll use the iterator functionality instead of the code that checks the length
-of the slice and indexes into specific locations. This will clarify what the
-`Config::build` function is doing because the iterator will access the values.
+Iteratorlar haqidagi yangi bilimlarimiz bilan biz `build` funksiyasini oʻzgartirib, bir sliceni olish oʻrniga iteratorga argument sifatida ownershiplik qilishimiz mumkin.
+Biz slice uzunligini tekshiradigan kod o'rniga iterator funksiyasidan foydalanamiz va ma'lum joylarga ko'rsatamiz. Bu `Config::build` funksiyasi nima qilayotganini aniqlaydi, chunki iterator qiymatlarga kira oladi.
 
-Once `Config::build` takes ownership of the iterator and stops using indexing
-operations that borrow, we can move the `String` values from the iterator into
-`Config` rather than calling `clone` and making a new allocation.
+`Config::build` iteratorga ownershiplik qilib, borrow qilingan indekslash operatsiyalaridan foydalanishni to'xtatgandan so'ng, biz `clone` deb chaqirish va yangi ajratish(allocation) o'rniga `String` qiymatlarini iteratordan `Config`ga ko'chirishimiz mumkin.
 
-#### Using the Returned Iterator Directly
+#### Qaytarilgan(return) iteratordan to'g'ridan-to'g'ri foydalanish
 
-Open your I/O project’s *src/main.rs* file, which should look like this:
+I/O loyihangizning *src/main.rs* faylini oching, u quyidagicha ko'rinishi kerak:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch13-functional-features/listing-12-24-reproduced/src/main.rs:ch13}}
 ```
 
-We’ll first change the start of the `main` function that we had in Listing
-12-24 to the code in Listing 13-18, which this time uses an iterator. This
-won’t compile until we update `Config::build` as well.
+Biz birinchi navbatda 12-24-Ro'yhatdagi `main` funksiyaning boshlanishini 13-18-Ro'yxatdagi kodga almashtiramiz, bu safar iteratordan foydalanadi. Biz `Config::build`ni ham yangilamagunimizcha, bu kompilyatsiya qilinmaydi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-18/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 13-18: Passing the return value of `env::args` to
-`Config::build`</span>
+<span class="caption">Ro'yxat 13-18: `env::args` ning return(qaytish) qiymatini `Config::build`` ga o'tkazish</span>
 
 The `env::args` function returns an iterator! Rather than collecting the
 iterator values into a vector and then passing a slice to `Config::build`, now
