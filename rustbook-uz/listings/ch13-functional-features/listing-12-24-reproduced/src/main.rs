@@ -8,7 +8,7 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     let config = Config::build(&args).unwrap_or_else(|err| {
-        eprintln!("Problem parsing arguments: {err}");
+        eprintln!("Argumentlarni tahlil qilish muammosi: {err}");
         process::exit(1);
     });
 
@@ -16,7 +16,7 @@ fn main() {
     // ANCHOR_END: ch13
 
     if let Err(e) = minigrep::run(config) {
-        eprintln!("Application error: {e}");
+        eprintln!("Dastur xatosi: {e}");
         process::exit(1);
     }
     // ANCHOR: ch13
