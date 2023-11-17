@@ -33,9 +33,9 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let tarkib = fs::read_to_string(config.fayl_yoli)?;
 
     let natijalar = if config.ignore_case {
-        search_case_insensitive(&config.sorov, &tarkib)
+        harflarga_etiborsiz_qidirish(&config.sorov, &tarkib)
     } else {
-        search(&config.sorov, &tarkib)
+        qidiruv(&config.sorov, &tarkib)
     };
 
     for line in natijalar {
@@ -45,7 +45,7 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub fn search<'a>(sorov: &str, tarkib: &'a str) -> Vec<&'a str> {
+pub fn qidiruv<'a>(sorov: &str, tarkib: &'a str) -> Vec<&'a str> {
     let mut natijalar = Vec::new();
 
     for line in tarkib.lines() {
@@ -57,7 +57,7 @@ pub fn search<'a>(sorov: &str, tarkib: &'a str) -> Vec<&'a str> {
     natijalar
 }
 
-pub fn search_case_insensitive<'a>(
+pub fn harflarga_etiborsiz_qidirish<'a>(
     sorov: &str,
     tarkib: &'a str,
 ) -> Vec<&'a str> {
@@ -86,7 +86,7 @@ xavfsiz, tez, samarali.
 Uchtasini tanlang.
 Duct tape.";
 
-        assert_eq!(vec!["xavfsiz, tez, samarali."], search(sorov, tarkib));
+        assert_eq!(vec!["xavfsiz, tez, samarali."], qidiruv(sorov, tarkib));
     }
 
     #[test]

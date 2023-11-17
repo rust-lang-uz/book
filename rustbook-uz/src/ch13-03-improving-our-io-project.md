@@ -43,17 +43,11 @@ Biz birinchi navbatda 12-24-Ro'yhatdagi `main` funksiyaning boshlanishini 13-18-
 
 <span class="caption">Ro'yxat 13-18: `env::args` ning return(qaytish) qiymatini `Config::build`` ga o'tkazish</span>
 
-The `env::args` function returns an iterator! Rather than collecting the
-iterator values into a vector and then passing a slice to `Config::build`, now
-we’re passing ownership of the iterator returned from `env::args` to
-`Config::build` directly.
+`env::args` funksiyasi iteratorni qaytaradi! Iterator qiymatlarini(value) vectorga yig'ib, keyin sliceni(bo'lak) `Config::build`  ga o'tkazish o'rniga, endi biz `env::args` dan qaytarilgan(return) iteratorga ownershiplik(egalik) huquqini to'g'ridan-to'g'ri `Config::build` ga o'tkazmoqdamiz.
 
-Next, we need to update the definition of `Config::build`. In your I/O
-project’s *src/lib.rs* file, let’s change the signature of `Config::build` to
-look like Listing 13-19. This still won’t compile because we need to update the
-function body.
+Keyinchalik, `Config::build` definitioni yangilashimiz kerak. I/O loyihangizning *src/lib.rs* faylida keling, `Config::build` signaturesni 13-19-raqamli roʻyxatga oʻxshatib oʻzgartiraylik. Bu hali ham kompilyatsiya qilinmaydi, chunki biz funksiya bodysini(tanasi) yangilashimiz kerak.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-19/src/lib.rs:here}}
@@ -83,7 +77,7 @@ Next, we’ll fix the body of `Config::build`. Because `args` implements the
 `Iterator` trait, we know we can call the `next` method on it! Listing 13-20
 updates the code from Listing 12-23 to use the `next` method:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-20/src/lib.rs:here}}
@@ -105,7 +99,7 @@ the same thing for the `file_path` value.
 We can also take advantage of iterators in the `search` function in our I/O
 project, which is reproduced here in Listing 13-21 as it was in Listing 12-19:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-19/src/lib.rs:ch13}}
@@ -121,24 +115,17 @@ make code clearer. Removing the mutable state might enable a future enhancement
 to make searching happen in parallel, because we wouldn’t have to manage
 concurrent access to the `results` vector. Listing 13-22 shows this change:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-22/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 13-22: Using iterator adaptor methods in the
-implementation of the `search` function</span>
+<span class="caption">Ro'yxat 13-22: `qidiruv` funksiyasini impelement qilishda iterator adapter metodlaridan foydalanish</span>
 
-Recall that the purpose of the `search` function is to return all lines in
-`contents` that contain the `query`. Similar to the `filter` example in Listing
-13-16, this code uses the `filter` adaptor to keep only the lines that
-`line.contains(query)` returns `true` for. We then collect the matching lines
-into another vector with `collect`. Much simpler! Feel free to make the same
-change to use iterator methods in the `search_case_insensitive` function as
-well.
+Eslatib o'tamiz, `qidiruv` funksiyasining maqsadi `tarkib` dagi `sorov` ni o'z ichiga olgan barcha qatorlarni qaytarishdir(return). 13-16 Roʻyxatdagi `filter` misoliga oʻxshab, bu kod `filter` adapteridan faqat `line.contains(sorov)` uchun `true` qaytaradigan satrlarni saqlash uchun foydalanadi. Keyin mos keladigan qatorlarni `collect` bilan boshqa vectorga yig'amiz. Juda oddiyroq! `harflarga_etiborsiz_qidirish` funksiyasida ham iterator metodlaridan foydalanish uchun xuddi shunday o'zgartirish kiriting.
 
-### Choosing Between Loops or Iterators
+### Looplar yoki iteratorlar o'rtasida tanlash
 
 The next logical question is which style you should choose in your own code and
 why: the original implementation in Listing 13-21 or the version using
