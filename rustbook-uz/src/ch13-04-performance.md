@@ -1,37 +1,21 @@
-## Comparing Performance: Loops vs. Iterators
+## Ishlash samaradorligini(Performance) solishtirish: Looplar va iteratorlar
 
-To determine whether to use loops or iterators, you need to know which
-implementation is faster: the version of the `search` function with an explicit
-`for` loop or the version with iterators.
+Looplar yoki iteratorlardan foydalanishni aniqlash uchun siz qaysi implement qilish tezroq ekanligini bilishingiz kerak: `qidiruv` funksiyasining aniq `for` lop sikliga ega versiyasi yoki iteratorli versiya.
 
-We ran a benchmark by loading the entire contents of *The Adventures of
-Sherlock Holmes* by Sir Arthur Conan Doyle into a `String` and looking for the
-word *the* in the contents. Here are the results of the benchmark on the
-version of `search` using the `for` loop and the version using iterators:
+Ser Arthur Conan Doylening *Sherlok Xolmsning sarguzashtlari(The Adventures of Sherlock Holmes)* asarining to‘liq mazmunini `String`ga yuklash va mazmundan *the* so‘zini izlash orqali sinovdan o‘tkizdik. Mana, `for` loop siklidan foydalangan holda `qidiruv` versiyasi va iteratorlardan foydalangan holda sinov natijalari:
 
 ```text
 test bench_search_for  ... bench:  19,620,300 ns/iter (+/- 915,700)
 test bench_search_iter ... bench:  19,234,900 ns/iter (+/- 657,200)
 ```
 
-The iterator version was slightly faster! We won’t explain the benchmark code
-here, because the point is not to prove that the two versions are equivalent
-but to get a general sense of how these two implementations compare
-performance-wise.
+Iterator versiyasi biroz tezroq edi! Biz bu yerda benchmark kodini tushuntirmaymiz, chunki bu ikkita versiyaning ekvivalentligini isbotlash emas, balki ushbu ikki dasturning ishlash jihatidan qanday taqqoslanishi haqida umumiy tushunchaga ega bo'lishdir.
 
-For a more comprehensive benchmark, you should check using various texts of
-various sizes as the `contents`, different words and words of different lengths
-as the `query`, and all kinds of other variations. The point is this:
-iterators, although a high-level abstraction, get compiled down to roughly the
-same code as if you’d written the lower-level code yourself. Iterators are one
-of Rust’s *zero-cost abstractions*, by which we mean using the abstraction
-imposes no additional runtime overhead. This is analogous to how Bjarne
-Stroustrup, the original designer and implementor of C++, defines
-*zero-overhead* in “Foundations of C++” (2012):
+Batafsilroq tahlil qilish uchun siz `tarkib` sifatida har xil oʻlchamdagi turli matnlarni, `sorov` sifatida turli uzunlikdagi turli soʻz va soʻzlarni va boshqa har xil oʻzgarishlardan foydalanishni tekshirishingiz kerak. Gap shundaki: iteratorlar, garchi yuqori darajadagi(high-level) abstraksiya bo'lsa ham, xuddi quyi darajadagi(lower-level) kodni o'zingiz yozganingizdek, taxminan bir xil kodga kompilyatsiya qilinadi. Iteratorlar Rustning *zero-cost(nol xarajatli) abstraksiyalaridan* biri bo‘lib, bu orqali biz abstraktsiyadan foydalanish qo‘shimcha runtime yukini talab qilmaydi. Bu C++ tilining asl dizayneri va amalga oshiruvchisi(implementori) Bjarne Stroustrupning “C++ asoslari (Foundations of C++)” (2012) asarida *zero-overhead* belgilashiga o‘xshaydi:
 
-> In general, C++ implementations obey the zero-overhead principle: What you
-> don’t use, you don’t pay for. And further: What you do use, you couldn’t hand
-> code any better.
+> Umuman olganda, C++ ilovalari zero overhead(nol qo'shimcha xarajatlar) printsipiga bo'ysunadi:
+> Siz foydalanmayotgan narsangiz uchun pul to'lamaysiz. Va yana: Siz foydalanadigan narsadan yaxshiroq
+> kodlash mumkin emas.
 
 As another example, the following code is taken from an audio decoder. The
 decoding algorithm uses the linear prediction mathematical operation to
