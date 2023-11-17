@@ -88,7 +88,7 @@ Duct tape.";
     }
 
     #[test]
-    fn case_insensitive() {
+    fn harflarga_etiborsiz() {
         let sorov = "rUsT";
         let tarkib = "\
 Rust:
