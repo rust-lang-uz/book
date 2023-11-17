@@ -127,19 +127,8 @@ Eslatib o'tamiz, `qidiruv` funksiyasining maqsadi `tarkib` dagi `sorov` ni o'z i
 
 ### Looplar yoki iteratorlar o'rtasida tanlash
 
-The next logical question is which style you should choose in your own code and
-why: the original implementation in Listing 13-21 or the version using
-iterators in Listing 13-22. Most Rust programmers prefer to use the iterator
-style. It’s a bit tougher to get the hang of at first, but once you get a feel
-for the various iterator adaptors and what they do, iterators can be easier to
-understand. Instead of fiddling with the various bits of looping and building
-new vectors, the code focuses on the high-level objective of the loop. This
-abstracts away some of the commonplace code so it’s easier to see the concepts
-that are unique to this code, such as the filtering condition each element in
-the iterator must pass.
+Keyingi mantiqiy savol - o'z kodingizda qaysi uslubni tanlashingiz kerakligi va nima uchun: 13-21-Ro'yxatdagi asl dastur yoki 13-22-Ro'yxatdagi iteratorlardan foydalangan holda versiya. Aksariyat Rust dasturchilari iterator uslubidan foydalanishni afzal ko'rishadi. Avvaliga o'rganish biroz qiyinroq, lekin siz turli xil iterator adapterlari va ular nima qilishini his qilganingizdan so'ng, iteratorlarni tushunish osonroq bo'ladi. Kod aylanishning turli bitlari va yangi vectorlarni yaratish o'rniga, loop siklning yuqori darajadagi(high-level) maqsadiga e'tibor qaratadi. Bu ba'zi oddiy kodlarni abstrakt qiladi, shuning uchun ushbu kodga xos bo'lgan tushunchalarni, masalan, iteratordagi har bir element o'tishi kerak bo'lgan filtrlash shartini ko'rish osonroq bo'ladi.
 
-But are the two implementations truly equivalent? The intuitive assumption
-might be that the more low-level loop will be faster. Let’s talk about
-performance.
+Ammo ikkita dastur haqiqattan ham ekvivalentmi? Intuitiv taxmin shundan iboratki, low-leveldagi loop tezroq bo'ladi. Keling, performance haqida gapiraylik.
 
 [impl-trait]: ch10-02-traits.html#traits-as-parameters
