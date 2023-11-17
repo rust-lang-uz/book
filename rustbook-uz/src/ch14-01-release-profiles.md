@@ -35,16 +35,9 @@ opt-level = 0
 opt-level = 3
 ```
 
-`opt-level` sozlama Rust kodingizga qo'llaniladigan optimallashtirishlar sonini nazorat qiladi, 0 dan 3 gacha. Ko'proq optimallashtirishni qo'llash kompilyatsiya vaqtini uzaytiradi, shuning uchun agar siz tez-tez ishlab chiqayotgan bo'lsangiz va kodingizni kompilyatsiya qilsangiz, natijada olingan kod sekinroq ishlayotgan bo'lsa ham, tezroq kompilyatsiya qilishni kamroq optimallashtirishni xohlaysiz. Shunday qilib, `dev` uchun default `opt-level` `0` dir. When you’re
-ready to release your code, it’s best to spend more time compiling. You’ll only
-compile in release mode once, but you’ll run the compiled program many times,
-so release mode trades longer compile time for code that runs faster. That is
-why the default `opt-level` for the `release` profile is `3`.
+`opt-level` sozlama Rust kodingizga qo'llaniladigan optimallashtirishlar sonini nazorat qiladi, 0 dan 3 gacha. Ko'proq optimallashtirishni qo'llash kompilyatsiya vaqtini uzaytiradi, shuning uchun agar siz tez-tez ishlab chiqayotgan bo'lsangiz va kodingizni kompilyatsiya qilsangiz, natijada olingan kod sekinroq ishlayotgan bo'lsa ham, tezroq kompilyatsiya qilishni kamroq optimallashtirishni xohlaysiz. Shunday qilib, `dev` uchun default `opt-level` `0` dir. Kodni releasega chiqarishga tayyor bo'lganingizda, kompilyatsiya qilish uchun ko'proq vaqt sarflaganingiz ma'qul. Siz release rejimida faqat bir marta kompilyatsiya qilasiz, lekin kompilyatsiya qilingan dasturni ko'p marta ishga tushirasiz, shuning uchun release rejimi tradelari tezroq ishlaydigan kod uchun kompilyatsiya vaqtini uzaytiradi. Shuning uchun `release` profili uchun default `opt-level` `3` dir.
 
-You can override a default setting by adding a different value for it in
-*Cargo.toml*. For example, if we want to use optimization level 1 in the
-development profile, we can add these two lines to our project’s *Cargo.toml*
-file:
+Siz *Cargo.toml* da boshqa qiymat qoʻshish orqali default sozlamani bekor qilishingiz mumkin. Misol uchun, agar biz development profilida optimallashtirish darajasi 1 dan foydalanmoqchi bo'lsak, loyihamizning *Cargo.toml* fayliga ushbu ikki qatorni qo'shishimiz mumkin:
 
 <span class="filename">Fayl nomi: Cargo.toml</span>
 
@@ -53,10 +46,7 @@ file:
 opt-level = 1
 ```
 
-This code overrides the default setting of `0`. Now when we run `cargo build`,
-Cargo will use the defaults for the `dev` profile plus our customization to
-`opt-level`. Because we set `opt-level` to `1`, Cargo will apply more
-optimizations than the default, but not as many as in a release build.
+Bu kod default `0` sozlamasini bekor qiladi. Now when we run `cargo build`,
+Cargo `dev` profili uchun default sozlamalardan hamda `opt-level`ga moslashtirishimizdan foydalanadi. Biz `opt-level`ni `1` ga o‘rnatganimiz sababli, Cargo defaultdan ko‘ra ko‘proq optimallashtirishni qo‘llaydi, lekin release builddagi kabi emas.
 
-For the full list of configuration options and defaults for each profile, see
-[Cargo’s documentation](https://doc.rust-lang.org/cargo/reference/profiles.html).
+Har bir profil uchun konfiguratsiya opsiyalari va standart sozlamalarning to'liq ro'yxati uchun Cargo [texnik hujjatlariga](https://doc.rust-lang.org/cargo/reference/profiles.html) qarang.
