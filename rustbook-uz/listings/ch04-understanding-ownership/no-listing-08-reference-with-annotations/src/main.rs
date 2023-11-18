@@ -9,6 +9,6 @@ fn main() {
 // ANCHOR: here
 fn uzunlikni_hisoblash(s: &String) -> usize { // s - Stringga reference(havola)
     s.len()
-} // Bu erda s scopedan chiqib ketadi. Lekin u nazarda tutgan narsaga ownership qilmagani
+} // Bu yerda s scopedan chiqib ketadi. Lekin u nazarda tutgan itemga ownership qilmagani
   // uchun u tashlanmaydi.
 // ANCHOR_END: here

@@ -76,7 +76,7 @@ Yaxshiyamki, Rust bu muammoni hal qildi: string slicelar.
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-17-slice/src/main.rs:here}}
 ```
 
-Butun `String`ga reference oʻrniga `salom` qoʻshimcha `[0..5]` bitida koʻrsatilgan `String` qismiga referencedir. Biz `[starting_index..ending_index]` ni belgilash orqali qavslar ichidagi diapazondan foydalangan holda slicelarni yaratamiz, bu yerda `starting_index` bo'limdagi birinchi pozitsiyadir va `ending_index` slicedagi oxirgi pozitsiyadan bittaga ko'p. Ichkarida, slice ma'lumotlar tuzilmasi `ending_index` minus `starting_index` ga mos keladigan boshlang'ich pozitsiyasini va slice uzunligini saqlaydi. Demak, `let rust = &s[6..11];` holatida rust so'zi `s` ning 6 indeksidagi baytga ko‘rsatgichni o‘z ichiga olgan bo‘lak bo‘lib, uzunligi 5 ga teng bo‘ladi.
+Butun `String`ga reference oʻrniga `salom` qoʻshimcha `[0..5]` bitida koʻrsatilgan `String` qismiga referencedir. Biz `[starting_index..ending_index]` ni belgilash orqali qavslar ichidagi diapazondan foydalangan holda slicelarni yaratamiz, bu yerda `starting_index` bo'limdagi birinchi pozitsiyadir va `ending_index` slicedagi oxirgi pozitsiyadan bittaga ko'p. Ichkarida, slice ma'lumotlar tuzilmasi `ending_index` minus `starting_index` ga mos keladigan boshlang'ich pozitsiyasini va slice uzunligini saqlaydi. Demak, `let dunyo = &s[6..11];` holatida dunyo so'zi `s` ning 6 indeksidagi baytga ko‘rsatgichni o‘z ichiga olgan bo‘lak bo‘lib, uzunligi 5 ga teng bo‘ladi.
 
 4-6-rasmda bu diagrammada ko'rsatilgan.
 

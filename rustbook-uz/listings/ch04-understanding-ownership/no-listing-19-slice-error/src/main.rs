@@ -12,7 +12,7 @@ fn birinchi_soz(s: &String) -> &str {
 
 // ANCHOR: here
 fn main() {
-    let mut s = String::from("salom rust");
+    let mut s = String::from("salom dunyo");
 
     let soz = birinchi_soz(&s);
 
