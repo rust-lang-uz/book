@@ -188,7 +188,7 @@ Ushbu ma'lumotlar guruhi stackda saqlanadi. O'ng tomonda tarkibni saqlaydigan he
 <img alt="Two tables: the first table contains the representation of s1 on the
 stack, consisting of its length (5), capacity (5), and a pointer to the first
 value in the second table. The second table contains the representation of the
-string data on the heap, byte by byte." src="img/trpl04-01.svg" class="center"
+string data on the heap, byte by byte." src="img/trpl04-01.png" class="center"
 style="width: 50%;" />
 
 <span class="caption">4-1-rasm: `s1` ga bog‘langan `salom` qiymatiga ega `String` xotirasidagi tasvir</span>
@@ -199,7 +199,7 @@ Uzunlik - `String` mazmuni hozirda qancha xotira, baytlarda foydalanayotganligi.
 
 <img alt="Three tables: tables s1 and s2 representing those strings on the
 stack, respectively, and both pointing to the same string data on the heap."
-src="img/trpl04-02.svg" class="center" style="width: 50%;" />
+src="img/trpl04-02.png" class="center" style="width: 50%;" />
 
 <span class="caption">4-2-rasm: `s1` pointeri, uzunligi va sigʻimi nusxasiga ega `s2` oʻzgaruvchisi xotirasida koʻrsatilishi</span>
 
@@ -207,7 +207,7 @@ Tasvir 4-3-rasmga *o'xshamaydi*, agar Rust o'rniga heap ma'lumotlarni ko'chirsa,
 
 <img alt="Four tables: two tables representing the stack data for s1 and s2,
 and each points to its own copy of string data on the heap."
-src="img/trpl04-03.svg" class="center" style="width: 50%;" />
+src="img/trpl04-03.png" class="center" style="width: 50%;" />
 
 <span class="caption">4-3-rasm: Rust heap ma'lumotlarni ham nusxalagan bo'lsa, `s2 = s1` nima qilishi mumkin bo'lgan yana bir imkoniyat</span>
 
@@ -230,7 +230,7 @@ Agar siz boshqa tillar bilan ishlashda *shallow copy* va *deep copy* so‘zlarin
 <img alt="Three tables: tables s1 and s2 representing those strings on the
 stack, respectively, and both pointing to the same string data on the heap.
 Table s1 is grayed out be-cause s1 is no longer valid; only s2 can be used to
-access the heap data." src="img/trpl04-04.svg" class="center" style="width:
+access the heap data." src="img/trpl04-04.png" class="center" style="width:
 50%;" />
 
 <span class="caption">4-4-rasm: `s1` dan keyin xotiradagi ko`rinish bekor qilingan</span>

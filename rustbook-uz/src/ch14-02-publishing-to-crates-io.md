@@ -75,13 +75,13 @@ E'tibor bering, `//!` bilan boshlanadigan oxirgi qatordan keyin hech qanday kod 
 
 `cargo doc --open`ni ishga tushirganimizda, bu izohlar 14-2-rasmda ko‘rsatilganidek, `my_crate` hujjatlarining birinchi sahifasida cratedagi public itemlar ro‘yxati ustida ko'rsatiladi:
 
-<img alt="Rendered HTML documentation with a comment for the crate as a whole" src="img/trpl14-02.png" class="center" />
+<img alt="Rendered HTML documentation with a comment for the crate as a whole" src="img/trlpuz2.png" class="center" />
 
 <span class="caption">14-2-rasm: `my_crate` uchun taqdim etilgan hujjatlar, jumladan, crateni bir butun sifatida tavsiflovchi sharh</span>
 
 Elementlar ichidagi hujjat sharhlari, ayniqsa, cratelar va modullarni tavsiflash uchun foydalidir. Foydalanuvchilarga cratening tashkil etilishini tushunishlariga yordam berish uchun konteynerning umumiy maqsadini tushuntirish uchun ulardan foydalaning.
 
-### Exporting a Convenient Public API with `pub use`
+### `pub use` bilan qulay Public APIni eksport qilish
 
 The structure of your public API is a major consideration when publishing a
 crate. People who use your crate are less familiar with the structure than you

@@ -84,7 +84,7 @@ Butun `String`ga reference oʻrniga `salom` qoʻshimcha `[0..5]` bitida koʻrsat
 to the byte at index 0 in a table of the string data &quot;hello world&quot; on
 the heap. The third table rep-resents the stack data of the slice world, which
 has a length value of 5 and points to byte 6 of the heap data table."
-src="img/trpl04-06.svg" class="center" style="width: 50%;" />
+src="img/trpl04-06.png" class="center" style="width: 50%;" />
 
 <span class="caption">4-6-rasm: `String`ning bir qismiga referal qiluvchi String slice</span>
 
