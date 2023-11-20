@@ -108,32 +108,24 @@ Ushbu kutubxona ichida ikkita modul mavjud: 14-3 roʻyxatda koʻrsatilganidek, `
 
 E'tibor bering, `AsosiyRang` va `IkkilamchiRang` turlari birinchi sahifada ko'rsatilmagan va `aralashtirish` funksiyasi ham mavjud emas. Ularni ko'rish uchun `turlar` va `yordamchi` ni bosishimiz kerak.
 
-Another crate that depends on this library would need `use` statements that
-bring the items from `art` into scope, specifying the module structure that’s
-currently defined. Listing 14-4 shows an example of a crate that uses the
-`PrimaryColor` and `mix` items from the `art` crate:
+Ushbu kutubxonaga bog'liq bo'lgan boshqa cratega `rassom` dan elementlarni qamrab oladigan, hozirda aniqlangan modul stryucturedan ko'rsatadigan `use` statementlari kerak bo'ladi. 14-4 roʻyxatda `rassom` cratesidagi `AsosiyRang` va `aralashtirish` elementlaridan foydalanadigan crate misoli koʻrsatilgan:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-04/src/main.rs}}
 ```
 
-<span class="caption">Listing 14-4: A crate using the `art` crate’s items with
-its internal structure exported</span>
+<span class="caption">Roʻyxat 14-4: `rassom` crate itemlaridan foydalanilgan, ichki stuctureni eksport qilingan crate</span>
 
-The author of the code in Listing 14-4, which uses the `art` crate, had to
-figure out that `PrimaryColor` is in the `kinds` module and `mix` is in the
-`utils` module. The module structure of the `art` crate is more relevant to
-developers working on the `art` crate than to those using it. The internal
+`rassom` cratesidan foydalanadigan 14-4-Ro'yxatdagi kod muallifi `AsosiyRang` `turlar` modulida, `aralashtirish` esa `yordamchi` modulida ekanligini aniqlashi kerak edi. `rassom` cratening modul stucturesi undan foydalanadiganlarga qaraganda `rassom` crate ustida ishlayotgan developerlarga ko'proq mos keladi. The internal
 structure doesn’t contain any useful information for someone trying to
 understand how to use the `art` crate, but rather causes confusion because
 developers who use it have to figure out where to look, and must specify the
 module names in the `use` statements.
+Ichki stuctureda `rassom` cratesidan qanday foydalanishni tushunishga urinayotganlar uchun foydali ma'lumotlar mavjud emas, aksincha, chalkashliklarga sabab bo'ladi, chunki undan foydalanadigan developerlar qayerga qarash kerakligini aniqlashlari kerak va `use` statementlarida modul nomlarini ko'rsatishi kerak.
 
-To remove the internal organization from the public API, we can modify the
-`art` crate code in Listing 14-3 to add `pub use` statements to re-export the
-items at the top level, as shown in Listing 14-5:
+Ichki organizationni public API’dan olib tashlash uchun biz 14-5 ro‘yxatda ko‘rsatilganidek, top leveldagi elementlarni qayta eksport qilish uchun `pub use` statementlarini qo‘shish uchun 14-3 ro‘yxatdagi `rassom` crate kodini o‘zgartirishimiz mumkin:
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -141,8 +133,7 @@ items at the top level, as shown in Listing 14-5:
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-05/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 14-5: Adding `pub use` statements to re-export
-items</span>
+<span class="caption">Ro'yxat 14-5: Elementlarni qayta eksport qilish uchun `pub use` statementlarini qo'shish</span>
 
 The API documentation that `cargo doc` generates for this crate will now list
 and link re-exports on the front page, as shown in Figure 14-4, making the
@@ -157,7 +148,7 @@ The `art` crate users can still see and use the internal structure from Listing
 14-3 as demonstrated in Listing 14-4, or they can use the more convenient
 structure in Listing 14-5, as shown in Listing 14-6:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-06/src/main.rs:here}}
