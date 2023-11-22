@@ -24,7 +24,7 @@ qarzga olsa, ko'p hollarda smart pointerlar ma'lumotga *egalik* qiladilar.
 
 Garchi biz ularni o‘sha paytda shunday deb atamagan bo‘lsak-da, biz ushbu
 kitobda bir nechta smart pointerlarga duch keldik, jumladan, 8-bobdagi `String`
-va `Vec<T>`. Bu ikkala tur ham aqlli ko‘rsatkich hisoblanadi, chunki u biror
+va `Vec<T>`. Bu ikkala tur ham smart pointer hisoblanadi, chunki u biror
 xotiraga egalik qiladi va sizga uni manipulyatsiya qilish imkonini beradi.
 Shuningdek, ularda metama'lumot va qo'shimcha imkoniyatlar yoki kafolatlar
 bo'ladi. Masalan, `String` o'z sig'imini metama'lumot sifatida saqlaydi va uning
