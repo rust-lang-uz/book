@@ -1,53 +1,60 @@
-# Smart Pointers
+# Smart Pointerlar
 
-A *pointer* is a general concept for a variable that contains an address in
-memory. This address refers to, or “points at,” some other data. The most
-common kind of pointer in Rust is a reference, which you learned about in
-Chapter 4. References are indicated by the `&` symbol and borrow the value they
-point to. They don’t have any special capabilities other than referring to
-data, and have no overhead.
+*Pointer* bu xotirada biror manzilni o'z ichiga olgan o'zgaruvchi uchun umumiy
+tushuncha. Ushbu manzil biror boshqa ma'lumotga ishora qiladi. Rustda eng keng
+tarqalgan pointer turi bu siz 4-bobda o'rgangan reference hisoblanadi.
+Referencelar `&` belgisi bilan ko'rsatiladi va qaratilgan qiymatni qarzga oladi.
+Ularning ma'lumotga murojaat qilishdan boshqa hech qanday maxsus qobiliyati
+bo'lmaydi.
 
-*Smart pointers*, on the other hand, are data structures that act like a
-pointer but also have additional metadata and capabilities. The concept of
-smart pointers isn’t unique to Rust: smart pointers originated in C++ and exist
-in other languages as well. Rust has a variety of smart pointers defined in the
-standard library that provide functionality beyond that provided by references.
-To explore the general concept, we’ll look at a couple of different examples of
-smart pointers, including a *reference counting* smart pointer type. This
-pointer enables you to allow data to have multiple owners by keeping track of
-the number of owners and, when no owners remain, cleaning up the data.
+*Smart pointerlar* esa pointer kabi ishlaydigan, lekin qo'shimcha
+metama'lumotlar va imkoniyatlarga ega ma'lumot tuzilmalaridir. Smart pointerlar
+tushunchasi faqatgina Rustda yagona emas: smart pointerlar C++da paydo bo'lgan
+va boshqa tillarda ham mavjud. Rust standart kutubxonasi taqdim etadigan turli
+xil smart pointerlarga ega bo'lib, ular referencelardan tashqari funksionallikni
+ta'minlaydi. Umumiy tushunchani o'rganish uchun biz smart pointerlarning bir
+nechta turli misollarini ko'rib chiqamiz, jumladan *reference hisoblash* smart
+pointer turi. Ushbu pointer sizga egalar sonini kuzatish orqali ma'lumotning bir
+nechta egalari bo'lish imkonini beradi va egalari qolmaganda ma'lumotni
+tozalaydi.
 
-Rust, with its concept of ownership and borrowing, has an additional difference
-between references and smart pointers: while references only borrow data, in
-many cases, smart pointers *own* the data they point to.
+Rust o'zining egalik va qarz olish tushunchasi bilan referencelar va smart
+pointerlar o'rtasida qo'shimcha farqga ega: referencelar faqat ma'lumotlarni
+qarzga olsa, ko'p hollarda smart pointerlar ma'lumotga *egalik* qiladilar.
 
-Though we didn’t call them as such at the time, we’ve already encountered a few
-smart pointers in this book, including `String` and `Vec<T>` in Chapter 8. Both
-these types count as smart pointers because they own some memory and allow you
-to manipulate it. They also have metadata and extra capabilities or guarantees.
-`String`, for example, stores its capacity as metadata and has the extra
-ability to ensure its data will always be valid UTF-8.
+Garchi biz ularni o‘sha paytda shunday deb atamagan bo‘lsak-da, biz ushbu
+kitobda bir nechta smart pointerlarga duch keldik, jumladan, 8-bobdagi `String`
+va `Vec<T>`. Bu ikkala tur ham smart pointer hisoblanadi, chunki u biror
+xotiraga egalik qiladi va sizga uni manipulyatsiya qilish imkonini beradi.
+Shuningdek, ularda metama'lumot va qo'shimcha imkoniyatlar yoki kafolatlar
+bo'ladi. Masalan, `String` o'z sig'imini metama'lumot sifatida saqlaydi va uning
+ma'lumoti har doim UTF-8 bo'lishini ta'minlash uchun qo'shimcha xususiyatga ega.
 
-Smart pointers are usually implemented using structs. Unlike an ordinary
-struct, smart pointers implement the `Deref` and `Drop` traits. The `Deref`
-trait allows an instance of the smart pointer struct to behave like a reference
-so you can write your code to work with either references or smart pointers.
-The `Drop` trait allows you to customize the code that’s run when an instance
-of the smart pointer goes out of scope. In this chapter, we’ll discuss both
-traits and demonstrate why they’re important to smart pointers.
+Smart pointerlar odatda structlar yordamida amalga oshiriladi. Oddiy structdan
+farqli o'laroq, smart pointerlar `Deref` va `Drop` traitlarini amalga oshiradi.
+`Deref` traiti smart pointer struct-ning instancesiga reference kabi o'zini
+tutish imkonini beradi, shunday qilib siz ikkala referencelar yoki smart
+pointerlar bilan ishlash uchun kod yozishingiz mumkin. `Drop` traiti smart
+pointerning instancesi scopedan chiqib ketganda ishga tushadigan kodni
+moslashtirish imkonini beradi. Ushbu bobda biz ikkala traitni muhokama qilamiz
+va nima uchun ular smart pointerlar uchun muhimligini ko'rsatamiz.
 
-Given that the smart pointer pattern is a general design pattern used
-frequently in Rust, this chapter won’t cover every existing smart pointer. Many
-libraries have their own smart pointers, and you can even write your own. We’ll
-cover the most common smart pointers in the standard library:
+Smart pointer patterni Rustda tez-tez ishlatiladigan umumiy dizayn patterni
+ekanligini hisobga olsak, bu bobda mavjud bo'lgan barcha smart pointerlar qamrab
+olinmaydi. Ko'pgina kutubxonalarda o'zlarining smart pointerlari mavjud va siz
+hatto o'zingiznikini yozishingiz mumkin. Biz standart kutubxonadagi eng keng
+tarqalgan smart pointerlarni ko'rib chiqamiz:
 
-* `Box<T>` for allocating values on the heap
-* `Rc<T>`, a reference counting type that enables multiple ownership
-* `Ref<T>` and `RefMut<T>`, accessed through `RefCell<T>`, a type that enforces
-  the borrowing rules at runtime instead of compile time
+- `Box<T>` heapga qiymatlarni joylashtirish uchun
+- `Rc<T>`, bir nechta egalik qilish imkonini beruvchi referencelar hisoblash
+  turi
+- `Ref<T>` va `RefMut<T>`, `RefCell<T>` orqali kiriladi, bu qarz olish
+  qoidalariga kompilyatsiya vaqti o'rniga runtimeda rioya qilishga majburlovchi
+  tur
 
-In addition, we’ll cover the *interior mutability* pattern where an immutable
-type exposes an API for mutating an interior value. We’ll also discuss
-*reference cycles*: how they can leak memory and how to prevent them.
+Bundan tashqari, biz *ichki o'zgaruvchanlik* patternini ko'rib chiqamiz, bunda
+o'zgarmas tur ichki qiymatni o'zgartirish uchun APIni ochib beradi. Shuningdek,
+biz *reference davrlarini* muhokama qilamiz: ular xotirani oqishiga olib kelishi
+va ularni qanday oldini olish mumkin.
 
-Let’s dive in!
+Keling sho'ng'iymiz!
