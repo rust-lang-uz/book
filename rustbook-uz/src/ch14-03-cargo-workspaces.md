@@ -1,26 +1,15 @@
-## Cargo Workspaces
+## Cargo Workspaselar
 
-In Chapter 12, we built a package that included a binary crate and a library
-crate. As your project develops, you might find that the library crate
-continues to get bigger and you want to split your package further into
-multiple library crates. Cargo offers a feature called *workspaces* that can
-help manage multiple related packages that are developed in tandem.
+12-bobda biz bianry crate va kutubxona cratesini o'z ichiga olgan paketni yaratdik. Loyihangiz rivojlanib borgan sari, kutubxona(library) cratesi kattalashib borishini va paketingizni bir nechta kutubxona cratelariga bo'lishni xohlayotganingizni ko'rishingiz mumkin. Cargo tandemda ishlab chiqilgan bir nechta tegishli paketlarni boshqarishga yordam beradigan *workspaces* deb nomlangan xususiyatni taklif etadi.
 
-### Creating a Workspace
+### Workspace yaratish
 
-A *workspace* is a set of packages that share the same *Cargo.lock* and output
-directory. Let’s make a project using a workspace—we’ll use trivial code so we
-can concentrate on the structure of the workspace. There are multiple ways to
-structure a workspace, so we'll just show one common way. We’ll have a
-workspace containing a binary and two libraries. The binary, which will provide
-the main functionality, will depend on the two libraries. One library will
-provide an `add_one` function, and a second library an `add_two` function.
-These three crates will be part of the same workspace. We’ll start by creating
-a new directory for the workspace:
+*workspace* - bu bir xil *Cargo.lock* va output(chiqish) jildiga ega bo'lgan paketlar to'plami. Keling, workspcedan foydalangan holda loyiha yarataylik - biz workspacening tuzilishiga e'tibor qaratishimiz uchun arzimas koddan foydalanamiz. Workspaceni tuzishning bir necha yo'li mavjud, shuning uchun biz faqat bitta umumiy usulni ko'rsatamiz. Binary(ikkilik) va ikkita kutubxonani o'z ichiga olgan workspacega ega bo'lamiz. Asosiy funksionallikni ta'minlaydigan binary ikkita kutubxonaga bog'liq bo'ladi. Bitta kutubxona `bitta_qoshish` funksiyasini, ikkinchi kutubxona esa `ikkita_qoshish` funksiyasini taqdim etadi.
+Ushbu uchta crate bir xil workspacening bir qismi bo'ladi. Biz workspaceni uchun yangi jild yaratishdan boshlaymiz:
 
 ```console
-$ mkdir add
-$ cd add
+$ mkdir qoshish
+$ cd qoshish
 ```
 
 Next, in the *add* directory, we create the *Cargo.toml* file that will
