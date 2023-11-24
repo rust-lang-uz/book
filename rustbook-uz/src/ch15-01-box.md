@@ -1,20 +1,23 @@
-## Using `Box<T>` to Point to Data on the Heap
+## Ma'lumotlarni Heapga joylash uchun `Box<T>` dan foydalanish
 
-The most straightforward smart pointer is a *box*, whose type is written
-`Box<T>`. Boxes allow you to store data on the heap rather than the stack. What
-remains on the stack is the pointer to the heap data. Refer to Chapter 4 to
-review the difference between the stack and the heap.
+Eng sodda smart pointer bu *box* bo'lib, uning turi `Box<T>` deb yoziladi.
+Boxlar sizga ma'lumotlarni stackda emas, balki heapda saqlashga imkon beradi.
+Stackda esa heapdagi ma'lumotlariga pointer qoladi. Stack va heam o'rtasidagi
+farqni ko'rib chiqish uchun 4-bobga qarang.
 
-Boxes don’t have performance overhead, other than storing their data on the
-heap instead of on the stack. But they don’t have many extra capabilities
-either. You’ll use them most often in these situations:
+Boxlar o'z ma'lumotlarini stackda emas, balki heapda saqlashdan tashqari,
+ishlash bo'yicha qo'shimcha xarajatlarga ega emas. Lekin ularda ko'p qo'shimcha
+imkoniyatlar ham yo'q. Siz ulardan ko'pincha quyidagi holatlarda foydalanasiz:
 
-* When you have a type whose size can’t be known at compile time and you want
-  to use a value of that type in a context that requires an exact size
-* When you have a large amount of data and you want to transfer ownership but
-  ensure the data won’t be copied when you do so
-* When you want to own a value and you care only that it’s a type that
-  implements a particular trait rather than being of a specific type
+* Agar sizda kompilyatsiya vaqtida o'lchami noma'lum bo'lgan tur mavjud bo'lsa
+  va siz aniq o'lchamni talab qiladigan kontekstda ushbu turdagi qiymatdan
+  foydalanmoqchi bo'lsangiz
+* Agar sizda katta hajmdagi maʼlumotlar mavjud boʻlsa va siz egalik huquqini
+  oʻtkazganingizda maʼlumotlardan nusxa olinmasligiga ishonch hosil qilmoqchi
+  bo'lsangiz
+* Agar siz biror qiymatga egalik qilmoqchi bo'lsangiz va siz uni ma'lum bir
+  turda bo'lishiga emas, balki ma'lum bir traitni implement qiluvchi tur
+  bo'lishi haqida qayg'ursangiz
 
 We’ll demonstrate the first situation in the [“Enabling Recursive Types with
 Boxes”](#enabling-recursive-types-with-boxes)<!-- ignore --> section. In the
