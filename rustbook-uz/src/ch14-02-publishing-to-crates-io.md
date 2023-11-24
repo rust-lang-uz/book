@@ -210,53 +210,34 @@ name = "kalkulyator"
 license = "MIT"
 ```
 
-If you want to use a license that doesn’t appear in the SPDX, you need to place
-the text of that license in a file, include the file in your project, and then
-use `license-file` to specify the name of that file instead of using the
-`license` key.
+Agar siz SPDX da ko'rinmaydigan litsenziyadan foydalanmoqchi bo'lsangiz, ushbu litsenziya matnini faylga joylashtirishingiz, faylni loyihangizga kiritishingiz kerak, va keyin `license` kalitidan foydalanish oʻrniga oʻsha fayl nomini koʻrsatish uchun `license-file` dan foydalaning.
 
-Guidance on which license is appropriate for your project is beyond the scope
-of this book. Many people in the Rust community license their projects in the
-same way as Rust by using a dual license of `MIT OR Apache-2.0`. This practice
-demonstrates that you can also specify multiple license identifiers separated
-by `OR` to have multiple licenses for your project.
+Loyihangiz uchun qaysi litsenziya to'g'ri kelishi haqidagi ko'rsatmalar ushbu kitob doirasidan tashqarida. Rust hamjamiyatidagi(community) ko'p odamlar o'z loyihalarini Rust bilan bir xil tarzda `MIT OR Apache-2.0` qo'sh litsenziyasidan foydalangan holda litsenziyalashadi. Ushbu amaliyot shuni ko'rsatadiki, loyihangiz uchun bir nechta litsenziyaga ega bo'lish uchun `OR` bilan ajratilgan bir nechta litsenziya identifikatorlarini ham belgilashingiz mumkin.
 
-With a unique name, the version, your description, and a license added, the
-*Cargo.toml* file for a project that is ready to publish might look like this:
+Noyob nom, versiya, tavsif(description) va litsenziya qoʻshilgan holda nashr etishga tayyor boʻlgan loyiha uchun *Cargo.toml* fayli quyidagicha koʻrinishi mumkin:
 
 <span class="filename">Fayl nomi: Cargo.toml</span>
 
 ```toml
 [package]
-name = "guessing_game"
+name = "kalkulyator"
 version = "0.1.0"
 edition = "2021"
-description = "A fun game where you guess what number the computer has chosen."
+description = "Sanoq tizimlari bilan ishlaydigan kalkulyator"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
 ```
 
-[Cargo’s documentation](https://doc.rust-lang.org/cargo/) describes other
-metadata you can specify to ensure others can discover and use your crate more
-easily.
+[Cargo hujjatlarida](https://doc.rust-lang.org/cargo/) boshqalar sizning cratengizni osongina topishi va undan foydalanishi uchun siz belgilashingiz mumkin bo'lgan boshqa metama'lumotlar tasvirlangan.
 
-### Publishing to Crates.io
+### Crates.io-da nashr qilish
 
-Now that you’ve created an account, saved your API token, chosen a name for
-your crate, and specified the required metadata, you’re ready to publish!
-Publishing a crate uploads a specific version to
-[crates.io](https://crates.io/)<!-- ignore --> for others to use.
+Endi siz hisob(account) yaratdingiz, API tokeningizni saqladingiz, cratengiz uchun nom tanladingiz va kerakli metamaʼlumotlarni koʻrsatdingiz, siz nashr(publish) qilishga tayyorsiz! Crateni nashr qilish boshqalar foydalanishi uchun [crates.io](https://crates.io/)<!-- ignore --> saytiga ma'lum bir versiyani yuklaydi.
 
-Be careful, because a publish is *permanent*. The version can never be
-overwritten, and the code cannot be deleted. One major goal of
-[crates.io](https://crates.io/)<!-- ignore --> is to act as a permanent archive
-of code so that builds of all projects that depend on crates from
-[crates.io](https://crates.io/)<!-- ignore --> will continue to work. Allowing
-version deletions would make fulfilling that goal impossible. However, there is
-no limit to the number of crate versions you can publish.
+Ehtiyot bo'ling, chunki nashr *doimiydir(permanent)*. Versiyani hech qachon qayta yozib bo'lmaydi va kodni o'chirib bo'lmaydi.[crates.io](https://crates.io/)<!-- ignore --> -ning asosiy maqsadlaridan biri doimiy kod arxivi bo'lib xizmat qilishdir, shunda [crates.io](https://crates.io/)<!-- ignore -->-dan cratelarga bog'liq bo'lgan barcha loyihalar o'z ishini davom ettiradi. Versiyani o'chirishga ruxsat berish bu maqsadni amalga oshirishni imkonsiz qiladi. Biroq, siz nashr(publish) etishingiz mumkin bo'lgan crate versiyalari soniga cheklov yo'q.
 
-Run the `cargo publish` command again. It should succeed now:
+`cargo publish` buyrug'ini qayta ishga tushiring. Endi u muvaffaqiyatli bo'lishi kerak:
 
 <!-- manual-regeneration
 go to some valid crate, publish a new version
@@ -267,16 +248,16 @@ copy just the relevant lines below
 ```console
 $ cargo publish
     Updating crates.io index
-   Packaging guessing_game v0.1.0 (file:///projects/guessing_game)
-   Verifying guessing_game v0.1.0 (file:///projects/guessing_game)
-   Compiling guessing_game v0.1.0
-(file:///projects/guessing_game/target/package/guessing_game-0.1.0)
+   Packaging kalkulyator v0.1.0 (file:///projects/kalkulyator)
+   Verifying kalkulyator v0.1.0 (file:///projects/kalkulyator)
+   Compiling kalkulyator v0.1.0
+(file:///projects/kalkulyator/target/package/kalkulyator-0.1.0)
     Finished dev [unoptimized + debuginfo] target(s) in 0.19s
-   Uploading guessing_game v0.1.0 (file:///projects/guessing_game)
+   Uploading kalkulyator v0.1.0 (file:///projects/kalkulyator)
 ```
 
-Congratulations! You’ve now shared your code with the Rust community, and
-anyone can easily add your crate as a dependency of their project.
+Tabriklaymiz! Siz endi kodingizni Rust hamjamiyatiga(community) ulashdingiz va
+har kim o'z loyihasiga dependency sifatida cratengizni osongina qo'shishi mumkin.
 
 ### Publishing a New Version of an Existing Crate
 
@@ -303,8 +284,8 @@ yank means that all projects with a *Cargo.lock* will not break, and any future
 
 To yank a version of a crate, in the directory of the crate that you’ve
 previously published, run `cargo yank` and specify which version you want to
-yank. For example, if we've published a crate named `guessing_game` version
-1.0.1 and we want to yank it, in the project directory for `guessing_game` we'd
+yank. For example, if we've published a crate named `kalkulyator` version
+1.0.1 and we want to yank it, in the project directory for `kalkulyator` we'd
 run:
 
 <!-- manual-regeneration:
@@ -315,7 +296,7 @@ cargo yank carol-test --version 2.1.0 --undo
 ```console
 $ cargo yank --vers 1.0.1
     Updating crates.io index
-        Yank guessing_game@1.0.1
+        Yank kalkulyator@1.0.1
 ```
 
 By adding `--undo` to the command, you can also undo a yank and allow projects
@@ -324,7 +305,7 @@ to start depending on a version again:
 ```console
 $ cargo yank --vers 1.0.1 --undo
     Updating crates.io index
-      Unyank guessing_game@1.0.1
+      Unyank kalkulyator@1.0.1
 ```
 
 A yank *does not* delete any code. It cannot, for example, delete accidentally
