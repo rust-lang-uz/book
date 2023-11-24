@@ -155,51 +155,31 @@ Ko'plab ichki modullar mavjud bo'lsa, `pub use` bilan top leveldagi turlarni qay
 
 Foydali public API stucturesini yaratish fandan ko'ra ko'proq san'atdir va siz foydalanuvchilaringiz uchun eng mos keladigan APIni topish uchun takrorlashingiz mumkin. `pub use` ni tanlash sizga cratengizni ichki stuctureda moslashuvchanlikni beradi va bu ichki stuctureni foydalanuvchilarga taqdim etgan narsadan ajratadi. O'rnatgan ba'zi cratelar kodlarini ko'rib chiqing, ularning ichki tuzilishi(internal structure) public APIdan farq qiladimi yoki yo'qmi.
 
-### Setting Up a Crates.io Account
+### Crates.io da account sozlash
 
-Before you can publish any crates, you need to create an account on
-[crates.io](https://crates.io/)<!-- ignore --> and get an API token. To do so,
-visit the home page at [crates.io](https://crates.io/)<!-- ignore --> and log
-in via a GitHub account. (The GitHub account is currently a requirement, but
-the site might support other ways of creating an account in the future.) Once
-you’re logged in, visit your account settings at
-[https://crates.io/me/](https://crates.io/me/)<!-- ignore --> and retrieve your
-API key. Then run the `cargo login` command with your API key, like this:
+Har qanday cratelarni nashr qilishdan oldin [crates.io](https://crates.io/)<!-- ignore --> saytida hisob(account) yaratishingiz va API tokenini olishingiz kerak.
+Buning uchun [crates.io](https://crates.io/)<!-- ignore --> saytidagi bosh sahifaga tashrif buyuring va GitHub hisob qaydnomasi(account) orqali tizimga kiring. (GitHub hisobi hozirda talab hisoblanadi, ammo sayt kelajakda hisob yaratishning boshqa usullarini qo'llab-quvvatlashi mumkin.), Tizimga kirganingizdan so'ng,[https://crates.io/me/](https://crates.io/me/)<!-- ignore --> sahifasidagi hisob sozlamalariga tashrif buyuring va API kalitingizni(key) oling. Keyin API kalitingiz bilan `cargo login` buyrug'ini bajaring, masalan:
 
 ```console
 $ cargo login abcdefghijklmnopqrstuvwxyz012345
 ```
 
-This command will inform Cargo of your API token and store it locally in
-*~/.cargo/credentials*. Note that this token is a *secret*: do not share it
-with anyone else. If you do share it with anyone for any reason, you should
-revoke it and generate a new token on [crates.io](https://crates.io/)<!-- ignore
--->.
+Bu buyruq Cargoga API tokeningiz haqida xabar beradi va uni *~/.cargo/credentials* da saqlaydi. E'tibor bering, bu token *secret*: uni boshqa hech kim bilan baham ko'rmang. Agar biron-bir sababga ko'ra uni kimdir bilan baham ko'rsangiz, uni bekor qilishingiz va [crates.io](https://crates.io/)<!-- ignore --> saytida yangi token yaratishingiz kerak.
 
-### Adding Metadata to a New Crate
+### Yangi cratega metadata qo'shish
 
-Let’s say you have a crate you want to publish. Before publishing, you’ll need
-to add some metadata in the `[package]` section of the crate’s *Cargo.toml*
-file.
+Aytaylik, sizda nashr qilmoqchi bo'lgan cratengiz bor. Nashr qilishdan oldin cratening *Cargo.toml* faylining `[package]` boʻlimiga metamaʼlumotlar qoʻshishingiz kerak boʻladi.
 
-Your crate will need a unique name. While you’re working on a crate locally,
-you can name a crate whatever you’d like. However, crate names on
-[crates.io](https://crates.io/)<!-- ignore --> are allocated on a first-come,
-first-served basis. Once a crate name is taken, no one else can publish a crate
-with that name. Before attempting to publish a crate, search for the name you
-want to use. If the name has been used, you will need to find another name and
-edit the `name` field in the *Cargo.toml* file under the `[package]` section to
-use the new name for publishing, like so:
+Sizning cratengizga noyob nom kerak bo'ladi. Mahalliy(local) miqyosda crate ustida ishlayotganingizda, cratega xohlaganingizcha nom berishingiz mumkin. Biroq, [crates.io](https://crates.io/)<!-- ignore --> saytidagi crate nomlari birinchi kelganda, birinchi navbatda beriladi. Crate nomi olingandan so'ng, boshqa hech kim bu nom bilan crateni nashr eta olmaydi. Crateni nashr etishga urinishdan oldin foydalanmoqchi bo'lgan nomni qidiring. Agar nom ishlatilgan bo'lsa, nashr qilish uchun yangi nomdan foydalanish uchun boshqa nom topib, *Cargo.toml* faylida `[package]` bo'limi ostidagi `name` maydonini tahrirlashingiz kerak bo'ladi:
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Fayl nomi: Cargo.toml</span>
 
 ```toml
 [package]
-name = "guessing_game"
+name = "kalkulyator"
 ```
 
-Even if you’ve chosen a unique name, when you run `cargo publish` to publish
-the crate at this point, you’ll get a warning and then an error:
+Noyob nom tanlagan bo'lsangiz ham, ushbu nuqtada crateni nashr qilish uchun `cargo publish` ni ishga tushirganingizda, siz ogohlantirish va keyin xatolikni olasiz:
 
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/listing-14-01/
@@ -219,20 +199,14 @@ Caused by:
   the remote server responded with an error: missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for how to upload metadata
 ```
 
-This errors because you’re missing some crucial information: a description and
-license are required so people will know what your crate does and under what
-terms they can use it. In *Cargo.toml*, add a description that's just a
-sentence or two, because it will appear with your crate in search results. For
-the `license` field, you need to give a *license identifier value*. The [Linux
-Foundation’s Software Package Data Exchange (SPDX)][spdx] lists the identifiers
-you can use for this value. For example, to specify that you’ve licensed your
-crate using the MIT License, add the `MIT` identifier:
+Bu xato, chunki sizda ba'zi muhim ma'lumotlar yetishmayapti: tavsif(description) va litsenziya talab qilinadi, shunda foydalanuvchilar sizning cratengiz nima qilishini va undan qanday shartlar ostida foydalanishlari mumkinligini bilishlari mumkin. *Cargo.toml* ga bir yoki ikki jumladan iborat tavsif(description) qo'shing, chunki u qidiruv natijalarida cratengiz bilan birga ko'rinadi. `license` maydoni uchun siz *litsenziya identifikatorining qiymatini* berishingiz kerak. [Linux
+Foundation’s Software Package Data Exchange (SPDX)][spdx] ushbu qiymat uchun foydalanishingiz mumkin bo'lgan identifikatorlarni sanab o'tadi. Masalan, MIT litsenziyasidan foydalangan holda cratengizni litsenziyalaganingizni ko'rsatish uchun `MIT` identifikatorini qo'shing:
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Fayl nomi: Cargo.toml</span>
 
 ```toml
 [package]
-name = "guessing_game"
+name = "kalkulyator"
 license = "MIT"
 ```
 
@@ -250,7 +224,7 @@ by `OR` to have multiple licenses for your project.
 With a unique name, the version, your description, and a license added, the
 *Cargo.toml* file for a project that is ready to publish might look like this:
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Fayl nomi: Cargo.toml</span>
 
 ```toml
 [package]
