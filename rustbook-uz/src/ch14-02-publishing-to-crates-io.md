@@ -259,34 +259,21 @@ $ cargo publish
 Tabriklaymiz! Siz endi kodingizni Rust hamjamiyatiga(community) ulashdingiz va
 har kim o'z loyihasiga dependency sifatida cratengizni osongina qo'shishi mumkin.
 
-### Publishing a New Version of an Existing Crate
+### Mavjud cratening yangi versiyasini nashr qilish
 
-When you’ve made changes to your crate and are ready to release a new version,
-you change the `version` value specified in your *Cargo.toml* file and
-republish. Use the [Semantic Versioning rules][semver] to decide what an
-appropriate next version number is based on the kinds of changes you’ve made.
-Then run `cargo publish` to upload the new version.
+Cratengizga oʻzgartirishlar kiritib, yangi versiyani chiqarishga tayyor boʻlgach, *Cargo.toml* faylida koʻrsatilgan `version` qiymatini oʻzgartirasiz va qayta nashr qilasiz. Siz kiritgan o'zgartirishlar turiga qarab keyingi versiya raqami qanday bo'lishini aniqlash uchun [semantik versiya qoidalaridan][semver] foydalaning.
+Keyin yangi versiyani yuklash uchun `cargo publish`ni ishga tushiring.
 
 <!-- Old link, do not remove -->
 <a id="removing-versions-from-cratesio-with-cargo-yank"></a>
 
-### Deprecating Versions from Crates.io with `cargo yank`
+### Crates.io-dan `cargo yank` bilan eskirgan versiyalar
 
-Although you can’t remove previous versions of a crate, you can prevent any
-future projects from adding them as a new dependency. This is useful when a
-crate version is broken for one reason or another. In such situations, Cargo
-supports *yanking* a crate version.
+Cratening oldingi versiyalarini olib tashlamasangiz ham, kelajakdagi loyihalarni ularni yangi dependency sifatida qo'shishning oldini olishingiz mumkin. Bu crate versiyasi bir yoki boshqa sabablarga ko'ra buzilganda foydalidir. Bunday vaziyatlarda Cargo crate versiyasini *yanking(tortib)* olishni qo'llab-quvvatlaydi.
 
-Yanking a version prevents new projects from depending on that version while
-allowing all existing projects that depend on it to continue. Essentially, a
-yank means that all projects with a *Cargo.lock* will not break, and any future
-*Cargo.lock* files generated will not use the yanked version.
+Versiyani yanking o'zgartirish yangi loyihalarning ushbu versiyaga bog'lanishiga to'sqinlik qiladi, lekin shunga qaramay, unga bog'liq bo'lgan barcha mavjud loyihalarni ishlashni davom ettirishga imkon beradi. Aslini olganda, yank degani *Cargo.lock* bilan barcha loyihalar buzilmasligini va kelajakda yaratilgan *Cargo.lock* fayllari yanked versiyasidan foydalanmasligini anglatadi.
 
-To yank a version of a crate, in the directory of the crate that you’ve
-previously published, run `cargo yank` and specify which version you want to
-yank. For example, if we've published a crate named `kalkulyator` version
-1.0.1 and we want to yank it, in the project directory for `kalkulyator` we'd
-run:
+Cratening versiyasini tortib olish uchun siz avval nashr qilgan crate jildida  `cargo yank` ni ishga tushiring va qaysi versiyani yank qilishni belgilang. Misol uchun, agar biz `kalkulyator` nomli 1.0.1 versiyasini chop etgan bo'lsak va biz uni yank qilib olmoqchi bo'lsak, `kalkulyator` loyihasi jildida biz quyidagi amllarni bajaramiz:
 
 <!-- manual-regeneration:
 cargo yank carol-test --version 2.1.0
@@ -299,8 +286,7 @@ $ cargo yank --vers 1.0.1
         Yank kalkulyator@1.0.1
 ```
 
-By adding `--undo` to the command, you can also undo a yank and allow projects
-to start depending on a version again:
+Buyruqga `--undo` ni qo'shish orqali siz `yank` ni bekor qilishingiz va loyihalarni versiyaga qarab qaytadan boshlashga ruxsat berishingiz mumkin:
 
 ```console
 $ cargo yank --vers 1.0.1 --undo
@@ -308,8 +294,7 @@ $ cargo yank --vers 1.0.1 --undo
       Unyank kalkulyator@1.0.1
 ```
 
-A yank *does not* delete any code. It cannot, for example, delete accidentally
-uploaded secrets. If that happens, you must reset those secrets immediately.
+Yank *hech qanday kodni o'chirmaydi*. U, masalan, tasodifan yuklangan secretlarni o'chira olmaydi. Agar bu sodir bo'lsa, siz ushbu secretlarni darhol tiklashingiz kerak.
 
 [spdx]: http://spdx.org/licenses/
 [semver]: http://semver.org/
