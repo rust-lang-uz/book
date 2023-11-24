@@ -1,29 +1,29 @@
-//! # Art
+//! # Rassom
 //!
-//! A library for modeling artistic concepts.
+//! Badiiy tushunchalarni modellashtirish uchun kutubxona.
 
-pub mod kinds {
-    /// The primary colors according to the RYB color model.
-    pub enum PrimaryColor {
-        Red,
-        Yellow,
-        Blue,
+pub mod turlar {
+    /// RYB rang modeliga muvofiq asosiy ranglar.
+    pub enum AsosiyRang {
+        Qizil,
+        Sariq,
+        Kok,
     }
 
-    /// The secondary colors according to the RYB color model.
-    pub enum SecondaryColor {
-        Orange,
-        Green,
-        Purple,
+    /// RYB rang modeliga muvofiq ikkinchi darajali ranglar.
+    pub enum IkkilamchiRang {
+        Qovoqrang,
+        Yashil,
+        Siyohrang,
     }
 }
 
-pub mod utils {
-    use crate::kinds::*;
+pub mod yordamchi {
+    use crate::turlar::*;
 
-    /// Combines two primary colors in equal amounts to create
-    /// a secondary color.
-    pub fn mix(c1: PrimaryColor, c2: PrimaryColor) -> SecondaryColor {
-        SecondaryColor::Orange
+    /// Ikkilamchi rang yaratish uchun ikkita asosiy rangni teng
+    /// miqdorda birlashtiradi.
+    pub fn aralashtirish(c1: AsosiyRang, c2: AsosiyRang) -> IkkilamchiRang {
+        IkkilamchiRang::Qovoqrang
     }
 }

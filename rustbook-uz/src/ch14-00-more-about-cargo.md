@@ -8,4 +8,4 @@ Hozirgacha biz kodimizni yaratish(build), ishga tushirish(run) va sinab ko'rish(
 * [crates.io](https://crates.io/)<!-- ignore -->  dan binary(ikkilik) fayllarni o'rnating
 * Maxsus buyruqlar yordamida cargoni kengaytiring
 
-Caergo biz ushbu bobda ko'rib chiqiladigan funksiyalardan ham ko'proq narsani qila oladi, shuning uchun uning barcha xususiyatlarini to'liq tushuntirish uchun uning [texnik hujjatlariga](https://doc.rust-lang.org/cargo/) qarang.
+Cargo biz ushbu bobda ko'rib chiqiladigan funksiyalardan ham ko'proq narsani qila oladi, shuning uchun uning barcha xususiyatlarini to'liq tushuntirish uchun uning [texnik hujjatlariga](https://doc.rust-lang.org/cargo/) qarang.

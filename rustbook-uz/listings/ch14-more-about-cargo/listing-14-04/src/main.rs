@@ -1,8 +1,8 @@
-use art::kinds::PrimaryColor;
-use art::utils::mix;
+use art::turlar::AsosiyRang;
+use rassom::yordamchi::aralashtirish;
 
 fn main() {
-    let red = PrimaryColor::Red;
-    let yellow = PrimaryColor::Yellow;
-    mix(red, yellow);
+    let qizil = AsosiyRang::Qizil;
+    let yellow = AsosiyRang::Sariq;
+    aralashtirish(qizil, sariq);
 }
