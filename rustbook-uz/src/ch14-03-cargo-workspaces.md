@@ -258,14 +258,9 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
-The first section of the output shows that the `ishlamoqda` test in the `bitta_qoshish`
-crate passed. The next section shows that zero tests were found in the `adder`
-crate, and then the last section shows zero documentation tests were found in
-the `bitta_qoshish` crate.
+Chiqishning(output) birinchi qismida `bitta_qoshish` cratesidagi `ishlamoqda` testi muvaffaqiyatli o'tganligi ko'rsatilgan. Keyingi bo'limda `qoshuvchi` cratesida nol testlar topilganligi ko'rsatilgan, so'ngra oxirgi bo'lim `bitta_qoshish` cratesida nol hujjat testlari topilganligini ko'rsatadi.
 
-We can also run tests for one particular crate in a workspace from the
-top-level directory by using the `-p` flag and specifying the name of the crate
-we want to test:
+Bundan tashqari, biz top leveldagi jilddan `-p` flagidan foydalanib va biz test qilib ko'rmoqchi bo'lgan crate nomini ko'rsatib, workspacedagi ma'lum bir crate uchun testlarni o'tkazishimiz mumkin:
 
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/no-listing-04-workspace-with-tests/add
@@ -290,18 +285,11 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
-This output shows `cargo test` only ran the tests for the `bitta_qoshish` crate and
-didn’t run the `adder` crate tests.
+Bu chiqishda `cargo test` koʻrsatilgan, faqat `bitta_qoshish` cratesi uchun stestlar oʻtkazilgan va `qoshuvchi` cratesi testlari oʻtkazilmagan.
 
-If you publish the crates in the workspace to [crates.io](https://crates.io/),
-each crate in the workspace will need to be published separately. Like `cargo
-test`, we can publish a particular crate in our workspace by using the `-p`
-flag and specifying the name of the crate we want to publish.
+Agar siz workspacedagi cratelarni [crates.io](https://crates.io/)-ga nashr(publish) qilsangiz, workspacedagi har bir crate alohida nashr etilishi kerak bo'ladi.
+`cargo test` singari, biz `p` flagidan foydalanib va nashr qilmoqchi bo'lgan crate nomini ko'rsatib, workspacemizda ma'lum bir crateni nashr qilishimiz mumkin.
 
-For additional practice, add an `add_two` crate to this workspace in a similar
-way as the `bitta_qoshish` crate!
+Qo'shimcha mashq qilish uchun ushbu workspacega `bitta_qoshish` cratesga o'xshash `ikkita_qoshish` cratesini qo'shing!
 
-As your project grows, consider using a workspace: it’s easier to understand
-smaller, individual components than one big blob of code. Furthermore, keeping
-the crates in a workspace can make coordination between crates easier if they
-are often changed at the same time.
+Loyihangiz o'sib ulg'aygan sayin, workspacedan foydalanishni o'ylab ko'ring: bitta katta kod blokidan ko'ra kichikroq, individual komponentlarni tushunish osonroq. Bundan tashqari, cratelarni workspaceda saqlash, agar ular bir vaqtning o'zida tez-tez almashtirilsa, cratelar orasidagi muvofiqlashtirishni osonlashtirishi mumkin.
