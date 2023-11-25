@@ -1,17 +1,7 @@
-## Extending Cargo with Custom Commands
+## Maxsus buyruqlar bilan cargoni kengaytirish
 
-Cargo is designed so you can extend it with new subcommands without having to
-modify Cargo. If a binary in your `$PATH` is named `cargo-something`, you can
-run it as if it was a Cargo subcommand by running `cargo something`. Custom
-commands like this are also listed when you run `cargo --list`. Being able to
-use `cargo install` to install extensions and then run them just like the
-built-in Cargo tools is a super convenient benefit of Cargo’s design!
+Cargo cargoni o'zini o'zgartirmasdan, uni yangi kichik buyruqlar bilan kengaytirishingiz uchun mo'ljallangan. Agar `$PATH`-dagi binary fayl `cargo-birnarsa` deb nomlangan bo'lsa, uni `cargo birnarsasi`ni ishga tushirish orqali uni Cargo kichik buyrug'i kabi ishga tushirishingiz mumkin. Bu kabi maxsus buyruqlar `cargo --list` ishga tushirilganda ham ro'yxatga olinadi. Kengaytmalarni(extension) o'rnatish va keyin ularni xuddi o'rnatilgan Cargo toollari kabi ishga tushirish uchun `cargo install` dan foydalanish imkoniyati Cargo dizaynining o'ta qulay afzalligidir!
 
-## Summary
+## Xulosa
 
-Sharing code with Cargo and [crates.io](https://crates.io/)<!-- ignore --> is
-part of what makes the Rust ecosystem useful for many different tasks. Rust’s
-standard library is small and stable, but crates are easy to share, use, and
-improve on a timeline different from that of the language. Don’t be shy about
-sharing code that’s useful to you on [crates.io](https://crates.io/)<!-- ignore
--->; it’s likely that it will be useful to someone else as well!
+Cargo va [crates.io](https://crates.io/)<!-- ignore --> bilan kod almashish Rust ekotizimini turli xil vazifalar uchun foydali qiladigan dizaynning bir qismidir. Rustning standart kutubxonasi(standard library) kichik va barqaror(stable), lekin cratelarni almashish(share), ishlatish va tildagidan farqli vaqt jadvalida yaxshilash oson. [crates.io](https://crates.io/)<!-- ignore--> saytida sizga foydali bo'lgan kodni baham(share) ko'rishdan uyalmang, ehtimol u boshqa birovga ham foydali bo'lishi mumkin!
