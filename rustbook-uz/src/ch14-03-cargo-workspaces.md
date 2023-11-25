@@ -63,8 +63,8 @@ Keyin `bitta_qoshish` nomli yangi kutubxonalibrary cratesini yarating:
 
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/output-only-02-add-one/add
-rm -rf add_one
-cargo new add_one --lib
+rm -rf bitta_qoshish
+cargo new bitta_qoshish --lib
 copy output below
 -->
 
@@ -149,17 +149,9 @@ Hello, world! 10 plus one is 11!
 
 Bu kodni *qoshuvchi/src/main.rs* da ishga tushiradi, bu `bitta_qoshish` cratesiga bog'liq.
 
-#### Depending on an External Package in a Workspace
+#### Workspacedagi tashqi(external) paketga bog'liqlik
 
-Notice that the workspace has only one *Cargo.lock* file at the top level,
-rather than having a *Cargo.lock* in each crate’s directory. This ensures that
-all crates are using the same version of all dependencies. If we add the `rand`
-package to the *adder/Cargo.toml* and *add_one/Cargo.toml* files, Cargo will
-resolve both of those to one version of `rand` and record that in the one
-*Cargo.lock*. Making all crates in the workspace use the same dependencies
-means the crates will always be compatible with each other. Let’s add the
-`rand` crate to the `[dependencies]` section in the *add_one/Cargo.toml* file
-so we can use the `rand` crate in the `add_one` crate:
+E'tibor bering, workspaceda har bir crate jildida *Cargo.lock* emas, balki top leveldagi faqat bitta *Cargo.lock* fayli mavjud. Bu barcha cratelar barcha depencilarning(bog'liqlik) bir xil versiyasidan foydalanishini ta'minlaydi. Agar biz *qoshuvchi/Cargo.toml* va *bitta_qoshish/Cargo.toml* fayllariga `rand` paketini qo'shsak, Cargo ikkalasini ham `rand` ning bitta versiyasida hal qiladi va buni bitta *Cargo.lock*da qayd etadi. Workspacedagi barcha cratelarni bir xil depensilardan foydalanishga aylantirish, cratelarning har doim bir-biriga mos kelishini anglatadi. Keling, *bitta_qoshish/Cargo.toml* faylidagi `[dependencies]` bo'limiga `rand` cratesini qo'shamiz, shunda biz `bitta_qoshish` cratesida `rand` cratesidan foydalanishimiz mumkin:
 
 <!-- When updating the version of `rand` used, also update the version of
 `rand` used in these files so they all match:
@@ -167,16 +159,13 @@ so we can use the `rand` crate in the `add_one` crate:
 * ch07-04-bringing-paths-into-scope-with-the-use-keyword.md
 -->
 
-<span class="filename">Fayl nomi: add_one/Cargo.toml</span>
+<span class="filename">Fayl nomi: bitta_qoshish/Cargo.toml</span>
 
 ```toml
-{{#include ../listings/ch14-more-about-cargo/no-listing-03-workspace-with-external-dependency/add/add_one/Cargo.toml:6:7}}
+{{#include ../listings/ch14-more-about-cargo/no-listing-03-workspace-with-external-dependency/add/bitta_qoshish/Cargo.toml:6:7}}
 ```
 
-We can now add `use rand;` to the *add_one/src/lib.rs* file, and building the
-whole workspace by running `cargo build` in the *add* directory will bring in
-and compile the `rand` crate. We will get one warning because we aren’t
-referring to the `rand` we brought into scope:
+Endi biz *bitta_qoshish/src/lib.rs* fayliga `use rand;` ni qo'shishimiz mumkin va *qoshish* jildida `cargo build`-ni ishga tushirish orqali butun workspaceni build qilish `rand` cratesini olib keladi va kompilyatsiya qiladi. Biz bitta ogohlantirish olamiz, chunki biz qamrab olgan `rand` ni nazarda tutmayapmiz:
 
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/no-listing-03-workspace-with-external-dependency/add
@@ -190,25 +179,21 @@ $ cargo build
   Downloaded rand v0.8.5
    --snip--
    Compiling rand v0.8.5
-   Compiling add_one v0.1.0 (file:///projects/add/add_one)
+   Compiling bitta_qoshish v0.1.0 (file:///projects/qoshish/bitta_qoshish)
 warning: unused import: `rand`
- --> add_one/src/lib.rs:1:5
+ --> bitta_qoshish/src/lib.rs:1:5
   |
 1 | use rand;
   |     ^^^^
   |
   = note: `#[warn(unused_imports)]` on by default
 
-warning: `add_one` (lib) generated 1 warning
-   Compiling adder v0.1.0 (file:///projects/add/adder)
+warning: `bitta_qoshish` (lib) generated 1 warning
+   Compiling qoshuvchi v0.1.0 (file:///projects/qoshish/qoshuvchi)
     Finished dev [unoptimized + debuginfo] target(s) in 10.18s
 ```
 
-The top-level *Cargo.lock* now contains information about the dependency of
-`add_one` on `rand`. However, even though `rand` is used somewhere in the
-workspace, we can’t use it in other crates in the workspace unless we add
-`rand` to their *Cargo.toml* files as well. For example, if we add `use rand;`
-to the *adder/src/main.rs* file for the `adder` package, we’ll get an error:
+Top leveldagi *Cargo.lock* endi `bitta_qoshish` `rand` ga bog'liqligi(dependency) haqida ma'lumotni o'z ichiga oladi. Biroq, workspacening biror joyida `rand` ishlatilsa ham, ularning *Cargo.toml* fayllariga `rand` qo'shmagunimizcha, biz uni workspacedagi boshqa cratelarda ishlata olmaymiz. Masalan, agar biz `qoshuvchi` paketi uchun *qoshuvchi/src/main.rs* fayliga `use rand;` qo'shsak, xatoga duch kelamiz:
 
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/output-only-03-use-rand/add
@@ -219,31 +204,25 @@ copy output below; the output updating script doesn't handle subdirectories in p
 ```console
 $ cargo build
   --snip--
-   Compiling adder v0.1.0 (file:///projects/add/adder)
+   Compiling qoshuvchi v0.1.0 (file:///projects/qoshish/qoshuvchi)
 error[E0432]: unresolved import `rand`
- --> adder/src/main.rs:2:5
+ --> qoshuvchi/src/main.rs:2:5
   |
 2 | use rand;
   |     ^^^^ no external crate `rand`
 ```
 
-To fix this, edit the *Cargo.toml* file for the `adder` package and indicate
-that `rand` is a dependency for it as well. Building the `adder` package will
-add `rand` to the list of dependencies for `adder` in *Cargo.lock*, but no
-additional copies of `rand` will be downloaded. Cargo has ensured that every
-crate in every package in the workspace using the `rand` package will be using
-the same version, saving us space and ensuring that the crates in the workspace
-will be compatible with each other.
+Buni tuzatish uchun `qoshuvchi` paketi uchun *Cargo.toml* faylini tahrirlang va `rand` ham unga dependency(bog'liqligini) ekanligini ko'rsating. `qoshuvchi` paketini yaratish *Cargo.lock* dagi `qoshuvchi` uchun depensiar ro'yxatiga `rand` qo'shadi, lekin `rand` ning qo'shimcha nusxalari yuklab olinmaydi. Cargo `rand` paketidan foydalangan holda workspacedagi har bir cratedagi har bir crate bir xil versiyadan foydalanishini taʼminladi, bu bizga joyni tejaydi va workspacedagi cratelar bir-biriga mos kelishini taʼminlaydi.
 
 #### Adding a Test to a Workspace
 
-For another enhancement, let’s add a test of the `add_one::add_one` function
-within the `add_one` crate:
+For another enhancement, let’s add a test of the `bitta_qoshish::bitta_qoshish` function
+within the `bitta_qoshish` crate:
 
-<span class="filename">Fayl nomi: add_one/src/lib.rs</span>
+<span class="filename">Fayl nomi: bitta_qoshish/src/lib.rs</span>
 
 ```rust,noplayground
-{{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-04-workspace-with-tests/add/add_one/src/lib.rs}}
+{{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-04-workspace-with-tests/add/bitta_qoshish/src/lib.rs}}
 ```
 
 Now run `cargo test` in the top-level *add* directory. Running `cargo test` in
@@ -259,10 +238,10 @@ paths properly
 
 ```console
 $ cargo test
-   Compiling add_one v0.1.0 (file:///projects/add/add_one)
+   Compiling bitta_qoshish v0.1.0 (file:///projects/add/bitta_qoshish)
    Compiling adder v0.1.0 (file:///projects/add/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.27s
-     Running unittests src/lib.rs (target/debug/deps/add_one-f0253159197f7841)
+     Running unittests src/lib.rs (target/debug/deps/bitta_qoshish-f0253159197f7841)
 
 running 1 test
 test tests::it_works ... ok
@@ -275,17 +254,17 @@ running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-   Doc-tests add_one
+   Doc-tests bitta_qoshish
 
 running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
-The first section of the output shows that the `it_works` test in the `add_one`
+The first section of the output shows that the `it_works` test in the `bitta_qoshish`
 crate passed. The next section shows that zero tests were found in the `adder`
 crate, and then the last section shows zero documentation tests were found in
-the `add_one` crate.
+the `bitta_qoshish` crate.
 
 We can also run tests for one particular crate in a workspace from the
 top-level directory by using the `-p` flag and specifying the name of the crate
@@ -293,28 +272,28 @@ we want to test:
 
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/no-listing-04-workspace-with-tests/add
-cargo test -p add_one
+cargo test -p bitta_qoshish
 copy output below; the output updating script doesn't handle subdirectories in paths properly
 -->
 
 ```console
-$ cargo test -p add_one
+$ cargo test -p bitta_qoshish
     Finished test [unoptimized + debuginfo] target(s) in 0.00s
-     Running unittests src/lib.rs (target/debug/deps/add_one-b3235fea9a156f74)
+     Running unittests src/lib.rs (target/debug/deps/bitta_qoshish-b3235fea9a156f74)
 
 running 1 test
 test tests::it_works ... ok
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-   Doc-tests add_one
+   Doc-tests bitta_qoshish
 
 running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
-This output shows `cargo test` only ran the tests for the `add_one` crate and
+This output shows `cargo test` only ran the tests for the `bitta_qoshish` crate and
 didn’t run the `adder` crate tests.
 
 If you publish the crates in the workspace to [crates.io](https://crates.io/),
@@ -323,7 +302,7 @@ test`, we can publish a particular crate in our workspace by using the `-p`
 flag and specifying the name of the crate we want to publish.
 
 For additional practice, add an `add_two` crate to this workspace in a similar
-way as the `add_one` crate!
+way as the `bitta_qoshish` crate!
 
 As your project grows, consider using a workspace: it’s easier to understand
 smaller, individual components than one big blob of code. Furthermore, keeping
