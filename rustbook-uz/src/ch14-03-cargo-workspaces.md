@@ -12,20 +12,16 @@ $ mkdir qoshish
 $ cd qoshish
 ```
 
-Next, in the *add* directory, we create the *Cargo.toml* file that will
-configure the entire workspace. This file won’t have a `[package]` section.
-Instead, it will start with a `[workspace]` section that will allow us to add
-members to the workspace by specifying the path to the package with our binary
-crate; in this case, that path is *adder*:
+Keyinchalik, *qoshuvchi* jildida biz butun workspaceni sozlaydigan *Cargo.toml* faylini yaratamiz. Bu faylda `[package]` boʻlimi boʻlmaydi.
+Buning o'rniga, u binary(ikkilik) crate yordamida paketga yo'lni ko'rsatib, workspacega a'zolar qo'shish imkonini beruvchi `[workspace]` bo'limidan boshlanadi; bu holda, bu yo'l *qoshuvchi*:
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Fayl nomi: Cargo.toml</span>
 
 ```toml
 {{#include ../listings/ch14-more-about-cargo/no-listing-01-workspace-with-adder-crate/add/Cargo.toml}}
 ```
 
-Next, we’ll create the `adder` binary crate by running `cargo new` within the
-*add* directory:
+Keyin, *qoshuvchi* jilida `cargo new` ni ishga tushirish orqali `qoshuvchi` binary cratesini yaratamiz:
 
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/output-only-01-adder-crate/add
@@ -35,33 +31,23 @@ copy output below
 -->
 
 ```console
-$ cargo new adder
-     Created binary (application) `adder` package
+$ cargo new qoshuvchi
+     Created binary (application) `qoshuvchi` package
 ```
 
-At this point, we can build the workspace by running `cargo build`. The files
-in your *add* directory should look like this:
+Ushbu nuqtada biz `cargo build` ni ishga tushirish orqali worksoaceni qurishimiz mumkin. Sizning *qoshuvchi* jildingiz quyidagicha ko'rinishi kerak:
 
 ```text
 ├── Cargo.lock
 ├── Cargo.toml
-├── adder
+├── qoshuvchi
 │   ├── Cargo.toml
 │   └── src
 │       └── main.rs
 └── target
 ```
 
-The workspace has one *target* directory at the top level that the compiled
-artifacts will be placed into; the `adder` package doesn’t have its own
-*target* directory. Even if we were to run `cargo build` from inside the
-*adder* directory, the compiled artifacts would still end up in *add/target*
-rather than *add/adder/target*. Cargo structures the *target* directory in a
-workspace like this because the crates in a workspace are meant to depend on
-each other. If each crate had its own *target* directory, each crate would have
-to recompile each of the other crates in the workspace to place the artifacts
-in its own *target* directory. By sharing one *target* directory, the crates
-can avoid unnecessary rebuilding.
+Workspaceda kompilyatsiya qilingan artefaktlar joylashtiriladigan top leveldagi bitta *target* jildi mavjud; `qoshuvchi` paketi o'zining *target* jildiga ega emas. Agar biz *qoshuvchi* jildi ichidan `cargo build`ni ishga tushirsak ham, kompilyatsiya qilingan artefaktlar hali ham *qoshish/qoshuvchi/target* emas, balki *qoshish/target* da tugaydi. Cargo workspacedagi *target* jildini shunday tuzadi, chunki workspacedagi cratelar bir-biriga bog'liq bo'lishi kerak. Agar har bir crate o'zining *target* jildiga ega bo'lsa, har bir crate artefaktlarni o'zining *target* jildiga joylashtirish uchun workspacedagi boshqa cratelarning har birini qayta kompilyatsiya qilishi kerak edi. Bitta *target* jildini baham ko'rish(share) orqali cratelar keraksiz rebuildingdan qochishi mumkin.
 
 ### Creating the Second Package in the Workspace
 
@@ -69,7 +55,7 @@ Next, let’s create another member package in the workspace and call it
 `add_one`. Change the top-level *Cargo.toml* to specify the *add_one* path in
 the `members` list:
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Fayl nomi: Cargo.toml</span>
 
 ```toml
 {{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/Cargo.toml}}
