@@ -3,17 +3,17 @@
 version = 3
 
 [[package]]
-name = "add_one"
+name = "bitta_qoshish"
 version = "0.1.0"
 dependencies = [
  "rand",
 ]
 
 [[package]]
-name = "adder"
+name = "qoshuvchi"
 version = "0.1.0"
 dependencies = [
- "add_one",
+ "bitta_qoshish",
 ]
 
 [[package]]

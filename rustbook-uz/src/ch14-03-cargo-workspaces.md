@@ -162,7 +162,7 @@ E'tibor bering, workspaceda har bir crate jildida *Cargo.lock* emas, balki top l
 <span class="filename">Fayl nomi: bitta_qoshish/Cargo.toml</span>
 
 ```toml
-{{#include ../listings/ch14-more-about-cargo/no-listing-03-workspace-with-external-dependency/add/bitta_qoshish/Cargo.toml:6:7}}
+{{#include ../listings/ch14-more-about-cargo/no-listing-03-workspace-with-external-dependency/qoshish/bitta_qoshish/Cargo.toml:6:7}}
 ```
 
 Endi biz *bitta_qoshish/src/lib.rs* fayliga `use rand;` ni qo'shishimiz mumkin va *qoshish* jildida `cargo build`-ni ishga tushirish orqali butun workspaceni build qilish `rand` cratesini olib keladi va kompilyatsiya qiladi. Biz bitta ogohlantirish olamiz, chunki biz qamrab olgan `rand` ni nazarda tutmayapmiz:
@@ -214,20 +214,17 @@ error[E0432]: unresolved import `rand`
 
 Buni tuzatish uchun `qoshuvchi` paketi uchun *Cargo.toml* faylini tahrirlang va `rand` ham unga dependency(bog'liqligini) ekanligini ko'rsating. `qoshuvchi` paketini yaratish *Cargo.lock* dagi `qoshuvchi` uchun depensiar ro'yxatiga `rand` qo'shadi, lekin `rand` ning qo'shimcha nusxalari yuklab olinmaydi. Cargo `rand` paketidan foydalangan holda workspacedagi har bir cratedagi har bir crate bir xil versiyadan foydalanishini taʼminladi, bu bizga joyni tejaydi va workspacedagi cratelar bir-biriga mos kelishini taʼminlaydi.
 
-#### Adding a Test to a Workspace
+#### Workspacega test qo'shish
 
-For another enhancement, let’s add a test of the `bitta_qoshish::bitta_qoshish` function
-within the `bitta_qoshish` crate:
+Yana bir yaxshilanish uchun, keling, `bitta_qoshish` cratesidagi `bitta_qoshish::bitta_qoshish` funksiyasi testini qo'shamiz:
 
 <span class="filename">Fayl nomi: bitta_qoshish/src/lib.rs</span>
 
 ```rust,noplayground
-{{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-04-workspace-with-tests/add/bitta_qoshish/src/lib.rs}}
+{{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-04-workspace-with-tests/qoshish/bitta_qoshish/src/lib.rs}}
 ```
 
-Now run `cargo test` in the top-level *add* directory. Running `cargo test` in
-a workspace structured like this one will run the tests for all the crates in
-the workspace:
+Top-leveldagi *qoshish* jildida `cargo test`-ni ishga tushiring. Shunga o'xshash tuzilgan workspaceda `cargo test` ni o'tkazish workspacedagi barcha cratelar uchun testlarni o'tkazadi:
 
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/no-listing-04-workspace-with-tests/add
@@ -238,17 +235,17 @@ paths properly
 
 ```console
 $ cargo test
-   Compiling bitta_qoshish v0.1.0 (file:///projects/add/bitta_qoshish)
-   Compiling adder v0.1.0 (file:///projects/add/adder)
+   Compiling bitta_qoshish v0.1.0 (file:///projects/qoshish/bitta_qoshish)
+   Compiling adder v0.1.0 (file:///projects/qoshish/qoshuvchi)
     Finished test [unoptimized + debuginfo] target(s) in 0.27s
      Running unittests src/lib.rs (target/debug/deps/bitta_qoshish-f0253159197f7841)
 
 running 1 test
-test tests::it_works ... ok
+test tests::ishlamoqda ... ok
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-     Running unittests src/main.rs (target/debug/deps/adder-49979ff40686fa8e)
+     Running unittests src/main.rs (target/debug/deps/qoshuvchi-49979ff40686fa8e)
 
 running 0 tests
 
@@ -261,7 +258,7 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
-The first section of the output shows that the `it_works` test in the `bitta_qoshish`
+The first section of the output shows that the `ishlamoqda` test in the `bitta_qoshish`
 crate passed. The next section shows that zero tests were found in the `adder`
 crate, and then the last section shows zero documentation tests were found in
 the `bitta_qoshish` crate.
@@ -282,7 +279,7 @@ $ cargo test -p bitta_qoshish
      Running unittests src/lib.rs (target/debug/deps/bitta_qoshish-b3235fea9a156f74)
 
 running 1 test
-test tests::it_works ... ok
+test tests::ishlamoqda ... ok
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
