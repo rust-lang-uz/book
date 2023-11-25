@@ -18,7 +18,7 @@ Buning o'rniga, u binary(ikkilik) crate yordamida paketga yo'lni ko'rsatib, work
 <span class="filename">Fayl nomi: Cargo.toml</span>
 
 ```toml
-{{#include ../listings/ch14-more-about-cargo/no-listing-01-workspace-with-adder-crate/add/Cargo.toml}}
+{{#include ../listings/ch14-more-about-cargo/no-listing-01-workspace-with-adder-crate/qoshish/Cargo.toml}}
 ```
 
 Keyin, *qoshuvchi* jilida `cargo new` ni ishga tushirish orqali `qoshuvchi` binary cratesini yaratamiz:
@@ -56,7 +56,7 @@ Keyinchalik, workspaceda boshqa a'zolar(member) paketini yaratamiz va uni `bitta
 <span class="filename">Fayl nomi: Cargo.toml</span>
 
 ```toml
-{{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/Cargo.toml}}
+{{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/qoshish/Cargo.toml}}
 ```
 
 Keyin `bitta_qoshish` nomli yangi kutubxonalibrary cratesini yarating:
@@ -94,7 +94,7 @@ Sizning *qoshish* jildingizda endi quyidagi jild va fayllar bo‘lishi kerak:
 <span class="filename">Fayl nomi: bitta_qoshish/src/lib.rs</span>
 
 ```rust,noplayground
-{{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/add_one/src/lib.rs}}
+{{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/qoshish/bitta_qoshish/src/lib.rs}}
 ```
 
 Endi biz kutubxonamizga ega bo'lgan `bitta_qoshish` paketiga bog'liq bo'lgan `qoshuvchi` paketiga ega bo'lishimiz mumkin. Birinchidan, biz *qoshuvchi/Cargo.toml* ga `bitta_qoshish` yo'liga bog'liqlikni qo'shishimiz kerak.
@@ -102,7 +102,7 @@ Endi biz kutubxonamizga ega bo'lgan `bitta_qoshish` paketiga bog'liq bo'lgan `qo
 <span class="filename">Fayl nomi: qoshuvchi/Cargo.toml</span>
 
 ```toml
-{{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/adder/Cargo.toml:6:7}}
+{{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/qoshish/qoshuvchi/Cargo.toml:6:7}}
 ```
 
 Cargo workspacedagi cratelar bir-biriga bog'liq bo'ladi deb o'ylamaydi, shuning uchun biz qaramlik munosabatlari(relationship) haqida aniq bo'lishimiz kerak.
@@ -112,7 +112,7 @@ Keyin, keling, `qoshuvchi` cratedagi `bitta_qoshish` funksiyasidan (`bitta_qoshi
 <span class="filename">Fayl nomi: qoshuvchi/src/main.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-07/add/adder/src/main.rs}}
+{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-07/qoshish/qoshuvchi/src/main.rs}}
 ```
 
 <span class="caption">Roʻyxat 14-7: `bitta_qoshish` kutubxonasi cratesidan `qoshish` cratesidan foydalanish</span>
@@ -127,14 +127,12 @@ copy output below; the output updating script doesn't handle subdirectories in p
 
 ```console
 $ cargo build
-   Compiling add_one v0.1.0 (file:///projects/qoshish/bitta_qoshish)
+   Compiling bitta_qoshish v0.1.0 (file:///projects/qoshish/bitta_qoshish)
    Compiling qoshuvchi v0.1.0 (file:///projects/qoshish/qoshuvchi)
     Finished dev [unoptimized + debuginfo] target(s) in 0.68s
 ```
 
-To run the binary crate from the *add* directory, we can specify which
-package in the workspace we want to run by using the `-p` argument and the
-package name with `cargo run`:
+Binary crateni *qoshish* jildidan ishga tushirish uchun biz `-p` argumenti va `cargo run` bilan paket nomidan foydalanib workspaceda qaysi paketni ishga tushirishni belgilashimiz mumkin:
 
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/listing-14-07/add
@@ -143,13 +141,13 @@ copy output below; the output updating script doesn't handle subdirectories in p
 -->
 
 ```console
-$ cargo run -p adder
+$ cargo run -p qoshuvchi
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
-     Running `target/debug/adder`
+     Running `target/debug/qoshuvchi`
 Hello, world! 10 plus one is 11!
 ```
 
-This runs the code in *adder/src/main.rs*, which depends on the `add_one` crate.
+Bu kodni *qoshuvchi/src/main.rs* da ishga tushiradi, bu `bitta_qoshish` cratesiga bog'liq.
 
 #### Depending on an External Package in a Workspace
 

@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "qoshuvchi",
+    "bitta_qoshish",
+]

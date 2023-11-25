@@ -1,0 +1,8 @@
+[package]
+name = "qoshish"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+bitta_qoshish = { path = "../bitta_qoshish" }
