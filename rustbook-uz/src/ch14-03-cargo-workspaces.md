@@ -49,11 +49,9 @@ Ushbu nuqtada biz `cargo build` ni ishga tushirish orqali worksoaceni qurishimiz
 
 Workspaceda kompilyatsiya qilingan artefaktlar joylashtiriladigan top leveldagi bitta *target* jildi mavjud; `qoshuvchi` paketi o'zining *target* jildiga ega emas. Agar biz *qoshuvchi* jildi ichidan `cargo build`ni ishga tushirsak ham, kompilyatsiya qilingan artefaktlar hali ham *qoshish/qoshuvchi/target* emas, balki *qoshish/target* da tugaydi. Cargo workspacedagi *target* jildini shunday tuzadi, chunki workspacedagi cratelar bir-biriga bog'liq bo'lishi kerak. Agar har bir crate o'zining *target* jildiga ega bo'lsa, har bir crate artefaktlarni o'zining *target* jildiga joylashtirish uchun workspacedagi boshqa cratelarning har birini qayta kompilyatsiya qilishi kerak edi. Bitta *target* jildini baham ko'rish(share) orqali cratelar keraksiz rebuildingdan qochishi mumkin.
 
-### Creating the Second Package in the Workspace
+### Workspaceda ikkinchi paketni yaratish
 
-Next, let’s create another member package in the workspace and call it
-`add_one`. Change the top-level *Cargo.toml* to specify the *add_one* path in
-the `members` list:
+Keyinchalik, workspaceda boshqa a'zolar(member) paketini yaratamiz va uni `bitta_qoshish` deb nomlaymiz. `members` ro'yxatida *bitta_qoshish* yo'lini belgilash uchun top leveldagi *Cargo.toml* ni o'zgartiring:
 
 <span class="filename">Fayl nomi: Cargo.toml</span>
 
@@ -61,7 +59,7 @@ the `members` list:
 {{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/Cargo.toml}}
 ```
 
-Then generate a new library crate named `add_one`:
+Keyin `bitta_qoshish` nomli yangi kutubxonalibrary cratesini yarating:
 
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/output-only-02-add-one/add
@@ -71,63 +69,55 @@ copy output below
 -->
 
 ```console
-$ cargo new add_one --lib
-     Created library `add_one` package
+$ cargo new bitta_qoshish --lib
+     Created library `bitta_qoshish` package
 ```
 
-Your *add* directory should now have these directories and files:
+Sizning *qoshish* jildingizda endi quyidagi jild va fayllar bo‘lishi kerak:
 
 ```text
 ├── Cargo.lock
 ├── Cargo.toml
-├── add_one
+├── bitta_qoshish
 │   ├── Cargo.toml
 │   └── src
 │       └── lib.rs
-├── adder
+├── qoshuvchi
 │   ├── Cargo.toml
 │   └── src
 │       └── main.rs
 └── target
 ```
 
-In the *add_one/src/lib.rs* file, let’s add an `add_one` function:
+*bitta_qoshish/src/lib.rs* fayliga `bitta_qoshish` funksiyasini qo'shamiz:
 
-<span class="filename">Filename: add_one/src/lib.rs</span>
+<span class="filename">Fayl nomi: bitta_qoshish/src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/add_one/src/lib.rs}}
 ```
 
-Now we can have the `adder` package with our binary depend on the `add_one`
-package that has our library. First, we’ll need to add a path dependency on
-`add_one` to *adder/Cargo.toml*.
+Endi biz kutubxonamizga ega bo'lgan `bitta_qoshish` paketiga bog'liq bo'lgan `qoshuvchi` paketiga ega bo'lishimiz mumkin. Birinchidan, biz *qoshuvchi/Cargo.toml* ga `bitta_qoshish` yo'liga bog'liqlikni qo'shishimiz kerak.
 
-<span class="filename">Filename: adder/Cargo.toml</span>
+<span class="filename">Fayl nomi: qoshuvchi/Cargo.toml</span>
 
 ```toml
 {{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/adder/Cargo.toml:6:7}}
 ```
 
-Cargo doesn’t assume that crates in a workspace will depend on each other, so
-we need to be explicit about the dependency relationships.
+Cargo workspacedagi cratelar bir-biriga bog'liq bo'ladi deb o'ylamaydi, shuning uchun biz qaramlik munosabatlari(relationship) haqida aniq bo'lishimiz kerak.
 
-Next, let’s use the `add_one` function (from the `add_one` crate) in the
-`adder` crate. Open the *adder/src/main.rs* file and add a `use` line at the
-top to bring the new `add_one` library crate into scope. Then change the `main`
-function to call the `add_one` function, as in Listing 14-7.
+Keyin, keling, `qoshuvchi` cratedagi `bitta_qoshish` funksiyasidan (`bitta_qoshish` cratesidan) foydalanamiz. *qoshuvchi/src/main.rs* faylini oching va yangi `bitta_qoshish` kutubxona cratesini qamrab olish uchun tepaga `use` qatorini qo'shing. Keyin 14-7 roʻyxatdagi kabi `bitta_qoshish` funksiyasini chaqirish uchun `main` funksiyani oʻzgartiring.
 
-<span class="filename">Filename: adder/src/main.rs</span>
+<span class="filename">Fayl nomi: qoshuvchi/src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-07/add/adder/src/main.rs}}
 ```
 
-<span class="caption">Listing 14-7: Using the `add_one` library crate from the
- `adder` crate</span>
+<span class="caption">Roʻyxat 14-7: `bitta_qoshish` kutubxonasi cratesidan `qoshish` cratesidan foydalanish</span>
 
-Let’s build the workspace by running `cargo build` in the top-level *add*
-directory!
+Keling, yuqori darajadagi *qoshish* jildida `cargo build`ni ishga tushirish orqali workspaceni build qilaylik!
 
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/listing-14-07/add
@@ -137,8 +127,8 @@ copy output below; the output updating script doesn't handle subdirectories in p
 
 ```console
 $ cargo build
-   Compiling add_one v0.1.0 (file:///projects/add/add_one)
-   Compiling adder v0.1.0 (file:///projects/add/adder)
+   Compiling add_one v0.1.0 (file:///projects/qoshish/bitta_qoshish)
+   Compiling qoshuvchi v0.1.0 (file:///projects/qoshish/qoshuvchi)
     Finished dev [unoptimized + debuginfo] target(s) in 0.68s
 ```
 
@@ -179,7 +169,7 @@ so we can use the `rand` crate in the `add_one` crate:
 * ch07-04-bringing-paths-into-scope-with-the-use-keyword.md
 -->
 
-<span class="filename">Filename: add_one/Cargo.toml</span>
+<span class="filename">Fayl nomi: add_one/Cargo.toml</span>
 
 ```toml
 {{#include ../listings/ch14-more-about-cargo/no-listing-03-workspace-with-external-dependency/add/add_one/Cargo.toml:6:7}}
@@ -252,7 +242,7 @@ will be compatible with each other.
 For another enhancement, let’s add a test of the `add_one::add_one` function
 within the `add_one` crate:
 
-<span class="filename">Filename: add_one/src/lib.rs</span>
+<span class="filename">Fayl nomi: add_one/src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-04-workspace-with-tests/add/add_one/src/lib.rs}}
