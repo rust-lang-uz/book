@@ -1,4 +1,4 @@
-## Cargo Workspaselar
+## Cargo Workspacelar
 
 12-bobda biz bianry crate va kutubxona cratesini o'z ichiga olgan paketni yaratdik. Loyihangiz rivojlanib borgan sari, kutubxona(library) cratesi kattalashib borishini va paketingizni bir nechta kutubxona cratelariga bo'lishni xohlayotganingizni ko'rishingiz mumkin. Cargo tandemda ishlab chiqilgan bir nechta tegishli paketlarni boshqarishga yordam beradigan *workspaces* deb nomlangan xususiyatni taklif etadi.
 
@@ -144,7 +144,7 @@ copy output below; the output updating script doesn't handle subdirectories in p
 $ cargo run -p qoshuvchi
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/qoshuvchi`
-Hello, world! 10 plus one is 11!
+Salom, Rust! 10 plyus bir 11 ga teng!
 ```
 
 Bu kodni *qoshuvchi/src/main.rs* da ishga tushiradi, bu `bitta_qoshish` cratesiga bog'liq.
