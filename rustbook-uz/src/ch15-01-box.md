@@ -23,7 +23,7 @@ Birinchi holatni [“Rekursiv turlarni Boxlar bilan qo'llash”](#rekursiv-turla
 
 ### Heapda ma'lumotlarni saqlash uchun `Box<T>` dan foydalanish
 
-`Box<T>` uchun heap xotiradan foydalanish holatini muhokama qilishdan oldin, biz sintaksisni va `Box<T>` ichida saqlangan qiymatlar bilan qanday o'zaro aloqa qilishni ko`rib chiqamiz.
+`Box<T>` uchun heap xotiradan foydalanish holatini muhokama qilishdan oldin, biz sintaksisni va `Box<T>` ichida saqlangan qiymatlar bilan qanday o'zaro aloqa qilishni ko'rib chiqamiz.
 
 15-1 ro'yxatda `i32` qiymatini heapda saqlash uchun boxdan qanday foydalanish ko'rsatilgan:
 
@@ -94,38 +94,23 @@ Xato ushbu tur “cheksiz o'lchamga ega” ekanligini ko'rsatadi. Buning sababi 
 
 #### Rekursiv bo'lmagan turning o'lchamini hisoblash
 
-Recall the `Message` enum we defined in Listing 6-2 when we discussed enum
-definitions in Chapter 6:
+6-bobda enum ta'riflarini muhokama qilganimizdagi 6-2 ro'yxatda e'lon qilingan `Xabar` enumini eslang:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-02/src/main.rs:here}}
 ```
 
-To determine how much space to allocate for a `Message` value, Rust goes
-through each of the variants to see which variant needs the most space. Rust
-sees that `Message::Quit` doesn’t need any space, `Message::Move` needs enough
-space to store two `i32` values, and so forth. Because only one variant will be
-used, the most space a `Message` value will need is the space it would take to
-store the largest of its variants.
+`Xabar` qiymati uchun qancha joy ajratish kerakligini aniqlash uchun Rust har bir variantni ko'rib chiqadi va qaysi variantga ko'proq joy kerakligini aniqlaydi. Rust `Xabar::Chiqish` uchun hech qanday joy kerak emasligini, `Xabar::Kochirish` ikkita `i32` qiymatini saqlash uchun yetarli joy kerakligini aniqlaydi va hokazo. Faqat bitta variant qo'llanilishi sababli, `Xabar` qiymatiga kerak bo'ladigan eng ko'p joy-bu uning eng katta variantini saqlash uchun zarur bo'lgan joy hisoblanadi.
 
-Contrast this with what happens when Rust tries to determine how much space a
-recursive type like the `List` enum in Listing 15-2 needs. The compiler starts
-by looking at the `Cons` variant, which holds a value of type `i32` and a value
-of type `List`. Therefore, `Cons` needs an amount of space equal to the size of
-an `i32` plus the size of a `List`. To figure out how much memory the `List`
-type needs, the compiler looks at the variants, starting with the `Cons`
-variant. The `Cons` variant holds a value of type `i32` and a value of type
-`List`, and this process continues infinitely, as shown in Figure 15-1.
+Rust 15-2 roʻyxatdagi `List` enum kabi rekursiv turga qancha boʻsh joy kerakligini aniqlashga harakat qilganda nima sodir boʻlishini bu bilan taqqoslang. Kompilyator `i32` turidagi qiymat va `List` turidagi qiymatga ega bo'lgan `Cons` variantini ko'rib chiqishdan boshlaydi. Shuning uchun, `Cons` uchun `i32` va `List` o'lchamiga teng bo'sh joy kerak bo'ladi. `List` turiga qancha xotira kerakligini aniqlash uchun kompilyator `Cons` variantidan boshlab variantlarni ko'rib chiqadi. `Cons` variantida `i32` turidagi qiymat va `List` turidagi qiymat mavjud va bu jarayon 15-1-rasmda ko'rsatilganidek, cheksiz davom etadi.
 
-<img alt="An infinite Cons list" src="img/trpl15-01.svg" class="center" style="width: 50%;" />
+<img alt="Cheksiz Cons list" src="img/trpl15-01.svg" class="center" style="width: 50%;" />
 
-<span class="caption">Figure 15-1: An infinite `List` consisting of infinite
-`Cons` variants</span>
+<span class="caption">15-1-rasm: Cheksiz `Cons` variantlaridan iborat cheksiz `List`</span>
 
-#### Using `Box<T>` to Get a Recursive Type with a Known Size
+#### O'lchami ma'lum bo'lgan rekursiv turni e'lon qilish uchun `Box<T>` dan foydalanish
 
-Because Rust can’t figure out how much space to allocate for recursively
-defined types, the compiler gives an error with this helpful suggestion:
+Rust rekursiv e'lon qilingan turlar uchun qancha joy ajratish kerakligini aniqlay olmaganligi sababli, kompilyator ushbu foydali taklif bilan xatolik beradi:
 
 <!-- manual-regeneration
 after doing automatic regeneration, look at listings/ch15-smart-pointers/listing-15-03/output.txt and copy the relevant line
@@ -138,21 +123,14 @@ help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to make `List` repre
   |               ++++    +
 ```
 
-In this suggestion, “indirection” means that instead of storing a value
-directly, we should change the data structure to store the value indirectly by
-storing a pointer to the value instead.
+Ushbu taklifda "indirection" qiymatni to'g'ridan-to'g'ri saqlash o'rniga, biz pointerni qiymatga saqlash orqali qiymatni bilvosita saqlash uchun ma'lumotlar strukturasini o'zgartirishimiz kerakligini anglatadi.
 
-Because a `Box<T>` is a pointer, Rust always knows how much space a `Box<T>`
-needs: a pointer’s size doesn’t change based on the amount of data it’s
-pointing to. This means we can put a `Box<T>` inside the `Cons` variant instead
-of another `List` value directly. The `Box<T>` will point to the next `List`
-value that will be on the heap rather than inside the `Cons` variant.
-Conceptually, we still have a list, created with lists holding other lists, but
-this implementation is now more like placing the items next to one another
-rather than inside one another.
+`Box<T>` pointer bo'lgani uchun Rust har doim `Box<T>` uchun qancha joy kerakligini biladi: pointerning o'lchami u ko'rsatayotgan ma'lumotlar miqdoriga qarab o'zgarmaydi. Bu shuni anglatadiki, biz to'g'ridan-to'g'ri boshqa `List` qiymati o'rniga `Cons` variantiga `Box<T>` qo'yishimiz mumkin. `Box<T>` keyingi `List` qiymatiga ishora qiladi, bu qiymat `Cons` varianti ichida emas, balki heapda bo'ladi. G'oyaga ko'ra, bizda hali ham boshqa ro'yxatlarni o'z ichiga olgan ro'yxatlar bilan yaratilgan ro'yxat mavjud, ammo bu amalga oshirish endi elementlarni bir-birining ichiga emas, balki bir-birining yoniga joylashtirishga o'xshaydi.
 
 We can change the definition of the `List` enum in Listing 15-2 and the usage
 of the `List` in Listing 15-3 to the code in Listing 15-5, which will compile:
+
+Biz 15-2 ro'yxatidagi `List` enumni va 15-3 ro'yxatidagi `List`ning qo'llanishini 15-5 ro'yxatidagi kodga o'zgartirishimiz mumkin, bu kompilyatsiya bo'ladi:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -160,35 +138,16 @@ of the `List` in Listing 15-3 to the code in Listing 15-5, which will compile:
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-05/src/main.rs}}
 ```
 
-<span class="caption">Listing 15-5: Definition of `List` that uses `Box<T>` in
-order to have a known size</span>
+<span class="caption">Ro'yxat 15-5: Maʼlum oʻlchamga ega boʻlish uchun `Box<T>` dan foydalanadigan `List`ni e'lon qilinishi</span>
 
-The `Cons` variant needs the size of an `i32` plus the space to store the
-box’s pointer data. The `Nil` variant stores no values, so it needs less space
-than the `Cons` variant. We now know that any `List` value will take up the
-size of an `i32` plus the size of a box’s pointer data. By using a box, we’ve
-broken the infinite, recursive chain, so the compiler can figure out the size
-it needs to store a `List` value. Figure 15-2 shows what the `Cons` variant
-looks like now.
+`Cons` variantiga `i32` o'lchamiga va boxdagi pointer ma'lumotlarini saqlash uchun bo'sh joy kerak. `Nil` varianti hech qanday qiymatlarni saqlamaydi, shuning uchun u `Cons` variantiga qaraganda kamroq joy talab qiladi. Endi bilamizki, har qanday `List` qiymati `i32` o‘lchamini va boxdagi pointer ma’lumotlari hajmini egallaydi. Boxdan foydalanib, biz cheksiz, rekursiv zanjirni buzdik, shuning uchun kompilyator `List` qiymatini saqlash uchun kerakli hajmni aniqlay oladi. 15-2-rasmda `Cons` varianti hozir qanday ko'rinishi ko'rsatilgan.
 
-<img alt="A finite Cons list" src="img/trpl15-02.svg" class="center" />
+<img alt="Cheksiz bo'lmagan Cons list" src="img/trpl15-02.svg" class="center" />
 
-<span class="caption">Figure 15-2: A `List` that is not infinitely sized
-because `Cons` holds a `Box`</span>
+<span class="caption">15-2-rasm: Cheksiz o'lchamli bo'lmagan `List`, chunki `Cons` endi `Box` saqlaydi</span>
 
-Boxes provide only the indirection and heap allocation; they don’t have any
-other special capabilities, like those we’ll see with the other smart pointer
-types. They also don’t have the performance overhead that these special
-capabilities incur, so they can be useful in cases like the cons list where the
-indirection is the only feature we need. We’ll look at more use cases for boxes
-in Chapter 17, too.
+Boxlar faqat bilvosita va heapda joylashuvni ta'minlaydi; ularda biz boshqa smart pointerlarda ko'radigan boshqa maxsus imkoniyatlar yo'q. Ular, shuningdek, ushbu maxsus imkoniyatlarga ega bo'lgan ishlash xarajatlariga ega emaslar, shuning uchun ular bizga kerak bo'lgan yagona xususiyat bo'lgan cons list kabi holatlarda foydali bo'lishi mumkin. Biz 17-bobda boxlar uchun ko'proq foydalanish holatlarini ko'rib chiqamiz.
 
-The `Box<T>` type is a smart pointer because it implements the `Deref` trait,
-which allows `Box<T>` values to be treated like references. When a `Box<T>`
-value goes out of scope, the heap data that the box is pointing to is cleaned
-up as well because of the `Drop` trait implementation. These two traits will be
-even more important to the functionality provided by the other smart pointer
-types we’ll discuss in the rest of this chapter. Let’s explore these two traits
-in more detail.
+`Box<T>` turi smart pointerdir, chunki u `Deref` xususiyatini amalga oshiradi, bu esa `Box<T>` qiymatlariga reference kabi qarashga imkonini beradi. `Box<T>` qiymati scopedan chiqib ketganda, box ko'rsatayotgan heapdagi ma'lumotlar ham `Drop` xususiyatini amalga oshirish tufayli tozalanadi. Ushbu ikki xususiyat biz ushbu bobning qolgan qismida muhokama qiladigan boshqa smart pointer turlari tomonidan taqdim etilgan funksionallik uchun yanada muhimroq bo'ladi. Keling, ushbu ikki xususiyatni batafsil ko'rib chiqaylik.
 
 [trait-objects]: ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types
