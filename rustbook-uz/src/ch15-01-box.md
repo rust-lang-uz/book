@@ -1,4 +1,4 @@
-## Ma'lumotlarni Heapga joylash uchun `Box<T>` dan foydalanish
+## Heapdagi ma'lumotlarni ko'rsatish uchun `Box<T>` dan foydalanish
 
 Eng sodda smart pointer bu *box* bo'lib, uning turi `Box<T>` deb yoziladi.
 Boxlar sizga ma'lumotlarni stackda emas, balki heapda saqlashga imkon beradi.
