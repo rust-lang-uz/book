@@ -1,29 +1,15 @@
-## Using Threads to Run Code Simultaneously
+## Kodni bir vaqtning o'zida ishga tushirish uchun thereadlardan foydalanish
 
-In most current operating systems, an executed program’s code is run in a
-*process*, and the operating system will manage multiple processes at once.
-Within a program, you can also have independent parts that run simultaneously.
-The features that run these independent parts are called *threads*. For
-example, a web server could have multiple threads so that it could respond to
-more than one request at the same time.
+Kodni bir vaqtning o'zida ishga tushirish(simultaneously) uchun thereadlardan foydalanish hozirgi operatsion tizimlarning ko'pchiligida bajarilgan(execute) dastur kodi *process* ishga tushiriladi va operatsion tizim bir vaqtning o'zida bir nechta processlarni boshqaradi.Dastur doirasida siz bir vaqtning o'zida ishlaydigan(simultaneously) mustaqil qismlarga(independent part) ham ega bo'lishingiz mumkin. Ushbu mustaqil qismlarni boshqaradigan xususiyatlar *thereadlar* deb ataladi. Masalan, veb-server bir vaqtning o'zida bir nechta so'rovlarga(requestlar) javob berishi uchun bir nechta(multiple) threadlarga ega bo'lishi mumkin.
 
-Splitting the computation in your program into multiple threads to run multiple
-tasks at the same time can improve performance, but it also adds complexity.
-Because threads can run simultaneously, there’s no inherent guarantee about the
-order in which parts of your code on different threads will run. This can lead
-to problems, such as:
+Bir vaqtning o'zida bir nechta vazifalarni(multiple task) bajarish uchun dasturingizdagi hisoblashni bir nechta(multiple) threadlarga bo'lish unumdorlikni oshirishi mumkin, ammo bu murakkablikni ham oshiradi.
+Theredlar bir vaqtning o'zida(simultaneously) ishlashi mumkinligi sababli, kodingizning turli xil ish threadlaridagi qismlari qaysi tartibda ishlashi haqida hech qanday kafolat yo'q. Bu muammolarga olib kelishi mumkin, masalan:
 
-* Race conditions, where threads are accessing data or resources in an
-  inconsistent order
-* Deadlocks, where two threads are waiting for each other, preventing both
-  threads from continuing
-* Bugs that happen only in certain situations and are hard to reproduce and fix
-  reliably
+* Race conditionlari, bu yerda thereadlar ma'lumotlar yoki resurslarga mos kelmaydigan tartibda kirishadi
+* Deadlock, bu yerda ikkita theread bir-birini kutib, ikkala thereadning davom etishiga to'sqinlik qiladi
+* Faqat ma'lum holatlarda yuzaga keladigan va qayta ishlab chiqarish va ishonchli tarzda tuzatish qiyin bo'lgan xatolar
 
-Rust attempts to mitigate the negative effects of using threads, but
-programming in a multithreaded context still takes careful thought and requires
-a code structure that is different from that in programs running in a single
-thread.
+Rust thereadlardan foydalanishning salbiy ta'sirini yumshatishga harakat qiladi, lekin multithreadli kontekstda dasturlash hali ham ehtiyotkorlik bilan o'ylashni talab qiladi va bitta thereadda ishlaydigan dasturlardan farq qiladigan kod tuzilishini talab qiladi.
 
 Programming languages implement threads in a few different ways, and many
 operating systems provide an API the language can call for creating new
