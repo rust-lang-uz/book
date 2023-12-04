@@ -1,26 +1,8 @@
 # Fearless Concurrency
 
-Handling concurrent programming safely and efficiently is another of Rust’s
-major goals. *Concurrent programming*, where different parts of a program
-execute independently, and *parallel programming*, where different parts of a
-program execute at the same time, are becoming increasingly important as more
-computers take advantage of their multiple processors. Historically,
-programming in these contexts has been difficult and error prone: Rust hopes to
-change that.
+Bir vaqtning o'zida dasturlashni(concurrent programming) xavfsiz va samarali boshqarish Rustning asosiy maqsadlaridan biridir. Dasturning turli qismlari mustaqil ravishda bajariladigan(execute) *concurrent programming* va dasturning turli qismlari bir vaqtning o'zida bajariladigan *parallel dasturlash* ko'proq kompyuterlar o'zlarining bir nechta protsessorlaridan foydalanishlari sababli tobora muhim ahamiyat kasb etmoqda. Tarixiy jihatdan, ushbu kontekstlarda dasturlash qiyin va xatolarga moyil bo'lgan: Rust buni o'zgartirishga umid qilmoqda.
 
-Initially, the Rust team thought that ensuring memory safety and preventing
-concurrency problems were two separate challenges to be solved with different
-methods. Over time, the team discovered that the ownership and type systems are
-a powerful set of tools to help manage memory safety *and* concurrency
-problems! By leveraging ownership and type checking, many concurrency errors
-are compile-time errors in Rust rather than runtime errors. Therefore, rather
-than making you spend lots of time trying to reproduce the exact circumstances
-under which a runtime concurrency bug occurs, incorrect code will refuse to
-compile and present an error explaining the problem. As a result, you can fix
-your code while you’re working on it rather than potentially after it has been
-shipped to production. We’ve nicknamed this aspect of Rust *fearless*
-*concurrency*. Fearless concurrency allows you to write code that is free of
-subtle bugs and is easy to refactor without introducing new bugs.
+Dastlab, Rust jamoasi xotira xavfsizligini ta'minlash va parallel muammolarning oldini olish turli usullar bilan hal qilinishi kerak bo'lgan ikkita alohida muammo deb o'ylagan. Vaqt o'tishi bilan jamoa egalik(ownership) va turdagi tizimlar(type system) xotira xavfsizligi *va* parallellik muammolarini boshqarishga yordam beradigan kuchli vositalar to'plami ekanligini aniqladi! Ownership(egalik) va turlarni tekshirishdan(type checking) foydalangan holda, ko'plab parallellik xatolar runtimedagi xatolardan ko'ra Rustda kompilyatsiya vaqtidagi xatolardir. Shuning uchun, runtime bilan bir vaqtda xatolik yuzaga kelgan aniq holatlarni takrorlash uchun ko'p vaqt sarflashdan ko'ra, noto'g'ri kod kompilyatsiya qilishni rad etadi va muammoni tushuntiruvchi xatoni taqdim etadi. Natijada, siz kodingizni ishlab chiqarishga(production) yuborilgandan keyin emas, balki uning ustida ishlayotganingizda tuzatishingiz mumkin. Biz Rustning bu jihatini *fearless* *concurrency* deb nomladik. Fearless concurrency sizga nozik xatolarsiz kod yozish imkonini beradi va yangi xatolarni kiritmasdan qayta tiklash oson.
 
 > Note: For simplicity’s sake, we’ll refer to many of the problems as
 > *concurrent* rather than being more precise by saying *concurrent and/or
