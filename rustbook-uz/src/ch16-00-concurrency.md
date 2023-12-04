@@ -4,28 +4,17 @@ Bir vaqtning o'zida dasturlashni(concurrent programming) xavfsiz va samarali bos
 
 Dastlab, Rust jamoasi xotira xavfsizligini ta'minlash va parallel muammolarning oldini olish turli usullar bilan hal qilinishi kerak bo'lgan ikkita alohida muammo deb o'ylagan. Vaqt o'tishi bilan jamoa egalik(ownership) va turdagi tizimlar(type system) xotira xavfsizligi *va* parallellik muammolarini boshqarishga yordam beradigan kuchli vositalar to'plami ekanligini aniqladi! Ownership(egalik) va turlarni tekshirishdan(type checking) foydalangan holda, ko'plab parallellik xatolar runtimedagi xatolardan ko'ra Rustda kompilyatsiya vaqtidagi xatolardir. Shuning uchun, runtime bilan bir vaqtda xatolik yuzaga kelgan aniq holatlarni takrorlash uchun ko'p vaqt sarflashdan ko'ra, noto'g'ri kod kompilyatsiya qilishni rad etadi va muammoni tushuntiruvchi xatoni taqdim etadi. Natijada, siz kodingizni ishlab chiqarishga(production) yuborilgandan keyin emas, balki uning ustida ishlayotganingizda tuzatishingiz mumkin. Biz Rustning bu jihatini *fearless* *concurrency* deb nomladik. Fearless concurrency sizga nozik xatolarsiz kod yozish imkonini beradi va yangi xatolarni kiritmasdan qayta tiklash oson.
 
-> Note: For simplicity’s sake, we’ll refer to many of the problems as
-> *concurrent* rather than being more precise by saying *concurrent and/or
-> parallel*. If this book were about concurrency and/or parallelism, we’d be
-> more specific. For this chapter, please mentally substitute *concurrent
-> and/or parallel* whenever we use *concurrent*.
+> Eslatma: Oddiylik uchun biz ko'p muammolarni *concurrent* va yoki parallel
+> deb aniqroq bo'lishdan ko'ra *concurrent* deb ataymiz.
+> Agar bu kitob concurrency va yoki  parallellik haqida bo'lsa, biz aniqroq bo'lardik.
+> Ushbu bo'lim uchun, iltimos, biz concurrent ishlatganimizda,
+> parallel va/yoki concurrentni aqliy ravishda almashtiring.
 
-Many languages are dogmatic about the solutions they offer for handling
-concurrent problems. For example, Erlang has elegant functionality for
-message-passing concurrency but has only obscure ways to share state between
-threads. Supporting only a subset of possible solutions is a reasonable
-strategy for higher-level languages, because a higher-level language promises
-benefits from giving up some control to gain abstractions. However, lower-level
-languages are expected to provide the solution with the best performance in any
-given situation and have fewer abstractions over the hardware. Therefore, Rust
-offers a variety of tools for modeling problems in whatever way is appropriate
-for your situation and requirements.
+Ko'pgina tillar bir vaqtda muammolarni hal qilish(concurrent problem) uchun taklif qiladigan yechimlar haqida dogmatikdir. Misol uchun, Erlang xabarlarni bir vaqtda uzatish uchun oqlangan funksiyaga ega, ammo threadlar orasidagi holatni(state) almashishning noaniq usullariga ega. Mumkin bo'lgan yechimlarning faqat bir qismini qo'llab-quvvatlash high-leveldagi tillar uchun oqilona strategiyadir, chunki high-leveldagi til mavhumlikni qo'lga kiritish uchun ba'zi nazoratdan voz kechishdan foyda va'da qiladi. Biroq, low-leveldagi tillar har qanday vaziyatda eng yaxshi samaradorlik bilan yechimni ta'minlashi va hardwarega(qurilma) nisbatan kamroq abstraktsiyalarga ega bo'lishi kutilmoqda. Shu sababli, Rust sizning vaziyatingiz va talablaringizga mos keladigan tarzda muammolarni modellashtirish uchun turli xil vositalarni taklif qiladi.
 
-Here are the topics we’ll cover in this chapter:
+Mana biz ushbu bobda muhokama qiladigan mavzular:
 
-* How to create threads to run multiple pieces of code at the same time
-* *Message-passing* concurrency, where channels send messages between threads
-* *Shared-state* concurrency, where multiple threads have access to some piece
-  of data
-* The `Sync` and `Send` traits, which extend Rust’s concurrency guarantees to
-  user-defined types as well as types provided by the standard library
+* Bir vaqtning o'zida bir nechta kod qismlarini ishlatish uchun threadlarni qanday yaratish kerak
+* *Message-passing* Xabarlarni uzatish concurrency, bu yerda kanallar threadlar o'rtasida xabarlar yuboradi
+* *Shared-state* bir vaqtning o'zida bir nechta thereadlar(multiple thread) ma'lumotlarning bir qismiga kirish huquqiga ega
+* `Sync` va `Send` traitlari, Rustning parallellik kafolatlarini foydalanuvchi tomonidan belgilangan turlarga hamda standart kutubxona tomonidan taqdim etilgan turlarga kengaytiradi.
