@@ -1,31 +1,23 @@
-## Kodni bir vaqtning o'zida ishga tushirish uchun thereadlardan foydalanish
+## Kodni bir vaqtning o'zida ishga tushirish uchun threadlardan foydalanish
 
-Kodni bir vaqtning o'zida ishga tushirish(simultaneously) uchun thereadlardan foydalanish hozirgi operatsion tizimlarning ko'pchiligida bajarilgan(execute) dastur kodi *process* ishga tushiriladi va operatsion tizim bir vaqtning o'zida bir nechta processlarni boshqaradi.Dastur doirasida siz bir vaqtning o'zida ishlaydigan(simultaneously) mustaqil qismlarga(independent part) ham ega bo'lishingiz mumkin. Ushbu mustaqil qismlarni boshqaradigan xususiyatlar *thereadlar* deb ataladi. Masalan, veb-server bir vaqtning o'zida bir nechta so'rovlarga(requestlar) javob berishi uchun bir nechta(multiple) threadlarga ega bo'lishi mumkin.
+Kodni bir vaqtning o'zida ishga tushirish(simultaneously) uchun threadlardan foydalanish hozirgi operatsion tizimlarning ko'pchiligida bajarilgan(execute) dastur kodi *process* ishga tushiriladi va operatsion tizim bir vaqtning o'zida bir nechta processlarni boshqaradi.Dastur doirasida siz bir vaqtning o'zida ishlaydigan(simultaneously) mustaqil qismlarga(independent part) ham ega bo'lishingiz mumkin. Ushbu mustaqil qismlarni boshqaradigan xususiyatlar *threadlar* deb ataladi. Masalan, veb-server bir vaqtning o'zida bir nechta so'rovlarga(requestlar) javob berishi uchun bir nechta(multiple) threadlarga ega bo'lishi mumkin.
 
 Bir vaqtning o'zida bir nechta vazifalarni(multiple task) bajarish uchun dasturingizdagi hisoblashni bir nechta(multiple) threadlarga bo'lish unumdorlikni oshirishi mumkin, ammo bu murakkablikni ham oshiradi.
 Theredlar bir vaqtning o'zida(simultaneously) ishlashi mumkinligi sababli, kodingizning turli xil ish threadlaridagi qismlari qaysi tartibda ishlashi haqida hech qanday kafolat yo'q. Bu muammolarga olib kelishi mumkin, masalan:
 
-* Race conditionlari, bu yerda thereadlar ma'lumotlar yoki resurslarga mos kelmaydigan tartibda kirishadi
-* Deadlock, bu yerda ikkita theread bir-birini kutib, ikkala thereadning davom etishiga to'sqinlik qiladi
+* Race conditionlari, bu yerda threadlar ma'lumotlar yoki resurslarga mos kelmaydigan tartibda kirishadi
+* Deadlock, bu yerda ikkita thread bir-birini kutib, ikkala threadning davom etishiga to'sqinlik qiladi
 * Faqat ma'lum holatlarda yuzaga keladigan va qayta ishlab chiqarish va ishonchli tarzda tuzatish qiyin bo'lgan xatolar
 
-Rust thereadlardan foydalanishning salbiy ta'sirini yumshatishga harakat qiladi, lekin multithreadli kontekstda dasturlash hali ham ehtiyotkorlik bilan o'ylashni talab qiladi va bitta thereadda ishlaydigan dasturlardan farq qiladigan kod tuzilishini talab qiladi.
+Rust threadlardan foydalanishning salbiy ta'sirini yumshatishga harakat qiladi, lekin multithreadli kontekstda dasturlash hali ham ehtiyotkorlik bilan o'ylashni talab qiladi va bitta threadda ishlaydigan dasturlardan farq qiladigan kod tuzilishini talab qiladi.
 
-Programming languages implement threads in a few different ways, and many
-operating systems provide an API the language can call for creating new
-threads. The Rust standard library uses a *1:1* model of thread implementation,
-whereby a program uses one operating system thread per one language thread.
-There are crates that implement other models of threading that make different
-tradeoffs to the 1:1 model.
+Dasturlash tillari threadlarni turli yo'llar bilan amalga oshiradi(impelement qiladi) va ko'pgina operatsion tizimlar yangi threadlarni yaratish uchun til chaqirishi mumkin bo'lgan API-ni taqdim etadi. Rust standart kutubxonasi(standard library) *1:1* threadni amalga oshirish modelidan foydalanadi, bunda dastur har bir til uchun bitta operatsion tizim threadidan foydalanadi. 1:1 modeliga turli xil o'zgarishlarni keltirib chiqaradigan boshqa theredlar modellarini amalga oshiradigan(implement qiladigan) cratelar mavjud.
 
-### Creating a New Thread with `spawn`
+### `spawn` yordamida yangi thread yaratish
 
-To create a new thread, we call the `thread::spawn` function and pass it a
-closure (we talked about closures in Chapter 13) containing the code we want to
-run in the new thread. The example in Listing 16-1 prints some text from a main
-thread and other text from a new thread:
+Yangi thread yaratish uchun biz `thread::spawn` funksiyasini chaqiramiz va unga yangi threadda ishga tushirmoqchi bo'lgan kodni o'z ichiga olgan closureni (biz 13-bobda closurelar haqida gapirgan edik) o'tkazamiz. 16-1 ro'yxatdagi misol asosiy(main) threaddagi ba'zi matnni va yangi threaddagi boshqa matnni chop etadi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-01/src/main.rs}}
@@ -81,7 +73,7 @@ call the `join` method on it, will wait for its thread to finish. Listing 16-2
 shows how to use the `JoinHandle` of the thread we created in Listing 16-1 and
 call `join` to make sure the spawned thread finishes before `main` exits:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-02/src/main.rs}}
@@ -122,7 +114,7 @@ call to `handle.join()` and does not end until the spawned thread is finished.
 But let’s see what happens when we instead move `handle.join()` before the
 `for` loop in `main`, like this:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/no-listing-01-join-too-early/src/main.rs}}
@@ -170,7 +162,7 @@ spawned thread’s closure must capture the values it needs. Listing 16-3 shows
 an attempt to create a vector in the main thread and use it in the spawned
 thread. However, this won’t yet work, as you’ll see in a moment.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-03/src/main.rs}}
@@ -196,7 +188,7 @@ to `v` will always be valid.
 Listing 16-4 provides a scenario that’s more likely to have a reference to `v`
 that won’t be valid:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-04/src/main.rs}}
@@ -231,7 +223,7 @@ ownership of the values it’s using rather than allowing Rust to infer that it
 should borrow the values. The modification to Listing 16-3 shown in Listing
 16-5 will compile and run as we intend:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-05/src/main.rs}}
