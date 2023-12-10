@@ -10,7 +10,7 @@ fn main() {
     });
 
     for i in 1..5 {
-        println!("hi number {} from the main thread!", i);
+        println!("salom, main threaddan {}-raqam!", i);
         thread::sleep(Duration::from_millis(1));
     }
 }

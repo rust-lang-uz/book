@@ -23,43 +23,31 @@ Yangi thread yaratish uchun biz `thread::spawn` funksiyasini chaqiramiz va unga 
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-01/src/main.rs}}
 ```
 
-<span class="caption">Listing 16-1: Creating a new thread to print one thing
-while the main thread prints something else</span>
+<span class="caption">Ro'yxat 16-1: Bir narsani chop etish uchun yangi thread yaratish, main thread esa boshqa narsalarni chop etish</span>
 
-Note that when the main thread of a Rust program completes, all spawned threads
-are shut down, whether or not they have finished running. The output from this
-program might be a little different every time, but it will look similar to the
-following:
+Esda tutingki, Rust dasturining asosiy ishi tugagach, barcha ochilgan threadlar ishlashni tugatgan yoki tugatmaganidan qat'i nazar, o'chiriladi. Ushbu dasturning chiqishi har safar bir oz boshqacha bo'lishi mumkin, ammo u quyidagilarga o'xshaydi:
 
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
 changes in the compiler -->
 
 ```text
-hi number 1 from the main thread!
+salom, main threaddan 1-raqam!
 hi number 1 from the spawned thread!
-hi number 2 from the main thread!
+salom, main threaddan 2-raqam!
 hi number 2 from the spawned thread!
-hi number 3 from the main thread!
+salom, main threaddan 3-raqam!
 hi number 3 from the spawned thread!
-hi number 4 from the main thread!
+salom, main threaddan 4-raqam!
 hi number 4 from the spawned thread!
 hi number 5 from the spawned thread!
 ```
 
-The calls to `thread::sleep` force a thread to stop its execution for a short
-duration, allowing a different thread to run. The threads will probably take
-turns, but that isn’t guaranteed: it depends on how your operating system
-schedules the threads. In this run, the main thread printed first, even though
-the print statement from the spawned thread appears first in the code. And even
-though we told the spawned thread to print until `i` is 9, it only got to 5
-before the main thread shut down.
+`thread::sleep`ga chaqiruvlar threadni qisqa muddatga uning bajarilishini to'xtatishga majbur qiladi, bu esa boshqa threadning ishlashiga imkon beradi. Ehtimol, threadlar navbatma-navbat bo'ladi, lekin bu kafolatlanmaydi: bu sizning operatsion tizimingiz threadlarni qanday rejalashtirishiga(schedule) bog'liq. Bu ishga tushirishda birinchi bo'lib main thread chop etiladi, garchi ishlab chiqarilgan threadning chop etish bayonoti kodda birinchi bo'lib paydo bo'lsa ham. Va biz paydo bo'lgan thredga `i` 9 bo'lguncha chop etishni aytgan bo'lsak ham, asosiy thread yopilishidan oldin u 5 ga yetdi.
 
-If you run this code and only see output from the main thread, or don’t see any
-overlap, try increasing the numbers in the ranges to create more opportunities
-for the operating system to switch between the threads.
+Agar siz ushbu kodni ishga tushirsangiz va faqat main threaddan olingan ma'lumotlarni ko'rsangiz yoki hech qanday o'xshashlikni ko'rmasangiz, operatsion tizimning threadlar o'rtasida almashishi uchun ko'proq imkoniyatlar yaratish uchun diapazonlardagi raqamlarni oshirib ko'ring.
 
-### Waiting for All Threads to Finish Using `join` Handles
+### `join` handlerlari yordamida barcha threadlar tugashini kutilmoqda
 
 The code in Listing 16-1 not only stops the spawned thread prematurely most of
 the time due to the main thread ending, but because there is no guarantee on
