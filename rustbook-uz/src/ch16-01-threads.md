@@ -117,21 +117,11 @@ salom, main threaddan 4-raqam!
 
 Kichik tafsilotlar(detail), masalan, `join` deb ataladigan joy, sizning threadlaringiz bir vaqtning o'zida ishlashi yoki ishlamasligiga ta'sir qilishi mumkin.
 
-### Using `move` Closures with Threads
+### Threadlar bilan `move` closuredan foydalanish
 
-We'll often use the `move` keyword with closures passed to `thread::spawn`
-because the closure will then take ownership of the values it uses from the
-environment, thus transferring ownership of those values from one thread to
-another. In the [“Capturing References or Moving Ownership”][capture]<!-- ignore
---> section of Chapter 13, we discussed `move` in the context of closures. Now,
-we’ll concentrate more on the interaction between `move` and `thread::spawn`.
+Biz tez-tez closurelar `thread::spawn` ga o'tiladigan `move` kalit so'zidan foydalanamiz, chunki closure keyinchalik environmentdan foydalanadigan qiymatlarga ownershiplik(egalik) qiladi va shu tariqa bu qiymatlarga ownershiplik huquqini bir threaddan ikkinchisiga o'tkazadi. 13-bobning “Ma’lumotnomalarni qo‘lga kiritish yoki ownershiplik huquqini ko‘chirish” bo‘limida biz closure kontekstida `move`ni muhokama qildik. Endi biz `move` va `thread::spawn` o'rtasidagi o'zaro ta'sirga ko'proq e'tibor qaratamiz.
 
-Notice in Listing 16-1 that the closure we pass to `thread::spawn` takes no
-arguments: we’re not using any data from the main thread in the spawned
-thread’s code. To use data from the main thread in the spawned thread, the
-spawned thread’s closure must capture the values it needs. Listing 16-3 shows
-an attempt to create a vector in the main thread and use it in the spawned
-thread. However, this won’t yet work, as you’ll see in a moment.
+Ro'yxat 16-1da e'tibor bering, biz `thread::spawn` ga o'tadigan closure hech qanday argument talab qilmaydi: biz ochilgan thread kodidagi main threaddan hech qanday ma'lumotdan foydalanmayapmiz. Tugallangan threaddagi main threaddan ma'lumotlarni ishlatish uchun ochilgan threadning yopilishi kerakli qiymatlarni olishi kerak. 16-3 ro'yxatda main threadda vector yaratish va uni ishlab ochilgan threadda ishlatishga urinish ko'rsatilgan. Biroq, bu hali ishlamaydi, buni birozdan keyin ko'rasiz.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -139,25 +129,17 @@ thread. However, this won’t yet work, as you’ll see in a moment.
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-03/src/main.rs}}
 ```
 
-<span class="caption">Listing 16-3: Attempting to use a vector created by the
-main thread in another thread</span>
+<span class="caption">Ro'yxat 16-3: main thread tomonidan yaratilgan vectorni boshqa threadda ishlatishga urinish</span>
 
-The closure uses `v`, so it will capture `v` and make it part of the closure’s
-environment. Because `thread::spawn` runs this closure in a new thread, we
-should be able to access `v` inside that new thread. But when we compile this
-example, we get the following error:
+Closure `v` dan foydalanadi, shuning uchun u `v` ni oladi va uni closure environmentining bir qismiga aylantiradi. Chunki `thread::spawn` bu closureni yangi threadda ishga tushiradi, biz ushbu yangi thread ichidagi `v` ga kirishimiz kerak. Ammo biz ushbu misolni kompilatsiya qilganimizda, biz quyidagi xatoni olamiz:
 
 ```console
 {{#include ../listings/ch16-fearless-concurrency/listing-16-03/output.txt}}
 ```
 
-Rust *infers* how to capture `v`, and because `println!` only needs a reference
-to `v`, the closure tries to borrow `v`. However, there’s a problem: Rust can’t
-tell how long the spawned thread will run, so it doesn’t know if the reference
-to `v` will always be valid.
+Rust `v` ni qanday capture qilishni *infers*(xulosa) qiladi va `println!` faqat `v` ga reference kerakligi sababli, closure `v` ni olishga harakat qiladi. Biroq, muammo bor: Rust ochilgan threrad qancha vaqt ishlashini ayta olmaydi, shuning uchun `v` ga reference har doim haqiqiy(valiq yaroqli) bo'lishini bilmaydi.
 
-Listing 16-4 provides a scenario that’s more likely to have a reference to `v`
-that won’t be valid:
+16-4 ro'yxatda `v` ga reference bo'lishi mumkin bo'lgan senariy ko'rsatilgan va u yaroqli(valiq) bo'lmaydi:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -165,18 +147,11 @@ that won’t be valid:
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-04/src/main.rs}}
 ```
 
-<span class="caption">Listing 16-4: A thread with a closure that attempts to
-capture a reference to `v` from a main thread that drops `v`</span>
+<span class="caption">Roʻyxat 16-4: `v` tushiradigan main threaddan `v` ga referenceni olishga harakat qiluvchi yopilgan thread.</span>
 
-If Rust allowed us to run this code, there’s a possibility the spawned thread
-would be immediately put in the background without running at all. The spawned
-thread has a reference to `v` inside, but the main thread immediately drops
-`v`, using the `drop` function we discussed in Chapter 15. Then, when the
-spawned thread starts to execute, `v` is no longer valid, so a reference to it
-is also invalid. Oh no!
+Agar Rust bizga ushbu kodni ishga tushirishga ruxsat bergan bo'lsa, ochilgan thread umuman ishlamasdan darhol fonga qo'yilishi mumkin. Ochilgan thread ichida `v` ga reference bor, lekin main thread darhol `v` ni tushiradi, biz 15-bobda muhokama qilgan `drop` funksiyasidan foydalangan holda. Keyin, ochilgan thread bajarila boshlaganda, `v` endi haqiqiy(valiq) emas, shuning uchun unga referense ham yaroqsiz. Oh yo'q!
 
-To fix the compiler error in Listing 16-3, we can use the error message’s
-advice:
+16-3 ro'yxatdagi kompilyator xatosini tuzatish uchun xato xabari maslahatidan foydalanishimiz mumkin:
 
 <!-- manual-regeneration
 after automatic regeneration, look at listings/ch16-fearless-concurrency/listing-16-03/output.txt and copy the relevant part
@@ -189,10 +164,7 @@ help: to force the closure to take ownership of `v` (and any other referenced va
   |                                ++++
 ```
 
-By adding the `move` keyword before the closure, we force the closure to take
-ownership of the values it’s using rather than allowing Rust to infer that it
-should borrow the values. The modification to Listing 16-3 shown in Listing
-16-5 will compile and run as we intend:
+Closuredan oldin `move` kalit so‘zini qo‘shish orqali biz closureni Rustga qiymatlarni olishi kerak degan xulosaga(infer) kelishga ruxsat berishdan ko‘ra, u foydalanadigan qiymatlarga ownershiklik qilishga majburlaymiz. 16-5 ro'yxatda ko'rsatilgan 16-3 ro'yxatga kiritilgan o'zgartirish biz xohlagan tarzda kompilatsiya bo'ladi va ishlaydi:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -200,8 +172,7 @@ should borrow the values. The modification to Listing 16-3 shown in Listing
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-05/src/main.rs}}
 ```
 
-<span class="caption">Listing 16-5: Using the `move` keyword to force a closure
-to take ownership of the values it uses</span>
+<span class="caption">Roʻyxat 16-5: `move` kalit soʻzidan foydalanib, closureni oʻzi foydalanadigan qiymatlarga ownershiplik qilishga majburlash</span>
 
 We might be tempted to try the same thing to fix the code in Listing 16-4 where
 the main thread called `drop` by using a `move` closure. However, this fix will
