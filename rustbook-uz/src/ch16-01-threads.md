@@ -33,14 +33,14 @@ changes in the compiler -->
 
 ```text
 salom, main threaddan 1-raqam!
-hi number 1 from the spawned thread!
+salom, ochilgan threaddan 1-raqam!
 salom, main threaddan 2-raqam!
-hi number 2 from the spawned thread!
+salom, ochilgan threaddan 2-raqam!
 salom, main threaddan 3-raqam!
-hi number 3 from the spawned thread!
+salom, ochilgan threaddan 3-raqam!
 salom, main threaddan 4-raqam!
-hi number 4 from the spawned thread!
-hi number 5 from the spawned thread!
+salom, ochilgan threaddan 4-raqam!
+salom, ochilgan threaddan 5-raqam!
 ```
 
 `thread::sleep`ga chaqiruvlar threadni qisqa muddatga uning bajarilishini to'xtatishga majbur qiladi, bu esa boshqa threadning ishlashiga imkon beradi. Ehtimol, threadlar navbatma-navbat bo'ladi, lekin bu kafolatlanmaydi: bu sizning operatsion tizimingiz threadlarni qanday rejalashtirishiga(schedule) bog'liq. Bu ishga tushirishda birinchi bo'lib main thread chop etiladi, garchi ishlab chiqarilgan threadning chop etish bayonoti kodda birinchi bo'lib paydo bo'lsa ham. Va biz paydo bo'lgan thredga `i` 9 bo'lguncha chop etishni aytgan bo'lsak ham, asosiy thread yopilishidan oldin u 5 ga yetdi.
@@ -49,17 +49,9 @@ Agar siz ushbu kodni ishga tushirsangiz va faqat main threaddan olingan ma'lumot
 
 ### `join` handlerlari yordamida barcha threadlar tugashini kutilmoqda
 
-The code in Listing 16-1 not only stops the spawned thread prematurely most of
-the time due to the main thread ending, but because there is no guarantee on
-the order in which threads run, we also can’t guarantee that the spawned thread
-will get to run at all!
+16-1 ro'yxatidagi kod ko'pincha main thread tugashi tufayli paydo bo'lgan threadni muddatidan oldin to'xtatibgina qolmay, balki threadlarning ishlash tartibiga kafolat yo'qligi sababli, biz ham yangi ochilgangan threadning umuman ishga tushishiga kafolat bera olmaymiz!
 
-We can fix the problem of the spawned thread not running or ending prematurely
-by saving the return value of `thread::spawn` in a variable. The return type of
-`thread::spawn` is `JoinHandle`. A `JoinHandle` is an owned value that, when we
-call the `join` method on it, will wait for its thread to finish. Listing 16-2
-shows how to use the `JoinHandle` of the thread we created in Listing 16-1 and
-call `join` to make sure the spawned thread finishes before `main` exits:
+O'zgaruvchida `thread::spawn` ning qaytish(return) qiymatini saqlash orqali ochilgangan threadning ishlamasligi yoki muddatidan oldin tugashi muammosini hal qilishimiz mumkin. `thread::spawn` ning qaytish turi(return type) `JoinHandle` dir. `JoinHandle` - bu tegishli qiymat bo'lib, biz `join` metodini chaqirganimizda, uning threadi tugashini kutamiz. 16-2 ro'yxatda biz 16-1 ro'yxatda yaratgan `JoinHandle` dan qanday foydalanish va `join`ni chaqirish orqali yaratilgan thread `main` chiqishdan oldin tugashini ko'rsatadi:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -67,40 +59,33 @@ call `join` to make sure the spawned thread finishes before `main` exits:
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-02/src/main.rs}}
 ```
 
-<span class="caption">Listing 16-2: Saving a `JoinHandle` from `thread::spawn`
-to guarantee the thread is run to completion</span>
+<span class="caption">Roʻyxat 16-2: `JoinHandle` ni `thread::spawn` dan saqlash, threadning oxirigacha ishga tushishini kafolatlash</span>
 
-Calling `join` on the handle blocks the thread currently running until the
-thread represented by the handle terminates. *Blocking* a thread means that
-thread is prevented from performing work or exiting. Because we’ve put the call
-to `join` after the main thread’s `for` loop, running Listing 16-2 should
-produce output similar to this:
+Handleda `join`ni chaqirish, handle bilan ifodalangan thread tugaguncha ishlayotgan threadni bloklaydi. Threadni *bloklash* uning ish bajarishi yoki chiqishining oldini olish degani. Biz chaqiruvni(call) main threadning `foor` loop siklidan keyin qo'yganimiz sababli, 16-2 ro'yxatini ishga tushirish shunga o'xshash natijani berishi kerak:
 
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
 changes in the compiler -->
 
 ```text
-hi number 1 from the main thread!
-hi number 2 from the main thread!
-hi number 1 from the spawned thread!
-hi number 3 from the main thread!
-hi number 2 from the spawned thread!
-hi number 4 from the main thread!
-hi number 3 from the spawned thread!
-hi number 4 from the spawned thread!
-hi number 5 from the spawned thread!
-hi number 6 from the spawned thread!
-hi number 7 from the spawned thread!
-hi number 8 from the spawned thread!
-hi number 9 from the spawned thread!
+salom, main threaddan 1-raqam!
+salom, main threaddan 2-raqam!
+salom, ochilgan threaddan 1-raqam!
+salom, main threaddan 3-raqam!
+salom, ochilgan threaddan 2-raqam!
+salom, main threaddan 4-raqam!
+salom, ochilgan threaddan 3-raqam!
+salom, ochilgan threaddan 4-raqam!
+salom, ochilgan threaddan 5-raqam!
+salom, ochilgan threaddan 6-raqam!
+salom, ochilgan threaddan 7-raqam!
+salom, ochilgan threaddan 8-raqam!
+salom, ochilgan threaddan 9-raqam!
 ```
 
-The two threads continue alternating, but the main thread waits because of the
-call to `handle.join()` and does not end until the spawned thread is finished.
+Ikki thread almashishda davom etadi, lekin main thread `handle.join()` chaqiruvi tufayli kutadi va hosil qilingan thread tugamaguncha tugamaydi.
 
-But let’s see what happens when we instead move `handle.join()` before the
-`for` loop in `main`, like this:
+Ammo keling, `main` da `for` loop siklidan oldin `handle.join()` ni ko‘chirsak nima bo‘lishini ko‘rib chiqamiz, masalan:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -108,31 +93,29 @@ But let’s see what happens when we instead move `handle.join()` before the
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/no-listing-01-join-too-early/src/main.rs}}
 ```
 
-The main thread will wait for the spawned thread to finish and then run its
-`for` loop, so the output won’t be interleaved anymore, as shown here:
+Main thread ochilgan thread tugashini kutadi va keyin `for` loop siklini ishga tushiradi, shuning uchun bu yerda ko'rsatilganidek, chiqish boshqa qo'shilmaydi:
 
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
 changes in the compiler -->
 
 ```text
-hi number 1 from the spawned thread!
-hi number 2 from the spawned thread!
-hi number 3 from the spawned thread!
-hi number 4 from the spawned thread!
-hi number 5 from the spawned thread!
-hi number 6 from the spawned thread!
-hi number 7 from the spawned thread!
-hi number 8 from the spawned thread!
-hi number 9 from the spawned thread!
-hi number 1 from the main thread!
-hi number 2 from the main thread!
-hi number 3 from the main thread!
-hi number 4 from the main thread!
+salom, ochilgan threaddan 1-raqam!
+salom, ochilgan threaddan 2-raqam!
+salom, ochilgan threaddan 3-raqam!
+salom, ochilgan threaddan 4-raqam!
+salom, ochilgan threaddan 5-raqam!
+salom, ochilgan threaddan 6-raqam!
+salom, ochilgan threaddan 7-raqam!
+salom, ochilgan threaddan 8-raqam!
+salom, ochilgan threaddan 9-raqam!
+salom, main threaddan 1-raqam!
+salom, main threaddan 2-raqam!
+salom, main threaddan 3-raqam!
+salom, main threaddan 4-raqam!
 ```
 
-Small details, such as where `join` is called, can affect whether or not your
-threads run at the same time.
+Kichik tafsilotlar(detail), masalan, `join` deb ataladigan joy, sizning threadlaringiz bir vaqtning o'zida ishlashi yoki ishlamasligiga ta'sir qilishi mumkin.
 
 ### Using `move` Closures with Threads
 
