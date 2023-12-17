@@ -174,28 +174,14 @@ Closuredan oldin `move` kalit so‘zini qo‘shish orqali biz closureni Rustga q
 
 <span class="caption">Roʻyxat 16-5: `move` kalit soʻzidan foydalanib, closureni oʻzi foydalanadigan qiymatlarga ownershiplik qilishga majburlash</span>
 
-We might be tempted to try the same thing to fix the code in Listing 16-4 where
-the main thread called `drop` by using a `move` closure. However, this fix will
-not work because what Listing 16-4 is trying to do is disallowed for a
-different reason. If we added `move` to the closure, we would move `v` into the
-closure’s environment, and we could no longer call `drop` on it in the main
-thread. We would get this compiler error instead:
+Kodni 16 4 ro'yxatida tuzatish uchun xuddi shu narsani sinab ko'rishimiz mumkin, bu yerda main thread `move` closuresi orqali `drop` deb ataladi. Biroq, bu tuzatish ishlamaydi, chunki 16-4-raqamli roʻyxat boshqa sabablarga koʻra amalga oshirilmaydi. Agar biz closurega `move` ni qo‘shsak, biz `v` ni closure environmentiga o'tkazamiz va biz main threadda endi `drop` ni chaqira olmaymiz. Buning o'rniga biz ushbu kompilyator xatosini olamiz:
 
 ```console
 {{#include ../listings/ch16-fearless-concurrency/output-only-01-move-drop/output.txt}}
 ```
 
-Rust’s ownership rules have saved us again! We got an error from the code in
-Listing 16-3 because Rust was being conservative and only borrowing `v` for the
-thread, which meant the main thread could theoretically invalidate the spawned
-thread’s reference. By telling Rust to move ownership of `v` to the spawned
-thread, we’re guaranteeing Rust that the main thread won’t use `v` anymore. If
-we change Listing 16-4 in the same way, we’re then violating the ownership
-rules when we try to use `v` in the main thread. The `move` keyword overrides
-Rust’s conservative default of borrowing; it doesn’t let us violate the
-ownership rules.
+Rustning ownershiplik(egalik) qoidalari bizni yana qutqardi! 16-3 roʻyxatdagi koddan xatoga yoʻl qoʻydik, chunki Rust konservativ boʻlib, thread uchun faqat `v` harfini oldi, bu esa main thread nazariy jihatdan ochilgangan threadning referenceni bekor qilishi mumkinligini anglatadi. Rustga `v` ownershiplik huquqini ochilgan threadga o'tkazishni aytish orqali biz Rustga main thread endi `v` dan foydalanmasligiga kafolat beramiz. Agar biz 16-4 ro'yxatni xuddi shunday o'zgartirsak, main threadda `v` dan foydalanmoqchi bo'lganimizda ownershiplik qoidalarini buzgan bo'lamiz. `move` kalit so'zi Rustning borrowing olishning konservativ defaultini bekor qiladi; ownershiplik qoidalarini buzishimizga yo'l qo'ymaydi.
 
-With a basic understanding of threads and the thread API, let’s look at what we
-can *do* with threads.
+Threadar va thread API haqida asosiy tushunchaga ega bo'lgan holda, keling, threadlar bilan nima qilishimiz mumkinligini ko'rib chiqaylik.
 
 [capture]: ch13-01-closures.html#capturing-references-or-moving-ownership
