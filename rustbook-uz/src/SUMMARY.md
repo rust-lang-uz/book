@@ -97,7 +97,7 @@
 
 - [Qo'rqmas parallellik](ch16-00-concurrency.md)
     - [Kodni bir vaqtning o'zida ishga tushirish uchun threadlardan foydalanish](ch16-01-threads.md)
-    - [Threadlar orasidagi ma'lumotlarni uzatish uchun xabar uzatishdan(Message Passing) foydalanish](ch16-02-message-passing.md)
+    - [Threadlar orasidagi ma'lumotlarni uzatish uchun Message Passing(xabar uzatish)dan foydalanish](ch16-02-message-passing.md)
     - [Shared-State Concurrency](ch16-03-shared-state.md)
     - [`Sync` va `Send` traitlari bilan kengaytiriladigan parallellik](ch16-04-extensible-concurrency-sync-and-send.md)
 

@@ -1,33 +1,14 @@
-## Using Message Passing to Transfer Data Between Threads
+## Threadlar orasidagi ma'lumotlarni uzatish uchun Message Passing(xabar uzatish)dan foydalanish
 
-One increasingly popular approach to ensuring safe concurrency is *message
-passing*, where threads or actors communicate by sending each other messages
-containing data. Here’s the idea in a slogan from [the Go language
-documentation](https://golang.org/doc/effective_go.html#concurrency):
-“Do not communicate by sharing memory; instead, share memory by communicating.”
+Xavfsiz concurrencyni ta'minlashning tobora ommalashib borayotgan yondashuvlaridan biri bu *message passing* bo'lib, bu yerda threadlar yoki actorlar bir-biriga ma'lumotlarni o'z ichiga olgan xabarlarni yuborish orqali muloqot qilishadi. [Go tili texnik hujjatlaridagi](https://golang.org/doc/effective_go.html#concurrency) shiordagi g‘oya: “Xotirani almashish(share) orqali muloqot qilmang; Buning o'rniga, muloqot(communication) orqali xotirani share qiling."
 
-To accomplish message-sending concurrency, Rust's standard library provides an
-implementation of *channels*. A channel is a general programming concept by
-which data is sent from one thread to another.
+Message-sending(xabar yuborish) concurrencyni amalga oshirish uchun Rustning standart kutubxonasi *channels* amalga oshirishni ta'minlaydi. Channel(kanal) - bu umumiy dasturlash tushunchasi bo'lib, uning yordamida ma'lumotlar bir threaddan ikkinchisiga yuboriladi.
 
-You can imagine a channel in programming as being like a directional channel of
-water, such as a stream or a river. If you put something like a rubber duck
-into a river, it will travel downstream to the end of the waterway.
+Dasturlashdagi kanalni(channel) oqim yoki daryo kabi suvning yo'naltirilgan kanali kabi tasavvur qilishingiz mumkin. Agar siz daryoga rezina o'rdak kabi narsalarni qo'ysangiz, u suv yo'lining oxirigacha pastga tushadi.
 
-A channel has two halves: a transmitter and a receiver. The transmitter half is
-the upstream location where you put rubber ducks into the river, and the
-receiver half is where the rubber duck ends up downstream. One part of your
-code calls methods on the transmitter with the data you want to send, and
-another part checks the receiving end for arriving messages. A channel is said
-to be *closed* if either the transmitter or receiver half is dropped.
+Kanalning ikkita yarmi bor: uzatuvchi(transmitte) va qabul qiluvchi(receiver). Transmitterning yarmi daryoga rezina o'rdak qo'yadigan yuqori oqim joyidir va qabul qiluvchining yarmi rezina o'rdak quyi oqimga tushadi. Kodingizning bir qismi siz yubormoqchi bo'lgan ma'lumotlarga ega bo'lgan transmitterdagi metodlarni chaqiradi, boshqa qismi esa kelgan xabarlarni qabul qiluvchi tomonni tekshiradi. Agar transmitter yoki receiverning yarmi tushib qolsa, kanal *closed(yopiq)* deyiladi.
 
-Here, we’ll work up to a program that has one thread to generate values and
-send them down a channel, and another thread that will receive the values and
-print them out. We’ll be sending simple values between threads using a channel
-to illustrate the feature. Once you’re familiar with the technique, you could
-use channels for any threads that need to communicate between each other, such
-as a chat system or a system where many threads perform parts of a calculation
-and send the parts to one thread that aggregates the results.
+Bu yerda biz qiymatlarni yaratish va ularni kanalga yuborish uchun bitta threadga ega bo'lgan dasturni va qiymatlarni qabul qiladigan va ularni chop etadigan boshqa threadni ishlab chiqamiz. Featureni tasvirlash uchun kanal yordamida  threadlar orasidagi oddiy qiymatlarni yuboramiz. Texnika bilan tanishganingizdan so'ng, siz bir-biringiz bilan aloqa o'rnatishingiz kerak bo'lgan har qanday threadlar uchun kanallardan foydalanishingiz mumkin, masalan, chat tizimi yoki ko'p threadlar hisoblash qismlarini bajaradigan va qismlarni natijalarni jamlaydigan bitta threadga yuboradigan tizim.
 
 First, in Listing 16-6, we’ll create a channel but not do anything with it.
 Note that this won’t compile yet because Rust can’t tell what type of values we
