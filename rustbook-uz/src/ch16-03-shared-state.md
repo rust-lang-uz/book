@@ -1,24 +1,12 @@
-## Shared-State Concurrency
+## Concurrencyda Shared-State
 
-Message passing is a fine way of handling concurrency, but it’s not the only
-one. Another method would be for multiple threads to access the same shared
-data. Consider this part of the slogan from the Go language documentation
-again: “do not communicate by sharing memory.”
+Message passing(Xabarni uzatish) - bu concurrencyni boshqarishning yaxshi usuli, ammo bu yagona emas. Yana bir usul bir nechta(multiple) threadlar bir xil umumiy ma'lumotlarga(shared data) kirishlari mumkin. Go tilidagi texnik hujjatlardagi shiorning ushbu qismini yana bir bor ko'rib chiqing: "xotirani almashish(sharing memory) orqali muloqot(comminicate) qilmang."
 
-What would communicating by sharing memory look like? In addition, why would
-message-passing enthusiasts caution not to use memory sharing?
+Xotirani almashish(sharing memory) orqali muloqot(comminication) qanday ko'rinishga ega bo'lar edi? Bundan tashqari, nima uchun message-passing enthusiastlar memory sharingdan foydalanmaslik haqida ogohlantiradilar?
 
-In a way, channels in any programming language are similar to single ownership,
-because once you transfer a value down a channel, you should no longer use that
-value. Shared memory concurrency is like multiple ownership: multiple threads
-can access the same memory location at the same time. As you saw in Chapter 15,
-where smart pointers made multiple ownership possible, multiple ownership can
-add complexity because these different owners need managing. Rust’s type system
-and ownership rules greatly assist in getting this management correct. For an
-example, let’s look at mutexes, one of the more common concurrency primitives
-for shared memory.
+Qaysidir ma'noda, har qanday dasturlash tilidagi kanallar bitta ownershiplik huquqiga o'xshaydi, chunki qiymatni kanalga o'tkazganingizdan so'ng, siz boshqa qiymatdan foydalanmasligingiz kerak. Shared memory concurrencyda bir nechta ownershiplik huquqiga o'xshaydi: concurrencyda bir nechta threadlar bir xil xotira joyiga(memory location) kirishi mumkin. 15-bobda ko'rganingizdek, smart pointerlar bir nechta ownershiplik qilish imkoniyatini yaratdi, bir nechta(multiple) ownershiplik murakkablikni oshirishi mumkin, chunki bu turli ownerlarni boshqarish kerak. Rust type tizimi va ownershiplik qoidalari ushbu boshqaruvni to'g'ri bajarishga katta yordam beradi. Misol uchun, shared memory uchun eng keng tarqalgan concurrency primitivlaridan biri bo'lgan mutexlarni ko'rib chiqaylik.
 
-### Using Mutexes to Allow Access to Data from One Thread at a Time
+### Bir vaqtning o'zida bitta threaddan ma'lumotlarga kirishga ruxsat berish uchun mutexlardan foydalanish
 
 *Mutex* is an abbreviation for *mutual exclusion*, as in, a mutex allows only
 one thread to access some data at any given time. To access the data in a
