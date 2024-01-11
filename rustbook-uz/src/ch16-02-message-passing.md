@@ -65,15 +65,9 @@ Tushundim: salom
 
 Mukammal! Perfect!
 
-### Channels and Ownership Transference
+### Kanallar va ownershiplik(egalkik) huquqini o'tkazish
 
-The ownership rules play a vital role in message sending because they help you
-write safe, concurrent code. Preventing errors in concurrent programming is the
-advantage of thinking about ownership throughout your Rust programs. Let’s do
-an experiment to show how channels and ownership work together to prevent
-problems: we’ll try to use a `val` value in the spawned thread *after* we’ve
-sent it down the channel. Try compiling the code in Listing 16-9 to see why
-this code isn’t allowed:
+Ownershiplik qoidalari xabarlarni jo'natishda muhim rol o'ynaydi, chunki ular xavfsiz, bir vaqtda kod yozishga yordam beradi. Bir vaqtning o'zida dasturlashda(concurrent programming) xatolarning oldini olish Rust dasturlarida ownershiplik haqida o'ylashning afzalligi hisoblanadi. Muammolarning oldini olish uchun kanallar va ownershiplik qanday ishlashini ko‘rsatish uchun tajriba o‘tkazamiz: biz kanalga yuborganimizdan so‘ng `val` qiymatidan foydalanishga harakat qilamiz. Nima uchun bu kodga ruxsat berilmaganligini bilish uchun 16-9-raqamdagi kodni kompilyatsiya qilib ko'ring:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -81,32 +75,20 @@ this code isn’t allowed:
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-09/src/main.rs}}
 ```
 
-<span class="caption">Listing 16-9: Attempting to use `val` after we’ve sent it
-down the channel</span>
+<span class="caption">Roʻyxat 16-9: `val`ni kanalga yuborganimizdan keyin foydalanishga urinish</span>
 
-Here, we try to print `val` after we’ve sent it down the channel via `tx.send`.
-Allowing this would be a bad idea: once the value has been sent to another
-thread, that thread could modify or drop it before we try to use the value
-again. Potentially, the other thread’s modifications could cause errors or
-unexpected results due to inconsistent or nonexistent data. However, Rust gives
-us an error if we try to compile the code in Listing 16-9:
+Bu yerda biz `tx.send` orqali kanalga yuborganimizdan so‘ng `val`ni chop etishga harakat qilamiz.
+Bunga ruxsat berish noto'g'ri fikr bo'ladi: qiymat boshqa threadga yuborilgandan so'ng, biz qiymatni qayta ishlatishdan oldin uni o'zgartirishi yoki tashlab yuborishi(drop) mumkin. Potensial ravishda, boshqa threadning o'zgartirishlari nomuvofiq yoki mavjud bo'lmagan ma'lumotlar tufayli xatolar yoki kutilmagan natijalarga olib kelishi mumkin. Biroq, agar biz 16-9 ro'yxatdagi kodni kompilyatsiya qilmoqchi bo'lsak, Rust bizga xato qiladi:
 
 ```console
 {{#include ../listings/ch16-fearless-concurrency/listing-16-09/output.txt}}
 ```
 
-Our concurrency mistake has caused a compile time error. The `send` function
-takes ownership of its parameter, and when the value is moved, the receiver
-takes ownership of it. This stops us from accidentally using the value again
-after sending it; the ownership system checks that everything is okay.
+Bizning concurrency xatomiz kompilyatsiya vaqtida xatolikka olib keldi. `send` funksiyasi oʻz parametriga ownershiplik qiladi va qiymat koʻchirilganda qabul qiluvchi(receiver) unga ownershiplik qiladi. Bu bizni qiymatni yuborgandan keyin tasodifan qayta ishlatishdan to'xtatadi; ownershiplik tizimi hamma narsa yaxshi ekanligini tekshiradi.
 
-### Sending Multiple Values and Seeing the Receiver Waiting
+### Bir nechta qiymatlarni yuborish va qabul qiluvchining(receiver) kutayotganini ko'rish
 
-The code in Listing 16-8 compiled and ran, but it didn’t clearly show us that
-two separate threads were talking to each other over the channel. In Listing
-16-10 we’ve made some modifications that will prove the code in Listing 16-8 is
-running concurrently: the spawned thread will now send multiple messages and
-pause for a second between each message.
+16-8 ro'yxatdagi kod kompilatsiya bo'ldi va ishga tushirildi, lekin u bizga ikkita alohida thread kanal orqali bir-biri bilan gaplashayotganini aniq ko'rsatmadi. 16-10-ro'yxatda biz 16-8-ro'yxatdagi kod bir vaqtda ishlayotganini tasdiqlovchi ba'zi o'zgartirishlar kiritdik: ochilgan thread endi bir nechta xabarlarni yuboradi va har bir xabar o'rtasida bir soniya pauza qiladi.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -114,42 +96,30 @@ pause for a second between each message.
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-10/src/main.rs}}
 ```
 
-<span class="caption">Listing 16-10: Sending multiple messages and pausing
-between each</span>
+<span class="caption">Ro'yxat 16-10: Bir nechta xabarlarni yuborish va har biri o'rtasida pauza qilish</span>
 
-This time, the spawned thread has a vector of strings that we want to send to
-the main thread. We iterate over them, sending each individually, and pause
-between each by calling the `thread::sleep` function with a `Duration` value of
-1 second.
+Bu safar, ochilgan threadda biz main threadga yubormoqchi bo'lgan satrlar vektori mavjud. Biz ularni takrorlaymiz, har birini alohida yuboramiz va 1 soniyalik `Duration` qiymati bilan `thread::sleep` funksiyasini chaqirish orqali har biri o‘rtasida pauza qilamiz.
 
-In the main thread, we’re not calling the `recv` function explicitly anymore:
-instead, we’re treating `rx` as an iterator. For each value received, we’re
-printing it. When the channel is closed, iteration will end.
+Main threadda biz endi `recv` funksiyasini aniq chaqirmayapmiz: buning o'rniga biz `rx` ni iterator sifatida ko'rib chiqamiz. Qabul qilingan har bir qiymat uchun biz uni chop etamiz. Kanal yopilganda(close), iteratsiya tugaydi.
 
-When running the code in Listing 16-10, you should see the following output
-with a 1-second pause in between each line:
+16-10 ro'yxatdagi kodni ishga tushirganda, har bir satr orasida 1 soniyalik pauza bilan quyidagi chiqishni ko'rishingiz kerak:
 
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
 changes in the compiler -->
 
 ```text
-Got: hi
-Got: from
-Got: the
-Got: thread
+Tushundim: qandaysan
+Tushundim: otabek
+Tushundim: vodiyga
+Tushundim: ketti
 ```
 
-Because we don’t have any code that pauses or delays in the `for` loop in the
-main thread, we can tell that the main thread is waiting to receive values from
-the spawned thread.
+Bizda main threaddagi `for` siklida pauza yoki kechikishlar keltirib chiqaradigan kod yo‘qligi sababli, biz main thread hosil qilingan threaddan qiymatlarni olishni kutayotganini aytishimiz mumkin.
 
-### Creating Multiple Producers by Cloning the Transmitter
+### Transmitterni klonlash orqali bir nechta producerlarni yaratish
 
-Earlier we mentioned that `mpsc` was an acronym for *multiple producer,
-single consumer*. Let’s put `mpsc` to use and expand the code in Listing 16-10
-to create multiple threads that all send values to the same receiver. We can do
-so by cloning the transmitter, as shown in Listing 16-11:
+Avvalroq `mpsc` *multiple producer, single consumer* degan qisqartma ekanligini eslatib o'tgan edik. Keling, 16-10 ro'yxatdagi kodni ishlatish va kengaytirish uchun `mpsc` ni qo'yaylik va barchasi bir xil qabul qiluvchiga(receiver) qiymatlarni yuboradigan bir nechta threadlarni yaratamiz. Biz buni 16-11 ro'yxatda ko'rsatilganidek, transmitterni klonlash orqali amalga oshirishimiz mumkin:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -157,35 +127,28 @@ so by cloning the transmitter, as shown in Listing 16-11:
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-11/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 16-11: Sending multiple messages from multiple
-producers</span>
+<span class="caption">Ro'yxat 16-11: Bir nechta producerlardan(multiple producer) bir nechta xabarlarni(multiple message) yuborish</span>
 
-This time, before we create the first spawned thread, we call `clone` on the
-transmitter. This will give us a new transmitter we can pass to the first
-spawned thread. We pass the original transmitter to a second spawned thread.
-This gives us two threads, each sending different messages to the one receiver.
+Bu safar, birinchi ochilgan threadni yaratishdan oldin, biz transmitterda `clone` deb nomlaymiz. Bu bizga yangi transmitterni beradi, biz birinchi ochilgan threadga o'tishimiz mumkin. Biz asl transmitterni ikkinchi ochilgan threadga o'tkazamiz.
+Bu bizga ikkita thread beradi, ularning har biri bitta qabul qiluvchiga(receiver) turli xabarlar yuboradi.
 
-When you run the code, your output should look something like this:
+Kodni ishga tushirganingizda, chiqishingiz quyidagicha ko'rinishi kerak:
 
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
 changes in the compiler -->
 
 ```text
-Got: hi
-Got: more
-Got: from
-Got: messages
-Got: for
-Got: the
-Got: thread
-Got: you
+Tushundim: salom
+Tushundim: threaddan
+Tushundim: siz
+Tushundim: uchun
+Tushundim: ko'plab
+Tushundim: habarlar
+Tushundim: hammasi
+Tushundim: ishlayapti
 ```
 
-You might see the values in another order, depending on your system. This is
-what makes concurrency interesting as well as difficult. If you experiment with
-`thread::sleep`, giving it various values in the different threads, each run
-will be more nondeterministic and create different output each time.
+Tizimingizga qarab qiymatlarni boshqa tartibda ko'rishingiz mumkin. Bu concurrencyni qiziqarli va qiyin qiladi. Agar siz `thread::sleep` bilan tajriba o'tkazsangiz, unga turli threadlarda turli qiymatlar bersangiz, har bir ishga tushirish aniqroq bo'lmaydi va har safar har xil chiqish hosil qiladi.
 
-Now that we’ve looked at how channels work, let’s look at a different method of
-concurrency.
+Endi biz kanallar qanday ishlashini ko'rib chiqdik, keling, boshqa concurrency usulini ko'rib chiqaylik.

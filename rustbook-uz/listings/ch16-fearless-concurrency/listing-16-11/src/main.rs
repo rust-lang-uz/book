@@ -11,10 +11,10 @@ fn main() {
     let tx1 = tx.clone();
     thread::spawn(move || {
         let vals = vec![
-            String::from("hi"),
-            String::from("from"),
-            String::from("the"),
-            String::from("thread"),
+            String::from("salom"),
+            String::from("threaddan"),
+            String::from("siz"),
+            String::from("uchun"),
         ];
 
         for val in vals {
@@ -25,10 +25,10 @@ fn main() {
 
     thread::spawn(move || {
         let vals = vec![
-            String::from("more"),
-            String::from("messages"),
-            String::from("for"),
-            String::from("you"),
+            String::from("ko'plab"),
+            String::from("habarlar"),
+            String::from("hammasi"),
+            String::from("ishlayapti"),
         ];
 
         for val in vals {
@@ -38,7 +38,7 @@ fn main() {
     });
 
     for received in rx {
-        println!("Got: {}", received);
+        println!("Tushundim: {}", received);
     }
 
     // --snip--
