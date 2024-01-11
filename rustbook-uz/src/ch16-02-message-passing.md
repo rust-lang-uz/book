@@ -35,19 +35,9 @@ Biz `mpsc::channel` funksiyasidan foydalanib yangi kanal yaratamiz; `mpsc` *mult
 
 <span class="caption">Roʻyxat 16-7: `tx` ni ochilgan threadga koʻchirish va `salom` yuborish</span>
 
-Again, we’re using `thread::spawn` to create a new thread and then using `move`
-to move `tx` into the closure so the spawned thread owns `tx`. The spawned
-thread needs to own the transmitter to be able to send messages through the
-channel. The transmitter has a `send` method that takes the value we want to
-send. The `send` method returns a `Result<T, E>` type, so if the receiver has
-already been dropped and there’s nowhere to send a value, the send operation
-will return an error. In this example, we’re calling `unwrap` to panic in case
-of an error. But in a real application, we would handle it properly: return to
-Chapter 9 to review strategies for proper error handling.
+Shunga qaramay, biz yangi thread yaratish uchun `thread::spawn` dan foydalanamiz va keyin `move` yordamida `tx` ni yopishga(close) o'tkazamiz, shunda hosil qilingan thread `tx`ga ega bo'ladi. Kanal orqali xabarlarni jo'natish uchun ochilgan thread transmitterga ega bo'lishi kerak. Transmitterda biz jo'natmoqchi bo'lgan qiymatni qabul qiluvchi `send` metodi mavjud. `send` metodi `Result<T, E>` typeni qaytaradi, shuning uchun agar qabul qiluvchi(receiver) allaqachon drop qilingan bo'lsa va qiymatni yuborish uchun joy bo'lmasa, yuborish operatsiyasi xatolikni qaytaradi. Ushbu misolda biz xatolik yuz berganda panic qo'yish uchun `unwrap` ni chaqiramiz. Ammo haqiqiy dasturda biz uni to'g'ri hal qilamiz: xatolarni to'g'ri hal qilish strategiyalarini ko'rib chiqish uchun 9-bobga qayting.
 
-In Listing 16-8, we’ll get the value from the receiver in the main thread. This
-is like retrieving the rubber duck from the water at the end of the river or
-receiving a chat message.
+16-8 ro'yxatda biz main threaddagi qabul qiluvchidan(receive) qiymatni olamiz. Bu daryoning oxiridagi suvdan rezina o'rdakni olish yoki suhbat xabarini olish kabi.
 
 <span class="filename">Fayl nomi: src/main.rs</span>
 
@@ -55,39 +45,25 @@ receiving a chat message.
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-08/src/main.rs}}
 ```
 
-<span class="caption">Listing 16-8: Receiving the value “hi” in the main thread
-and printing it</span>
+<span class="caption">Ro'yxat 16-8: main threadda `salom` qiymatini olish va uni chop etish</span>
 
-The receiver has two useful methods: `recv` and `try_recv`. We’re using `recv`,
-short for *receive*, which will block the main thread’s execution and wait
-until a value is sent down the channel. Once a value is sent, `recv` will
-return it in a `Result<T, E>`. When the transmitter closes, `recv` will return
-an error to signal that no more values will be coming.
+Receiverda ikkita foydali metod mavjud: `recv` va `try_recv`. Biz `recv` dan foydalanmoqdamiz, bu *receive(qabul qilish)* ning qisqartmasi bo'lib, u main threadning bajarilishini bloklaydi va kanalga qiymat yuborilguncha kutadi. Qiymat yuborilgach, `recv` uni `Result<T, E>` shaklida qaytaradi. Transmitter yopilganda, `recv` boshqa qiymatlar kelmasligini bildirish uchun xatolikni qaytaradi.
 
-The `try_recv` method doesn’t block, but will instead return a `Result<T, E>`
-immediately: an `Ok` value holding a message if one is available and an `Err`
-value if there aren’t any messages this time. Using `try_recv` is useful if
-this thread has other work to do while waiting for messages: we could write a
-loop that calls `try_recv` every so often, handles a message if one is
-available, and otherwise does other work for a little while until checking
-again.
+`try_recv` metodi bloklanmaydi, aksincha darhol `Result<T, E>`ni qaytaradi: `Ok` qiymati, agar mavjud bo‘lsa, xabarni ushlab turadi va bu safar hech qanday xabar bo‘lmasa, `Err` qiymati. `try_recv` dan foydalanish, agar ushbu thread xabarlarni kutayotganda boshqa ishi boʻlsa foydali boʻladi: biz tez-tez `try_recv` ni chaqiradigan, agar mavjud bo'lsa, xabarni ko'rib chiqadigan va boshqasi qayta tekshirilgunga qadar biroz vaqt ishlaydigan sikl yozishimiz mumkin.
 
-We’ve used `recv` in this example for simplicity; we don’t have any other work
-for the main thread to do other than wait for messages, so blocking the main
-thread is appropriate.
+Biz ushbu misolda soddalik uchun `recv` dan foydalandik; bizda main thread uchun xabarlarni kutishdan boshqa ishimiz yo'q, shuning uchun main threadi bloklash maqsadga muvofiqdir.
 
-When we run the code in Listing 16-8, we’ll see the value printed from the main
-thread:
+Kodni 16-8 ro'yxatda ishga tushirganimizda, biz main threaddan chop etilgan qiymatni ko'ramiz:
 
 <!-- Not extracting output because changes to this output aren't significant;
 the changes are likely to be due to the threads running differently rather than
 changes in the compiler -->
 
 ```text
-Got: hi
+Tushundim: salom
 ```
 
-Perfect!
+Mukammal! Perfect!
 
 ### Channels and Ownership Transference
 
