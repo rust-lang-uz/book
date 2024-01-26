@@ -20,7 +20,7 @@ Kompilyator modul kodini quyidagi joylarda qidiradi:
   - *src/poliz/sabzavotlar.rs* faylida
   - *src/poliz/sabzavotlar/mod.rs* faylida
 - **Modullarda kodlash yo'llari**: Modul sizning cratengizning bir qismi bo'lgandan so'ng, maxfiylik qoidalari ruxsat bergan bo'lsa, kod yo'lidan foydalanib, xuddi shu cratening istalgan joyidan ushbu moduldagi kodga murojaat qilishingiz mumkin. Misol uchun, poliz sabzavotlari modulidagi `Pomidor` turi `Crate::poliz::sabzavotlar::Pomidor` da topiladi.
-- **Shaxsiy va ommaviy**: Modul ichidagi kod standart bo'yicha uning ota-modullaridan maxfiydir. Modulni ommaviy qilish uchun uni `mod` o'rniga `pub mod` bilan e’lon qiling. Ommaviy moduldagi elementlarni ham hammaga ochiq qilish uchun ularni e'lon qilishdan oldin `pub` dan foydalaning.
+- **Private va Public**: Modul ichidagi kod standart bo'yicha uning ota-modullaridan maxfiydir. Modulni public qilish uchun uni `mod` o'rniga `pub mod` bilan e’lon qiling. Public moduldagi elementlarni ham hammaga ochiq qilish uchun ularni e'lon qilishdan oldin `pub` dan foydalaning.
 - **`use` kalit so'zi**: Bir doirada `use` kalit so'zidan foydalanish uzoq yo'llarning takrorlanishini kamaytirish uchun elementlar uchun taxalluslarni yaratadi. `Crate::poliz::sabzavotlar::Pomidor` ga murojaat qilishi mumkin bo'lgan har qanday sohada siz `use crate::poliz::sabzavotlar::Pomidor;` bilan taxallus yaratishingiz mumkin va shundan so'ng siz ushbu turdagi ushbu doirada foydalanish uchun `Pomidor `deb yozishingiz kerak.
 
 Bu erda biz ushbu qoidalarni aks ettiruvchi `orqa_hovli` nomli binary crate yaratamiz. Crate jildi, shuningdek, `orqa_hovli` deb nomlangan, quyidagi fayllar va jildlarni o'z ichiga oladi:
@@ -62,7 +62,7 @@ Keling, ushbu qoidalarning tafsilotlari bilan tanishamiz va ularni amalda ko'rsa
 ### Modullarda tegishli kodlarni guruhlash
 
 *Modullar* kodni o'qish va qayta foydalanishni osonlashtirish uchun crate ichida tartibga solish imkonini beradi.
-Modullar bizga elementlarning *maxfiyligini* boshqarishga ham imkon beradi, chunki modul ichidagi kod standart boʻyicha shaxsiy(private) hisoblanadi. Shaxsiy elementlar tashqi foydalanish uchun mavjud bo'lmagan ichki dastur tafsilotlari. Biz modullar va ulardagi elementlarni hammaga ochiq qilishni tanlashimiz mumkin, bu esa ularni tashqi koddan foydalanish va ularga bog'liq bo'lishiga imkon beradi.
+Modullar bizga elementlarning *maxfiyligini* boshqarishga ham imkon beradi, chunki modul ichidagi kod standart boʻyicha shaxsiy(private) hisoblanadi. Private elementlar tashqi foydalanish uchun mavjud bo'lmagan ichki dastur tafsilotlari. Biz modullar va ulardagi elementlarni hammaga ochiq qilishni tanlashimiz mumkin, bu esa ularni tashqi koddan foydalanish va ularga bog'liq bo'lishiga imkon beradi.
 
 Misol tariqasida, restoranning funksionalligini ta'minlaydigan kutubxona cratesini yozamiz. Biz funksiyalarning signaturelarini aniqlaymiz, lekin restoranni implement qilishga emas, balki kodni tashkil etishga e'tibor qaratish uchun ularning tanasini bo'sh qoldiramiz.
 

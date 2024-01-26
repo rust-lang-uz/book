@@ -15,7 +15,7 @@ Bu so'rash bilan bir xil: `navbat_listiga_qoshish` funksiyasining yo'li nima?
 
 Biz crate ildizida belgilangan yangi `restoranda_ovqatlanish` funksiyasidan `navbat_listiga_qoshish` funksiyasini chaqirishning ikkita usulini ko‘rsatamiz. Bu yoʻllar toʻgʻri, ammo bu misolni avvalgidek tuzishga toʻsqinlik qiladigan yana bir muammo bor. Sababini birozdan keyin tushuntiramiz.
 
-`restoranda_ovqatlanish` funksiyasi kutubxonamizning ommaviy API-ning bir qismidir, shuning uchun biz uni `pub` kalit so'zi bilan belgilaymiz. [“`pub` kalit so'zi bilan yo'llarni ochish”][pub]<!-- ignore --> bo‘limida biz `pub` haqida batafsilroq to‘xtalib o'tamiz.
+`restoranda_ovqatlanish` funksiyasi kutubxonamizning public API-ning bir qismidir, shuning uchun biz uni `pub` kalit so'zi bilan belgilaymiz. [“`pub` kalit so'zi bilan yo'llarni ochish”][pub]<!-- ignore --> bo‘limida biz `pub` haqida batafsilroq to‘xtalib o'tamiz.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -41,15 +41,15 @@ Keling, 7-3 ro'yxatini kompilatsiya qilishga harakat qilaylik va nima uchun u ha
 
 <span class="caption">Ro'yxat 7-4: 7-3 ro'yxatdagi kodni kompilyatsiya qilishda kompilyator xatolari</span>
 
-Xato xabarlari `xizmat` moduli shaxsiy ekanligini aytadi. Boshqacha qilib aytadigan bo'lsak, bizda `xizmat` moduli va `navbat_listiga_qoshish` funksiyasi uchun to'g'ri yo'llar mavjud, ammo Rust ulardan foydalanishimizga ruxsat bermaydi, chunki u shaxsiy bo'limlarga kirish imkoniga ega emas. Rust-da barcha elementlar (funktsiyalar, metodlar, structlar, enumlar, modullar va konstantalar) standart bo'yicha ota-modullar uchun shaxsiydir. Agar siz funksiya yoki struktura kabi elementni yaratmoqchi bo'lsangiz, uni modulga joylashtirasiz.
+Xato xabarlari `xizmat` moduli private ekanligini aytadi. Boshqacha qilib aytadigan bo'lsak, bizda `xizmat` moduli va `navbat_listiga_qoshish` funksiyasi uchun to'g'ri yo'llar mavjud, ammo Rust ulardan foydalanishimizga ruxsat bermaydi, chunki u private bo'limlarga kirish imkoniga ega emas. Rust-da barcha elementlar (funktsiyalar, metodlar, structlar, enumlar, modullar va konstantalar) standart bo'yicha ota-modullar uchun privatedir. Agar siz funksiya yoki struktura kabi elementni yaratmoqchi bo'lsangiz, uni modulga joylashtirasiz.
 
-Ota-moduldagi elementlar ichki modullar ichidagi shaxsiy elementlardan foydalana olmaydi, lekin bolalar modullaridagi elementlar o'zlarining ota-modullaridagi elementlardan foydalanishi mumkin. Buning sababi shundaki, bolalar modullari o'zlarining amalga oshirish tafsilotlarini o'rab oladi va yashiradi, lekin bolalar modullari ular aniqlangan kontekstni ko'rishlari mumkin. Bizning metaforamizni davom ettirish uchun, maxfiylik qoidalarini restoranning orqa ofisi kabi tasavvur qiling: u erda nima sodir bo'layotgani restoran mijozlari uchun shaxsiy, ammo ofis menejerlari o'zlari ishlayotgan restoranda hamma narsani ko'rishlari va qilishlari mumkin.
+Ota-moduldagi elementlar ichki modullar ichidagi private elementlardan foydalana olmaydi, lekin bolalar modullaridagi elementlar o'zlarining ota-modullaridagi elementlardan foydalanishi mumkin. Buning sababi shundaki, bolalar modullari o'zlarining amalga oshirish tafsilotlarini o'rab oladi va yashiradi, lekin bolalar modullari ular aniqlangan kontekstni ko'rishlari mumkin. Bizning metaforamizni davom ettirish uchun, maxfiylik qoidalarini restoranning orqa ofisi kabi tasavvur qiling: u erda nima sodir bo'layotgani restoran mijozlari uchun private, ammo ofis menejerlari o'zlari ishlayotgan restoranda hamma narsani ko'rishlari va qilishlari mumkin.
 
 Rust modul tizimining shu tarzda ishlashini tanladi, shuning uchun ichki dastur tafsilotlarini yashirish standart bo'yichadir. Shunday qilib, siz ichki kodning qaysi qismlarini tashqi kodni buzmasdan o'zgartirishingiz mumkinligini bilasiz. Biroq, Rust sizga obyektni hammaga ochiq qilish uchun `pub` kalit so'zidan foydalanib, tashqi ajdod modullariga ichki modullar kodining ichki qismlarini ochish imkoniyatini beradi.
 
 ### `pub` kalit so'zi bilan yo'llarni ochish
 
-Keling, 7-4 ro'yxatdagi xatoga qaytaylik, bu bizga `xizmat` moduli shaxsiy ekanligini aytdi. Biz ota-moduldagi `restoranda_ovqatlanish` funksiyasi bolalar modulidagi `navbat_listiga_qoshish` funksiyasiga kirishini xohlaymiz, shuning uchun biz `xizmat` modulini `pub` kalit so'zi bilan belgilaymiz, ro'yxat 7-5da ko`rsatilganidek.
+Keling, 7-4 ro'yxatdagi xatoga qaytaylik, bu bizga `xizmat` moduli private ekanligini aytdi. Biz ota-moduldagi `restoranda_ovqatlanish` funksiyasi bolalar modulidagi `navbat_listiga_qoshish` funksiyasiga kirishini xohlaymiz, shuning uchun biz `xizmat` modulini `pub` kalit so'zi bilan belgilaymiz, ro'yxat 7-5da ko`rsatilganidek.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -67,10 +67,10 @@ Afsuski, 7-5 ro'yxatdagi kod hali ham 7-6 ro'yxatda ko'rsatilganidek xatolikka o
 
 <span class="caption">Ro'yxat 7-6: 7-5 ro'yxatdagi kodni build qilishda kompilyator xatolari</span>
 
-Nima bo'ldi? `mod xizmat` oldiga `pub` kalit so‘zini qo‘shish modulni hammaga ochiq qiladi. Ushbu o'zgarish bilan, agar biz `uyning_oldi` ga kira olsak, biz `xizmat` ga kira olamiz. Lekin `xizmat` ning *tarkibi* hamon shaxsiy; modulni ommaviy qilish uning mazmunini ochiq qilmaydi. Moduldagi `pub` kalit so‘zi faqat uning ota-modullaridagi kodni unga murojaat qilish imkonini beradi, uning ichki kodiga kirishga ruxsat bermaydi.
-Modullar konteyner bo'lgani uchun modulni faqat ommaviy qilish orqali biz ko'p narsa qila olmaymiz; biz oldinga borishimiz va modul ichidagi bir yoki bir nechta narsalarni ham hammaga ochiq qilishni tanlashimiz kerak.
+Nima bo'ldi? `mod xizmat` oldiga `pub` kalit so‘zini qo‘shish modulni hammaga ochiq qiladi. Ushbu o'zgarish bilan, agar biz `uyning_oldi` ga kira olsak, biz `xizmat` ga kira olamiz. Lekin `xizmat` ning *tarkibi* hamon private; modulni public qilish uning mazmunini ochiq qilmaydi. Moduldagi `pub` kalit so‘zi faqat uning ota-modullaridagi kodni unga murojaat qilish imkonini beradi, uning ichki kodiga kirishga ruxsat bermaydi.
+Modullar konteyner bo'lgani uchun modulni faqat public qilish orqali biz ko'p narsa qila olmaymiz; biz oldinga borishimiz va modul ichidagi bir yoki bir nechta narsalarni ham hammaga ochiq qilishni tanlashimiz kerak.
 
-7-6 roʻyxatdagi xatolar `navbat_listiga_qoshish` funksiyasi shaxsiy ekanligini bildiradi.
+7-6 roʻyxatdagi xatolar `navbat_listiga_qoshish` funksiyasi private ekanligini bildiradi.
 Maxfiylik qoidalari structlar, enumlar, funksiyalar va metodlar hamda modullarga nisbatan qo'llaniladi.
 
 7-7 ro'yxatda ko'rsatilganidek, definitiondan oldin `pub` kalit so'zini qo'shish orqali `navbat_listiga_qoshish` funksiyasini ham hammaga ochiq qilaylik.
@@ -89,7 +89,7 @@ Mutlaq yo'lda biz crate modul daraxtining ildizi bo'lgan `crate` dan boshlaymiz.
 
 Nisbiy yo'lda mantiq birinchi qadamdan tashqari mutlaq yo'l bilan bir xil bo'ladi: yo'l crate ildizidan emas, `uyning_oldi`dan boshlanadi. `uyning_oldi` moduli `restoranda_ovqatlanish` bilan bir xil modul ichida aniqlanadi, shuning uchun `restoranda_ovqatlanish` belgilangan moduldan boshlanadigan nisbiy yo‘l ishlaydi. Keyin, `xizmat` va `navbat_listiga_qoshish` `pub` bilan belgilanganligi sababli, qolgan yo‘l ishlaydi va bu funksiya chaqiruvi amal qiladi!
 
-Agar siz kutubxona crateyingizni boshqa loyihalar sizning kodingizdan foydalanishi uchun baham ko'rishni rejalashtirmoqchi bo'lsangiz, ommaviy API sizning crateyingiz foydalanuvchilari bilan tuzilgan shartnoma bo'lib, ular sizning kodingiz bilan qanday aloqada bo'lishini belgilaydi. Odamlar sizning crateyingizga bog'liq bo'lishini osonlashtirish uchun ommaviy API-ga o'zgartirishlarni boshqarish bo'yicha ko'plab fikrlar mavjud. Bu mulohazalar ushbu kitob doirasidan tashqarida; agar sizni ushbu mavzu qiziqtirsa, [Rust API ko'rsatmalari][api-guidelines]ga qarang.
+Agar siz kutubxona crateyingizni boshqa loyihalar sizning kodingizdan foydalanishi uchun baham ko'rishni rejalashtirmoqchi bo'lsangiz, public API sizning crateyingiz foydalanuvchilari bilan tuzilgan shartnoma bo'lib, ular sizning kodingiz bilan qanday aloqada bo'lishini belgilaydi. Odamlar sizning crateyingizga bog'liq bo'lishini osonlashtirish uchun public API-ga o'zgartirishlarni boshqarish bo'yicha ko'plab fikrlar mavjud. Bu mulohazalar ushbu kitob doirasidan tashqarida; agar sizni ushbu mavzu qiziqtirsa, [Rust API ko'rsatmalari][api-guidelines]ga qarang.
 
 > #### Binary va kutubxonaga ega paketlar uchun eng yaxshi amaliyotlar
 >
@@ -99,12 +99,12 @@ Agar siz kutubxona crateyingizni boshqa loyihalar sizning kodingizdan foydalanis
 > ushbu patternli paketlar kutubxona cratesi bilan kod chaqiradigan bajariladigan
 > faylni ishga tushirish uchun binary crateda yetarli kodga ega bo'ladi. Bu boshqa
 > loyihalarga paket taqdim etadigan eng ko'p funksiyalardan foydalanish imkonini
-> beradi, chunki kutubxona cratesi kodi ommaviy bo'lishi mumkin.
+> beradi, chunki kutubxona cratesi kodi public bo'lishi mumkin.
 >
-> Modul daraxti *src/lib.rs* da aniqlanishi kerak. Keyin har qanday ommaviy obyektlar
+> Modul daraxti *src/lib.rs* da aniqlanishi kerak. Keyin har qanday public obyektlar
 > binary crateda paket nomi bilan yo'llarni boshlash orqali ishlatilishi mumkin.
 > Binary crate kutubxona cratesidan foydalanuvchiga aylanadi, xuddi butunlay tashqi
-> crate kutubxona cratesidan foydalanadi: u faqat ommaviy APIdan foydalanishi mumkin.
+> crate kutubxona cratesidan foydalanadi: u faqat pulic APIdan foydalanishi mumkin.
 > Bu sizga yaxshi API yaratishga yordam beradi; Siz nafaqat muallif, balki
 > mijoz hamsiz!
 >
@@ -128,9 +128,9 @@ Yo'l boshida `super` dan foydalanib, joriy modul yoki crate ildizi emas, balki o
 `buyurtmani_tuzatish` funksiyasi `uyning_orqasi` modulida joylashgan, shuning uchun biz `super` dan `uyning_orqasi` ota-moduliga o'tishimiz mumkin. U yerdan `yetkazib_berish` ni qidiramiz va uni topamiz.
 Muvaffaqiyat! Bizning fikrimizcha, `uyning_orqasi` moduli va `yetkazib_berish` funksiyasi bir-biri bilan bir xil munosabatda bo'lib qoladi va agar biz cratening modul daraxtini qayta tashkil etishga qaror qilsak, birgalikda harakatlanadi. Shu sababli, biz `super` dan foydalandik, shuning uchun kelajakda bu kod boshqa modulga ko‘chirilsa, kodni yangilash uchun kamroq joylarga ega bo‘lamiz.
 
-### Structlar va Enumlarni ommaviy qilish(Public)
+### Structlar va Enumlarni public qilish
 
-Shuningdek, structlar va enumlarni ommaviy sifatida belgilash uchun `pub` dan foydalanishimiz mumkin, ammo `pub` dan structlar va enumlar bilan foydalanish uchun qo'shimcha tafsilotlar mavjud. Agar struct definitiondan oldin `pub` dan foydalansak, biz structni hammaga ommaviy qilamiz, lekin structning maydonlari hali ham shaxsiy bo'lib qoladi. Biz har bir sohani alohida-alohida ommaviy qilishimiz yoki qilmasligimiz mumkin. 7-9 roʻyxatda biz ommaviy `qizdirilgan_non` maydoni, lekin shaxsiy `mavsumiy_meva` maydoni bilan ommaviy `uyning_orqasi:: nonushta` structini belgilab oldik. Bu restoranda mijoz ovqat bilan birga keladigan non turini tanlashi mumkin bo'lgan holatni modellashtiradi, ammo oshpaz qaysi meva mavsumda va omborda borligiga qarab ovqatga hamroh bo'lishini hal qiladi. Mavjud mevalar tezda o'zgaradi, shuning uchun mijozlar mevani tanlay olmaydi yoki hatto qaysi mevani olishini ko'ra olmaydi.
+Shuningdek, structlar va enumlarni public sifatida belgilash uchun `pub` dan foydalanishimiz mumkin, ammo `pub` dan structlar va enumlar bilan foydalanish uchun qo'shimcha tafsilotlar mavjud. Agar struct definitiondan oldin `pub` dan foydalansak, biz structni hammaga public qilamiz, lekin structning maydonlari hali ham private bo'lib qoladi. Biz har bir sohani alohida-alohida public qilishimiz yoki qilmasligimiz mumkin. 7-9 roʻyxatda biz public `qizdirilgan_non` maydoni, lekin private `mavsumiy_meva` maydoni bilan public `uyning_orqasi:: nonushta` structini belgilab oldik. Bu restoranda mijoz ovqat bilan birga keladigan non turini tanlashi mumkin bo'lgan holatni modellashtiradi, ammo oshpaz qaysi meva mavsumda va omborda borligiga qarab ovqatga hamroh bo'lishini hal qiladi. Mavjud mevalar tezda o'zgaradi, shuning uchun mijozlar mevani tanlay olmaydi yoki hatto qaysi mevani olishini ko'ra olmaydi.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -138,14 +138,14 @@ Shuningdek, structlar va enumlarni ommaviy sifatida belgilash uchun `pub` dan fo
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-09/src/lib.rs}}
 ```
 
-<span class="caption">Ro'yxat 7-9: Ba'zi ommaviy maydonlari va ba'zilari bo'lgan struct
+<span class="caption">Ro'yxat 7-9: Ba'zi public maydonlari va ba'zilari bo'lgan struct
 xususiy maydonlar</span>
 
-`uyning_orqasi::Nonushta` structdagi `yopilgan_non` maydoni ommaviy bo'lgani uchun `restoranda_ovqatlanish` da biz `yopilgan_non` maydoniga nuqta belgisi yordamida yozishimiz va o'qishimiz mumkin. Esda tutingki, biz `mavsumiy_meva` maydonidan `restoranda_ovqatlanish`da foydalana olmaymiz, chunki `mavsumiy_meva` shaxsiydir. Qaysi xatoga yo'l qo'yganingizni bilish uchun `mavsumiy_meva` maydoni qiymatini o'zgartiruvchi qatorni izohdan chiqarib ko'ring!
+`uyning_orqasi::Nonushta` structdagi `yopilgan_non` maydoni public bo'lgani uchun `restoranda_ovqatlanish` da biz `yopilgan_non` maydoniga nuqta belgisi yordamida yozishimiz va o'qishimiz mumkin. Esda tutingki, biz `mavsumiy_meva` maydonidan `restoranda_ovqatlanish`da foydalana olmaymiz, chunki `mavsumiy_meva` privatedir. Qaysi xatoga yo'l qo'yganingizni bilish uchun `mavsumiy_meva` maydoni qiymatini o'zgartiruvchi qatorni izohdan chiqarib ko'ring!
 
-Shuni ham yodda tutingki, `uyning_orqasi::Nonushta` shaxsiy maydonga ega bo'lgani uchun struct `Nonushta` misolini yaratuvchi ommaviy bog'langan funksiyani ta'minlashi kerak (biz uni bu yerda `yoz` deb nomladik).Agar `Nonushta` bunday funksiyaga ega boʻlmagan boʻlsa, biz `restoranda_ovqatlanish`da `Nonushta` misolini yarata olmadik, chunki biz `restoranda_ovqatlanish`da shaxsiy `mavsumiy_meva` maydonining qiymatini oʻrnata olmadik.
+Shuni ham yodda tutingki, `uyning_orqasi::Nonushta` private maydonga ega bo'lgani uchun struct `Nonushta` misolini yaratuvchi public bog'langan funksiyani ta'minlashi kerak (biz uni bu yerda `yoz` deb nomladik).Agar `Nonushta` bunday funksiyaga ega boʻlmagan boʻlsa, biz `restoranda_ovqatlanish`da `Nonushta` misolini yarata olmadik, chunki biz `restoranda_ovqatlanish`da private `mavsumiy_meva` maydonining qiymatini oʻrnata olmadik.
 
-Aksincha, agar biz enumni ommaviy qilsak, uning barcha variantlari ommaviy bo'ladi. 7 10 roʻyxatda koʻrsatilganidek, bizga faqat `enum` kalit soʻzidan oldin `pub` kerak boʻladi.
+Aksincha, agar biz enumni public qilsak, uning barcha variantlari public bo'ladi. 7 10 roʻyxatda koʻrsatilganidek, bizga faqat `enum` kalit soʻzidan oldin `pub` kerak boʻladi.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -153,11 +153,11 @@ Aksincha, agar biz enumni ommaviy qilsak, uning barcha variantlari ommaviy bo'la
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-10/src/lib.rs}}
 ```
 
-<span class="caption">Ro'yxat 7-10: Enumni ommaviy deb belgilash uning barcha variantlarini hammaga ochiq qiladi</span>
+<span class="caption">Ro'yxat 7-10: Enumni public deb belgilash uning barcha variantlarini hammaga ochiq qiladi</span>
 
-Biz `Taom` ro‘yxatini hammaga ommaviy qilganimiz uchun `restoranda_ovqatlanish`da `Palov` va `Salat` variantlaridan foydalanishimiz mumkin.
+Biz `Taom` ro‘yxatini hammaga public qilganimiz uchun `restoranda_ovqatlanish`da `Palov` va `Salat` variantlaridan foydalanishimiz mumkin.
 
-Enumlar, agar ularning variantlari ommaviy bo'lmasa, unchalik foydali emas; Har bir holatda `pub` bilan barcha enum variantlariga izoh qo'yish zerikarli bo'lar edi, shuning uchun enum variantlari uchun standart umumiy bo'lishi kerak. Structlar ko'pincha maydonlari ommaviy bo'lmasdan foydali bo'ladi, shuning uchun struct maydonlari, agar `pub` bilan izohlanmagan bo'lsa, standart bo'yicha hamma narsa shaxsiy bo'lishining umumiy qoidasiga amal qiladi.
+Enumlar, agar ularning variantlari public bo'lmasa, unchalik foydali emas; Har bir holatda `pub` bilan barcha enum variantlariga izoh qo'yish zerikarli bo'lar edi, shuning uchun enum variantlari uchun standart umumiy bo'lishi kerak. Structlar ko'pincha maydonlari public bo'lmasdan foydali bo'ladi, shuning uchun struct maydonlari, agar `pub` bilan izohlanmagan bo'lsa, standart bo'yicha hamma narsa private bo'lishining umumiy qoidasiga amal qiladi.
 
 `pub` bilan bog'liq yana bir holat bor, biz uni ko'rib chiqmaganmiz va bu bizning modul tizimining oxirgi xususiyati: `use` kalit so'zi. Biz avval `use` ni o'z ichiga olamiz, so'ngra `pub` va `use` ni qanday birlashtirishni ko'rsatamiz.
 

@@ -78,7 +78,7 @@ Esda tutingki, *src/lib.rs* dagi `pub use crate::uyning_oldi::xizmat` statementi
 
 ## Xulosa
 
-Rust sizga paketni bir nechta cratelarga va crateni modullarga bo'lish imkonini beradi, shunda siz bir modulda belgilangan elementlarga boshqa moduldan murojaat qilishingiz mumkin. Buni mutlaq yoki nisbiy yo'llarni belgilash orqali amalga oshirishingiz mumkin. Ushbu yo'llar `use` statementi bilan qamrab olinishi mumkin, shuning uchun siz ushbu doiradagi elementdan bir nechta foydalanish uchun qisqaroq yo'ldan foydalanishingiz mumkin. Modul kodi standart boʻyicha maxfiydir, lekin `pub` kalit soʻzini qoʻshish orqali definitionlarni hammaga ommaviy qilishingiz mumkin.
+Rust sizga paketni bir nechta cratelarga va crateni modullarga bo'lish imkonini beradi, shunda siz bir modulda belgilangan elementlarga boshqa moduldan murojaat qilishingiz mumkin. Buni mutlaq yoki nisbiy yo'llarni belgilash orqali amalga oshirishingiz mumkin. Ushbu yo'llar `use` statementi bilan qamrab olinishi mumkin, shuning uchun siz ushbu doiradagi elementdan bir nechta foydalanish uchun qisqaroq yo'ldan foydalanishingiz mumkin. Modul kodi standart boʻyicha maxfiydir, lekin `pub` kalit soʻzini qoʻshish orqali definitionlarni hammaga public qilishingiz mumkin.
 
 Keyingi bobda biz standart kutubxonadagi ma'lumotlar tuzilmalarining ba'zi to'plamlarini ko'rib chiqamiz, ulardan siz o'zingizning aniq tartiblangan kodingizda foydalanishingiz mumkin.
 

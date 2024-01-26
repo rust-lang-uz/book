@@ -87,7 +87,7 @@ Ikkinchi `use` statementida biz `std::io::Result` turi uchun yangi `IoResult` no
 
 ### `pub use` bilan nomlarni qayta eksport(re-eksport) qilish
 
-`use` kalit so'zidan foydalanib, nomni qamrovga kiritganimizda, yangi doirada mavjud bo'lgan nom shaxsiy bo'ladi. Bizning kodimizni chaqiradigan kodni xuddi shu kod doirasida aniqlangandek ushbu nomga murojaat qilishini yoqish uchun biz `pub` va `use` ni birlashtira olamiz. Bu usul *re-eksport* deb nomlanadi, chunki biz obyektni qamrovga kiritmoqdamiz, lekin elementni boshqa qamrovlarga kiritish uchun ham mavjud qilamiz.
+`use` kalit so'zidan foydalanib, nomni qamrovga kiritganimizda, yangi doirada mavjud bo'lgan nom private bo'ladi. Bizning kodimizni chaqiradigan kodni xuddi shu kod doirasida aniqlangandek ushbu nomga murojaat qilishini yoqish uchun biz `pub` va `use` ni birlashtira olamiz. Bu usul *re-eksport* deb nomlanadi, chunki biz obyektni qamrovga kiritmoqdamiz, lekin elementni boshqa qamrovlarga kiritish uchun ham mavjud qilamiz.
 
 7-17 ro'yxatda 7-11 ro'yxatdagi kod ko'rsatilgan, ildiz modulidagi `use` `pub use` ga o'zgartirilgan.
 
@@ -190,7 +190,7 @@ Agar biz yo'lda belgilangan *barcha* umumiy elementlarni qamrovga kiritmoqchi bo
 use std::collections::*;
 ```
 
-Ushbu `use` statementi `std::collections` da aniqlangan barcha ommaviy elementlarni joriy doiraga olib keladi. Glob operatoridan foydalanganda ehtiyot bo'ling! Glob qaysi nomlar qamrovda ekanligini va dasturingizda ishlatiladigan nom qayerda aniqlanganligini aniqlashni qiyinlashtirishi mumkin.
+Ushbu `use` statementi `std::collections` da aniqlangan barcha public elementlarni joriy doiraga olib keladi. Glob operatoridan foydalanganda ehtiyot bo'ling! Glob qaysi nomlar qamrovda ekanligini va dasturingizda ishlatiladigan nom qayerda aniqlanganligini aniqlashni qiyinlashtirishi mumkin.
 
 Glob operatori ko'pincha sinovdan o'tgan hamma narsani `tests` moduliga kiritish uchun test paytida ishlatiladi; biz bu haqda 11-bobdagi ["Testlarni qanday yozish kerak"][writing-tests]<!-- ignore --> bo'limida gaplashamiz. Glob operatori ba'zan prelude patterning bir qismi sifatida ham qo'llaniladi: ushbu pattern haqida qo'shimcha ma'lumot olish uchun [standart kutubxona texnik hujjatlariga](../std/prelude/index.html#other-preludes)<!-- ignore --> qarang.
 
