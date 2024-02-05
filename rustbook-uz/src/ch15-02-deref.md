@@ -1,18 +1,19 @@
-## Treating Smart Pointers Like Regular References with the `Deref` Trait
+## Smart Pointerlarni `Deref` Xususiyati Bilan Oddiy Havolalar Kabi Ishlatish
 
-Implementing the `Deref` trait allows you to customize the behavior of the
-*dereference operator* `*` (not to be confused with the multiplication or glob
-operator). By implementing `Deref` in such a way that a smart pointer can be
-treated like a regular reference, you can write code that operates on
-references and use that code with smart pointers too.
+`Deref` xususiyatini qo'llash, *dereference operatori*ning `*` (ko'paytirish
+yoki glob operatori bilan adashtirmaslik kerak) xulq-atvorini sozlashga imkon
+beradi. Smart pointerlarni `Deref` xususiyati bilan oddiy havolalar kabi
+qo'llasangiz, siz havolalar ustida ishlaydigan kod yozishingiz, shuningdek,
+ushbu kodni smart pointerlar bilan ishlatishingiz mumkin bo'ladi.
 
-Let’s first look at how the dereference operator works with regular references.
-Then we’ll try to define a custom type that behaves like `Box<T>`, and see why
-the dereference operator doesn’t work like a reference on our newly defined
-type. We’ll explore how implementing the `Deref` trait makes it possible for
-smart pointers to work in ways similar to references. Then we’ll look at
-Rust’s *deref coercion* feature and how it lets us work with either references
-or smart pointers.
+Keling, avvalo, dereference operatori oddiy havolalar bilan qanday ishlashini
+ko'rib chiqaylik. Keyin biz `Box<T>` kabi maxsus turni e'lon qilishga harakat
+qilamiz va dereference operatori nega bizning yangi e'lon qilgan turimizdagi
+havola kabi ishlamayotganini ko'ramiz. Biz `Deref` xususiyatini amalga oshirish
+smart pointerlarning havolalarga o'xshash tarzda ishlashiga qanday imkon
+berishini ko'rib chiqamiz. Keyin biz Rustning *deref coercion* xususiyatini va
+u bizga havolalar yoki smart pointerlar bilan ishlashga qanday imkon berishini
+ko'rib chiqamiz.
 
 > Note: there’s one big difference between the `MyBox<T>` type we’re about to
 > build and the real `Box<T>`: our version will not store its data on the heap.
