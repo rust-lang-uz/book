@@ -15,20 +15,21 @@ berishini ko'rib chiqamiz. Keyin biz Rustning *deref coercion* xususiyatini va
 u bizga havolalar yoki smart pointerlar bilan ishlashga qanday imkon berishini
 ko'rib chiqamiz.
 
-> Note: there’s one big difference between the `MyBox<T>` type we’re about to
-> build and the real `Box<T>`: our version will not store its data on the heap.
-> We are focusing this example on `Deref`, so where the data is actually stored
-> is less important than the pointer-like behavior.
+> Eslatma: biz qurmoqchi bo'lgan `MyBox<T>` turi va haqiqiy `Box<T>` o‘rtasida
+> bitta katta farq bor: bizning versiyamiz o‘z ma’lumotlarini heapda saqlamaydi.
+> Biz ushbu misolda e'tiborimizni `Deref`ga qaratmoqdamiz, shuning uchun 
+> ma'lumotlarning qayerda saqlanishi pointerga o'xshash xatti-harakatlardan 
+> kamroq ahamiyatga ega.
 
 <!-- Old link, do not remove -->
 <a id="following-the-pointer-to-the-value-with-the-dereference-operator"></a>
 
-### Following the Pointer to the Value
+### Pointerni Qiymatga bog'lash 
 
-A regular reference is a type of pointer, and one way to think of a pointer is
-as an arrow to a value stored somewhere else. In Listing 15-6, we create a
-reference to an `i32` value and then use the dereference operator to follow the
-reference to the value:
+Muntazam havola pointerning bir turi bo'lib, pointerni boshqa joyda saqlangan
+qiymatga o'q kabi tasavvur qilishning bir usuli. 15-6 ro'yxatda biz `i32`
+qiymatiga havola yaratamiz va keyin qiymatga havolani bog'lash uchun dereference
+operatoridan foydalanamiz:
 
 <span class="filename">Filename: src/main.rs</span>
 
