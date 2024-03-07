@@ -1,11 +1,8 @@
-## `Drop` Trait bilan tozalash uchun ishlaydigan kod
+## `Drop` Trait bilan tozalash uchun kodni yuritish
 
 Agar qiymat o‘z doirasidan chiqqanda uni o‘zgartirish imkonini beradigan ikkinchi muhim sanalgan smart pointer namunasidan biri bu `Drop`dir. Siz `Drop` traitini implementatsiya qilish uchun xohlagan turdan foydalanishingiz mumkin, va kodni fayl yoki tarmoqlarni ulash resurslarini yaratish uchun ham ishlatilishi mumkin 
 
-We’re introducing `Drop` in the context of smart pointers because the
-functionality of the `Drop` trait is almost always used when implementing a
-smart pointer. For example, when a `Box<T>` is dropped it will deallocate the
-space on the heap that the box points to.
+`Drop`ni smart pointerlar kontekstida ishlatishimizning sababi `Drop` traiti smart pointerni implementatsiyasida deyarli har doim ishlatiladi. Masalan, qachonki `Box<T>` tashlab yuborilganda u quti ko‘rsatayotgan heapdan joy ajratadi.
 
 In some languages, for some types, the programmer must call code to free memory
 or resources every time they finish using an instance of those types. Examples
