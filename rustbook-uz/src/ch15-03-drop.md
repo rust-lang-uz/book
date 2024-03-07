@@ -6,10 +6,7 @@ Agar qiymat o‘z doirasidan chiqqanda uni o‘zgartirish imkonini beradigan ikk
 
 Ayrim dasturlash tillarida ayrim turlar uchun dasturchi xotirani bo‘shatish uchun yoki har safar  resurslar o‘sha tur instancedan ishlatib bo‘lmagungacha kodni chaqirishi kerak. Fayl handlelari, soketlar va locklar bunga misol bo‘la oladi. Agar ular kodni chaqirishni unitsalar, tizimda haddan tashqari yuklanish yuzaga keladi va tizim ishdan chiqadi. Rustda agar qiymat o‘z doirasidan chiqqanda siz kodning ma’lum bir qismi ishga tushirishni belgilashingiz mumkin, kompilyator avtomatik ravishda kodni kiritadi. Natijada, ma’lum bir turdagi instance tugagan dasturning hamma joyiga tozalovchi kodni joylashtirishdan xavotir olmasangiz ham bo‘ladi va siz resurslarni sizib ketishini oldini olgan bo‘lasiz!
 
-You specify the code to run when a value goes out of scope by implementing the
-`Drop` trait. The `Drop` trait requires you to implement one method named
-`drop` that takes a mutable reference to `self`. To see when Rust calls `drop`,
-let’s implement `drop` with `println!` statements for now.
+Siz `Drop` traiti implementatsiyasi yordamida agar qiymat doirasidan chiqqan holda kodni run qilish uchun belgilashingiz mumkin. `Drop` traiti sizdan `self`dan referens oluvchi `drop` nomli metodni implementatsiya qilishni talab qiladi. Rustda `drop` qachon chaqirilishini ko‘rish uchun, `drop`ni `println!` yordamida implementatsiya qilib ko‘raylik.
 
 Listing 15-14 shows a `CustomSmartPointer` struct whose only custom
 functionality is that it will print `Dropping CustomSmartPointer!` when the
