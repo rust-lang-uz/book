@@ -8,18 +8,15 @@ Ayrim dasturlash tillarida ayrim turlar uchun dasturchi xotirani bo‘shatish uc
 
 Siz `Drop` traiti implementatsiyasi yordamida agar qiymat doirasidan chiqqan holda kodni run qilish uchun belgilashingiz mumkin. `Drop` traiti sizdan `self`dan referens oluvchi `drop` nomli metodni implementatsiya qilishni talab qiladi. Rustda `drop` qachon chaqirilishini ko‘rish uchun, `drop`ni `println!` yordamida implementatsiya qilib ko‘raylik.
 
-Listing 15-14 shows a `CustomSmartPointer` struct whose only custom
-functionality is that it will print `Dropping CustomSmartPointer!` when the
-instance goes out of scope, to show when Rust runs the `drop` function.
+15-14 ni ko‘rib chiqadigan bo‘lsak, Rustda qachon `drop` funksiyasi ishlashini ko‘rish uchun faqat o‘ziga tegishli bo‘lgan`CustomSmartPointer` structi faqat agar instance o‘z doirasidan chiqqanda `Dropping CustomSmartPointer!` ni print qiladi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-14/src/main.rs}}
 ```
 
-<span class="caption">Listing 15-14: A `CustomSmartPointer` struct that
-implements the `Drop` trait where we would put our cleanup code</span>
+<span class="caption">15-14ni ko'rib chiqish: `CustomSmartPointer` structi biz tozalash uchun qo’ygan kodda `Drop` traitining implementatsiyasi</span>
 
 The `Drop` trait is included in the prelude, so we don’t need to bring it into
 scope. We implement the `Drop` trait on `CustomSmartPointer` and provide an
