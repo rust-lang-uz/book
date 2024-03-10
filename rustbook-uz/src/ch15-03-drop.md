@@ -18,31 +18,17 @@ Siz `Drop` traiti implementatsiyasi yordamida agar qiymat doirasidan chiqqan hol
 
 <span class="caption">15-14ni ko'rib chiqish: `CustomSmartPointer` structi biz tozalash uchun qo’ygan kodda `Drop` traitining implementatsiyasi</span>
 
-The `Drop` trait is included in the prelude, so we don’t need to bring it into
-scope. We implement the `Drop` trait on `CustomSmartPointer` and provide an
-implementation for the `drop` method that calls `println!`. The body of the
-`drop` function is where you would place any logic that you wanted to run when
-an instance of your type goes out of scope. We’re printing some text here to
-demonstrate visually when Rust will call `drop`.
+`Drop` traiti o‘z ichiga preludeni oladi, shuning uchun biz uni scopeni ichiga olishimiz shart emas. Biz `CustomSmartPointer`da `Drop`ni implementatsiya qilamiz va `drop` metodi implementatisyasi uchun `println!`ni chaqiramiz. `drop` funksiyasining tana (body) qismi bu sizning turdagi instance o‘z doirasidan (scope) chiqib ketgandagi ayrim bir logikaga ega koddir. Rustda qachon `drop` chaqirilishini ko‘rish uchun biz ozgina tekstni print qilamiz.
 
-In `main`, we create two instances of `CustomSmartPointer` and then print
-`CustomSmartPointers created`. At the end of `main`, our instances of
-`CustomSmartPointer` will go out of scope, and Rust will call the code we put
-in the `drop` method, printing our final message. Note that we didn’t need to
-call the `drop` method explicitly.
+`main`da biz 2ta `CustomSmartPointer` instancelarini yaratamiz va keyin `CustomSmartPointers yaratildi`ni print qilamiz. `main`ning oxirida `CustomSmartPointer` doiradan (scope) chiqib ketadi va Rust yakuniy xabarni print qilib, biz kodga qo‘ygan `drop` metodini chaqiradi. E’tibor bering biz `drop` metodini to‘g‘ridan-to‘g‘ri chaqririshimiz shart emas.
 
-When we run this program, we’ll see the following output:
+Agar biz dasturni run qilsak, quyidagi outputni ko‘ramiz:
 
 ```console
 {{#include ../listings/ch15-smart-pointers/listing-15-14/output.txt}}
 ```
 
-Rust automatically called `drop` for us when our instances went out of scope,
-calling the code we specified. Variables are dropped in the reverse order of
-their creation, so `d` was dropped before `c`. This example’s purpose is to
-give you a visual guide to how the `drop` method works; usually you would
-specify the cleanup code that your type needs to run rather than a print
-message.
+Rust avtomatik ravishda bizning o‘rnimizga biz ko‘rsatgan kodni instance doiradan (scope) chiqqanda `drop`ni chaqirdi. O‘zgaruvchilar yaratilish paytida teskari tartibda tushib qoldiriladi (drop qilinadi), shuning uchun `d` `c`dan oldin tushib qoldirildi (drop qilindi). Ushbu misolning maqsadi sizga `drop` metodining qanday ishlashining vizual ko‘rinishini berishdir; odatda xabarni print qilishning o‘rniga siz sizning turingizni ishga tushirish (run qilish) uchun tozalash kodini ko‘rsatasiz. 
 
 ### Dropping a Value Early with `std::mem::drop`
 
