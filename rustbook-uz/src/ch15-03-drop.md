@@ -30,23 +30,13 @@ Agar biz dasturni run qilsak, quyidagi outputni ko‘ramiz:
 
 Rust avtomatik ravishda bizning o‘rnimizga biz ko‘rsatgan kodni instance doiradan (scope) chiqqanda `drop`ni chaqirdi. O‘zgaruvchilar yaratilish paytida teskari tartibda tushib qoldiriladi (drop qilinadi), shuning uchun `d` `c`dan oldin tushib qoldirildi (drop qilindi). Ushbu misolning maqsadi sizga `drop` metodining qanday ishlashining vizual ko‘rinishini berishdir; odatda xabarni print qilishning o‘rniga siz sizning turingizni ishga tushirish (run qilish) uchun tozalash kodini ko‘rsatasiz. 
 
-### Dropping a Value Early with `std::mem::drop`
+### `std::mem::drop` yordamida Qiymatni Erta Drop qilish
 
-Unfortunately, it’s not straightforward to disable the automatic `drop`
-functionality. Disabling `drop` isn’t usually necessary; the whole point of the
-`Drop` trait is that it’s taken care of automatically. Occasionally, however,
-you might want to clean up a value early. One example is when using smart
-pointers that manage locks: you might want to force the `drop` method that
-releases the lock so that other code in the same scope can acquire the lock.
-Rust doesn’t let you call the `Drop` trait’s `drop` method manually; instead
-you have to call the `std::mem::drop` function provided by the standard library
-if you want to force a value to be dropped before the end of its scope.
+Afsuski, avtomatik `drop` funksiyasini o‘chirish oson emas.  Odatda `drop`ni o‘chirish zarur emas; `Drop`ning asosiy mohiyati uning avtomatik ravishda hal qilishidir. Ba’zi paytlarda siz qiymatni erta tozalashga duch kelishingiz mumkin. Lockalarni boshqaruvchi smart pointerlarni ishlatishga bir misol bo‘la oladi:  bir doirada (scope)da boshqa kodni olish uchun siz lockni chaqiradigan `drop` metodini majburiy ravishda ishlatishingiz mumkin. Rust sizga `Drop` traitidagi `drop` metodini qo‘lda tushurishga qo‘ymaydi; agar siz qiymatni o‘z doirani (scope) tugashidan oldin majburiy drop bo‘lishini xohlasangiz. uning uchun siz standart kutubxona tomonidan taqdim etilgan `std::mem::drop`ni ishlatishingiz mumkin.
 
-If we try to call the `Drop` trait’s `drop` method manually by modifying the
-`main` function from Listing 15-14, as shown in Listing 15-15, we’ll get a
-compiler error:
+Agar biz 15-14dagi ilovaga qo‘lda `Drop` traitining `drop` metodi yordamida `main`ga o‘zgaritirish kiratigan bo‘lsak, 15-15 ilovada ko‘rsatilgan kompilyator xatosini ko‘ramiz:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-15/src/main.rs:here}}
