@@ -66,27 +66,16 @@ Agar qiymat o‘z doirasidan (scope) chiqqanda biz `drop`ni avtomatik kiritishin
 
 <span class="caption"> 15-16 ro'yxat: qiymat o'z doirasidan (scope) chiqqanda to'g'ridan-to'g'ri `std::mem::drop`ni chaqirish </span>
 
-Running this code will print the following:
+Run qilingan kod quyidagini print qiladi:
 
 ```console
 {{#include ../listings/ch15-smart-pointers/listing-15-16/output.txt}}
 ```
 
-The text ```Dropping CustomSmartPointer with data `some data`!``` is printed
-between the `CustomSmartPointer created.` and `CustomSmartPointer dropped
-before the end of main.` text, showing that the `drop` method code is called to
-drop `c` at that point.
+`c` nuqtasida tozalash (drop qilish) uchun `drop` metodi kodini chaqirishini ko‘rsatish uchun`CustomSmartPointerdagi ma’lumot bilan tozalash (drop qilish)` `CustomSmartPointer yaratildi` va `CustomSmartPointer main tugashidan oldin tozalandi (drop qilindi)` matnlari orasida print qilindi.
 
-You can use code specified in a `Drop` trait implementation in many ways to
-make cleanup convenient and safe: for instance, you could use it to create your
-own memory allocator! With the `Drop` trait and Rust’s ownership system, you
-don’t have to remember to clean up because Rust does it automatically.
+Siz `Drop` traiti implementatsiyasida ko‘rsatilgan koddan har xil turda tozalashni qulay va xavfsiz qilishingiz mumkin: masalan, siz uni o‘zingizning xotira taqsimlagichni yaratish uchun ishlatsangiz bo‘ladi. `Drop` traiti va Rustning ownership tizimi bilan tozalash uchun bosh qotirmasangiz ham bo‘ladi chunki Rust buni avtomatik ravishda qiladi.
 
-You also don’t have to worry about problems resulting from accidentally
-cleaning up values still in use: the ownership system that makes sure
-references are always valid also ensures that `drop` gets called only once when
-the value is no longer being used.
+Siz ishlatilib turgan qiymatlarni bexosdan tozalanib ketish muammolaridan xavotir olmasangiz bo‘ladi: ownership tizimi referencelarni doim to‘g‘riligiga hamda `drop` qiymat bir marta chaqrilib boshqa ishlatilmasligini ta’minlaydi.
 
-Now that we’ve examined `Box<T>` and some of the characteristics of smart
-pointers, let’s look at a few other smart pointers defined in the standard
-library.
+Hozirda biz `Box<T>`ni va smart pointerlarni ba’zi bir xususiyatlarini tekshirib oldik, keling standart kutubxonada keltirilgan boshqa smart pointerlarni ham ko‘rib chiqaylik.
