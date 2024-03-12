@@ -42,43 +42,29 @@ Agar biz 15-14dagi ilovaga qo‘lda `Drop` traitining `drop` metodi yordamida `m
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-15/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 15-15: Attempting to call the `drop` method from
-the `Drop` trait manually to clean up early</span>
+<span class="caption"> 15-15 ro'yxat: `Drop` traitidagi `drop` metodi orqali qo'lda erta tozalashga harakat qilish</span>
 
-When we try to compile this code, we’ll get this error:
+Ushbu kodni komplilyatsiya qilganimizda quyidagi xatolikni ko‘ramiz:
 
 ```console
 {{#include ../listings/ch15-smart-pointers/listing-15-15/output.txt}}
 ```
 
-This error message states that we’re not allowed to explicitly call `drop`. The
-error message uses the term *destructor*, which is the general programming term
-for a function that cleans up an instance. A *destructor* is analogous to a
-*constructor*, which creates an instance. The `drop` function in Rust is one
-particular destructor.
+Ushbu xatolikdagi xabarda `drop`ni to‘g‘ridan-to‘g‘ri chaqira olmasligizni ko‘rsatadi. Xatolikdagi xabar instanceni tozalovchi umumiy dasturlash atamasi bo‘lgan funksiya, ya’ni `destructor`ni ishlatadi. `destructor` `constructor`ga o‘xshash bo‘lib, instancelarni yaratadi. Rustda `drop` funksiyasi alohida bir destructordir. 
 
-Rust doesn’t let us call `drop` explicitly because Rust would still
-automatically call `drop` on the value at the end of `main`. This would cause a
-*double free* error because Rust would be trying to clean up the same value
-twice.
+Rust bizga `drop`ni to‘g‘ridan-to‘g‘ri chaqrishga qo‘ymaydi chunki Rust qiymatni avtomatik ravishda baribir `main`ni oxirida `drop`ni chaqiradi. Ushbu holat *double free* xatoligini keltirib chiqarishi mumkin chunki Rust bitta qiymatni ikki marta tozalashga xarakat qiladi.
 
-We can’t disable the automatic insertion of `drop` when a value goes out of
-scope, and we can’t call the `drop` method explicitly. So, if we need to force
-a value to be cleaned up early, we use the `std::mem::drop` function.
+Agar qiymat o‘z doirasidan (scope) chiqqanda biz `drop`ni avtomatik kiritishini o‘chirib qo‘ya olmaymiz va `drop` metodini to‘g‘ridan-to‘g‘ri chaqira olmaymiz. Shuning uchun agar bizga majburiy ravishda qiymat tozalanishini xoxlasak, biz `std::mem::drop`funksiyasini ishlatamiz
 
-The `std::mem::drop` function is different from the `drop` method in the `Drop`
-trait. We call it by passing as an argument the value we want to force drop.
-The function is in the prelude, so we can modify `main` in Listing 15-15 to
-call the `drop` function, as shown in Listing 15-16:
+`std::mem::drop` funksiyasi `Drop` traitidagi `drop` metodidan farq qiladi. Biz buni majburan tozalash (drop) qilishni xohlagan qiymatni argument sifatida berish deb ataymiz. Funksiya preludeda, va 15-16 ro'yxatda ko‘rsatilgandek biz 15-15 ro'yxatdagi `main`da `drop` funkisyasini chaqirish uchun o‘zgartirish kiritishimiz mumkin:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-16/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 15-16: Calling `std::mem::drop` to explicitly
-drop a value before it goes out of scope</span>
+<span class="caption"> 15-16 ro'yxat: qiymat o'z doirasidan (scope) chiqqanda to'g'ridan-to'g'ri `std::mem::drop`ni chaqirish </span>
 
 Running this code will print the following:
 
