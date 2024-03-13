@@ -31,121 +31,127 @@ qiymatga o'q kabi tasavvur qilishning bir usuli. 15-6 ro'yxatda biz `i32`
 qiymatiga havola yaratamiz va keyin qiymatga havolani bog'lash uchun dereference
 operatoridan foydalanamiz:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-06/src/main.rs}}
 ```
 
-<span class="caption">Listing 15-6: Using the dereference operator to follow a
-reference to an `i32` value</span>
+<span class="caption">Ro'yxat 15-6: `i32` qiymatiga havola orqali murojat qilish
+uchun dereference operatoridan foydalanish</span>
 
-The variable `x` holds an `i32` value `5`. We set `y` equal to a reference to
-`x`. We can assert that `x` is equal to `5`. However, if we want to make an
-assertion about the value in `y`, we have to use `*y` to follow the reference
-to the value it’s pointing to (hence *dereference*) so the compiler can compare
-the actual value. Once we dereference `y`, we have access to the integer value
-`y` is pointing to that we can compare with `5`.
+`x` o'zgaruvchisi `i32` turidagi `5` qiymatiga ega. Biz `y` ni `x` ning
+havolasiga tenglashtiramiz. Biz `x` `5` ga teng ekanligini solishtirishimiz
+mumkin. Ammo, agar biz `y` dagi qiymatni solishtirmoqchi bo'lsak, kompilyator
+haqiqiy qiymatni solishtirishi uchun `*y` dan foydalanib, u havola qilgan
+qiymatga (ya'ni, *dereference*) murojaat qilishimiz kerak. `y` da dereference
+qo'llaganimizdan so'ng, `y` ishora qilib turgan butun son qiymatiga kirish
+imkoniga ega bo'lamiz, bu `5` bilan solishtirishimizga imkon beradi.
 
-If we tried to write `assert_eq!(5, y);` instead, we would get this compilation
-error:
+Agar `assert_eq!(5, y);` yozishga harakat qilganimizda, ushbu kompilyatsiya
+xatoligini olgan bo'lar edik:
 
 ```console
 {{#include ../listings/ch15-smart-pointers/output-only-01-comparing-to-reference/output.txt}}
 ```
 
-Comparing a number and a reference to a number isn’t allowed because they’re
-different types. We must use the dereference operator to follow the reference
-to the value it’s pointing to.
+Raqam va raqamga havola bilan solishtirishga yo'l qo'yilmaydi, chunki ular har
+xil turlar. Biz havola qilingan qiymatga murojaat qilish uchun dereference
+operatoridan foydalanishimiz kerak.
 
-### Using `Box<T>` Like a Reference
+### `Box<T>` ni Havola Kabi Ishlatish
 
-We can rewrite the code in Listing 15-6 to use a `Box<T>` instead of a
-reference; the dereference operator used on the `Box<T>` in Listing 15-7
-functions in the same way as the dereference operator used on the reference in
-Listing 15-6:
+15-6 ro'yxatdagi kodni havola o'rniga `Box<T>` ishlatgan holda qayta yozishimiz
+mumkin; 15-7 ro'yxatdagi funksiyalarida `Box<T>` da ishlatiladigan dereference
+operatori 15-6 ro'yxatidagi havolada ishlatilgan dereference operatori
+bilan bir xil tarzda ishlatiladi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-07/src/main.rs}}
 ```
 
-<span class="caption">Listing 15-7: Using the dereference operator on a
-`Box<i32>`</span>
+<span class="caption">Ro'yxat 15-7: `Box<i32>` da dereference operatorini
+ishlatish</span>
 
-The main difference between Listing 15-7 and Listing 15-6 is that here we set
-`y` to be an instance of a `Box<T>` pointing to a copied value of `x` rather
-than a reference pointing to the value of `x`. In the last assertion, we can
-use the dereference operator to follow the pointer of the `Box<T>` in the same
-way that we did when `y` was a reference. Next, we’ll explore what is special
-about `Box<T>` that enables us to use the dereference operator by defining our
-own type.
+15-7 va 15-6 ro'yxat o'rtasidagi asosiy farq shundaki, biz bu yerda `y` ni `x`
+qiymatiga havola emas, balki `x` ning ko'chirilgan qiymatiga ishora qiluvchi
+`Box<T>` ning misoli qilib belgiladik. Oxirgi solishtiruvda biz dereference
+operatoridan `Box<T>` ko'rsatgichiga murojat qilish uchun xuddi `y` havola
+bo'lganida qilganimizdek bajarishimiz mumkin. Keyin biz `Box<T>` ning o'ziga xos
+xususiyatlarini o'rganamiz, bu bizga o'z turimizni e'lon qilish orqali
+dereference operatoridan foydalanishga imkon beradi. 
 
-### Defining Our Own Smart Pointer
+### O'zimizning Aqlli Ko'rsatgichimizni E'lon Qilish
 
-Let’s build a smart pointer similar to the `Box<T>` type provided by the
-standard library to experience how smart pointers behave differently from
-references by default. Then we’ll look at how to add the ability to use the
-dereference operator.
+Keling, aqlli ko'rsatgichlar havolalardan qanday farq qilishini bilish uchun
+standart kutubxona tomonidan taqdim etilgan `Box<T>` turiga o'xshash aqlli
+ko'rsatgichni yarataylik. Keyin biz dereference operatoridan foydalanish
+qobiliyatini qanday qo'shishni ko'rib chiqamiz.
 
-The `Box<T>` type is ultimately defined as a tuple struct with one element, so
-Listing 15-8 defines a `MyBox<T>` type in the same way. We’ll also define a
-`new` function to match the `new` function defined on `Box<T>`.
+`Box<T>` turi oxir-oqibat bitta elementga ega bo'lgan tuple struct sifatida
+aniqlanadi, 15-8 ro'yxatda xuddi shu tarzda `MyBox<T>` turini belgilaydi.
+Shuningdek, `Box<T>` da belgilangan `new` funksiyaga mos keladigan `new`
+funksiyani aniqlaymiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-08/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 15-8: Defining a `MyBox<T>` type</span>
+<span class="caption">Ro'yxat 15-8: `MyBox<T>` turini aniqlash</span>
 
-We define a struct named `MyBox` and declare a generic parameter `T`, because
-we want our type to hold values of any type. The `MyBox` type is a tuple struct
-with one element of type `T`. The `MyBox::new` function takes one parameter of
-type `T` and returns a `MyBox` instance that holds the value passed in.
+Biz `MyBox` nomli structni aniqlaymiz va `T` generic parametrini e'lon qilamiz,
+chunki biz turimiz istalgan turdagi qiymatlarni ushlab turishini xohlaymiz.
+`MyBox` turi `T` turidagi bitta elementga ega bo'lgan tuple structdir.
+`MyBox::new` funksiyasi `T` turidagi bitta parametrni oladi va berilgan qiymatni
+ushlab turuvchi `MyBox` misolini qaytaradi.
 
-Let’s try adding the `main` function in Listing 15-7 to Listing 15-8 and
-changing it to use the `MyBox<T>` type we’ve defined instead of `Box<T>`. The
-code in Listing 15-9 won’t compile because Rust doesn’t know how to dereference
-`MyBox`.
+15-7 ro'yxatdagi `main` funksiyasini 15-8 ro'yxatiga qo'shib, `Box<T>` o'rniga
+biz belgilagan `MyBox<T>`turidan foydalanish uchun o'zgartirishga harakat
+qilaylik. 15-9 ro'yxatdagi kod kompilyatsiya qilinmaydi, chunki Rust `MyBox` ni
+qanday qilib dereference qilishni bilmaydi.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-09/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 15-9: Attempting to use `MyBox<T>` in the same
-way we used references and `Box<T>`</span>
+<span class="caption">Ro'yxat 15-9: `MyBox<T>` dan xuddi havolalar va `Box<T>`
+dan foydalanganimiz kabi foydalanishga urinish</span>
 
-Here’s the resulting compilation error:
+Natijada kompilyatsiya xatosi:
 
 ```console
 {{#include ../listings/ch15-smart-pointers/listing-15-09/output.txt}}
 ```
 
-Our `MyBox<T>` type can’t be dereferenced because we haven’t implemented that
-ability on our type. To enable dereferencing with the `*` operator, we
-implement the `Deref` trait.
+Bizning `MyBox<T>` turini dereference qilib bo'lmaydi, chunki biz bu qobiliyatni
+o'z turimizda qo'llamaganmiz. `*` operatori yordamida dereference qilishni
+yoqish uchun biz `Deref` traitini qo`llaymiz.
 
-### Treating a Type Like a Reference by Implementing the `Deref` Trait
+### `Deref` Traitni Amalga Oshirish Orqali Turga Havola Kabi Munosabatda Bo'lish
 
-As discussed in the [“Implementing a Trait on a Type”][impl-trait]<!-- ignore
---> section of Chapter 10, to implement a trait, we need to provide
-implementations for the trait’s required methods. The `Deref` trait, provided
-by the standard library, requires us to implement one method named `deref` that
-borrows `self` and returns a reference to the inner data. Listing 15-10
-contains an implementation of `Deref` to add to the definition of `MyBox`:
+10-bobning [“Turga xos Traitni amalga
+oshirish”][turga-xos-traitni-amalga-oshirish]<!-- ignore --> boʻlimida muhokama
+qilinganidek, traitni amalga oshirish uchun biz traitning talab qilinadigan
+usullarini amalga oshirishimiz kerak. Standart kutubxona tomonidan taqdim
+etilgan `Deref` xususiyati bizdan `self` qarz oladigan va ichki ma'lumotlarga
+havolani qaytaradigan `deref` nomli metodni qo'llashimizni talab qiladi. 15-10
+ro'yxat `MyBox` ta'rifiga qo'shish uchun `Deref` amalga oshirilishini o'z ichiga
+oladi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-10/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 15-10: Implementing `Deref` on `MyBox<T>`</span>
+<span class="caption">Ro'yxat 15-10: `MyBox<T>` uchun `Deref` ni amalga
+oshirish</span>
 
 The `type Target = T;` syntax defines an associated type for the `Deref`
 trait to use. Associated types are a slightly different way of declaring a
@@ -156,7 +162,7 @@ We fill in the body of the `deref` method with `&self.0` so `deref` returns a
 reference to the value we want to access with the `*` operator; recall from the
 [“Using Tuple Structs without Named Fields to Create Different
 Types”][tuple-structs]<!-- ignore --> section of Chapter 5 that `.0` accesses
-the first value in a tuple struct. The `main` function in Listing 15-9 that
+the first value in a tuple struct. The `main` function in Ro'yxat 15-9 that
 calls `*` on the `MyBox<T>` value now compiles, and the assertions pass!
 
 Without the `Deref` trait, the compiler can only dereference `&` references.
@@ -164,7 +170,7 @@ The `deref` method gives the compiler the ability to take a value of any type
 that implements `Deref` and call the `deref` method to get a `&` reference that
 it knows how to dereference.
 
-When we entered `*y` in Listing 15-9, behind the scenes Rust actually ran this
+When we entered `*y` in Ro'yxat 15-9, behind the scenes Rust actually ran this
 code:
 
 ```rust,ignore
@@ -188,7 +194,7 @@ Note that the `*` operator is replaced with a call to the `deref` method and
 then a call to the `*` operator just once, each time we use a `*` in our code.
 Because the substitution of the `*` operator does not recurse infinitely, we
 end up with data of type `i32`, which matches the `5` in `assert_eq!` in
-Listing 15-9.
+Ro'yxat 15-9.
 
 ### Implicit Deref Coercions with Functions and Methods
 
@@ -208,51 +214,51 @@ with `&` and `*`. The deref coercion feature also lets us write more code that
 can work for either references or smart pointers.
 
 To see deref coercion in action, let’s use the `MyBox<T>` type we defined in
-Listing 15-8 as well as the implementation of `Deref` that we added in Listing
-15-10. Listing 15-11 shows the definition of a function that has a string slice
+Ro'yxat 15-8 as well as the implementation of `Deref` that we added in Listing
+15-10. Ro'yxat 15-11 shows the definition of a function that has a string slice
 parameter:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-11/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 15-11: A `hello` function that has the parameter
+<span class="caption">Ro'yxat 15-11: A `hello` function that has the parameter
 `name` of type `&str`</span>
 
 We can call the `hello` function with a string slice as an argument, such as
 `hello("Rust");` for example. Deref coercion makes it possible to call `hello`
-with a reference to a value of type `MyBox<String>`, as shown in Listing 15-12:
+with a reference to a value of type `MyBox<String>`, as shown in Ro'yxat 15-12:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-12/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 15-12: Calling `hello` with a reference to a
+<span class="caption">Ro'yxat 15-12: Calling `hello` with a reference to a
 `MyBox<String>` value, which works because of deref coercion</span>
 
 Here we’re calling the `hello` function with the argument `&m`, which is a
 reference to a `MyBox<String>` value. Because we implemented the `Deref` trait
-on `MyBox<T>` in Listing 15-10, Rust can turn `&MyBox<String>` into `&String`
+on `MyBox<T>` in Ro'yxat 15-10, Rust can turn `&MyBox<String>` into `&String`
 by calling `deref`. The standard library provides an implementation of `Deref`
 on `String` that returns a string slice, and this is in the API documentation
 for `Deref`. Rust calls `deref` again to turn the `&String` into `&str`, which
 matches the `hello` function’s definition.
 
 If Rust didn’t implement deref coercion, we would have to write the code in
-Listing 15-13 instead of the code in Listing 15-12 to call `hello` with a value
+Ro'yxat 15-13 instead of the code in Listing 15-12 to call `hello` with a value
 of type `&MyBox<String>`.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-13/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 15-13: The code we would have to write if Rust
+<span class="caption">Ro'yxat 15-13: The code we would have to write if Rust
 didn’t have deref coercion</span>
 
 The `(*m)` dereferences the `MyBox<String>` into a `String`. Then the `&` and
