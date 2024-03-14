@@ -1,6 +1,6 @@
 // ANCHOR: here
-fn hello(name: &str) {
-    println!("Hello, {name}!");
+fn salom(nom: &str) {
+    println!("Salom, {nom}!");
 }
 // ANCHOR_END: here
 
