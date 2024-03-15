@@ -16,13 +16,13 @@ impl<T> MyBox<T> {
     }
 }
 
-fn hello(name: &str) {
-    println!("Hello, {name}!");
+fn salom(nom: &str) {
+    println!("Salom, {nom}!");
 }
 
 // ANCHOR: here
 fn main() {
     let m = MyBox::new(String::from("Rust"));
-    hello(&m);
+    salom(&m);
 }
 // ANCHOR_END: here
