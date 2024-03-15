@@ -8,62 +8,35 @@ Qaysidir ma'noda, har qanday dasturlash tilidagi kanallar bitta ownershiplik huq
 
 ### Bir vaqtning o'zida bitta threaddan ma'lumotlarga kirishga ruxsat berish uchun mutexlardan foydalanish
 
-*Mutex* is an abbreviation for *mutual exclusion*, as in, a mutex allows only
-one thread to access some data at any given time. To access the data in a
-mutex, a thread must first signal that it wants access by asking to acquire the
-mutex’s *lock*. The lock is a data structure that is part of the mutex that
-keeps track of who currently has exclusive access to the data. Therefore, the
-mutex is described as *guarding* the data it holds via the locking system.
+*Mutex* bu *mutual exclusion* ning qisqartmasi boʻlib, mutex istalgan vaqtda baʼzi maʼlumotlarga faqat bitta threadga kirish imkonini beradi. Mutexdagi ma'lumotlarga kirish uchun thread birinchi navbatda mutexning *lock(qulf)*ni olishni so'rab kirishni xohlashini bildirishi kerak. Lock(qulf) - bu mutexning bir qismi bo'lgan ma'lumotlar tuzilmasi bo'lib, u hozirda ma'lumotlarga kimning eksklyuziv kirish huquqiga ega ekanligini kuzatib boradi. Shuning uchun, mutex qulflash tizimi(locking system) orqali o'zida mavjud bo'lgan ma'lumotlarni *himoya qilish(guarding)* sifatida tavsiflanadi.
 
-Mutexes have a reputation for being difficult to use because you have to
-remember two rules:
+Mutexlardan foydalanish qiyinligi bilan mashhur, chunki siz ikkita qoidani eslab qolishingiz kerak:
 
-* You must attempt to acquire the lock before using the data.
-* When you’re done with the data that the mutex guards, you must unlock the
-  data so other threads can acquire the lock.
+* Ma'lumotlardan foydalanishdan oldin siz qulfni olishga harakat qilishingiz kerak.
+* Mutex himoya qiladigan ma'lumotlar bilan ishlashni tugatgandan so'ng, boshqa threadlar qulfni(lock) olishi uchun ma'lumotlarni qulfdan chiqarishingiz(unlock) kerak.
 
-For a real-world metaphor for a mutex, imagine a panel discussion at a
-conference with only one microphone. Before a panelist can speak, they have to
-ask or signal that they want to use the microphone. When they get the
-microphone, they can talk for as long as they want to and then hand the
-microphone to the next panelist who requests to speak. If a panelist forgets to
-hand the microphone off when they’re finished with it, no one else is able to
-speak. If management of the shared microphone goes wrong, the panel won’t work
-as planned!
+Mutexni tushunish uchun bitta mikrofon bilan konferensiyada guruh muhokamasining haqiqiy hayotiy misolini tasavvur qiling. Panel ishtirokchisi gapirishdan oldin mikrofondan foydalanishni xohlashini so'rashi yoki signal berishi kerak. Mikrofonni olishganda, ular xohlagancha gaplashishi mumkin va keyin mikrofonni gapirishni so'ragan keyingi ishtirokchiga beradi. Agar panel ishtirokchisi mikrofon bilan ishlashni tugatgandan so'ng uni o'chirishni unutib qo'ysa, boshqa hech kim gapira olmaydi. Agar umumiy mikrofonni boshqarish noto'g'ri bo'lsa, panel rejalashtirilganidek ishlamaydi!
 
-Management of mutexes can be incredibly tricky to get right, which is why so
-many people are enthusiastic about channels. However, thanks to Rust’s type
-system and ownership rules, you can’t get locking and unlocking wrong.
+Mutexlarni boshqarish juda qiyin bo'lishi mumkin, shuning uchun ko'p odamlar kanallarga(channel) ishtiyoq bilan qarashadi. Biroq, Rust type tizimi va ownershiplik qoidalari tufayli siz qulflash(locking) va qulfni noto'g'ri ochishingiz(unlocking) mumkin emas.
 
-#### The API of `Mutex<T>`
+#### `Mutex<T>` API
 
-As an example of how to use a mutex, let’s start by using a mutex in a
-single-threaded context, as shown in Listing 16-12:
+Mutexdan qanday foydalanishga misol sifatida, keling, 16-12 ro'yxatda ko'rsatilganidek, bitta threadli kontekstda mutexdan foydalanishdan boshlaylik:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-12/src/main.rs}}
 ```
 
-<span class="caption">Listing 16-12: Exploring the API of `Mutex<T>` in a
-single-threaded context for simplicity</span>
+<span class="caption">Ro'yxat 16-12: `Mutex<T>` API-ni soddaligi uchun single-threadli kontekstda oʻrganish</span>
 
-As with many types, we create a `Mutex<T>` using the associated function `new`.
-To access the data inside the mutex, we use the `lock` method to acquire the
-lock. This call will block the current thread so it can’t do any work until
-it’s our turn to have the lock.
+Ko'pgina turlarda(type) bo'lgani kabi, biz bog'langan `new` funksiyasidan foydalangan holda `Mutex<T>` ni yaratamiz.
+Mutex ichidagi ma'lumotlarga kirish uchun biz qulfni olish uchun `lock` metodidan foydalanamiz. Bu chaqiruv joriy threadni bloklaydi, shuning uchun u bizni qulflash navbati kelmaguncha hech qanday ishni bajara olmaydi.
 
-The call to `lock` would fail if another thread holding the lock panicked. In
-that case, no one would ever be able to get the lock, so we’ve chosen to
-`unwrap` and have this thread panic if we’re in that situation.
+Qulfni ushlab turgan boshqa thread panic qo'zg'atsa, `lock` chaqiruvi muvaffaqiyatsiz bo'ladi. Bunday holda, hech kim qulfni qo'lga kirita olmaydi, shuning uchun biz  `unwrap`ni tanladik va agar shunday vaziyatda bo'lsak, bu threadni panic qo'yishni tanladik.
 
-After we’ve acquired the lock, we can treat the return value, named `num` in
-this case, as a mutable reference to the data inside. The type system ensures
-that we acquire a lock before using the value in `m`. The type of `m` is
-`Mutex<i32>`, not `i32`, so we *must* call `lock` to be able to use the `i32`
-value. We can’t forget; the type system won’t let us access the inner `i32`
-otherwise.
+Qulfni qo'lga kiritganimizdan so'ng, biz bu holatda `num` deb nomlangan return qiymatini ichidagi ma'lumotlarga o'zgaruvchan reference sifatida ko'rib chiqishimiz mumkin. Tur(type) tizimi `m` dagi qiymatni ishlatishdan oldin qulfni olishimizni ta'minlaydi. `m` turi `i32` emas, `Mutex<i32>`, shuning uchun biz `i32` qiymatidan foydalanish uchun `lock`ni chaqirishimiz kerak. Biz unuta olmaymiz; aks holda turdagi tizim bizga ichki `i32` ga kirishga ruxsat bermaydi.
 
 As you might suspect, `Mutex<T>` is a smart pointer. More accurately, the call
 to `lock` *returns* a smart pointer called `MutexGuard`, wrapped in a
@@ -86,7 +59,7 @@ the counter goes from 0 to 10. The next example in Listing 16-13 will have
 a compiler error, and we’ll use that error to learn more about using
 `Mutex<T>` and how Rust helps us use it correctly.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-13/src/main.rs}}
@@ -126,7 +99,7 @@ In Chapter 15, we gave a value multiple owners by using the smart pointer
 what happens. We’ll wrap the `Mutex<T>` in `Rc<T>` in Listing 16-14 and clone
 the `Rc<T>` before moving ownership to the thread.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-14/src/main.rs}}
@@ -179,7 +152,7 @@ Let’s return to our example: `Arc<T>` and `Rc<T>` have the same API, so we fix
 our program by changing the `use` line, the call to `new`, and the call to
 `clone`. The code in Listing 16-15 will finally compile and run:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-15/src/main.rs}}
