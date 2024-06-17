@@ -6,15 +6,12 @@ Biz ichki o'zgaruvchanlik shakli/patterni ishlatadigan turlardan faqatgina borro
 
 Keling ushbu tushunchani ichki o'zgaruvchanlik shakliga amal qiluvchi quyidagi `RefCell<T>` turiga qarab ko'rib chiqaylik.
 
-### Enforcing Borrowing Rules at Runtime with `RefCell<T>`
+### Enforcing Borrowing Rules at Runtime with `RefCell<T>` yordamida Borrowing qoidalarini Runtime vaqtida kuch bilan ishlatish
 
-Unlike `Rc<T>`, the `RefCell<T>` type represents single ownership over the data
-it holds. So, what makes `RefCell<T>` different from a type like `Box<T>`?
-Recall the borrowing rules you learned in Chapter 4:
+`Rc<T>`lidan faqrli o'laroq, `RefCell<T>` turi o'zi egalik qilib turgan ma'lumotda yagona egalikni namoyish etadi. Xo'sh, `RefCell<T>` turi `Box<T>` turidan nimasi bilan farq qiladi? 4-bo'limda o'tilgan borrowing qoidalarini esga olaylik: 
 
-* At any given time, you can have *either* (but not both) one mutable reference
-  or any number of immutable references.
-* References must always be valid.
+* Xohlagan belgilangan vaqtda, siz *yoki* (ikkalasini bir vaqtda ega bo'lish mumkin emas)bitta        o'zgaruvchan referens yoki xohlagan sondagi o'zgarmas referenslarga ega bo'lishingiz mumkin. 
+* Referenslar har doim yaroqli bo'lishi shart
 
 With references and `Box<T>`, the borrowing rules’ invariants are enforced at
 compile time. With `RefCell<T>`, these invariants are enforced *at runtime*.
