@@ -13,10 +13,7 @@ Keling ushbu tushunchani ichki o'zgaruvchanlik shakliga amal qiluvchi quyidagi `
 * Xohlagan belgilangan vaqtda, siz *yoki* (ikkalasini bir vaqtda ega bo'lish mumkin emas)bitta        o'zgaruvchan referens yoki xohlagan sondagi o'zgarmas referenslarga ega bo'lishingiz mumkin. 
 * Referenslar har doim yaroqli bo'lishi shart
 
-With references and `Box<T>`, the borrowing rules’ invariants are enforced at
-compile time. With `RefCell<T>`, these invariants are enforced *at runtime*.
-With references, if you break these rules, you’ll get a compiler error. With
-`RefCell<T>`, if you break these rules, your program will panic and exit.
+Referenslar va `Box<T>` bilan, borrowing qoidalarining kompilyatsiya vaqtida o'zgarmaslar kuchga kiradi. `RefCell<T>` bilan esa ushbu o'zgarmaslar *runtime paytida* kuchga kiradi. Referenslar bilan, agar siz ushbu qoidalarni buzsangiz, sizda kompilyator xatoligi yuzaga keladi. `RefCell<T>` bilan suhbu qoidalarni buzganingizda, sizning dasturingizda panic vujudga kelib, dastur chiqib ketadi.
 
 The advantages of checking the borrowing rules at compile time are that errors
 will be caught sooner in the development process, and there is no impact on
