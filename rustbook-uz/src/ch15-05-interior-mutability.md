@@ -21,6 +21,8 @@ runtime performance because all the analysis is completed beforehand. For those
 reasons, checking the borrowing rules at compile time is the best choice in the
 majority of cases, which is why this is Rust’s default.
 
+Borrowing qoidalarini kompilyatsiay vaqtida tekshirishning yaxshi tarafi xatolarni development vaqtida tezroq topishdir, va runtime unumdorligiga ta'sir ko'rsatmaydi chunki hamma analizlar oldindan qilingan bo'ladi. Ko'p hollarda borrowing qoidalarini kompilyatsiya vaqtida tekshirish eng yaxshi tanlovdir, sababi ushbu xususiyat Rustda odatiy  xususiyatidir. 
+
 The advantage of checking the borrowing rules at runtime instead is that
 certain memory-safe scenarios are then allowed, where they would’ve been
 disallowed by the compile-time checks. Static analysis, like the Rust compiler,
