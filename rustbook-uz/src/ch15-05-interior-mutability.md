@@ -23,28 +23,13 @@ majority of cases, which is why this is Rust’s default.
 
 Borrowing qoidalarini kompilyatsiay vaqtida tekshirishning yaxshi tarafi xatolarni development vaqtida tezroq topishdir, va runtime unumdorligiga ta'sir ko'rsatmaydi chunki hamma analizlar oldindan qilingan bo'ladi. Ko'p hollarda borrowing qoidalarini kompilyatsiya vaqtida tekshirish eng yaxshi tanlovdir, sababi ushbu xususiyat Rustda odatiy  xususiyatidir. 
 
-The advantage of checking the borrowing rules at runtime instead is that
-certain memory-safe scenarios are then allowed, where they would’ve been
-disallowed by the compile-time checks. Static analysis, like the Rust compiler,
-is inherently conservative. Some properties of code are impossible to detect by
-analyzing the code: the most famous example is the Halting Problem, which is
-beyond the scope of this book but is an interesting topic to research.
+Borrowing qoidalarini runtime vaqtida tekshrishning afzalligi shundaki, kompilyatsiya vaqtidagi tekshiruvlar tomonidan ruxsat etilmaganda ba'zi xotira uchun xavfsizlik ssenariylarga ruxsat beriladi. Rust kompilyatoriga o'xshagan statik analizlar o'z-o'zidan konservativdir. Kodni tahlil qilayotganda kodning ba'zi bir xususiyatlarini aniqlash qiyindir: bunga  Halting Problem mashxur misol bo'la oladi, bu kitob doirasidan tashqarida bo'lsada lekin izlanib o'rganish uchun qiziq mavzu
 
-Because some analysis is impossible, if the Rust compiler can’t be sure the
-code complies with the ownership rules, it might reject a correct program; in
-this way, it’s conservative. If Rust accepted an incorrect program, users
-wouldn’t be able to trust in the guarantees Rust makes. However, if Rust
-rejects a correct program, the programmer will be inconvenienced, but nothing
-catastrophic can occur. The `RefCell<T>` type is useful when you’re sure your
-code follows the borrowing rules but the compiler is unable to understand and
-guarantee that.
+Agar Rust kompilyatori egalik (ownership) qoidalari asosida kompilyatsiya qilayotganini aqiqlay olmasa, bu to'g'ri, ya'ni ishlab turgan dasturni rad etishi mumkin, shuning uchun ham konservativ hisoblanadi va bu ba'zi tahlillar uchun qiyindir. Agar Rust xatolikka ega bo'lgan dasturni qabul qilsa, foydalanuvchilar Rust beradigan kafolatlarga ishona olmaydilar. Agarda, Rust ishlab turgan dasturni rad etsa, dasturchi uchun noqulaylik tug'diradi, lekin hech qanday qo'rqinchli narsa bo'lmaydi. `RefCell<T>` turi sizning kodingiz borrowing qoidlariga amal qilayotganiga ishonchingiz komil bo'lganda lekin kompilyator buni tushuna olmayotganda va kafolat bera olmaganda foydalidir.
 
-Similar to `Rc<T>`, `RefCell<T>` is only for use in single-threaded scenarios
-and will give you a compile-time error if you try using it in a multithreaded
-context. We’ll talk about how to get the functionality of `RefCell<T>` in a
-multithreaded program in Chapter 16.
+`RefCell<T>` `Rc<T>`ga o'xshab bitta potokli (oqimli) ssenariylarda ishlatilinadi va agar siz ko'p potokli (oqimli) holatda ishlatsangiz kompilyatsiya vaqtidagi xatolikni yuzaga keltiradi. Biz `RefCell<T>`ni ko'p potokli (oqimli) dasturda qanday qilib funksionalligini olishni 16-bo'limda ko'rib chiqamiz.  
 
-Here is a recap of the reasons to choose `Box<T>`, `Rc<T>`, or `RefCell<T>`:
+Quyida takrorlash uchun `Box<T>`, `Rc<T>`, yoki `RefCell<T>`ni tanlash sabablari:
 
 * `Rc<T>` enables multiple owners of the same data; `Box<T>` and `RefCell<T>`
   have single owners.
