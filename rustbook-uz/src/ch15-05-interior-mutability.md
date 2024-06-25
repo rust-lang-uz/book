@@ -31,14 +31,13 @@ Agar Rust kompilyatori egalik (ownership) qoidalari asosida kompilyatsiya qilayo
 
 Quyida takrorlash uchun `Box<T>`, `Rc<T>`, yoki `RefCell<T>`ni tanlash sabablari:
 
-* `Rc<T>` enables multiple owners of the same data; `Box<T>` and `RefCell<T>`
-  have single owners.
-* `Box<T>` allows immutable or mutable borrows checked at compile time; `Rc<T>`
-  allows only immutable borrows checked at compile time; `RefCell<T>` allows
-  immutable or mutable borrows checked at runtime.
-* Because `RefCell<T>` allows mutable borrows checked at runtime, you can
-  mutate the value inside the `RefCell<T>` even when the `RefCell<T>` is
-  immutable.
+* `Rc<T>` bitta ma'lumotga ko'p egalarga ega bo'lish imkonini beradi; `Box<T>` va `RefCell<T>`
+  esa yagona egaga egadirlar;
+* `Box<T>` kompilyatsiya vaqtida o'zgaruvchan va o'zgarmas borrowlarni tekshrilishini ta'minlaydi;
+  `Rc<T>` kompilyatsiya vaqtida faqat o'zgarmas borrowlarni tekshrilishini ta'minlaydi; 
+  `RefCell<T>` runtimeda o'zgaruvchan va o'zgarmas borrowlarni tekshrilishini ta'minlaydi.
+* Because `RefCell<T>` runtimeda o'zgaruvchan borrowlar tekshirilishi ta'minlaydi, agar
+  `RefCell<T>` o'zgarmas bo'lsada `RefCell<T>` ichida qiymatni o'zgaruvchan qilishingiz mumkin.
 
 Mutating the value inside an immutable value is the *interior mutability*
 pattern. Let’s look at a situation in which interior mutability is useful and
