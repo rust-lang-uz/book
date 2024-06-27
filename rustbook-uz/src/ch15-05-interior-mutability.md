@@ -51,23 +51,22 @@ Borrowing qoilari natijasida, o'zgarmas qiyamtga ega bo'lganingizda, siz o'zgaru
 {{#rustdoc_include ../listings/ch15-smart-pointers/no-listing-01-cant-borrow-immutable-as-mutable/src/main.rs}}
 ```
 
-If you tried to compile this code, you’d get the following error:
+Agar siz ushbu kodni kompilyatsiya qilishga harakat qilsangiz, quyidagi xatolik kelib chiqadi:
 
 ```console
 {{#include ../listings/ch15-smart-pointers/no-listing-01-cant-borrow-immutable-as-mutable/output.txt}}
 ```
 
-However, there are situations in which it would be useful for a value to mutate
-itself in its methods but appear immutable to other code. Code outside the
-value’s methods would not be able to mutate the value. Using `RefCell<T>` is
-one way to get the ability to have interior mutability, but `RefCell<T>`
-doesn’t get around the borrowing rules completely: the borrow checker in the
-compiler allows this interior mutability, and the borrowing rules are checked
-at runtime instead. If you violate the rules, you’ll get a `panic!` instead of
-a compiler error.
+Shunday vaziyatlar borki qiymat o'zini-o'zi o'zining metodlarida o'zgarivchan qilishi
+foydali hisoblanadi, lekin boshqa kodda o'zgarmas shaklda bo'ladi. Kodning doirasidan
+tashqaridagi qiymat metodi qiymatni o'zgaruvchan qila olmaydi. `RefCell<T>`ni ishlatish ichki
+o'zgaruvchanlikga ega bo'lishning bir yo'li hisoblanadi, lekin `RefCell<T>` borrowing 
+qoidalarini to'liq aylanib o'tmaydi: kompilyatorda borrow tekshiruvchisi shu ichki o'zgaruvchanlikka
+ruxsat beradi, va borrowing qoidalari runtimes tekshiriladi. Agar qoidalarni rad etsangiz,
+kompilyator xatoligini o'rniga `panic!` ko'rasiz. 
 
-Let’s work through a practical example where we can use `RefCell<T>` to mutate
-an immutable value and see why that is useful.
+`RefCell<T>`ni o'zgarmas qiymatni o'zgaruvchanga aylantirishni, hamda nimaga `RefCell<T>`ni
+ishlatish foydali ekanligini amaliy misollarda ko'rib chiqaylik.
 
 #### A Use Case for Interior Mutability: Mock Objects
 
