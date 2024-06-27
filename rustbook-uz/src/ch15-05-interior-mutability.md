@@ -39,14 +39,13 @@ Quyida takrorlash uchun `Box<T>`, `Rc<T>`, yoki `RefCell<T>`ni tanlash sabablari
 * Because `RefCell<T>` runtimeda o'zgaruvchan borrowlar tekshirilishi ta'minlaydi, agar
   `RefCell<T>` o'zgarmas bo'lsada `RefCell<T>` ichida qiymatni o'zgaruvchan qilishingiz mumkin.
 
-Mutating the value inside an immutable value is the *interior mutability*
-pattern. Let’s look at a situation in which interior mutability is useful and
-examine how it’s possible.
+Qiymatni o'zgarmas qiymat ichida o'zgaruvchan qilish *ichki o'zgaruvchanlik* shaklidir (pattern).
+Keling ichki o'zgaruvchanlikni foydali ekanligini va bu qanday sodir bo'lishini misollarda ko'rib
+chiqaylik.
 
-### Interior Mutability: A Mutable Borrow to an Immutable Value
+### Ichki o'zgaruvchanlik: O'zgaruvchan Borrowdan O'zgarmas Qiymatga
 
-A consequence of the borrowing rules is that when you have an immutable value,
-you can’t borrow it mutably. For example, this code won’t compile:
+Borrowing qoilari natijasida, o'zgarmas qiyamtga ega bo'lganingizda, siz o'zgaruvchan borrow qila olmaysiz. Masalan, ushbu kod kompilyatsiya qilinmaydi:
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch15-smart-pointers/no-listing-01-cant-borrow-immutable-as-mutable/src/main.rs}}
