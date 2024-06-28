@@ -68,16 +68,14 @@ kompilyator xatoligini o'rniga `panic!` ko'rasiz.
 `RefCell<T>`ni o'zgarmas qiymatni o'zgaruvchanga aylantirishni, hamda nimaga `RefCell<T>`ni
 ishlatish foydali ekanligini amaliy misollarda ko'rib chiqaylik.
 
-#### A Use Case for Interior Mutability: Mock Objects
+#### Ichki o'zgaruvchanlik uchun foydalanish holati/misoli: Soxta Obyektlar
 
-Sometimes during testing a programmer will use a type in place of another type,
-in order to observe particular behavior and assert it’s implemented correctly.
-This placeholder type is called a *test double*. Think of it in the sense of a
-“stunt double” in filmmaking, where a person steps in and substitutes for an
-actor to do a particular tricky scene. Test doubles stand in for other types
-when we’re running tests. *Mock objects* are specific types of test doubles
-that record what happens during a test so you can assert that the correct
-actions took place.
+Ayrim hollarda test vaqti dasturchi boshqa turni o'rniga kerakli hatti-harakatni kuzatish
+uchun va to'g'ri kompilyatsiya amalga oshirilganligini tasdiqlash uchun boshqa bir turni
+ishlatib ko'radi. Ushbu to'ldiruvchi tur *test double* deb ataladi. Qiyin bo'lgan sahna ko'rinishida
+aktyorning o'rniga chiqib, sahna ko'rinishi amalga oshirib beruvchi, ya'nikino yaratishda "kaskadyor"
+misolida ko'rib chiqaylik. Test doublelari boshqa turlarda test o'tkazayotganimizda xizmat qiladi.
+*Soxta obyektlar* test paytida nimalar sodir bo'lishini qayd etuvchi test doublelar o'ziga xos turlardan biri bo'lib, siz to'g'ri amallar amalga oshirilayotganini ko'zdan kechirishingiz mumkin.
 
 Rust doesn’t have objects in the same sense as other languages have objects,
 and Rust doesn’t have mock object functionality built into the standard library
