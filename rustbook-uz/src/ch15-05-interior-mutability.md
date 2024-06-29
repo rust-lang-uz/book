@@ -77,15 +77,14 @@ aktyorning o'rniga chiqib, sahna ko'rinishi amalga oshirib beruvchi, ya'nikino y
 misolida ko'rib chiqaylik. Test doublelari boshqa turlarda test o'tkazayotganimizda xizmat qiladi.
 *Soxta obyektlar* test paytida nimalar sodir bo'lishini qayd etuvchi test doublelar o'ziga xos turlardan biri bo'lib, siz to'g'ri amallar amalga oshirilayotganini ko'zdan kechirishingiz mumkin.
 
-Rust doesn’t have objects in the same sense as other languages have objects,
-and Rust doesn’t have mock object functionality built into the standard library
-as some other languages do. However, you can definitely create a struct that
-will serve the same purposes as a mock object.
+Rustda boshqa dasturlash tillari kabi bir xil ma'noli obyektlarga ega emas,
+va soxta obyekt funksionalligini olgan standart kutubxonasi yo'q. Aksincha, soxta 
+obyektlar kabi ish bajaruvchi struct yaratishingiz mumkin. 
 
-Here’s the scenario we’ll test: we’ll create a library that tracks a value
-against a maximum value and sends messages based on how close to the maximum
-value the current value is. This library could be used to keep track of a
-user’s quota for the number of API calls they’re allowed to make, for example.
+Ushbu ssenariyni ko'rib chiqaylik: qiymatni maksimal qiymatga nisbatan kuzatuvchi
+kutubxona yaratamiz va joriy qiymat maksimal qiymatga qanchalik yaqinligiga qarab bizga
+xabar jo'natib turadi. Ushbu kutubxona foydalanuvchi uchun ruxsat etilgan API 'call'lar sonini
+kuzatib borish uchun ishlatilishi mumkin, bu ishlatish mumkin bo'lgan bir misol.
 
 Our library will only provide the functionality of tracking how close to the
 maximum a value is and what the messages should be at what times. Applications
