@@ -9,17 +9,16 @@ tanlashga imkon beradi, ammo shu bilan birga xato
 xabarlarini ekranga chiqaradi.
 
 `println!` funktsiyasi (makrosi) faqat standart chiqishda chop etish mumkin,
-shuning uchun biz standart xatolar oqimiga chop etish uchun boshqa narsadan
-foydalanishimiz kerak.
+shuning uchun biz standart xatolar oqimiga chop etish uchun boshqa misollarda 
+ko'rib chiqaylik.
 
 ### Xatolar yozilgan joyni tekshirish
 
 Birinchidan, keling, `minigrep`-dan chop etilgan kontent hozirda standart chiqishga
 qanday yozilishini, shu jumladan biz standart xato oqimiga yozmoqchi bo'lgan har qanday
 xato xabarlarini ko'rib chiqaylik. Biz buni standart chiqish oqimini faylga yo'naltirish
-va ataylab xatoga yo'l qo'yish orqali qilamiz. Biz standart xatolar oqimini yo'naltirmaymiz,
-shuning uchun standart xatolar oqimiga yuborilgan har qanday tarkib ekranda paydo bo'lishda
-davom etadi.
+va ataylab xatoga yo'l qo'yish orqali qilamiz. Biz standart xatolar oqimiga yo'naltirmaganimiz uchun,
+standart xatolar oqimiga yuborilgan har qanday tarkib ekranda paydo bo'lishda davom etadi.
 
 Buyruq qatorining (cmd) dasturlari xato xabarlarini standart xato oqimiga yuborishi kutilmoqda,
 shuning uchun biz standart chiqish oqimini faylga yo'naltirsak ham, ekrandagi xato xabarlarini
@@ -34,7 +33,7 @@ Biz hech qanday dalil (argument) keltirmaymiz, bu xatoga olib kelishi kerak:
 $ cargo run > output.txt
 ```
 
-`>` sintaksisi qobiqqa (shellga) *output.txt*-ga ekran o'rniga standart chiqish tarkibini yozishni buyuradi.
+`>` sintaksisi qobiqqa (shellga) *output.txt*-ga ekran o'rniga standart chiqish (standard output) tarkibini yozishni buyuradi.
 Biz ekranda ko'rishni kutgan xato xabarini ko'rmadik, shuning uchun u faylda bo'lishi kerak.
 Yuqorida keltirilgan *output.txt*-ning holati:
 
@@ -42,12 +41,12 @@ Yuqorida keltirilgan *output.txt*-ning holati:
 Problem parsing arguments: not enough arguments
 ```
 
-Ha, bizning xato xabarimiz standart chiqishda ko'rsatiladi. 
+Ha, bizning xato xabarimiz standart chiqishda (standard outputga) ko'rsatiladi. 
 Bunday xato xabarlarini standart xatolar oqimiga kiritish ancha foydali,
 shuning uchun faqat muvaffaqiyatli ishga tushirish ma'lumotlari faylga kiradi.
 Biz buni keyinchalik o'zgartiramiz.
 
-### Xatolarni xato oqimiga chop etish (print qilish)
+### Xatolarni standard xato oqimiga chop etish (print qilish)
 
 Xato xabarlarini chiqarish usulini o'zgartirish uchun biz 12-24-ro'yxatdagi koddan 
 foydalanamiz. Ushbu bobda ilgari qilgan refaktoring tufayli xato xabarlarini chop
@@ -91,10 +90,10 @@ Are you nobody, too?
 How dreary to be somebody!
 ```
 
-Yani, biz vaziyatga qarab, muvaffaqiyatli matn uchun 
+Yani, biz vaziyatga qarab, muvaffaqiyatli chiqish (output) uchun 
 standart chiqish oqimidan va xatolarni chiqarish uchun standart xato oqimidan foydalanamiz.
 
-## Natijalar
+## Xulosa
 
 Ushbu bobda siz hozirgacha o'rgangan ba'zi asosiy tushunchalar takrorlangan va 
 Rustda muntazam I/O operatsiyalarini qanday bajarish kerakligi aytilgan.
