@@ -1,108 +1,108 @@
-## Writing Error Messages to Standard Error Instead of Standard Output
+## Xato xabarlarini standart chiqish oqimi o'rniga xato oqimiga yozish
 
-At the moment, we’re writing all of our output to the terminal using the
-`println!` macro. In most terminals, there are two kinds of output: *standard
-output* (`stdout`) for general information and *standard error* (`stderr`) for
-error messages. This distinction enables users to choose to direct the
-successful output of a program to a file but still print error messages to the
-screen.
+Ayni paytda biz `println!` funksiyasidan foydalangan holda terminalga barcha 
+chiqishlarimizni yozib olamiz. Ko'pgina terminallarda ikkita chiqish turi 
+mavjud: umumiy ma'lumot uchun standart chiqish oqimi ( `stdout` ) 
+va xato xabarlari uchun standart xato oqimi (`stderr`).
+Ushbu farq foydalanuvchilarga dasturning muvaffaqiyatli chiqishini faylga yo'naltirishni 
+tanlashga imkon beradi, ammo shu bilan birga xato 
+xabarlarini ekranga chiqaradi.
 
-The `println!` macro is only capable of printing to standard output, so we
-have to use something else to print to standard error.
+`println!` funktsiyasi (makrosi) faqat standart chiqishda chop etish mumkin,
+shuning uchun biz standart xatolar oqimiga chop etish uchun boshqa misollarda 
+ko'rib chiqaylik.
 
-### Checking Where Errors Are Written
+### Xatolar yozilgan joyni tekshirish
 
-First, let’s observe how the content printed by `minigrep` is currently being
-written to standard output, including any error messages we want to write to
-standard error instead. We’ll do that by redirecting the standard output stream
-to a file while intentionally causing an error. We won’t redirect the standard
-error stream, so any content sent to standard error will continue to display on
-the screen.
+Birinchidan, keling, `minigrep`-dan chop etilgan kontent hozirda standart chiqishga
+qanday yozilishini, shu jumladan biz standart xato oqimiga yozmoqchi bo'lgan har qanday
+xato xabarlarini ko'rib chiqaylik. Biz buni standart chiqish oqimini faylga yo'naltirish
+va ataylab xatoga yo'l qo'yish orqali qilamiz. Biz standart xatolar oqimiga yo'naltirmaganimiz uchun,
+standart xatolar oqimiga yuborilgan har qanday tarkib ekranda paydo bo'lishda davom etadi.
 
-Command line programs are expected to send error messages to the standard error
-stream so we can still see error messages on the screen even if we redirect the
-standard output stream to a file. Our program is not currently well-behaved:
-we’re about to see that it saves the error message output to a file instead!
+Buyruq qatorining (cmd) dasturlari xato xabarlarini standart xato oqimiga yuborishi kutilmoqda,
+shuning uchun biz standart chiqish oqimini faylga yo'naltirsak ham, ekrandagi xato xabarlarini
+ko'rishimiz mumkin. Bizning dasturimiz hozirda to'g'ri ishlamayapti:
+biz xato xabari chiqishini faylga saqlayotganini ko'ramiz.
 
-To demonstrate this behavior, we’ll run the program with `>` and the file path,
-*output.txt*, that we want to redirect the standard output stream to. We won’t
-pass any arguments, which should cause an error:
+Ushbu xatti-harakatni namoyish qilish uchun biz dasturni `>` va *output.txt* fayl nomi
+bilan ishga tushiramiz. Biz standart chiqish oqimini yo'naltirishni xohlaymiz.
+Biz hech qanday dalil (argument) keltirmaymiz, bu xatoga olib kelishi kerak:
 
 ```console
 $ cargo run > output.txt
 ```
 
-The `>` syntax tells the shell to write the contents of standard output to
-*output.txt* instead of the screen. We didn’t see the error message we were
-expecting printed to the screen, so that means it must have ended up in the
-file. This is what *output.txt* contains:
+`>` sintaksisi qobiqqa (shellga) *output.txt*-ga ekran o'rniga standart chiqish (standard output) tarkibini yozishni buyuradi.
+Biz ekranda ko'rishni kutgan xato xabarini ko'rmadik, shuning uchun u faylda bo'lishi kerak.
+Yuqorida keltirilgan *output.txt*-ning holati:
 
 ```text
 Problem parsing arguments: not enough arguments
 ```
 
-Yup, our error message is being printed to standard output. It’s much more
-useful for error messages like this to be printed to standard error so only
-data from a successful run ends up in the file. We’ll change that.
+Ha, bizning xato xabarimiz standart chiqishda (standard outputga) ko'rsatiladi. 
+Bunday xato xabarlarini standart xatolar oqimiga kiritish ancha foydali,
+shuning uchun faqat muvaffaqiyatli ishga tushirish ma'lumotlari faylga kiradi.
+Biz buni keyinchalik o'zgartiramiz.
 
-### Printing Errors to Standard Error
+### Xatolarni standard xato oqimiga chop etish (print qilish)
 
-We’ll use the code in Listing 12-24 to change how error messages are printed.
-Because of the refactoring we did earlier in this chapter, all the code that
-prints error messages is in one function, `main`. The standard library provides
-the `eprintln!` macro that prints to the standard error stream, so let’s change
-the two places we were calling `println!` to print errors to use `eprintln!`
-instead.
+Xato xabarlarini chiqarish usulini o'zgartirish uchun biz 12-24-ro'yxatdagi koddan 
+foydalanamiz. Ushbu bobda ilgari qilgan refaktoring tufayli xato xabarlarini chop
+etadigan barcha kodlar bitta `main` funktsiyada joylashgan. Rust standart kutubxonasi `eprintln!` makrosini
+taqdim etadi va bu makro standart xato oqimiga kiradi, shuning uchun `println!` bilan chaqirilgan joyda,
+keling uning o'rniga `eprintln!` makrosini ishlatamiz.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-24/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 12-24: Writing error messages to standard error
-instead of standard output using `eprintln!`</span>
+<span class="caption">Ro'yxat 12-24: `println!` yordamida Standard Output o'rniga Standard Error - da xato xabarlarini yozish!</span>
 
-Let’s now run the program again in the same way, without any arguments and
-redirecting standard output with `>`:
+Keling, dasturni xuddi shu tarzda, hech qanday dalilsiz (argumentsiz) qayta ishga
+tushiramiz va standart chiqishni (outputni) `>` bilan qayta yo'naltiramiz:
 
 ```console
 $ cargo run > output.txt
 Problem parsing arguments: not enough arguments
 ```
 
-Now we see the error onscreen and *output.txt* contains nothing, which is the
-behavior we expect of command line programs.
+Endi biz ekranda xatoni ko'rishimiz mumkin va *output.txt* esa bo'sh.
+Bu esa aynan buyruq qatoridan (cmd-dan) biz kutgan holat.
 
-Let’s run the program again with arguments that don’t cause an error but still
-redirect standard output to a file, like so:
+Keling, dasturni xatoga olib kelmaydigan argumentlar bilan qayta ishga tushiramiz,
+ammo baribir standart chiqish faylga yo'naltiradi, misol:
 
 ```console
 $ cargo run -- to poem.txt > output.txt
 ```
 
-We won’t see any output to the terminal, and *output.txt* will contain our
-results:
+Biz terminalga hech qanday chiqishni ko'rmaymiz. Va *output.txt* esa
+quydagi natijalarni o'z ichiga oladi:
 
-<span class="filename">Filename: output.txt</span>
+<span class="filename">Fayl: output.txt</span>
 
 ```text
 Are you nobody, too?
 How dreary to be somebody!
 ```
 
-This demonstrates that we’re now using standard output for successful output
-and standard error for error output as appropriate.
+Yani, biz vaziyatga qarab, muvaffaqiyatli chiqish (output) uchun 
+standart chiqish oqimidan va xatolarni chiqarish uchun standart xato oqimidan foydalanamiz.
 
-## Summary
+## Xulosa
 
-This chapter recapped some of the major concepts you’ve learned so far and
-covered how to perform common I/O operations in Rust. By using command line
-arguments, files, environment variables, and the `eprintln!` macro for printing
-errors, you’re now prepared to write command line applications. Combined with
-the concepts in previous chapters, your code will be well organized, store data
-effectively in the appropriate data structures, handle errors nicely, and be
-well tested.
+Ushbu bobda siz hozirgacha o'rgangan ba'zi asosiy tushunchalar takrorlangan va 
+Rustda muntazam I/O operatsiyalarini qanday bajarish kerakligi aytilgan.
+Buyruq qatori argumentlari (command line argumentlari), fayllar,
+atrof-muhit o'zgaruvchilari va `println!` makrosi yordamida xatolarni
+ishlatgan holda, endi siz buyruq qatori (CLI) dasturlarini yozishga tayyormiz.
+Oldingi boblardagi tushunchalar bilan birgalikda sizning kodingiz yaxshi tartibga solinadi,
+ma'lumotlarni tegishli tuzilmalarda samarali saqlaydi, xatolarni yaxshi qayta ishlaydi va yaxshi
+sinovdan o'tkaziladi.
 
-Next, we’ll explore some Rust features that were influenced by functional
-languages: closures and iterators.
+Keyinchalik, biz funktsional tillar ta'sirida bo'lgan Rust-ning
+ba'zi xususiyatlarini ko'rib chiqamiz: yopilishlar (closures) va iteratorlar.
