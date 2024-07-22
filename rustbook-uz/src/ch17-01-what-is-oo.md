@@ -1,113 +1,152 @@
-## Obyektga Yo'naltirilgan Dasturlash Xususiyatlari
+## Characteristics of Object-Oriented Languages
 
-Dasturlash jamiyatida bir tilni obyektga yo'naltirilgan deb hisoblash uchun qanday xususiyatlarga ega bo'lishi kerakligi haqida kelishuv yo'q. Rust ko'p
-dasturlash paradigmalaridan, jumladan OOPdan ilhomlangan; masalan, 13-bobda funksional dasturlashdan kelgan xususiyatlarni o'rgandik. Ehtimol, OOP
-tillari ma'lum umumiy xususiyatlarga ega, ya'ni obyektlar, inkapsulyatsiya va meros. Keling, har bir xususiyatning nimani anglatishini va Rust uni
-qo'llab-quvvatlaydimi yoki yo'qligini ko'rib chiqaylik.
+There is no consensus in the programming community about what features a
+language must have to be considered object-oriented. Rust is influenced by many
+programming paradigms, including OOP; for example, we explored the features
+that came from functional programming in Chapter 13. Arguably, OOP languages
+share certain common characteristics, namely objects, encapsulation, and
+inheritance. Let’s look at what each of those characteristics means and whether
+Rust supports it.
 
-### Obyektlar Ma'lumotlar va Xatti-harakatlarni O'z ichiga oladi
+### Objects Contain Data and Behavior
 
-Erich Gamma, Richard Helm, Ralph Johnson va John Vlissides tomonidan yozilgan *Design Patterns: Elements of Reusable Object-Oriented Software
-(Addison-Wesley Professional, 1994), oddiygina *The Gang of Four* deb ataladigan kitob, obyektga yo'naltirilgan dizayn shablonlarining katalogidir. U
-OOPni quyidagicha ta'riflaydi:
+The book *Design Patterns: Elements of Reusable Object-Oriented Software* by
+Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides (Addison-Wesley
+Professional, 1994), colloquially referred to as *The Gang of Four* book, is a
+catalog of object-oriented design patterns. It defines OOP this way:
 
-> Obyektga yo'naltirilgan dasturlar obyektlardan tashkil topgan. 
-> Bir *obyekt* ma'lumotlar va ushbu ma'lumotlar bilan ishlaydigan 
-> protseduralarni paketlaydi. Protseduralar odatda *metodlar*     
-> yoki *operatsiyalar* deb ataladi.
+> Object-oriented programs are made up of objects. An *object* packages both
+> data and the procedures that operate on that data. The procedures are
+> typically called *methods* or *operations*.
 
-Ushbu ta'rifga ko'ra, Rust obyektga yo'naltirilgan: structlar va enumlar ma'lumotlarga ega va `impl` bloklari structlar va enumlarda metodlar taqdim
-etadi. Garchi structlar va enumlar metodlar bilan *obyekt* deb atalmagan bo'lsa-da, ular The Gang of Four ta'rifiga ko'ra obyektlarning bir xil
-funksionalligini ta'minlaydi.
+Using this definition, Rust is object-oriented: structs and enums have data,
+and `impl` blocks provide methods on structs and enums. Even though structs and
+enums with methods aren’t *called* objects, they provide the same
+functionality, according to the Gang of Four’s definition of objects.
 
-### Amalga oshirish Tafsilotlarini Yashiruvchi Inkapsulyatsiya
+### Encapsulation that Hides Implementation Details
 
-OOP bilan odatda bog'liq bo'lgan yana bir jihat *inkapsulyatsiya* tushunchasi bo'lib, bu obyektning amalga oshirish tafsilotlari ushbu obyektni
-ishlatadigan kod uchun ochiq bo'lmasligini anglatadi. Shuning uchun, obyekt bilan o'zaro ta'sir qilishning yagona usuli uning ommaviy APIi orqali amalga
-oshiriladi; obyektni ishlatadigan kod obyektning ichki qismlariga kirib, ma'lumotlar yoki xatti-harakatlarni bevosita o'zgartira olmaydi. Bu dasturchiga
-obyektning ichki qismlarini o'zgartirish va refaktor qilish imkonini beradi, obyektdan foydalanadigan kodni o'zgartirmasdan.
+Another aspect commonly associated with OOP is the idea of *encapsulation*,
+which means that the implementation details of an object aren’t accessible to
+code using that object. Therefore, the only way to interact with an object is
+through its public API; code using the object shouldn’t be able to reach into
+the object’s internals and change data or behavior directly. This enables the
+programmer to change and refactor an object’s internals without needing to
+change the code that uses the object.
 
-7-bobda inkapsulyatsiyani qanday boshqarish mumkinligini muhokama qildik: biz `pub` kalit so'zidan foydalanib, kodimizdagi qaysi modullar, turlar,
-funksiyalar va metodlar ommaviy bo'lishi kerakligini va standart bo'lib hamma narsalar xususiy ekanligini hal qilishimiz mumkin. Masalan,
-`AveragedCollection` deb nomlangan structni aniqlashimiz mumkin, u `i32` qiymatlarining vektorini o'z ichiga oladi. Struct shuningdek, vektordagi
-qiymatlarning o'rtacha qiymatini o'z ichiga oluvchi maydonga ham ega bo'lishi mumkin, ya'ni o'rtacha qiymatga har safar ehtiyoj tug'ilganda hisoblanishi
-shart emas. Boshqacha qilib aytganda, `AveragedCollection` biz uchun hisoblangan o'rtacha qiymatni keshlaydi. 17-1 ro'yxatda `AveragedCollection`
-structining ta'rifi keltirilgan:
+We discussed how to control encapsulation in Chapter 7: we can use the `pub`
+keyword to decide which modules, types, functions, and methods in our code
+should be public, and by default everything else is private. For example, we
+can define a struct `AveragedCollection` that has a field containing a vector
+of `i32` values. The struct can also have a field that contains the average of
+the values in the vector, meaning the average doesn’t have to be computed
+on demand whenever anyone needs it. In other words, `AveragedCollection` will
+cache the calculated average for us. Listing 17-1 has the definition of the
+`AveragedCollection` struct:
 
-<span class="filename">Fayl nomi: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-01/src/lib.rs}}
 ```
 
-<span class="caption">Ro'yxat 17-1: `AveragedCollection` structi, integerlar ro'yxatini va yig'indi elementlarning o'rtacha qiymatini saqlaydi</span>
+<span class="caption">Listing 17-1: An `AveragedCollection` struct that
+maintains a list of integers and the average of the items in the
+collection</span>
 
-Struct `pub` deb belgilangan, shuning uchun boshqa kodlar uni ishlatishi mumkin, lekin struct ichidagi maydonlar xususiy bo'lib qoladi. Bu holda bu
-muhim, chunki biz ro'yxatga qiymat qo'shilgan yoki o'chirilganida o'rtacha qiymat ham yangilanishini ta'minlamoqchimiz. Buni biz `add`, `remove` va
-`average` metodlarini structga tatbiq etish orqali amalga oshiramiz, bu 17-2 ro'yxatda ko'rsatilgan:
+The struct is marked `pub` so that other code can use it, but the fields within
+the struct remain private. This is important in this case because we want to
+ensure that whenever a value is added or removed from the list, the average is
+also updated. We do this by implementing `add`, `remove`, and `average` methods
+on the struct, as shown in Listing 17-2:
 
-<span class="filename">Fayl nomi: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-02/src/lib.rs:here}}
 ```
 
-<span class="caption">Ro'yxat 17-2: `AveragedCollection` ustida ommaviy `add`, `remove` va `average` metodlarining amalga oshirilishi</span>
+<span class="caption">Listing 17-2: Implementations of the public methods
+`add`, `remove`, and `average` on `AveragedCollection`</span>
 
-`add`, `remove` va `average` ommaviy metodlar `AveragedCollection` nusxasidagi ma'lumotlarni kirish yoki o'zgartirishning yagona usuli. Element ro'yxatga
-`add` metodi orqali qo'shilganda yoki `remove` metodi orqali olib tashlanganda, har biri `average` maydonini yangilash bilan shug'ullanadigan xususiy
-`update_average` metodini chaqiradi.
+The public methods `add`, `remove`, and `average` are the only ways to access
+or modify data in an instance of `AveragedCollection`. When an item is added
+to `list` using the `add` method or removed using the `remove` method, the
+implementations of each call the private `update_average` method that handles
+updating the `average` field as well.
 
-`list` va `average` maydonlarini xususiy qilib qoldiramiz, shunda tashqi kod `list` maydoniga elementlar qo'shish yoki olib tashlash imkoniga ega
-bo'lmaydi; aks holda, `average` maydoni `list` o'zgarganda sinxronlashdan chiqib ketishi mumkin. 
-`average` metodi `average` maydonidagi qiymatni qaytaradi, tashqi kodga `average`ni o'qish imkonini beradi, lekin uni o'zgartirish imkonini bermaydi.
+We leave the `list` and `average` fields private so there is no way for
+external code to add or remove items to or from the `list` field directly;
+otherwise, the `average` field might become out of sync when the `list`
+changes. The `average` method returns the value in the `average` field,
+allowing external code to read the `average` but not modify it.
 
-Biz `AveragedCollection` structining amalga oshirish tafsilotlarini inkapsulyatsiya qilganimiz sababli, kelajakda uning jihatlarini osonlik bilan
-o'zgartirishimiz mumkin. Masalan, `list` maydoni uchun `Vec<i32>` o'rniga `HashSet<i32>` dan foydalanishimiz mumkin. `add`, `remove` va `average` ommaviy
-metodlarining imzolari o'zgarmagan holda, `AveragedCollection`dan foydalanadigan kodni o'zgartirish kerak bo'lmaydi. Agar `list`ni ommaviy qilsak, bu har
-doim ham shunday bo'lmaydi: `HashSet<i32>` va `Vec<i32>` elementlarni qo'shish va olib tashlash uchun turli xil metodlarga ega, shuning uchun `list`ni
-to'g'ridan-to'g'ri o'zgartirayotgan tashqi kod o'zgartirilishi kerak bo'ladi.
+Because we’ve encapsulated the implementation details of the struct
+`AveragedCollection`, we can easily change aspects, such as the data structure,
+in the future. For instance, we could use a `HashSet<i32>` instead of a
+`Vec<i32>` for the `list` field. As long as the signatures of the `add`,
+`remove`, and `average` public methods stay the same, code using
+`AveragedCollection` wouldn’t need to change. If we made `list` public instead,
+this wouldn’t necessarily be the case: `HashSet<i32>` and `Vec<i32>` have
+different methods for adding and removing items, so the external code would
+likely have to change if it were modifying `list` directly.
 
-Agar inkapsulyatsiya tilni obyektga yo'naltirilgan deb hisoblash uchun zaruriy xususiyat bo'lsa, Rust bu talabga javob beradi. Kodning turli qismlari
-uchun `pub`dan foydalanish yoki foydalanmaslik imkoniyati amalga oshirish tafsilotlarini inkapsulyatsiya qilish imkonini beradi.
+If encapsulation is a required aspect for a language to be considered
+object-oriented, then Rust meets that requirement. The option to use `pub` or
+not for different parts of code enables encapsulation of implementation details.
 
-### Merozdan foydalanish Tizimi va Kodni Ulashish Sifatida
+### Inheritance as a Type System and as Code Sharing
 
-*Meros olish* bu mexanizm bo'lib, bunda obyekt boshqa obyektning ta'rifidan elementlarni meros qilib oladi va shunday qilib, ota obyektning ma'lumotlari
-va xatti-harakatlarini qayta ta'riflashsiz oladi.
+*Inheritance* is a mechanism whereby an object can inherit elements from
+another object’s definition, thus gaining the parent object’s data and behavior
+without you having to define them again.
 
-Agar til obyektga yo'naltirilgan til deb hisoblanishi uchun meros olishga ega bo'lishi kerak bo'lsa, Rust bunday til emas. Ota structning maydonlari va
-metodlarini makrosiz meros qilib olishning hech qanday yo'li yo'q.
+If a language must have inheritance to be an object-oriented language, then
+Rust is not one. There is no way to define a struct that inherits the parent
+struct’s fields and method implementations without using a macro.
 
-Biroq, agar siz dasturlash vositangizda meros olishga ega bo'lishga odatlangan bo'lsangiz, Rustda boshqa echimlardan foydalanishingiz mumkin, bu meros
-olishga erishmoqchi bo'lgan sababingizga qarab o'zgaradi.
+However, if you’re used to having inheritance in your programming toolbox, you
+can use other solutions in Rust, depending on your reason for reaching for
+inheritance in the first place.
 
-Meros olishni tanlashning ikki asosiy sababi bor. Biri kodni qayta ishlatish uchun: siz bir tur uchun ma'lum xatti-harakatni amalga oshirishingiz mumkin
-va meros olish bu amalga oshirishni boshqa tur uchun qayta ishlatishga imkon beradi. Rust kodida siz buni cheklangan tarzda trait metodlari uchun 
-standart amalga oshirishlar yordamida amalga oshirishingiz mumkin, bu 10-14 ro'yxatda `Summary` traitida `summarize` metodining standart amalga
-oshirilishini qo'shganimizda ko'rsatilgan.
+You would choose inheritance for two main reasons. One is for reuse of code:
+you can implement particular behavior for one type, and inheritance enables you
+to reuse that implementation for a different type. You can do this in a limited
+way in Rust code using default trait method implementations, which you saw in
+Listing 10-14 when we added a default implementation of the `summarize` method
+on the `Summary` trait. Any type implementing the `Summary` trait would have
+the `summarize` method available on it without any further code. This is
+similar to a parent class having an implementation of a method and an
+inheriting child class also having the implementation of the method. We can
+also override the default implementation of the `summarize` method when we
+implement the `Summary` trait, which is similar to a child class overriding the
+implementation of a method inherited from a parent class.
 
- `Summary` traitini amalga oshirgan har qanday tur `summarize` metodiga ega bo'ladi, hech qanday qo'shimcha kod yozmasdan. Bu ota sinfning metodini
- amalga oshirishiga va meros qilib olingan bola sinfining metodni amalga oshirishiga o'xshaydi. `Summary` traitini amalga oshirganimizda `summarize`
- metodining standart amalga oshirilishini ham bekor qilishimiz mumkin, bu meros qilib olingan bola sinfi ota sinfdan meros qilib olingan metodni amalga
- oshirishini bekor qilishga o'xshaydi.
+The other reason to use inheritance relates to the type system: to enable a
+child type to be used in the same places as the parent type. This is also
+called *polymorphism*, which means that you can substitute multiple objects for
+each other at runtime if they share certain characteristics.
 
-Meros olishdan foydalanishning boshqa sababi turi tizimiga bog'liq: bola turini ota turi bilan bir xil joylarda ishlatishga imkon berish. Bu shuningdek
-*polimorfizm* deb ataladi, bu bir-birini almashtirish imkonini beradi, agar ular ma'lum xususiyatlarga ega bo'lsa.
-
-> ### Polimorfizm
+> ### Polymorphism
 >
-> Ko'pchilik uchun polimorfizm meros olish bilan sinonimdir. Ammo bu aslida ko'proq umumiy tushuncha bo'lib, u turli turlardagi ma'lumotlar bilan
-ishlaydigan kodni anglatadi. Meros olish uchun bu turlar odatda quyi sinflardir.
+> To many people, polymorphism is synonymous with inheritance. But it’s
+> actually a more general concept that refers to code that can work with data
+> of multiple types. For inheritance, those types are generally subclasses.
 >
-> Rust esa o'rniga turli xil turlar ustida abstraksiya qilish uchun generiklardan va bu turlarning nimani ta'minlashi kerakligini cheklash uchun trait
-cheklovlaridan foydalanadi. Bu ba'zan *cheklangan parametrik polimorfizm* deb ataladi.
+> Rust instead uses generics to abstract over different possible types and
+> trait bounds to impose constraints on what those types must provide. This is
+> sometimes called *bounded parametric polymorphism*.
 
-Meros olish ko'pincha dastur dizayn yechimi sifatida ko'plab dasturlash tillarida sevilmay qoldi, chunki u ko'pincha kerakli koddan ko'proq kodni ulash
-xavfini tug'diradi. Quyi sinflar har doim ham ota sinfining barcha xususiyatlarini ulashmasligi kerak, ammo meros olishda shunday bo'ladi. Bu dastur
-dizaynini kamroq moslashuvchan qiladi. Shuningdek, bu quyi sinfda metodlarni chaqirish imkoniyatini beradi, bu metodlar quyi sinfga mos kelmasligi yoki
-xatolarga olib kelishi mumkin, chunki metodlar quyi sinfga tatbiq etilmaydi. Bundan tashqari, ba'zi tillar faqat yagona meros olishga ruxsat beradi (bu
-quyi sinf faqat bitta sinfdan meros olishi mumkinligini anglatadi), bu esa dastur dizaynining moslashuvchanligini yanada cheklaydi.
+Inheritance has recently fallen out of favor as a programming design solution
+in many programming languages because it’s often at risk of sharing more code
+than necessary. Subclasses shouldn’t always share all characteristics of their
+parent class but will do so with inheritance. This can make a program’s design
+less flexible. It also introduces the possibility of calling methods on
+subclasses that don’t make sense or that cause errors because the methods don’t
+apply to the subclass. In addition, some languages will only allow single
+inheritance (meaning a subclass can only inherit from one class), further
+restricting the flexibility of a program’s design.
 
-Ushbu sabablarga ko'ra, Rust meros olish o'rniga trait obyektlaridan foydalanish yo'lini tanlaydi. Keling, Rustda trait obyektlari qanday qilib
-polimorfizmni ta'minlashini ko'rib chiqaylik.
+For these reasons, Rust takes the different approach of using trait objects
+instead of inheritance. Let’s look at how trait objects enable polymorphism in
+Rust.
