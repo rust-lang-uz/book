@@ -1,13 +1,12 @@
-## Extensible Concurrency with the `Sync` and `Send` Traits
+## "Sinxronlash" va "Yuborish" xususiyatlari bilan kengaytiriladigan parallellik
 
-Interestingly, the Rust language has *very* few concurrency features. Almost
-every concurrency feature we’ve talked about so far in this chapter has been
-part of the standard library, not the language. Your options for handling
-concurrency are not limited to the language or the standard library; you can
-write your own concurrency features or use those written by others.
+Qizig'i shundaki, Rust dasturlash tilida bir vaqtning o'zida * juda kam sonli paralellik xususiyatlar mavjud. 
+Deyarli ushbu bobdni o'zida biz hozirgacha gaplashgan har bir parallellik xususiyati standart kutubxonaning bir qismi edi tilni emas. Paralellilikni boshqarish uchun  tilning  o'zida yoki standart kutubxonada sizning imkoniyatlaringiz cheklanmagan.
+Siz o'zingizni paralellik hususiyatlaringizni yozishingiz mumkun yoki boshqalar tarafidan yozilganlaridan foydalanishingiz mumkun.
 
-However, two concurrency concepts are embedded in the language: the
-`std::marker` traits `Sync` and `Send`.
+Biroq, tilga ikkita parallellik tushunchasi kiritilgan bu holatda: 
+`std::marker` o'ziga `Sinxron` va `Yuborish` hususiyatlarini olgan.
+
 
 ### Allowing Transference of Ownership Between Threads with `Send`
 
