@@ -86,22 +86,23 @@ kutubxona yaratamiz va joriy qiymat maksimal qiymatga qanchalik yaqinligiga qara
 xabar jo'natib turadi. Ushbu kutubxona foydalanuvchi uchun ruxsat etilgan API 'call'lar sonini
 kuzatib borish uchun ishlatilishi mumkin, bu ishlatish mumkin bo'lgan bir misol.
 
-Our library will only provide the functionality of tracking how close to the
-maximum a value is and what the messages should be at what times. Applications
-that use our library will be expected to provide the mechanism for sending the
-messages: the application could put a message in the application, send an
-email, send a text message, or something else. The library doesn’t need to know
-that detail. All it needs is something that implements a trait we’ll provide
-called `Messenger`. Listing 15-20 shows the library code:
+Bizning kutubxonamiz faqatgina qiymatni maksimal qiymatga qanchalik yaqin ekanligi
+va qaysi vaqtda qaysi xabar jo'natilishini kuzatib turish imkonini beredi. Bizning
+kutubxonamizdan foydalanadigan ilovalar xabar jo'natish mexanizmini ta'minlashini
+talab qiladi, ya'ni ilova xabarni ilova ichida, email orqali, matnli xabar ko'rinishida
+yoki boshqa ko'rinishda yuborishi mumkin. Kutubxona ushbu tafsilotlarni bilishi talab etilmaydi.
+Kutubxona uchun biz tomonimizdan qo'llaniladigan `Messenger` traitini implementatsiya qiladigan
+narsa kerak xolos.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Faylnomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-20/src/lib.rs}}
 ```
 
-<span class="caption">Listing 15-20: A library to keep track of how close a
-value is to a maximum value and warn when the value is at certain levels</span>
+<span class="caption">15-20-ro'yxat: Qiymatni qanchalik maksimal qiymatga yaqinligini kuzatish va kerakli darajaga 
+yetganda ogohlantiruvchi kutubxona</span>
+
 
 One important part of this code is that the `Messenger` trait has one method
 called `send` that takes an immutable reference to `self` and the text of the
