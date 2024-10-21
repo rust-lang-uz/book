@@ -1,2 +1,2 @@
-# i10n
+# l10n
 Rust Programming Language localization project
