@@ -88,15 +88,15 @@ a request to it, and returns the text of the title element:
 
 In Listing 17-1, we define a function named `page_title`, and we mark it with
 the `async` keyword. Then we use the `trpl::get` function to fetch whatever URL
-is passed in, and, and we await the response by using the `await` keyword. Then
-we get the text of the response by calling its `text` method and once again
-awaiting it with the `await` keyword. Both of these steps are asynchronous. For
-`get`, we need to wait for the server to send back the first part of its
-response, which will include HTTP headers, cookies, and so on. That part of the
-response can be delivered separately from the body of the request. Especially if
-the body is very large, it can take some time for it all to arrive. Thus, we
-have to wait for the *entirety* of the response to arrive, so the `text` method
-is also async.
+is passed in, and we await the response by using the `await` keyword. Then we
+get the text of the response by calling its `text` method, and once again await
+it with the `await` keyword. Both of these steps are asynchronous. For `get`,
+we need to wait for the server to send back the first part of its response,
+which will include HTTP headers, cookies, and so on. That part of the response
+can be delivered separately from the body of the request. Especially if the
+body is very large, it can take some time for it all to arrive. Thus, we have
+to wait for the *entirety* of the response to arrive, so the `text` method is
+also async.
 
 We have to explicitly await both of these futures, because futures in Rust are
 *lazy*: they don’t do anything until you ask them to with `await`. (In fact,
@@ -259,7 +259,7 @@ await the result of calling `page_title`, as in Listing 17-4.
 
 <Listing number="17-4" caption="Awaiting an async block with `trpl::run`" file-name="src/main.rs">
 
-<!-- should_panic,noplayground because mdbook does not pass args -->
+<!-- should_panic,noplayground because mdbook test does not pass args -->
 
 ```rust,should_panic,noplayground
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-04/src/main.rs:run}}
@@ -269,8 +269,19 @@ await the result of calling `page_title`, as in Listing 17-4.
 
 When we run this, we get the behavior we might have expected initially:
 
+<!-- manual-regeneration
+cd listings/ch17-async-await/listing-17-04
+cargo build # skip all the build noise
+cargo run https://www.rust-lang.org
+# copy the output here
+-->
+
 ```console
-{{#include ../listings/ch17-async-await/listing-17-04/output.txt}}
+$ cargo run -- https://www.rust-lang.org
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running `target/debug/async_await 'https://www.rust-lang.org'`
+The title for https://www.rust-lang.org was
+            Rust Programming Language
 ```
 
 Phew: we finally have some working async code! This now compiles, and we can run
