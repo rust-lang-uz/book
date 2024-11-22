@@ -1,89 +1,73 @@
-## Extensible Concurrency with the `Sync` and `Send` Traits
+## Kengaytirilgan parallellik (konkurensiya) bilan `Sinxronlash`(Sync) va  `Jonatish`(Send) xususiyatlari
 
-Interestingly, the Rust language has *very* few concurrency features. Almost
-every concurrency feature we’ve talked about so far in this chapter has been
-part of the standard library, not the language. Your options for handling
-concurrency are not limited to the language or the standard library; you can
-write your own concurrency features or use those written by others.
+Qiziqroq qilib aytganda, Rust tilida juda kam konkurentlik talabiga javob bera oladigan xususiyatlar bor. Biz shu vaqtgacha, avvalgi bolimlarda korib
+chiqqan deyarli barcha xususiyatlar standard kutubxonaga tegishli xususiyatlar hisoblanadi, tilga(Rustga) emas. Sizning parallellik(konkurensiya) bilan
+musobatingiz Rust tiliga yoki standardlashtirilgan kutubxonaga cheklanmagan. Siz oziznikini yozishingiz yoki boshqalar tomonidan yozilganini olishingiz
+mumkin.
 
-However, two concurrency concepts are embedded in the language: the
-`std::marker` traits `Sync` and `Send`.
+Ammo, tilga 2 ta parallellik konsepsiya(metodologiya, tushuncha) lari kiritilgan:
+`std::marker`  xususiyatlari `Sync`(sinxronlash) va `Send`(jonatish).
 
-### Allowing Transference of Ownership Between Threads with `Send`
+### `Send`(Jonatish) orqali egalikni Threadlarga kochirish
 
-The `Send` marker trait indicates that ownership of values of the type
-implementing `Send` can be transferred between threads. Almost every Rust type
-is `Send`, but there are some exceptions, including `Rc<T>`: this cannot be
-`Send` because if you cloned an `Rc<T>` value and tried to transfer ownership
-of the clone to another thread, both threads might update the reference count
-at the same time. For this reason, `Rc<T>` is implemented for use in
-single-threaded situations where you don’t want to pay the thread-safe
-performance penalty.
+`Send`(Yuborish) belgisi xususiyati Jonatishni amalga oshiruvchi turdagi qiymatlarga egalik huquqini threadlar o'rtasida o'tkazish mumkinligini
+ko'rsatadi. Deyarli har bir Rust turi `Send`(Yuborish), lekin ba'zi istisnolar mavjud, masalan `Rc<T>`: buni `Send`(Yuborish) bo’lmaydi, chunki agar siz
+`Rc<T>` qiymatini klonlashtirsangiz va klonga egalik huquqini boshqa threadga o'tkazmoqchi bo'lsangiz, ikkala threadlar ham reference sonini yangilishi
+mumkin. Shu sabablisiz i `Rc<T>`  bitta oqimli holatlarda foydalanish uchun amalga oshiriladi qayerdaki siz jarima (thread-xavfsizligi uchun) tolashni
+istamasangiz.
 
-Therefore, Rust’s type system and trait bounds ensure that you can never
-accidentally send an `Rc<T>` value across threads unsafely. When we tried to do
-this in Listing 16-14, we got the error `the trait Send is not implemented for
-Rc<Mutex<i32>>`. When we switched to `Arc<T>`, which is `Send`, the code
-compiled.
+Shu sababli, Rustning turga asoslangan tizimi va belgilar chegaralari hech qachon tasodifan `Rc<T>` qiymatini threadlar bo'ylab xavfsiz tarzda yubora
+olmasligingizni ta'minlaydi. Buni 16-14-raqamli roʻyxatda qilishga urinib koʻrganimizda, Rc<Mutex<i32>> uchun Jo’natish(Send)  xususiyati qoʻllanilmagan
+degan xatoga duch keldik. `Arc<T>`-ga, ya'ni `Send`-g(Jonatishga)a o'tganimizda, kod tuzildi.
 
-Any type composed entirely of `Send` types is automatically marked as `Send` as
-well. Almost all primitive types are `Send`, aside from raw pointers, which
-we’ll discuss in Chapter 19.
+To'liq `Send`(Yuborish) turlaridan tashkil topgan har qanday tur avtomatik ravishda `Send`(Yuborish) sifatida ham belgilanadi. Deyarli barcha ibtidoiy
+turlar, biz 19-bobda muhokama qiladigan xom(primitive) ko'rsatkichlardan tashqari, `Send`(Yuborishdir).
 
-### Allowing Access from Multiple Threads with `Sync`
+### `Sync`(Sinxronizatsiya) bilan bir nechta mavzulardan kirishga ruxsat berish
 
-The `Sync` marker trait indicates that it is safe for the type implementing
-`Sync` to be referenced from multiple threads. In other words, any type `T` is
-`Sync` if `&T` (an immutable reference to `T`) is `Send`, meaning the reference
-can be sent safely to another thread. Similar to `Send`, primitive types are
-`Sync`, and types composed entirely of types that are `Sync` are also `Sync`.
+`Sync`(Sinxronlash) belgisi xususiyati Sinxronizatsiyani amalga oshiruvchi turga bir nechta oqimlardan havola qilish xavfsiz ekanligini ko'rsatadi.
+Boshqacha qilib aytganda, agar `&T` (T ga o'zgarmas havola) Send bo'lsa, har qanday `T` turi Sinxronizatsiya hisoblanadi, ya'ni havola boshqa oqimga
+xavfsiz yuborilishi mumkin. Yuborishga o'xshab, primitive turlar Sync(Sinxrondir) va to'liq `Sync`(Sinxronlashtirilgan) turlardan tashkil topgan turlar
+ham `Sync`(Sinxrondir).
 
-The smart pointer `Rc<T>` is also not `Sync` for the same reasons that it’s not
-`Send`. The `RefCell<T>` type (which we talked about in Chapter 15) and the
-family of related `Cell<T>` types are not `Sync`. The implementation of borrow
-checking that `RefCell<T>` does at runtime is not thread-safe. The smart
-pointer `Mutex<T>` is `Sync` and can be used to share access with multiple
-threads as you saw in the [“Sharing a `Mutex<T>` Between Multiple
-Threads”][sharing-a-mutext-between-multiple-threads]<!-- ignore --> section.
+`Rc<T>` aqlli ko'rsatkichi ham xuddi shu sabablarga ko'ra `Sync`(Sinxronlashtirilmaydi), chunki u Send(Yuborish) emas. `RefCell<T>` turi (bu haqda biz
+15-bobda gaplashdik) va tegishli `Cell<T>` turlari oilasi `Sync`(Sinxronlash) emas. `RefCell<T>` ish vaqtida bajaradigan qarzni tekshirishni amalga
+oshirish thread uchun xavfsiz emas. `Mutex<T>` aqlli ko'rsatkichi `Sync`(Sinxronlashdir) va Bir nechta mavzular o'rtasida `Mutex<T>` almashish bo'limida
+ko'rganingizdek, bir nechta oqimlar bilan kirishni almashish uchun ishlatilishi mumkin.
 
-### Implementing `Send` and `Sync` Manually Is Unsafe
+### `Send`(Yuborish) va `Sync`(Sinxronizatsiya) ni qo'lda amalga oshirish xavfli
 
-Because types that are made up of `Send` and `Sync` traits are automatically
-also `Send` and `Sync`, we don’t have to implement those traits manually. As
-marker traits, they don’t even have any methods to implement. They’re just
-useful for enforcing invariants related to concurrency.
+Send(Yuborish) va Sync(Sinxronlash) xususiyatlaridan tashkil topgan turlar avtomatik ravishda Send(Yuborish) va Sync(Sinxronlash) xususiyatiga ega
+boʻlgani uchun biz bu xususiyatlarni qoʻlda amalga oshirishimiz shart emas. Belgilovchi xususiyatlar sifatida ular hatto amalga oshirish uchun hech
+qanday usullarga ega emaslar. Ular parallellik bilan bog'liq invariantlarni qo'llash uchun foydalidir.
 
-Manually implementing these traits involves implementing unsafe Rust code.
-We’ll talk about using unsafe Rust code in Chapter 19; for now, the important
-information is that building new concurrent types not made up of `Send` and
-`Sync` parts requires careful thought to uphold the safety guarantees. [“The
-Rustonomicon”][nomicon] has more information about these guarantees and how to
-uphold them.
+Ushbu xususiyatlarni qo'lda amalga oshirish xavfli Rust kodini amalga oshirishni o'z ichiga oladi. 19-bobda xavfli Rust kodidan foydalanish haqida
+gaplashamiz; Hozircha muhim ma'lumot shundaki, `Send`(Yuborish) va `Sync`(Sinxronlash) qismlaridan iborat bo'lmagan yangi bir vaqtda turlarni yaratish
+xavfsizlik kafolatlarini ta'minlash uchun ehtiyotkorlik bilan o'ylashni talab qiladi. "Rustonomicon" ushbu kafolatlar va ularni qanday saqlash kerakligi
+haqida ko'proq ma'lumotga ega ular.
 
-## Summary
+## Xulosa
 
-This isn’t the last you’ll see of concurrency in this book: the project in
-Chapter 20 will use the concepts in this chapter in a more realistic situation
-than the smaller examples discussed here.
+Bu siz ushbu kitobda mos kelishini ko'rgan oxirgi narsa emas: 20-bobdagi loyiha bu bobdagi tushunchalardan bu erda muhokama qilingan kichikroq misollarga
+qaraganda realroq vaziyatda foydalanadi.
 
-As mentioned earlier, because very little of how Rust handles concurrency is
-part of the language, many concurrency solutions are implemented as crates.
-These evolve more quickly than the standard library, so be sure to search
-online for the current, state-of-the-art crates to use in multithreaded
-situations.
+Yuqorida aytib o'tganimizdek, Rustning parallellikni qanday boshqarishi tilning bir qismi bo'lganligi sababli, ko'plab parallellik echimlari qutilar
+sifatida amalga oshiriladi. Ular standart kutubxonaga qaraganda tezroq rivojlanadi, shuning uchun ko'p tarmoqli vaziyatlarda foydalanish uchun joriy, eng
+zamonaviy qutilarni onlayn qidirib toping.
 
-The Rust standard library provides channels for message passing and smart
-pointer types, such as `Mutex<T>` and `Arc<T>`, that are safe to use in
-concurrent contexts. The type system and the borrow checker ensure that the
-code using these solutions won’t end up with data races or invalid references.
-Once you get your code to compile, you can rest assured that it will happily
-run on multiple threads without the kinds of hard-to-track-down bugs common in
-other languages. Concurrent programming is no longer a concept to be afraid of:
-go forth and make your programs concurrent, fearlessly!
+Rust standart kutubxonasi bir vaqtda kontekstlarda foydalanish uchun xavfsiz bo'lgan `Mutex<T>` va `Arc<T>` kabi xabarlarni uzatish va aqlli ko'rsatkich
+turlari uchun kanallarni taqdim etadi. Tur tizimi va qarz tekshiruvi ushbu echimlardan foydalanadigan kod ma'lumotlar poygasi yoki noto'g'ri havolalar
+bilan yakunlanmasligini ta'minlaydi. Kodingizni kompilyatsiya qilish uchun olganingizdan so'ng, u boshqa tillarda tez-tez uchraydigan kuzatilishi qiyin
+bo'lgan xatolarsiz bir nechta mavzularda baxtli ishlashiga amin bo'lishingiz mumkin. Bir vaqtning o'zida dasturlash endi qo'rqadigan tushuncha emas:
+oldinga boring va dasturlaringizni qo'rqmasdan bir vaqtda qiling!
 
-Next, we’ll talk about idiomatic ways to model problems and structure solutions
-as your Rust programs get bigger. In addition, we’ll discuss how Rust’s idioms
-relate to those you might be familiar with from object-oriented programming.
+Keyinchalik, Rust dasturlaringiz kattalashib borishi bilan muammolarni modellashtirish va echimlarni tuzishning idiomatik usullari haqida gaplashamiz.
+Bundan tashqari, biz Rustning idiomalari sizga object-oriented programming(ob'ektga yo'naltirilgan dasturlashdan) tanish bo'lgan narsalar bilan qanday
+bog'liqligini muhokama qilamiz.
+
+[sharing-a-mutext-between-multiple-threads]:
+ch16-03-shared-state.html#sharing-a-mutext-between-multiple-threads
+[nomicon]: ../nomicon/index.html
 
 [sharing-a-mutext-between-multiple-threads]:
 ch16-03-shared-state.html#sharing-a-mutext-between-multiple-threads
