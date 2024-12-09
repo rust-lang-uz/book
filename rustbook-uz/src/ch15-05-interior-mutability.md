@@ -115,6 +115,9 @@ able to say that if we create a `LimitTracker` with something that implements
 the `Messenger` trait and a particular value for `max`, when we pass different
 numbers for `value`, the messenger is told to send the appropriate messages.
 
+Ushbu kodning e'tiborli tomoni shundaki `Messenger` traitining `send` nomli metodi xabarning matni hamda`self`ga o'zgarmas referensni oladi. Ushbu trait bizning soxta obyektimizning implementatisiyasi
+uchun kerak bo'lgan interfeys hisoblanadi, shu xolatda soxta obyekt haqiqiy obyektga o'xshab ishlatilishi mumkin. Yana bir muhim tomoni shundaki, biz `set_value`ni ko'rinishini `LimitTracker` orqali ko'rishimiz mumkin.  Biz xohlaganimizcha o'tkazayotganimizni `value` parametri uchun o'zgartirishimiz mumkin, lekin `set_value` biz da'vo qilishimiz mumkin bo'lgan narsani return qilmaydi. Agar biz `Messenger` traitini implementatisiya qiladigan va ma'lum bir qiymatga ega bo'lgan `LimitTracker` yaratsak, `value` uchun turli raqamlar berganimizda, xabar kerakli xabar ko'rinishida jo'natildi deya olishni xohlaymiz.
+
 We need a mock object that, instead of sending an email or text message when we
 call `send`, will only keep track of the messages it’s told to send. We can
 create a new instance of the mock object, create a `LimitTracker` that uses the
