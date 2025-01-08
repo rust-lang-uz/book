@@ -114,13 +114,6 @@ lekin `set_value` biz da'vo qilishimiz mumkin bo'lgan narsani return qilmaydi. A
 yaratsak, `value` uchun turli raqamlar berganimizda, xabar kerakli xabar ko'rinishida jo'natildi 
 deya olishni xohlaymiz.
 
-We need a mock object that, instead of sending an email or text message when we
-call `send`, will only keep track of the messages it’s told to send. We can
-create a new instance of the mock object, create a `LimitTracker` that uses the
-mock object, call the `set_value` method on `LimitTracker`, and then check that
-the mock object has the messages we expect. Listing 15-21 shows an attempt to
-implement a mock object to do just that, but the borrow checker won’t allow it:
-
 Pochta orqali yoki matn xabar orqali xabar jo'natish o'rniga biz `send` ni ishga tushurib yuborilishi kerak bo'lgan xabarni 
 kuzatish uchun soxta obyekt kerak bo'ladi. Obyektning yangi namunasini yaratishimiz mumkin, soxta obyektdan foydalanadigan 
 `LimitTracker` yaratib, `LimitTracker`da `set_value` metodini qo'llashimiz va soxta obyekt biz kutgan xabar bor yoki yo'qligin 
