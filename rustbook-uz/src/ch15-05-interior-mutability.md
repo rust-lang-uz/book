@@ -103,20 +103,16 @@ narsa kerak xolos.
 <span class="caption">15-20-ro'yxat: Qiymatni qanchalik maksimal qiymatga yaqinligini kuzatish va kerakli darajaga 
 yetganda ogohlantiruvchi kutubxona</span>
 
-
-One important part of this code is that the `Messenger` trait has one method
-called `send` that takes an immutable reference to `self` and the text of the
-message. This trait is the interface our mock object needs to implement so that
-the mock can be used in the same way a real object is. The other important part
-is that we want to test the behavior of the `set_value` method on the
-`LimitTracker`. We can change what we pass in for the `value` parameter, but
-`set_value` doesn’t return anything for us to make assertions on. We want to be
-able to say that if we create a `LimitTracker` with something that implements
-the `Messenger` trait and a particular value for `max`, when we pass different
-numbers for `value`, the messenger is told to send the appropriate messages.
-
-Ushbu kodning e'tiborli tomoni shundaki `Messenger` traitining `send` nomli metodi xabarning matni hamda`self`ga o'zgarmas referensni oladi. Ushbu trait bizning soxta obyektimizning implementatisiyasi
-uchun kerak bo'lgan interfeys hisoblanadi, shu xolatda soxta obyekt haqiqiy obyektga o'xshab ishlatilishi mumkin. Yana bir muhim tomoni shundaki, biz `set_value`ni ko'rinishini `LimitTracker` orqali ko'rishimiz mumkin.  Biz xohlaganimizcha o'tkazayotganimizni `value` parametri uchun o'zgartirishimiz mumkin, lekin `set_value` biz da'vo qilishimiz mumkin bo'lgan narsani return qilmaydi. Agar biz `Messenger` traitini implementatisiya qiladigan va ma'lum bir qiymatga ega bo'lgan `LimitTracker` yaratsak, `value` uchun turli raqamlar berganimizda, xabar kerakli xabar ko'rinishida jo'natildi deya olishni xohlaymiz.
+Ushbu kodning e'tiborli tomoni shundaki `Messenger` traitining `send` nomli metodi 
+xabarning matni hamda`self`ga o'zgarmas referensni oladi. Ushbu trait bizning soxta 
+obyektimizning implementatisiyasi uchun kerak bo'lgan interfeys hisoblanadi, shu 
+holatda soxta obyekt haqiqiy obyektga o'xshab ishlatilishi mumkin. Yana bir muhim 
+tomoni shundaki, biz `set_value`ni ko'rinishini `LimitTracker` orqali ko'rishimiz mumkin.  
+Biz xohlaganimizcha o'tkazayotganimizni `value` parametri uchun o'zgartirishimiz mumkin, 
+lekin `set_value` biz da'vo qilishimiz mumkin bo'lgan narsani return qilmaydi. Agar biz 
+`Messenger` traitini implementatisiya qiladigan va ma'lum bir qiymatga ega bo'lgan `LimitTracker` 
+yaratsak, `value` uchun turli raqamlar berganimizda, xabar kerakli xabar ko'rinishida jo'natildi 
+deya olishni xohlaymiz.
 
 We need a mock object that, instead of sending an email or text message when we
 call `send`, will only keep track of the messages it’s told to send. We can
@@ -125,18 +121,23 @@ mock object, call the `set_value` method on `LimitTracker`, and then check that
 the mock object has the messages we expect. Listing 15-21 shows an attempt to
 implement a mock object to do just that, but the borrow checker won’t allow it:
 
-<span class="filename">Filename: src/lib.rs</span>
+Pochta orqali yoki matn xabar orqali xabar jo'natish o'rniga biz `send` ni ishga tushurib yuborilishi kerak bo'lgan xabarni 
+kuzatish uchun soxta obyekt kerak bo'ladi. Obyektning yangi namunasini yaratishimiz mumkin, soxta obyektdan foydalanadigan 
+`LimitTracker` yaratib, `LimitTracker`da `set_value` metodini qo'llashimiz va soxta obyekt biz kutgan xabar bor yoki yo'qligin 
+tekshirib ko'ramiz. 15-21-ro'yxat soxta obyekt implementatsiya qilishga urinishi, lekin borrow tekshiruvchi ruxsat bermasligi ko'rsatilgan: 
+
+<span class="filename">Faylnomi: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-21/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 15-21: An attempt to implement a `MockMessenger`
-that isn’t allowed by the borrow checker</span>
+<span class="caption">15-21-ro'yxat: `MockMessenger`ning implementatsiya qilishga urinishi, ammo borrow checker bunga ruxsat bermayotgaligi ko'rsatilgan</span>
 
 This test code defines a `MockMessenger` struct that has a `sent_messages`
 field with a `Vec` of `String` values to keep track of the messages it’s told
 to send. We also define an associated function `new` to make it convenient to
+create new `MockMessenger` values that start with an empty list of messages. We
 create new `MockMessenger` values that start with an empty list of messages. We
 then implement the `Messenger` trait for `MockMessenger` so we can give a
 `MockMessenger` to a `LimitTracker`. In the definition of the `send` method, we
