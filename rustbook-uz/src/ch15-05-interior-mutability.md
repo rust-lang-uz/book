@@ -137,6 +137,11 @@ then implement the `Messenger` trait for `MockMessenger` so we can give a
 take the message passed in as a parameter and store it in the `MockMessenger`
 list of `sent_messages`.
 
+Ushbu test kodi “Sent_messages” maydoniga ega boʻlgan “MockMessenger” strukturasini belgilaydi, u “Vec” “String” qiymatlari bilan joʻnatilishi kerak boʻlgan xabarlarni kuzatib boradi. Shuningdek, biz bo'sh xabarlar ro'yxati bilan boshlanadigan yangi "MockMessenger" qiymatlarini yaratishni qulay qilish uchun "yangi" funksiyasini aniqlaymiz. Biz bo'sh xabarlar ro'yxati bilan boshlanadigan yangi MockMessenger qiymatlarini yaratamiz. Keyin biz “LimitTracker” ga “MockMessenger”ni berishimiz uchun “MockMessenger” uchun “Messenger” xususiyatini amalga oshiramiz. “Yuborish” usulining taʼrifida biz uzatilgan xabarni parametr sifatida qabul qilamiz va uni “sent_messages”ning “MockMessenger” roʻyxatida saqlaymiz.
+
+Ushbu test kodimiz `MockMessenger` structi `String`ning `Vec`bilan `sent_messages`maydoniga ega bo'lgan
+qiymatlarni 
+
 In the test, we’re testing what happens when the `LimitTracker` is told to set
 `value` to something that is more than 75 percent of the `max` value. First, we
 create a new `MockMessenger`, which will start with an empty list of messages.
