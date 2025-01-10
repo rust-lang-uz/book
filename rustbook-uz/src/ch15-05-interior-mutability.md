@@ -127,20 +127,7 @@ tekshirib ko'ramiz. 15-21-ro'yxat soxta obyekt implementatsiya qilishga urinishi
 
 <span class="caption">15-21-ro'yxat: `MockMessenger`ning implementatsiya qilishga urinishi, ammo borrow checker bunga ruxsat bermayotgaligi ko'rsatilgan</span>
 
-This test code defines a `MockMessenger` struct that has a `sent_messages`
-field with a `Vec` of `String` values to keep track of the messages it’s told
-to send. We also define an associated function `new` to make it convenient to
-create new `MockMessenger` values that start with an empty list of messages. We
-create new `MockMessenger` values that start with an empty list of messages. We
-then implement the `Messenger` trait for `MockMessenger` so we can give a
-`MockMessenger` to a `LimitTracker`. In the definition of the `send` method, we
-take the message passed in as a parameter and store it in the `MockMessenger`
-list of `sent_messages`.
-
-Ushbu test kodi “Sent_messages” maydoniga ega boʻlgan “MockMessenger” strukturasini belgilaydi, u “Vec” “String” qiymatlari bilan joʻnatilishi kerak boʻlgan xabarlarni kuzatib boradi. Shuningdek, biz bo'sh xabarlar ro'yxati bilan boshlanadigan yangi "MockMessenger" qiymatlarini yaratishni qulay qilish uchun "yangi" funksiyasini aniqlaymiz. Biz bo'sh xabarlar ro'yxati bilan boshlanadigan yangi MockMessenger qiymatlarini yaratamiz. Keyin biz “LimitTracker” ga “MockMessenger”ni berishimiz uchun “MockMessenger” uchun “Messenger” xususiyatini amalga oshiramiz. “Yuborish” usulining taʼrifida biz uzatilgan xabarni parametr sifatida qabul qilamiz va uni “sent_messages”ning “MockMessenger” roʻyxatida saqlaymiz.
-
-Ushbu test kodimiz `MockMessenger` structi `String`ning `Vec`bilan `sent_messages`maydoniga ega bo'lgan
-qiymatlarni 
+Ushbu test kodimiz `Sent_messages` maydoniga ega boʻlgan `MockMessenger` strukturasini belgilaydi va u `Vec`ga ega bo'lgan `String` qiymatlari bilan joʻnatilishi kerak boʻlgan xabarlarni kuzatib boradi. Shuningdek, biz bo'sh xabarlar ro'yxati bilan boshlanadigan yangi `MockMessenger` qiymatlarini yaratishni qulay qilish uchun `yangi` funksiyasini aniqlaymiz. Biz bo'sh xabarlar ro'yxati bilan boshlanadigan yangi MockMessenger qiymatlarini yaratamiz. Keyin biz `LimitTracker` ga `MockMessenger`ni berishimiz uchun `MockMessenger` uchun “Messenger” xususiyatini amalga oshiramiz. `send` usulining taʼrifida biz uzatilgan xabarni parametr sifatida qabul qilamiz va uni `sent_messages`ning `MockMessenger` roʻyxatida saqlaymiz. 
 
 In the test, we’re testing what happens when the `LimitTracker` is told to set
 `value` to something that is more than 75 percent of the `max` value. First, we
