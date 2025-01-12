@@ -140,20 +140,13 @@ of should now have one message in it.
 
 Sinovda biz “LimitTracker”ga “qiymat”ni “maksimal” qiymatining 75 foizidan ko‘prog‘iga o‘rnatish buyurilganda nima sodir bo‘lishini sinab ko‘ramiz. Birinchidan, biz yangi "MockMessenger" ni yaratamiz, u xabarlarning bo'sh ro'yxati bilan boshlanadi. Keyin biz yangi `LimitTracker` yaratamiz va unga yangi `MockMessenger` va `max` qiymati 100 ga havola beramiz. 100ning 75 foizi. Keyin biz “MockMessenger” kuzatayotgan xabarlar roʻyxatida bitta xabar boʻlishi kerakligini taʼkidlaymiz. unda.
 
-However, there’s one problem with this test, as shown here:
 Biroq, bu testda ko'rsatilganidek, bitta muammo bor:
 
 ```console
 {{#include ../listings/ch15-smart-pointers/listing-15-21/output.txt}}
 ```
 
-We can’t modify the `MockMessenger` to keep track of the messages, because the
-`send` method takes an immutable reference to `self`. We also can’t take the
-suggestion from the error text to use `&mut self` instead, because then the
-signature of `send` wouldn’t match the signature in the `Messenger` trait
-definition (feel free to try and see what error message you get).
-
-Biz “MockMessenger”ni xabarlarni kuzatib borish uchun o‘zgartira olmaymiz, chunki “yuborish” usuli “o‘z”ga o‘zgarmas havolani oladi. Shuningdek, xato matnidagi “&mut self” dan foydalanish taklifini qabul qila olmaymiz, chunki “yuborish” imzosi “Messenger” xususiyati taʼrifidagi imzoga toʻgʻri kelmasdi (xato boʻlganini koʻring. xabar olasiz).
+Biz `MockMessenger`ni xabarlarni kuzatib borish uchun o‘zgartira olmaymiz, chunki `send` metodi `self`ga o'zgarmas refernce oladi. Shuningdek, xato matnidagi `&mut self` dan foydalanish taklifini ham qabul qila olmaymiz, chunki `send` signaturasi `Messenger` traiti taʼrifidagi imzoga toʻgʻri kelmas edi (urunib ko'rganingizda qanaqa xatolik (error message) bo'lishini ko'rishingiz mumkin).
 
 This is a situation in which interior mutability can help! We’ll store the
 `sent_messages` within a `RefCell<T>`, and then the `send` method will be
