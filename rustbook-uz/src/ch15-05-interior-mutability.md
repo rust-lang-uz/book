@@ -129,16 +129,7 @@ tekshirib ko'ramiz. 15-21-ro'yxat soxta obyekt implementatsiya qilishga urinishi
 
 Ushbu test kodimiz `Sent_messages` maydoniga ega boʻlgan `MockMessenger` strukturasini belgilaydi va u `Vec`ga ega bo'lgan `String` qiymatlari bilan joʻnatilishi kerak boʻlgan xabarlarni kuzatib boradi. Shuningdek, biz bo'sh xabarlar ro'yxati bilan boshlanadigan yangi `MockMessenger` qiymatlarini yaratishni qulay qilish uchun `yangi` funksiyasini aniqlaymiz. Biz bo'sh xabarlar ro'yxati bilan boshlanadigan yangi MockMessenger qiymatlarini yaratamiz. Keyin biz `LimitTracker` ga `MockMessenger`ni berishimiz uchun `MockMessenger` uchun “Messenger” xususiyatini amalga oshiramiz. `send` usulining taʼrifida biz uzatilgan xabarni parametr sifatida qabul qilamiz va uni `sent_messages`ning `MockMessenger` roʻyxatida saqlaymiz. 
 
-In the test, we’re testing what happens when the `LimitTracker` is told to set
-`value` to something that is more than 75 percent of the `max` value. First, we
-create a new `MockMessenger`, which will start with an empty list of messages.
-Then we create a new `LimitTracker` and give it a reference to the new
-`MockMessenger` and a `max` value of 100. We call the `set_value` method on the
-`LimitTracker` with a value of 80, which is more than 75 percent of 100. Then
-we assert that the list of messages that the `MockMessenger` is keeping track
-of should now have one message in it.
-
-Sinovda biz “LimitTracker”ga “qiymat”ni “maksimal” qiymatining 75 foizidan ko‘prog‘iga o‘rnatish buyurilganda nima sodir bo‘lishini sinab ko‘ramiz. Birinchidan, biz yangi "MockMessenger" ni yaratamiz, u xabarlarning bo'sh ro'yxati bilan boshlanadi. Keyin biz yangi `LimitTracker` yaratamiz va unga yangi `MockMessenger` va `max` qiymati 100 ga havola beramiz. 100ning 75 foizi. Keyin biz “MockMessenger” kuzatayotgan xabarlar roʻyxatida bitta xabar boʻlishi kerakligini taʼkidlaymiz. unda.
+Sinovda biz `LimitTracker`ga `value`ni `max` qiymatining 75 foizidan ko‘prog‘iga o‘rnatish buyurilganda nima sodir bo‘lishini sinab ko‘ramiz. Birinchidan, biz yangi `MockMessenger` ni yaratamiz, u xabarlarning bo'sh ro'yxati bilan boshlanadi. Keyin biz yangi `LimitTracker` yaratamiz va unga yangi `MockMessenger` va `max` qiymati 100 ga teng reference beramiz. 100dan 75dan katta bo'lgan, 80ga teng bo'lgan qiymatli `LimitTracker`dagi `set_value` metodini ishga tushiramiz. Keyin biz `MockMessenger` kuzatayotgan xabarlar roʻyxatida bitta xabar boʻlishi kerakligini taʼkidlaymiz.
 
 Biroq, bu testda ko'rsatilganidek, bitta muammo bor:
 
