@@ -139,12 +139,9 @@ Biroq, bu testda ko'rsatilganidek, bitta muammo bor:
 
 Biz `MockMessenger`ni xabarlarni kuzatib borish uchun o‘zgartira olmaymiz, chunki `send` metodi `self`ga o'zgarmas refernce oladi. Shuningdek, xato matnidagi `&mut self` dan foydalanish taklifini ham qabul qila olmaymiz, chunki `send` signaturasi `Messenger` traiti taʼrifidagi imzoga toʻgʻri kelmas edi (urunib ko'rganingizda qanaqa xatolik (error message) bo'lishini ko'rishingiz mumkin).
 
-This is a situation in which interior mutability can help! We’ll store the
-`sent_messages` within a `RefCell<T>`, and then the `send` method will be
-able to modify `sent_messages` to store the messages we’ve seen. Listing 15-22
-shows what that looks like:
+Ushbu holatda bizga ichgi o'zgaruvchanlik yordam berishi mumkin! Biz `RefCell<T>` orqali `sent_messages`ni joylyamiz, va keyin biz ko'rgan xabarlarni joylashtirish uchun `send` metodi `sent_messages`ni o'zgartira oladi. 15-22-ro'yxat bu qanday ko'rinishda bo'lishini ko'rsatadi:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Faylnomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-22/src/lib.rs:here}}
