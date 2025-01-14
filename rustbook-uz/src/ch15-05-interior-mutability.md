@@ -147,25 +147,17 @@ Ushbu holatda bizga ichgi o'zgaruvchanlik yordam berishi mumkin! Biz `RefCell<T>
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-22/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 15-22: Using `RefCell<T>` to mutate an inner
-value while the outer value is considered immutable</span>
+<span class="caption">15-22-ro'yxat: tashqi qiymat o'zgarmas bo'lganida `RefCell<T>` yordamida ichki qiymatni o'zgaruvchan qilish</span>
 
-The `sent_messages` field is now of type `RefCell<Vec<String>>` instead of
-`Vec<String>`. In the `new` function, we create a new `RefCell<Vec<String>>`
-instance around the empty vector.
+`sent_messages` maydoni endi `Vec<String>` oʻrniga `RefCell<Vec<String>>` turiga ega. 
+`new` funksiyada biz yangisini yaratamiz `RefCell<Vec<String>>` bo'sh vektor atrofidagi misol.
+`new` funksiyasida biz yangi `RefCell<Vec<String>>` instancesini bo'sh vektor atrofida yaratib olamiz.
 
-For the implementation of the `send` method, the first parameter is still an
-immutable borrow of `self`, which matches the trait definition. We call
-`borrow_mut` on the `RefCell<Vec<String>>` in `self.sent_messages` to get a
-mutable reference to the value inside the `RefCell<Vec<String>>`, which is the
-vector. Then we can call `push` on the mutable reference to the vector to keep
-track of the messages sent during the test.
+`send` metodini ishga tushirishda, traitning ma'no/tarifiga o'xshash bo'lgan birinchi parametr `self`ning o'zgarmas borrowi bo'lib qolaveradi. Vvektor hisoblangan `RefCell<Vec<String>>`ninig ichidagi qiymatga o'zgaruvchan reference olish uchun `self.sent_messages`ning `RefCell<Vec<String>>`dagi `borrow_mut`ni ishga tushuramiz. Keyin test paytida yuborilgan xabarlarni kuzatib borish uchun vektorga o'zgaruvchan referenceda `push` ni ishga tushirishimiz mumkin.
 
-The last change we have to make is in the assertion: to see how many items are
-in the inner vector, we call `borrow` on the `RefCell<Vec<String>>` to get an
-immutable reference to the vector.
+Tasdiqlash uchun biz qilishimiz kerak bo'lgan oxirgi o'zgarish bu: ichki vektor ichida qancha itemlar borligini ko'rish uchun, vektorga o'zgarmas refrence olish uchun`RefCell<Vec<String>>`dagi `borrow`ni ishga tushiramiz.
 
-Now that you’ve seen how to use `RefCell<T>`, let’s dig into how it works!
+`RefCell<T>`dan qanday ishlatish mumkiniligi bilan tanishdik, keling qanday ishlashi haqida o'raganib chiqaylik.
 
 #### Keeping Track of Borrows at Runtime with `RefCell<T>`
 
