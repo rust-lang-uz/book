@@ -168,6 +168,8 @@ methods, which are part of the safe API that belongs to `RefCell<T>`. The
 returns the smart pointer type `RefMut<T>`. Both types implement `Deref`, so we
 can treat them like regular references.
 
+O'zgarmas va o'zgaruvchan havolalarni yaratishda biz mos ravishda `&` va `&mut` sintaksisidan foydalanamiz. `RefCell<T>` bilan biz `RefCell<T>`ga tegishli xavfsiz API tarkibiga kiruvchi `borrow` va `borrow_mut` usullaridan foydalanamiz. “Borrow” usuli “Ref<T>” aqlli ko‘rsatkich turini, “borrow_mut” esa “RefMut<T>” aqlli ko‘rsatkich turini qaytaradi. Ikkala tur ham "Deref" ni amalga oshiradi, shuning uchun biz ularni oddiy havolalar kabi ko'rib chiqishimiz mumkin.
+
 The `RefCell<T>` keeps track of how many `Ref<T>` and `RefMut<T>` smart
 pointers are currently active. Every time we call `borrow`, the `RefCell<T>`
 increases its count of how many immutable borrows are active. When a `Ref<T>`
