@@ -163,21 +163,11 @@ Tasdiqlash uchun biz qilishimiz kerak bo'lgan oxirgi o'zgarish bu: ichki vektor 
 
 O'zgarmas va o'zgaruvchan referencelarni yaratishda biz mos ravishda `&` va `&mut` sintaksisidan foydalanamiz. `RefCell<T>` bilan biz `RefCell<T>`ga tegishli xavfsiz API tarkibiga kiruvchi `borrow` va `borrow_mut` usullaridan foydalanamiz. `borrow` metodi `Ref<T>` smart pointer turini, `borrow_mut` esa `RefMut<T>` smart pointer turini qaytaradi. Ikkala tur ham `Deref` ni implementatsiya qiladi, shuning uchun biz ularni/doimiy oddiy reference kabi ko'rib chiqishimiz mumkin.
 
-The `RefCell<T>` keeps track of how many `Ref<T>` and `RefMut<T>` smart
-pointers are currently active. Every time we call `borrow`, the `RefCell<T>`
-increases its count of how many immutable borrows are active. When a `Ref<T>`
-value goes out of scope, the count of immutable borrows goes down by one. Just
-like the compile-time borrowing rules, `RefCell<T>` lets us have many immutable
-borrows or one mutable borrow at any point in time.
+`RefCell<T>` hozirda qancha `Ref<T>` va `RefMut<T>` smart pointerlari faol ekanligini kuzatib boradi. Har safar biz `borrow` ishga tushirganimizda, `RefCell<T>` qancha o'zgarmas borrowlar faolligini oshiradi. Agar `Ref<T>` qiymati chegarasidan chiqib ketsa, o'zgarmas borrowlar soni bittaga kamayadi. Kompilyatsiya vaqtidagi borrowing qoidalari kabi, `RefCell<T>` bizga istalgan vaqtda koʻp oʻzgarmas yoki bitta oʻzgaruvchan borrowga ega boʻlish imkonini beradi.
 
-If we try to violate these rules, rather than getting a compiler error as we
-would with references, the implementation of `RefCell<T>` will panic at
-runtime. Listing 15-23 shows a modification of the implementation of `send` in
-Listing 15-22. We’re deliberately trying to create two mutable borrows active
-for the same scope to illustrate that `RefCell<T>` prevents us from doing this
-at runtime.
+Agar biz referencelarda bo'lgani kabi kompilyator xatosini olishdan ko'ra, ushbu qoidalarni buzishga harakat qilsak, `RefCell<T>` amalga oshirilishi runtime vaqtida panic qo'yadi. 15-23 ro'yxatda 15-22 ro'yxatda `send` ning implementatsiyasining modifikatsiyasi ko'rsatilgan. `RefCell<T>` runtimeda buni amalga oshirishga to'sqinlik qilishini ko‘rsatish uchun biz ataylab bir xil qamrov uchun faol ikkita o‘zgaruvchan borrowni yaratishga harakat qilapmiz.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Faylnomi: src/lib.rs</span>
 
 ```rust,ignore,panics
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-23/src/lib.rs:here}}
