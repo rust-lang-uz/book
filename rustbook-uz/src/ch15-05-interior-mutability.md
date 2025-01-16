@@ -161,14 +161,7 @@ Tasdiqlash uchun biz qilishimiz kerak bo'lgan oxirgi o'zgarish bu: ichki vektor 
 
 #### Keeping Track of Borrows at Runtime with `RefCell<T>`
 
-When creating immutable and mutable references, we use the `&` and `&mut`
-syntax, respectively. With `RefCell<T>`, we use the `borrow` and `borrow_mut`
-methods, which are part of the safe API that belongs to `RefCell<T>`. The
-`borrow` method returns the smart pointer type `Ref<T>`, and `borrow_mut`
-returns the smart pointer type `RefMut<T>`. Both types implement `Deref`, so we
-can treat them like regular references.
-
-O'zgarmas va o'zgaruvchan havolalarni yaratishda biz mos ravishda `&` va `&mut` sintaksisidan foydalanamiz. `RefCell<T>` bilan biz `RefCell<T>`ga tegishli xavfsiz API tarkibiga kiruvchi `borrow` va `borrow_mut` usullaridan foydalanamiz. “Borrow” usuli “Ref<T>” aqlli ko‘rsatkich turini, “borrow_mut” esa “RefMut<T>” aqlli ko‘rsatkich turini qaytaradi. Ikkala tur ham "Deref" ni amalga oshiradi, shuning uchun biz ularni oddiy havolalar kabi ko'rib chiqishimiz mumkin.
+O'zgarmas va o'zgaruvchan referencelarni yaratishda biz mos ravishda `&` va `&mut` sintaksisidan foydalanamiz. `RefCell<T>` bilan biz `RefCell<T>`ga tegishli xavfsiz API tarkibiga kiruvchi `borrow` va `borrow_mut` usullaridan foydalanamiz. `borrow` metodi `Ref<T>` smart pointer turini, `borrow_mut` esa `RefMut<T>` smart pointer turini qaytaradi. Ikkala tur ham `Deref` ni implementatsiya qiladi, shuning uchun biz ularni/doimiy oddiy reference kabi ko'rib chiqishimiz mumkin.
 
 The `RefCell<T>` keeps track of how many `Ref<T>` and `RefMut<T>` smart
 pointers are currently active. Every time we call `borrow`, the `RefCell<T>`
