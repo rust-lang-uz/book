@@ -176,19 +176,16 @@ Agar biz referencelarda bo'lgani kabi kompilyator xatosini olishdan ko'ra, ushbu
 <span class="caption">Listing 15-23: Creating two mutable references in the
 same scope to see that `RefCell<T>` will panic</span>
 
-We create a variable `one_borrow` for the `RefMut<T>` smart pointer returned
-from `borrow_mut`. Then we create another mutable borrow in the same way in the
-variable `two_borrow`. This makes two mutable references in the same scope,
-which isn’t allowed. When we run the tests for our library, the code in Listing
-15-23 will compile without any errors, but the test will fail:
+`borrow_mut`dan qaytarilgan `RefMut<T>` smart pointer uchun `one_borrow` o'zgaruvchisini yaratamiz. Keyin `two_borrow` o'zgaruvchisida xuddi shu tarzda boshqa o'zgaruvchan borrow hosil qilamiz. Bu bir scopeda ikkita o'zgaruvchan reference qiladi, bu aslida mumkin emas. Kutubxonamiz uchun testlarni o'tkazganimizda, 15-23 ro'yxatdagi kod hech qanday xatosiz kompilyatsiya qilinadi, ammo test muvaffaqiyatsiz bo'ladi:
 
 ```console
 {{#include ../listings/ch15-smart-pointers/listing-15-23/output.txt}}
 ```
 
-Notice that the code panicked with the message `already borrowed:
-BorrowMutError`. This is how `RefCell<T>` handles violations of the borrowing
-rules at runtime.
+Notice that the code panicked with the message `already borrowed: BorrowMutError`. 
+This is how `RefCell<T>` handles violations of the borrowing rules at runtime.
+
+E'tibor bering ushbu kod quyidagi panicni keltirib chiqardi `already borrowed: BorrowMutError`. Bu `RefCell<T>`runtime vaqtida borrowing qoidalari buzilishini boshqariishini ko'rsak bo'ladi
 
 Choosing to catch borrowing errors at runtime rather than compile time, as
 we’ve done here, means you’d potentially be finding mistakes in your code later
