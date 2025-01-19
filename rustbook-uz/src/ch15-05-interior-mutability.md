@@ -194,17 +194,11 @@ vaqtingizdagi xabarlarni kuzatish uchun o'zini o'zgaritira oladigan soxta obyekt
 
 ### `Rc<T>` va `RefCell<T>`ni birlashtirish orqali o`zgaruvchan ma`lumotlarning bir nechta egalariga ega bo`lish
 
-`RefCell<T>` dan foydalanishning keng tarqalgan usuli `Rc<T>` bilan kombinatsiyadir. Eslatib o'tamiz, `Rc<T>` sizga ba'zi ma'lumotlarning bir nechta egalariga ega bo'lish imkonini beradi, lekin u faqat ushbu ma'lumotlarga o'zgarmas ruxsat beradi. Agar sizda `RefCell<T>` ga ega `Rc<T>` boʻlsa, siz bir nechta egalari boʻlishi mumkin boʻlgan *and* (*va*) siz o'zgartira oladigan qiymatni olishingiz mumkin!
+`RefCell<T>` dan foydalanishning keng tarqalgan usuli `Rc<T>` bilan kombinatsiyadir. Eslatib o'tamiz, `Rc<T>` sizga ba'zi ma'lumotlarning bir nechta egalariga ega bo'lish imkonini beradi, lekin u faqat ushbu ma'lumotlarga o'zgarmas ruxsat beradi. Agar sizda `RefCell<T>` ga ega `Rc<T>` boʻlsa, siz bir nechta egalari boʻlishi mumkin boʻlgan *va* siz o'zgartira oladigan qiymatni olishingiz mumkin!
 
-For example, recall the cons list example in Listing 15-18 where we used
-`Rc<T>` to allow multiple lists to share ownership of another list. Because
-`Rc<T>` holds only immutable values, we can’t change any of the values in the
-list once we’ve created them. Let’s add in `RefCell<T>` to gain the ability to
-change the values in the lists. Listing 15-24 shows that by using a
-`RefCell<T>` in the `Cons` definition, we can modify the value stored in all
-the lists:
+Misol uchun, 15-18-sonli ro'yxatdagi kamchiliklar ro'yxati misolini eslang, bu ro'yxatda bir nechta ro'yxatlarga boshqa ro'yxat egaligini ulashishga ruxsat berish uchun `Rc<T>` dan foydalanganmiz. `Rc<T>` faqat oʻzgarmas qiymatlarga ega boʻlgani uchun biz ularni yaratganimizdan soʻng biz roʻyxatdagi qiymatlarni oʻzgartira olmaymiz. Ro'yxatlardagi qiymatlarni o'zgartirish imkoniyatiga ega bo'lish uchun `RefCell<T>` ni qo'shaylik. 15-24-ro'yxat shuni ko'rsatadiki, `Cons` ta'rifida `RefCell<T>` dan foydalanib, biz barcha ro'yxatlarda saqlangan qiymatni o'zgartirishimiz mumkin:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">src/main.rs nomli fayl:</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-24/src/main.rs}}
