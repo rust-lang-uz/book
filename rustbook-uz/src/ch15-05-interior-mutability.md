@@ -184,19 +184,13 @@ same scope to see that `RefCell<T>` will panic</span>
 
 E'tibor bering ushbu kod quyidagi panicni keltirib chiqardi `already borrowed: BorrowMutError`. Bu `RefCell<T>`runtime vaqtida borrowing qoidalari buzilishini boshqariishini ko'rsak bo'ladi
 
-Choosing to catch borrowing errors at runtime rather than compile time, as
-we’ve done here, means you’d potentially be finding mistakes in your code later
-in the development process: possibly not until your code was deployed to
-production. Also, your code would incur a small runtime performance penalty as
-a result of keeping track of the borrows at runtime rather than compile time.
-However, using `RefCell<T>` makes it possible to write a mock object that can
-modify itself to keep track of the messages it has seen while you’re using it
-in a context where only immutable values are allowed. You can use `RefCell<T>`
-despite its trade-offs to get more functionality than regular references
-provide.
-
-Biz bu erda qilganimizdek, kompilyatsiya vaqtida emas, balki ish vaqtida qarz olish xatolarini qo'lga kiritishni tanlash, ishlab chiqish jarayonida keyinchalik kodingizda xatolar topishingiz mumkinligini anglatadi: ehtimol sizning kodingiz ishlab chiqarishga o'rnatilmaguncha. Bundan tashqari, sizning kodingiz kompilyatsiya vaqtida emas, balki ish vaqtida qarzlarni kuzatib borish natijasida kichik ish vaqti ishlashi uchun jarimaga tortiladi. Biroq, `RefCell<T>` dan foydalanish siz undan foydalanayotganda ko'rgan xabarlarni kuzatib borish uchun o'zini o'zgartira oladigan soxta ob'ektni yozish imkonini beradi.
-faqat o'zgarmas qiymatlarga ruxsat berilgan kontekstda. Oddiy havolalardan ko'ra ko'proq funktsional imkoniyatlarga ega bo'lish uchun `RefCell<T>` dan farqli tomonlariga qaramay foydalanishingiz mumkin.
+Ko'p marta qilganimizdek, ya'ni kompilyatsiya vaqtida emas, balki ish vaqtida borriwing 
+xatolarini ko'rish, ishlab chiqish jarayonida keyinchalik kodingizda 
+xatolar topishingiz mumkinligini anglatadi, ya'ni sizning kodingiz productionga 
+deploy qilinmagungacha. Bundan tashqari, sizning kodingiz kompilyatsiya vaqtida emas, aksincha runtime 
+vaqtida borrowlarni kuzatib borishi natijasida kichik runtime xatolik bo'lishi mumkin. 
+Lekin, `RefCell<T>`dan foydalanish faqat o'zgaruvchan qiymatlar mumkin bo'lgan kontekstdan foydalanayotgan
+vaqtingizdagi xabarlarni kuzatish uchun o'zini o'zgaritira oladigan soxta obyektni yaratish imkonini beradi. Doimiy referencelardan ko'ra ko'proq funksionallikni olishni xohlasangiz `RefCell<T>`dan foydalanishingiz mumkin, uning farqli tomomnlariga qaramasdan ham.
 
 ### Having Multiple Owners of Mutable Data by Combining `Rc<T>` and `RefCell<T>`
 
