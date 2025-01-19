@@ -159,7 +159,7 @@ Tasdiqlash uchun biz qilishimiz kerak bo'lgan oxirgi o'zgarish bu: ichki vektor 
 
 `RefCell<T>`dan qanday ishlatish mumkiniligi bilan tanishdik, keling qanday ishlashi haqida o'raganib chiqaylik.
 
-#### Keeping Track of Borrows at Runtime with `RefCell<T>`
+#### Runtime vaqtidan `RefCell<T>` yordamida Borrowlarni kuzatish
 
 O'zgarmas va o'zgaruvchan referencelarni yaratishda biz mos ravishda `&` va `&mut` sintaksisidan foydalanamiz. `RefCell<T>` bilan biz `RefCell<T>`ga tegishli xavfsiz API tarkibiga kiruvchi `borrow` va `borrow_mut` usullaridan foydalanamiz. `borrow` metodi `Ref<T>` smart pointer turini, `borrow_mut` esa `RefMut<T>` smart pointer turini qaytaradi. Ikkala tur ham `Deref` ni implementatsiya qiladi, shuning uchun biz ularni/doimiy oddiy reference kabi ko'rib chiqishimiz mumkin.
 
@@ -192,12 +192,9 @@ vaqtida borrowlarni kuzatib borishi natijasida kichik runtime xatolik bo'lishi m
 Lekin, `RefCell<T>`dan foydalanish faqat o'zgaruvchan qiymatlar mumkin bo'lgan kontekstdan foydalanayotgan
 vaqtingizdagi xabarlarni kuzatish uchun o'zini o'zgaritira oladigan soxta obyektni yaratish imkonini beradi. Doimiy referencelardan ko'ra ko'proq funksionallikni olishni xohlasangiz `RefCell<T>`dan foydalanishingiz mumkin, uning farqli tomomnlariga qaramasdan ham.
 
-### Having Multiple Owners of Mutable Data by Combining `Rc<T>` and `RefCell<T>`
+### `Rc<T>` va `RefCell<T>`ni birlashtirish orqali o`zgaruvchan ma`lumotlarning bir nechta egalariga ega bo`lish
 
-A common way to use `RefCell<T>` is in combination with `Rc<T>`. Recall that
-`Rc<T>` lets you have multiple owners of some data, but it only gives immutable
-access to that data. If you have an `Rc<T>` that holds a `RefCell<T>`, you can
-get a value that can have multiple owners *and* that you can mutate!
+`RefCell<T>` dan foydalanishning keng tarqalgan usuli `Rc<T>` bilan kombinatsiyadir. Eslatib o'tamiz, `Rc<T>` sizga ba'zi ma'lumotlarning bir nechta egalariga ega bo'lish imkonini beradi, lekin u faqat ushbu ma'lumotlarga o'zgarmas ruxsat beradi. Agar sizda `RefCell<T>` ga ega `Rc<T>` boʻlsa, siz bir nechta egalari boʻlishi mumkin boʻlgan *and* (*va*) siz o'zgartira oladigan qiymatni olishingiz mumkin!
 
 For example, recall the cons list example in Listing 15-18 where we used
 `Rc<T>` to allow multiple lists to share ownership of another list. Because
