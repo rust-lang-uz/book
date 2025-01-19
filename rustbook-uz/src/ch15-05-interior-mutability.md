@@ -204,8 +204,7 @@ Misol uchun, 15-18-sonli ro'yxatdagi kamchiliklar ro'yxati misolini eslang, bu r
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-24/src/main.rs}}
 ```
 
-<span class="caption">Listing 15-24: Using `Rc<RefCell<i32>>` to create a
-`List` that we can mutate</span>
+<span class="caption">15-24-ro'yxat: `Rc<RefCell<i32>>` yordamida o'zgaruvchan `List` yaratish</span>
 
 We create a value that is an instance of `Rc<RefCell<i32>>` and store it in a
 variable named `value` so we can access it directly later. Then we create a
