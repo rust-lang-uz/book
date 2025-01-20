@@ -206,25 +206,11 @@ Misol uchun, 15-18-sonli ro'yxatdagi kamchiliklar ro'yxati misolini eslang, bu r
 
 <span class="caption">15-24-ro'yxat: `Rc<RefCell<i32>>` yordamida o'zgaruvchan `List` yaratish</span>
 
-We create a value that is an instance of `Rc<RefCell<i32>>` and store it in a
-variable named `value` so we can access it directly later. Then we create a
-`List` in `a` with a `Cons` variant that holds `value`. We need to clone
-`value` so both `a` and `value` have ownership of the inner `5` value rather
-than transferring ownership from `value` to `a` or having `a` borrow from
-`value`.
-
 Keyinchalik to'g'ridan-to'g'ri foydalana olishimiz mumkin bo'lgan `Rc<RefCell<i32>>` namunasi (instance) bo'lgan qiymatni yaratamiz `value` nomli o'zgaruvchiga joylashtiramiz. Keyin `a` bilan birga `value`ni o'z ichiga olgan `Cons` variantida `List` yaratamiz. `value`ni klonlashimiz kerak bo'ladi, shunda `value`dan `a`ga ownershipni (egalik) berishdan yoki `value`dan `a` borrowga ega bo;lishdan ko'ra `a` va `value`ning ikkalasi ham ichki `5`ga ownershipga (egalikka) ega bo'ladilar.
 
-We wrap the list `a` in an `Rc<T>` so when we create lists `b` and `c`, they
-can both refer to `a`, which is what we did in Listing 15-18.
+15-18-ro'yxatda qilganimizdek, `a` ro'yxatini `Rc<T>` ichiga o'rab olamiz, shunda `b` va `c` ro'yxatlarini yaratganimizda, ular ikkalasi ham `a` ga murojaat (refer) qilishlari mumkin bo'ladi
 
-After we’ve created the lists in `a`, `b`, and `c`, we want to add 10 to the
-value in `value`. We do this by calling `borrow_mut` on `value`, which uses the
-automatic dereferencing feature we discussed in Chapter 5 (see the section
-[“Where’s the `->` Operator?”][wheres-the---operator]<!-- ignore -->) to
-dereference the `Rc<T>` to the inner `RefCell<T>` value. The `borrow_mut`
-method returns a `RefMut<T>` smart pointer, and we use the dereference operator
-on it and change the inner value.
+`a`, `b` va `c` ro'yxatlarini yaratganimizdan so'ng, biz `qiymat` qiymatiga 10 qo'shmoqchimiz. Biz buni 5-bobda muhokama qilgan avtomatik yoʻqotish xususiyatidan foydalanadigan `value`da `borrow_mut` ni ishga tushurishh orqali, ya'ni `Rc<T>`ni ichki `RefCell<T>` qiymatiga yo'naltirish orqali amalga oshiramiz ([`->` Operatori Qayerda?”]ida ko'ring [wheres-the---operator]<!-- ignore -->). `borrow_mut` usuli `RefMut<T>` smart pointerini qaytaradi va biz unda dereference operatoridan foydalanamiz va uning ichki qiymatni o`zgartiramiz.
 
 When we print `a`, `b`, and `c`, we can see that they all have the modified
 value of 15 rather than 5:
