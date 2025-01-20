@@ -213,6 +213,8 @@ variable named `value` so we can access it directly later. Then we create a
 than transferring ownership from `value` to `a` or having `a` borrow from
 `value`.
 
+Keyinchalik to'g'ridan-to'g'ri foydalana olishimiz mumkin bo'lgan `Rc<RefCell<i32>>` namunasi (instance) bo'lgan qiymatni yaratamiz `value` nomli o'zgaruvchiga joylashtiramiz. Keyin `a` bilan birga `value`ni o'z ichiga olgan `Cons` variantida `List` yaratamiz. `value`ni klonlashimiz kerak bo'ladi, shunda `value`dan `a`ga ownershipni (egalik) berishdan yoki `value`dan `a` borrowga ega bo;lishdan ko'ra `a` va `value`ning ikkalasi ham ichki `5`ga ownershipga (egalikka) ega bo'ladilar.
+
 We wrap the list `a` in an `Rc<T>` so when we create lists `b` and `c`, they
 can both refer to `a`, which is what we did in Listing 15-18.
 
