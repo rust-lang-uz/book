@@ -212,20 +212,13 @@ Keyinchalik to'g'ridan-to'g'ri foydalana olishimiz mumkin bo'lgan `Rc<RefCell<i3
 
 `a`, `b` va `c` ro'yxatlarini yaratganimizdan so'ng, biz `qiymat` qiymatiga 10 qo'shmoqchimiz. Biz buni 5-bobda muhokama qilgan avtomatik yoʻqotish xususiyatidan foydalanadigan `value`da `borrow_mut` ni ishga tushurishh orqali, ya'ni `Rc<T>`ni ichki `RefCell<T>` qiymatiga yo'naltirish orqali amalga oshiramiz ([`->` Operatori Qayerda?”]ida ko'ring [wheres-the---operator]<!-- ignore -->). `borrow_mut` usuli `RefMut<T>` smart pointerini qaytaradi va biz unda dereference operatoridan foydalanamiz va uning ichki qiymatni o`zgartiramiz.
 
-When we print `a`, `b`, and `c`, we can see that they all have the modified
-value of 15 rather than 5:
+`a`, `b`, va `c` print qilganimizda, 5dan ko'ra 15lik qiymatni hammasi o'zgaritirish kiritganligini ko'rishimiz mumkin.
 
 ```console
 {{#include ../listings/ch15-smart-pointers/listing-15-24/output.txt}}
 ```
 
-This technique is pretty neat! By using `RefCell<T>`, we have an outwardly
-immutable `List` value. But we can use the methods on `RefCell<T>` that provide
-access to its interior mutability so we can modify our data when we need to.
-The runtime checks of the borrowing rules protect us from data races, and it’s
-sometimes worth trading a bit of speed for this flexibility in our data
-structures. Note that `RefCell<T>` does not work for multithreaded code!
-`Mutex<T>` is the thread-safe version of `RefCell<T>` and we’ll discuss
-`Mutex<T>` in Chapter 16.
+Ushbu uslub juda jozibali! `RefCell<T>` dan foydalanib, biz tashqi o'zgarmas `List` qiymatiga ega bo'lamiz. Lekin biz `RefCell<T>` da uning ichki o'zgaruvchanligiga kirish/boshqarishni ta'minlaydigan metoddan foydalanishimiz mumkin, shunda kerak bo'lganda ma'lumotlarimizni o'zgartirishimiz mumkin. Runtime qarz olish (borrowing) qoidalari bizni ma'lumotlar o'zgaruvchanligidan (data races) himoya qilishini tekshiradi, va ba'zida ma'lumotlar tuzilmalarimizdagi bu moslashuvchanlik uchun biroz tezlikni oshirishga/o'zgaritishga (trading) arziydi. `RefCell<T>` ko'p oqimli (multithreaded) kod uchun ishlamaydi, shuni inobatga oling! `Mutex<T>` bu `RefCell<T>` ning xafsizroq versiyasidir va biz `Mutex<T>` ni 16-bobda muhokama qilamiz.
+ 
 
 [wheres-the---operator]: ch05-03-method-syntax.html#wheres-the---operator
