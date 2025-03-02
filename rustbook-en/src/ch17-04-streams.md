@@ -18,7 +18,7 @@ channel receiver. The first difference is time: iterators are synchronous, while
 the channel receiver is asynchronous. The second is the API. When working
 directly with `Iterator`, we call its synchronous `next` method. With the
 `trpl::Receiver` stream in particular, we called an asynchronous `recv` method
-instead. Otherwise, these APIs otherwise feel very similar, and that similarity
+instead. Otherwise, these APIs feel very similar, and that similarity
 isn’t a coincidence. A stream is like an asynchronous form of iteration. Whereas
 the `trpl::Receiver` specifically waits to receive messages, though, the
 general-purpose stream API is much broader: it provides the next item the
@@ -57,7 +57,7 @@ error[E0599]: no method named `next` found for struct `Iter` in the current scop
 10 |         while let Some(value) = stream.next().await {
    |                                        ^^^^
    |
-   = note: the full type name has been written to 'file:///projects/async_await/target/debug/deps/async_await-9de943556a6001b8.long-type-1281356139287206597.txt'
+   = note: the full type name has been written to '/Users/chris/dev/rust-lang/book/main/listings/ch17-async-await/listing-17-30/target/debug/deps/async_await-575db3dd3197d257.long-type-14490787947592691573.txt'
    = note: consider using `--verbose` to print the full type name to the console
    = help: items from traits can only be used if the trait is in scope
 help: the following traits which provide `next` are implemented but not in scope; perhaps you want to import one of them
@@ -123,7 +123,7 @@ we can do that _is_ unique to streams.
 
 Many concepts are naturally represented as streams: items becoming available in
 a queue, chunks of data being pulled incrementally from the filesystem when the
-full data set is too large for the computer’s , or data arriving over the
+full data set is too large for the computer’s memory, or data arriving over the
 network over time. Because streams are futures, we can use them with any other
 kind of future and combine them in interesting ways. For example, we can batch
 up events to avoid triggering too many network calls, set timeouts on sequences
@@ -235,11 +235,9 @@ and we spawn a task to handle the async `sleep` calls.
 Now our code has a much more interesting result. Between every other pair of
 messages, a `Problem: Elapsed(())` error.
 
-<!-- manual-regeneration
-cd listings/ch17-async-await/listing-17-35
-cargo run
-copy only the program output, *not* the compiler output
--->
+<!-- Not extracting output because changes to this output aren't significant;
+the changes are likely to be due to the threads running differently rather than
+changes in the compiler -->
 
 ```text
 Message: 'a'
@@ -396,11 +394,9 @@ messages we’re choosing to ignore. Instead, we never produce those interval
 messages in the first place! This is the inherent “laziness” of Rust’s futures
 at work again, allowing us to choose our performance characteristics.
 
-<!-- manual-regeneration
-cd listings/ch17-async-await/listing-17-39
-cargo run
-copy and paste only the program output
--->
+<!-- Not extracting output because changes to this output aren't significant;
+the changes are likely to be due to the threads running differently rather than
+changes in the compiler -->
 
 ```text
 Interval: 1
