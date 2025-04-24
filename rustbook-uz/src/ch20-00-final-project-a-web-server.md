@@ -1,4 +1,4 @@
-# So'ngi Loyiha: Multithreaded Web Server qurish
+# So'ngi Loyiha: Ko'p oqimli (Multithreaded) Web Server qurish
 
 Bu uzoq safar bo‘ldi, lekin nihoyat kitobning oxiriga yetdik. Ushbu bobda biz yakuniy boblarda o‘rganilgan ba’zi tushunchalarni amalda qo‘llash uchun yana bir loyihani birga quramiz, shuningdek, avvalgi darslarni ham eslab o‘tamiz.
 
