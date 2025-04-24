@@ -1,4 +1,4 @@
-# Oxirgi Loyiha: Building a Multithreaded Web Server
+# So'ngi Loyiha: Building a Multithreaded Web Server
 
 It’s been a long journey, but we’ve reached the end of the book. In this
 chapter, we’ll build one more project together to demonstrate some of the
