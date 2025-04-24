@@ -13,7 +13,7 @@ Veb-serverni yaratish bo‘yicha rejamiz quyidagicha:
 1. TCP va HTTP haqida biroz ma’lumot olish.
 2. Soket orqali TCP ulanishlarini tinglash.
 3. Bir nechta HTTP so‘rovlarini tahlil qilish.
-4. To‘g‘ri HTTP javobini yaratish.
+4. To‘g‘ri HTTP javobini (response) yaratish.
 5. Serverimiz unumdorligini oqimlar to‘plami (thread pool) yordamida oshirish.
 
 Boshlashdan oldin bir narsani aytib o‘tishimiz kerak: biz foydalanadigan usul Rust tilida veb-server qurishning eng yaxshi usuli bo‘lmaydi. Rust hamjamiyati 
