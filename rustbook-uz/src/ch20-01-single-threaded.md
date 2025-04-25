@@ -1,33 +1,19 @@
 ## Bitta oqimli (single-threaded) veb-server yaratish
 
-We’ll start by getting a single-threaded web server working. Before we begin,
-let’s look at a quick overview of the protocols involved in building web
-servers. The details of these protocols are beyond the scope of this book, but
-a brief overview will give you the information you need.
+Biz avval bitta oqimli veb-serverni ishga tushirishdan boshlaymiz. Ishni boshlashdan oldin, veb-serverlarni qurishda ishtirok etadigan protokollar haqida qisqacha ko‘rib chiqamiz. Ushbu protokollarning batafsil tafsilotlari ushbu kitob doirasidan tashqarida, ammo qisqacha tushuntirish sizga zarur bo‘lgan asosiy ma’lumotlarni beradi.
 
-The two main protocols involved in web servers are *Hypertext Transfer
-Protocol* *(HTTP)* and *Transmission Control Protocol* *(TCP)*. Both protocols
-are *request-response* protocols, meaning a *client* initiates requests and a
-*server* listens to the requests and provides a response to the client. The
-contents of those requests and responses are defined by the protocols.
+Veb-serverlarda ishtirok etadigan ikkita asosiy protokol bu *Gipermatn uzatish protokoli* *(HTTP)* va *Uzatishni boshqarish protokoli* *(TCP)* hisoblanadi. Har ikkala protokol ham *so‘rov-javob* (request-response) protokollari bo‘lib, bunda *mijoz* (client) so‘rov yuboradi, *server* esa bu so‘rovlarni tinglaydi va mijozga javob qaytaradi. Ushbu so‘rovlar va javoblarning mazmuni protokollar tomonidan aniqlanadi.
 
-TCP is the lower-level protocol that describes the details of how information
-gets from one server to another but doesn’t specify what that information is.
-HTTP builds on top of TCP by defining the contents of the requests and
-responses. It’s technically possible to use HTTP with other protocols, but in
-the vast majority of cases, HTTP sends its data over TCP. We’ll work with the
-raw bytes of TCP and HTTP requests and responses.
+TCP bu past darajadagi (lower-level) protokol bo‘lib, ma’lumotlar bir serverdan boshqasiga qanday uzatilishini belgilaydi, lekin bu ma’lumotlarning mazmuni qanday bo‘lishi kerakligini aniqlamaydi. HTTP esa TCP ustida qurilgan bo‘lib, so‘rovlar va javoblarning tarkibini belgilaydi. Texnik jihatdan HTTP’ni boshqa protokollar bilan ham ishlatish mumkin, ammo aksariyat hollarda HTTP o‘z ma’lumotlarini TCP orqali uzatadi. Biz esa TCP va HTTP so‘rov hamda javoblarining xom baytlari (raw bytes) bilan ishlaymiz.
 
-### Listening to the TCP Connection
+### TCP ulanishni tinglash
 
-Our web server needs to listen to a TCP connection, so that’s the first part
-we’ll work on. The standard library offers a `std::net` module that lets us do
-this. Let’s make a new project in the usual fashion:
+Veb-serverimiz TCP ulanishini tinglashi kerak, shuning uchun birinchi navbatda shu qism ustida ishlaymiz. Rust’ning standart kutubxonasi bizga buni amalga oshirish imkonini beruvchi `std::net` modulini taklif qiladi. Keling, odatdagidek yangi loyiha yaratamiz:
 
 ```console
-$ cargo new hello
-     Created binary (application) `hello` project
-$ cd hello
+$ cargo new salom
+     Created binary (application) `salom` project
+$ cd salom
 ```
 
 Now enter the code in Listing 20-1 in *src/main.rs* to start. This code will
