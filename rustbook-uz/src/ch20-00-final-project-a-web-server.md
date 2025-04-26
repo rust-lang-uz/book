@@ -1,33 +1,20 @@
-# Final Project: Building a Multithreaded Web Server
+# So'ngi Loyiha: Ko'p oqimli (Multithreaded) Veb Server qurish
 
-It’s been a long journey, but we’ve reached the end of the book. In this
-chapter, we’ll build one more project together to demonstrate some of the
-concepts we covered in the final chapters, as well as recap some earlier
-lessons.
+Bu uzoq safar bo‘ldi, lekin nihoyat kitobning oxiriga yetdik. Ushbu bobda biz yakuniy boblarda o‘rganilgan ba’zi tushunchalarni amalda qo‘llash uchun yana bir loyihani birga quramiz, shuningdek, avvalgi darslarni ham eslab o‘tamiz.
 
-For our final project, we’ll make a web server that says “hello” and looks like
-Figure 20-1 in a web browser.
+Yakuniy loyihamizda biz “salom” deb javob beradigan va veb-brauzerda 20-1-rasmga o‘xshash ko‘rinadigan veb-server yaratamiz.
 
 ![hello from rust](img/trpl20-01.png)
 
-<span class="caption">Figure 20-1: Our final shared project</span>
+<span class="caption">20-rasm: Bizning yakuniy umumiy loyihamiz</span>
 
-Here is our plan for building the web server:
+Veb-serverni yaratish bo‘yicha rejamiz quyidagicha:
 
-1. Learn a bit about TCP and HTTP.
-2. Listen for TCP connections on a socket.
-3. Parse a small number of HTTP requests.
-4. Create a proper HTTP response.
-5. Improve the throughput of our server with a thread pool.
+1. TCP va HTTP haqida biroz ma’lumot olish.
+2. Soket orqali TCP ulanishlarini tinglash.
+3. Bir nechta HTTP so‘rovlarini tahlil qilish.
+4. To‘g‘ri HTTP javobini (response) yaratish.
+5. Serverimiz unumdorligini oqimlar to‘plami (thread pool) yordamida oshirish.
 
-Before we get started, we should mention one detail: the method we’ll use won’t
-be the best way to build a web server with Rust. Community members have
-published a number of production-ready crates available on
-[crates.io](https://crates.io/) that provide more complete web server and
-thread pool implementations than we’ll build. However, our intention in this
-chapter is to help you learn, not to take the easy route. Because Rust is a
-systems programming language, we can choose the level of abstraction we want to
-work with and can go to a lower level than is possible or practical in other
-languages. We’ll therefore write the basic HTTP server and thread pool manually
-so you can learn the general ideas and techniques behind the crates you might
-use in the future.
+Boshlashdan oldin bir narsani aytib o‘tishimiz kerak: biz foydalanadigan usul Rust tilida veb-server qurishning eng yaxshi usuli bo‘lmaydi. Rust hamjamiyati 
+[crates.io](https://crates.io/) saytida chop etilgan, to‘liq funksiyali veb-server va oqimlar to‘plami (thread pool) kutubxonalarini yaratgan. Bu kutubxonalar biz quradigan versiyadan ko‘ra ancha mukammal. Biroq, ushbu bobdagi maqsadimiz – sizni o‘rgatish, eng oson yo‘lni tanlash emas. Rust tizim dasturlash tili bo‘lganligi sababli, biz o‘zimiz ishlamoqchi bo‘lgan abstraktsiya darajasini tanlashimiz mumkin va boshqa tillarda amalga oshirish qiyin yoki imkonsiz bo‘lgan chuqur darajadagi ishlarni bajarish imkoniyatiga egamiz. Shuning uchun biz HTTP server va oqimlar to‘plamini qo‘lda yozamiz, shunda siz kelajakda foydalanishingiz mumkin bo‘lgan kutubxonalar ortida qanday g‘oya va texnikalar yotganini tushunib olasiz.
