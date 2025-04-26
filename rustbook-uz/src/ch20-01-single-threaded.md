@@ -16,9 +16,7 @@ $ cargo new salom
 $ cd salom
 ```
 
-Now enter the code in Listing 20-1 in *src/main.rs* to start. This code will
-listen at the local address `127.0.0.1:7878` for incoming TCP streams. When it
-gets an incoming stream, it will print `Connection established!`.
+Endi *src/main.rs* fayliga 20-1 ro‘yxatdagi (Listing 20-1) kodni kiriting. Bu kod `127.0.0.1:7878` lokal manzilida kiruvchi TCP oqimlarini tinglaydi. Har safar yangi oqim kelganda, `Connection established!` (Ulanish o‘rnatildi!) deb chop etadi.
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -26,31 +24,13 @@ gets an incoming stream, it will print `Connection established!`.
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-01/src/main.rs}}
 ```
 
-<span class="caption">Listing 20-1: Listening for incoming streams and printing
-a message when we receive a stream</span>
+<span class="caption">20-1 ro‘yxat: Kiruvchi oqimlarni tinglash va oqim qabul qilinganda xabar chop etish</span>
 
-Using `TcpListener`, we can listen for TCP connections at the address
-`127.0.0.1:7878`. In the address, the section before the colon is an IP address
-representing your computer (this is the same on every computer and doesn’t
-represent the authors’ computer specifically), and `7878` is the port. We’ve
-chosen this port for two reasons: HTTP isn’t normally accepted on this port so
-our server is unlikely to conflict with any other web server you might have
-running on your machine, and 7878 is *rust* typed on a telephone.
+`TcpListener` yordamida biz `127.0.0.1:7878` manzilida TCP ulanishlarini tinglashimiz mumkin. Manzilda ikki nuqtadan (:) oldingi qism — bu kompyuteringizni ifodalovchi IP manzil (bu barcha kompyuterlarda bir xil bo‘ladi va mualliflarning kompyuteriga xos emas), `7878` esa port raqami. Biz bu portni ikki sababga ko‘ra tanladik: odatda HTTP bu portda ishlatilmaydi, shuning uchun serverimiz kompyuteringizda ishlayotgan boshqa veb-serverlar bilan to‘qnash kelmaydi; ikkinchidan, telefon klaviaturasida *rust* so‘zini terishda 7878 raqamlari ishlatiladi.
 
-The `bind` function in this scenario works like the `new` function in that it
-will return a new `TcpListener` instance. The function is called `bind`
-because, in networking, connecting to a port to listen to is known as “binding
-to a port.”
+Ushbu holatda `bind` funksiyasi `new` funksiyasiga o‘xshab ishlaydi, ya’ni u yangi `TcpListener` obyektini qaytaradi. Funksiya `bind` deb nomlangan, chunki tarmoqlarda portga ulanib tinglash jarayoni “portga bog‘lanish” (binding) deb ataladi.
 
-The `bind` function returns a `Result<T, E>`, which indicates that it’s
-possible for binding to fail. For example, connecting to port 80 requires
-administrator privileges (nonadministrators can listen only on ports higher
-than 1023), so if we tried to connect to port 80 without being an
-administrator, binding wouldn’t work. Binding also wouldn’t work, for example,
-if we ran two instances of our program and so had two programs listening to the
-same port. Because we’re writing a basic server just for learning purposes, we
-won’t worry about handling these kinds of errors; instead, we use `unwrap` to
-stop the program if errors happen.
+`bind` funksiyasi `Result<T, E>` turini qaytaradi, bu esa bog‘lanish (binding) muvaffaqiyatsiz bo‘lishi mumkinligini bildiradi. Masalan, 80-portga ulanish uchun administrator huquqlari talab qilinadi (administrator bo‘lmagan foydalanuvchilar faqat 1023 dan yuqori portlarni tinglashi mumkin). Shuning uchun, agar biz administrator bo‘lmasak va 80-portga ulanishga harakat qilsak, bog‘lanish amalga oshmaydi. Bundan tashqari, agar dasturimizning ikkita nusxasini ishga tushirsak va ular bir xil portda tinglashga harakat qilsa, bog‘lanish yana amalga oshmaydi. Biz bu yerda faqat o‘rganish maqsadida oddiy server yozayotganimiz uchun bunday xatoliklarni oldini olish haqida hozircha qayg‘urmaymiz; uning o‘rniga dasturimizda xatolik yuz bersa dasturni to'xtatadigan `unwrap` funksiyasidan foydalanamiz.
 
 The `incoming` method on `TcpListener` returns an iterator that gives us a
 sequence of streams (more specifically, streams of type `TcpStream`). A single
