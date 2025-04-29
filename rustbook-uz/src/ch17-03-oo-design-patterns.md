@@ -1,516 +1,355 @@
-## Implementing an Object-Oriented Design Pattern
+## Ob'ektga Yo'naltirilgan Dizayn Shablonini Amalga Oshirishi
 
-The *state pattern* is an object-oriented design pattern. The crux of the
-pattern is that we define a set of states a value can have internally. The
-states are represented by a set of *state objects*, and the value’s behavior
-changes based on its state. We’re going to work through an example of a blog
-post struct that has a field to hold its state, which will be a state object
-from the set "draft", "review", or "published".
+*Holat shabloni* — bu ob'ektga yo'naltirilgan dizayn shabloni. Ushbu shablonning asosiy maqsadi - ichki holda bir qiymatning olishi mumkin bo'lgan
+holatlarning to'plamini aniqlashdir. Holatlar *holat ob'ektlari* to'plami bilan ifodalanadi va qiymatning xatti-harakatlari uning holatiga qarab
+o'zgaradi. Biz blog postining strukturasini misol sifatida ko'rib chiqamiz, bu struktura "draft", "review" yoki "published" deb nomlangan holatlarni
+saqlovchi maydonni o'z ichiga oladi.
 
-The state objects share functionality: in Rust, of course, we use structs and
-traits rather than objects and inheritance. Each state object is responsible
-for its own behavior and for governing when it should change into another
-state. The value that holds a state object knows nothing about the different
-behavior of the states or when to transition between states.
+Holat ob'ektlari funktsionallikni baham ko'radi: Rustda, albatta, biz ob'ektlar va meros olish o'rnini strukturalar va xususiyatlar bilan to'ldiramiz.
+Har bir holat ob'ekti o'z xatti-harakatlari uchun mas'ul bo'lib, qachon boshqa holatga o'tishini belgilaydi. Holat ob'ektini saqlovchi qiymat holatlar
+turli xatti-harakatlari yoki holatlarni o'tkazish qachonligini bilmaydi.
 
-The advantage of using the state pattern is that, when the business
-requirements of the program change, we won’t need to change the code of the
-value holding the state or the code that uses the value. We’ll only need to
-update the code inside one of the state objects to change its rules or perhaps
-add more state objects.
+Holat shablonidan foydalanishning foydasi shundaki, agar dasturiy ta'minot talablariga o'zgarishlar kirsa, biz holatni ushlab turuvchi qiymat kodini yoki
+qiymatni ishlatadigan kodni o'zgartirishimiz shart emas. Biz faqat bitta holat ob'ekti ichidagi qoidalarni yoki ehtimol yangi holat ob'ektlarini
+qo'shishimiz kerak.
+Avvalambor, biz holat shablonini an’anaviy ob’ektga yo‘naltirilgan uslubda amalga oshiramiz, so‘ngra Rustda biroz tabiiyroq bo‘lgan yondashuvdan
+foydalanamiz. Keling, holat shablonini ishlatib, blog postining ish oqimini bosqichma-bosqich amalga oshirishga kirishamiz.
 
-First, we’re going to implement the state pattern in a more traditional
-object-oriented way, then we’ll use an approach that’s a bit more natural in
-Rust. Let’s dig in to incrementally implementing a blog post workflow using the
-state pattern.
+Oxirgi funksionallik quyidagi ko‘rinishga ega bo‘ladi:
 
-The final functionality will look like this:
+1. Blog posti bo’sh loyiha sifatida boshlanadi.
+2. Loyiha tugagach, postning ko‘rigi so‘raladi.
+3. Post ma’qullangach, u e’lon qilinadi.
+4. Faqat e’lon qilingan blog postlari chop etishga kontent qaytaradi, shuning uchun ma’qullanmagan postlar tasodifan e’lon qilinmaydi.
 
-1. A blog post starts as an empty draft.
-2. When the draft is done, a review of the post is requested.
-3. When the post is approved, it gets published.
-4. Only published blog posts return content to print, so unapproved posts can’t
-   accidentally be published.
+Postga boshqa har qanday o‘zgarishlar kiritganimizda, u ta’sir qilmasligi kerak. Misol uchun, agar biz ko‘rishni so‘ramasdan, loyiha blog postini
+ma’qullamoqchi bo‘lsak, post e’lon qilinmagan loyiha sifatida qolishi kerak.
 
-Any other changes attempted on a post should have no effect. For example, if we
-try to approve a draft blog post before we’ve requested a review, the post
-should remain an unpublished draft.
+Ro‘yxat 17-11 bu ish oqimini kod ko‘rinishida qiladi: bu biz amalga oshirmoqchi bo‘lgan `blog` nomli kutubxona qutisi API ni ishlatishining misolidir. Bu
+hali kompilyatsiya bo‘lmaydi, chunki biz `blog` qutisini amalga oshirmaganmiz.
 
-Listing 17-11 shows this workflow in code form: this is an example usage of the
-API we’ll implement in a library crate named `blog`. This won’t compile yet
-because we haven’t implemented the `blog` crate.
+<span class="filename">Fayl nomi: src/main.rs</span>
 
-<span class="filename">Filename: src/main.rs</span>
-
-```rust,ignore,does_not_compile
+rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch17-oop/listing-17-11/src/main.rs:all}}
-```
 
-<span class="caption">Listing 17-11: Code that demonstrates the desired
-behavior we want our `blog` crate to have</span>
 
-We want to allow the user to create a new draft blog post with `Post::new`. We
-want to allow text to be added to the blog post. If we try to get the post’s
-content immediately, before approval, we shouldn’t get any text because the
-post is still a draft. We’ve added `assert_eq!` in the code for demonstration
-purposes. An excellent unit test for this would be to assert that a draft blog
-post returns an empty string from the `content` method, but we’re not going to
-write tests for this example.
+<span class="caption">Ro‘yxat 17-11: Bizning `blog` qutimizda bo‘lishini xohlagan xatti-harakatlarni namoyish etuvchi kod</span>
 
-Next, we want to enable a request for a review of the post, and we want
-`content` to return an empty string while waiting for the review. When the post
-receives approval, it should get published, meaning the text of the post will
-be returned when `content` is called.
+Biz foydalanuvchiga `Post::new` yordamida yangi loyiha blog postini yaratishga ruxsat berishni istaymiz. Biz blog postiga matn qo‘shishga ruxsat
+bermoqchimiz. Agar biz postning kontentini darhol, ma’qullashdan oldin olishga harakat qilsak, post hali loyiha bo‘lganligi sababli hech qanday matnni
+olmaymiz. Demonstratsiya maqsadlari uchun kode `assert_eq!` qo‘shilgan. Ushbu misol uchun juda yaxshi bir birlik testi, loyiha blog posti `content`
+metodidan bo‘sh qatorni qaytarishini tasdiqlash bo‘lardi, ammo biz bu misol uchun testlar yozmaymiz.
 
-Notice that the only type we’re interacting with from the crate is the `Post`
-type. This type will use the state pattern and will hold a value that will be
-one of three state objects representing the various states a post can be
-in—draft, waiting for review, or published. Changing from one state to another
-will be managed internally within the `Post` type. The states change in
-response to the methods called by our library’s users on the `Post` instance,
-but they don’t have to manage the state changes directly. Also, users can’t
-make a mistake with the states, like publishing a post before it’s reviewed.
+Keyin, biz postning ko‘rigini so‘rashni yoqmoqchimiz va `content` ko‘rishni kutayotgan davrda bo‘sh qatorni qaytarishi kerak. Post ma’qullangach, u e’lon
+qilinishi kerak, ya’ni `content` chaqirilganda postning matni qaytarilishi kerak.
+E'tibor bering, biz qutidan faqat `Post` turidagi ob'ekt bilan o'zaro aloqada bo'lmoqdamiz. Ushbu tur holat shablonidan foydalanadi va postning qanday
+holatlarda bo'lishini ifodalaydigan uchta holat ob'ektidan birini saqlaydi — loyiha, ko'rish uchun kutish yoki e'lon qilingan. Bir holatdan boshqasiga 
+‘tish `Post` turida ichki ravishda boshqariladi. Holatlar kutubxona foydalanuvchilari tomonidan `Post` eksemplarida chaqirilgan metodlarga javoban
+o'zgaradi, lekin ular holat o'zgarishlarini to'g'ridan-to'g'ri boshqarishlari shart emas. Shuningdek, foydalanuvchilar holatlar bilan xato qila
+olmaydilar, masalan, postni ko'rmasdan e'lon qilish.
 
-### Defining `Post` and Creating a New Instance in the Draft State
+### `Post` ni ta'riflash va Loyiha Holatidagi Yangi Instansiya Yaratish
 
-Let’s get started on the implementation of the library! We know we need a
-public `Post` struct that holds some content, so we’ll start with the
-definition of the struct and an associated public `new` function to create an
-instance of `Post`, as shown in Listing 17-12. We’ll also make a private
-`State` trait that will define the behavior that all state objects for a `Post`
-must have.
+Kutubxonaning amalga oshirilishiga kirishaylik! Bizga ba'zi kontentlarni saqlovchi jamoat `Post` strukturasini yaratish kerakligini bilamiz, shuning
+uchun biz strukturaning ta'rifidan va `Post` instansiyasini yaratish uchun bog'liq jamoat `new` funksiyasini quyida keltirilgan Ro'yxat 17-12 dan
+boshlaymiz. Shuningdek, biz `Post` uchun barcha holat ob'ektlarida bo'lishi kerak bo'lgan xatti-harakatlarni aniqlaydigan maxfiy `State` xususiyatini ham
+yaratamiz.
 
-Then `Post` will hold a trait object of `Box<dyn State>` inside an `Option<T>`
-in a private field named `state` to hold the state object. You’ll see why the
-`Option<T>` is necessary in a bit.
+Keyin `Post` ichida `state` deb nomlangan maxfiy maydonda holat ob'ektini saqlash uchun `Option<T>` ichida `Box<dyn State>` turidagi xususiyat ob'ektini 
+tutadi. `Option<T>` ni nima uchun zarurligini bir ozdan keyin ko'rasiz.
 
-<span class="filename">Filename: src/lib.rs</span>
+&lt;span class=&quot;filename&quot;&gt;Fayl nomi: src/lib.rs&lt;/span&gt;
 
-```rust,noplayground
+rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-12/src/lib.rs}}
-```
 
-<span class="caption">Listing 17-12: Definition of a `Post` struct and a `new`
-function that creates a new `Post` instance, a `State` trait, and a `Draft`
-struct</span>
 
-The `State` trait defines the behavior shared by different post states. The
-state objects are `Draft`, `PendingReview`, and `Published`, and they will all
-implement the `State` trait. For now, the trait doesn’t have any methods, and
-we’ll start by defining just the `Draft` state because that is the state we
-want a post to start in.
+&lt;span class=&quot;caption&quot;&gt;Ro'yxat 17-12: `Post` strukturasining ta'rifi va yangi `Post` instansiyasini yaratadigan `new` funksiyasi, `State` 
+xususiyati va `Draft` strukturasiga oid&lt;/span&gt;
 
-When we create a new `Post`, we set its `state` field to a `Some` value that
-holds a `Box`. This `Box` points to a new instance of the `Draft` struct.
-This ensures whenever we create a new instance of `Post`, it will start out as
-a draft. Because the `state` field of `Post` is private, there is no way to
-create a `Post` in any other state! In the `Post::new` function, we set the
-`content` field to a new, empty `String`.
+`State` xususiyati turli post holatlari tomonidan baham ko'riladigan xatti-harakatlarni belgilaydi. Holat ob'ektlari `Draft`, `PendingReview` va 
+`Published` bo'lib, ularning barchasi `State` xususiyatini amalga oshiradi. Hozircha, xususiyatda hech qanday metod yo'q, va biz faqatgina post 
+boshlanishi kerak bo'lgan `Draft` holatini belgilashdan boshlaymiz.
 
-### Storing the Text of the Post Content
 
-We saw in Listing 17-11 that we want to be able to call a method named
-`add_text` and pass it a `&str` that is then added as the text content of the
-blog post. We implement this as a method, rather than exposing the `content`
-field as `pub`, so that later we can implement a method that will control how
-the `content` field’s data is read. The `add_text` method is pretty
-straightforward, so let’s add the implementation in Listing 17-13 to the `impl
-Post` block:
+Yangi `Post` yaratayotganimizda, biz uning `state` maydonini `Box` tutuvchi `Some` qiymatiga o'rnatamiz. Ushbu `Box` yangi `Draft` strukturasi 
+instansiyasiga yo'naltirilgan. Bu, har safar yangi `Post` instansiyasini yaratganimizda, u loyiha sifatida boshlanishini ta'minlaydi. `Post`ning `state` 
+maydoni maxfiy bo'lgani uchun, `Post`ni boshqa holatda yaratishning iloji yo'q! `Post::new` funksiyasida, biz `content` maydonini yangi, bo'sh `String` 
+ga o'rnatamiz. 
 
-<span class="filename">Filename: src/lib.rs</span>
+### Post Kontentining Matnini Saqlash
 
-```rust,noplayground
+Ro'yxat 17-11 da biz `add_text` nomli metodni chaqirishni xohlayotganimizni va unga beriladigan `&str` ni blog postining matn kontenti sifatida 
+qo'shishni xohlaymiz. Biz buni metod sifatida amalga oshiramiz, `content` maydonini `pub` sifatida ochmaslik uchun, shunda keyinchalik `content` 
+maydonidagi ma'lumotlarni qanday o'qishni boshqaradigan metodni amalga oshira olishimiz mumkin. `add_text` metodi juda oddiy, shuning uchun uni Ro'yxat 
+17-13 ga `impl Post` blokiga qo'shamiz:
+
+&lt;span class=&quot;filename&quot;&gt;Fayl nomi: src/lib.rs&lt;/span&gt;
+
+rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-13/src/lib.rs:here}}
-```
 
-<span class="caption">Listing 17-13: Implementing the `add_text` method to add
-text to a post’s `content`</span>
 
-The `add_text` method takes a mutable reference to `self`, because we’re
-changing the `Post` instance that we’re calling `add_text` on. We then call
-`push_str` on the `String` in `content` and pass the `text` argument to add to
-the saved `content`. This behavior doesn’t depend on the state the post is in,
-so it’s not part of the state pattern. The `add_text` method doesn’t interact
-with the `state` field at all, but it is part of the behavior we want to
-support.
+&lt;span class=&quot;caption&quot;&gt;Ro'yxat 17-13: Postning `content` qismini to'ldirish uchun `add_text` metodini amalga oshirish&lt;/span&gt;
 
-### Ensuring the Content of a Draft Post Is Empty
+`add_text` metodi `self` ga o'zgaruvchan havolani oladi, chunki biz `add_text` chaqirayotgan `Post` instansiyasini o'zgartirmoqdamiz. Keyin, biz 
+`content` dagi `String` ustida `push_str` ni chaqiramiz va saqlangan `content` ga qo'shish uchun `text` argumentini uzatamiz. Bu xatti-harakat post qaysi 
+holatda bo'lishidan bog'liq emas, shuning uchun bu holat shablonining bir qismi emas. `add_text` metodi `state` maydoni bilan umuman o'zaro aloqada emas, 
+lekin bu biz qo'llab-quvvatlamoqchi bo'lgan xatti-harakatlar qismidir.
 
-Even after we’ve called `add_text` and added some content to our post, we still
-want the `content` method to return an empty string slice because the post is
-still in the draft state, as shown on line 7 of Listing 17-11. For now, let’s
-implement the `content` method with the simplest thing that will fulfill this
-requirement: always returning an empty string slice. We’ll change this later
-once we implement the ability to change a post’s state so it can be published.
-So far, posts can only be in the draft state, so the post content should always
-be empty. Listing 17-14 shows this placeholder implementation:
+### Loyiha Postining Kontenti Bo'shligini Ta'minlash
 
-<span class="filename">Filename: src/lib.rs</span>
+Biz `add_text` ni chaqirib, postimizga kontent qo'shgandan keyin ham, `content` metodimiz bo'sh qator qaytarishini xohlaymiz, chunki post hali loyiha 
+holatida, Ro'yxat 17-11 da 7-qatorda ko'rsatilganidek. Hozircha, biz ushbu talabni bajaradigan eng oddiy narsani amalga oshirish orqali `content` 
+metodini belgilaymiz: doimo bo'sh qator qaytarish. Postning holatini o'zgartirish imkonini beradigan kodni amalga oshirgandan so'ng, bu yerda 
+o'zgartiramiz. Hozirgi kunda postlar faqat loyiha holatida bo'lishi mumkin, shuning uchun post kontenti doimo bo'sh bo'lishi kerak. Ro'yxat 17-14 bu 
+asqotuvchi amalga oshirishni ko'rsatadi:
 
-```rust,noplayground
+&lt;span class=&quot;filename&quot;&gt;Fayl nomi: src/lib.rs&lt;/span&gt;
+
+rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-14/src/lib.rs:here}}
-```
 
-<span class="caption">Listing 17-14: Adding a placeholder implementation for
-the `content` method on `Post` that always returns an empty string slice</span>
 
-With this added `content` method, everything in Listing 17-11 up to line 7
-works as intended.
+&lt;span class=&quot;caption&quot;&gt;Ro'yxat 17-14: `content` metodining bo'sh qator qaytaradigan asqotuvchi amalga oshirilishi&lt;/span&gt;
 
-### Requesting a Review of the Post Changes Its State
+Ushbu qo'shilgan `content` metodi bilan, Ro'yxat 17-11 da 7-qatorgacha bo'lgan hamma narsa kutilganidek ishlaydi.
 
-Next, we need to add functionality to request a review of a post, which should
-change its state from `Draft` to `PendingReview`. Listing 17-15 shows this code:
+### Postni Ko'rish So'rash Holatini O'zgartiradi
 
-<span class="filename">Filename: src/lib.rs</span>
+Keyingi kerakli funksionallik postning ko'rinishi so'rash uchun bir imkoniyat qo'shishdir, bu esa uning holatini `Draft` dan `PendingReview` ga 
+o'zgartirishi kerak. Ro'yxat 17-15 ushbu kodni ko'rsatadi:
 
-```rust,noplayground
+&lt;span class=&quot;filename&quot;&gt;Fayl nomi: src/lib.rs&lt;/span&gt;
+
+rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-15/src/lib.rs:here}}
-```
 
-<span class="caption">Listing 17-15: Implementing `request_review` methods on
-`Post` and the `State` trait</span>
 
-We give `Post` a public method named `request_review` that will take a mutable
-reference to `self`. Then we call an internal `request_review` method on the
-current state of `Post`, and this second `request_review` method consumes the
-current state and returns a new state.
+&lt;span class=&quot;caption&quot;&gt;Ro'yxat 17-15: `Post` da va `State` xususiyatida `request_review` metodlarini amalga oshirish&lt;/span&gt;
 
-We add the `request_review` method to the `State` trait; all types that
-implement the trait will now need to implement the `request_review` method.
-Note that rather than having `self`, `&self`, or `&mut self` as the first
-parameter of the method, we have `self: Box<Self>`. This syntax means the
-method is only valid when called on a `Box` holding the type. This syntax takes
-ownership of `Box<Self>`, invalidating the old state so the state value of the
-`Post` can transform into a new state.
+Biz `Post` ga `request_review` nomli jamoat metodini beramiz, bu `self` ga o'zgaruvchan havolani oladi. Keyin biz `Post`ning joriy holatida ichki 
+`request_review` metodini chaqiramiz va bu ikkinchi `request_review` metodi joriy holatni iste'mol qiladi va yangi holatni qaytaradi.
 
-To consume the old state, the `request_review` method needs to take ownership
-of the state value. This is where the `Option` in the `state` field of `Post`
-comes in: we call the `take` method to take the `Some` value out of the `state`
-field and leave a `None` in its place, because Rust doesn’t let us have
-unpopulated fields in structs. This lets us move the `state` value out of
-`Post` rather than borrowing it. Then we’ll set the post’s `state` value to the
-result of this operation.
+Biz `request_review` metodini `State` xususiyatiga qo'shamiz; endi xususiyatni amalga oshiradigan barcha turlarga `request_review` metodini amalga 
+oshirish zarur. E'tibor bering, metodning birinchi parametrida `self`, `&self` yoki `&mut self` o'rniga `self: Box<Self>` bor. Ushbu sintaksis, metod 
+faqatgina turini saqlovchi `Box` da chaqirilganda haqiqiy bo'lishini anglatadi. Ushbu sintaksis `Box<Self>` ning mulkini o'zlashtiradi va eski holatni 
+yo'q qiladi, shuning uchun `Post`ning holat qiymati yangi holatga aylanishi mumkin.
 
-We need to set `state` to `None` temporarily rather than setting it directly
-with code like `self.state = self.state.request_review();` to get ownership of
-the `state` value. This ensures `Post` can’t use the old `state` value after
-we’ve transformed it into a new state.
+Eski holatni iste'mol qilish uchun `request_review` metodi holat qiymatining mulkini olishi kerak. Bu yerda `Post`ning `state` maydonidagi `Option` kela 
+boshlaydi: biz `state` maydonidan `Some` qiymatini olib, o'rniga `None` qo'yish uchun `take` metodini chaqiramiz, chunki Rust bizga strukturalarda 
+to'ldirilmagan maydoni bo'lishiga yo'l qo'ymaydi. Bu bizga `state` qiymatini `Post`dan olib yurishni ta'minlaydi, uni ijaraga olish o'rniga. Keyin biz 
+postning `state` qiymatini ushbu amaliyot natijasiga o'rnatamiz.
 
-The `request_review` method on `Draft` returns a new, boxed instance of a new
-`PendingReview` struct, which represents the state when a post is waiting for a
-review. The `PendingReview` struct also implements the `request_review` method
-but doesn’t do any transformations. Rather, it returns itself, because when we
-request a review on a post already in the `PendingReview` state, it should stay
-in the `PendingReview` state.
+Biz `state` ni bevosita `self.state = self.state.request_review();` kabi kod yozish orqali sozlashimiz kerak emas, o'z mulkimizni olish uchun 
+vaqtinchalik `None` qilib qo'yamiz. Bu, `Post` yangilangan holatga o'girilib olgandan keyin eski `state` qiymatini ishlata olmaydiganligini ta'minlaydi.
 
-Now we can start seeing the advantages of the state pattern: the
-`request_review` method on `Post` is the same no matter its `state` value. Each
-state is responsible for its own rules.
+`Draft` dan `request_review` metodi yangi, `PendingReview` strukturasining yangi, qutichalangan instansiyasini qaytaradi, bu post ko'rinishini kutayotgan 
+holatni ifodalaydi. `PendingReview` strukturasiga ham `request_review` metodi amalga oshirilgan, lekin hech qanday o'zgarishlar qilmadi. Aksincha, u 
+o'zini qaytaradi, chunki post allaqachon `PendingReview` holatida bo'lganda, biz ko'rinish so'raganimizda, u `PendingReview` holatida qolishi kerak.
+Endi biz holat shablonining afzalliklarini ko‘ra boshlaymiz: `Post`’dagi `request_review` metodi uning `state` qiymatiga qarab bir xil bo‘ladi. Har bir 
+holat o‘z qoidalari uchun mas’uldir.
 
-We’ll leave the `content` method on `Post` as is, returning an empty string
-slice. We can now have a `Post` in the `PendingReview` state as well as in the
-`Draft` state, but we want the same behavior in the `PendingReview` state.
-Listing 17-11 now works up to line 10!
+Biz `Post`dagi `content` metodini o‘z holatida qoldiramiz, ya’ni bo‘sh qator qaytaradi. Endi bizda `PendingReview` holatidagi va `Draft` holatidagi 
+`Post` bo‘lishi mumkin, lekin `PendingReview` holatida bir xil xatti-harakatlarni xohlaymiz. Ro‘yxat 17-11 endi 10-qatorgacha kutilganidek ishlaydi!
 
-<!-- Old headings. Do not remove or links may break. -->
-<a id="adding-the-approve-method-that-changes-the-behavior-of-content"></a>
+### `content` metodining xatti-harakatlarini o‘zgartirish uchun `approve` qo‘shish
 
-### Adding `approve` to Change the Behavior of `content`
+`approve` metodi `request_review` metodiga o‘xshash bo‘ladi: bu holat ma’qullanganda joriy holat aytgan qiymatga `state` ni o‘rnatadi, Ro‘yxat 17-16 da ko
+‘rsatilganidek:
 
-The `approve` method will be similar to the `request_review` method: it will
-set `state` to the value that the current state says it should have when that
-state is approved, as shown in Listing 17-16:
-
-<span class="filename">Filename: src/lib.rs</span>
-
-```rust,noplayground
+&lt;span class=&quot;filename&quot;&gt;Fayl nomi: src/lib.rs&lt;/span&gt;
+rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-16/src/lib.rs:here}}
-```
 
-<span class="caption">Listing 17-16: Implementing the `approve` method on
-`Post` and the `State` trait</span>
 
-We add the `approve` method to the `State` trait and add a new struct that
-implements `State`, the `Published` state.
+&lt;span class=&quot;caption&quot;&gt;Ro‘yxat 17-16: `Post` da va `State` xususiyatida `approve` metodini amalga oshirish&lt;/span&gt;
 
-Similar to the way `request_review` on `PendingReview` works, if we call the
-`approve` method on a `Draft`, it will have no effect because `approve` will
-return `self`. When we call `approve` on `PendingReview`, it returns a new,
-boxed instance of the `Published` struct. The `Published` struct implements the
-`State` trait, and for both the `request_review` method and the `approve`
-method, it returns itself, because the post should stay in the `Published`
-state in those cases.
+Biz `approve` metodini `State` xususiyatiga qo‘shamiz va `State` ni amalga oshiruvchi yangi struktura, ya’ni `Published` holatini qo‘shamiz.
 
-Now we need to update the `content` method on `Post`. We want the value
-returned from `content` to depend on the current state of the `Post`, so we’re
-going to have the `Post` delegate to a `content` method defined on its `state`,
-as shown in Listing 17-17:
+`PendingReview` holatidagi `request_review` qanday ishlashini o‘z ichiga olgan holda, agar biz `Draft` ustida `approve` metodini chaqirsak, bu hech 
+qanday ta’sir qilmaydi, chunki `approve` `self` ni qaytaradi. `PendingReview` ustida `approve` chaqirsak, u yangi, qutichalangan `Published` 
+strukturasining instansiyasini qaytaradi. `Published` strukturasi `State` xususiyatini amalga oshiradi va `request_review` va `approve` metodlari bo
+‘yicha u o‘zini qaytaradi, chunki post shu holatlarda `Published` holatida qolishi kerak.
 
-<span class="filename">Filename: src/lib.rs</span>
+Endi biz `Post`dagi `content` metodini yangilashimiz kerak. `content` dan qaytariladigan qiymat `Post`ning joriy holatiga bog‘liq bo‘lishini xohlaymiz, 
+shuning uchun `Post` `state` da aniqlangan `content` metodiga delegatsiya qiladi, bu Ro‘yxat 17-17 da ko‘rsatilgan:
 
-```rust,ignore,does_not_compile
+&lt;span class=&quot;filename&quot;&gt;Fayl nomi: src/lib.rs&lt;/span&gt;
+rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch17-oop/listing-17-17/src/lib.rs:here}}
-```
 
-<span class="caption">Listing 17-17: Updating the `content` method on `Post` to
-delegate to a `content` method on `State`</span>
 
-Because the goal is to keep all these rules inside the structs that implement
-`State`, we call a `content` method on the value in `state` and pass the post
-instance (that is, `self`) as an argument. Then we return the value that’s
-returned from using the `content` method on the `state` value.
-
-We call the `as_ref` method on the `Option` because we want a reference to the
-value inside the `Option` rather than ownership of the value. Because `state`
-is an `Option<Box<dyn State>>`, when we call `as_ref`, an `Option<&Box<dyn
-State>>` is returned. If we didn’t call `as_ref`, we would get an error because
-we can’t move `state` out of the borrowed `&self` of the function parameter.
-
-We then call the `unwrap` method, which we know will never panic, because we
-know the methods on `Post` ensure that `state` will always contain a `Some`
-value when those methods are done. This is one of the cases we talked about in
-the [“Cases In Which You Have More Information Than the
-Compiler”][more-info-than-rustc]<!-- ignore --> section of Chapter 9 when we
-know that a `None` value is never possible, even though the compiler isn’t able
-to understand that.
-
-At this point, when we call `content` on the `&Box<dyn State>`, deref coercion
-will take effect on the `&` and the `Box` so the `content` method will
-ultimately be called on the type that implements the `State` trait. That means
-we need to add `content` to the `State` trait definition, and that is where
-we’ll put the logic for what content to return depending on which state we
-have, as shown in Listing 17-18:
-
-<span class="filename">Filename: src/lib.rs</span>
-
-```rust,noplayground
-{{#rustdoc_include ../listings/ch17-oop/listing-17-18/src/lib.rs:here}}
-```
-
-<span class="caption">Listing 17-18: Adding the `content` method to the `State`
-trait</span>
-
-We add a default implementation for the `content` method that returns an empty
-string slice. That means we don’t need to implement `content` on the `Draft`
-and `PendingReview` structs. The `Published` struct will override the `content`
-method and return the value in `post.content`.
-
-Note that we need lifetime annotations on this method, as we discussed in
-Chapter 10. We’re taking a reference to a `post` as an argument and returning a
-reference to part of that `post`, so the lifetime of the returned reference is
-related to the lifetime of the `post` argument.
-
-And we’re done—all of Listing 17-11 now works! We’ve implemented the state
-pattern with the rules of the blog post workflow. The logic related to the
-rules lives in the state objects rather than being scattered throughout `Post`.
-
-> #### Why Not An Enum?
+&lt;span class=&quot;caption&quot;&gt;Ro‘yxat 17-17: `Post`dagi `content` metodini yangilash, `State` da joylashgan `content` metodiga delegatsiya 
+qilish &lt;/span&gt;
+Maqsadimiz, `State` ni amalga oshiruvchi strukturalarda barcha qoidalarni saqlab qolish bo‘lgani uchun, biz `state` qiymatidagi `content` metodini 
+chaqiramiz va post instansiyasini (ya’ni, `self`) argument sifatida uzatamiz. So‘ngra, `state` qiymatidagi `content` metodidan qaytgan qiymatni 
+qaytaramiz.&lt;br/&gt;&lt;br/&gt;Biz `Option` ustida `as_ref` metodini chaqiramiz, chunki biz qiymatning mulkini emas, balki `Option` ichidagi qiymatga 
+murojaatni xohlaymiz. `state` `Option<Box<dyn State>>` bo‘lganligi sababli, `as_ref` chaqirganda `Option<&Box<dyn State>>` qaytadi. Agar biz `as_ref` ni 
+chaqirmasak, xato xabari yuklanadi, chunki biz `state` ni funksiyaning parametrning ijaraga olingan `&self` dan harakatga o'tkaza olmaymiz.&lt;br/&gt;&lt;
+br/&gt;Keyin biz `unwrap` metodini chaqiramiz, bu esa hech qachon xato qilmaydi, chunki `Post`dagi metodlar bizga `state` har doim `Some` qiymatini o‘z 
+ichiga olishini ta’minlaydi. Bu biz 9-bobdagi [“Compiler’dan ko‘proq ma’lumotga ega bo‘lgan holatlar”][more-info-than-rustc] bo‘limida muhokama qilgan 
+holatlardan biridir, bunda `None` qiymatini olish mumkin emas, garchi kompilyator bu ma’lumotni tushunmasa ham.&lt;br/&gt;&lt;br/&gt;Hozirgi paytda, biz 
+`&Box<dyn State>` ustida `content` ni chaqirganda, `&` va `Box` ustida deref coercion amal qiladi, shuning uchun `content` metodi `State` xususiyatini 
+amalga oshiradigan tur ustida chaqirilib qoladi. Bu bizdan `State` xususiyatining ta’rifiga `content` qo‘shishni talab qiladi, va bu yerda biz qaysi 
+holatga bog‘liq holda qaysi kontentni qaytarish uchun mantiq qo‘yamiz, Ro‘yxat 17-18 ga ko‘rsatilgan:&lt;br/&gt;&lt;br/&gt;&amp;lt;span class=&amp;quot;
+filename&amp;quot;&amp;gt;Fayl nomi: src/lib.rs&amp;lt;/span&amp;gt;&lt;br/&gt;&lt;pre&gt;&lt;code&gt;rust,noplayground&lt;br/&gt;{{#rustdoc_include ../
+listings/ch17-oop/listing-17-18/src/lib.rs:here}}&lt;br/&gt;&lt;/code&gt;&lt;/pre&gt;&lt;br/&gt;&lt;br/&gt;&amp;lt;span class=&amp;quot;caption&amp;quot;&
+amp;gt;Ro‘yxat 17-18: `State` xususiyatiga `content` metodini qo‘shish&amp;lt;/span&amp;gt;&lt;br/&gt;&lt;br/&gt;Biz `content` metodining bo‘sh qatorni 
+qaytaradigan standart amalga oshirishini qo‘shamiz. Bu demak, biz `Draft` va `PendingReview` strukturalarida `content` ni amalga oshirish shart emas. 
+`Published` struktura esa `content` metodini o‘zgartirib, `post.content` da saqlangan qiymatni qaytaradi.&lt;br/&gt;&lt;br/&gt;E’tibor bering, biz ushbu 
+metodda umr davomiyligi annotatsiyalarini qo‘shishimiz kerak, bu haqda 10-bobda muhokama qilganmiz. Biz `post` ga havola olib, bu `post`ning bir qismiga 
+havola qaytaryapmiz, shuning uchun qaytgan havolaning umr davomiyligi `post` argumentining umr davomiyligiga bog‘liq.&lt;br/&gt;&lt;br/&gt;Biz ishimizni 
+tugatdik — Endi Ro‘yxat 17-11 ning hammasi ishlaydi! Biz blog postlari ish oqimi qoidalarini belgilash bilan holat shablonini amalga oshirdik. Qoidalarga 
+bog‘liq bo‘lgan mantiq holat ob’ektlarida yashaydi, bu esa `Post` bo‘ylab tarqalmaydi.
+> #### Nega Enum Emas?
 >
-> You may have been wondering why we didn’t use an `enum` with the different
-> possible post states as variants. That’s certainly a possible solution, try
-> it and compare the end results to see which you prefer! One disadvantage of
-> using an enum is every place that checks the value of the enum will need a
-> `match` expression or similar to handle every possible variant. This could
-> get more repetitive than this trait object solution.
+> Siz biz niqob sifatida postning turli holatlari uchun `enum` ishlatmaganimizni o‘ylab qolgan bo‘lishingiz mumkin. Bu albatta mumkin bo‘lgan yechim, 
+buni sinab ko‘rishingiz va natijalarini taqqoslab ko‘rishingiz mumkin! Enumdan foydalanishning bir kamchiligi shundaki, enum qiymatini tekshiradigan har 
+bir joyda har qanday imkoniyati variantni boshqarish uchun `match` ifodasi yoki shunga o‘xshash narsa bo‘lishi kerak. Bu holat ob'ektli yechimga nisbatan 
+ko‘proq takroriy bo‘lishi mumkin.
 
-### Trade-offs of the State Pattern
+### Holat Shablonining O‘zaro Ta'siri
 
-We’ve shown that Rust is capable of implementing the object-oriented state
-pattern to encapsulate the different kinds of behavior a post should have in
-each state. The methods on `Post` know nothing about the various behaviors. The
-way we organized the code, we have to look in only one place to know the
-different ways a published post can behave: the implementation of the `State`
-trait on the `Published` struct.
+Biz Rustda post har bir holatda qanday xil xatti-harakatlarga ega bo‘lishini o‘z ichiga oladigan ob'ektga yo‘naltirilgan holat shablonini amalga oshirib 
+bo‘ldik. `Post`dagi metodlar turli xatti-harakatlar haqida hech narsa bilmaydi. Biz kodni qanday tashkil qilganimiz tufayli, nashr etilgan postning turli 
+xil xatti-harakatlarini bilish uchun faqat bitta joyni ko‘rishimiz kerak: `Published` strukturasi ustida `State` xususiyatini amalga oshirishi.
 
-If we were to create an alternative implementation that didn’t use the state
-pattern, we might instead use `match` expressions in the methods on `Post` or
-even in the `main` code that checks the state of the post and changes behavior
-in those places. That would mean we would have to look in several places to
-understand all the implications of a post being in the published state! This
-would only increase the more states we added: each of those `match` expressions
-would need another arm.
+Agar biz holat shablonidan foydalanmaydigan muqobil amalga oshirishni yaratsak, biz `Post`dagi metodlarda yoki hatto postning holatini tekshiradigan va u 
+erda xatti-harakatlarni o‘zgartiradigan `main` kodida `match` ifodalaridan foydalanishimiz mumkin edi. Bu nashr etilgan holatda postning barcha 
+ta'sirlarini tushunish uchun bir necha joylarni ko‘rishimiz kerak bo‘lardi! Bu qanchalik ko‘p holat qo‘shsak, shuncha ko‘p joylarni ko‘rishimiz kerak bo
+‘ladi, har bir `match` ifodasi yana bir quloq qo‘shishi kerak.
 
-With the state pattern, the `Post` methods and the places we use `Post` don’t
-need `match` expressions, and to add a new state, we would only need to add a
-new struct and implement the trait methods on that one struct.
+Holat shablonini qo‘llaganimizda, `Post` metodlari va `Post`ni ishlatayotgan joylar `match` ifodalariga muhtoj bo‘lmaydi, va yangi holat qo‘shish uchun 
+faqat yangi strukturani qo‘shish va shu bir struktura ustida xususiyat metodlarini amalga oshirishimiz kerak bo‘ladi.
 
-The implementation using the state pattern is easy to extend to add more
-functionality. To see the simplicity of maintaining code that uses the state
-pattern, try a few of these suggestions:
+Holat shablonidan foydalanish orqali amalga oshirishni kengaytirish va ko‘proq funksionallik qo‘shish oson. Holat shablonini qo‘llaydigan kodni 
+saqlashning oddiyligini ko‘rish uchun bir nechta takliflarni amalga oshirishga harakat qiling:
 
-* Add a `reject` method that changes the post’s state from `PendingReview` back
-  to `Draft`.
-* Require two calls to `approve` before the state can be changed to `Published`.
-* Allow users to add text content only when a post is in the `Draft` state.
-  Hint: have the state object responsible for what might change about the
-  content but not responsible for modifying the `Post`.
+* `PendingReview` holatini `Draft` ga qaytaradigan `reject` metodini qo‘shing.
+* Holat `Published` ga o‘zgartirilishi uchun `approve` ga ikki marotaba chaqirishni talab qiling.
+* Foydalanuvchilarga faqat post `Draft` holatida bo‘lganda matn kontentini qo‘shishiga ruxsat bering. Ishoralar: holat ob'ekti kontentni qanday o
+‘zgarishi bo‘yicha mas’ul bo‘ladi, lekin `Post`ni o‘zgartirish bo‘yicha mas’ul bo‘lmaydi.
 
-One downside of the state pattern is that, because the states implement the
-transitions between states, some of the states are coupled to each other. If we
-add another state between `PendingReview` and `Published`, such as `Scheduled`,
-we would have to change the code in `PendingReview` to transition to
-`Scheduled` instead. It would be less work if `PendingReview` didn’t need to
-change with the addition of a new state, but that would mean switching to
-another design pattern.
+Holat shablonining bir kamchiligi shundaki, holatlar o‘rtasidagi o‘tishni amalga oshirishi tufayli, ba'zi holatlar bir-biriga bog‘langan. Agar biz 
+`PendingReview` va `Published` o‘rtasida `Scheduled` kabi yana bir holat qo‘shsak, `PendingReview` da `Scheduled` ga o‘tish uchun kodni o‘zgartirishimiz 
+kerak bo‘ladi. Agar `PendingReview` yangi holat qo‘shilganda o‘zgarish qilmasa, bu kamroq ish bo‘lardi, lekin bu boshqa dizayn shabloniga o‘tishni 
+anglatadi.
 
-Another downside is that we’ve duplicated some logic. To eliminate some of the
-duplication, we might try to make default implementations for the
-`request_review` and `approve` methods on the `State` trait that return `self`;
-however, this would violate object safety, because the trait doesn’t know what
-the concrete `self` will be exactly. We want to be able to use `State` as a
-trait object, so we need its methods to be object safe.
+Yana bir kamchiligi shundaki, ba'zi mantiqlarni takrorladik. Takrorlashlarni yo‘qotish uchun, ehtimol, `State` xususiyatida `self` ni qaytadigan 
+`request_review` va `approve` metodlari uchun standart amalga oshirishlarni yaratishga harakat qilishimiz mumkin; lekin bu ob'ekt xavfsizligini buzadi, 
+chunki xususiyat aniq `self` nima bo‘lishini bilmaydi. Biz `State` ni ob'ekt sifatida ishlatishimiz kerak, shuning uchun uning metodlarini ob'ekt xavfsiz 
+bo‘lishi kerak.
 
-Other duplication includes the similar implementations of the `request_review`
-and `approve` methods on `Post`. Both methods delegate to the implementation of
-the same method on the value in the `state` field of `Option` and set the new
-value of the `state` field to the result. If we had a lot of methods on `Post`
-that followed this pattern, we might consider defining a macro to eliminate the
-repetition (see the [“Macros”][macros]<!-- ignore --> section in Chapter 19).
+Boshqa takrorlashlarga `Post`dagi `request_review` va `approve` metodlarining o‘xshash amalga oshirilishi kiradi. Ikkala metod ham `Option` ning `state` 
+maydonidagi qiymatdagi bir xil metodni amalga oshirishga va `state` maydonining yangi qiymatini natijaga o‘rnatishga delegatsiya qiladi. Agar `Post`da 
+ushbu naqshga muvofiq ko‘p metodlar mavjud bo‘lsa, takrorlanishni yo‘qotish uchun makro ta'riflashni ko‘rib chiqamiz (19-bobdagi [“Makrolar”][macros] bo
+‘limini ko‘ring).
 
-By implementing the state pattern exactly as it’s defined for object-oriented
-languages, we’re not taking as full advantage of Rust’s strengths as we could.
-Let’s look at some changes we can make to the `blog` crate that can make
-invalid states and transitions into compile time errors.
+Holat shablonini ob'ektga yo‘naltirilgan tillar uchun aniq belgilanganidek amalga oshirish orqali biz Rustning kuchlarini to‘liq foydalana olmaymiz. 
+Keling, `blog` crate-ga o‘zgartirishlar kiritishni ko‘rib chiqaylik, bu esa to‘g‘ri holat va o‘tishlarni kompilyatsiya vaqtida xatolarga aylantiradi.
+#### Holatlarni va Xatti-harakatlarni Turlarga Kodlash
 
-#### Encoding States and Behavior as Types
+Biz sizga holat shablonini qayta o‘ylab ko‘rishni ko‘rsatamiz, bunda boshqa turdagi o‘zaro ta’sirlar olamiz. Holatlar va o‘tishlarni to‘liq yashirish o
+‘rniga, ularni turli turlarga kodlaymiz. Shu tariqa, Rustning type checking tizimi draft postlar faqat nashr etilgan postlar uchun ruxsat etilgan joyda 
+ishlatilishini oldini olish uchun kompilyator xatosi chiqaradi.
 
-We’ll show you how to rethink the state pattern to get a different set of
-trade-offs. Rather than encapsulating the states and transitions completely so
-outside code has no knowledge of them, we’ll encode the states into different
-types. Consequently, Rust’s type checking system will prevent attempts to use
-draft posts where only published posts are allowed by issuing a compiler error.
+Keling, Ro‘yxat 17-11 da `main` ning birinchi qismiga nazar solamiz:
 
-Let’s consider the first part of `main` in Listing 17-11:
+<span class="filename">Fayl nomi: src/main.rs</span>
 
-<span class="filename">Filename: src/main.rs</span>
-
-```rust,ignore
+rust,ignore
 {{#rustdoc_include ../listings/ch17-oop/listing-17-11/src/main.rs:here}}
-```
 
-We still enable the creation of new posts in the draft state using `Post::new`
-and the ability to add text to the post’s content. But instead of having a
-`content` method on a draft post that returns an empty string, we’ll make it so
-draft posts don’t have the `content` method at all. That way, if we try to get
-a draft post’s content, we’ll get a compiler error telling us the method
-doesn’t exist. As a result, it will be impossible for us to accidentally
-display draft post content in production, because that code won’t even compile.
-Listing 17-19 shows the definition of a `Post` struct and a `DraftPost` struct,
-as well as methods on each:
 
-<span class="filename">Filename: src/lib.rs</span>
+Biz hali ham `Post::new` yordamida draft holatidagi yangi postlarni yaratish imkoniyatini beramiz va postning kontentiga matn qo‘shish imkoniyatini 
+saqlab qolamiz. Lekin, draft postda bo‘sh qator qaytaradigan `content` metodi bo‘lishining o‘rniga, draft postlar `content` metodiga umuman ega emas. 
+Shunday qilib, agar biz draft postning kontentini olishga harakat qilsak, bu metod mavjud emasligi haqida kompilyator xatosini olamiz. Natijada, draft 
+post kontentini tasodifan ishlab chiqarishda ko‘rsatishimiz imkonsiz bo‘ladi, chunki bu kod hatto kompilyatsiyadan o‘tmaydi.
 
-```rust,noplayground
+Ro‘yxat 17-19 da `Post` strukturasining va `DraftPost` strukturasining ta’riflari, shuningdek, har birida metodlar ko‘rsatilgani keltiriladi:
+
+<span class="filename">Fayl nomi: src/lib.rs</span>
+
+rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-19/src/lib.rs}}
-```
 
-<span class="caption">Listing 17-19: A `Post` with a `content` method and a
-`DraftPost` without a `content` method</span>
 
-Both the `Post` and `DraftPost` structs have a private `content` field that
-stores the blog post text. The structs no longer have the `state` field because
-we’re moving the encoding of the state to the types of the structs. The `Post`
-struct will represent a published post, and it has a `content` method that
-returns the `content`.
+<span class="caption">Ro‘yxat 17-19: `content` metodi bor `Post` va `content` metodi yo‘q `DraftPost`</span>
 
-We still have a `Post::new` function, but instead of returning an instance of
-`Post`, it returns an instance of `DraftPost`. Because `content` is private
-and there aren’t any functions that return `Post`, it’s not possible to create
-an instance of `Post` right now.
+`Post` va `DraftPost` strukturalari blog post matnini saqlaydigan maxfiy `content` maydoniga ega. Strukturalar endi `state` maydoniga ega emas, chunki 
+biz holatni kodlashni struktura turlariga o‘tkaryapmiz. `Post` strukturasini nashr qilinadigan postni ifodalash uchun ishlatamiz va u `content` metodini o
+‘z ichiga oladi, bu esa `content` ni qaytaradi.
 
-The `DraftPost` struct has an `add_text` method, so we can add text to
-`content` as before, but note that `DraftPost` does not have a `content` method
-defined! So now the program ensures all posts start as draft posts, and draft
-posts don’t have their content available for display. Any attempt to get around
-these constraints will result in a compiler error.
+Bizda hali `Post::new` funksiyasi bor, lekin u `Post` instansiyasini qaytarish o‘rniga `DraftPost` instansiyasini qaytaradi. `content` maxfiy bo‘lgani va 
+`Post` ni qaytaradigan funksiyalar yo‘q bo‘lgani uchun, hozirda `Post` instansiyasini yaratish imkoni yo‘q.
 
-#### Implementing Transitions as Transformations into Different Types
+`DraftPost` strukturasida `add_text` metodi mavjud, shuning uchun biz oldiniga o‘xshab `content` ga matn qo‘shishimiz mumkin, ammo `DraftPost` da 
+`content` metodi aniqlanmaganini unutmang! Endi dastur barcha postlar dastlab draft postlar sifatida boshlanishini ta’minlaydi va draft postlarning 
+kontenti ko‘rsatish uchun mavjud emas. Ushbu cheklovlarni aylanib o‘tishga harakat qilinadigan har qanday urinish kompilyator xatosiga olib keladi.
 
-So how do we get a published post? We want to enforce the rule that a draft
-post has to be reviewed and approved before it can be published. A post in the
-pending review state should still not display any content. Let’s implement
-these constraints by adding another struct, `PendingReviewPost`, defining the
-`request_review` method on `DraftPost` to return a `PendingReviewPost`, and
-defining an `approve` method on `PendingReviewPost` to return a `Post`, as
-shown in Listing 17-20:
+#### O‘tishlarni Turli Turlarga Transformatsiya Qilish Olaroq Amalga Oshirishi
 
-<span class="filename">Filename: src/lib.rs</span>
+Qanday qilib biz nashr etilgan postni olamiz? Draft postni nashr qilishdan oldin ko‘rib chiqish va tasdiqlash qoidalarini o‘rnatishni xohlaymiz. 
+Kutilayotgan ko‘rib chiqish holatidagi post hech qanday kontentni ko‘rsatmasligi kerak. Ushbu cheklovlarni amalga oshirish uchun yana bir struktura, 
+`PendingReviewPost` qo‘shamiz, `DraftPost` da `request_review` metodini `PendingReviewPost` ni qaytarishi uchun aniqlaymiz va `PendingReviewPost` da 
+`Post` ga aylantiruvchi `approve` metodini aniqlaymiz, bu Ro‘yxat 17-20 da ko‘rsatiladi:
 
-```rust,noplayground
+&lt;span class=&quot;filename&quot;&gt;Fayl nomi: src/lib.rs&lt;/span&gt;
+
+rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-20/src/lib.rs:here}}
-```
 
-<span class="caption">Listing 17-20: A `PendingReviewPost` that gets created by
-calling `request_review` on `DraftPost` and an `approve` method that turns a
-`PendingReviewPost` into a published `Post`</span>
 
-The `request_review` and `approve` methods take ownership of `self`, thus
-consuming the `DraftPost` and `PendingReviewPost` instances and transforming
-them into a `PendingReviewPost` and a published `Post`, respectively. This way,
-we won’t have any lingering `DraftPost` instances after we’ve called
-`request_review` on them, and so forth. The `PendingReviewPost` struct doesn’t
-have a `content` method defined on it, so attempting to read its content
-results in a compiler error, as with `DraftPost`. Because the only way to get a
-published `Post` instance that does have a `content` method defined is to call
-the `approve` method on a `PendingReviewPost`, and the only way to get a
-`PendingReviewPost` is to call the `request_review` method on a `DraftPost`,
-we’ve now encoded the blog post workflow into the type system.
+&lt;span class=&quot;caption&quot;&gt;Ro‘yxat 17-20: `DraftPost`da `request_review` chaqirib yaratiladigan `PendingReviewPost` va `PendingReviewPost` ni 
+nashr qilingan `Post` ga aylantiruvchi `approve` metodi&lt;/span&gt;
 
-But we also have to make some small changes to `main`. The `request_review` and
-`approve` methods return new instances rather than modifying the struct they’re
-called on, so we need to add more `let post =` shadowing assignments to save
-the returned instances. We also can’t have the assertions about the draft and
-pending review posts’ contents be empty strings, nor do we need them: we can’t
-compile code that tries to use the content of posts in those states any longer.
-The updated code in `main` is shown in Listing 17-21:
+`request_review` va `approve` metodlari `self` ni mulkiga oladi, shunday qilib `DraftPost` va `PendingReviewPost` instansiyalarini yo‘q qilib, mos 
+ravishda `PendingReviewPost` va nashr qilingan `Post` ga aylantiradi. Shunday qilib, biz `request_review` chaqirgandan so‘ng hech qanday olib qoldirilgan 
+`DraftPost` instansiyalariga ega bo‘lmaymiz. `PendingReviewPost` strukturasida `content` metodi aniqlanmagan, shuning uchun uning kontentini o‘qishga 
+harakat qilish kompilyator xatosiga olib keladi, bu `DraftPost` bilan bir xil. Bizda `content` metodi aniqlangan nashr qilingan `Post` instansiyasini 
+olishning yagona usuli `PendingReviewPost` ustida `approve` metodini chaqirishdir, va `PendingReviewPost` ni olishning yagona usuli `DraftPost` ustida 
+`request_review` metodini chaqirishdir, shuning uchun biz blog postlari ish oqimini tur tizimiga kodladik.
 
-<span class="filename">Filename: src/main.rs</span>
+Lekin, `main` ga ba'zi kichik o‘zgarishlar kiritishimiz kerak. `request_review` va `approve` metodlari struktura ustida chaqirilganda, o‘zgarmasdan yangi 
+instansiyalarni qaytaradi, shuning uchun biz qaytarilgan instansiyalarni saqlash uchun ko‘proq `let post =` qo‘shimcha e'tiborlarga ehtiyojimiz bor. Biz 
+draft va kutilayotgan ko‘rib chiqish postlarining kontentlari bo‘sh qator bo‘lmasligi haqida qoidalar belgilashimiz, shuningdek, ularga ehtiyojimiz yo‘q: 
+bunday davlatlardagi postlar kontentini qo‘llashi mumkin bo‘lgan kodni kompilyatsiyadan o‘tkazishimiz mumkin emas. `main` da yangilangan kod Ro‘yxat 
+17-21 da ko‘rsatilgan:
 
-```rust,ignore
+&lt;span class=&quot;filename&quot;&gt;Fayl nomi: src/main.rs&lt;/span&gt;
+
+rust,ignore
 {{#rustdoc_include ../listings/ch17-oop/listing-17-21/src/main.rs}}
-```
 
-<span class="caption">Listing 17-21: Modifications to `main` to use the new
-implementation of the blog post workflow</span>
+&nbsp;<span class="caption">Ro‘yxat 17-21: Blog post ish oqimining yangi amalga oshirishiga o‘tish uchun `main` ga kiritilgan o‘zgarishlar</span>
 
-The changes we needed to make to `main` to reassign `post` mean that this
-implementation doesn’t quite follow the object-oriented state pattern anymore:
-the transformations between the states are no longer encapsulated entirely
-within the `Post` implementation. However, our gain is that invalid states are
-now impossible because of the type system and the type checking that happens at
-compile time! This ensures that certain bugs, such as display of the content of
-an unpublished post, will be discovered before they make it to production.
+`post` ni qayta tayinlash uchun `main` da kiritgan o‘zgarishlarimiz bu amalga oshirish endi ob&#039;ektga yo‘naltirilgan holat shablonini to‘liq 
+kuzatmaydi: holatlar o‘rtasidagi o‘tishlar endi to‘liq `Post` amalga oshirishida yashirilmagan. Biroq, bizning foydamiz shundaki, noaniq holatlar endi 
+tur tizimi va kompilyatsiya vaqtida sodir bo‘ladigan tur tekshiruvi tufayli imkonsizdir! Bu, nashr qilinmagan postning kontentini ko‘rsatish kabi ba’zi 
+xatolar ishlab chiqarishga o‘tishidan oldin aniqlanishini ta’minlaydi.
 
-Try the tasks suggested at the start of this section on the `blog` crate as it
-is after Listing 17-21 to see what you think about the design of this version
-of the code. Note that some of the tasks might be completed already in this
-design.
+Ro‘yxat 17-21 dan keyin `blog` crate-da ushbu bo‘limning boshida taklif qilingan vazifalarni bajarishga harakat qiling va ushbu kodning ushbu 
+versiyasining dizayni haqida nima deb o‘ylayotganingizni ko‘ring. Ba’zi vazifalar bu dizaynda allaqachon bajargan bo‘lishingiz mumkin.
 
-We’ve seen that even though Rust is capable of implementing object-oriented
-design patterns, other patterns, such as encoding state into the type system,
-are also available in Rust. These patterns have different trade-offs. Although
-you might be very familiar with object-oriented patterns, rethinking the
-problem to take advantage of Rust’s features can provide benefits, such as
-preventing some bugs at compile time. Object-oriented patterns won’t always be
-the best solution in Rust due to certain features, like ownership, that
-object-oriented languages don’t have.
+Biz Rust ob&#039;ektga yo‘naltirilgan dizayn shablonlarini amalga oshirish qobiliyatiga ega bo‘lganini ko‘rdik, shuningdek, holatni tur tizimiga kodlash 
+kabi boshqa shablonlar ham Rustda mavjud. Ushbu shablonlar turli xil o‘zaro ta’sirlarga ega. Ob&#039;ektga yo‘naltirilgan shablonlarga juda tanish bo
+‘lishingiz mumkin, ammo muammoni Rustning imkoniyatlaridan foydalanish bilan qayta o‘ylash ba’zi xatolarni kompilyatsiya vaqtida oldini olish kabi 
+foydalar taqdim etishi mumkin. Ob&#039;ektga yo‘naltirilgan shablonlar Rustda har doim eng yaxshi yechim bo‘lmasligi mumkin, chunki ob&#039;ektga yo
+‘naltirilgan tillarda yo‘q bo‘lgan, masalan, mulk kabi ba’zi xususiyatlar mavjuddir.
 
-## Summary
+## Xulosa
 
-No matter whether or not you think Rust is an object-oriented language after
-reading this chapter, you now know that you can use trait objects to get some
-object-oriented features in Rust. Dynamic dispatch can give your code some
-flexibility in exchange for a bit of runtime performance. You can use this
-flexibility to implement object-oriented patterns that can help your code’s
-maintainability. Rust also has other features, like ownership, that
-object-oriented languages don’t have. An object-oriented pattern won’t always
-be the best way to take advantage of Rust’s strengths, but is an available
-option.
+Bu bobni o‘qiganingizdan so‘ng, Rust ob’ektga yo‘naltirilgan tilmi yoki yo‘qligini o‘ylasangiz ham, siz endi Rustda ba'zi ob'ektga yo‘naltirilgan 
+xususiyatlarni olish uchun xususiyat ob'ektlaridan foydalanishingiz mumkinligini bilasiz. Dinamik tarqatish sizning kodingizga biroz ishga tushirish 
+vaqtida ishlash yaxshilanishi evaziga moslashuvchanlik beradi. Siz bu moslashuvchanlikdan ob'ektga yo‘naltirilgan shablonlarni amalga oshirish uchun 
+foydalanishingiz mumkin, bu esa sizning kodingizni saqlashni osonlashtiradi. Rustda ob'ektga yo‘naltirilgan tillarda yo‘q bo‘lgan mulk kabi boshqa 
+xususiyatlar ham mavjud. Ob'ektga yo‘naltirilgan shablon Rustning kuchlaridan foydalanishning eng yaxshi yo‘li har doim bo‘lmasligi mumkin, lekin bu bir 
+imkoniyatdir.
 
-Next, we’ll look at patterns, which are another of Rust’s features that enable
-lots of flexibility. We’ve looked at them briefly throughout the book but
-haven’t seen their full capability yet. Let’s go!
+Keyingi bo‘limda, Rustning ko‘plab moslashuvchanlikni ta’minlovchi yana bir xususiyati bo‘lgan shablonlarga nazar solamiz. Biz kitob davomida ularga 
+qisqacha to‘xtalganmiz, lekin ularning barcha imkoniyatlarini ko‘rmaganmiz. Keling, buni amalga oshiraylik!
 
 [more-info-than-rustc]: ch09-03-to-panic-or-not-to-panic.html#cases-in-which-you-have-more-information-than-the-compiler
 [macros]: ch19-06-macros.html#macros
