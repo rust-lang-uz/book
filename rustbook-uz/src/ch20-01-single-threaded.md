@@ -32,27 +32,9 @@ Ushbu holatda `bind` funksiyasi `new` funksiyasiga o‘xshab ishlaydi, ya’ni u
 
 `bind` funksiyasi `Result<T, E>` turini qaytaradi, bu esa bog‘lanish (binding) muvaffaqiyatsiz bo‘lishi mumkinligini bildiradi. Masalan, 80-portga ulanish uchun administrator huquqlari talab qilinadi (administrator bo‘lmagan foydalanuvchilar faqat 1023 dan yuqori portlarni tinglashi mumkin). Shuning uchun, agar biz administrator bo‘lmasak va 80-portga ulanishga harakat qilsak, bog‘lanish amalga oshmaydi. Bundan tashqari, agar dasturimizning ikkita nusxasini ishga tushirsak va ular bir xil portda tinglashga harakat qilsa, bog‘lanish yana amalga oshmaydi. Biz bu yerda faqat o‘rganish maqsadida oddiy server yozayotganimiz uchun bunday xatoliklarni oldini olish haqida hozircha qayg‘urmaymiz; uning o‘rniga dasturimizda xatolik yuz bersa dasturni to'xtatadigan `unwrap` funksiyasidan foydalanamiz.
 
-The `incoming` method on `TcpListener` returns an iterator that gives us a
-sequence of streams (more specifically, streams of type `TcpStream`). A single
-*stream* represents an open connection between the client and the server. A
-*connection* is the name for the full request and response process in which a
-client connects to the server, the server generates a response, and the server
-closes the connection. As such, we will read from the `TcpStream` to see what
-the client sent and then write our response to the stream to send data back to
-the client. Overall, this `for` loop will process each connection in turn and
-produce a series of streams for us to handle.
+`TcpListener` ustidagi `incoming` metodi bizga oqimlar ketma-ketligini (ya’ni, `TcpStream` turidagi oqimlar) taqdim etuvchi iteratorni qaytaradi. Har bir *oqim* (stream) mijoz (client) va server o‘rtasidagi ochiq ulanishni ifodalaydi. *Ulanish* (connection) deganda, mijoz serverga ulanadigan, server javob tayyorlab qaytaradigan va so‘ng ulanishni yopadigan to‘liq so‘rov-javob (request response) jarayoni tushuniladi. Shunday ekan, biz `TcpStream` dan o‘qib, mijoz nimani yuborganini bilamiz va javobimizni aynan shu oqim orqali yozib, mijozga yuboramiz. Umuman olganda, bu `for` sikli har bir ulanishni navbati bilan qayta ishlaydi va bizga boshqarish uchun bir nechta oqimlar beradi.
 
-For now, our handling of the stream consists of calling `unwrap` to terminate
-our program if the stream has any errors; if there aren’t any errors, the
-program prints a message. We’ll add more functionality for the success case in
-the next listing. The reason we might receive errors from the `incoming` method
-when a client connects to the server is that we’re not actually iterating over
-connections. Instead, we’re iterating over *connection attempts*. The
-connection might not be successful for a number of reasons, many of them
-operating system specific. For example, many operating systems have a limit to
-the number of simultaneous open connections they can support; new connection
-attempts beyond that number will produce an error until some of the open
-connections are closed.
+Hozircha oqimni (stream) qayta ishlashimiz faqat `unwrap` chaqirishdan iborat: agar oqimda xatolik yuz bersa, dastur to‘xtaydi; xatolik bo‘lmasa, dastur xabar chop etadi. Kelasi ro‘yxatda muvaffaqiyatli holatlar uchun ko‘proq funksionallik qo‘shamiz. Mijoz serverga ulanganida `incoming` metodidan xatoliklar chiqishi mumkin, chunki biz aslida ulanishlarning o‘zini emas, *ulanishga urinishlarni* (connection attemps) ko‘rib chiqayapmiz (iterating). Har bir urinish muvaffaqiyatli bo‘lavermasligi mumkin, va buning sabablari ko‘pincha operatsion tizimga bog‘liq bo‘ladi. Masalan, ko‘plab operatsion tizimlarda bir vaqtning o‘zida ochiq bo‘lishi mumkin bo‘lgan ulanishlar soni cheklangan bo‘ladi; bu limitdan oshib ketilganida, yangi ulanishga urinishlar xatolik chiqaradi, toki mavjud ulanishlardan ba’zilari yopilmaguncha.
 
 Let’s try running this code! Invoke `cargo run` in the terminal and then load
 *127.0.0.1:7878* in a web browser. The browser should show an error message
@@ -60,29 +42,20 @@ like “Connection reset,” because the server isn’t currently sending back a
 data. But when you look at your terminal, you should see several messages that
 were printed when the browser connected to the server!
 
+Keling, ushbu kodni ishga tushirib ko‘ramiz! Terminalda `cargo run` buyrug‘ini invoke qiling (yurg'azing) va so‘ng brauzeringizda *127.0.0.1:7878* manzilini oching. Brauzer “Connection reset” (Ulanish tiklandi) kabi xatolik xabarini ko‘rsatishi mumkin, chunki hozircha server hech qanday ma’lumot qaytarayotgani yo‘q. Biroq terminalingizga qarasangiz, brauzer serverga ulanganida chiqarilgan bir nechta xabarlarni ko‘rishingiz mumkin bo‘ladi!
+
 ```text
-     Running `target/debug/hello`
+     Running `target/debug/salom`
 Connection established!
 Connection established!
 Connection established!
 ```
 
-Sometimes, you’ll see multiple messages printed for one browser request; the
-reason might be that the browser is making a request for the page as well as a
-request for other resources, like the *favicon.ico* icon that appears in the
-browser tab.
+Ba’zan brauzerning bitta so‘rovi uchun bir nechta xabarlar chiqishini ko‘rishingiz mumkin; buning sababi shundaki, brauzer sahifa uchun so‘rov yuborish bilan birga, brauzer tab da (yorlig‘ida) ko‘rinadigan *favicon.ico* kabi boshqa resurslar uchun ham so‘rov yuboradi.
 
-It could also be that the browser is trying to connect to the server multiple
-times because the server isn’t responding with any data. When `stream` goes out
-of scope and is dropped at the end of the loop, the connection is closed as
-part of the `drop` implementation. Browsers sometimes deal with closed
-connections by retrying, because the problem might be temporary. The important
-factor is that we’ve successfully gotten a handle to a TCP connection!
+Brauzer bir necha marta serverga ulanishga harakat qilayotgan bo‘lishi ham mumkin, chunki server hech qanday ma’lumot yubormayapti. `stream` sikl oxirida ko‘lam (scope) dan chiqib ketganda, `drop` implementatsiyasi orqali ulanish yopiladi. Brauzerlar ba’zida yopilgan ulanishlarga qayta urinish qiladi, chunki muammo vaqtincha bo‘lishi mumkin. Muhim jihati shuki — biz TCP ulanishni muvaffaqiyatli qo‘lga kiritdik!
 
-Remember to stop the program by pressing <span class="keystroke">ctrl-c</span>
-when you’re done running a particular version of the code. Then restart the
-program by invoking the `cargo run` command after you’ve made each set of code
-changes to make sure you’re running the newest code.
+Dasturdan foydalanishni tugatganingizda, uni <span class="keystroke">ctrl-c</span> tugmasi yordamida to‘xtatishni unutmang. Har safar kodga o‘zgartirish kiritganingizdan so‘ng, eng so‘nggi versiyasi ishga tushirilayotganiga ishonch hosil qilish uchun `cargo run` buyrug‘ini qayta ishga tushuring.
 
 ### Reading the Request
 
