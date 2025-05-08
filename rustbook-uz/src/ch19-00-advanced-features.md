@@ -1,22 +1,25 @@
-# Advanced Features
+# Kengaytirilgan xususiyatlar
 
-By now, you’ve learned the most commonly used parts of the Rust programming
-language. Before we do one more project in Chapter 20, we’ll look at a few
-aspects of the language you might run into every once in a while, but may not
-use every day. You can use this chapter as a reference for when you encounter
-any unknowns. The features covered here are useful in very specific situations.
-Although you might not reach for them often, we want to make sure you have a
-grasp of all the features Rust has to offer.
+Hozirgacha Rust dasturlash tilining eng ko'p qo'llaniladigan qismlarini o'rgandingiz. 
+20-bobda yana bir loyihani amalga oshirishimizdan oldin, siz vaqti-vaqti bilan duch kelishingiz 
+mumkin bo'lgan, lekin har doim ham ishlatilmaydigan Rust xususiyatlari haqida gaplashamiz. 
+Qachondir tushunmovchiliklarga duch kelganingizda, ushbu bobdan qo'llanma sifatida foydalanishingiz mumkin. 
+Bu yerda ko'rib chiqiladigan xususiyatlar, funksiyalar faqat muayyan vaziyatlardagina foydali bo'ladi.
+Garchi bu funksiyalarga tez-tez murojaat qilmasligingiz mumkin bo‘lsa-da, Rust tili taklif qiladigan 
+barcha imkoniyatlarni tushunib olishingizni istaymiz.
 
-In this chapter, we’ll cover:
+Ushbu bobda biz quyidagilarni ko'rib chiqamiz:
 
-* Unsafe Rust: how to opt out of some of Rust’s guarantees and take
-  responsibility for manually upholding those guarantees
-* Advanced traits: associated types, default type parameters, fully qualified
-  syntax, supertraits, and the newtype pattern in relation to traits
-* Advanced types: more about the newtype pattern, type aliases, the never type,
-  and dynamically sized types
-* Advanced functions and closures: function pointers and returning closures
-* Macros: ways to define code that defines more code at compile time
+* Xavfsiz bo‘lmagan (Unsafe) Rust: Rustning ayrim kafolatlaridan qanday qilib voz kechish va bu kafolatlarni qo‘lda, ya’ni 
+o‘zingiz mustaqil tarzda boshqarish mas’uliyatini qanday olishni ko‘rib chiqamiz.
 
-It’s a panoply of Rust features with something for everyone! Let’s dive in!
+* Kengaytirilgan traitlar: bog‘langan turlar (associated types), standart tur parametrlari (default type parameters), 
+to‘liq aniqlangan sintaksis (fully qualified syntax), supertraitlar (supertraits) va newtype namunasi (newtype pattern).
+
+* Kengaytirilgan turlar: newtype namunasi (newtype pattern), tur aliaslari (type aliases),  hech qachon yuz bermaydigan tur
+(the never type — !) va dinamik o'lchamdagi turlar (dynamically sized types)
+
+* Kengaytirilgan funksiyalar va yopiq funksiyalar (Closures): funksiya ko'rsatkichlari (function pointers) va closure qaytaradigan funksiyalar (returning closures)
+* Andozalar (Macros): kodni jamlash (kompilyatsiya) vaqtida boshqa kodni aniqlovchi kodni yozish usullari.
+
+Bu — har bir dasturchi uchun foydali bo'lgan Rust imkoniyatlarining to‘liq to‘plamidir! Keling, to'plamga sho'ng'iymiz!
