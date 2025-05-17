@@ -36,12 +36,6 @@ Ushbu holatda `bind` funksiyasi `new` funksiyasiga o‘xshab ishlaydi, ya’ni u
 
 Hozircha oqimni (stream) qayta ishlashimiz faqat `unwrap` chaqirishdan iborat: agar oqimda xatolik yuz bersa, dastur to‘xtaydi; xatolik bo‘lmasa, dastur xabar chop etadi. Kelasi ro‘yxatda muvaffaqiyatli holatlar uchun ko‘proq funksionallik qo‘shamiz. Mijoz serverga ulanganida `incoming` metodidan xatoliklar chiqishi mumkin, chunki biz aslida ulanishlarning o‘zini emas, *ulanishga urinishlarni* (connection attemps) ko‘rib chiqayapmiz (iterating). Har bir urinish muvaffaqiyatli bo‘lavermasligi mumkin, va buning sabablari ko‘pincha operatsion tizimga bog‘liq bo‘ladi. Masalan, ko‘plab operatsion tizimlarda bir vaqtning o‘zida ochiq bo‘lishi mumkin bo‘lgan ulanishlar soni cheklangan bo‘ladi; bu limitdan oshib ketilganida, yangi ulanishga urinishlar xatolik chiqaradi, toki mavjud ulanishlardan ba’zilari yopilmaguncha.
 
-Let’s try running this code! Invoke `cargo run` in the terminal and then load
-*127.0.0.1:7878* in a web browser. The browser should show an error message
-like “Connection reset,” because the server isn’t currently sending back any
-data. But when you look at your terminal, you should see several messages that
-were printed when the browser connected to the server!
-
 Keling, ushbu kodni ishga tushirib ko‘ramiz! Terminalda `cargo run` buyrug‘ini invoke qiling (yurg'azing) va so‘ng brauzeringizda *127.0.0.1:7878* manzilini oching. Brauzer “Connection reset” (Ulanish tiklandi) kabi xatolik xabarini ko‘rsatishi mumkin, chunki hozircha server hech qanday ma’lumot qaytarayotgani yo‘q. Biroq terminalingizga qarasangiz, brauzer serverga ulanganida chiqarilgan bir nechta xabarlarni ko‘rishingiz mumkin bo‘ladi!
 
 ```text
@@ -57,14 +51,9 @@ Brauzer bir necha marta serverga ulanishga harakat qilayotgan bo‘lishi ham mum
 
 Dasturdan foydalanishni tugatganingizda, uni <span class="keystroke">ctrl-c</span> tugmasi yordamida to‘xtatishni unutmang. Har safar kodga o‘zgartirish kiritganingizdan so‘ng, eng so‘nggi versiyasi ishga tushirilayotganiga ishonch hosil qilish uchun `cargo run` buyrug‘ini qayta ishga tushuring.
 
-### Reading the Request
+### So'rovni o'qish
 
-Let’s implement the functionality to read the request from the browser! To
-separate the concerns of first getting a connection and then taking some action
-with the connection, we’ll start a new function for processing connections. In
-this new `handle_connection` function, we’ll read data from the TCP stream and
-print it so we can see the data being sent from the browser. Change the code to
-look like Listing 20-2.
+Brauzerdan yuborilgan so‘rovni o‘qish funksiyasini ishlab chiqamiz! Avval ulanishni (connection) qabul qilish va keyin ular bilan ishlash bosqichlarini bir-biridan ajratish uchun, ulanishni qayta ishlovchi yangi funksiya yozamiz. Bu yangi `handle_connection` funksiyasida TCP oqimidan (stream) ma’lumotlarni o‘qiymiz va brauzer yuborayotgan ma’lumotlarni ko‘rish uchun ularni chop etamiz. Kodni 20-02 ro‘yxatdagidek qilib o‘zgartiring.
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -72,22 +61,13 @@ look like Listing 20-2.
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-02/src/main.rs}}
 ```
 
-<span class="caption">Listing 20-2: Reading from the `TcpStream` and printing
-the data</span>
+<span class="caption">20-02 ro‘yxat: TcpStream dan o‘qish va yuborilgan ma’lumotni chop etish</span>
 
-We bring `std::io::prelude` and `std::io::BufReader` into scope to get access
-to traits and types that let us read from and write to the stream. In the `for`
-loop in the `main` function, instead of printing a message that says we made a
-connection, we now call the new `handle_connection` function and pass the
-`stream` to it.
+`std::io::prelude` va `std::io::BufReader` ni ko‘lamga (scope) olib kiramiz — bu bizga oqimdan (from stream) o‘qish va yozish imkonini beradigan trait va tiplardan foydalanish imkonini beradi. Endi `main` funksiyasidagi `for` siklida ulanish o‘rnatilgani haqida xabar chiqarish o‘rniga, yangi `handle_connection` funksiyasini chaqiramiz va unga stream `ni` uzatamiz.
 
-In the `handle_connection` function, we create a new `BufReader` instance that
-wraps a mutable reference to the `stream`. `BufReader` adds buffering by
-managing calls to the `std::io::Read` trait methods for us.
+`handle_connection` funksiyasida biz `oqimga (stream)` o‘zgaruvchan (mutable) murojaatni o‘rab oladigan yangi `BufReader` obyektini yaratamiz. `BufReader` buferlashni qo‘shadi — ya’ni u `std::io::Read` traitining metodlariga murojaat qilishni boshqaradi.
 
-We create a variable named `http_request` to collect the lines of the request
-the browser sends to our server. We indicate that we want to collect these
-lines in a vector by adding the `Vec<_>` type annotation.
+Brauzer serverimizga yuboradigan so‘rov satrlarini yig‘ish uchun `http_request` nomli o‘zgaruvchi yaratamiz. Bu satrlarni vector (vektor) ko‘rinishida yig‘moqchi ekanligimizni ko‘rsatish uchun `Vec<_>` tip annotatsiyasini qo‘shamiz.
 
 `BufReader` implements the `std::io::BufRead` trait, which provides the `lines`
 method. The `lines` method returns an iterator of `Result<String,
@@ -97,6 +77,8 @@ might be an error if the data isn’t valid UTF-8 or if there was a problem
 reading from the stream. Again, a production program should handle these errors
 more gracefully, but we’re choosing to stop the program in the error case for
 simplicity.
+
+`BufReader`  `std::io::BufRead` traitini amalga oshiradi va shu orqali `lines` metodini taqdim etadi. `Lines` metodi har gal yangi qatordan ajratib, oqimdagi ma’lumotlarni `Result<String, std::io::Error>` ko‘rinishidagi iterator sifatida qaytaradi. Har bir String qiymatni olish uchun biz har bir Result ustida map va unwrap chaqiramiz. Agar ma’lumotlar yaroqsiz UTF-8 formatida bo‘lsa yoki oqimdan o‘qishda muammo yuz bersa, Result xatolik (error) bo‘lishi mumkin. Ishlab chiqarish darajasidagi dastur bu xatolarni ancha ehtiyotkorlik bilan boshqarishi kerak, ammo soddalashtirish uchun biz bu yerda xatolik yuz bersa, dasturni to‘xtatamiz.
 
 The browser signals the end of an HTTP request by sending two newline
 characters in a row, so to get one request from the stream, we take lines until
