@@ -8,7 +8,7 @@ fn main() {
     println!("Raqamni topish o'yini!");
 
     // ANCHOR: ch07-04
-    let yashirin_raqam = rand::thread_rng().gen_range(1..=100);
+    let yashirin_raqam = rand::rng().random_range(1..=100);
     // ANCHOR_END: ch07-04
 
     println!("Yashirin raqam: {yashirin_raqam}");
