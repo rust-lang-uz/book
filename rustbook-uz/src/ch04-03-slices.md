@@ -58,8 +58,7 @@ Endi bizda satrdagi birinchi so'zning oxirgi indeksini aniqlashning metodi bor, 
 
 Bu dastur hech qanday xatosiz kompilyatsiya qiladi va agar biz `s.clear()` ga murojat qilgandan keyin `soz` ishlatgan bo'lsak ham shunday bo'lardi. Chunki `soz` `s` holatiga umuman bog‘lanmagan, `soz` hali ham `5` qiymatini o‘z ichiga oladi. Birinchi so‘zni chiqarish uchun biz ushbu `5` qiymatini `s` o‘zgaruvchisi bilan ishlatishimiz mumkin, ammo bu xato bo‘lishi mumkin, chunki `soz`da `5` ni saqlaganimizdan so‘ng `s` tarkibi o‘zgargan.
 
-Having to worry about the index in `word` getting out of sync with the data in
-`s` is tedious and error prone! Agar biz `ikkinchi_soz` funksiyasini yozsak, bu indekslarni boshqarish yanada mo'rt bo'ladi. Uning signaturesi quyidagicha ko'rinishi kerak:
+`soz` da indeksning `s` dagi ma'lumotlar bilan muvofiqligi yo‘qolishidan xavotir olish juda zerikarli va xatoga yo‘l qo‘yishga moyil! Agar biz `ikkinchi_soz` funksiyasini yozsak, bu indekslarni boshqarish yanada mo'rt bo'ladi. Uning signaturesi quyidagicha ko'rinishi kerak:
 ```rust,ignore
 fn ikkinchi_soz(s: &String) -> (usize, usize) {
 ```
