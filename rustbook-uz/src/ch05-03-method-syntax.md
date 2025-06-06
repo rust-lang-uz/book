@@ -127,7 +127,7 @@ Metod bo'lmagan associated funktsiyalar ko'pincha structning yangi nusxasini qay
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-03-associated-functions/src/main.rs:here}}
 ```
 
-Return turidagi va funksiya tanasidagi `Self` kalit so'zlari `impl` kalit so'zidan keyin paydo bo'ladigan turning taxalluslari bo'lib, bu holda `Kvadrat` bo'ladi.We’ll discuss modules in [Chapter 7][modules]<!-- ignore -->.
+Return turidagi va funksiya tanasidagi `Self` kalit so'zlari `impl` kalit so'zidan keyin paydo bo'ladigan turning taxalluslari bo'lib, bu holda `Kvadrat` bo'ladi. Biz bularni [7-bobda][modules]<!-- ignore --> muhokama qilamiz.
 
 Ushbu associated funktsiyani chaqirish uchun biz struct nomi bilan `::` sintaksisidan foydalanamiz; `let kv = Kvadrat::kvadrat(3);` misol bo'la oladi. Bu funksiya struct tomonidan nom maydoniga ega: `::` sintaksisi ham associated funksiyalar, ham modullar tomonidan yaratilgan nomlar bo'shliqlari uchun ishlatiladi. Biz modullarni [7-bobda][modules]<!-- ignore --> muhokama qilamiz.
 
