@@ -9,5 +9,5 @@ fn main() {
         balandlik: 50,
     };
 
-    println!("kvadrat1 - {}", kvadrat1);
+    println!("kvadrat1 - {:?}", kvadrat1);
 }
