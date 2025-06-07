@@ -50,7 +50,7 @@ Bu holda cratening ildiz fayli *src/main.rs* bo'lib, u quyidagilarni o'z ichiga 
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/poliz.rs}}
 ```
 
-Bu yerda `pub mod sabzavotlar;` *src/poliz/sabzavotlar.rs* dagi kod ham kiritilganligini bildiradi. That code is:
+Bu yerda `pub mod sabzavotlar;` *src/poliz/sabzavotlar.rs* dagi kod ham kiritilganligini bildiradi. Quyida misol uchun kod:
 
 ```rust,noplayground,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/poliz/sabzavotlar.rs}}
