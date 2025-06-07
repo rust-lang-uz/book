@@ -7,7 +7,6 @@ Birinchidan, kelajakda kodingizni tartibga solishda qulay foydalanish uchun qoid
 ### Modullar qo'llanmasi
 
 Bu yerda biz modullar, pathlar, `use` kalit soʻzi va `pub` kalit soʻzining kompilyatorda qanday ishlashi va koʻpchilik ishlab chiquvchilar oʻz kodlarini qanday tashkil qilishlari haqida qisqacha maʼlumot beramiz. Ushbu bobda biz ushbu qoidalarning har biriga misollarni ko'rib chiqamiz va modullar qanday ishlashini takrorlash uchun yaxshi vaqt.
-work.
 
 - **Cratening ildizidan boshlang**: Crateni kompilyatsiya qilishda kompilyator kodni kompilyatsiya qilish uchun avval cratening ildiz fayliga (odatda kutubxona cratesi uchun *src/lib.rs* yoki binary crate uchun *src/main.rs*) qaraydi.
 - **Modullarni e'lon qilish**: Cratening ildiz faylida siz yangi modullarni e'lon qilishingiz mumkin; aytaylik, siz `mod poliz` bilan `poliz` modulini e'lon qilasiz; 
