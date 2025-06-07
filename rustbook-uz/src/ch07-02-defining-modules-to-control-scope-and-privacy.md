@@ -65,7 +65,7 @@ Modullar bizga elementlarning *maxfiyligini* boshqarishga ham imkon beradi, chun
 
 Misol tariqasida, restoranning funksionalligini ta'minlaydigan kutubxona cratesini yozamiz. Biz funksiyalarning signaturelarini aniqlaymiz, lekin restoranni implement qilishga emas, balki kodni tashkil etishga e'tibor qaratish uchun ularning tanasini bo'sh qoldiramiz.
 
-Restoran sanoatida restoranning ba'zi qismlari *uyning old tomoni* va boshqalari *uyning orqa tomoni* deb ataladi. Uyning old tomoni mijozlar joylashgan joy; Bu mezbonlar mijozlarni joylashtiradigan, serverlar buyurtma va to'lovlarni qabul qiladigan va barmenlar ichimliklar tayyorlaydigan joyni o'z ichiga oladi. Uyning orqa tomonida oshpazlar va oshpazlar oshxonada ishlaydi, idishlarni yuvish mashinalari tozalaydi va menejerlar ma'muriy ishlarni bajaradilar.
+Restoran sanoatida restoranning ba'zi qismlari *uyning old tomoni* va boshqalari *uyning orqa tomoni* deb ataladi. Uyning old tomoni mijozlar joylashgan joy; Bu mezbonlar mijozlarni joylashtiradigan, serverlar buyurtma va to'lovlarni qabul qiladigan va barmenlar ichimliklar tayyorlaydigan joyni o'z ichiga oladi. Uyning orqa tomonda oshpazlar va pishiruvchilar oshxonada ishlaydi, idish-tovoqlarni yuvuvchilar tozalaydi va menejerlar ma'muriy ishlarni bajaradi.
 
 Cratemizni shu tarzda tuzish uchun biz uning funksiyalarini ichki modullarga ajratishimiz mumkin. `cargo new restoran --lib` ishga tushirish orqali `restoran` nomli yangi kutubxona yarating; keyin ba'zi modullar va funksiya signaturelarini aniqlash uchun 7-1 ro'yxatidagi kodni *src/lib.rs* ichiga kiriting. Mana, uyning old qismi:
 <span class="filename">Fayl nomi: src/lib.rs</span>
