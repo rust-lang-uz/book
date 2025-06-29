@@ -7,7 +7,7 @@ fn main() {
     ballar.insert(String::from("Yashil"), 10);
     ballar.insert(String::from("Sariq"), 50);
 
-    for (key, value) in &scores {
+    for (key, value) in &ballar {
         println!("{key}: {value}");
     }
     // ANCHOR_END: here
