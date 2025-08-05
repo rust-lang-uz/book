@@ -1,12 +1,15 @@
-## Using Trait Objects That Allow for Values of Different Types
+## Turli xildagi qiymatlarni qabul qila oladigan Trait ya'ni xususiyat obyektlaridan foydalanish
 
-In Chapter 8, we mentioned that one limitation of vectors is that they can
-store elements of only one type. We created a workaround in Listing 8-9 where
-we defined a `SpreadsheetCell` enum that had variants to hold integers, floats,
-and text. This meant we could store different types of data in each cell and
-still have a vector that represented a row of cells. This is a perfectly good
-solution when our interchangeable items are a fixed set of types that we know
-when our code is compiled.
+8-bobda biz vektorlarning faqat bir turdagi elementlarni saqlash
+imkoniyatiga ega ekanligini ta’kidlagan edik. 8-9-ro‘yxatda biz
+butun sonlar, kasr sonlar va matnlarni saqlash uchun variantlarga
+ega bo‘lgan ’SpreadsheetCell’ nomli sanab o‘tish turini yaratib,
+bu muammoni hal qilish yo‘lini topgan edik. Bu usul bizga har bir
+katakda turli xil ma’lumotlarni saqlash va shu bilan birga kataklar
+qatorini ifodalovchi vektorga ega bo‘lish imkonini berdi. Agar bizning
+o‘zaro almashtirilishi mumkin bo‘lgan elementlarimiz kodimiz tuzilayotgan
+paytda bizga ma’lum bo‘lgan turlarning belgilangan to‘plamidan iborat
+bo‘lsa, bu juda yaxshi yechim hisoblanadi.
 
 However, sometimes we want our library user to be able to extend the set of
 types that are valid in a particular situation. To show how we might achieve
