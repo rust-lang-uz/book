@@ -8,8 +8,16 @@ still have a vector that represented a row of cells. This is a perfectly good
 solution when our interchangeable items are a fixed set of types that we know
 when our code is compiled.
 
-Biroq, ba’zida biz kutubxonamiz foydalanuvchisi o‘zi uchun mos bo‘lgan, muayyan vaziyatda ishlatilishi mumkin bo‘lgan turlar to‘plamini kengaytira olishini xohlaymiz. Bu qanday amalga oshirilishini ko‘rsatish uchun, biz grafik foydalanuvchi interfeysi (GUI) vositasi misolini yaratamiz. Bu vosita elementlar ro‘yxatidan o‘tadi va har bir element uchun `draw` metodini chaqiradi. Bu GUI vositalarida keng qo‘llaniladigan uslubdir.
-Biz `gui` nomli kutubxona crate yaratamiz. Bu crate GUI kutubxonasining asosiy tuzilmasini o‘z ichiga oladi. U, masalan, `Button` yoki `TextField` kabi foydalanishga tayyor ayrim turlarni taqdim qilishi mumkin. Shu bilan birga, `gui` foydalanuvchilari o‘zlarining chizilishi mumkin bo‘lgan turlarini ham yaratmoqchi bo‘lishadi: masalan, bir dasturchi `Image` turini qo‘shsa, boshqasi `SelectBox` turini qo‘shishi mumkin.
+Biroq, ba’zida kutubxonamiz foydalanuvchisi o‘zi uchun mos bo‘lgan, muayyan vaziyatda
+ishlatilishi mumkin bo‘lgan turlar to‘plamini kengaytira olishini xohlaymiz. Bu qanday 
+amalga oshirilishini ko‘rsatish uchun, grafik foydalanuvchi interfeysi (GUI) vositasi 
+misolini yaratamiz. Ushbu vosita elementlar ro‘yxatidan o‘tadi va har bir element uchun 
+`draw` metodini chaqiradi. Bu GUI vositalarida keng qo‘llaniladigan uslubdir.`gui` 
+nomli kutubxona crate yaratiladi. Ushbuu crate GUI kutubxonasining asosiy tuzilmasini o‘z 
+ichiga oladi. Unda, masalan, `Button` yoki `TextField` kabi foydalanishga tayyor ayrim 
+turlarni taqdim qilishi mumkin. Shu bilan birga, `gui` foydalanuvchilari o‘zlarining 
+chizilishi mumkin bo‘lgan turlarini ham yaratmoqchi bo‘lishadi: masalan, bir dasturchi
+ `Image` turini qo‘shsa, boshqasi `SelectBox` turini qo‘shishi mumkin.
 
 Ushbu misolda biz to'laqonli grafik interfeyslik (GUI) kutubxona yozmaymiz, lekin
 qismlar bir-biri bilan qanday ulanishini ko'rsatamiz. Kutubxona yozish vaqtida
