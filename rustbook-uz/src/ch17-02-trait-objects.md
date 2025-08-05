@@ -1,14 +1,14 @@
 ## Turli xildagi qiymatlarni qabul qila oladigan Trait ya'ni xususiyat obyektlaridan foydalanish
 
 8-bobda biz vektorlarning faqat bir turdagi elementlarni saqlash
-imkoniyatiga ega ekanligini ta’kidlagan edik. 8-9-ro‘yxatda biz
+imkoniyatiga ega ekanligini ta’kidlagan edik. 8-9-ro‘yxatda
 butun sonlar, kasr sonlar va matnlarni saqlash uchun variantlarga
 ega bo‘lgan ’SpreadsheetCell’ nomli sanab o‘tish turini yaratib,
-bu muammoni hal qilish yo‘lini topgan edik. Bu usul bizga har bir
-katakda turli xil ma’lumotlarni saqlash va shu bilan birga kataklar
-qatorini ifodalovchi vektorga ega bo‘lish imkonini berdi. Agar bizning
-o‘zaro almashtirilishi mumkin bo‘lgan elementlarimiz kodimiz tuzilayotgan
-paytda bizga ma’lum bo‘lgan turlarning belgilangan to‘plamidan iborat
+bu muammoni hal qilish ko'rsatilgan edi. Bu usul har bir katakda
+turli xil ma’lumotlarni saqlash va shu bilan birga kataklar
+qatorini ifodalovchi vektorga ega bo‘lish imkonini berdi. Agar
+o‘zaro almashtirilishi mumkin bo‘lgan elementlarni kodda tuzilayotgan
+paytda ma’lum bo‘lgan turlarning belgilangan to‘plamidan iborat
 bo‘lsa, bu juda yaxshi yechim hisoblanadi.
 
 However, sometimes we want our library user to be able to extend the set of
