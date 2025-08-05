@@ -4,7 +4,7 @@ struct CustomSmartPointer {
 
 impl Drop for CustomSmartPointer {
     fn drop(&mut self) {
-        println!("CustomSmartPointerni `{}` ma'lumot bilan Drop qilish!", self.data);
+        println!("CustomSmartPointerni `{}` ma'lumot bilan tashlab yuborish!", self.data);
     }
 }
 
