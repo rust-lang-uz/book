@@ -31,14 +31,14 @@ chaqirishi lozim. Biz `draw` metodini chaqirgan vaqtimizda aynan nima ish sodir
 bo'lishini `gui` bilishi kerak emas, faqatgina `draw` metodi bizga chaqirish
 uchun mavjudligini biladi xolos.
 
-To do this in a language with inheritance, we might define a class named
-`Component` that has a method named `draw` on it. The other classes, such as
-`Button`, `Image`, and `SelectBox`, would inherit from `Component` and thus
-inherit the `draw` method. They could each override the `draw` method to define
-their custom behavior, but the framework could treat all of the types as if
-they were `Component` instances and call `draw` on them. But because Rust
-doesn’t have inheritance, we need another way to structure the `gui` library to
-allow users to extend it with new types.
+Buni nasl qilib oluvchi tilda qilish uchun, biz `draw` metodiga ega `Component`
+nomli tur yaratishimizga to'g'ri keladi. Boshqa `Button`, `Image` va `SelectBox`
+kabi turlar esa `Component` turdan nasl qilib olish orqali `draw` metodini ham o'z
+ichiga oladi. Har biri `draw` metodi hislatini o'zgartirish uchun qayta yozib chiqishlari
+mumkin, lekin asl freymvork hammasini huddi `Component` turi bo'lganiday, `draw` ni
+chaqirishi mumkin. Lekin Rust da nasldorlik bo'lmagani uchun, biz `gui` kutubxonasini
+foydalanuvchilar o'zlari xohlashganiga kengaytirishlari uchun, boshqa usul bilan tuzib
+chiqish yo'llarini ko'rib chiqishimizga to'g'ri keladi.
 
 ### Defining a Trait for Common Behavior
 
