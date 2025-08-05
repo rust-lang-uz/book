@@ -1,12 +1,15 @@
-## Using Trait Objects That Allow for Values of Different Types
+## Turli xildagi qiymatlarni qabul qila oladigan Trait ya'ni xususiyat obyektlaridan foydalanish
 
-In Chapter 8, we mentioned that one limitation of vectors is that they can
-store elements of only one type. We created a workaround in Listing 8-9 where
-we defined a `SpreadsheetCell` enum that had variants to hold integers, floats,
-and text. This meant we could store different types of data in each cell and
-still have a vector that represented a row of cells. This is a perfectly good
-solution when our interchangeable items are a fixed set of types that we know
-when our code is compiled.
+8-bobda biz vektorlarning faqat bir turdagi elementlarni saqlash
+imkoniyatiga ega ekanligini ta’kidlagan edik. 8-9-ro‘yxatda
+butun sonlar, kasr sonlar va matnlarni saqlash uchun variantlarga
+ega bo‘lgan ’SpreadsheetCell’ nomli sanab o‘tish turini yaratib,
+bu muammoni hal qilish ko'rsatilgan edi. Bu usul har bir katakda
+turli xil ma’lumotlarni saqlash va shu bilan birga kataklar
+qatorini ifodalovchi vektorga ega bo‘lish imkonini berdi. Agar
+o‘zaro almashtirilishi mumkin bo‘lgan elementlarni kodda tuzilayotgan
+paytda ma’lum bo‘lgan turlarning belgilangan to‘plamidan iborat
+bo‘lsa, bu juda yaxshi yechim hisoblanadi.
 
 Biroq, ba’zida biz kutubxonamiz foydalanuvchisi o‘zi uchun mos bo‘lgan, muayyan vaziyatda ishlatilishi mumkin bo‘lgan turlar to‘plamini kengaytira olishini xohlaymiz. Bu qanday amalga oshirilishini ko‘rsatish uchun, biz grafik foydalanuvchi interfeysi (GUI) vositasi misolini yaratamiz. Bu vosita elementlar ro‘yxatidan o‘tadi va har bir element uchun `draw` metodini chaqiradi. Bu GUI vositalarida keng qo‘llaniladigan uslubdir.
 Biz `gui` nomli kutubxona crate yaratamiz. Bu crate GUI kutubxonasining asosiy tuzilmasini o‘z ichiga oladi. U, masalan, `Button` yoki `TextField` kabi foydalanishga tayyor ayrim turlarni taqdim qilishi mumkin. Shu bilan birga, `gui` foydalanuvchilari o‘zlarining chizilishi mumkin bo‘lgan turlarini ham yaratmoqchi bo‘lishadi: masalan, bir dasturchi `Image` turini qo‘shsa, boshqasi `SelectBox` turini qo‘shishi mumkin.
