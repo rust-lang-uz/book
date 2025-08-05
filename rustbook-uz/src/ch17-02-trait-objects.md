@@ -8,16 +8,8 @@ still have a vector that represented a row of cells. This is a perfectly good
 solution when our interchangeable items are a fixed set of types that we know
 when our code is compiled.
 
-However, sometimes we want our library user to be able to extend the set of
-types that are valid in a particular situation. To show how we might achieve
-this, we’ll create an example graphical user interface (GUI) tool that iterates
-through a list of items, calling a `draw` method on each one to draw it to the
-screen—a common technique for GUI tools. We’ll create a library crate called
-`gui` that contains the structure of a GUI library. This crate might include
-some types for people to use, such as `Button` or `TextField`. In addition,
-`gui` users will want to create their own types that can be drawn: for
-instance, one programmer might add an `Image` and another might add a
-`SelectBox`.
+Biroq, ba’zida biz kutubxonamiz foydalanuvchisi o‘zi uchun mos bo‘lgan, muayyan vaziyatda ishlatilishi mumkin bo‘lgan turlar to‘plamini kengaytira olishini xohlaymiz. Bu qanday amalga oshirilishini ko‘rsatish uchun, biz grafik foydalanuvchi interfeysi (GUI) vositasi misolini yaratamiz. Bu vosita elementlar ro‘yxatidan o‘tadi va har bir element uchun `draw` metodini chaqiradi. Bu GUI vositalarida keng qo‘llaniladigan uslubdir.
+Biz `gui` nomli kutubxona crate yaratamiz. Bu crate GUI kutubxonasining asosiy tuzilmasini o‘z ichiga oladi. U, masalan, `Button` yoki `TextField` kabi foydalanishga tayyor ayrim turlarni taqdim qilishi mumkin. Shu bilan birga, `gui` foydalanuvchilari o‘zlarining chizilishi mumkin bo‘lgan turlarini ham yaratmoqchi bo‘lishadi: masalan, bir dasturchi `Image` turini qo‘shsa, boshqasi `SelectBox` turini qo‘shishi mumkin.
 
 Ushbu misolda biz to'laqonli grafik interfeyslik (GUI) kutubxona yozmaymiz, lekin
 qismlar bir-biri bilan qanday ulanishini ko'rsatamiz. Kutubxona yozish vaqtida
