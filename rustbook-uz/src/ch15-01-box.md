@@ -227,9 +227,6 @@ olgan ro'yxatlar bilan yaratilgan ro'yxat mavjud, ammo bu amalga oshirish endi
 elementlarni bir-birining ichiga emas, balki bir-birining yoniga joylashtirishga
 o'xshaydi.
 
-We can change the definition of the `List` enum in Listing 15-2 and the usage of
-the `List` in Listing 15-3 to the code in Listing 15-5, which will compile:
-
 Biz 15-2 ro'yxatidagi `List` enumni va 15-3 ro'yxatidagi `List`ning
 qo'llanishini 15-5 ro'yxatidagi kodga o'zgartirishimiz mumkin, bu kompilyatsiya
 bo'ladi:
