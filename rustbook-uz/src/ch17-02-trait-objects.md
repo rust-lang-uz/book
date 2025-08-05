@@ -19,13 +19,14 @@ some types for people to use, such as `Button` or `TextField`. In addition,
 instance, one programmer might add an `Image` and another might add a
 `SelectBox`.
 
-We won’t implement a fully fledged GUI library for this example but will show
-how the pieces would fit together. At the time of writing the library, we can’t
-know and define all the types other programmers might want to create. But we do
-know that `gui` needs to keep track of many values of different types, and it
-needs to call a `draw` method on each of these differently typed values. It
-doesn’t need to know exactly what will happen when we call the `draw` method,
-just that the value will have that method available for us to call.
+Ushbu misolda biz to'laqonli grafik interfeyslik (GUI) kutubxona yozmaymiz, lekin
+qismlar bir-biri bilan qanday ulanishini ko'rsatamiz. Kutubxona yozish vaqtida
+biz boshqa dasturchilar nima va qanday qilib yozishini oldindan bilmaymiz.
+Lekin biz bilamizki, `gui` imkon qadar ko'p turlar qiymatidan xabardor bo'lishi
+kerak, va u `draw` (ya'ni chizish) metodini ana shu turlarning har birida
+chaqirishi lozim. Biz `draw` metodini chaqirgan vaqtimizda aynan nima ish sodir
+bo'lishini `gui` bilishi kerak emas, faqatgina `draw` metodi bizga chaqirish
+uchun mavjudligini biladi xolos.
 
 To do this in a language with inheritance, we might define a class named
 `Component` that has a method named `draw` on it. The other classes, such as
