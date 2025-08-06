@@ -12,39 +12,39 @@ paytda ma’lum bo‘lgan turlarning belgilangan to‘plamidan iborat
 bo‘lsa, bu juda yaxshi yechim hisoblanadi.
 
 Biroq, ba’zida kutubxonamiz foydalanuvchisi o‘zi uchun mos bo‘lgan, muayyan vaziyatda
-ishlatilishi mumkin bo‘lgan turlar to‘plamini kengaytira olishini xohlaymiz. Bu qanday 
-amalga oshirilishini ko‘rsatish uchun, grafik foydalanuvchi interfeysi (GUI) vositasi 
-misolini yaratamiz. Ushbu vosita elementlar ro‘yxatidan o‘tadi va har bir element uchun 
-`draw` metodini chaqiradi. Bu GUI vositalarida keng qo‘llaniladigan uslubdir.`gui` 
-nomli kutubxona crate yaratiladi. Ushbuu crate GUI kutubxonasining asosiy tuzilmasini o‘z 
-ichiga oladi. Unda, masalan, `Button` yoki `TextField` kabi foydalanishga tayyor ayrim 
-turlarni taqdim qilishi mumkin. Shu bilan birga, `gui` foydalanuvchilari o‘zlarining 
+ishlatilishi mumkin bo‘lgan turlar to‘plamini kengaytira olishini xohlaymiz. Bu qanday
+amalga oshirilishini ko‘rsatish uchun, grafik foydalanuvchi interfeysi (GUI) vositasi
+misolini yaratamiz. Ushbu vosita elementlar ro‘yxatidan o‘tadi va har bir element uchun
+`draw` metodini chaqiradi. Bu GUI vositalarida keng qo‘llaniladigan uslubdir.`gui`
+nomli kutubxona crate yaratiladi. Ushbuu crate GUI kutubxonasining asosiy tuzilmasini o‘z
+ichiga oladi. Unda, masalan, `Button` yoki `TextField` kabi foydalanishga tayyor ayrim
+turlarni taqdim qilishi mumkin. Shu bilan birga, `gui` foydalanuvchilari o‘zlarining
 chizilishi mumkin bo‘lgan turlarini ham yaratmoqchi bo‘lishadi: masalan, bir dasturchi
- `Image` turini qo‘shsa, boshqasi `SelectBox` turini qo‘shishi mumkin.
+`Image` turini qo‘shsa, boshqasi `SelectBox` turini qo‘shishi mumkin.
 
-Ushbu misolda biz to'laqonli grafik interfeyslik (GUI) kutubxona yozmaymiz, lekin
-qismlar bir-biri bilan qanday ulanishini ko'rsatamiz. Kutubxona yozish vaqtida
-biz boshqa dasturchilar nima va qanday qilib yozishini oldindan bilmaymiz.
-Lekin biz bilamizki, `gui` imkon qadar ko'p turlar qiymatidan xabardor bo'lishi
-kerak, va u `draw` (ya'ni chizish) metodini ana shu turlarning har birida
-chaqirishi lozim. Biz `draw` metodini chaqirgan vaqtimizda aynan nima ish sodir
-bo'lishini `gui` bilishi kerak emas, faqatgina `draw` metodi bizga chaqirish
-uchun mavjudligini biladi xolos.
+Ushbu misolda to‘laqonli grafik interfeyslik (GUI) kutubxona yozilmaydi, lekin
+qismlar bir-biri bilan qanday ulanishini ko‘rsatiladi. Kutubxona yozish vaqtida
+boshqa dasturchilar nima va qanday qilib yozishini oldindan bilib bo‘lmaydi.
+Lekin bilamizki, `gui` imkon qadar ko‘p turlar qiymatidan xabardor bo‘lishi
+kerak, va u `draw` (ya’ni chizish) metodini ana shu turlarning har birida
+chaqirishi lozim. `draw` metodini chaqirgan vaqtida aynan nima ish sodir
+bo‘lishini `gui` bilishi kerak emas, faqatgina `draw` metodi chaqirish uchun
+mavjudligini biladi xolos.
 
-To do this in a language with inheritance, we might define a class named
-`Component` that has a method named `draw` on it. The other classes, such as
-`Button`, `Image`, and `SelectBox`, would inherit from `Component` and thus
-inherit the `draw` method. They could each override the `draw` method to define
-their custom behavior, but the framework could treat all of the types as if
-they were `Component` instances and call `draw` on them. But because Rust
-doesn’t have inheritance, we need another way to structure the `gui` library to
-allow users to extend it with new types.
+Obyektga yo‘naltirilgan tillarda (misol uchun Java, C# va h.k.), `Component` nomli
+klass ichida `draw` nomli metod bilan ifoda etiladi. `Button`, `Image` va
+`SelectBox` kabi klasslar `Component`dan nasil olishadi va shu tufayli ular
+ham `draw` metodini ifodalashadi. Ular, albatta, o‘zgacha `draw` metodini
+e’lon qilishlari mumkin, lekin dasturlash tili ularni xuddi `Component`dek
+ko‘rishadi va `draw`ni chaqira olishadi. Rust dasturlash tilida nasl olish
+imkoniyati yo‘q, vaholanki `gui` kutubxonasi foydalanuvchilari uni
+kengaytira olishi uchun kutubxona boshqacha tuzilishi lozim.
 
 ### Defining a Trait for Common Behavior
 
 To implement the behavior we want `gui` to have, we’ll define a trait named
 `Draw` that will have one method named `draw`. Then we can define a vector that
-takes a *trait object*. A trait object points to both an instance of a type
+takes a _trait object_. A trait object points to both an instance of a type
 implementing our specified trait and a table used to look up trait methods on
 that type at runtime. We create a trait object by specifying some sort of
 pointer, such as a `&` reference or a `Box<T>` smart pointer, then the `dyn`
@@ -60,7 +60,7 @@ We’ve mentioned that, in Rust, we refrain from calling structs and enums
 “objects” to distinguish them from other languages’ objects. In a struct or
 enum, the data in the struct fields and the behavior in `impl` blocks are
 separated, whereas in other languages, the data and behavior combined into one
-concept is often labeled an object. However, trait objects *are* more like
+concept is often labeled an object. However, trait objects _are_ more like
 objects in other languages in the sense that they combine data and behavior.
 But trait objects differ from traditional objects in that we can’t add data to
 a trait object. Trait objects aren’t as generally useful as objects in other
@@ -193,8 +193,8 @@ new type and draw it because `SelectBox` implements the `Draw` trait, which
 means it implements the `draw` method.
 
 This concept—of being concerned only with the messages a value responds to
-rather than the value’s concrete type—is similar to the concept of *duck
-typing* in dynamically typed languages: if it walks like a duck and quacks
+rather than the value’s concrete type—is similar to the concept of _duck
+typing_ in dynamically typed languages: if it walks like a duck and quacks
 like a duck, then it must be a duck! In the implementation of `run` on `Screen`
 in Listing 17-5, `run` doesn’t need to know what the concrete type of each
 component is. It doesn’t check whether a component is an instance of a `Button`
@@ -239,9 +239,9 @@ Chapter 10 our discussion on the monomorphization process performed by the
 compiler when we use trait bounds on generics: the compiler generates
 nongeneric implementations of functions and methods for each concrete type that
 we use in place of a generic type parameter. The code that results from
-monomorphization is doing *static dispatch*, which is when the compiler knows
-what method you’re calling at compile time. This is opposed to *dynamic
-dispatch*, which is when the compiler can’t tell at compile time which method
+monomorphization is doing _static dispatch_, which is when the compiler knows
+what method you’re calling at compile time. This is opposed to _dynamic
+dispatch_, which is when the compiler can’t tell at compile time which method
 you’re calling. In dynamic dispatch cases, the compiler emits code that at
 runtime will figure out which method to call.
 
@@ -255,6 +255,5 @@ method’s code, which in turn prevents some optimizations. However, we did get
 extra flexibility in the code that we wrote in Listing 17-5 and were able to
 support in Listing 17-9, so it’s a trade-off to consider.
 
-[performance-of-code-using-generics]:
-ch10-01-syntax.html#performance-of-code-using-generics
+[performance-of-code-using-generics]: ch10-01-syntax.html#performance-of-code-using-generics
 [dynamically-sized]: ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait
