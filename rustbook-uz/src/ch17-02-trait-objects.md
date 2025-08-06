@@ -56,10 +56,10 @@ trait object, Rust’s type system will ensure at compile time that any value
 used in that context will implement the trait object’s trait. Consequently, we
 don’t need to know all the possible types at compile time.
 
-Rust dasturlash tilida struktura (struct) va enumlar “obyekt” deb atalmaydi. 
+Rust dasturlash tilida structlar va enumlar “obyekt” deb atalmaydi. 
 Bunday yondashuv, ularni boshqa dasturlash tillaridagi obyekt tushunchasidan 
-farqlash maqsadida qo‘llaniladi. Rust tilida struktura yoki enum tarkibidagi 
-ma’lumotlar (ya’ni, maydonlar) va xatti-harakatlar (`impl` bloklarida ifodalanadi) 
+farqlash maqsadida qo‘llaniladi. Rust tilida struct yoki enum tarkibidagi 
+ma’lumotlar (ya’ni, maydonlar) va xatti-harakatlar `impl` bloklarida 
 alohida saqlanadi. Aksariyat boshqa dasturlash tillarida esa ma’lumotlar va 
 xatti-harakatlar yagona tuzilma sifatida birlashtirilib, odatda “obyekt” deb 
 ataladi. Biroq trait obyektlar (trait objects) boshqa dasturlash tillaridagi 
