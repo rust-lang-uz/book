@@ -56,16 +56,20 @@ trait object, Rust’s type system will ensure at compile time that any value
 used in that context will implement the trait object’s trait. Consequently, we
 don’t need to know all the possible types at compile time.
 
-We’ve mentioned that, in Rust, we refrain from calling structs and enums
-“objects” to distinguish them from other languages’ objects. In a struct or
-enum, the data in the struct fields and the behavior in `impl` blocks are
-separated, whereas in other languages, the data and behavior combined into one
-concept is often labeled an object. However, trait objects *are* more like
-objects in other languages in the sense that they combine data and behavior.
-But trait objects differ from traditional objects in that we can’t add data to
-a trait object. Trait objects aren’t as generally useful as objects in other
-languages: their specific purpose is to allow abstraction across common
-behavior.
+Rust dasturlash tilida struktura (struct) va enumlar “obyekt” deb atalmaydi. 
+Bunday yondashuv, ularni boshqa dasturlash tillaridagi obyekt tushunchasidan 
+farqlash maqsadida qo‘llaniladi. Rust tilida struktura yoki enum tarkibidagi 
+ma’lumotlar (ya’ni, maydonlar) va xatti-harakatlar (`impl` bloklarida ifodalanadi) 
+alohida saqlanadi. Aksariyat boshqa dasturlash tillarida esa ma’lumotlar va 
+xatti-harakatlar yagona tuzilma sifatida birlashtirilib, odatda “obyekt” deb 
+ataladi. Biroq trait obyektlar (trait objects) boshqa dasturlash tillaridagi 
+obyektlarga o‘xshashlik kasb etadi. Chunki ular ma’lumot va xatti-harakatni 
+birgalikda ifodalash imkonini beradi. Shunga qaramay, trait obyektlar an’anaviy 
+obyektlardan farq qiladi: ular tarkibiga yangi ma’lumotlar qo‘shishga imkon 
+bermaydi. Shu bois, trait obyektlar boshqa tillardagi obyektlar kabi keng 
+maqsadlarda emas, balki faqat umumiy xatti-harakatni abstraktsiyalash, 
+ya’ni umumiy funksionallik asosida turli obyektlar bilan ishlash imkoniyatini 
+yaratish uchun qo‘llaniladi.
 
 Listing 17-3 shows how to define a trait named `Draw` with one method named
 `draw`:
