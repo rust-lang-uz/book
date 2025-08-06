@@ -1,4 +1,4 @@
-## Turli xildagi qiymatlarni qabul qila oladigan Trait ya'ni xususiyat obyektlaridan foydalanish
+## Turli xildagi qiymatlarni qabul qila oladigan `Trait` ya'ni xususiyat obyektlaridan foydalanish
 
 8-bobda biz vektorlarning faqat bir turdagi elementlarni saqlash
 imkoniyatiga ega ekanligini ta’kidlagan edik. 8-9-ro‘yxatda
@@ -40,21 +40,24 @@ they were `Component` instances and call `draw` on them. But because Rust
 doesn’t have inheritance, we need another way to structure the `gui` library to
 allow users to extend it with new types.
 
-### Defining a Trait for Common Behavior
+### Umumiy xatti-harakatlar uchun `Trait` ni aniqlash ya'ni xususiyatni
 
-To implement the behavior we want `gui` to have, we’ll define a trait named
-`Draw` that will have one method named `draw`. Then we can define a vector that
-takes a *trait object*. A trait object points to both an instance of a type
-implementing our specified trait and a table used to look up trait methods on
-that type at runtime. We create a trait object by specifying some sort of
-pointer, such as a `&` reference or a `Box<T>` smart pointer, then the `dyn`
-keyword, and then specifying the relevant trait. (We’ll talk about the reason
-trait objects must use a pointer in Chapter 19 in the section [“Dynamically
-Sized Types and the `Sized` Trait.”][dynamically-sized]<!-- ignore -->) We can
-use trait objects in place of a generic or concrete type. Wherever we use a
-trait object, Rust’s type system will ensure at compile time that any value
-used in that context will implement the trait object’s trait. Consequently, we
-don’t need to know all the possible types at compile time.
+`Gui` uchun kerakli xatti-harakatni amalga oshirish maqsadida, biz `Draw` nomli
+trait'ni belgilaymiz. Bu trait `draw` deb nomlangan yagona usulni o‘z ichiga
+oladi. Shundan so‘ng *trait object* ni qabul qiladigan vektorni aniqlash mumkin.
+Trait obyekti ko‘rsatilgan xususiyatni amalga oshiruvchi turning nusxasiga ham,
+ishlash vaqtida ushbu turdagi trait usullarini qidirish uchun ishlatiladigan
+jadvalga ham ishora qiladi. Qandaydir ko‘rsatkichni, masalan `&` havola yoki
+`Box<T>` aqlli ko‘rsatkichni, so‘ngra `dyn` kalit so‘zini va tegishli trait'ni
+ko‘rsatish orqali trait obyektini yaratamiz. (Trait obyektlarining nima uchun
+ko‘rsatkich ishlatishi kerakligi haqida 19-bobning
+["Dinamik o‘lchamliturlar va ’Sized’ belgisi"][dinamik-olchamli]
+<!-- e’tiborsiz qoldirish --> qismida batafsil to‘xtalamiz.) Biz belgi
+obyektlarini `generic` ya'ni turdosh yoki aniq tur o‘rnida ishlatishimiz mumkin.
+Trait obyektini qayerda ishlatishimizdan qat'iy nazar, Rustning turlar tizimi
+kompilyatsiya vaqtida ushbu kontekstda ishlatiladigan har qanday qiymat
+trait obyektining trait'ini amalga oshirishini ta’minlaydi. Natijada biz
+kompilyatsiya vaqtida barcha mumkin bo‘lgan turlarni bilishimiz shart emas.
 
 We’ve mentioned that, in Rust, we refrain from calling structs and enums
 “objects” to distinguish them from other languages’ objects. In a struct or
