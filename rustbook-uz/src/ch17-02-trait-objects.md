@@ -67,32 +67,31 @@ a trait object. Trait objects aren’t as generally useful as objects in other
 languages: their specific purpose is to allow abstraction across common
 behavior.
 
-Listing 17-3 shows how to define a trait named `Draw` with one method named
-`draw`:
+17-3 chi ro'yxat `Draw` trait'ini `draw` metodi bilan birga ta'riflash ko'rsatib beradi:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-03/src/lib.rs}}
 ```
 
-<span class="caption">Listing 17-3: Definition of the `Draw` trait</span>
+<span class="caption">Ro'yxat 17-3: `Draw` trait'ining ta'rifi</span>
 
-This syntax should look familiar from our discussions on how to define traits
-in Chapter 10. Next comes some new syntax: Listing 17-4 defines a struct named
-`Screen` that holds a vector named `components`. This vector is of type
-`Box<dyn Draw>`, which is a trait object; it’s a stand-in for any type inside
-a `Box` that implements the `Draw` trait.
+Ushbu sintaksis bizning 10 chi bo'limda bo'lib o'tgan Traitlarni joriy etish
+suhbatimizdan keyin tanish bo'lishi kerak. Keyingisi esa yana yangi sintaksis:
+17-4 chi ro'yxat `Screen` nomli `components` nomi ostidagi vekotr o'z ichiga olgan
+structni ta'riflaydi. Ushbu vektor `Box<dyn Draw>` turidan, ya'ni trait obyekt (bu
+`Box` ichida `Draw` tratini joriy etuvchi istalgan turga solishtiriluvchi).
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-04/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 17-4: Definition of the `Screen` struct with a
-`components` field holding a vector of trait objects that implement the `Draw`
-trait</span>
+<span class="caption">Ro'yxat 17-4: `Screen` structidagi `components` maydoni
+bir vektorda joylashgan va `Draw` tratini joriy etgan obyektlarni ushlab turibdi
+</span>
 
 On the `Screen` struct, we’ll define a method named `run` that will call the
 `draw` method on each of its `components`, as shown in Listing 17-5:
