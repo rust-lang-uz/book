@@ -136,22 +136,23 @@ can hold a `Vec<T>` that contains a `Box<Button>` as well as a
 `Box<TextField>`. Let’s look at how this works, and then we’ll talk about the
 runtime performance implications.
 
-### Implementing the Trait
+### Traitni amalga oshirish
 
-Now we’ll add some types that implement the `Draw` trait. We’ll provide the
-`Button` type. Again, actually implementing a GUI library is beyond the scope
-of this book, so the `draw` method won’t have any useful implementation in its
-body. To imagine what the implementation might look like, a `Button` struct
-might have fields for `width`, `height`, and `label`, as shown in Listing 17-7:
+Endi `Draw` traitini amalga oshiradigan ba'zi turlarni qo‘shamiz. `Button` 
+turini taqdim etamiz. Yana, haqiqiy GUI kutubxonasini yaratish kitobimiz 
+doirasidan tashqarida, shuning uchun `draw` metodi tanasida hech qanday 
+foydali amalga oshirish bo‘lmaydi. Amalga oshirish qanday ko‘rinishi 
+mumkinligini tasavvur qilish uchun, `Button` tuzilmasi `width` (kenglik), 
+`height` (bo‘yi) va `label` (yorliq) kabi maydonlarga ega bo‘lishi mumkin, 
+bu 17-7 ro'yxatdada ko‘rsatilgan:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Faylnomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-07/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 17-7: A `Button` struct that implements the
-`Draw` trait</span>
+<span class="caption">Ro'yxat 17-7: `Draw` traitini amalga oshiradigan `Button` strukti</span>
 
 The `width`, `height`, and `label` fields on `Button` will differ from the
 fields on other components; for example, a `TextField` type might have those
