@@ -22,7 +22,7 @@ turlarni taqdim qilishi mumkin. Shu bilan birga, `gui` foydalanuvchilari o‘zla
 chizilishi mumkin bo‘lgan turlarini ham yaratmoqchi bo‘lishadi: masalan, bir dasturchi
 `Image` turini qo‘shsa, boshqasi `SelectBox` turini qo‘shishi mumkin.
 
-Ushbu misolda to‘laqonli grafik interfeyslik (GUI) kutubxona yozilmaydi, lekin
+Ushbu misolda to‘laqonli grafik interfeyslik (GUI) kutubxona yozilmaydi lekin
 qismlar bir-biri bilan qanday ulanishini ko‘rsatiladi. Kutubxona yozish vaqtida
 boshqa dasturchilar nima va qanday qilib yozishini oldindan bilib bo‘lmaydi.
 Lekin bilamizki, `gui` imkon qadar ko‘p turlar qiymatidan xabardor bo‘lishi
@@ -35,7 +35,7 @@ Obyektga yo‘naltirilgan tillarda (misol uchun Java, C# va h.k.), `Component` n
 klass ichida `draw` nomli metod bilan ifoda etiladi. `Button`, `Image` va
 `SelectBox` kabi klasslar `Component`dan nasil olishadi va shu tufayli ular
 ham `draw` metodini ifodalashadi. Ular, albatta, o‘zgacha `draw` metodini
-e’lon qilishlari mumkin, lekin dasturlash tili ularni xuddi `Component`dek
+e’lon qilishlari mumkin lekin dasturlash tili ularni xuddi `Component`dek
 ko‘rishadi va `draw`ni chaqira olishadi. Rust dasturlash tilida nasl olish
 imkoniyati yo‘q, vaholanki `gui` kutubxonasi foydalanuvchilari uni
 kengaytira olishi uchun kutubxona boshqacha tuzilishi lozim.
@@ -149,15 +149,14 @@ might have fields for `width`, `height`, and `label`, as shown in Listing 17-7:
 <span class="caption">Listing 17-7: A `Button` struct that implements the
 `Draw` trait</span>
 
-The `width`, `height`, and `label` fields on `Button` will differ from the
-fields on other components; for example, a `TextField` type might have those
-same fields plus a `placeholder` field. Each of the types we want to draw on
-the screen will implement the `Draw` trait but will use different code in the
-`draw` method to define how to draw that particular type, as `Button` has here
-(without the actual GUI code, as mentioned). The `Button` type, for instance,
-might have an additional `impl` block containing methods related to what
-happens when a user clicks the button. These kinds of methods won’t apply to
-types like `TextField`.
+`Button`ning `width`, `height` va `label` maydonlari boshqa komponentlarga
+nisbatan farq qiladi; misol uchun `TextField`ning turi avvalgi maydonlar va
+qo‘shimcha `placeholder` maydonidan tashkil topgan bo‘lishi mumkin. Har bir
+ekranga chizilishi kerak bo‘lgan turlar `Draw` trait’ini joriy qilishadi ammo
+ularning `draw` metodlari bir-birlaridan farq qiladi chunki har bir turning
+o‘ziga xos shakli yoki boshqa xususiyati chizilishi mumkin. Misol uchun
+`Button` bosganda sodir bo‘ladigan metod `impl` bloki ichida qo‘shimcha
+kiritilishi mumkin. `TextField` uchun esa bunday funksional talab etilmaydi.
 
 If someone using our library decides to implement a `SelectBox` struct that has
 `width`, `height`, and `options` fields, they implement the `Draw` trait on the
