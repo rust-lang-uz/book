@@ -122,18 +122,21 @@ as in Listing 17-6:
 {{#rustdoc_include ../listings/ch17-oop/listing-17-06/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 17-6: An alternate implementation of the `Screen`
-struct and its `run` method using generics and trait bounds</span>
+<span class="caption"> 17-6 ro'yxat: `Screen` tuzilmasi va uning `run`
+usulining muqobil amalga oshirilishi, bunda generiklar va xususiyatlar
+chegaralari qo‘llaniladi</span>
 
-This restricts us to a `Screen` instance that has a list of components all of
-type `Button` or all of type `TextField`. If you’ll only ever have homogeneous
-collections, using generics and trait bounds is preferable because the
-definitions will be monomorphized at compile time to use the concrete types.
+Bu faqat `Button` yoki faqat `TextField` turidagi komponentlar ro‘yxatiga
+ega bo‘lgan `Screen` nusxasi bilan cheklaydi. Agar sizda faqat bir xil
+to‘plamlar bo‘lsa, `generic` umumiy va `trait` xususiyat chegaralaridan
+foydalanish afzalroq, chunki aniq turlardan foydalanish uchun ta’riflar
+tuzish vaqtida har bir tur uchun birlashtiradi.
 
-On the other hand, with the method using trait objects, one `Screen` instance
-can hold a `Vec<T>` that contains a `Box<Button>` as well as a
-`Box<TextField>`. Let’s look at how this works, and then we’ll talk about the
-runtime performance implications.
+Boshqa tomondan, `trait` obyektlaridan foydalanadigan usul bilan bitta
+`Screen` nusxasi `Box<Button>`, shuningdek `Box<TextField>` ni o‘z ichiga
+olgan `Vec<T>` ni saqlash imkoniyatiga ega bo‘ladi. Keling, bu qanday
+ishlashini ko‘rib chiqaylik, so‘ngra dasturning ishlash vaqtidagi
+unumdorlik ta’sirlari haqida suhbatlashamiz.
 
 ### Implementing the Trait
 
