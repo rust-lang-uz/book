@@ -93,33 +93,33 @@ structni ta'riflaydi. Ushbu vektor `Box<dyn Draw>` turidan, ya'ni trait obyekt (
 bir vektorda joylashgan va `Draw` tratini joriy etgan obyektlarni ushlab turibdi
 </span>
 
-On the `Screen` struct, we’ll define a method named `run` that will call the
-`draw` method on each of its `components`, as shown in Listing 17-5:
+`Screen` struktida, biz 17-5 chi ro'yxatda ko'rsatilganiday, `draw` metodini har
+bir `components` ustidan chaqiradigan `run` nomli metod yaratamiz:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-05/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 17-5: A `run` method on `Screen` that calls the
-`draw` method on each component</span>
+<span class="caption">Ro'yxat 17-5: `Screen` da har bir komponent ustidan
+`draw` metodini chaqiradigan `run` metodi</span>
 
-This works differently from defining a struct that uses a generic type
-parameter with trait bounds. A generic type parameter can only be substituted
-with one concrete type at a time, whereas trait objects allow for multiple
-concrete types to fill in for the trait object at runtime. For example, we
-could have defined the `Screen` struct using a generic type and a trait bound
-as in Listing 17-6:
+Bu generik tur ko'rsatkichi va trait cheklanmalardan farqli boshqacha
+ishlaydi. Generik tur parametr bir vaqt o'zida faqat bitta tur qabul qiladi,
+trait obyektlar esa boshqa tarafdan ko'plab konkret turlar ishlash vaqtidagi
+trait obyektlarni to'ldirib berish uchun ishlatsa bo'ladi. Misol uchun,
+`Screen` struktini 17-6 chi ro'yxatda ko'rsatilganiday generik tur va trait
+cheklanmalari bilan ta'riflasa bo'ladi:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-06/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 17-6: An alternate implementation of the `Screen`
-struct and its `run` method using generics and trait bounds</span>
+<span class="caption">Ro'yxat 17-6: `Screen` strukti va uning `run` metodining
+generik va trait cheklanmalarini ishlatgandagi alternativ ta'rifi.</span>
 
 This restricts us to a `Screen` instance that has a list of components all of
 type `Button` or all of type `TextField`. If you’ll only ever have homogeneous
