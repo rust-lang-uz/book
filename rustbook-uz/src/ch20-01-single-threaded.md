@@ -1,38 +1,22 @@
-## Building a Single-Threaded Web Server
+## Bitta oqimli (single-threaded) veb-server yaratish
 
-We’ll start by getting a single-threaded web server working. Before we begin,
-let’s look at a quick overview of the protocols involved in building web
-servers. The details of these protocols are beyond the scope of this book, but
-a brief overview will give you the information you need.
+Avval bitta oqimli veb-serverni ishga tushirishdan boshlaymiz. Ishni boshlashdan oldin, veb-serverlarni qurishda ishtirok etadigan protokollar haqida qisqacha ko‘rib chiqamiz. Ushbu protokollarning batafsil tafsilotlari ushbu kitob doirasidan tashqarida, ammo qisqacha tushuntirish sizga zarur bo‘lgan asosiy ma’lumotlarni beradi.
 
-The two main protocols involved in web servers are *Hypertext Transfer
-Protocol* *(HTTP)* and *Transmission Control Protocol* *(TCP)*. Both protocols
-are *request-response* protocols, meaning a *client* initiates requests and a
-*server* listens to the requests and provides a response to the client. The
-contents of those requests and responses are defined by the protocols.
+Veb-serverlarda ishtirok etadigan ikkita asosiy protokol bu *Gipermatn uzatish protokoli* *(HTTP)* va *Uzatishni boshqarish protokoli* *(TCP)* hisoblanadi. Har ikkala protokol ham *so‘rov-javob* (request-response) protokollari bo‘lib, bunda *mijoz* (client) so‘rov yuboradi, *server* esa bu so‘rovlarni tinglaydi va mijozga javob qaytaradi. Ushbu so‘rovlar va javoblarning mazmuni protokollar tomonidan aniqlanadi.
 
-TCP is the lower-level protocol that describes the details of how information
-gets from one server to another but doesn’t specify what that information is.
-HTTP builds on top of TCP by defining the contents of the requests and
-responses. It’s technically possible to use HTTP with other protocols, but in
-the vast majority of cases, HTTP sends its data over TCP. We’ll work with the
-raw bytes of TCP and HTTP requests and responses.
+TCP bu past darajadagi (lower-level) protokol bo‘lib, ma’lumotlar bir serverdan boshqasiga qanday uzatilishini belgilaydi, lekin bu ma’lumotlarning mazmuni qanday bo‘lishi kerakligini aniqlamaydi. HTTP esa TCP ustida qurilgan bo‘lib, so‘rovlar va javoblarning tarkibini belgilaydi. Texnik jihatdan HTTP’ni boshqa protokollar bilan ham ishlatish mumkin, ammo aksariyat hollarda HTTP o‘z ma’lumotlarini TCP orqali uzatadi. Biz esa TCP va HTTP so‘rov hamda javoblarining xom baytlari (raw bytes) bilan ishlaymiz.
 
-### Listening to the TCP Connection
+### TCP ulanishni tinglash
 
-Our web server needs to listen to a TCP connection, so that’s the first part
-we’ll work on. The standard library offers a `std::net` module that lets us do
-this. Let’s make a new project in the usual fashion:
+Veb-serverimiz TCP ulanishini tinglashi kerak, shuning uchun birinchi navbatda shu qism ustida ishlaymiz. Rust’ning standart kutubxonasi buni amalga oshirish imkonini beruvchi `std::net` modulini taklif qiladi. Keling, odatdagidek yangi loyiha yaratamiz:
 
 ```console
-$ cargo new hello
-     Created binary (application) `hello` project
-$ cd hello
+$ cargo new salom
+     Created binary (application) `salom` project
+$ cd salom
 ```
 
-Now enter the code in Listing 20-1 in *src/main.rs* to start. This code will
-listen at the local address `127.0.0.1:7878` for incoming TCP streams. When it
-gets an incoming stream, it will print `Connection established!`.
+Endi *src/main.rs* fayliga 20-1 ro‘yxatdagi (Listing 20-1) kodni kiriting. Bu kod `127.0.0.1:7878` lokal manzilida kiruvchi TCP oqimlarini tinglaydi. Har safar yangi oqim kelganda, `Connection established!` (Ulanish o‘rnatildi!) deb chop etadi.
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -40,92 +24,36 @@ gets an incoming stream, it will print `Connection established!`.
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-01/src/main.rs}}
 ```
 
-<span class="caption">Listing 20-1: Listening for incoming streams and printing
-a message when we receive a stream</span>
+<span class="caption">20-1 ro‘yxat: Kiruvchi oqimlarni tinglash va oqim qabul qilinganda xabar chop etish</span>
 
-Using `TcpListener`, we can listen for TCP connections at the address
-`127.0.0.1:7878`. In the address, the section before the colon is an IP address
-representing your computer (this is the same on every computer and doesn’t
-represent the authors’ computer specifically), and `7878` is the port. We’ve
-chosen this port for two reasons: HTTP isn’t normally accepted on this port so
-our server is unlikely to conflict with any other web server you might have
-running on your machine, and 7878 is *rust* typed on a telephone.
+`TcpListener` yordamida `127.0.0.1:7878` manzilida TCP ulanishlarini tinglashimiz mumkin. Manzilda ikki nuqtadan (:) oldingi qism - bu kompyuteringizni ifodalovchi IP manzil (bu barcha kompyuterlarda bir xil bo‘ladi va mualliflarning kompyuteriga xos emas), `7878` esa port raqami. Bu portni ikki sababga ko‘ra tanladik: odatda HTTP bu portda ishlatilmaydi, shuning uchun serverimiz kompyuteringizda ishlayotgan boshqa veb-serverlar bilan to‘qnash kelmaydi; ikkinchidan, telefon klaviaturasida *rust* so‘zini terishda 7878 raqamlari ishlatiladi.
 
-The `bind` function in this scenario works like the `new` function in that it
-will return a new `TcpListener` instance. The function is called `bind`
-because, in networking, connecting to a port to listen to is known as “binding
-to a port.”
+Ushbu holatda `bind` funksiyasi `new` funksiyasiga o‘xshab ishlaydi, ya’ni u yangi `TcpListener` obyektini qaytaradi. Funksiya `bind` deb nomlangan, chunki tarmoqlarda portga ulanib tinglash jarayoni “portga bog‘lanish” (binding) deb ataladi.
 
-The `bind` function returns a `Result<T, E>`, which indicates that it’s
-possible for binding to fail. For example, connecting to port 80 requires
-administrator privileges (nonadministrators can listen only on ports higher
-than 1023), so if we tried to connect to port 80 without being an
-administrator, binding wouldn’t work. Binding also wouldn’t work, for example,
-if we ran two instances of our program and so had two programs listening to the
-same port. Because we’re writing a basic server just for learning purposes, we
-won’t worry about handling these kinds of errors; instead, we use `unwrap` to
-stop the program if errors happen.
+`bind` funksiyasi `Result<T, E>` turini qaytaradi, bu esa bog‘lanish (binding) muvaffaqiyatsiz bo‘lishi mumkinligini bildiradi. Masalan, 80-portga ulanish uchun administrator huquqlari talab qilinadi (administrator bo‘lmagan foydalanuvchilar faqat 1023 dan yuqori portlarni tinglashi mumkin). Shuning uchun, agar biz administrator bo‘lmasak va 80-portga ulanishga harakat qilsak, bog‘lanish amalga oshmaydi. Bundan tashqari, agar dasturimizning ikkita nusxasini ishga tushirsak va ular bir xil portni tinglashga harakat qilsa, bog‘lanish yana amalga oshmaydi. Bu yerda faqat o‘rganish maqsadida oddiy server yozayotganimiz uchun bunday xatoliklarni oldini olish haqida hozircha qayg‘urmaymiz; uning o‘rniga dasturimizda xatolik yuz bersa dasturni to'xtatadigan `unwrap` funksiyasidan foydalanamiz.
 
-The `incoming` method on `TcpListener` returns an iterator that gives us a
-sequence of streams (more specifically, streams of type `TcpStream`). A single
-*stream* represents an open connection between the client and the server. A
-*connection* is the name for the full request and response process in which a
-client connects to the server, the server generates a response, and the server
-closes the connection. As such, we will read from the `TcpStream` to see what
-the client sent and then write our response to the stream to send data back to
-the client. Overall, this `for` loop will process each connection in turn and
-produce a series of streams for us to handle.
+`TcpListener` ustidagi `incoming` metodi oqimlar ketma-ketligini (ya’ni, `TcpStream` turidagi oqimlar) taqdim etuvchi iteratorni qaytaradi. Har bir *oqim* (stream) mijoz (client) va server o‘rtasidagi ochiq ulanishni ifodalaydi. *Ulanish* (connection) deganda, mijoz serverga ulanadigan, server javob tayyorlab qaytaradigan va so‘ng ulanishni yopadigan to‘liq so‘rov-javob (request response) jarayoni tushuniladi. Shunday ekan, `TcpStream` dan o‘qib, mijoz nimani yuborganini bilamiz va javobimizni aynan shu oqim orqali yozib, mijozga yuboramiz. Umuman olganda, bu `for` sikli har bir ulanishni navbati bilan qayta ishlaydi va boshqarish uchun bir nechta oqimlar beradi.
 
-For now, our handling of the stream consists of calling `unwrap` to terminate
-our program if the stream has any errors; if there aren’t any errors, the
-program prints a message. We’ll add more functionality for the success case in
-the next listing. The reason we might receive errors from the `incoming` method
-when a client connects to the server is that we’re not actually iterating over
-connections. Instead, we’re iterating over *connection attempts*. The
-connection might not be successful for a number of reasons, many of them
-operating system specific. For example, many operating systems have a limit to
-the number of simultaneous open connections they can support; new connection
-attempts beyond that number will produce an error until some of the open
-connections are closed.
+Hozircha oqimni (stream) qayta ishlashimiz faqat `unwrap` chaqirishdan iborat: agar oqimda xatolik yuz bersa, dastur to‘xtaydi; xatolik bo‘lmasa, dastur xabar chop etadi. Keyingi ro‘yxatda muvaffaqiyatli holatlar uchun ko‘proq funksionallik qo‘shamiz. Mijoz serverga ulanganida `incoming` metodidan xatoliklar chiqishi mumkin, chunki aslida ulanishlarning o‘zini emas, *ulanishga urinishlarni* (connection attemps) ko‘rib chiqayapmiz (iterating). Har bir urinish muvaffaqiyatli bo‘lavermasligi mumkin, va buning sabablari ko‘pincha operatsion tizimga bog‘liq bo‘ladi. Masalan, ko‘plab operatsion tizimlarda bir vaqtning o‘zida ochiq bo‘lishi mumkin bo‘lgan ulanishlar soni cheklangan bo‘ladi; bu limitdan oshib ketilganida, yangi ulanishga urinishlar xatolik chiqaradi, toki mavjud ulanishlardan ba’zilari yopilmaguncha.
 
-Let’s try running this code! Invoke `cargo run` in the terminal and then load
-*127.0.0.1:7878* in a web browser. The browser should show an error message
-like “Connection reset,” because the server isn’t currently sending back any
-data. But when you look at your terminal, you should see several messages that
-were printed when the browser connected to the server!
+Keling, ushbu kodni ishga tushirib ko‘ramiz! Terminalda `cargo run` buyrug‘ini invoke qiling (yurg'azing) va so‘ng brauzeringizda *127.0.0.1:7878* manzilini oching. Brauzer “Connection reset” (Ulanish tiklandi) kabi xatolik xabarini ko‘rsatishi mumkin, chunki hozircha server hech qanday ma’lumot qaytarayotgani yo‘q. Biroq terminalingizga qarasangiz, brauzer serverga ulanganida chiqarilgan bir nechta xabarlarni ko‘rishingiz mumkin bo‘ladi!
 
 ```text
-     Running `target/debug/hello`
+     Running `target/debug/salom`
 Connection established!
 Connection established!
 Connection established!
 ```
 
-Sometimes, you’ll see multiple messages printed for one browser request; the
-reason might be that the browser is making a request for the page as well as a
-request for other resources, like the *favicon.ico* icon that appears in the
-browser tab.
+Ba’zan brauzerning bitta so‘rovi uchun bir nechta xabarlar chiqishini ko‘rishingiz mumkin; buning sababi shundaki, brauzer sahifa uchun so‘rov yuborish bilan birga, brauzer tab da (yorlig‘ida) ko‘rinadigan *favicon.ico* kabi boshqa resurslar uchun ham so‘rov yuboradi.
 
-It could also be that the browser is trying to connect to the server multiple
-times because the server isn’t responding with any data. When `stream` goes out
-of scope and is dropped at the end of the loop, the connection is closed as
-part of the `drop` implementation. Browsers sometimes deal with closed
-connections by retrying, because the problem might be temporary. The important
-factor is that we’ve successfully gotten a handle to a TCP connection!
+Brauzer bir necha marta serverga ulanishga harakat qilayotgan bo‘lishi ham mumkin, chunki server hech qanday ma’lumot yubormayapti. `stream` sikl oxirida ko‘lam (scope) dan chiqib ketganda, `drop` implementatsiyasi orqali ulanish yopiladi. Brauzerlar ba’zida yopilgan ulanishlarga qayta urinish qiladi, chunki muammo vaqtincha bo‘lishi mumkin. Muhim jihati shuki — biz TCP ulanishni muvaffaqiyatli qo‘lga kiritdik!
 
-Remember to stop the program by pressing <span class="keystroke">ctrl-c</span>
-when you’re done running a particular version of the code. Then restart the
-program by invoking the `cargo run` command after you’ve made each set of code
-changes to make sure you’re running the newest code.
+Dasturdan foydalanishni tugatganingizda, uni <span class="keystroke">ctrl-c</span> tugmasi yordamida to‘xtatishni unutmang. Har safar kodga o‘zgartirish kiritganingizdan so‘ng, eng so‘nggi versiyasi ishga tushirilayotganiga ishonch hosil qilish uchun `cargo run` buyrug‘ini qayta ishga tushuring.
 
-### Reading the Request
+### So'rovni o'qish
 
-Let’s implement the functionality to read the request from the browser! To
-separate the concerns of first getting a connection and then taking some action
-with the connection, we’ll start a new function for processing connections. In
-this new `handle_connection` function, we’ll read data from the TCP stream and
-print it so we can see the data being sent from the browser. Change the code to
-look like Listing 20-2.
+Brauzerdan yuborilgan so‘rovni o‘qish funksiyasini ishlab chiqamiz! Avval ulanishni (connection) qabul qilish va keyin ular bilan ishlash bosqichlarini bir-biridan ajratish uchun, ulanishni qayta ishlovchi yangi funksiya yozamiz. Bu yangi `handle_connection` funksiyasida TCP oqimidan (stream) ma’lumotlarni o‘qiymiz va brauzer yuborayotgan ma’lumotlarni ko‘rish uchun ularni chop etamiz. Kodni 20-02 ro‘yxatdagidek qilib o‘zgartiring.
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -133,31 +61,15 @@ look like Listing 20-2.
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-02/src/main.rs}}
 ```
 
-<span class="caption">Listing 20-2: Reading from the `TcpStream` and printing
-the data</span>
+<span class="caption">20-02 ro‘yxat: TcpStream dan o‘qish va yuborilgan ma’lumotni chop etish</span>
 
-We bring `std::io::prelude` and `std::io::BufReader` into scope to get access
-to traits and types that let us read from and write to the stream. In the `for`
-loop in the `main` function, instead of printing a message that says we made a
-connection, we now call the new `handle_connection` function and pass the
-`stream` to it.
+`std::io::prelude` va `std::io::BufReader` ni ko‘lamga (scope) olib kiramiz - bu bizga oqimdan (streamdan) o‘qish va yozish imkonini beradigan trait va tiplardan foydalanish imkonini beradi. Endi `main` funksiyasidagi `for` siklida ulanish o‘rnatilgani haqida xabar chiqarish o‘rniga, yangi `handle_connection` funksiyasini chaqiramiz va unga stream `ni` uzatamiz.
 
-In the `handle_connection` function, we create a new `BufReader` instance that
-wraps a mutable reference to the `stream`. `BufReader` adds buffering by
-managing calls to the `std::io::Read` trait methods for us.
+`handle_connection` funksiyasida biz `oqimga (stream)` o‘zgaruvchan (mutable) murojaatni o‘rab oladigan yangi `BufReader` obyektini yaratamiz. `BufReader` buferlashni qo‘shadi — ya’ni u `std::io::Read` traitining metodlariga murojaat qilishni boshqaradi.
 
-We create a variable named `http_request` to collect the lines of the request
-the browser sends to our server. We indicate that we want to collect these
-lines in a vector by adding the `Vec<_>` type annotation.
+Brauzer serverimizga yuboradigan so‘rov satrlarini yig‘ish uchun `http_request` nomli o‘zgaruvchi yaratamiz. Bu satrlarni vector (vektor) ko‘rinishida yig‘moqchi ekanligimizni ko‘rsatish uchun `Vec<_>` tip annotatsiyasini qo‘shamiz.
 
-`BufReader` implements the `std::io::BufRead` trait, which provides the `lines`
-method. The `lines` method returns an iterator of `Result<String,
-std::io::Error>` by splitting the stream of data whenever it sees a newline
-byte. To get each `String`, we map and `unwrap` each `Result`. The `Result`
-might be an error if the data isn’t valid UTF-8 or if there was a problem
-reading from the stream. Again, a production program should handle these errors
-more gracefully, but we’re choosing to stop the program in the error case for
-simplicity.
+`BufReader`  `std::io::BufRead` traitini amalga oshiradi va shu orqali `lines` metodini taqdim etadi. `Lines` metodi har gal yangi qatordan ajratib, oqimdagi ma’lumotlarni `Result<String, std::io::Error>` ko‘rinishidagi iterator sifatida qaytaradi. Har bir String qiymatni olish uchun har bir Natija (Result) ustida map va `uwrap` amallarini bajaramiz. Agar ma’lumotlar yaroqli UTF-8 formatda bo‘lmasa yoki oqimdan o‘qishda muammo yuz bersa, Result xatolik (error) bo‘lishi mumkin. Aslida Ishlab chiqarish (Production) darajasidagi dastur bu xatolarni ancha ehtiyotkorlik bilan boshqarishi kerak, ammo soddalashtirish uchun agar xatolik yuz bersa, dasturni to‘xtatamiz.
 
 The browser signals the end of an HTTP request by sending two newline
 characters in a row, so to get one request from the stream, we take lines until
