@@ -158,33 +158,34 @@ o‘ziga xos shakli yoki boshqa xususiyati chizilishi mumkin. Misol uchun
 `Button` bosganda sodir bo‘ladigan metod `impl` bloki ichida qo‘shimcha
 kiritilishi mumkin. `TextField` uchun esa bunday funksional talab etilmaydi.
 
-If someone using our library decides to implement a `SelectBox` struct that has
-`width`, `height`, and `options` fields, they implement the `Draw` trait on the
-`SelectBox` type as well, as shown in Listing 17-8:
+`width`, `height` va `options` maydonlardan tashkil topgan `SelectBox`ni
+amalga oshirmoqchi bo‘lgan dasturchi `SelectBox` uchun `Draw` trait’ini
+ham Ro‘yxat 17-8 da ko‘rsatilgandek yozishi kerak bo‘ladi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch17-oop/listing-17-08/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 17-8: Another crate using `gui` and implementing
-the `Draw` trait on a `SelectBox` struct</span>
+<span class="caption">Ro‘yxat 17-8: `gui`dan foydalanuvchi va undagi `Draw`
+trait’ini `SelectBox` struct’i uchun amalga oshiradigan crate</span>
 
-Our library’s user can now write their `main` function to create a `Screen`
-instance. To the `Screen` instance, they can add a `SelectBox` and a `Button`
-by putting each in a `Box<T>` to become a trait object. They can then call the
-`run` method on the `Screen` instance, which will call `draw` on each of the
-components. Listing 17-9 shows this implementation:
+Kutubxona foydalanuvchisi endi o‘z `main` funksiyasi ichida `Screen` nusxasini
+yaratish imkoniga ega. `Screen` nusxasiga foydalanuvchi `SelectBox` va `Button`
+nusxalarini har birini `Box<T>` ichiga joylash orqali ularni trait’ga o‘girib
+qo‘shib chiqishi mumkin. Undan keyin `Screen` nusxasida `run` metodi chaqirgan
+vaqtda har bir ichki komponentlarning `draw` metodi birma-bir chaqiriladi.
+Ro‘yxat 17-9 xuddi shuni namoyish etadi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch17-oop/listing-17-09/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 17-9: Using trait objects to store values of
-different types that implement the same trait</span>
+<span class="caption">Ro‘yxat 17-9: Bir trait’ni amalga oshiruvchi turli xil
+turlarni saqlash uchun trait obyektlar ishlatilishi</span>
 
 When we wrote the library, we didn’t know that someone might add the
 `SelectBox` type, but our `Screen` implementation was able to operate on the
