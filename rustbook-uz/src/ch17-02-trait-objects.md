@@ -197,17 +197,6 @@ When we wrote the library, we didn’t know that someone might add the
 new type and draw it because `SelectBox` implements the `Draw` trait, which
 means it implements the `draw` method.
 
-This concept—of being concerned only with the messages a value responds to
-rather than the value’s concrete type—is similar to the concept of *duck
-typing* in dynamically typed languages: if it walks like a duck and quacks
-like a duck, then it must be a duck! In the implementation of `run` on `Screen`
-in Listing 17-5, `run` doesn’t need to know what the concrete type of each
-component is. It doesn’t check whether a component is an instance of a `Button`
-or a `SelectBox`, it just calls the `draw` method on the component. By
-specifying `Box<dyn Draw>` as the type of the values in the `components`
-vector, we’ve defined `Screen` to need values that we can call the `draw`
-method on.
-
 Bu tushuncha — ya’ni, qiymatning aniq tipi emas, balki qanday xabarlarga 
 javob bera olishi muhim bo‘lishi — dinamik tiplangan tillardagi *duck typing* 
 tushunchasiga o‘xshaydi: agar u o‘rdakdek yursa va o‘rdakdek ovoz chiqarsa, 
