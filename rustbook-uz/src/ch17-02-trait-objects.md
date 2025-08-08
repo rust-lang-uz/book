@@ -1,6 +1,6 @@
 ## Turli xildagi qiymatlarni qabul qila oladigan `Trait` ya'ni xususiyat obyektlaridan foydalanish
 
-8-bobda biz vektorlarning faqat bir turdagi elementlarni saqlash
+8-bobda vektorlarning faqat bir turdagi elementlarni saqlash
 imkoniyatiga ega ekanligini ta’kidlagan edik. 8-9-ro‘yxatda
 butun sonlar, kasr sonlar va matnlarni saqlash uchun variantlarga
 ega bo‘lgan ’SpreadsheetCell’ nomli sanab o‘tish turini yaratib,
@@ -42,7 +42,7 @@ allow users to extend it with new types.
 
 ### Umumiy xatti-harakatlar uchun `Trait` ni aniqlash ya'ni xususiyatni
 
-`Gui` uchun kerakli xatti-harakatni amalga oshirish maqsadida, biz `Draw` nomli
+`Gui` uchun kerakli xatti-harakatni amalga oshirish maqsadida, `Draw` nomli
 trait'ni belgilaymiz. Bu trait `draw` deb nomlangan yagona usulni o‘z ichiga
 oladi. Shundan so‘ng *trait object* ni qabul qiladigan vektorni aniqlash mumkin.
 Trait obyekti ko‘rsatilgan xususiyatni amalga oshiruvchi turning nusxasiga ham,
@@ -52,12 +52,12 @@ jadvalga ham ishora qiladi. Qandaydir ko‘rsatkichni, masalan `&` havola yoki
 ko‘rsatish orqali trait obyektini yaratamiz. (Trait obyektlarining nima uchun
 ko‘rsatkich ishlatishi kerakligi haqida 19-bobning
 ["Dinamik o‘lchamliturlar va ’Sized’ belgisi"][dinamik-olchamli]
-<!-- e’tiborsiz qoldirish --> qismida batafsil to‘xtalamiz.) Biz belgi
+<!-- e’tiborsiz qoldirish --> qismida batafsil to‘xtalamiz.) Trait
 obyektlarini `generic` ya'ni turdosh yoki aniq tur o‘rnida ishlatishimiz mumkin.
 Trait obyektini qayerda ishlatishimizdan qat'iy nazar, Rustning turlar tizimi
 kompilyatsiya vaqtida ushbu kontekstda ishlatiladigan har qanday qiymat
-trait obyektining trait'ini amalga oshirishini ta’minlaydi. Natijada biz
-kompilyatsiya vaqtida barcha mumkin bo‘lgan turlarni bilishimiz shart emas.
+trait obyektining trait'ini amalga oshirishini ta’minlaydi. Natijada
+kompilyatsiya vaqtida barcha mumkin bo‘lgan turlarni bilish shart emas.
 
 We’ve mentioned that, in Rust, we refrain from calling structs and enums
 “objects” to distinguish them from other languages’ objects. In a struct or
@@ -209,11 +209,12 @@ specifying `Box<dyn Draw>` as the type of the values in the `components`
 vector, we’ve defined `Screen` to need values that we can call the `draw`
 method on.
 
-The advantage of using trait objects and Rust’s type system to write code
-similar to code using duck typing is that we never have to check whether a
-value implements a particular method at runtime or worry about getting errors
-if a value doesn’t implement a method but we call it anyway. Rust won’t compile
-our code if the values don’t implement the traits that the trait objects need.
+Trait obyektlar va Rustning turlar tizimidan foydalanib, `duck typing` uslubiga
+o‘xshash kod yozishning afzalligi shundaki, qiymatning ma’lum bir usulni
+bajarishini ishga tushirish vaqtida tekshirishimiz shart emas. Bundan tashqari,
+agar qiymat usulni amalga oshirmasa-yu, lekin u chaqirilsa ham, xatolar yuzaga
+kelishidan xavotirlanishimizga hojat yo‘q. Agar qiymatlar trait obyektlariga
+kerak bo'lgan trait'larni amalga oshirmasa, Rust bu kodni kompilatsiya qilmaydi.
 
 For example, Listing 17-10 shows what happens if we try to create a `Screen`
 with a `String` as a component:
