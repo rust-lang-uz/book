@@ -215,7 +215,7 @@ demak u o‘rdak! 17-5-ro‘yxatdagi `Screen` uchun `run` funksiyasi
 implementatsiyasida `run` har bir komponentning aniq tipi nima ekanini 
 bilishga muhtoj emas. Komponent `Button` yoki `SelectBox` ekanligini 
 tekshirmaydi, shunchaki uning `draw` metodini chaqiradi. `components` vektoridagi 
-qiymatlar turi sifatida `Box<dyn Draw>`ni ko‘rsatish orqali, `Screen`dan `draw` 
+qiymatlar turi sifatida `Box<dyn Draw>`ni ko‘rsatish orqali,`Screen`dan `draw` 
 metodini chaqira olishimiz mumkin bo‘lgan qiymatlarni talab qiladigan qilib belgiladik.
 
 The advantage of using trait objects and Rust’s type system to write code
