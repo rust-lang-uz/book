@@ -1,6 +1,6 @@
 ## Bitta oqimli (single-threaded) veb-server yaratish
 
-Biz avval bitta oqimli veb-serverni ishga tushirishdan boshlaymiz. Ishni boshlashdan oldin, veb-serverlarni qurishda ishtirok etadigan protokollar haqida qisqacha ko‘rib chiqamiz. Ushbu protokollarning batafsil tafsilotlari ushbu kitob doirasidan tashqarida, ammo qisqacha tushuntirish sizga zarur bo‘lgan asosiy ma’lumotlarni beradi.
+Avval bitta oqimli veb-serverni ishga tushirishdan boshlaymiz. Ishni boshlashdan oldin, veb-serverlarni qurishda ishtirok etadigan protokollar haqida qisqacha ko‘rib chiqamiz. Ushbu protokollarning batafsil tafsilotlari ushbu kitob doirasidan tashqarida, ammo qisqacha tushuntirish sizga zarur bo‘lgan asosiy ma’lumotlarni beradi.
 
 Veb-serverlarda ishtirok etadigan ikkita asosiy protokol bu *Gipermatn uzatish protokoli* *(HTTP)* va *Uzatishni boshqarish protokoli* *(TCP)* hisoblanadi. Har ikkala protokol ham *so‘rov-javob* (request-response) protokollari bo‘lib, bunda *mijoz* (client) so‘rov yuboradi, *server* esa bu so‘rovlarni tinglaydi va mijozga javob qaytaradi. Ushbu so‘rovlar va javoblarning mazmuni protokollar tomonidan aniqlanadi.
 
@@ -8,7 +8,7 @@ TCP bu past darajadagi (lower-level) protokol bo‘lib, ma’lumotlar bir server
 
 ### TCP ulanishni tinglash
 
-Veb-serverimiz TCP ulanishini tinglashi kerak, shuning uchun birinchi navbatda shu qism ustida ishlaymiz. Rust’ning standart kutubxonasi bizga buni amalga oshirish imkonini beruvchi `std::net` modulini taklif qiladi. Keling, odatdagidek yangi loyiha yaratamiz:
+Veb-serverimiz TCP ulanishini tinglashi kerak, shuning uchun birinchi navbatda shu qism ustida ishlaymiz. Rust’ning standart kutubxonasi buni amalga oshirish imkonini beruvchi `std::net` modulini taklif qiladi. Keling, odatdagidek yangi loyiha yaratamiz:
 
 ```console
 $ cargo new salom
@@ -26,15 +26,15 @@ Endi *src/main.rs* fayliga 20-1 ro‘yxatdagi (Listing 20-1) kodni kiriting. Bu 
 
 <span class="caption">20-1 ro‘yxat: Kiruvchi oqimlarni tinglash va oqim qabul qilinganda xabar chop etish</span>
 
-`TcpListener` yordamida biz `127.0.0.1:7878` manzilida TCP ulanishlarini tinglashimiz mumkin. Manzilda ikki nuqtadan (:) oldingi qism — bu kompyuteringizni ifodalovchi IP manzil (bu barcha kompyuterlarda bir xil bo‘ladi va mualliflarning kompyuteriga xos emas), `7878` esa port raqami. Biz bu portni ikki sababga ko‘ra tanladik: odatda HTTP bu portda ishlatilmaydi, shuning uchun serverimiz kompyuteringizda ishlayotgan boshqa veb-serverlar bilan to‘qnash kelmaydi; ikkinchidan, telefon klaviaturasida *rust* so‘zini terishda 7878 raqamlari ishlatiladi.
+`TcpListener` yordamida `127.0.0.1:7878` manzilida TCP ulanishlarini tinglashimiz mumkin. Manzilda ikki nuqtadan (:) oldingi qism - bu kompyuteringizni ifodalovchi IP manzil (bu barcha kompyuterlarda bir xil bo‘ladi va mualliflarning kompyuteriga xos emas), `7878` esa port raqami. Bu portni ikki sababga ko‘ra tanladik: odatda HTTP bu portda ishlatilmaydi, shuning uchun serverimiz kompyuteringizda ishlayotgan boshqa veb-serverlar bilan to‘qnash kelmaydi; ikkinchidan, telefon klaviaturasida *rust* so‘zini terishda 7878 raqamlari ishlatiladi.
 
 Ushbu holatda `bind` funksiyasi `new` funksiyasiga o‘xshab ishlaydi, ya’ni u yangi `TcpListener` obyektini qaytaradi. Funksiya `bind` deb nomlangan, chunki tarmoqlarda portga ulanib tinglash jarayoni “portga bog‘lanish” (binding) deb ataladi.
 
-`bind` funksiyasi `Result<T, E>` turini qaytaradi, bu esa bog‘lanish (binding) muvaffaqiyatsiz bo‘lishi mumkinligini bildiradi. Masalan, 80-portga ulanish uchun administrator huquqlari talab qilinadi (administrator bo‘lmagan foydalanuvchilar faqat 1023 dan yuqori portlarni tinglashi mumkin). Shuning uchun, agar biz administrator bo‘lmasak va 80-portga ulanishga harakat qilsak, bog‘lanish amalga oshmaydi. Bundan tashqari, agar dasturimizning ikkita nusxasini ishga tushirsak va ular bir xil portda tinglashga harakat qilsa, bog‘lanish yana amalga oshmaydi. Biz bu yerda faqat o‘rganish maqsadida oddiy server yozayotganimiz uchun bunday xatoliklarni oldini olish haqida hozircha qayg‘urmaymiz; uning o‘rniga dasturimizda xatolik yuz bersa dasturni to'xtatadigan `unwrap` funksiyasidan foydalanamiz.
+`bind` funksiyasi `Result<T, E>` turini qaytaradi, bu esa bog‘lanish (binding) muvaffaqiyatsiz bo‘lishi mumkinligini bildiradi. Masalan, 80-portga ulanish uchun administrator huquqlari talab qilinadi (administrator bo‘lmagan foydalanuvchilar faqat 1023 dan yuqori portlarni tinglashi mumkin). Shuning uchun, agar biz administrator bo‘lmasak va 80-portga ulanishga harakat qilsak, bog‘lanish amalga oshmaydi. Bundan tashqari, agar dasturimizning ikkita nusxasini ishga tushirsak va ular bir xil portni tinglashga harakat qilsa, bog‘lanish yana amalga oshmaydi. Bu yerda faqat o‘rganish maqsadida oddiy server yozayotganimiz uchun bunday xatoliklarni oldini olish haqida hozircha qayg‘urmaymiz; uning o‘rniga dasturimizda xatolik yuz bersa dasturni to'xtatadigan `unwrap` funksiyasidan foydalanamiz.
 
-`TcpListener` ustidagi `incoming` metodi bizga oqimlar ketma-ketligini (ya’ni, `TcpStream` turidagi oqimlar) taqdim etuvchi iteratorni qaytaradi. Har bir *oqim* (stream) mijoz (client) va server o‘rtasidagi ochiq ulanishni ifodalaydi. *Ulanish* (connection) deganda, mijoz serverga ulanadigan, server javob tayyorlab qaytaradigan va so‘ng ulanishni yopadigan to‘liq so‘rov-javob (request response) jarayoni tushuniladi. Shunday ekan, biz `TcpStream` dan o‘qib, mijoz nimani yuborganini bilamiz va javobimizni aynan shu oqim orqali yozib, mijozga yuboramiz. Umuman olganda, bu `for` sikli har bir ulanishni navbati bilan qayta ishlaydi va bizga boshqarish uchun bir nechta oqimlar beradi.
+`TcpListener` ustidagi `incoming` metodi oqimlar ketma-ketligini (ya’ni, `TcpStream` turidagi oqimlar) taqdim etuvchi iteratorni qaytaradi. Har bir *oqim* (stream) mijoz (client) va server o‘rtasidagi ochiq ulanishni ifodalaydi. *Ulanish* (connection) deganda, mijoz serverga ulanadigan, server javob tayyorlab qaytaradigan va so‘ng ulanishni yopadigan to‘liq so‘rov-javob (request response) jarayoni tushuniladi. Shunday ekan, `TcpStream` dan o‘qib, mijoz nimani yuborganini bilamiz va javobimizni aynan shu oqim orqali yozib, mijozga yuboramiz. Umuman olganda, bu `for` sikli har bir ulanishni navbati bilan qayta ishlaydi va boshqarish uchun bir nechta oqimlar beradi.
 
-Hozircha oqimni (stream) qayta ishlashimiz faqat `unwrap` chaqirishdan iborat: agar oqimda xatolik yuz bersa, dastur to‘xtaydi; xatolik bo‘lmasa, dastur xabar chop etadi. Kelasi ro‘yxatda muvaffaqiyatli holatlar uchun ko‘proq funksionallik qo‘shamiz. Mijoz serverga ulanganida `incoming` metodidan xatoliklar chiqishi mumkin, chunki biz aslida ulanishlarning o‘zini emas, *ulanishga urinishlarni* (connection attemps) ko‘rib chiqayapmiz (iterating). Har bir urinish muvaffaqiyatli bo‘lavermasligi mumkin, va buning sabablari ko‘pincha operatsion tizimga bog‘liq bo‘ladi. Masalan, ko‘plab operatsion tizimlarda bir vaqtning o‘zida ochiq bo‘lishi mumkin bo‘lgan ulanishlar soni cheklangan bo‘ladi; bu limitdan oshib ketilganida, yangi ulanishga urinishlar xatolik chiqaradi, toki mavjud ulanishlardan ba’zilari yopilmaguncha.
+Hozircha oqimni (stream) qayta ishlashimiz faqat `unwrap` chaqirishdan iborat: agar oqimda xatolik yuz bersa, dastur to‘xtaydi; xatolik bo‘lmasa, dastur xabar chop etadi. Keyingi ro‘yxatda muvaffaqiyatli holatlar uchun ko‘proq funksionallik qo‘shamiz. Mijoz serverga ulanganida `incoming` metodidan xatoliklar chiqishi mumkin, chunki aslida ulanishlarning o‘zini emas, *ulanishga urinishlarni* (connection attemps) ko‘rib chiqayapmiz (iterating). Har bir urinish muvaffaqiyatli bo‘lavermasligi mumkin, va buning sabablari ko‘pincha operatsion tizimga bog‘liq bo‘ladi. Masalan, ko‘plab operatsion tizimlarda bir vaqtning o‘zida ochiq bo‘lishi mumkin bo‘lgan ulanishlar soni cheklangan bo‘ladi; bu limitdan oshib ketilganida, yangi ulanishga urinishlar xatolik chiqaradi, toki mavjud ulanishlardan ba’zilari yopilmaguncha.
 
 Keling, ushbu kodni ishga tushirib ko‘ramiz! Terminalda `cargo run` buyrug‘ini invoke qiling (yurg'azing) va so‘ng brauzeringizda *127.0.0.1:7878* manzilini oching. Brauzer “Connection reset” (Ulanish tiklandi) kabi xatolik xabarini ko‘rsatishi mumkin, chunki hozircha server hech qanday ma’lumot qaytarayotgani yo‘q. Biroq terminalingizga qarasangiz, brauzer serverga ulanganida chiqarilgan bir nechta xabarlarni ko‘rishingiz mumkin bo‘ladi!
 
@@ -63,22 +63,13 @@ Brauzerdan yuborilgan so‘rovni o‘qish funksiyasini ishlab chiqamiz! Avval ul
 
 <span class="caption">20-02 ro‘yxat: TcpStream dan o‘qish va yuborilgan ma’lumotni chop etish</span>
 
-`std::io::prelude` va `std::io::BufReader` ni ko‘lamga (scope) olib kiramiz — bu bizga oqimdan (from stream) o‘qish va yozish imkonini beradigan trait va tiplardan foydalanish imkonini beradi. Endi `main` funksiyasidagi `for` siklida ulanish o‘rnatilgani haqida xabar chiqarish o‘rniga, yangi `handle_connection` funksiyasini chaqiramiz va unga stream `ni` uzatamiz.
+`std::io::prelude` va `std::io::BufReader` ni ko‘lamga (scope) olib kiramiz - bu bizga oqimdan (streamdan) o‘qish va yozish imkonini beradigan trait va tiplardan foydalanish imkonini beradi. Endi `main` funksiyasidagi `for` siklida ulanish o‘rnatilgani haqida xabar chiqarish o‘rniga, yangi `handle_connection` funksiyasini chaqiramiz va unga stream `ni` uzatamiz.
 
 `handle_connection` funksiyasida biz `oqimga (stream)` o‘zgaruvchan (mutable) murojaatni o‘rab oladigan yangi `BufReader` obyektini yaratamiz. `BufReader` buferlashni qo‘shadi — ya’ni u `std::io::Read` traitining metodlariga murojaat qilishni boshqaradi.
 
 Brauzer serverimizga yuboradigan so‘rov satrlarini yig‘ish uchun `http_request` nomli o‘zgaruvchi yaratamiz. Bu satrlarni vector (vektor) ko‘rinishida yig‘moqchi ekanligimizni ko‘rsatish uchun `Vec<_>` tip annotatsiyasini qo‘shamiz.
 
-`BufReader` implements the `std::io::BufRead` trait, which provides the `lines`
-method. The `lines` method returns an iterator of `Result<String,
-std::io::Error>` by splitting the stream of data whenever it sees a newline
-byte. To get each `String`, we map and `unwrap` each `Result`. The `Result`
-might be an error if the data isn’t valid UTF-8 or if there was a problem
-reading from the stream. Again, a production program should handle these errors
-more gracefully, but we’re choosing to stop the program in the error case for
-simplicity.
-
-`BufReader`  `std::io::BufRead` traitini amalga oshiradi va shu orqali `lines` metodini taqdim etadi. `Lines` metodi har gal yangi qatordan ajratib, oqimdagi ma’lumotlarni `Result<String, std::io::Error>` ko‘rinishidagi iterator sifatida qaytaradi. Har bir String qiymatni olish uchun biz har bir Result ustida map va unwrap chaqiramiz. Agar ma’lumotlar yaroqsiz UTF-8 formatida bo‘lsa yoki oqimdan o‘qishda muammo yuz bersa, Result xatolik (error) bo‘lishi mumkin. Ishlab chiqarish darajasidagi dastur bu xatolarni ancha ehtiyotkorlik bilan boshqarishi kerak, ammo soddalashtirish uchun biz bu yerda xatolik yuz bersa, dasturni to‘xtatamiz.
+`BufReader`  `std::io::BufRead` traitini amalga oshiradi va shu orqali `lines` metodini taqdim etadi. `Lines` metodi har gal yangi qatordan ajratib, oqimdagi ma’lumotlarni `Result<String, std::io::Error>` ko‘rinishidagi iterator sifatida qaytaradi. Har bir String qiymatni olish uchun har bir Natija (Result) ustida map va `uwrap` amallarini bajaramiz. Agar ma’lumotlar yaroqli UTF-8 formatda bo‘lmasa yoki oqimdan o‘qishda muammo yuz bersa, Result xatolik (error) bo‘lishi mumkin. Aslida Ishlab chiqarish (Production) darajasidagi dastur bu xatolarni ancha ehtiyotkorlik bilan boshqarishi kerak, ammo soddalashtirish uchun agar xatolik yuz bersa, dasturni to‘xtatamiz.
 
 The browser signals the end of an HTTP request by sending two newline
 characters in a row, so to get one request from the stream, we take lines until
