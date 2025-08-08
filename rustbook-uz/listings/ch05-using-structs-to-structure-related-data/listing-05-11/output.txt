@@ -1,6 +1,6 @@
 $ cargo run
    Compiling rectangles v0.1.0 (file:///projects/rectangles)
-error[E0277]: `Rectangle` doesn't implement `std::fmt::Display`
+error[E0277]: `Kvadrat` doesn't implement `std::fmt::Display`
   --> src/main.rs:12:29
    |
 12 |     println!("kvadrat1 is {}", kvadrat1);

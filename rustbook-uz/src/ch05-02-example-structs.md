@@ -42,7 +42,7 @@ Ushbu kod bilan bog'liq muammo `area` signaturesida aniq ko'rinadi:
 
 Bir tomondan, bu dastur yaxshiroq. Tuplar bizga biroz struct qo'shishga imkon beradi va biz hozir faqat bitta argumentni keltiramiz. Ammo boshqa yo'l bilan, bu versiya unchalik aniq emas: tuplelar o'z elementlarini nomlamaydi, shuning uchun biz hisob-kitobimizni kamroq aniq qilib, tuple qismlariga indeks qilishimiz kerak.
 
-Kenglik va balandlikni aralashtirish maydonni hisoblash uchun muhim emas, lekin agar biz ekranda to'rtburchak chizmoqchi bo'lsak, bu muhim bo'ladi! Shuni yodda tutishimiz kerakki, `kenglik` indeks `0` da, `balandlik` esa `1` indeksda. Agar kimdir bizning kodimizdan foydalansa, buni tushunish va yodda tutish qiyinroq bo'ladi. Kodimizda ma'lumotlarimizning ma'nosini etkazmaganimiz sababli, endi xatolarni kiritish osonroq.
+Kenglik va balandlikni aralashtirish maydonni hisoblash uchun muhim emas, lekin agar biz ekranda to'rtburchak chizmoqchi bo'lsak, bu muhim bo'ladi! Shuni yodda tutishimiz kerakki, `kenglik` indeks `0` da, `balandlik` esa `1` indeksda. Agar kimdir bizning kodimizdan foydalansa, buni tushunish va yodda tutish qiyinroq bo'ladi. Kodimizda ma'lumotlarimizning ma'nosini yetkazmaganimiz sababli, endi xatolarni kiritish osonroq.
 
 ### Struktuctlar bilan Refaktoring: ko'proq ma'no qo'shish
 
@@ -58,7 +58,7 @@ Biz ma'lumotlarni etiketlash orqali ma'no qo'shish uchun structlardan foydalanam
 
 Bu yerda biz structni aniqladik va uni `Kvadrat` deb nomladik. Jingalak qavslar ichida biz maydonlarni `kenglik` va `balandlik` sifatida belgiladik, ularning ikkalasi ham `u32` turiga ega. Keyin, `main` da biz `Kvadrat` ning ma'lum bir misolini yaratdik, uning kengligi `30` va balandligi `50`.
 
-Bizning `area` funksiyamiz endi biz `kvadrat` deb nomlagan bitta parametr bilan aniqlanadi, uning turi `Kvadrat` structi misolining o‘zgarmas borrowidir. 4-bobda aytib o'tilganidek, biz unga ownershiplik qilishdan ko'ra, structi borrow qilishni xohlaymiz. Shunday qilib, `main` o'z ownershipini saqlab qoladi va `kvadrat1` dan foydalanishni davom ettirishi mumkin, shuning uchun biz funktsiya signaturesida `&` dan foydalanamiz va biz funktiyani chaqiramiz.
+Bizning `area` funksiyamiz endi biz `kvadrat` deb nomlagan bitta parametr bilan aniqlanadi, uning turi `Kvadrat` structi misolining o‘zgarmas borrowidir. 4-bobda aytib o'tilganidek, biz unga ownershiplik qilishdan ko'ra, structi borrow qilishni xohlaymiz. Shunday qilib, `main` o'z ownershipini saqlab qoladi va `kvadrat1` dan foydalanishni davom ettirishi mumkin, shuning uchun biz funktsiya signaturesida `&` dan foydalanamiz va biz funksiyani chaqiramiz.
 
 `area` funksiyasi `Kvadrat` misolining `kenglik` va `balandlik`  maydonlariga kiradi (esda tutingki, borrow qilingan struct misolining maydonlariga kirish maydon qiymatlarini ko'chirmaydi, shuning uchun siz ko'pincha structlarning borrowlarini ko'rasiz). Endi `area` funksiyasi signaturesi biz nimani nazarda tutayotganimizni aniq aytadi: `Kvadrat` maydonini uning `kenglik` va `balandlik` maydonlaridan foydalanib hisoblang. Bu kenglik va balandlik bir-biri bilan bog'liqligini bildiradi va `0` va `1` qator indeks qiymatlarini ishlatishdan ko'ra, qiymatlarga tavsiflovchi nomlar beradi. Bu aniqlik uchun g'alaba.
 

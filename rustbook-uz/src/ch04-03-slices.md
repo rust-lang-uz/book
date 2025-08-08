@@ -2,7 +2,7 @@
 
 *Slicelar* butun to'plamga emas, balki to'plamdagi elementlarning qo'shni ketma-ketligiga murojaat qilish imkonini beradi. Slice bir xil referencedir, shuning uchun u ownershipga ega emas.
 
-Bu erda kichik dasturlash muammosi: bo'shliqlar bilan ajratilgan so'zlar qatorini oladigan va shu qatorda topilgan birinchi so'zni qaytaradigan funksiya yozing.
+Bu yerda kichik dasturlash muammosi: bo'shliqlar bilan ajratilgan so'zlar qatorini oladigan va shu qatorda topilgan birinchi so'zni qaytaradigan funksiya yozing.
 Agar funksiya satrda bo'sh joy topmasa, butun satr bitta so'zdan iborat bo'lishi kerak, shuning uchun butun satr qaytarilishi kerak.
 
 Keling, slicelar hal qiladigan muammoni tushunish uchun ushbu funksiyaning imzosini slicelardan foydalanmasdan qanday yozishni ko'rib chiqaylik:
@@ -58,8 +58,7 @@ Endi bizda satrdagi birinchi so'zning oxirgi indeksini aniqlashning metodi bor, 
 
 Bu dastur hech qanday xatosiz kompilyatsiya qiladi va agar biz `s.clear()` ga murojat qilgandan keyin `soz` ishlatgan bo'lsak ham shunday bo'lardi. Chunki `soz` `s` holatiga umuman bog‘lanmagan, `soz` hali ham `5` qiymatini o‘z ichiga oladi. Birinchi so‘zni chiqarish uchun biz ushbu `5` qiymatini `s` o‘zgaruvchisi bilan ishlatishimiz mumkin, ammo bu xato bo‘lishi mumkin, chunki `soz`da `5` ni saqlaganimizdan so‘ng `s` tarkibi o‘zgargan.
 
-Having to worry about the index in `word` getting out of sync with the data in
-`s` is tedious and error prone! Agar biz `ikkinchi_soz` funksiyasini yozsak, bu indekslarni boshqarish yanada mo'rt bo'ladi. Uning signaturesi quyidagicha ko'rinishi kerak:
+`soz` da indeksning `s` dagi ma'lumotlar bilan muvofiqligi yo‘qolishidan xavotir olish juda zerikarli va xatoga yo‘l qo‘yishga moyil! Agar biz `ikkinchi_soz` funksiyasini yozsak, bu indekslarni boshqarish yanada mo'rt bo'ladi. Uning signaturesi quyidagicha ko'rinishi kerak:
 ```rust,ignore
 fn ikkinchi_soz(s: &String) -> (usize, usize) {
 ```

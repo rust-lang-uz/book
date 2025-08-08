@@ -109,7 +109,7 @@ Enumlar va structlar o'rtasida yana bir o'xshashlik bor: biz `impl` yordamida st
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-05-methods-on-enums/src/main.rs:here}}
 ```
 
-Metod tanasi biz metod deb atagan qiymatni olish uchun `self` ishlatadi. Ushbu misolda biz `Xabar::Yozish(String::from("salom"))` qiymatini o'z ichiga olgan `m` o'zgaruvchisini yaratdik va `m.chaqiruv()` ishga tushganda `chaqiruv` metodining tanasida aynan shunday bo`ladi.
+Metod tanasi biz metod deb atagan qiymatni olish uchun `self` ishlatadi. Ushbu misolda biz `Xabar::Yozish(String::from("salom"))` qiymatini o'z ichiga olgan `m` o'zgaruvchisini yaratdik va `m.chaqiruv()` ishga tushganda `chaqiruv` metodining tanasida aynan shunday boʻladi.
 Keling, standart kutubxonadagi juda keng tarqalgan va foydali bo'lgan yana bir enumni ko'rib chiqaylik: `Option`.
 
 ### `Option` Enum va uning null qiymatlardan ustunligi
