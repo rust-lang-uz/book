@@ -208,6 +208,16 @@ specifying `Box<dyn Draw>` as the type of the values in the `components`
 vector, we’ve defined `Screen` to need values that we can call the `draw`
 method on.
 
+Bu tushuncha — ya’ni, qiymatning aniq tipi emas, balki qanday xabarlarga 
+javob bera olishi muhim bo‘lishi — dinamik tiplangan tillardagi *duck typing* 
+tushunchasiga o‘xshaydi: agar u o‘rdakdek yursa va o‘rdakdek ovoz chiqarsa, 
+demak u o‘rdak! 17-5-ro‘yxatdagi `Screen` uchun `run` funksiyasi 
+implementatsiyasida `run` har bir komponentning aniq tipi nima ekanini 
+bilishga muhtoj emas. Komponent `Button` yoki `SelectBox` ekanligini 
+tekshirmaydi, shunchaki uning `draw` metodini chaqiradi. `components` vektoridagi 
+qiymatlar turi sifatida `Box<dyn Draw>`ni ko‘rsatish orqali, `Screen`dan `draw` 
+metodini chaqira olishimiz mumkin bo‘lgan qiymatlarni talab qiladigan qilib belgiladik.
+
 The advantage of using trait objects and Rust’s type system to write code
 similar to code using duck typing is that we never have to check whether a
 value implements a particular method at runtime or worry about getting errors
