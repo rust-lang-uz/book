@@ -12,39 +12,39 @@ paytda ma’lum bo‘lgan turlarning belgilangan to‘plamidan iborat
 bo‘lsa, bu juda yaxshi yechim hisoblanadi.
 
 Biroq, ba’zida kutubxonamiz foydalanuvchisi o‘zi uchun mos bo‘lgan, muayyan vaziyatda
-ishlatilishi mumkin bo‘lgan turlar to‘plamini kengaytira olishini xohlaymiz. Bu qanday 
-amalga oshirilishini ko‘rsatish uchun, grafik foydalanuvchi interfeysi (GUI) vositasi 
-misolini yaratamiz. Ushbu vosita elementlar ro‘yxatidan o‘tadi va har bir element uchun 
-`draw` metodini chaqiradi. Bu GUI vositalarida keng qo‘llaniladigan uslubdir.`gui` 
-nomli kutubxona crate yaratiladi. Ushbuu crate GUI kutubxonasining asosiy tuzilmasini o‘z 
-ichiga oladi. Unda, masalan, `Button` yoki `TextField` kabi foydalanishga tayyor ayrim 
-turlarni taqdim qilishi mumkin. Shu bilan birga, `gui` foydalanuvchilari o‘zlarining 
+ishlatilishi mumkin bo‘lgan turlar to‘plamini kengaytira olishini xohlaymiz. Bu qanday
+amalga oshirilishini ko‘rsatish uchun, grafik foydalanuvchi interfeysi (GUI) vositasi
+misolini yaratamiz. Ushbu vosita elementlar ro‘yxatidan o‘tadi va har bir element uchun
+`draw` metodini chaqiradi. Bu GUI vositalarida keng qo‘llaniladigan uslubdir.`gui`
+nomli kutubxona crate yaratiladi. Ushbuu crate GUI kutubxonasining asosiy tuzilmasini o‘z
+ichiga oladi. Unda, masalan, `Button` yoki `TextField` kabi foydalanishga tayyor ayrim
+turlarni taqdim qilishi mumkin. Shu bilan birga, `gui` foydalanuvchilari o‘zlarining
 chizilishi mumkin bo‘lgan turlarini ham yaratmoqchi bo‘lishadi: masalan, bir dasturchi
- `Image` turini qo‘shsa, boshqasi `SelectBox` turini qo‘shishi mumkin.
+`Image` turini qo‘shsa, boshqasi `SelectBox` turini qo‘shishi mumkin.
 
-Ushbu misolda biz to'laqonli grafik interfeyslik (GUI) kutubxona yozmaymiz, lekin
-qismlar bir-biri bilan qanday ulanishini ko'rsatamiz. Kutubxona yozish vaqtida
-biz boshqa dasturchilar nima va qanday qilib yozishini oldindan bilmaymiz.
-Lekin biz bilamizki, `gui` imkon qadar ko'p turlar qiymatidan xabardor bo'lishi
-kerak, va u `draw` (ya'ni chizish) metodini ana shu turlarning har birida
-chaqirishi lozim. Biz `draw` metodini chaqirgan vaqtimizda aynan nima ish sodir
-bo'lishini `gui` bilishi kerak emas, faqatgina `draw` metodi bizga chaqirish
-uchun mavjudligini biladi xolos.
+Ushbu misolda to‘laqonli grafik interfeyslik (GUI) kutubxona yozilmaydi lekin
+qismlar bir-biri bilan qanday ulanishini ko‘rsatiladi. Kutubxona yozish vaqtida
+boshqa dasturchilar nima va qanday qilib yozishini oldindan bilib bo‘lmaydi.
+Lekin bilamizki, `gui` imkon qadar ko‘p turlar qiymatidan xabardor bo‘lishi
+kerak, va u `draw` (ya’ni chizish) metodini ana shu turlarning har birida
+chaqirishi lozim. `draw` metodini chaqirgan vaqtida aynan nima ish sodir
+bo‘lishini `gui` bilishi kerak emas, faqatgina `draw` metodi chaqirish uchun
+mavjudligini biladi xolos.
 
-To do this in a language with inheritance, we might define a class named
-`Component` that has a method named `draw` on it. The other classes, such as
-`Button`, `Image`, and `SelectBox`, would inherit from `Component` and thus
-inherit the `draw` method. They could each override the `draw` method to define
-their custom behavior, but the framework could treat all of the types as if
-they were `Component` instances and call `draw` on them. But because Rust
-doesn’t have inheritance, we need another way to structure the `gui` library to
-allow users to extend it with new types.
+Obyektga yo‘naltirilgan tillarda (misol uchun Java, C# va h.k.), `Component` nomli
+klass ichida `draw` nomli metod bilan ifoda etiladi. `Button`, `Image` va
+`SelectBox` kabi klasslar `Component`dan nasil olishadi va shu tufayli ular
+ham `draw` metodini ifodalashadi. Ular, albatta, o‘zgacha `draw` metodini
+e’lon qilishlari mumkin lekin dasturlash tili ularni xuddi `Component`dek
+ko‘rishadi va `draw`ni chaqira olishadi. Rust dasturlash tilida nasl olish
+imkoniyati yo‘q, vaholanki `gui` kutubxonasi foydalanuvchilari uni
+kengaytira olishi uchun kutubxona boshqacha tuzilishi lozim.
 
 ### Defining a Trait for Common Behavior
 
 To implement the behavior we want `gui` to have, we’ll define a trait named
 `Draw` that will have one method named `draw`. Then we can define a vector that
-takes a *trait object*. A trait object points to both an instance of a type
+takes a _trait object_. A trait object points to both an instance of a type
 implementing our specified trait and a table used to look up trait methods on
 that type at runtime. We create a trait object by specifying some sort of
 pointer, such as a `&` reference or a `Box<T>` smart pointer, then the `dyn`
@@ -55,6 +55,7 @@ use trait objects in place of a generic or concrete type. Wherever we use a
 trait object, Rust’s type system will ensure at compile time that any value
 used in that context will implement the trait object’s trait. Consequently, we
 don’t need to know all the possible types at compile time.
+
 
 Rust dasturlash tilida structlar va enumlar “obyekt” deb atalmaydi. 
 Bunday yondashuv, ularni boshqa dasturlash tillaridagi obyekt tushunchasidan 
@@ -154,43 +155,43 @@ bu 17-7 ro'yxatdada ko‘rsatilgan:
 
 <span class="caption">Ro'yxat 17-7: `Draw` traitini amalga oshiradigan `Button` strukti</span>
 
-The `width`, `height`, and `label` fields on `Button` will differ from the
-fields on other components; for example, a `TextField` type might have those
-same fields plus a `placeholder` field. Each of the types we want to draw on
-the screen will implement the `Draw` trait but will use different code in the
-`draw` method to define how to draw that particular type, as `Button` has here
-(without the actual GUI code, as mentioned). The `Button` type, for instance,
-might have an additional `impl` block containing methods related to what
-happens when a user clicks the button. These kinds of methods won’t apply to
-types like `TextField`.
+`Button`ning `width`, `height` va `label` maydonlari boshqa komponentlarga
+nisbatan farq qiladi; misol uchun `TextField`ning turi avvalgi maydonlar va
+qo‘shimcha `placeholder` maydonidan tashkil topgan bo‘lishi mumkin. Har bir
+ekranga chizilishi kerak bo‘lgan turlar `Draw` trait’ini joriy qilishadi ammo
+ularning `draw` metodlari bir-birlaridan farq qiladi chunki har bir turning
+o‘ziga xos shakli yoki boshqa xususiyati chizilishi mumkin. Misol uchun
+`Button` bosganda sodir bo‘ladigan metod `impl` bloki ichida qo‘shimcha
+kiritilishi mumkin. `TextField` uchun esa bunday funksional talab etilmaydi.
 
-If someone using our library decides to implement a `SelectBox` struct that has
-`width`, `height`, and `options` fields, they implement the `Draw` trait on the
-`SelectBox` type as well, as shown in Listing 17-8:
+`width`, `height` va `options` maydonlardan tashkil topgan `SelectBox`ni
+amalga oshirmoqchi bo‘lgan dasturchi `SelectBox` uchun `Draw` trait’ini
+ham Ro‘yxat 17-8 da ko‘rsatilgandek yozishi kerak bo‘ladi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch17-oop/listing-17-08/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 17-8: Another crate using `gui` and implementing
-the `Draw` trait on a `SelectBox` struct</span>
+<span class="caption">Ro‘yxat 17-8: `gui`dan foydalanuvchi va undagi `Draw`
+trait’ini `SelectBox` struct’i uchun amalga oshiradigan crate</span>
 
-Our library’s user can now write their `main` function to create a `Screen`
-instance. To the `Screen` instance, they can add a `SelectBox` and a `Button`
-by putting each in a `Box<T>` to become a trait object. They can then call the
-`run` method on the `Screen` instance, which will call `draw` on each of the
-components. Listing 17-9 shows this implementation:
+Kutubxona foydalanuvchisi endi o‘z `main` funksiyasi ichida `Screen` nusxasini
+yaratish imkoniga ega. `Screen` nusxasiga foydalanuvchi `SelectBox` va `Button`
+nusxalarini har birini `Box<T>` ichiga joylash orqali ularni trait’ga o‘girib
+qo‘shib chiqishi mumkin. Undan keyin `Screen` nusxasida `run` metodi chaqirgan
+vaqtda har bir ichki komponentlarning `draw` metodi birma-bir chaqiriladi.
+Ro‘yxat 17-9 xuddi shuni namoyish etadi:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch17-oop/listing-17-09/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 17-9: Using trait objects to store values of
-different types that implement the same trait</span>
+<span class="caption">Ro‘yxat 17-9: Bir trait’ni amalga oshiruvchi turli xil
+turlarni saqlash uchun trait obyektlar ishlatilishi</span>
 
 When we wrote the library, we didn’t know that someone might add the
 `SelectBox` type, but our `Screen` implementation was able to operate on the
@@ -243,9 +244,9 @@ Chapter 10 our discussion on the monomorphization process performed by the
 compiler when we use trait bounds on generics: the compiler generates
 nongeneric implementations of functions and methods for each concrete type that
 we use in place of a generic type parameter. The code that results from
-monomorphization is doing *static dispatch*, which is when the compiler knows
-what method you’re calling at compile time. This is opposed to *dynamic
-dispatch*, which is when the compiler can’t tell at compile time which method
+monomorphization is doing _static dispatch_, which is when the compiler knows
+what method you’re calling at compile time. This is opposed to _dynamic
+dispatch_, which is when the compiler can’t tell at compile time which method
 you’re calling. In dynamic dispatch cases, the compiler emits code that at
 runtime will figure out which method to call.
 
@@ -259,6 +260,5 @@ method’s code, which in turn prevents some optimizations. However, we did get
 extra flexibility in the code that we wrote in Listing 17-5 and were able to
 support in Listing 17-9, so it’s a trade-off to consider.
 
-[performance-of-code-using-generics]:
-ch10-01-syntax.html#performance-of-code-using-generics
+[performance-of-code-using-generics]: ch10-01-syntax.html#performance-of-code-using-generics
 [dynamically-sized]: ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait
