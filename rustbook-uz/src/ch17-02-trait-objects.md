@@ -1,6 +1,6 @@
-## Turli xildagi qiymatlarni qabul qila oladigan Trait ya'ni xususiyat obyektlaridan foydalanish
+## Turli xildagi qiymatlarni qabul qila oladigan `Trait` ya'ni xususiyat obyektlaridan foydalanish
 
-8-bobda biz vektorlarning faqat bir turdagi elementlarni saqlash
+8-bobda vektorlarning faqat bir turdagi elementlarni saqlash
 imkoniyatiga ega ekanligini ta’kidlagan edik. 8-9-ro‘yxatda
 butun sonlar, kasr sonlar va matnlarni saqlash uchun variantlarga
 ega bo‘lgan ’SpreadsheetCell’ nomli sanab o‘tish turini yaratib,
@@ -40,22 +40,24 @@ ko‘rishadi va `draw`ni chaqira olishadi. Rust dasturlash tilida nasl olish
 imkoniyati yo‘q, vaholanki `gui` kutubxonasi foydalanuvchilari uni
 kengaytira olishi uchun kutubxona boshqacha tuzilishi lozim.
 
-### Defining a Trait for Common Behavior
+### Umumiy xatti-harakatlar uchun `Trait` ni aniqlash ya'ni xususiyatni
 
-To implement the behavior we want `gui` to have, we’ll define a trait named
-`Draw` that will have one method named `draw`. Then we can define a vector that
-takes a _trait object_. A trait object points to both an instance of a type
-implementing our specified trait and a table used to look up trait methods on
-that type at runtime. We create a trait object by specifying some sort of
-pointer, such as a `&` reference or a `Box<T>` smart pointer, then the `dyn`
-keyword, and then specifying the relevant trait. (We’ll talk about the reason
-trait objects must use a pointer in Chapter 19 in the section [“Dynamically
-Sized Types and the `Sized` Trait.”][dynamically-sized]<!-- ignore -->) We can
-use trait objects in place of a generic or concrete type. Wherever we use a
-trait object, Rust’s type system will ensure at compile time that any value
-used in that context will implement the trait object’s trait. Consequently, we
-don’t need to know all the possible types at compile time.
-
+`Gui` uchun kerakli xatti-harakatni amalga oshirish maqsadida, `Draw` nomli
+trait'ni belgilaymiz. Bu trait `draw` deb nomlangan yagona usulni o‘z ichiga
+oladi. Shundan so‘ng *trait object* ni qabul qiladigan vektorni aniqlash mumkin.
+Trait obyekti ko‘rsatilgan xususiyatni amalga oshiruvchi turning nusxasiga ham,
+ishlash vaqtida ushbu turdagi trait usullarini qidirish uchun ishlatiladigan
+jadvalga ham ishora qiladi. Qandaydir ko‘rsatkichni, masalan `&` havola yoki
+`Box<T>` aqlli ko‘rsatkichni, so‘ngra `dyn` kalit so‘zini va tegishli trait'ni
+ko‘rsatish orqali trait obyektini yaratamiz. (Trait obyektlarining nima uchun
+ko‘rsatkich ishlatishi kerakligi haqida 19-bobning
+["Dinamik o‘lchamliturlar va ’Sized’ belgisi"][dinamik-olchamli]
+<!-- e’tiborsiz qoldirish --> qismida batafsil to‘xtalamiz.) Trait
+obyektlarini `generic` ya'ni turdosh yoki aniq tur o‘rnida ishlatishimiz mumkin.
+Trait obyektini qayerda ishlatishimizdan qat'iy nazar, Rustning turlar tizimi
+kompilyatsiya vaqtida ushbu kontekstda ishlatiladigan har qanday qiymat
+trait obyektining trait'ini amalga oshirishini ta’minlaydi. Natijada
+kompilyatsiya vaqtida barcha mumkin bo‘lgan turlarni bilish shart emas.
 
 Rust dasturlash tilida structlar va enumlar “obyekt” deb atalmaydi. 
 Bunday yondashuv, ularni boshqa dasturlash tillaridagi obyekt tushunchasidan 
@@ -124,18 +126,21 @@ as in Listing 17-6:
 {{#rustdoc_include ../listings/ch17-oop/listing-17-06/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 17-6: An alternate implementation of the `Screen`
-struct and its `run` method using generics and trait bounds</span>
+<span class="caption"> 17-6 ro'yxat: `Screen` tuzilmasi va uning `run`
+usulining muqobil amalga oshirilishi, bunda generiklar va xususiyatlar
+chegaralari qo‘llaniladi</span>
 
-This restricts us to a `Screen` instance that has a list of components all of
-type `Button` or all of type `TextField`. If you’ll only ever have homogeneous
-collections, using generics and trait bounds is preferable because the
-definitions will be monomorphized at compile time to use the concrete types.
+Bu faqat `Button` yoki faqat `TextField` turidagi komponentlar ro‘yxatiga
+ega bo‘lgan `Screen` nusxasi bilan cheklaydi. Agar sizda faqat bir xil
+to‘plamlar bo‘lsa, `generic` umumiy va `trait` xususiyat chegaralaridan
+foydalanish afzalroq, chunki aniq turlardan foydalanish uchun ta’riflar
+tuzish vaqtida har bir tur uchun birlashtiradi.
 
-On the other hand, with the method using trait objects, one `Screen` instance
-can hold a `Vec<T>` that contains a `Box<Button>` as well as a
-`Box<TextField>`. Let’s look at how this works, and then we’ll talk about the
-runtime performance implications.
+Boshqa tomondan, `trait` obyektlaridan foydalanadigan usul bilan bitta
+`Screen` nusxasi `Box<Button>`, shuningdek `Box<TextField>` ni o‘z ichiga
+olgan `Vec<T>` ni saqlash imkoniyatiga ega bo‘ladi. Keling, bu qanday
+ishlashini ko‘rib chiqaylik, so‘ngra dasturning ishlash vaqtidagi
+unumdorlik ta’sirlari haqida suhbatlashamiz.
 
 ### Traitni amalga oshirish
 
@@ -208,11 +213,12 @@ tekshirmaydi, shunchaki uning `draw` metodini chaqiradi. `components` vektoridag
 qiymatlar turi sifatida `Box<dyn Draw>`ni ko‘rsatish orqali,`Screen`dan `draw` 
 metodini chaqira olishimiz mumkin bo‘lgan qiymatlarni talab qiladigan qilib belgiladik.
 
-The advantage of using trait objects and Rust’s type system to write code
-similar to code using duck typing is that we never have to check whether a
-value implements a particular method at runtime or worry about getting errors
-if a value doesn’t implement a method but we call it anyway. Rust won’t compile
-our code if the values don’t implement the traits that the trait objects need.
+Trait obyektlar va Rustning turlar tizimidan foydalanib, `duck typing` uslubiga
+o‘xshash kod yozishning afzalligi shundaki, qiymatning ma’lum bir usulni
+bajarishini ishga tushirish vaqtida tekshirishimiz shart emas. Bundan tashqari,
+agar qiymat usulni amalga oshirmasa-yu, lekin u chaqirilsa ham, xatolar yuzaga
+kelishidan xavotirlanishimizga hojat yo‘q. Agar qiymatlar trait obyektlariga
+kerak bo'lgan trait'larni amalga oshirmasa, Rust bu kodni kompilatsiya qilmaydi.
 
 For example, Listing 17-10 shows what happens if we try to create a `Screen`
 with a `String` as a component:
