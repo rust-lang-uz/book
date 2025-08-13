@@ -11,16 +11,16 @@ o‘zaro almashtirilishi mumkin bo‘lgan elementlarni kodda tuzilayotgan
 paytda ma’lum bo‘lgan turlarning belgilangan to‘plamidan iborat
 bo‘lsa, bu juda yaxshi yechim hisoblanadi.
 
-Biroq, ba’zida kutubxonamiz foydalanuvchisi o‘zi uchun mos bo‘lgan, muayyan vaziyatda
-ishlatilishi mumkin bo‘lgan turlar to‘plamini kengaytira olishini xohlaymiz. Bu qanday 
-amalga oshirilishini ko‘rsatish uchun, grafik foydalanuvchi interfeysi (GUI) vositasi 
-misolini yaratamiz. Ushbu vosita elementlar ro‘yxatidan o‘tadi va har bir element uchun 
-`draw` metodini chaqiradi. Bu GUI vositalarida keng qo‘llaniladigan uslubdir.`gui` 
-nomli kutubxona crate yaratiladi. Ushbuu crate GUI kutubxonasining asosiy tuzilmasini o‘z 
-ichiga oladi. Unda, masalan, `Button` yoki `TextField` kabi foydalanishga tayyor ayrim 
-turlarni taqdim qilishi mumkin. Shu bilan birga, `gui` foydalanuvchilari o‘zlarining 
+Biroq, ba’zida kutubxonamiz foydalanuvchisi o‘zi uchun mos bo‘lgan, muayyan
+vaziyatda ishlatilishi mumkin bo‘lgan turlar to‘plamini kengaytira olishini xohlaymiz.
+Bu qanday amalga oshirilishini ko‘rsatish uchun, grafik foydalanuvchi interfeysi (GUI)
+vositasi misolini yaratamiz. Ushbu vosita elementlar ro‘yxatidan o‘tadi va har bir element
+uchun `draw` metodini chaqiradi. Bu GUI vositalarida keng qo‘llaniladigan uslubdir.`gui`
+nomli kutubxona crate yaratiladi. Ushbuu crate GUI kutubxonasining asosiy tuzilmasini
+o‘z ichiga oladi. Unda, masalan, `Button` yoki `TextField` kabi foydalanishga tayyor ayrim
+turlarni taqdim qilishi mumkin. Shu bilan birga, `gui` foydalanuvchilari o‘zlarining
 chizilishi mumkin bo‘lgan turlarini ham yaratmoqchi bo‘lishadi: masalan, bir dasturchi
- `Image` turini qo‘shsa, boshqasi `SelectBox` turini qo‘shishi mumkin.
+`Image` turini qo‘shsa, boshqasi `SelectBox` turini qo‘shishi mumkin.
 
 Ushbu misolda biz to'laqonli grafik interfeyslik (GUI) kutubxona yozmaymiz, lekin
 qismlar bir-biri bilan qanday ulanishini ko'rsatamiz. Kutubxona yozish vaqtida
@@ -44,7 +44,7 @@ allow users to extend it with new types.
 
 To implement the behavior we want `gui` to have, we’ll define a trait named
 `Draw` that will have one method named `draw`. Then we can define a vector that
-takes a *trait object*. A trait object points to both an instance of a type
+takes a _trait object_. A trait object points to both an instance of a type
 implementing our specified trait and a table used to look up trait methods on
 that type at runtime. We create a trait object by specifying some sort of
 pointer, such as a `&` reference or a `Box<T>` smart pointer, then the `dyn`
@@ -56,20 +56,19 @@ trait object, Rust’s type system will ensure at compile time that any value
 used in that context will implement the trait object’s trait. Consequently, we
 don’t need to know all the possible types at compile time.
 
-Rust dasturlash tilida structlar va enumlar “obyekt” deb atalmaydi. 
-Bunday yondashuv, ularni boshqa dasturlash tillaridagi obyekt tushunchasidan 
-farqlash maqsadida qo‘llaniladi. Rust tilida struct yoki enum tarkibidagi 
-ma’lumotlar (ya’ni, maydonlar) va xatti-harakatlar `impl` bloklarida 
-alohida saqlanadi. Aksariyat boshqa dasturlash tillarida esa ma’lumotlar va 
-xatti-harakatlar yagona tuzilma sifatida birlashtirilib, odatda “obyekt” deb 
-ataladi. Biroq trait obyektlar (trait objects) boshqa dasturlash tillaridagi 
-obyektlarga o‘xshashlik kasb etadi. Chunki ular ma’lumot va xatti-harakatni 
-birgalikda ifodalash imkonini beradi. Shunga qaramay, trait obyektlar an’anaviy 
-obyektlardan farq qiladi: ular tarkibiga yangi ma’lumotlar qo‘shishga imkon 
-bermaydi. Shu bois, trait obyektlar boshqa tillardagi obyektlar kabi keng 
-maqsadlarda emas, balki faqat umumiy xatti-harakatni abstraktsiyalash, 
-ya’ni umumiy funksionallik asosida turli obyektlar bilan ishlash imkoniyatini 
-yaratish uchun qo‘llaniladi.
+We’ve mentioned that, in Rust, we refrain from calling structs and enums
+“objects” to distinguish them from other languages’ objects. In a struct or
+enum, the data in the struct fields and the behavior in `impl` blocks are
+separated, whereas in other languages, the data and behavior combined into one
+concept is often labeled an object. However, trait objects _are_ more like
+objects in other languages in the sense that they combine data and behavior.
+But trait objects differ from traditional objects in that we can’t add data to
+a trait object. Trait objects aren’t as generally useful as objects in other
+languages: their specific purpose is to allow abstraction across common
+behavior.
+
+Rust dasturlash tilida struktura (struct) va enumlar “obyekt” deb atalmaydi. Bunday yondashuv, ularni boshqa dasturlash tillaridagi obyekt tushunchasidan farqlash maqsadida qo‘llaniladi. Rust tilida struktura yoki enum tarkibidagi ma’lumotlar (ya’ni, maydonlar) va xatti-harakatlar (impl bloklarida ifodalanadi) alohida saqlanadi. Aksariyat boshqa dasturlash tillarida esa ma’lumotlar va xatti-harakatlar yagona tuzilma sifatida birlashtirilib, odatda “obyekt” deb ataladi.
+Biroq trait obyektlar (trait objects) boshqa dasturlash tillaridagi obyektlarga o‘xshashlik kasb etadi. Chunki ular ma’lumot va xatti-harakatni birgalikda ifodalash imkonini beradi. Shunga qaramay, trait obyektlar an’anaviy obyektlardan farq qiladi: ular tarkibiga yangi ma’lumotlar qo‘shishga imkon bermaydi. Shu bois, trait obyektlar boshqa tillardagi obyektlar kabi keng maqsadlarda emas, balki faqat umumiy xatti-harakatni abstraktsiyalash, ya’ni umumiy funksionallik asosida turli obyektlar bilan ishlash imkoniyatini yaratish uchun qo‘llaniladi.
 
 Listing 17-3 shows how to define a trait named `Draw` with one method named
 `draw`:
@@ -136,23 +135,22 @@ can hold a `Vec<T>` that contains a `Box<Button>` as well as a
 `Box<TextField>`. Let’s look at how this works, and then we’ll talk about the
 runtime performance implications.
 
-### Traitni amalga oshirish
+### Implementing the Trait
 
-Endi `Draw` traitini amalga oshiradigan ba'zi turlarni qo‘shamiz. `Button` 
-turini taqdim etamiz. Yana, haqiqiy GUI kutubxonasini yaratish kitobimiz 
-doirasidan tashqarida, shuning uchun `draw` metodi tanasida hech qanday 
-foydali amalga oshirish bo‘lmaydi. Amalga oshirish qanday ko‘rinishi 
-mumkinligini tasavvur qilish uchun, `Button` tuzilmasi `width` (kenglik), 
-`height` (bo‘yi) va `label` (yorliq) kabi maydonlarga ega bo‘lishi mumkin, 
-bu 17-7 ro'yxatdada ko‘rsatilgan:
+Now we’ll add some types that implement the `Draw` trait. We’ll provide the
+`Button` type. Again, actually implementing a GUI library is beyond the scope
+of this book, so the `draw` method won’t have any useful implementation in its
+body. To imagine what the implementation might look like, a `Button` struct
+might have fields for `width`, `height`, and `label`, as shown in Listing 17-7:
 
-<span class="filename">Faylnomi: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-07/src/lib.rs:here}}
 ```
 
-<span class="caption">Ro'yxat 17-7: `Draw` traitini amalga oshiradigan `Button` strukti</span>
+<span class="caption">Listing 17-7: A `Button` struct that implements the
+`Draw` trait</span>
 
 The `width`, `height`, and `label` fields on `Button` will differ from the
 fields on other components; for example, a `TextField` type might have those
@@ -197,15 +195,16 @@ When we wrote the library, we didn’t know that someone might add the
 new type and draw it because `SelectBox` implements the `Draw` trait, which
 means it implements the `draw` method.
 
-Bu tushuncha — ya’ni, qiymatning aniq tipi emas, balki qanday xabarlarga 
-javob bera olishi muhim bo‘lishi — dinamik tiplangan tillardagi *duck typing* 
-tushunchasiga o‘xshaydi: agar u o‘rdakdek yursa va o‘rdakdek ovoz chiqarsa, 
-demak u o‘rdak! 17-5-ro‘yxatdagi `Screen` uchun `run` funksiyasi 
-implementatsiyasida `run` har bir komponentning aniq tipi nima ekanini 
-bilishga muhtoj emas. Komponent `Button` yoki `SelectBox` ekanligini 
-tekshirmaydi, shunchaki uning `draw` metodini chaqiradi. `components` vektoridagi 
-qiymatlar turi sifatida `Box<dyn Draw>`ni ko‘rsatish orqali,`Screen`dan `draw` 
-metodini chaqira olishimiz mumkin bo‘lgan qiymatlarni talab qiladigan qilib belgiladik.
+This concept—of being concerned only with the messages a value responds to
+rather than the value’s concrete type—is similar to the concept of _duck
+typing_ in dynamically typed languages: if it walks like a duck and quacks
+like a duck, then it must be a duck! In the implementation of `run` on `Screen`
+in Listing 17-5, `run` doesn’t need to know what the concrete type of each
+component is. It doesn’t check whether a component is an instance of a `Button`
+or a `SelectBox`, it just calls the `draw` method on the component. By
+specifying `Box<dyn Draw>` as the type of the values in the `components`
+vector, we’ve defined `Screen` to need values that we can call the `draw`
+method on.
 
 The advantage of using trait objects and Rust’s type system to write code
 similar to code using duck typing is that we never have to check whether a
@@ -243,22 +242,22 @@ Chapter 10 our discussion on the monomorphization process performed by the
 compiler when we use trait bounds on generics: the compiler generates
 nongeneric implementations of functions and methods for each concrete type that
 we use in place of a generic type parameter. The code that results from
-monomorphization is doing *static dispatch*, which is when the compiler knows
-what method you’re calling at compile time. This is opposed to *dynamic
-dispatch*, which is when the compiler can’t tell at compile time which method
+monomorphization is doing _static dispatch_, which is when the compiler knows
+what method you’re calling at compile time. This is opposed to _dynamic
+dispatch_, which is when the compiler can’t tell at compile time which method
 you’re calling. In dynamic dispatch cases, the compiler emits code that at
 runtime will figure out which method to call.
 
-When we use trait objects, Rust must use dynamic dispatch. The compiler doesn’t
-know all the types that might be used with the code that’s using trait objects,
-so it doesn’t know which method implemented on which type to call. Instead, at
-runtime, Rust uses the pointers inside the trait object to know which method to
-call. This lookup incurs a runtime cost that doesn’t occur with static
-dispatch. Dynamic dispatch also prevents the compiler from choosing to inline a
-method’s code, which in turn prevents some optimizations. However, we did get
-extra flexibility in the code that we wrote in Listing 17-5 and were able to
-support in Listing 17-9, so it’s a trade-off to consider.
+Rust-da trait obyektlaridan foydalanganda, dinamik dispatch ishlatiladi.
+Kompilyator kodda qaysi turdagi qiymatlar ishlatilishini oldindan bilmaydi,
+shuning uchun qaysi turdagi metod chaqirilishini ham bilmaydi. Buning o‘rniga,
+bajarilish vaqtida (runtime) Rust trait obyektining ichidagi ko‘rsatkichlardan
+(pointer) qaysi metodni chaqirish kerakligini aniqlaydi. Bu esa statik dispatchiga
+nisbatan bajarilish vaqtida qo‘shimcha xarajatlarni keltirib chiqaradi. Shuningdek,
+dinamik dispatchi kompilyatorga metod kodini inline qilish imkonini bermaydi, bu esa
+ba’zi optimallashtirishlarni cheklaydi. Biroq, biz ro‘yxat 17-5 yozgan kodimizda
+qo‘shimcha moslashuvchanlikka ega bo‘ldik va ro‘yxat 17-9 da qo‘llab-quvvatlay oldik,
+shuning uchun buni hisobga olish kerak.
 
-[performance-of-code-using-generics]:
-ch10-01-syntax.html#performance-of-code-using-generics
+[performance-of-code-using-generics]: ch10-01-syntax.html#performance-of-code-using-generics
 [dynamically-sized]: ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait
