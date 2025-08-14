@@ -220,27 +220,28 @@ agar qiymat usulni amalga oshirmasa-yu, lekin u chaqirilsa ham, xatolar yuzaga
 kelishidan xavotirlanishimizga hojat yo‘q. Agar qiymatlar trait obyektlariga
 kerak bo'lgan trait'larni amalga oshirmasa, Rust bu kodni kompilatsiya qilmaydi.
 
-For example, Listing 17-10 shows what happens if we try to create a `Screen`
-with a `String` as a component:
+Masalan, 17-10-ro'yxatda `String` komponentli `Screen` yaratishga harakat
+qilsa, nima sodir bo‘lishi ko‘rsatilgan:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch17-oop/listing-17-10/src/main.rs}}
 ```
 
-<span class="caption">Listing 17-10: Attempting to use a type that doesn’t
-implement the trait object’s trait</span>
+<span class="caption">17-10-ro'yxat: Trait obyektining xususiyatini amalga
+oshirmaydigan turdan foydalanishga urinish</span>
 
-We’ll get this error because `String` doesn’t implement the `Draw` trait:
+`String` funksiyasi `Draw` trait'ni amalga oshirmagani uchun quyidagi xatolik yuz berdi:
 
 ```console
 {{#include ../listings/ch17-oop/listing-17-10/output.txt}}
 ```
 
-This error lets us know that either we’re passing something to `Screen` we
-didn’t mean to pass and so should pass a different type or we should implement
-`Draw` on `String` so that `Screen` is able to call `draw` on it.
+Bu xato quyidagi ikki holatdan birini ko‘rsatadi: yoki o‘tkazmoqchi
+bo‘lmagan biror narsani `Screen`ga o‘tkazilayapti va shuning uchun boshqa turda
+o‘tkazish kerak, yoki `String`ga `Draw`ni amalga oshirishimiz kerak, shunda
+`Screen` `draw`ni chaqira oladi.
 
 ### Trait Objects Perform Dynamic Dispatch
 
