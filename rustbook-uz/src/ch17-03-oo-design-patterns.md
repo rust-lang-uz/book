@@ -7,12 +7,6 @@ changes based on its state. We’re going to work through an example of a blog
 post struct that has a field to hold its state, which will be a state object
 from the set "draft", "review", or "published".
 
-The state objects share functionality: in Rust, of course, we use structs and
-traits rather than objects and inheritance. Each state object is responsible
-for its own behavior and for governing when it should change into another
-state. The value that holds a state object knows nothing about the different
-behavior of the states or when to transition between states.
-
 Rust dasturlash tilida dasturiy holat obyektlari funksionalini bo‘lishish
 uchun obyektga yo‘naltirilgan dasturlash tillariga nisbatan albatta struct va
 trait’lar ishlatiladi. Har bir dastur holat obyekti o‘z xatti-harakati va
