@@ -19,10 +19,10 @@ value holding the state or the code that uses the value. We’ll only need to
 update the code inside one of the state objects to change its rules or perhaps
 add more state objects.
 
-First, we’re going to implement the state pattern in a more traditional
-object-oriented way, then we’ll use an approach that’s a bit more natural in
-Rust. Let’s dig in to incrementally implementing a blog post workflow using the
-state pattern.
+Birinchidan,`state` namunasini an’anaviy obyektga yo‘naltirilgan tarzda amalga
+oshib, so‘ng Rustda yanada tabiiyroq bo‘lgan yondashuvdan foydalanish mumkun. 
+Keling, blog post yozish jarayonini `state` qonuniyatidan foydalangan holda
+bosqichma-bosqich amalga oshirishni ko‘rib chiqaylik.
 
 The final functionality will look like this:
 
