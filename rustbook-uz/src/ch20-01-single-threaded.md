@@ -1,6 +1,6 @@
 ## Bitta oqimli (single-threaded) veb-server yaratish
 
-Biz avval bitta oqimli veb-serverni ishga tushirishdan boshlaymiz. Ishni boshlashdan oldin, veb-serverlarni qurishda ishtirok etadigan protokollar haqida qisqacha ko‘rib chiqamiz. Ushbu protokollarning batafsil tafsilotlari ushbu kitob doirasidan tashqarida, ammo qisqacha tushuntirish sizga zarur bo‘lgan asosiy ma’lumotlarni beradi.
+Avval bitta oqimli veb-serverni ishga tushirishdan boshlaymiz. Ishni boshlashdan oldin, veb-serverlarni qurishda ishtirok etadigan protokollar haqida qisqacha ko‘rib chiqamiz. Ushbu protokollarning batafsil tafsilotlari ushbu kitob doirasidan tashqarida, ammo qisqacha tushuntirish sizga zarur bo‘lgan asosiy ma’lumotlarni beradi.
 
 Veb-serverlarda ishtirok etadigan ikkita asosiy protokol bu *Gipermatn uzatish protokoli* *(HTTP)* va *Uzatishni boshqarish protokoli* *(TCP)* hisoblanadi. Har ikkala protokol ham *so‘rov-javob* (request-response) protokollari bo‘lib, bunda *mijoz* (client) so‘rov yuboradi, *server* esa bu so‘rovlarni tinglaydi va mijozga javob qaytaradi. Ushbu so‘rovlar va javoblarning mazmuni protokollar tomonidan aniqlanadi.
 
@@ -26,7 +26,7 @@ Endi *src/main.rs* fayliga 20-1 ro‘yxatdagi (Listing 20-1) kodni kiriting. Bu 
 
 <span class="caption">20-1 ro‘yxat: Kiruvchi oqimlarni tinglash va oqim qabul qilinganda xabar chop etish</span>
 
-`TcpListener` yordamida biz `127.0.0.1:7878` manzilida TCP ulanishlarini tinglashimiz mumkin. Manzilda ikki nuqtadan (:) oldingi qism — bu kompyuteringizni ifodalovchi IP manzil (bu barcha kompyuterlarda bir xil bo‘ladi va mualliflarning kompyuteriga xos emas), `7878` esa port raqami. Biz bu portni ikki sababga ko‘ra tanladik: odatda HTTP bu portda ishlatilmaydi, shuning uchun serverimiz kompyuteringizda ishlayotgan boshqa veb-serverlar bilan to‘qnash kelmaydi; ikkinchidan, telefon klaviaturasida *rust* so‘zini terishda 7878 raqamlari ishlatiladi.
+`TcpListener` yordamida `127.0.0.1:7878` manzilida TCP ulanishlarini tinglashimiz mumkin. Manzilda ikki nuqtadan (:) oldingi qism — bu kompyuteringizni ifodalovchi IP manzil (bu barcha kompyuterlarda bir xil bo‘ladi va mualliflarning kompyuteriga xos emas), `7878` esa port raqami. Biz bu portni ikki sababga ko‘ra tanladik: odatda HTTP bu portda ishlatilmaydi, shuning uchun serverimiz kompyuteringizda ishlayotgan boshqa veb-serverlar bilan to‘qnash kelmaydi; ikkinchidan, telefon klaviaturasida *rust* so‘zini terishda 7878 raqamlari ishlatiladi.
 
 Ushbu holatda `bind` funksiyasi `new` funksiyasiga o‘xshab ishlaydi, ya’ni u yangi `TcpListener` obyektini qaytaradi. Funksiya `bind` deb nomlangan, chunki tarmoqlarda portga ulanib tinglash jarayoni “portga bog‘lanish” (binding) deb ataladi.
 
