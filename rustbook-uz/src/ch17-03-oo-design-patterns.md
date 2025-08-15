@@ -62,14 +62,8 @@ Next, we want to enable a request for a review of the post, and we want
 receives approval, it should get published, meaning the text of the post will
 be returned when `content` is called.
 
-Notice that the only type we’re interacting with from the crate is the `Post`
-type. This type will use the state pattern and will hold a value that will be
-one of three state objects representing the various states a post can be
-in—draft, waiting for review, or published. Changing from one state to another
-will be managed internally within the `Post` type. The states change in
-response to the methods called by our library’s users on the `Post` instance,
-but they don’t have to manage the state changes directly. Also, users can’t
-make a mistake with the states, like publishing a post before it’s reviewed.
+E’tibor bering, biz crate ichidan faqat bitta tur (type) bilan ishlayapmiz - bu `Post` turi. Ushbu tur holat (state) andozasi (pattern) dan foydalanadi va u postning uch xil holatidan birini ifodalovchi obyekt qiymatini saqlaydi: qoralama (draft), ko‘rib chiqishni kutayotgan (waiting for review) yoki nashr qilingan (published).
+Bir holatdan boshqasiga o‘tish jarayoni `Post` turining o‘zida ichki tarzda boshqariladi. Holatlar, kutubxonamiz foydalanuvchilari `Post` obyektida metodlarni chaqirganida o‘zgaradi, lekin foydalanuvchilar bu holat almashuvlarini bevosita boshqarishga majbur emaslar. Bundan tashqari, foydalanuvchilar holatlar bilan xato qilolmaydi, masalan, postni tekshirilmasdan turib nashr qilish kabi.
 
 ### Defining `Post` and Creating a New Instance in the Draft State
 
