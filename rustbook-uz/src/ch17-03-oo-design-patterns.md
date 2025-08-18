@@ -37,18 +37,18 @@ Any other changes attempted on a post should have no effect. For example, if we
 try to approve a draft blog post before we’ve requested a review, the post
 should remain an unpublished draft.
 
-Listing 17-11 shows this workflow in code form: this is an example usage of the
-API we’ll implement in a library crate named `blog`. This won’t compile yet
-because we haven’t implemented the `blog` crate.
+Ro‘yxat 17-11 da ko‘rsatilgan ish jarayoni: `blog` nomli kutubxona crate’ni
+joriy etish arafasida. `blog` joriy etilmaganligi sababli ushbu kod kompilyatsiya
+bo‘lmaydi
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch17-oop/listing-17-11/src/main.rs:all}}
 ```
 
-<span class="caption">Listing 17-11: Code that demonstrates the desired
-behavior we want our `blog` crate to have</span>
+<span class="caption">Ro’yxat 17-11: `blog` crate’dan kutilayotgan
+xatti-harakat namoyish etilgan.</span>
 
 We want to allow the user to create a new draft blog post with `Post::new`. We
 want to allow text to be added to the blog post. If we try to get the post’s
