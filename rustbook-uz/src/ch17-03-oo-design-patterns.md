@@ -80,19 +80,20 @@ instance of `Post`, as shown in Listing 17-12. We’ll also make a private
 `State` trait that will define the behavior that all state objects for a `Post`
 must have.
 
-Then `Post` will hold a trait object of `Box<dyn State>` inside an `Option<T>`
-in a private field named `state` to hold the state object. You’ll see why the
-`Option<T>` is necessary in a bit.
+Keyin ’Post’ o‘z ichida ’state’ nomli maxfiy maydonida ’Option<T>’ orqali
+o‘ralgan ’Box<dyn State>’ trait obyektini saqlaydi, bu esa state obyektini
+ushlab turish uchun xizmat qiladi. Option<T> nima uchun kerakligini birozdan
+so‘ng bilib olasiz.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-12/src/lib.rs}}
 ```
 
-<span class="caption">Listing 17-12: Definition of a `Post` struct and a `new`
-function that creates a new `Post` instance, a `State` trait, and a `Draft`
-struct</span>
+<span class="caption">17-12-ro‘yxat: `Post` strukturasi va yangi `Post`
+namunasini yaratuvchi `new` funksiyasi, `State` interfeysi hamda `Draft`
+strukturasining ta’rifi</span>
 
 The `State` trait defines the behavior shared by different post states. The
 state objects are `Draft`, `PendingReview`, and `Published`, and they will all
