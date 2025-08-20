@@ -74,6 +74,10 @@ instance of `Post`, as shown in Listing 17-12. We’ll also make a private
 `State` trait that will define the behavior that all state objects for a `Post`
 must have.
 
+## `Post` ni aniqlash va qoralama holatida yangi nusxa yaratish
+
+Keling, kutubxona implementatsiyasini boshlaymiz! Umumiy (public) `Post` strukturasiga ehtiyoj borligini bilamiz, u kontentni saqlaydi. Shunday ekan, avval Post strukturasini va unga bog‘langan umumiy `new` funksiyasini ta’riflashdan boshlaymiz. Ushbu funksiya `Post` ning yangi nusxasini yaratadi (rasmda ko‘rsatilganidek — Listing 17-12). Bundan tashqari, xususiy (private) `State` traitini ham yaratamiz. Bu trait `Post` uchun barcha holat obyektlari bajarishi kerak bo‘lgan xatti-harakatlarni belgilab beradi.
+
 Then `Post` will hold a trait object of `Box<dyn State>` inside an `Option<T>`
 in a private field named `state` to hold the state object. You’ll see why the
 `Option<T>` is necessary in a bit.
