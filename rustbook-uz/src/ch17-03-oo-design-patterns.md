@@ -1,8 +1,8 @@
 ## Implementing an Object-Oriented Design Pattern
 
-The *state pattern* is an object-oriented design pattern. The crux of the
+The _state pattern_ is an object-oriented design pattern. The crux of the
 pattern is that we define a set of states a value can have internally. The
-states are represented by a set of *state objects*, and the value’s behavior
+states are represented by a set of _state objects_, and the value’s behavior
 changes based on its state. We’re going to work through an example of a blog
 post struct that has a field to hold its state, which will be a state object
 from the set "draft", "review", or "published".
@@ -62,12 +62,27 @@ Next, we want to enable a request for a review of the post, and we want
 receives approval, it should get published, meaning the text of the post will
 be returned when `content` is called.
 
-E’tibor bering, biz crate ichidan faqat bitta tur (type) bilan ishlayapmiz - bu `Post` turi. Ushbu tur holat (state) andozasi (pattern) dan foydalanadi va u postning uch xil holatidan birini ifodalovchi obyekt qiymatini saqlaydi: qoralama (draft), ko‘rib chiqishni kutayotgan (waiting for review) yoki nashr qilingan (published).
-Bir holatdan boshqasiga o‘tish jarayoni `Post` turining o‘zida ichki tarzda boshqariladi. Holatlar, kutubxonamiz foydalanuvchilari `Post` obyektida metodlarni chaqirganida o‘zgaradi, lekin foydalanuvchilar bu holat almashuvlarini bevosita boshqarishga majbur emaslar. Bundan tashqari, foydalanuvchilar holatlar bilan xato qilolmaydi, masalan, postni tekshirilmasdan turib nashr qilish kabi.
+E’tibor bering, biz crate ichidan faqat bitta tur (type) bilan ishlayapmiz - bu
+`Post` turi. Ushbu tur holat (state) andozasi (pattern) dan foydalanadi va u
+postning uch xil holatidan birini ifodalovchi obyekt qiymatini saqlaydi:
+qoralama (draft), ko‘rib chiqishni kutayotgan (waiting for review) yoki nashr
+qilingan (published).
+Bir holatdan boshqasiga o‘tish jarayoni `Post` turining o‘zida ichki tarzda
+boshqariladi. Holatlar, kutubxonamiz foydalanuvchilari `Post` obyektida
+metodlarni chaqirganida o‘zgaradi, lekin foydalanuvchilar bu holat
+almashuvlarini bevosita boshqarishga majbur emaslar. Bundan tashqari,
+foydalanuvchilar holatlar bilan xato qilolmaydi, masalan, postni
+tekshirilmasdan turib nashr qilish kabi.
 
 ## `Post` ni aniqlash va qoralama holatida yangi nusxa yaratish
 
-Keling, kutubxona implementatsiyasini boshlaymiz! Umumiy (public) `Post` strukturasiga ehtiyoj borligini bilamiz, u kontentni saqlaydi. Shunday ekan, avval Post strukturasini va unga bog‘langan umumiy `new` funksiyasini ta’riflashdan boshlaymiz. Ushbu funksiya `Post` ning yangi nusxasini yaratadi (rasmda ko‘rsatilganidek — Listing 17-12). Bundan tashqari, xususiy (private) `State` trait'ini ham yaratamiz. Bu trait `Post` uchun barcha holat obyektlari bajarishi kerak bo‘lgan xatti-harakatlarni belgilab beradi.
+Keling, kutubxona implementatsiyasini boshlaymiz! Umumiy (public) `Post`
+strukturasiga ehtiyoj borligini bilamiz, u kontentni saqlaydi. Shunday ekan,
+avval Post strukturasini va unga bog‘langan umumiy `new` funksiyasini
+ta’riflashdan boshlaymiz. Ushbu funksiya `Post` ning yangi nusxasini yaratadi
+(rasmda ko‘rsatilganidek — Listing 17-12). Bundan tashqari, xususiy (private)
+`State` trait'ini ham yaratamiz. Bu trait `Post` uchun barcha holat obyektlari
+bajarishi kerak bo‘lgan xatti-harakatlarni belgilab beradi.
 
 Then `Post` will hold a trait object of `Box<dyn State>` inside an `Option<T>`
 in a private field named `state` to hold the state object. You’ll see why the
@@ -203,6 +218,7 @@ slice. We can now have a `Post` in the `PendingReview` state as well as in the
 Listing 17-11 now works up to line 10!
 
 <!-- Old headings. Do not remove or links may break. -->
+
 <a id="adding-the-approve-method-that-changes-the-behavior-of-content"></a>
 
 ### Adding `approve` to Change the Behavior of `content`
@@ -328,10 +344,10 @@ The implementation using the state pattern is easy to extend to add more
 functionality. To see the simplicity of maintaining code that uses the state
 pattern, try a few of these suggestions:
 
-* Add a `reject` method that changes the post’s state from `PendingReview` back
+- Add a `reject` method that changes the post’s state from `PendingReview` back
   to `Draft`.
-* Require two calls to `approve` before the state can be changed to `Published`.
-* Allow users to add text content only when a post is in the `Draft` state.
+- Require two calls to `approve` before the state can be changed to `Published`.
+- Allow users to add text content only when a post is in the `Draft` state.
   Hint: have the state object responsible for what might change about the
   content but not responsible for modifying the `Post`.
 
