@@ -1,17 +1,18 @@
 ## Implementing an Object-Oriented Design Pattern
 
-The *state pattern* is an object-oriented design pattern. The crux of the
+The _state pattern_ is an object-oriented design pattern. The crux of the
 pattern is that we define a set of states a value can have internally. The
-states are represented by a set of *state objects*, and the value’s behavior
+states are represented by a set of _state objects_, and the value’s behavior
 changes based on its state. We’re going to work through an example of a blog
 post struct that has a field to hold its state, which will be a state object
 from the set "draft", "review", or "published".
 
-The state objects share functionality: in Rust, of course, we use structs and
-traits rather than objects and inheritance. Each state object is responsible
-for its own behavior and for governing when it should change into another
-state. The value that holds a state object knows nothing about the different
-behavior of the states or when to transition between states.
+Rust dasturlash tilida dasturiy holat obyektlari funksionalini bo‘lishish
+uchun obyektga yo‘naltirilgan dasturlash tillariga nisbatan albatta struct va
+trait’lar ishlatiladi. Har bir dastur holat obyekti o‘z xatti-harakati va
+qachon boshqa holatga o‘tishi kerakligini boshqarishi uchun javobgardir. Uning
+qiymati boshqa obyektlar xatti-harakati yoki holat o‘zgaruvi haqida hech nima
+bilmaydi.
 
 The advantage of using the state pattern is that, when the business
 requirements of the program change, we won’t need to change the code of the
@@ -36,18 +37,18 @@ Any other changes attempted on a post should have no effect. For example, if we
 try to approve a draft blog post before we’ve requested a review, the post
 should remain an unpublished draft.
 
-Listing 17-11 shows this workflow in code form: this is an example usage of the
-API we’ll implement in a library crate named `blog`. This won’t compile yet
-because we haven’t implemented the `blog` crate.
+Ro‘yxat 17-11 da ko‘rsatilgan ish jarayoni: `blog` nomli kutubxona crate’ni
+joriy etish arafasida. `blog` joriy etilmaganligi sababli ushbu kod kompilyatsiya
+bo‘lmaydi
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Fayl nomi: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch17-oop/listing-17-11/src/main.rs:all}}
 ```
 
-<span class="caption">Listing 17-11: Code that demonstrates the desired
-behavior we want our `blog` crate to have</span>
+<span class="caption">Ro’yxat 17-11: `blog` crate’dan kutilayotgan
+xatti-harakat namoyish etilgan.</span>
 
 We want to allow the user to create a new draft blog post with `Post::new`. We
 want to allow text to be added to the blog post. If we try to get the post’s
@@ -215,6 +216,7 @@ slice. We can now have a `Post` in the `PendingReview` state as well as in the
 Listing 17-11 now works up to line 10!
 
 <!-- Old headings. Do not remove or links may break. -->
+
 <a id="adding-the-approve-method-that-changes-the-behavior-of-content"></a>
 
 ### Adding `approve` to Change the Behavior of `content`
@@ -340,10 +342,10 @@ The implementation using the state pattern is easy to extend to add more
 functionality. To see the simplicity of maintaining code that uses the state
 pattern, try a few of these suggestions:
 
-* Add a `reject` method that changes the post’s state from `PendingReview` back
+- Add a `reject` method that changes the post’s state from `PendingReview` back
   to `Draft`.
-* Require two calls to `approve` before the state can be changed to `Published`.
-* Allow users to add text content only when a post is in the `Draft` state.
+- Require two calls to `approve` before the state can be changed to `Published`.
+- Allow users to add text content only when a post is in the `Draft` state.
   Hint: have the state object responsible for what might change about the
   content but not responsible for modifying the `Post`.
 
