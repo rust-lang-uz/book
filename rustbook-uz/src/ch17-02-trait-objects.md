@@ -67,7 +67,7 @@ a trait object. Trait objects aren’t as generally useful as objects in other
 languages: their specific purpose is to allow abstraction across common
 behavior.
 
-17-3 chi ro'yxat `Draw` trait'ini `draw` metodi bilan birga ta'riflash ko'rsatib beradi:
+17-3-ro'yxat `Draw` trait'ini `draw` metodi bilan birga ta'riflash ko'rsatib beradi:
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
@@ -77,9 +77,9 @@ behavior.
 
 <span class="caption">Ro'yxat 17-3: `Draw` trait'ining ta'rifi</span>
 
-Ushbu sintaksis bizning 10 chi bo'limda bo'lib o'tgan Traitlarni joriy etish
+Ushbu sintaksis bizning 10-bo'limda bo'lib o'tgan Traitlarni joriy etish
 suhbatimizdan keyin tanish bo'lishi kerak. Keyingisi esa yana yangi sintaksis:
-17-4 chi ro'yxat `Screen` nomli `components` nomi ostidagi vekotr o'z ichiga olgan
+17-4-ro'yxat `Screen` nomli `components` nomi ostidagi vekotr o'z ichiga olgan
 structni ta'riflaydi. Ushbu vektor `Box<dyn Draw>` turidan, ya'ni trait obyekt (bu
 `Box` ichida `Draw` tratini joriy etuvchi istalgan turga solishtiriluvchi).
 
@@ -93,7 +93,7 @@ structni ta'riflaydi. Ushbu vektor `Box<dyn Draw>` turidan, ya'ni trait obyekt (
 bir vektorda joylashgan va `Draw` tratini joriy etgan obyektlarni ushlab turibdi
 </span>
 
-`Screen` struktida, biz 17-5 chi ro'yxatda ko'rsatilganiday, `draw` metodini har
+`Screen` struktida, biz 17-5-ro'yxatda ko'rsatilganiday, `draw` metodini har
 bir `components` ustidan chaqiradigan `run` nomli metod yaratamiz:
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
@@ -109,7 +109,7 @@ Bu generik tur ko'rsatkichi va trait cheklanmalardan farqli boshqacha
 ishlaydi. Generik tur parametr bir vaqt o'zida faqat bitta tur qabul qiladi,
 trait obyektlar esa boshqa tarafdan ko'plab konkret turlar ishlash vaqtidagi
 trait obyektlarni to'ldirib berish uchun ishlatsa bo'ladi. Misol uchun,
-`Screen` struktini 17-6 chi ro'yxatda ko'rsatilganiday generik tur va trait
+`Screen` struktini 17-6-ro'yxatda ko'rsatilganiday generik tur va trait
 cheklanmalari bilan ta'riflasa bo'ladi:
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
