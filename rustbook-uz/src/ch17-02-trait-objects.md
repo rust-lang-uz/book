@@ -255,15 +255,16 @@ metod qayerda chaqirilishini biladi. Kompilyator bilmagan holat esa dynamic disp
 (ya’ni dinamik yo‘naltirish) deb ataladi va kompilyatsiya jarayonida dastur o‘zi
 ishga tushish vaqtida yo‘naltira oladigan kod yaratiladi.
 
-When we use trait objects, Rust must use dynamic dispatch. The compiler doesn’t
-know all the types that might be used with the code that’s using trait objects,
-so it doesn’t know which method implemented on which type to call. Instead, at
-runtime, Rust uses the pointers inside the trait object to know which method to
-call. This lookup incurs a runtime cost that doesn’t occur with static
-dispatch. Dynamic dispatch also prevents the compiler from choosing to inline a
-method’s code, which in turn prevents some optimizations. However, we did get
-extra flexibility in the code that we wrote in Listing 17-5 and were able to
-support in Listing 17-9, so it’s a trade-off to consider.
+Rust-da trait obyektlaridan foydalanganda, dinamik dispatch ishlatiladi.
+Kompilyator kodda qaysi turdagi qiymatlar ishlatilishini oldindan bilmaydi,
+shuning uchun qaysi turdagi metod chaqirilishini ham bilmaydi. Buning o‘rniga,
+bajarilish vaqtida (runtime) Rust trait obyektining ichidagi ko‘rsatkichlardan
+(pointer) qaysi metodni chaqirish kerakligini aniqlaydi. Bu esa statik dispatchiga
+nisbatan bajarilish vaqtida qo‘shimcha xarajatlarni keltirib chiqaradi. Shuningdek,
+dinamik dispatchi kompilyatorga metod kodini inline qilish imkonini bermaydi, bu esa
+ba’zi optimallashtirishlarni cheklaydi. Biroq, biz ro‘yxat 17-5 yozgan kodimizda
+qo‘shimcha moslashuvchanlikka ega bo‘ldik va ro‘yxat 17-9 da qo‘llab-quvvatlay oldik,
+shuning uchun buni hisobga olish kerak.
 
 [performance-of-code-using-generics]: ch10-01-syntax.html#generiklar-yordamida-kodning-ishlashi
 [dynamically-sized]: ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait
