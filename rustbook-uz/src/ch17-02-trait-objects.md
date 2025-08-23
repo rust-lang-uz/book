@@ -76,61 +76,59 @@ maqsadlarda emas, balki faqat umumiy xatti-harakatni abstraktsiyalash,
 ya’ni umumiy funksionallik asosida turli obyektlar bilan ishlash imkoniyatini
 yaratish uchun qo‘llaniladi.
 
-Listing 17-3 shows how to define a trait named `Draw` with one method named
-`draw`:
+17-3-ro'yxat `Draw` trait'ini `draw` metodi bilan birga ta'riflash ko'rsatib beradi:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-03/src/lib.rs}}
 ```
 
-<span class="caption">Listing 17-3: Definition of the `Draw` trait</span>
+<span class="caption">Ro'yxat 17-3: `Draw` trait'ining ta'rifi</span>
 
-This syntax should look familiar from our discussions on how to define traits
-in Chapter 10. Next comes some new syntax: Listing 17-4 defines a struct named
-`Screen` that holds a vector named `components`. This vector is of type
-`Box<dyn Draw>`, which is a trait object; it’s a stand-in for any type inside
-a `Box` that implements the `Draw` trait.
+Ushbu sintaksis bizning 10-bo'limda bo'lib o'tgan Traitlarni joriy etish
+suhbatimizdan keyin tanish bo'lishi kerak. Keyingisi esa yana yangi sintaksis:
+17-4-ro'yxat `Screen` nomli `components` nomi ostidagi vekotr o'z ichiga olgan
+structni ta'riflaydi. Ushbu vektor `Box<dyn Draw>` turidan, ya'ni trait obyekt (bu
+`Box` ichida `Draw` tratini joriy etuvchi istalgan turga solishtiriluvchi).
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-04/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 17-4: Definition of the `Screen` struct with a
-`components` field holding a vector of trait objects that implement the `Draw`
-trait</span>
+<span class="caption">Ro'yxat 17-4: `Screen` structidagi `components` maydoni
+bir vektorda joylashgan va `Draw` tratini joriy etgan obyektlarni ushlab turibdi
+</span>
 
-On the `Screen` struct, we’ll define a method named `run` that will call the
-`draw` method on each of its `components`, as shown in Listing 17-5:
+`Screen` struktida, biz 17-5-ro'yxatda ko'rsatilganiday, `draw` metodini har
+bir `components` ustidan chaqiradigan `run` nomli metod yaratamiz:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-05/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 17-5: A `run` method on `Screen` that calls the
-`draw` method on each component</span>
+<span class="caption">Ro'yxat 17-5: `Screen` da har bir komponent ustidan
+`draw` metodini chaqiradigan `run` metodi</span>
 
-This works differently from defining a struct that uses a generic type
-parameter with trait bounds. A generic type parameter can only be substituted
-with one concrete type at a time, whereas trait objects allow for multiple
-concrete types to fill in for the trait object at runtime. For example, we
-could have defined the `Screen` struct using a generic type and a trait bound
-as in Listing 17-6:
+Bu generik tur ko'rsatkichi va trait cheklanmalardan farqli boshqacha
+ishlaydi. Generik tur parametr bir vaqt o'zida faqat bitta tur qabul qiladi,
+trait obyektlar esa boshqa tarafdan ko'plab konkret turlar ishlash vaqtidagi
+trait obyektlarni to'ldirib berish uchun ishlatsa bo'ladi. Misol uchun,
+`Screen` struktini 17-6-ro'yxatda ko'rsatilganiday generik tur va trait
+cheklanmalari bilan ta'riflasa bo'ladi:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-06/src/lib.rs:here}}
 ```
 
-<span class="caption"> 17-6 ro'yxat: `Screen` tuzilmasi va uning `run`
-usulining muqobil amalga oshirilishi, bunda generiklar va xususiyatlar
-chegaralari qo‘llaniladi</span>
+<span class="caption">Ro'yxat 17-6: `Screen` strukti va uning `run` metodining
+generik va trait cheklanmalarini ishlatgandagi alternativ ta'rifi.</span>
 
 Bu faqat `Button` yoki faqat `TextField` turidagi komponentlar ro‘yxatiga
 ega bo‘lgan `Screen` nusxasi bilan cheklaydi. Agar sizda faqat bir xil
