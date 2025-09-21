@@ -1,29 +1,15 @@
-# Patterns and Matching
+# Patternlar va matching
 
-*Patterns* are a special syntax in Rust for matching against the structure of
-types, both complex and simple. Using patterns in conjunction with `match`
-expressions and other constructs gives you more control over a program’s
-control flow. A pattern consists of some combination of the following:
+*Pattern*(namuna, andaza) - Rust dasturlash tilida kodning biron qismini ma'lum bir tuzilma yoki qiymatga moslashtirish uchun ishlatiladigan maxsus sintaksis. Patternlarni `match` bilan birga ishlatish orqali siz dasturning ishlash jarayonini yana ham yaxshiroq boshqara olishingiz mumkin. Patternlar quyidagi kombinatsiyalardan iborat bo'lishi mumkin:
 
-* Literals
-* Destructured arrays, enums, structs, or tuples
-* Variables
-* Wildcards
-* Placeholders
+* Literallar
+* Qayta strukturalangan arraylar, enumlar, structlar yoki tuplelar
+* O'zgaruvchilar
+* Pastki chiziqcha (yohud Wildcards, `_` ko'rinishida yoziladi)
+* To'ldiruvchilar
 
-Some example patterns include `x`, `(a, 3)`, and `Some(Color::Red)`. In the
-contexts in which patterns are valid, these components describe the shape of
-data. Our program then matches values against the patterns to determine whether
-it has the correct shape of data to continue running a particular piece of code.
+Ushbu kombinatsiyalarga misol qilib `x`, `(a, 3)` va `Some(Color::Red)` larni ko'rsatishimiz mumkin. Ushbu kombinatsiyalar ma'lumotning tuzilishini ifoda etadi. Dasturimiz biron ma'lumotni ushbu kombinatsiyalarga solishtirib ko'radi va ma'lumotimizning turi aynan biz istagan shaklda ekani yoki yo'qligini tekshiradi. Ma'lumot tekshirilgach, dasturni davom ettirish mumkin bo'ladi.
 
-To use a pattern, we compare it to some value. If the pattern matches the
-value, we use the value parts in our code. Recall the `match` expressions in
-Chapter 6 that used patterns, such as the coin-sorting machine example. If the
-value fits the shape of the pattern, we can use the named pieces. If it
-doesn’t, the code associated with the pattern won’t run.
+Patternni ishlatish uchun, biz uni biron ma'lumot bilan solishtiramiz. Agar pattern ma'lumot bilan mos kelsa, biz u ma'lumotni kodning qolgan qismida ishlatishimiz mumkin bo'ladi. 6-bo'limdagi tangalarni tartiblovchi mashina misolini yodga oladigan bo'lsak, u yerda `match` ishlatilganiga guvoh bo'lamiz. Agar qiymat pattern bilan mos kelsa, biz uni ishlatishimiz mumkin. Aks holda, patternning qolgan qismi ishlamaydi
 
-This chapter is a reference on all things related to patterns. We’ll cover the
-valid places to use patterns, the difference between refutable and irrefutable
-patterns, and the different kinds of pattern syntax that you might see. By the
-end of the chapter, you’ll know how to use patterns to express many concepts in
-a clear way.
+Ushbu bo'lim patternlarga tegishli barcha ma'lumotlar uchun manba hisoblanadi. Ushbu bo'limda biz patternlarni qanday to'g'ri ishlatish, aniq va noaniq patternlar o'rtasidagi farq and patternlarning turli xil sintaks shakldagi ko'rinishlarini o'rganamiz. Ushbu bo'lim yakunida siz patternlarni o'z dasturlaringizdagi turli konseptsiyalarni sodda va oson yo'l bilan ishlatishni boshlaysiz.
