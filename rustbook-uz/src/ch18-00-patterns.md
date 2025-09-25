@@ -1,6 +1,8 @@
 # Patternlar va matching
 
-*Pattern*(namuna, andaza) - Rust dasturlash tilida kodning biron qismini maʼlum bir tuzilma yoki qiymatga moslashtirish uchun ishlatiladigan maxsus sintaksis. Patternlarni `match` bilan birga ishlatish orqali siz dasturning ishlash jarayonini yana ham yaxshiroq boshqara olishingiz mumkin. Patternlar quyidagi kombinatsiyalardan iborat boʼlishi mumkin:
+*Pattern*(namuna, andaza) - Rust dasturlash tilida kodning biron qismini maʼlum bir tuzilma yoki qiymatga moslashtirish
+uchun ishlatiladigan maxsus sintaksis. Patternlarni `match` bilan birga ishlatish orqali siz dasturning ishlash jarayonini
+yana ham yaxshiroq boshqara olishingiz mumkin. Patternlar quyidagi kombinatsiyalardan iborat boʼlishi mumkin:
 
 * Literallar
 * Qayta strukturalangan arrayʼlar, enumʼlar, structlʼar yoki tupleʼlar
