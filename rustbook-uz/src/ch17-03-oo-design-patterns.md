@@ -50,13 +50,14 @@ bo‘lmaydi
 <span class="caption">Ro’yxat 17-11: `blog` crate’dan kutilayotgan
 xatti-harakat namoyish etilgan.</span>
 
-We want to allow the user to create a new draft blog post with `Post::new`. We
-want to allow text to be added to the blog post. If we try to get the post’s
-content immediately, before approval, we shouldn’t get any text because the
-post is still a draft. We’ve added `assert_eq!` in the code for demonstration
-purposes. An excellent unit test for this would be to assert that a draft blog
-post returns an empty string from the `content` method, but we’re not going to
-write tests for this example.
+Foydalanuvchiga `Post::new` orqali yangi qoralama blog posti yaratish
+imkonini bermoqchimiz. Shuningdek, foydalanuvchi blog postiga matn qo‘shishi
+mumkin bo‘lishi kerak. Agar tasdiqlashdan oldin post mazmunini (content)
+olishga harakat qilsak, hech qanday matn qaytmasligi kerak, chunki post hali
+ham qoralama holatida. Keltirilgan kodda buni ko‘rsatish uchun `assert_eq!` qo‘shilgan. Buning uchun
+zo‘r unit testi shunday bo‘lar edi: qoralama blog postining `content`
+metodi bo‘sh satr (empty string) qaytarishini tekshirish. Ammo biz bu misolda test
+yozmaymiz.
 
 Next, we want to enable a request for a review of the post, and we want
 `content` to return an empty string while waiting for the review. When the post
