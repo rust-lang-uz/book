@@ -1,21 +1,22 @@
-## All the Places Patterns Can Be Used
+## Qoliplar Qoʻllaniladigan Barcha Oʻrinlar
 
-Patterns pop up in a number of places in Rust, and you’ve been using them a lot
-without realizing it! This section discusses all the places where patterns are
-valid.
+Rust tilida, qoliplarga bir qancha joylarda duch kelish mumkin, va shu paytgacha,
+oʻzingiz sezmagan holda, ulardan foydalanib kelayotgan edingiz! Bu boʻlim
+qoliplapdan foydalanish joiz boʻlgan barcha oʻrinlar haqida soʻz yuritadi.
 
-### `match` Arms
+### `match` Qoʻllari
 
-As discussed in Chapter 6, we use patterns in the arms of `match` expressions.
-Formally, `match` expressions are defined as the keyword `match`, a value to
-match on, and one or more match arms that consist of a pattern and an
-expression to run if the value matches that arm’s pattern, like this:
+6-bobda aytganimizdek, qoliplarni `match` ifodasining qoʻllarida ishlatamiz.
+Rasman, `match` quyidagilar bilan ifodalanadi: `match` kalitsoʻzi,
+qolipga solinayotgan qiymat, va quyidagi misolda koʻrsatilganiday,
+qolip va unga qiymat mos tushganda bajariladigan ifodadan iborat
+bir yoki bir nechta `match` qoʻllari:
 
 ```text
-match VALUE {
-    PATTERN => EXPRESSION,
-    PATTERN => EXPRESSION,
-    PATTERN => EXPRESSION,
+match QIYMAT {
+    QOLIP => IFODA,
+    QOLIP => IFODA,
+    QOLIP => IFODA,
 }
 ```
 
