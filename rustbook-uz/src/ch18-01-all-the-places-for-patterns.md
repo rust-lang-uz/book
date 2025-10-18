@@ -1,22 +1,22 @@
-## Qoliplar Qoʻllaniladigan Barcha Oʻrinlar
+## Qoliplar qoʻllaniladigan barcha oʻrinlar
 
 Rust tilida, qoliplarga bir qancha joylarda duch kelish mumkin, va shu paytgacha,
 oʻzingiz sezmagan holda, ulardan foydalanib kelayotgan edingiz! Bu boʻlim
 qoliplapdan foydalanish joiz boʻlgan barcha oʻrinlar haqida soʻz yuritadi.
 
-### `match` Qoʻllari
+### `match` qoʻllari
 
 6-bobda aytganimizdek, qoliplarni `match` ifodasining qoʻllarida ishlatamiz.
 Rasman, `match` quyidagilar bilan ifodalanadi: `match` kalitsoʻzi,
-qolipga solinayotgan qiymat, va quyidagi misolda koʻrsatilganiday,
-qolip va unga qiymat mos tushganda bajariladigan ifodadan iborat
-bir yoki bir nechta `match` qoʻllari:
+qolipga solinayotgan qiymat, va qolip va unga qiymat mos tushganda bajariladigan
+ifodadan iborat bir yoki bir nechta `match` qoʻllari. Buni siz quyidagi misolda
+koʻrishingiz mumkin:
 
 ```text
 match QIYMAT {
-    QOLIP => IFODA,
-    QOLIP => IFODA,
-    QOLIP => IFODA,
+    QOLIP => IFODA, // birinchi qoʻl
+    QOLIP => IFODA, // ikkinchi qoʻl
+    QOLIP => IFODA, // uchinchi qoʻl
 }
 ```
 
