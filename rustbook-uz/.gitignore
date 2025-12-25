@@ -5,3 +5,5 @@ book/
 target
 tmp
 
+result
+**/result

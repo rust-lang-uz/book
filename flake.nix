@@ -1,0 +1,36 @@
+{
+  description = "A beginning of an awesome project bootstrapped with github:bleur-org/templates";
+
+  inputs = {
+    # Stable Nixpkgs
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+
+    # Unstable Nixpkgs
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    # Flake parts for eachSystem
+    flake-parts.url = "github:hercules-ci/flake-parts";
+  };
+
+  # In this context, outputs are mostly about getting home-manager what it
+  # needs since it will be the one using the flake
+  outputs = {flake-parts, ...} @ inputs:
+    flake-parts.lib.mkFlake {inherit inputs;} (top @ {...}: {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      perSystem = {pkgs, ...}: {
+        # Nix formatter
+        formatter = pkgs.alejandra;
+
+        # Development shells
+        devShells.default = import ./shell.nix {inherit pkgs;};
+
+        # Output package
+        packages.default = pkgs.callPackage ./. {inherit pkgs;};
+      };
+    });
+}
