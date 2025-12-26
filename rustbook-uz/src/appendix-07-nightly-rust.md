@@ -10,7 +10,7 @@ va agar narsalar doimiy ravishda oʻzgarib tursa, bu mumkin boʻlmas edi. Shu bi
 yangi funksiyalar bilan tajriba o‘tkazganimizdan keyingina muhim muammolarni aniqlashimiz mumkin.
 Ularning chiqarilish paytida, biz hech narsani o‘zgartira olmagan bo‘lar edik.
 
-Biz bu muammoning yechimini "uzluksiz barqarorlik" deb ataymiz.
+Bu muammoning yechimini "uzluksiz barqarorlik" deb ataymiz.
 va asosiy tamoyilimiz quyidagicha: siz hech qachon Rustʼning yangi versiyasiga o‘tishdan qo‘rqmasligingiz kerak.
 barqaror Rustning yangi versiyasiga. Har bir yangilanish og‘riqsiz bo‘lishi kerak, lekin shu bilan yana birga
 sizga yangi funksiyalar, kamroq xatolar va tezroq compile time (kompilyatsiya vaqti).
