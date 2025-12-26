@@ -1,9 +1,8 @@
 name: Check
 
 on:
-  push:
-    branches:
-      - feature/ci_job
+  schedule:
+    - cron: "0 0 * * SAT"
   workflow_dispatch:
 
 permissions: write-all
