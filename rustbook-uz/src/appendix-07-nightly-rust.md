@@ -6,7 +6,7 @@ Ushbu ilova Rust qanday yaratilinadi va bu sizga Rust dasturchi sifatida qanday 
 
 Til sifatida Rust kodingizning barqarorligiga *katta* e’tibor qaratadi. Biz xohlaymizki
 Rustʼni mustahkam poydevor sifatida qurishingiz mumkin boʻlgan mustahkam asos boʻlishini xohlaymiz, 
-va agar narsalar doimiy ravishda oʻzgarib tursa, bu mumkin boʻlmas edi. Shu bilan birga, agar biz buni qila olmasak
+va agar narsalar doimiy ravishda oʻzgarib tursa, bu mumkin boʻlmas edi. Shu bilan birga, agar buni qila olmasak
 yangi funksiyalar bilan tajriba o‘tkazganimizdan keyingina muhim muammolarni aniqlashimiz mumkin.
 Ularning chiqarilish paytida, biz hech narsani o‘zgartira olmagan bo‘lar edik.
 
