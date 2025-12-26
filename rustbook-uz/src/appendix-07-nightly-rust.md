@@ -5,8 +5,8 @@ Ushbu ilova Rust qanday yaratilinadi va bu sizga Rust dasturchi sifatida qanday 
 ### Uzluksiz barqarorlik
 
 Til sifatida Rust kodingizning barqarorligiga *katta* e’tibor qaratadi. Biz xohlaymizki
-Rust siz qurishingiz mumkin bo‘lgan ishonchli poydevor edi va agar hamma
-doimo o‘zgarib turib bo‘lsa, bu imkonsiz bo‘lar edi. Shu bilan birga, agar biz buni qila olmasak
+Rustʼni mustahkam poydevor sifatida qurishingiz mumkin boʻlgan mustahkam asos boʻlishini xohlaymiz, 
+va agar narsalar doimiy ravishda oʻzgarib tursa, bu mumkin boʻlmas edi. Shu bilan birga, agar biz buni qila olmasak
 yangi funksiyalar bilan tajriba o‘tkazganimizdan keyingina muhim muammolarni aniqlashimiz mumkin.
 Ularning chiqarilish paytida, biz hech narsani o‘zgartira olmagan bo‘lar edik.
 
