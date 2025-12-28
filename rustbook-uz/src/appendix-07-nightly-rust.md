@@ -107,11 +107,13 @@ bir relizga kiritilmagan boʻlsa, tashvishlanmang: tez orada boshqasi keladi!
 Bu reliz chiqish muddati yaqinlashganda, ehtimol, xomroq funksiyalarni
 shoshilinch ravishda qoʻshishga boʻlgan bosimni kamaytirishga yordam beradi.
 
-Ushbu jarayon tufayli siz har doim quyidagi Rust buildni tekshirishingiz mumkin va
-uni yangilash osonligiga ishonch hosil qiling: agar beta-versiya
-kutilganidek ishlamasa, siz bu haqda jamoaga xabar berishingiz va xatosini tuzatishingiz mumkin
-keyingi stable relizdan oldin! Beta-versiyada nosozliklar muammolar kam uchraydi, lekin
-`rustc` baribir dasturiy ta’minot va unda xatolar mavjud.
+Ushbu jarayon tufayli siz har doim Rust’ning navbatdagi versiyasini tekshirib
+koʻrishingiz va yangilanish qanchalik osonligiga shaxsan amin boʻlishingiz
+mumkin: agar beta reliz kutilganidek ishlamasa, bu haqida jamoaga xabar
+berishingiz va muammo keyingi barqaror reliz chiqqunga qadar tuzatilishiga
+yordam berishingiz mumkin! Beta relizda nosozliklar yuz berishi nisbatan
+kam uchraydigan holat, biroq `rustc` ham dasturiy taʼminot mahsulidir va
+unda xatoliklar uchrab turadi.
 
 ### Beqaror funksiyalar
 
