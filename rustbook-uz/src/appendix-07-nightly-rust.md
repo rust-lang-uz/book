@@ -33,7 +33,7 @@ faraz qilaylik, Rust dasturchilari Rust 1.5 versiyasi ustida ishlashmoqda. Bu re
 2015-yil dekabr oyida boʻlib o‘tdi, ammo u bizga haqiqiy versiya raqamlarini beradi.
 Rustʼga yangi funksiya qoʻshildi: yangi kommit main branchʼiga tushadi.
 Har kecha Rustning yangi `nightly` versiyasi yaratiladi. Har kuni - bu
-chiqarish sanasi va bu nashrlar bizning chiqarish infratuzilmamiz tomonidan yaratiladi
+kuni va bu relizlar bizning reliz infratuzilmamiz tomonidan avtomatik ravishda yaratiladi.
 Shunday qilib, vaqt o‘tishi bilan bizning relizlarimiz quyidagicha ko‘rinadi, bir kecha-kunduzda bir marta:
 
 ```text
