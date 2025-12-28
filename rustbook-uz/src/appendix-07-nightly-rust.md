@@ -43,7 +43,7 @@ nightly: * - - * - - *
 ```
 
 Har olti haftada yangi reliz tayyorlash vaqti keladi! Rust repositoriy `beta` branch,
-nightly tomonidan ishlatiladigan `main` branchidan ajralib turadi. Endi
+nightly tomonidan ishlatiladigan `main` branchʼidan ajralib chiqadi. Endi
 ikkita reliz bor:
 
 ```text
