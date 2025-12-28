@@ -19,7 +19,7 @@ sizga yangi funksiyalar, kamroq xatolar va tezroq compile time (kompilyatsiya va
 
 Rustni ishlab chiqish *grafik* bo‘yicha amalga oshiriladi. Ya’ni, butun ishlanma
 Rust repozitoriysining `master` branchda o‘tkaziladi (hozirgi kunlarga `main` branchga o‘tdi).
-Rust ni release'lar, release poyezd modelga qat’iy amal qiladi. Shu model Cisco IOS va boshqa proektlar ishlatadi.
+Rustʼdagi relizlar, reliz poyezdi modeliga qatʼiy amal qiladi. Shu model Cisco IOS va boshqa loyihalarda ishlatadi.
 Rustda uchta release kanallar bor:
 * Nightly
 * Beta
