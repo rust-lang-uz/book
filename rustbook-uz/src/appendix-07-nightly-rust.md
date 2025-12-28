@@ -29,7 +29,7 @@ Ko'p Rust dasturchilar asosan `stable` kanaldan foydalanadilar, lekin xohlovchil
 tajribaviy yangi funksiyalarni sinash, `nightly` yoki `beta` versiyalardan foydalanishi mumkin.
 
 Ishlab chiqish va reliz jarayoni qanday ishlashiga misol:
-Faraz qilaylik, Rustni dasturchilar Rust 1.5 versiyasi ustida ishlamoqda. Bu son
+faraz qilaylik, Rust dasturchilari Rust 1.5 versiyasi ustida ishlashmoqda. Bu reliz
 2015-yil dekabr oyida boʻlib o‘tdi, ammo u bizga haqiqiy versiya raqamlarini beradi.
 Rustʼga yangi funksiya qoʻshildi: yangi kommit main branchʼiga tushadi.
 Har kecha Rustning yangi `nightly` versiyasi yaratiladi. Har kuni - bu
