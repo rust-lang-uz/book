@@ -28,7 +28,7 @@ Rustʼda uchta reliz kanallar bor:
 Ko'p Rust dasturchilar asosan `stable` kanaldan foydalanadilar, lekin xohlovchilar
 tajribaviy yangi funksiyalarni sinash, `nightly` yoki `beta` versiyalardan foydalanishi mumkin.
 
-Ishlab chiqish va ishlab chiqarish jarayoni qanday ishlashiga misol: keling
+Ishlab chiqish va reliz jarayoni qanday ishlashiga misol:
 Faraz qilaylik, Rustni dasturchilar Rust 1.5 versiyasi ustida ishlamoqda. Bu son
 2015-yil dekabr oyida boʻlib o‘tdi, ammo u bizga haqiqiy versiya raqamlarini beradi.
 Rustʼga yangi funksiya qoʻshildi: yangi kommit main branchʼiga tushadi.
