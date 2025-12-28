@@ -1,6 +1,7 @@
 ## Appendix G - Rust va "Nightly Rust" qanday yaratiladi
 
-Ushbu ilova Rust qanday yaratilinadi va bu sizga Rust dasturchi sifatida qanday ta’sir qiladi
+Ushbu ilova Rust qanday yaratilishi va bu sizga Rust dasturchi sifatida
+qanday taʼsir qilishi haqida.
 
 ### Uzluksiz barqarorlik
 
