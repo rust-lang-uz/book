@@ -31,7 +31,7 @@ tajribaviy yangi funksiyalarni sinash, `nightly` yoki `beta` versiyalardan foyda
 Ishlab chiqish va ishlab chiqarish jarayoni qanday ishlashiga misol: keling
 Faraz qilaylik, Rustni dasturchilar Rust 1.5 versiyasi ustida ishlamoqda. Bu son
 2015-yil dekabr oyida boʻlib o‘tdi, ammo u bizga haqiqiy versiya raqamlarini beradi.
-. Rustga yangi funksiya qoʻshilmoqda: yangi kommit main branchga tushadi.
+Rustʼga yangi funksiya qoʻshildi: yangi kommit main branchʼiga tushadi.
 Har kecha Rustning yangi `nightly` versiyasi yaratiladi. Har kuni - bu
 chiqarish sanasi va bu nashrlar bizning chiqarish infratuzilmamiz tomonidan yaratiladi
 avtomatik ravishda.
