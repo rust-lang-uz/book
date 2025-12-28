@@ -99,12 +99,13 @@ stable:                                *
 Bu "poyezd modeli" deb ataladi, chunki har olti haftada reliz "bekatdan joʻnatiladi",
 lekin hali ham beta-kanal orqali oʻtishi kerak, `stable` relizga aylanish uchun.
 
-Rust har olti haftada soat kabi chiqariladi. Agar siz Rustning bitta relizni sanasini bilsangiz,
-keyingi relizni sanasini bilib olishingiz mumkin: u olti haftadan keyin boʻlib oʻtadi. Yoqimli
-har olti haftada chiqarishning bir jihati shundaki, keyingi poyezd
-tez orada keladi. Agar biror funksiya maʼlum bir relizga kiritilmagan boʻlsa, buning keragi yoʻq
-tashvishlanmoq: qisqa vaqt ichida boshqasi boʻladi! Bu tazyiqni kamaytirishga yordam beradi,
-chiqarishdan oldingi soʻnggi lahzada, ehtimol, toʻliq ishlab chiqilmagan funksiyalarni kiritish zarurati bilan bogʻliq.
+Rust har olti haftada soat kabi chiqariladi. Agar siz Rustning bitta relizni
+sanasini bilsangiz, keyingi relizni sanasini bilib olishingiz mumkin: u olti
+haftadan keyin boʻlib oʻtadi.  Relizlar har olti haftada chiqishini yaxshi
+jihati shundaki, keyingi poyezd tez orada keladi.  Agar biror funksiya maʼlum
+bir relizga kiritilmagan boʻlsa, tashvishlanmang: tez orada boshqasi keladi!
+Bu reliz chiqish muddati yaqinlashganda, ehtimol, xomroq funksiyalarni
+shoshilinch ravishda qoʻshishga boʻlgan bosimni kamaytirishga yordam beradi.
 
 Ushbu jarayon tufayli siz har doim quyidagi Rust buildni tekshirishingiz mumkin va
 uni yangilash osonligiga ishonch hosil qiling: agar beta-versiya
