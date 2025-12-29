@@ -43,7 +43,7 @@ Shunday qilib, vaqt oʻtgan sari, bizning relizlarimiz har tun quyidagi koʻrini
 nightly: * - - * - - *
 ```
 
-Har olti haftada yangi reliz tayyorlash vaqti keladi! Rust repositoriy `beta` branch,
+Har olti hafta yangi reliz tayyorlash vaqti keladi! Rust repozitoriyasining `beta` branchʼi,
 nightly tomonidan ishlatiladigan `main` branchʼidan ajralib chiqadi. Endi
 ikkita reliz bor:
 
