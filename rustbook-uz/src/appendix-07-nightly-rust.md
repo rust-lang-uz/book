@@ -20,7 +20,8 @@ sizga yangi funksiyalar, kamroq xatolar va tezroq compile time (kompilyatsiya va
 ### Chux-chux! Reliz kanallar va poyezdda sayr qilmoq
 
 Rustni ishlab chiqish *grafik* bo‘yicha amalga oshiriladi. Ya’ni, butun ishlanma
-Rust repozitoriysining `master` branchda o‘tkaziladi (hozirgi kunlarga `main` branchga o‘tdi).
+Rust repozitoriysining `master` branchʼida o‘tkaziladi (hozirgi kunlarga
+`main` branchʼiga o‘tdi).
 Rustʼdagi relizlar, reliz poyezdi modeliga qatʼiy amal qiladi. Shu model Cisco IOS va boshqa loyihalarda ishlatadi.
 Rustʼda uchta reliz kanallar bor:
 * Nightly
