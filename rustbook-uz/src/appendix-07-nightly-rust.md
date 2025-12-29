@@ -17,7 +17,7 @@ oʻtishdan qoʻrqmasligingiz kerak.
 Har bir yangilanish og‘riqsiz bo‘lishi kerak, lekin shu bilan yana birga
 sizga yangi funksiyalar, kamroq xatolar va tezroq compile time (kompilyatsiya vaqti) berishi kerak.
 
-### Chux-chux! Chiqarish kanallar va poyezdda sayr qilmoq
+### Chux-chux! Reliz kanallar va poyezdda sayr qilmoq
 
 Rustni ishlab chiqish *grafik* bo‘yicha amalga oshiriladi. Ya’ni, butun ishlanma
 Rust repozitoriysining `master` branchda o‘tkaziladi (hozirgi kunlarga `main` branchga o‘tdi).
