@@ -85,8 +85,9 @@ beta:                * - - - - - - - - *
 stable:                                *
 ```
 
-Ura! Rust 1.5 tayyor! Biroq biz bir narsani unutib qoʻydik: chunki 6 haft o'tgandan deb, 
-bizga Rustning *keyingi* versiyasining yangi beta-versiyasi ham kerak, 1.6.
+Ura! Rust 1.5 tayyor! Biroq biz bir narsani unutib qoʻydik: 6 hafta oʻtib
+ketgani sababli, bizga Rustʼning *keyingi* 1.6 versiyasining yangi beta
+relizi kerak.
 Shuning uchun `stable` `beta` dan ajralgandan so‘ng, `beta` ning keyingi versiyasi `nightly` dan yana ajralib chiqadi:
 
 ```text
