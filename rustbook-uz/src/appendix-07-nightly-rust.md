@@ -36,7 +36,7 @@ faraz qilaylik, Rust dasturchilari Rust 1.5 versiyasi ustida ishlashmoqda. Bu re
 Rustʼga yangi funksiya qoʻshildi: yangi kommit main branchʼiga tushadi.
 Har kecha Rustning yangi `nightly` versiyasi yaratiladi. Har kuni - bu
 kuni va bu relizlar bizning reliz infratuzilmamiz tomonidan avtomatik ravishda yaratiladi.
-Shunday qilib, vaqt o‘tishi bilan bizning relizlarimiz quyidagicha ko‘rinadi, bir kecha-kunduzda bir marta:
+Shunday qilib, vaqt oʻtgan sari, bizning relizlarimiz har tun quyidagi koʻrinishga ega boʻladi:
 
 ```text
 nightly: * - - * - - *
