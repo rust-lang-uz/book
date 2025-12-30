@@ -12,7 +12,7 @@ qolipga solinayotgan qiymat, va qolip va unga qiymat mos tushganda bajariladigan
 ifodadan iborat bir yoki bir nechta `match` qoʻllari. Buni siz quyidagi misolda
 koʻrishingiz mumkin:
 
-```text
+```rust,ignore
 match QIYMAT {
     QOLIP => IFODA, // birinchi qoʻl
     QOLIP => IFODA, // ikkinchi qoʻl
@@ -20,8 +20,8 @@ match QIYMAT {
 }
 ```
 
-For example, here's the `match` expression from Listing 6-5 that matches on an
-`Option<i32>` value in the variable `x`:
+Masalan, ushbu 6-5 lavhasidagi `match` ifodasida, `x` oʻzgaruvchisi
+`Option<i32>` qiymatiga mos tushadi:
 
 ```rust,ignore
 match x {
@@ -30,21 +30,22 @@ match x {
 }
 ```
 
-The patterns in this `match` expression are the `None` and `Some(i)` on the
-left of each arrow.
+Bu `match` ifodasidagi qoliplar yoylarning chap tarafidagi `None` va `Some(i)`
+qiymatlaridir.
 
-One requirement for `match` expressions is that they need to be *exhaustive* in
-the sense that all possibilities for the value in the `match` expression must
-be accounted for. One way to ensure you’ve covered every possibility is to have
-a catchall pattern for the last arm: for example, a variable name matching any
-value can never fail and thus covers every remaining case.
+`match` ifodalari uchun talablardan biri bu qiymatning barcha ehtimoliy
+koʻrinishlarini hisobga olishdir. Bu talabni doimiy ravishda qondirish
+yoʻllaridan biri esa eng oxirgi qoʻl sifatida har qanday qiymatni qabul qila
+oladigan qolipni qoʻshishdir: masalan, istalgan qiymatni oluvchi oʻzgaruvchi
+nomi hech qachon pand bermaydi va har doim qolgan holatlarni qoplaydi.
 
-The particular pattern `_` will match anything, but it never binds to a
-variable, so it’s often used in the last match arm. The `_` pattern can be
-useful when you want to ignore any value not specified, for example. We’ll
-cover the `_` pattern in more detail in the [“Ignoring Values in a
-Pattern”][ignoring-values-in-a-pattern]<!-- ignore --> section later in this
-chapter.
+Ushbu maxsus qolip `_` (ost chiziq) har qanday qiymatga mos tushadi, uni
+hech qachon biron oʻzgaruvchiga bogʻlamaydi. Shuning uchun, koʻp hollarda
+bu qolip oxirgi `match` qoʻli sifatida ishlatiladi. Masalan, `_` qolibi
+biron bir qiymatni e'tiborsiz qoldirmoqchi boʻlganingizda qoʻl keladi.
+Biz `_` qolibini, keyinroq, ushbu bobning [“Qoliplarda qiymatlarni e'tiborsiz
+qoldirish”][ignoring-values-in-a-pattern]<!-- ignore --> boʻlimida batafsil
+yoritamiz.
 
 ### Conditional `if let` Expressions
 
