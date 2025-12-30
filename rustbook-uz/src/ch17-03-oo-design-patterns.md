@@ -21,7 +21,7 @@ update the code inside one of the state objects to change its rules or perhaps
 add more state objects.
 
 Birinchidan,`state` namunasini an’anaviy obyektga yo‘naltirilgan tarzda amalga
-oshib, so‘ng Rustda yanada tabiiyroq bo‘lgan yondashuvdan foydalanish mumkun. 
+oshib, so‘ng Rustʼda yanada tabiiyroq bo‘lgan yondashuvdan foydalanish mumkun. 
 Keling, blog post yozish jarayonini `state` qonuniyatidan foydalangan holda
 bosqichma-bosqich amalga oshirishni ko‘rib chiqaylik.
 
@@ -75,7 +75,7 @@ almashuvlarini bevosita boshqarishga majbur emaslar. Bundan tashqari,
 foydalanuvchilar holatlar bilan xato qilolmaydi, masalan, postni
 tekshirilmasdan turib nashr qilish kabi.
 
-## `Post` ni aniqlash va qoralama holatida yangi nusxa yaratish
+## `Post`ni aniqlash va qoralama holatida yangi nusxa yaratish
 
 Keling, kutubxona implementatsiyasini boshlaymiz! Umumiy (public) `Post`
 strukturasiga ehtiyoj borligini bilamiz, u kontentni saqlaydi. Shunday ekan,

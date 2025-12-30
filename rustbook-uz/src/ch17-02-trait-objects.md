@@ -220,7 +220,7 @@ agar qiymat usulni amalga oshirmasa-yu, lekin u chaqirilsa ham, xatolar yuzaga
 kelishidan xavotirlanishimizga hojat yo‘q. Agar qiymatlar trait obyektlariga
 kerak bo'lgan trait'larni amalga oshirmasa, Rust bu kodni kompilatsiya qilmaydi.
 
-Masalan, 17-10-ro'yxatda `String` komponentli `Screen` yaratishga harakat
+Masalan, 17-10-roʻyxatda `String` komponentli `Screen` yaratishga harakat
 qilsa, nima sodir bo‘lishi ko‘rsatilgan:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
@@ -238,10 +238,10 @@ oshirmaydigan turdan foydalanishga urinish</span>
 {{#include ../listings/ch17-oop/listing-17-10/output.txt}}
 ```
 
-Bu xato quyidagi ikki holatdan birini ko‘rsatadi: yoki o‘tkazmoqchi
-bo‘lmagan biror narsani `Screen`ga o‘tkazilayapti va shuning uchun boshqa turda
-o‘tkazish kerak, yoki `String`ga `Draw`ni amalga oshirishimiz kerak, shunda
-`Screen` `draw`ni chaqira oladi.
+Bu xato bizga shuni bildiradi: biz `Screen`ga yubormoqchi bo‘lmagan narsani
+yuboryapmiz va shuning uchun boshqa turni o'tkazishimiz kerakligini yoki
+`String` ustiga `Draw`ni qo'llashimiz kerakligini bildiradi, shunda `Screen`
+`draw`ni chaqira oladi.
 
 ### Trait Objects Perform Dynamic Dispatch
 
