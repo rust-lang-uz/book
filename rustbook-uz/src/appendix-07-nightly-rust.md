@@ -119,13 +119,16 @@ unda xatoliklar uchrab turadi.
 
 ### Beqaror funksiyalar
 
-Ushbu chiqarish modeli bilan yana bir muammo bor: beqaror funksiyalar. Rust ishlatiladi
-funksiyada qanday funksiyalar yoqilganini aniqlash uchun "feature bayroqchalar" deb nomlangan narsa bor
-. Agar yangi funksiya faol ishlab chiqilayotgan bo‘lsa, u `main`ga tushadi
-, va shuning uchun, `nightly` da b‘oladi, lekin *feature bayrogʻni* ortida. Agar siz foydalanuvchi sifatida 
-ishlab chiqilayotgan funksiyani sinab koʻrmoqchi boʻlsangiz, buni qilishingiz mumkin, 
-lekin buning uchun siz Rust `nightly` builddan foydalanishingiz va ushbu funksiyani yoqish uchun tegishli
-bayroq yordamida manba kodingizni annotate qilishiz kerak.
+Ushbu reliz modelining yana bir oʻziga xos jihati bor: bular
+beqaror funksiyalardir. Rust maʼlum bir relizda qaysi funksiyalar
+faollashtirilganligini aniqlash uchun “feature flags” (funksiya
+bayroqchalari) deb nomlangan usuldan foydalanadi. Agar yangi funksiya faol
+ishlab chiqish jarayonida boʻlsa, u master branchʼiga, binobarin, nightly
+reliziga joylanadi, biroq maxsus *feature flag* ostida. Agar siz foydalanuvchi
+sifatida hali yakunlanmagan funksiyani sinab koʻrmoqchi boʻlsangiz, buni
+amalga oshirishingiz mumkin. Buning uchun sizdan Rustʼning nightly relizidan
+foydalanish va ushbu funksiyani faollashtirish uchun kodga tegishli bayroqchani
+(flag) qoʻshish talab etiladi.
 
 Agar Rustning `beta` yoki `stable` versiyasidan foydalansangiz, hech qanday feature bayroqlardan foydalana olmaysiz.
 Bu kalit bizga yangi funksiyalarni amalda qoʻllash imkonini beradi,
