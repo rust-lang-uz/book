@@ -16,7 +16,7 @@ ishlatilishi mumkin bo‘lgan turlar to‘plamini kengaytira olishini xohlaymiz.
 amalga oshirilishini ko‘rsatish uchun, grafik foydalanuvchi interfeysi (GUI) vositasi
 misolini yaratamiz. Ushbu vosita elementlar ro‘yxatidan o‘tadi va har bir element uchun
 `draw` metodini chaqiradi. Bu GUI vositalarida keng qo‘llaniladigan uslubdir.`gui`
-nomli kutubxona crate yaratiladi. Ushbuu crate GUI kutubxonasining asosiy tuzilmasini o‘z
+nomli kutubxona crate yaratiladi. Ushbu crate GUI kutubxonasining asosiy tuzilmasini o‘z
 ichiga oladi. Unda, masalan, `Button` yoki `TextField` kabi foydalanishga tayyor ayrim
 turlarni taqdim qilishi mumkin. Shu bilan birga, `gui` foydalanuvchilari o‘zlarining
 chizilishi mumkin bo‘lgan turlarini ham yaratmoqchi bo‘lishadi: masalan, bir dasturchi
@@ -76,61 +76,59 @@ maqsadlarda emas, balki faqat umumiy xatti-harakatni abstraktsiyalash,
 ya’ni umumiy funksionallik asosida turli obyektlar bilan ishlash imkoniyatini
 yaratish uchun qo‘llaniladi.
 
-Listing 17-3 shows how to define a trait named `Draw` with one method named
-`draw`:
+17-3-ro'yxat `Draw` trait'ini `draw` metodi bilan birga ta'riflash ko'rsatib beradi:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-03/src/lib.rs}}
 ```
 
-<span class="caption">Listing 17-3: Definition of the `Draw` trait</span>
+<span class="caption">Ro'yxat 17-3: `Draw` trait'ining ta'rifi</span>
 
-This syntax should look familiar from our discussions on how to define traits
-in Chapter 10. Next comes some new syntax: Listing 17-4 defines a struct named
-`Screen` that holds a vector named `components`. This vector is of type
-`Box<dyn Draw>`, which is a trait object; it’s a stand-in for any type inside
-a `Box` that implements the `Draw` trait.
+Ushbu sintaksis bizning 10-bo'limda bo'lib o'tgan Traitlarni joriy etish
+suhbatimizdan keyin tanish bo'lishi kerak. Keyingisi esa yana yangi sintaksis:
+17-4-ro'yxat `Screen` nomli `components` nomi ostidagi vekotr o'z ichiga olgan
+structni ta'riflaydi. Ushbu vektor `Box<dyn Draw>` turidan, ya'ni trait obyekt (bu
+`Box` ichida `Draw` tratini joriy etuvchi istalgan turga solishtiriluvchi).
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-04/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 17-4: Definition of the `Screen` struct with a
-`components` field holding a vector of trait objects that implement the `Draw`
-trait</span>
+<span class="caption">Ro'yxat 17-4: `Screen` structidagi `components` maydoni
+bir vektorda joylashgan va `Draw` tratini joriy etgan obyektlarni ushlab turibdi
+</span>
 
-On the `Screen` struct, we’ll define a method named `run` that will call the
-`draw` method on each of its `components`, as shown in Listing 17-5:
+`Screen` struktida, biz 17-5-ro'yxatda ko'rsatilganiday, `draw` metodini har
+bir `components` ustidan chaqiradigan `run` nomli metod yaratamiz:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-05/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 17-5: A `run` method on `Screen` that calls the
-`draw` method on each component</span>
+<span class="caption">Ro'yxat 17-5: `Screen` da har bir komponent ustidan
+`draw` metodini chaqiradigan `run` metodi</span>
 
-This works differently from defining a struct that uses a generic type
-parameter with trait bounds. A generic type parameter can only be substituted
-with one concrete type at a time, whereas trait objects allow for multiple
-concrete types to fill in for the trait object at runtime. For example, we
-could have defined the `Screen` struct using a generic type and a trait bound
-as in Listing 17-6:
+Bu generik tur ko'rsatkichi va trait cheklanmalardan farqli boshqacha
+ishlaydi. Generik tur parametr bir vaqt o'zida faqat bitta tur qabul qiladi,
+trait obyektlar esa boshqa tarafdan ko'plab konkret turlar ishlash vaqtidagi
+trait obyektlarni to'ldirib berish uchun ishlatsa bo'ladi. Misol uchun,
+`Screen` struktini 17-6-ro'yxatda ko'rsatilganiday generik tur va trait
+cheklanmalari bilan ta'riflasa bo'ladi:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Fayl nomi: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-06/src/lib.rs:here}}
 ```
 
-<span class="caption"> 17-6 ro'yxat: `Screen` tuzilmasi va uning `run`
-usulining muqobil amalga oshirilishi, bunda generiklar va xususiyatlar
-chegaralari qo‘llaniladi</span>
+<span class="caption">Ro'yxat 17-6: `Screen` strukti va uning `run` metodining
+generik va trait cheklanmalarini ishlatgandagi alternativ ta'rifi.</span>
 
 Bu faqat `Button` yoki faqat `TextField` turidagi komponentlar ro‘yxatiga
 ega bo‘lgan `Screen` nusxasi bilan cheklaydi. Agar sizda faqat bir xil
@@ -240,34 +238,33 @@ oshirmaydigan turdan foydalanishga urinish</span>
 {{#include ../listings/ch17-oop/listing-17-10/output.txt}}
 ```
 
-Bu xato bizga shuni bildiradi: biz `Screen` ga yubormoqchi bo‘lmagan narsani
+Bu xato bizga shuni bildiradi: biz `Screen`ga yubormoqchi bo‘lmagan narsani
 yuboryapmiz va shuning uchun boshqa turni o'tkazishimiz kerakligini yoki
 `String` ustiga `Draw`ni qo'llashimiz kerakligini bildiradi, shunda `Screen`
 `draw`ni chaqira oladi.
 
 ### Trait Objects Perform Dynamic Dispatch
 
-Recall in the [“Performance of Code Using
-Generics”][performance-of-code-using-generics]<!-- ignore --> section in
-Chapter 10 our discussion on the monomorphization process performed by the
-compiler when we use trait bounds on generics: the compiler generates
-nongeneric implementations of functions and methods for each concrete type that
-we use in place of a generic type parameter. The code that results from
-monomorphization is doing _static dispatch_, which is when the compiler knows
-what method you’re calling at compile time. This is opposed to _dynamic
-dispatch_, which is when the compiler can’t tell at compile time which method
-you’re calling. In dynamic dispatch cases, the compiler emits code that at
-runtime will figure out which method to call.
+["Generiklar yordamida kodning ishlashi"][performance-of-code-using-generics]<!-- ignore-->
+bo‘limidagi muhokamadagi kompilyator monomorfizatsiya qismini eslaymiz. Kompilyator
+umumiy turlarning trait chegaralari ustida ishlash jarayonida u har bir umumiy tur
+o‘rnida ishlatilgan aniq turlarni funksiya va metodlarga joriy etadi.
+Monomorfizatsiya natijasidagi kod _static dispatch_ (ya’ni statik yo‘naltirish) deb
+ataladi. Bu degani kompilyatsiya vaqtida kompilyator qaysi turga oid funksiya yoki
+metod qayerda chaqirilishini biladi. Kompilyator bilmagan holat esa dynamic dispatch
+(ya’ni dinamik yo‘naltirish) deb ataladi va kompilyatsiya jarayonida dastur o‘zi
+ishga tushish vaqtida yo‘naltira oladigan kod yaratiladi.
 
-When we use trait objects, Rust must use dynamic dispatch. The compiler doesn’t
-know all the types that might be used with the code that’s using trait objects,
-so it doesn’t know which method implemented on which type to call. Instead, at
-runtime, Rust uses the pointers inside the trait object to know which method to
-call. This lookup incurs a runtime cost that doesn’t occur with static
-dispatch. Dynamic dispatch also prevents the compiler from choosing to inline a
-method’s code, which in turn prevents some optimizations. However, we did get
-extra flexibility in the code that we wrote in Listing 17-5 and were able to
-support in Listing 17-9, so it’s a trade-off to consider.
+Rust-da trait obyektlaridan foydalanganda, dinamik dispatch ishlatiladi.
+Kompilyator kodda qaysi turdagi qiymatlar ishlatilishini oldindan bilmaydi,
+shuning uchun qaysi turdagi metod chaqirilishini ham bilmaydi. Buning o‘rniga,
+bajarilish vaqtida (runtime) Rust trait obyektining ichidagi ko‘rsatkichlardan
+(pointer) qaysi metodni chaqirish kerakligini aniqlaydi. Bu esa statik dispatchiga
+nisbatan bajarilish vaqtida qo‘shimcha xarajatlarni keltirib chiqaradi. Shuningdek,
+dinamik dispatchi kompilyatorga metod kodini inline qilish imkonini bermaydi, bu esa
+ba’zi optimallashtirishlarni cheklaydi. Biroq, biz ro‘yxat 17-5 yozgan kodimizda
+qo‘shimcha moslashuvchanlikka ega bo‘ldik va ro‘yxat 17-9 da qo‘llab-quvvatlay oldik,
+shuning uchun buni hisobga olish kerak.
 
-[performance-of-code-using-generics]: ch10-01-syntax.html#performance-of-code-using-generics
+[performance-of-code-using-generics]: ch10-01-syntax.html#generiklar-yordamida-kodning-ishlashi
 [dynamically-sized]: ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait
