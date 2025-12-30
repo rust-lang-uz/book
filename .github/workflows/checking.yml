@@ -19,6 +19,8 @@ jobs:
         uses: lycheeverse/lychee-action@v2
         with:
           fail: false
+          # Note: This changes the lychee output directory as well.
+          workingDirectory: rustbook-uz/src
 
       - name: Create Issue From File
         if: steps.lychee.outputs.exit_code != 0
@@ -27,4 +29,3 @@ jobs:
           title: Link Checker Report
           content-filepath: ./lychee/out.md
           labels: report, automated issue
-          workingDirectory: ./rustbook-uz
