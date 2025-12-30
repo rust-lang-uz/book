@@ -186,7 +186,7 @@ RFC deb nomlangan jumla yozishingiz mumkin.
 
 Istalgan kishi Rustni yaxshilash uchun RFC yozishi mumkin va takliflar koʻrib chiqiladi va
 turli mavzulardagi koʻplab kichik jamoalardan tashkil topgan Rust jamoasi tomonidan muhokama qilinadi. Toʻliq buyruqlar ro‘yxati
-Rust [web-saytida](https://www.rust-lang.org/governance) topishingiz mumkin, bu yerda
+Rust [veb-saytida](https://www.rust-lang.org/governance) topishingiz mumkin, bu yerda
 loyihaning har bir sohasi: tilni loyihlantirish, compiler ni amalga oshirish,
 infratuzilma, documentatsiya va boshqalar. Tegishli jamoa oʻqiydi
 taklif va sharhlar, oʻz sharhlarini yozadi va oxir-oqibat,
