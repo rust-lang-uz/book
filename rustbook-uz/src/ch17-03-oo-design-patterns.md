@@ -85,10 +85,10 @@ ta’riflashdan boshlaymiz. Ushbu funksiya `Post` ning yangi nusxasini yaratadi
 `State` trait'ini ham yaratamiz. Bu trait `Post` uchun barcha holat obyektlari
 bajarishi kerak bo‘lgan xatti-harakatlarni belgilab beradi.
 
-Keyin ’Post’ o‘z ichida ’state’ nomli maxfiy maydonida ’Option<T>’ orqali
-o‘ralgan ’Box<dyn State>’ trait obyektini saqlaydi, bu esa state obyektini
-ushlab turish uchun xizmat qiladi. Option<T> nima uchun kerakligini birozdan
-so‘ng bilib olasiz.
+Keyin `Post` o‘z ichida `state` nomli maxfiy maydonida `Option<T>` orqali
+o‘ralgan `Box<dyn State>` trait obyektini saqlaydi, bu esa state obyektini
+ushlab turish uchun xizmat qiladi. `Option<T>` nima uchun kerakligini birozdan
+soʻng bilib olasiz.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>
 
