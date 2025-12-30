@@ -20,7 +20,7 @@ update the code inside one of the state objects to change its rules or perhaps
 add more state objects.
 
 Birinchidan,`state` namunasini an’anaviy obyektga yo‘naltirilgan tarzda amalga
-oshib, so‘ng Rustda yanada tabiiyroq bo‘lgan yondashuvdan foydalanish mumkun. 
+oshib, so‘ng Rustʼda yanada tabiiyroq bo‘lgan yondashuvdan foydalanish mumkun. 
 Keling, blog post yozish jarayonini `state` qonuniyatidan foydalangan holda
 bosqichma-bosqich amalga oshirishni ko‘rib chiqaylik.
 
@@ -80,9 +80,9 @@ instance of `Post`, as shown in Listing 17-12. We’ll also make a private
 `State` trait that will define the behavior that all state objects for a `Post`
 must have.
 
-Keyin ’Post’ o‘z ichida ’state’ nomli maxfiy maydonida ’Option<T>’ orqali
-o‘ralgan ’Box<dyn State>’ trait obyektini saqlaydi, bu esa state obyektini
-ushlab turish uchun xizmat qiladi. Option<T> nima uchun kerakligini birozdan
+Keyin `Post` o‘z ichida `state` nomli maxfiy maydonida `Option<T>` orqali
+o‘ralgan `Box<dyn State>` trait obyektini saqlaydi, bu esa state obyektini
+ushlab turish uchun xizmat qiladi. `Option<T>` nima uchun kerakligini birozdan
 so‘ng bilib olasiz.
 
 <span class="filename">Fayl nomi: src/lib.rs</span>

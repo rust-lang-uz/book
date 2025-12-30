@@ -44,7 +44,7 @@ kengaytira olishi uchun kutubxona boshqacha tuzilishi lozim.
 
 `Gui` uchun kerakli xatti-harakatni amalga oshirish maqsadida, `Draw` nomli
 trait'ni belgilaymiz. Bu trait `draw` deb nomlangan yagona usulni o‘z ichiga
-oladi. Shundan so‘ng *trait object* ni qabul qiladigan vektorni aniqlash mumkin.
+oladi. Shundan so‘ng _trait object_ ni qabul qiladigan vektorni aniqlash mumkin.
 Trait obyekti ko‘rsatilgan xususiyatni amalga oshiruvchi turning nusxasiga ham,
 ishlash vaqtida ushbu turdagi trait usullarini qidirish uchun ishlatiladigan
 jadvalga ham ishora qiladi. Qandaydir ko‘rsatkichni, masalan `&` havola yoki
@@ -52,26 +52,28 @@ jadvalga ham ishora qiladi. Qandaydir ko‘rsatkichni, masalan `&` havola yoki
 ko‘rsatish orqali trait obyektini yaratamiz. (Trait obyektlarining nima uchun
 ko‘rsatkich ishlatishi kerakligi haqida 19-bobning
 ["Dinamik o‘lchamliturlar va ’Sized’ belgisi"][dinamik-olchamli]
+
 <!-- e’tiborsiz qoldirish --> qismida batafsil to‘xtalamiz.) Trait
+
 obyektlarini `generic` ya'ni turdosh yoki aniq tur o‘rnida ishlatishimiz mumkin.
 Trait obyektini qayerda ishlatishimizdan qat'iy nazar, Rustning turlar tizimi
 kompilyatsiya vaqtida ushbu kontekstda ishlatiladigan har qanday qiymat
 trait obyektining trait'ini amalga oshirishini ta’minlaydi. Natijada
 kompilyatsiya vaqtida barcha mumkin bo‘lgan turlarni bilish shart emas.
 
-Rust dasturlash tilida structlar va enumlar “obyekt” deb atalmaydi. 
-Bunday yondashuv, ularni boshqa dasturlash tillaridagi obyekt tushunchasidan 
-farqlash maqsadida qo‘llaniladi. Rust tilida struct yoki enum tarkibidagi 
-ma’lumotlar (ya’ni, maydonlar) va xatti-harakatlar `impl` bloklarida 
-alohida saqlanadi. Aksariyat boshqa dasturlash tillarida esa ma’lumotlar va 
-xatti-harakatlar yagona tuzilma sifatida birlashtirilib, odatda “obyekt” deb 
-ataladi. Biroq trait obyektlar (trait objects) boshqa dasturlash tillaridagi 
-obyektlarga o‘xshashlik kasb etadi. Chunki ular ma’lumot va xatti-harakatni 
-birgalikda ifodalash imkonini beradi. Shunga qaramay, trait obyektlar an’anaviy 
-obyektlardan farq qiladi: ular tarkibiga yangi ma’lumotlar qo‘shishga imkon 
-bermaydi. Shu bois, trait obyektlar boshqa tillardagi obyektlar kabi keng 
-maqsadlarda emas, balki faqat umumiy xatti-harakatni abstraktsiyalash, 
-ya’ni umumiy funksionallik asosida turli obyektlar bilan ishlash imkoniyatini 
+Rust dasturlash tilida structlar va enumlar “obyekt” deb atalmaydi.
+Bunday yondashuv, ularni boshqa dasturlash tillaridagi obyekt tushunchasidan
+farqlash maqsadida qo‘llaniladi. Rust tilida struct yoki enum tarkibidagi
+ma’lumotlar (ya’ni, maydonlar) va xatti-harakatlar `impl` bloklarida
+alohida saqlanadi. Aksariyat boshqa dasturlash tillarida esa ma’lumotlar va
+xatti-harakatlar yagona tuzilma sifatida birlashtirilib, odatda “obyekt” deb
+ataladi. Biroq trait obyektlar (trait objects) boshqa dasturlash tillaridagi
+obyektlarga o‘xshashlik kasb etadi. Chunki ular ma’lumot va xatti-harakatni
+birgalikda ifodalash imkonini beradi. Shunga qaramay, trait obyektlar an’anaviy
+obyektlardan farq qiladi: ular tarkibiga yangi ma’lumotlar qo‘shishga imkon
+bermaydi. Shu bois, trait obyektlar boshqa tillardagi obyektlar kabi keng
+maqsadlarda emas, balki faqat umumiy xatti-harakatni abstraktsiyalash,
+ya’ni umumiy funksionallik asosida turli obyektlar bilan ishlash imkoniyatini
 yaratish uchun qo‘llaniladi.
 
 Listing 17-3 shows how to define a trait named `Draw` with one method named
@@ -144,12 +146,12 @@ unumdorlik ta’sirlari haqida suhbatlashamiz.
 
 ### Traitni amalga oshirish
 
-Endi `Draw` traitini amalga oshiradigan ba'zi turlarni qo‘shamiz. `Button` 
-turini taqdim etamiz. Yana, haqiqiy GUI kutubxonasini yaratish kitobimiz 
-doirasidan tashqarida, shuning uchun `draw` metodi tanasida hech qanday 
-foydali amalga oshirish bo‘lmaydi. Amalga oshirish qanday ko‘rinishi 
-mumkinligini tasavvur qilish uchun, `Button` tuzilmasi `width` (kenglik), 
-`height` (bo‘yi) va `label` (yorliq) kabi maydonlarga ega bo‘lishi mumkin, 
+Endi `Draw` traitini amalga oshiradigan ba'zi turlarni qo‘shamiz. `Button`
+turini taqdim etamiz. Yana, haqiqiy GUI kutubxonasini yaratish kitobimiz
+doirasidan tashqarida, shuning uchun `draw` metodi tanasida hech qanday
+foydali amalga oshirish bo‘lmaydi. Amalga oshirish qanday ko‘rinishi
+mumkinligini tasavvur qilish uchun, `Button` tuzilmasi `width` (kenglik),
+`height` (bo‘yi) va `label` (yorliq) kabi maydonlarga ega bo‘lishi mumkin,
 bu 17-7 ro'yxatdada ko‘rsatilgan:
 
 <span class="filename">Faylnomi: src/lib.rs</span>
@@ -203,14 +205,14 @@ When we wrote the library, we didn’t know that someone might add the
 new type and draw it because `SelectBox` implements the `Draw` trait, which
 means it implements the `draw` method.
 
-Bu tushuncha — ya’ni, qiymatning aniq tipi emas, balki qanday xabarlarga 
-javob bera olishi muhim bo‘lishi — dinamik tiplangan tillardagi *duck typing* 
-tushunchasiga o‘xshaydi: agar u o‘rdakdek yursa va o‘rdakdek ovoz chiqarsa, 
-demak u o‘rdak! 17-5-ro‘yxatdagi `Screen` uchun `run` funksiyasi 
-implementatsiyasida `run` har bir komponentning aniq tipi nima ekanini 
-bilishga muhtoj emas. Komponent `Button` yoki `SelectBox` ekanligini 
-tekshirmaydi, shunchaki uning `draw` metodini chaqiradi. `components` vektoridagi 
-qiymatlar turi sifatida `Box<dyn Draw>`ni ko‘rsatish orqali,`Screen`dan `draw` 
+Bu tushuncha — ya’ni, qiymatning aniq tipi emas, balki qanday xabarlarga
+javob bera olishi muhim bo‘lishi — dinamik tiplangan tillardagi _duck typing_
+tushunchasiga o‘xshaydi: agar u o‘rdakdek yursa va o‘rdakdek ovoz chiqarsa,
+demak u o‘rdak! 17-5-ro‘yxatdagi `Screen` uchun `run` funksiyasi
+implementatsiyasida `run` har bir komponentning aniq tipi nima ekanini
+bilishga muhtoj emas. Komponent `Button` yoki `SelectBox` ekanligini
+tekshirmaydi, shunchaki uning `draw` metodini chaqiradi. `components` vektoridagi
+qiymatlar turi sifatida `Box<dyn Draw>`ni ko‘rsatish orqali,`Screen`dan `draw`
 metodini chaqira olishimiz mumkin bo‘lgan qiymatlarni talab qiladigan qilib belgiladik.
 
 Trait obyektlar va Rustning turlar tizimidan foydalanib, `duck typing` uslubiga
@@ -220,7 +222,7 @@ agar qiymat usulni amalga oshirmasa-yu, lekin u chaqirilsa ham, xatolar yuzaga
 kelishidan xavotirlanishimizga hojat yo‘q. Agar qiymatlar trait obyektlariga
 kerak bo'lgan trait'larni amalga oshirmasa, Rust bu kodni kompilatsiya qilmaydi.
 
-Masalan, 17-10-ro'yxatda `String` komponentli `Screen` yaratishga harakat
+Masalan, 17-10-roʻyxatda `String` komponentli `Screen` yaratishga harakat
 qilsa, nima sodir bo‘lishi ko‘rsatilgan:
 
 <span class="filename">Fayl nomi: src/main.rs</span>
@@ -238,10 +240,10 @@ oshirmaydigan turdan foydalanishga urinish</span>
 {{#include ../listings/ch17-oop/listing-17-10/output.txt}}
 ```
 
-Bu xato quyidagi ikki holatdan birini ko‘rsatadi: yoki o‘tkazmoqchi
-bo‘lmagan biror narsani `Screen`ga o‘tkazilayapti va shuning uchun boshqa turda
-o‘tkazish kerak, yoki `String`ga `Draw`ni amalga oshirishimiz kerak, shunda
-`Screen` `draw`ni chaqira oladi.
+Bu xato bizga shuni bildiradi: biz `Screen` ga yubormoqchi bo‘lmagan narsani
+yuboryapmiz va shuning uchun boshqa turni o'tkazishimiz kerakligini yoki
+`String` ustiga `Draw`ni qo'llashimiz kerakligini bildiradi, shunda `Screen`
+`draw`ni chaqira oladi.
 
 ### Trait Objects Perform Dynamic Dispatch
 
