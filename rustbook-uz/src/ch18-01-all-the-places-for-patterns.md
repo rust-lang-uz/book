@@ -20,7 +20,7 @@ match QIYMAT {
 }
 ```
 
-Masalan, ushbu 6-5 Lavhasidagi `match` ifodasida, `x` oʻzgaruvchisi
+Masalan, ushbu 6-5 lavhasidagi `match` ifodasida, `x` oʻzgaruvchisi
 `Option<i32>` qiymatiga mos tushadi:
 
 ```rust,ignore
