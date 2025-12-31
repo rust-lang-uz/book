@@ -175,7 +175,7 @@ $ rustup override set nightly
 ```
 
 Endi, har doim, `rustc` yoki `cargo` shu direktoriya (*~/proektlarim/nightly-kerak-narsa*) ni ichida chaqirganizda
-`rustup` siz `nightly` da ishlayotganingizni aniqlantiradi (boshqa proektlarga tasir qilmaydi, global da `stable` turadi).
+`rustup` siz `nightly` da ishlatayotganingizga ishonch komil qiladi (boshqa loyihalarga taʼsir qilmaydi, globalda `stable` turadi).
 Sizda koʻp Rust dagi proektlar holatida, bu juda foydalik bʻoladi!
 
 ### RFC Jarayonlar va Jamoalar
