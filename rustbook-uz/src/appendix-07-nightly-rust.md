@@ -130,7 +130,7 @@ amalga oshirishingiz mumkin. Buning uchun sizdan Rustʼning nightly relizidan
 foydalanish va ushbu funksiyani faollashtirish uchun kodga tegishli bayroqchani
 (flag) qoʻshish talab etiladi.
 
-Agar Rustning `beta` yoki `stable` versiyasidan foydalansangiz, hech qanday feature bayroqlardan foydalana olmaysiz.
+Agar Rustʼning `beta` yoki `stable` relizidan foydalansangiz, hech qanday funksiya bayroqlardan foydalana olmaysiz.
 Bu kalit bizga yangi funksiyalarni amalda qoʻllash imkonini beradi,
 Biz ularni abadiy barqaror (stable) deb eʼlon qilishimizdan oldin. 
 Eng soʻnggi versiyaga oʻtishni xohlovchilar buni amalga oshirishlari mumkin,
