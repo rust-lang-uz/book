@@ -162,7 +162,7 @@ beta-x86_64-pc-windows-msvc
 nightly-x86_64-pc-windows-msvc
 ```
 
-Koʻrib turibsizki, `stable` toolchain odatiy (default) sifatida turibdi.
+Koʻrib turibsizki, `stable` toolchain birlamchi (default) sifatida turibdi.
 Kʻop Rust foydalanuvchilar, ko‘pincha vaqtida `stable` ni ishlatadi.
 Masalan, siz `stable` ni koʻpincha vaqt ishlatmoqchisiz, lekin bitta aniq proektda
 `nightly` ni ishlatmoqchisiz, chunki sizga yangi, yana stable ga chiqmagan funksiya
