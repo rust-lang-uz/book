@@ -75,7 +75,7 @@ nightly: * - - * - - * - - * - - * - - *
 beta:                * - - - - - - - - *
 ```
 
-Birinchi beta-versiya yaratilganidan olti hafta o‘tgach, `stable`ni chiqarilish vaqti keldi!
+Birinchi beta reliz yaratilganidan olti hafta o‘tgach, `stable`ni chiqarilish vaqti keldi!
 `stable` branch `beta` branchdan yaratiladi:
 
 ```text
