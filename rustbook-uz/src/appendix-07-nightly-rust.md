@@ -186,7 +186,7 @@ Yangi funksiyalar haqida qanday bilish mumkin? Rust ishlab chiqish modeli quyida
 RFC deb nomlangan ariza yozishingiz mumkin.
 
 Istalgan kishi Rustni yaxshilash uchun RFC yozishi mumkin va takliflar koʻrib chiqiladi va
-turli mavzulardagi koʻplab kichik jamoalardan tashkil topgan Rust jamoasi tomonidan muhokama qilinadi. Toʻliq buyruqlar ro‘yxati
+turli mavzulardagi koʻplab kichik jamoalardan tashkil topgan Rust jamoasi tomonidan muhokama qilinadi. Toʻliq jamoalar roʻyxatini
 Rust [veb-saytida](https://www.rust-lang.org/governance) topishingiz mumkin, bu yerda
 loyihaning har bir sohasi: tilni loyihlantirish, compiler ni amalga oshirish,
 infratuzilma, documentatsiya va boshqalar. Tegishli jamoa oʻqiydi
