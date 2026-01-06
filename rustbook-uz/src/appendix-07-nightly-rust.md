@@ -183,7 +183,7 @@ Sizda koʻp Rust dagi proektlar holatida, bu juda foydalik bʻoladi!
 
 Yangi funksiyalar haqida qanday bilish mumkin? Rust ishlab chiqish modeli quyidagicha
 *Fikr soʻrovi (RFC - request for comments) jarayoni* deb etiladi. Agar Rustni yaxshilamoqchi boʻlsangiz,
-RFC deb nomlangan jumla yozishingiz mumkin.
+RFC deb nomlangan ariza yozishingiz mumkin.
 
 Istalgan kishi Rustni yaxshilash uchun RFC yozishi mumkin va takliflar koʻrib chiqiladi va
 turli mavzulardagi koʻplab kichik jamoalardan tashkil topgan Rust jamoasi tomonidan muhokama qilinadi. Toʻliq buyruqlar ro‘yxati
