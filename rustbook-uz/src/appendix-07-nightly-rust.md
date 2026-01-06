@@ -15,7 +15,8 @@ Bu muammoning yechimini "uzluksiz barqarorlik" deb ataymiz.
 Asosiy tamoyilimiz quyidagicha: siz hech qachon Rustʼning yangi versiyasiga
 oʻtishdan qoʻrqmasligingiz kerak.
 Har bir yangilanish og‘riqsiz bo‘lishi kerak, lekin shu bilan yana birga
-sizga yangi funksiyalar, kamroq xatolar va tezroq compile time (kompilyatsiya vaqti) berishi kerak.
+sizga yangi funksiyalar, kamroq xatolar va tezroq kompilyatsiya vaqti
+berishi kerak.
 
 ### Chux-chux! Reliz kanallar va poyezdda sayr qilish
 
