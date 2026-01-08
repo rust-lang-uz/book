@@ -29,7 +29,7 @@ Rustʼda uchta reliz kanallar bor:
 * Beta
 * Stable
 
-Ko'p Rust dasturchilar asosan `stable` kanaldan foydalanadilar, lekin xohlovchilar
+Koʻp Rust dasturchilar asosan `stable` kanaldan foydalanadilar, lekin xohlovchilar
 tajribaviy yangi funksiyalarni sinash uchun, `nightly` yoki `beta` versiyalardan foydalanishi mumkin.
 
 Ishlab chiqish va reliz jarayoni qanday ishlashiga misol:
