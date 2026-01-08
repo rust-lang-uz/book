@@ -20,7 +20,7 @@ berishi kerak.
 
 ### Chux-chux! Reliz kanallar va poyezdda sayr qilish
 
-Rustni ishlab chiqish *grafik* bo‘yicha amalga oshiriladi. Ya’ni, butun ishlanma
+Rustʼni ishlab chiqish *grafik* bo‘yicha amalga oshiriladi. Ya’ni, butun ishlanma
 Rust repozitoriysining `master` branchʼida o‘tkaziladi (hozirgi kunlarga
 `main` branchʼiga o‘tdi).
 Rustʼdagi relizlar, reliz poyezdi modeliga qatʼiy amal qiladi. Shu model Cisco IOS va boshqa loyihalarda ishlatadi.
