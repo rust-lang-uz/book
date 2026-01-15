@@ -30,13 +30,13 @@ Rustʼda uchta reliz kanallar bor:
 * Stable
 
 Koʻp Rust dasturchilar asosan `stable` kanaldan foydalanadilar, lekin xohlovchilar
-tajribaviy yangi funksiyalarni sinash uchun, `nightly` yoki `beta` versiyalardan foydalanishi mumkin.
+tajribaviy yangi funksiyalarni sinash uchun, `nightly` yoki `beta` relizlardan foydalanishi mumkin.
 
 Ishlab chiqish va reliz jarayoni qanday ishlashiga misol:
 faraz qilaylik, Rust dasturchilari Rust 1.5 versiyasi ustida ishlashmoqda. Bu reliz
 2015-yil dekabr oyida boʻlib o‘tdi, ammo u bizga haqiqiy versiya raqamlarini beradi.
 Rustʼga yangi funksiya qoʻshildi: yangi kommit main branchʼiga tushadi.
-Har kecha Rustning yangi `nightly` versiyasi yaratiladi. Har kuni - reliz
+Har kecha Rustning yangi `nightly` reliz yaratiladi. Har kuni - reliz
 kuni va bu relizlar bizning reliz infratuzilmamiz tomonidan avtomatik ravishda yaratiladi.
 Shunday qilib, vaqt oʻtgan sari, bizning relizlarimiz har tun quyidagi koʻrinishga ega boʻladi:
 
@@ -54,7 +54,7 @@ nightly: * - - * - - *
 beta:                *
 ```
 
-Rust foydalanuvchilarining aksariyati beta-versiyalarni kundalik ishda ishlatmaydi, 
+Rust foydalanuvchilarining aksariyati beta-relizni kundalik ishda ishlatmaydi, 
 ammo mumkin bo‘lgan regressiyalarni aniqlashga yordam berish uchun ularni CI tizimlarida sinovdan o‘tkazadi. 
 Vaholanki, har kecha avvalgidek `nightly` build chiqariladi:
 
@@ -64,10 +64,10 @@ nightly: * - - * - - * - - * - - *
 beta:                *
 ```
 
-Aytaylik, regressiya topildi. Yaxshiyam beta-versiyani sinab ko‘rishga vaqtimiz boʻldi,
-Regressiya barqaror versiyaga kirishdan oldin! Tuzatish tatbiq
+Aytaylik, regressiya topildi. Yaxshiyam beta-relizni sinab ko‘rishga vaqtimiz boʻldi,
+Regressiya barqaror relizga kirishdan oldin! Tuzatish tatbiq
 `main` branch ga qilinadi, shuning uchun `nightly` tuzatildi va keyin tuzatish ga koʻchiriladi
-`beta` branchga va yangi beta versiyasi chiqariladi:
+`beta` branchga va yangi beta reliz chiqariladi:
 
 ```text
 nightly: * - - * - - * - - * - - * - - *
@@ -89,7 +89,7 @@ stable:                                *
 Ura! Rust 1.5 tayyor! Biroq biz bir narsani unutib qoʻydik: 6 hafta oʻtib
 ketgani sababli, bizga Rustʼning *keyingi* 1.6 versiyasining yangi beta
 relizi kerak.
-Shuning uchun `stable` `beta` dan ajralgandan so‘ng, `beta` ning keyingi versiyasi `nightly` dan yana ajralib chiqadi:
+Shuning uchun `stable` `beta` dan ajralgandan so‘ng, `beta` ning keyingi reliz `nightly` dan yana ajralib chiqadi:
 
 ```text
 nightly: * - - * - - * - - * - - * - - * - * - *
@@ -135,7 +135,7 @@ Agar Rustʼning `beta` yoki `stable` relizidan foydalansangiz, hech qanday funks
 Bu kalit bizga yangi funksiyalarni amalda qoʻllash imkonini beradi,
 Biz ularni abadiy barqaror (stable) deb eʼlon qilishimizdan oldin. 
 Eng soʻnggi versiyaga oʻtishni xohlovchilar buni amalga oshirishlari mumkin,
-ishonchli tajribaga ega boʻlishni dasturchilar esa `stable` versiyada qolishlari
+ishonchli tajribaga ega boʻlishni dasturchilar esa `stable` relizda qolishlari
 va kodlari buzilmasligiga ishonch hosil qilishlari mumkin. Uzluksiz barqarorlik.
 
 Ushbu kitobda faqat `stable` funksiyalar haqida maʼlumot berilgan, chunki ishlab chiqilayotgan funksiyalar
@@ -200,6 +200,6 @@ buni biz ["Beqaror funksiyalar"](#beqaror-funksiyalar) boʻlimida muhokama qilga
 
 Biroz vaqt oʻtgach, `nightly` relizlardan foydalanadigan Rust dasturchilari yangi funksiyani sinab koʻrishlari mumkin boʻlganidan soʻng, 
 jamoa aʼzolari uni qanday ishlatishini muhokama qiladilar.
-`nightly` versiyalarda ishlaydi va uni Rustning `stable` versiyasiga kiritish yoki kiritmaslik toʻgʻrisida qaror qabul qiladi.
+`nightly` relizlarda ishlaydi va uni Rustning `stable` relizga kiritish yoki kiritmaslik toʻgʻrisida qaror qabul qiladi.
 Agar targʻibot haqida qaror qabul qilinsa, funksiya `feature gate` olinadi va endi u `stable` hisoblanadi! 
 U yangi Rust `stable` relizga kiradi.
