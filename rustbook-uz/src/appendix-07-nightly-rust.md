@@ -5,7 +5,7 @@ qanday taʼsir qilishi haqida.
 
 ### Uzluksiz barqarorlik
 
-Til sifatida Rust kodingizning barqarorligiga *katta* e’tibor qaratadi. Biz xohlaymizki
+Til sifatida Rust kodingizning barqarorligiga *katta* e’tibor qaratadi.
 Rustʼni mustahkam poydevor sifatida qurishingiz mumkin boʻlgan mustahkam asos boʻlishini xohlaymiz, 
 va agar narsalar doimiy ravishda oʻzgarib tursa, bu mumkin boʻlmas edi. Shu bilan birga, agar buni qila olmasak
 yangi funksiyalar bilan tajriba oʻtkazganimizdan keyingina muhim muammolarni aniqlashimiz mumkin.
