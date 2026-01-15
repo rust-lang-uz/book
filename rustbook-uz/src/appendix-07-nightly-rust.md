@@ -54,9 +54,9 @@ nightly: * - - * - - *
 beta:                *
 ```
 
-K'op Rust foydalanuvchilari beta-versiyalardan faol foydalanmaydi, lekin ularni da sinovdan o‘tkazadi
-Rustga mumkin bo‘lgan regressiyalarni aniqlashga yordam berish uchun o‘zlarining CI tizimlarida ishlatadi. Vaholanki,
-har kecha avvalgidek `nightly` build chiqariladi:
+Rust foydalanuvchilarining aksariyati beta-versiyalarni kundalik ishda ishlatmaydi, 
+ammo mumkin bo‘lgan regressiyalarni aniqlashga yordam berish uchun ularni CI tizimlarida sinovdan o‘tkazadi. 
+Vaholanki, har kecha avvalgidek `nightly` build chiqariladi:
 
 ```text
 nightly: * - - * - - * - - * - - *
