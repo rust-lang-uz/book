@@ -171,7 +171,7 @@ kerak boʻlib qoladi. Shuni qilish uchun, `rustup override` komanda ni proektizn
 `nightly` toolchain qoyib, rustup uni oʻsha direktoriyada ishlatish uchun, qilishiz mumkin:
 
 ```console
-$ cd ~/proektlarim/nightly-kerak-narsa
+$ cd ~/proektlarim/nightly-feature
 $ rustup override set nightly
 ```
 
